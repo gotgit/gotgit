@@ -1,0 +1,114 @@
+{
+    "embeddedFonts" : ["/etc/fop/simsun.ttc","/etc/fop/simhei.ttf"],
+    "fontsAlias" : {
+        "stdFont": "simsun",
+        "stdBold": "simsun",
+        "stdItalic": "simsun",
+        "stdBoldItalic": "simsun",
+        "stdSans": "simsun",
+        "stdSansBold": "simsun",
+        "stdSansItalic": "simsun",
+        "stdSansBoldItalic": "simsun",
+        "stdMono": "simsun",
+        "stdMonoItalic": "simsun",
+        "stdMonoBold": "simsun",
+        "stdMonoBoldItalic": "simhei",
+        "stdSerif": "simsun"
+    },
+    "pageSetup" : {
+        "size" : "A4",
+        "firstTemplate": "coverPage",
+        "width": null,
+        "height": null,
+        "margin-top": "2cm",
+        "margin-bottom": "2cm",
+        "margin-left": "2cm",
+        "margin-right": "2cm",
+        "margin-gutter": "0cm",
+        "spacing-header": "5mm",
+        "spacing-footer": "5mm"
+    }, 
+
+    "pageTemplates" : {
+        "coverPage":{
+            "frames": [
+                ["0cm", "0cm", "100%", "100%"]
+            ],
+            "showHeader" : false,
+            "showFooter" : false 
+        },
+        "contentsPage":{
+            "frames": [
+                ["0cm", "0cm", "100%", "100%"]
+            ],
+            "showHeader" : true,
+            "showFooter" : true 
+        }
+    },
+    "styles" : [
+        ["palatino" , {"parent": "bodytext","fontName": "stdFont"} ],
+        ["redpalatino" , {"parent": "normal","fontName": "stdFont", "textColor": "red"} ],
+        ["base",{
+            "fontSize":12,
+            "leading":15,
+            "bulletFontSize": 10,
+            "textColor": black,
+            "backColor": null,
+            "borderColor": null,
+            "wordWrap": "CJK" }],
+        ["bodytext",{
+            "alignment":TA_JUSTIFY }],
+        ["toc", {
+            "backColor":"#EFEFEF",
+            "fontSize":10 }],
+        ["left", {
+            "parent": "bodytext",
+            "alignment": "left"
+        }],
+        ["right", {
+            "parent": "bodytext",
+            "alignment": "right"
+        }],
+        ["centered", {
+            "parent": "bodytext",
+            "alignment": "center"
+        }],
+        ["footer",   {
+            "parent": normal,
+            "textColor":"#545454",
+            "backColor":"#EFEFEF",
+            "fontSize":10,
+            "alignment": TA_CENTER }],
+        ["header",   {
+            "parent": normal,
+            "textColor":"#545454",
+            "backColor":"#EFEFEF",
+            "fontSize":10,
+            "alignment": TA_CENTER }],
+        ["headertable" , {
+            "parent" : "table",
+            "colWidths": ["20%","60%","20%"],
+            "commands": [
+              [ "FONTSIZE", [0,0], [-1,-1], "9" ],
+              [ "TEXTCOLOR", [0,0], [-1,-1], "#545454" ],
+              [ "BACKGROUND", [0,0], [-1,-1], "#EFEFEF" ]
+            ]
+        }],
+        ["footertable" , {
+            "parent" : "table",
+            "colWidths": ["45%","5%","45%"],
+            "commands": [
+              [ "FONTSIZE", [0,0], [-1,-1], "9" ],
+              [ "TEXTCOLOR", [0,0], [-1,-1], "#545454" ],
+              [ "BACKGROUND", [0,0], [-1,-1], "#EFEFEF" ]
+            ]
+        }],
+        ["code", {
+            "parent": "literal",
+            "fontSize":10,
+            "wordWrap": None
+        }],
+        ["lineblock",{"parent":bodytext, "spaceBefore":6 }] 
+    ],
+    "linkColor": "navy"
+}
