@@ -3,24 +3,23 @@
 ==================
 
 ------------
-for Docbones
+版本控制宝典
 ------------
 
 :作者: |AuthorOSSXP|_
 :网址: http://www.ossxp.com/
 :版本: |doc_rev|
 :日期: |doc_date|
-:版权信息: |Creative Commons|_
 
 .. |date| date::        %Y-%m-%d %H:%M
 .. |doc_rev| replace::  @ENV(DOC_REV)@
 .. |doc_date| replace:: @ENV(DOC_DATE)@
 .. |Creative Commons|   image:: images/cc-icon.png
 .. _Creative Commons:   http://creativecommons.org/licenses/by-sa/3.0/
-.. |AuthorOSSXP|        replace:: 北京群英汇信息技术有限公司
-.. _AuthorOSSXP:        http://www.ossxp.com/
-.. |ArticleTitle|       replace:: reST 学习手册
-.. _ArticleTitle:       http://www.ossxp.com/doc/
+.. |AuthorOSSXP|        replace:: 蒋鑫
+.. _AuthorOSSXP:        http://blog.ossxp.com/
+.. |ArticleTitle|       replace:: 爱上Git
+.. _ArticleTitle:       http://www.ossxp.com/
 
 .. contents:: 目录
 .. sectnum::
@@ -35,389 +34,79 @@ for Docbones
    PageBreak contentsPage
 
 
-基本格式说明
-============
-
-分段以及断行
-------------
-
-这是一个段落的开始，
-本行自动续行。下面用一个空行分隔两个段落。
-
-新的段落。
-
-缩进也是语法(类python)
------------------------
-
-这是一个段落。下面段落用空格缩进。
-
-  缩进的段落
-  等量缩进， *续行* 。
-
-    继续缩进的 *段落* 。
-
-结束缩进，成为一个段落。
-
-#. 列表1
-#. 列表2
-
-..
-
-  为了显示为缩进,而非作为列表的内容解析，前面的段落用空注释结束列表
-
-#. 列表2
-
-预格式化文本(literal blocks)
-------------------------------
-
-这是一个段落。下面的双冒号的孤立段落，将会开启一个样式为 literal-block 的 PRE 块。
-在该块中，reST 语法不做解析。
-
-::
-
-  双冒号的孤立行，开始 pre formatted text
-                  __更上一层楼
-                _|
-              _|
-  欲穷千里目-|
-
-  缩进中，reST **不** 进行解析
-
-缩进停止，则开始新的段落。
-
-----
-
-段落结尾的两个冒号，下个段落也开始一个literal block: ::
-
- 缩进样式 *不解析*
-   缩进样式 *不解析*
- 缩进样式 *不解析*
-
-引用块
---------
-
-双冒号的孤立段落，也可以开启一个引用式的缩进，就像邮件引用一样。
-在该块中，reST 语法不做解析。
-
-::
-
-> *something*
-> xyz
->> xyz
-> xyz
-
-行块
------
-
-下面的段落中，以竖线 | 和一个空格做起始，维持换行的格式
-
-| 开始一个line block
-| 另外的一行,
-  续行。
-| 再一行
-|    含有缩进的一行
-|  含有缩进的一行
-|    含有缩进的一行
-
-另外一个段落。
-
-文字样式
---------
-
-- *斜体*
-- **粗体**
-- 粗斜体如何显示？？？
-- 解析文本调用缺省解析器: `子曰：“学而时习之不亦乐乎？”`
-- 以 tt 标签显示的: ``import os``
-- 水的分子式是 |H2O|.
-- 相对论公式： |e=mc2|.
-
-.. |H2O| replace:: H\ :sub:`2`\ O
-.. |e=mc2| replace:: E = mc\ :sup:`2`
-
-列表
------
-
-* 子弹头列表
-
-   - 子列表
-   - 子列表
-
-* 子弹头列表2
-
-   #. 自动编号列表1
-   #. 自动编号列表2
-
-   #. 自动编号列表3
-
-* 子弹头列表3
-
-   2. 从2开始编号
-   3. 编号顺序递增
-
-       a) Item 3a.
-       b) Item 3b.
-
-   4. 列表4
-
-       i) Item 4i.
-       ii) Item 4ii.
-
-定义
------
-
-apple
-  一种水果
-
-  知名软件公司
-
-term2 : 名词
-  定义
-
-分隔线
-------
-
-四个减号开始一个分隔线
-
-------
-
-分隔线下内容。。。
-
-
-高级格式说明
-============
-
-超链接
-------
-
-直接嵌入超链接
-~~~~~~~~~~~~~~
-
-群英汇的网址是: http://www.ossxp.com.
-
-直接嵌入具名超链接
-~~~~~~~~~~~~~~~~~~~
-
-这个链接会自动创建一个具名链接，除了这里显示链接外，
-还可以在后面引用。如: `北京群英汇 <http://www.ossxp.com>`_
-是开源软件服务提供商。
-
-这里引用 北京群英汇_
-
-定义和引用具名超链接
-~~~~~~~~~~~~~~~~~~~~
-
-定义超链接格式： ``.. _hyperlink-name: link-block``
-
-内部anchor
-^^^^^^^^^^
-定位到 target_
-
-在文内通过一个不包含 link-block 的具名链接定义，即定义此 anchor，用于文内跳转。
-
-.. _target:
-
-上面是一个名为 target 的文内anchor。
-
-指向URI的超链接
-^^^^^^^^^^^^^^^
-
-群英汇_ [#]_ 的主页: ossxp_, 发邮件给 `Jiang Xin`_
-
-
-.. _群英汇: ossxp_
-.. _ossxp: http://www.ossxp.com/
-.. _Jiang Xin: worldhello.net@gmail.com
-.. [#] 链接的定义可以指向另外一个链接的定义
-
-匿名超链接
-~~~~~~~~~~
-
-格式：
-  * 引用时，后面是两个下划线，而不是一个
-  * 定义时，以两个下划线为名称，不包含链接名字
-
-示例： See `the web site of my favorite programming language`__.
-
-.. __: http://www.python.org
-
-一个文档可以包含多个匿名超链接，要求：
-
- * 引用的数量和定义的数量相同
- * 定义和引用一一对应
-
-
-脚注
-----
-
-脚注就是以顺序的数字显示链接，并指向脚注区域的相关注释。
-
-手动编号的脚注
-~~~~~~~~~~~~~~
-
-方括号 [1]_ 内手动编号 [1]_ ，别忘了结尾的下划线 [3]_, 可以重复引用脚注 [3]_
-
-.. [1] 嵌入的脚注前后要有空格
-.. [2] 阿拉伯数字
-.. [3] 下划线只在引用时需要提供，定义时，不需要
-
-自动编号的脚注
-~~~~~~~~~~~~~~
-
-自动编号的脚注是用井号 [#]_ 作为 label 的脚注 [#]_
-
-.. [#] 以 # 代替数字
-.. [#] 自动增加编号。定义的时候也写成 #，而不要用数字
-
-但是自动编号的局限性是：不能对一个脚注在多处引用。
-
-对于需要在多处引用自动编号的脚注，可以使用下面的带有 label 的自动编号脚注。
-
-
-带 label 自动编号的脚注
-~~~~~~~~~~~~~~~~~~~~~~~
-
-带有label 的自动脚注 [#note]_ 会根据前面的脚注情况，自动编号。显示为
-"[n]".  如果多此引用此脚注，可以多次出现同 label 的自动脚注 [#note]_ 。
-如果向使用链接指向脚注，可以用 *简单链接* 语法做指向。如： note_
-
-.. [#note] This is the footnote labeled "note".
-
-自动符号脚注
-~~~~~~~~~~~~~~~~~~~~~~~
-
-可以用星号 * 作为脚注的label，会依次用不同的符号来显示。脚注 [*]_,脚注 [*]_,脚注 [*]_,脚注 [*]_,脚注 [*]_ ...
-
-.. [*] 以符号的形式显示的脚注
-.. [*] 以符号的形式显示的脚注
-.. [*] 以符号的形式显示的脚注
-.. [*] 以符号的形式显示的脚注
-.. [*] 以符号的形式显示的脚注
-
-引证
-----
-
-引证就是以有意义的单词或者规定的格式编码显示链接，并指向引证区域的相关注释。
-
-和脚注类似，不过是直接使用字母而非数字作为 label。 [CIT2002]_.
-
-.. [CIT2002] This is the citation.  It's just like a footnote,
-   except the label is textual.
-
-替换
-----
-
-用竖线中间夹着要替换的单词。定义替换采用两个点的类似注释的语法。
-
-文字替换
-~~~~~~~~
-
-|RST|_ is a little annoying to type over and over, especially
-when writing about |RST| itself, and spelling out the
-bicapitalized word |RST| every time isn't really necessary for
-|RST| source readability.
-
-.. |RST| replace:: reStructuredText
-.. _RST: http://docutils.sourceforge.net/rst.html
-
-图片替换
-~~~~~~~~
-
-* 嵌入 |CC| 授权协议图标。
-* 带有链接的 |CC with link|_ 授权协议图标。
-
-.. |CC| image:: images/cc-icon.png
-.. |CC with link| image:: images/cc-icon.png
-.. _CC with link: http://creativecommons.org/licenses/by-sa/3.0/
-
-
-表格
-----
-
-* 英文表格
-
-  +------------+------------+-----------+
-  | Header 1   | Header 2   | Header 3  |
-  +============+============+===========+
-  | body row 1 | column 2   | column 3  |
-  +------------+------------+-----------+
-  | body row 2 |    `ps -ef | grep py`  |
-  |            |                        |
-  +------------+------------+-----------+
-  | body row 3 | Cells may  | - Cells   |
-  +------------+ span rows. | - contain |
-  | body row 4 |            | - blocks. |
-  +------------+------------+-----------+
-
-* 中文表格
-
-  +------------+------------+-----------+
-  |    表头1   |    表头2   |    表头3  |
-  +============+============+===========+
-  | 表格行1    |    列 2    |    列 3   |
-  +------------+------------+-----------+
-  | 表格行2    |    `ps -ef | grep py`  |
-  |            |                        |
-  +------------+------------+-----------+
-  | 表格行3    | 单元格     | - 单元格  |
-  +------------+ 跨越多行。 | - 包含    |
-  | 表格行4    |            | - 块.     |
-  +------------+------------+-----------+
-
-* 简单表格
-
-
-Simple table:
-
-=====  =====  ======
-   Inputs     Output
-------------  ------
-  A      B    A or B
-=====  =====  ======
-False  False  False
-True   False  True
-False  True   True
-True   True   True
-=====  =====  ======
-
-指令扩展
-============
-
-图片
-----
-
- * 嵌入图片
-
-   .. image:: images/cc-icon.png
-
- * 带标题的图片
-
-   .. figure:: images/cc-icon.png
-
-      Creative Commons 授权图标（by-sa）
-
- * 图片缩放
-
-   .. figure:: images/cc-icon.png
-      :scale: 50
-
-      缩放了 50% 的图片
-
- * 图片缩放
-
-   .. figure:: images/cc-icon.png
-      :height: 11
-      :width: 11
-
-      设置了固定高和宽度的图片
-
-警告
-----
-
-.. note:: This is a paragraph
-
-   - Here is a bullet list.
-
-.. Danger:: modify at your own risk!
-
-
+.. include:: preface.rst
+
+第一部分: 初识Git
+##################
+
+.. include:: ./01-meet-git/010-scm-history.rst
+.. include:: ./01-meet-git/020-love-git.rst
+.. include:: ./01-meet-git/030-git-install.rst
+.. include:: ./01-meet-git/040-git-config.rst
+
+第二部分: Git基础
+##################
+
+.. include:: ./02-use-git/010-git-init.rst
+.. include:: ./02-use-git/020-git-basic.rst
+.. include:: ./02-use-git/030-git-stage.rst
+.. include:: ./02-use-git/040-git-rm-del.rst
+.. include:: ./02-use-git/050-git-ignore.rst
+.. include:: ./02-use-git/060-git-log.rst
+.. include:: ./02-use-git/070-revert-rollback.rst
+.. include:: ./02-use-git/080-git-rebase.rst
+.. include:: ./02-use-git/090-git-pull-push.rst
+
+第三部分: Git进阶
+##################
+
+.. include:: ./03-adv-git/010-git-tag.rst
+.. include:: ./03-adv-git/020-git-branch.rst
+.. include:: ./03-adv-git/030-conflict.rst
+.. include:: ./03-adv-git/040-git-remote.rst
+.. include:: ./03-adv-git/050-git-secret.rst
+
+第四部分: Git使用模型
+#####################
+
+.. include:: ./04-git-model/010-central-model.rst
+.. include:: ./04-git-model/020-integrate-admin-model.rst
+.. include:: ./04-git-model/030-topgit-model.rst
+.. include:: ./04-git-model/040-subtree-model.rst
+.. include:: ./04-git-model/050-submodule-model.rst
+.. include:: ./04-git-model/060-android-model.rst
+
+第五部分: 搭建Git服务器
+#######################
+
+.. include:: ./05-git-server/010-http.rst
+.. include:: ./05-git-server/020-git.rst
+.. include:: ./05-git-server/030-ssh.rst
+.. include:: ./05-git-server/040-gitosis.rst
+.. include:: ./05-git-server/050-gitolite.rst
+.. include:: ./05-git-server/060-github-like.rst
+
+第六部分: 迁移到Git
+####################
+
+.. include:: ./06-migrate/010-cvs.rst
+.. include:: ./06-migrate/020-svn.rst
+.. include:: ./06-migrate/030-hg.rst
+.. include:: ./06-migrate/040-smart-migrate.rst
+
+第七部分: Git应用
+#################
+
+.. include:: ./07-git-app/010-backup.rst
+.. include:: ./07-git-app/020-binary-diff.rst
+.. include:: ./07-git-app/030-gitweb.rst
+.. include:: ./07-git-app/040-git-gui.rst
+.. include:: ./07-git-app/050-windows.rst
+
+第八部分: 附录
+##############
+
+.. include:: ./90-app/010-cvs-git-table.rst
+.. include:: ./90-app/020-svn-git-table.rst
+.. include:: ./90-app/030-hg-git-table.rst
+.. include:: ./90-app/040-quilt.rst
