@@ -1,2 +1,136 @@
 SSH 协议
 ========
+
+SSH 协议基本上是提供 Git 远程写服务的标准甚至是唯一服务。因为 SSH
+认证本身的限制，可能唯一的缺点是：无法提供匿名的读取服务。
+
+SSH 协议来实现 Git 服务，有两种方式。
+
+* 其一是用户具有真正的 SSH 登录帐号，即用户本身可以直接登录到服务器，获得 shell。
+* 另外的一种方式是，使用专用的 SSH 帐号，即所有用户使用同一个 SSH 登录帐号通过公钥认证方式登录。各个帐号通过连接时使用的不同的公钥来确认不同的身份。
+
+对于拥有 SHELL 权限的 SSH 登录帐号，可以直接用下面的 git 命令访问，例如：
+
+::
+
+  $ git clone username@my.domain:/path/to/repo.git
+
+说明：
+
+* username 是登录服务器 my.domain 的用户帐号
+* /path/to/repo.git 是服务器中版本库的绝对路径。若用相对路径则相对于 username 用户的主目录而言
+* 如果采用口令认证，不能像 HTTPS 协议那样可以在 URL 中同时给出登录名和口令，必须每次连接时输入
+* 如果采用公钥认证，则无须输入口令
+
+对于采用专有 SSH 帐号登录，可以直接用下面的 git 命令访问，例如：
+
+::
+
+  $ git clone git@my.domain:path/to/repo.git
+
+和使用真正的 SSH 帐号登录的区别是：
+
+* 帐号名为 git 或其他专用帐号
+* 服务器端安装了特定的软件作为登录用户的 shell，因此普通用户不能使用该帐号直接登录 SSH 服务器
+* 因采用了特定软件作为 shell，可以提供更为精细的授权模型
+* 使用公钥认证，不使用口令认证，一旦出现口令认证，则意味着配置错误
+* 版本库路径不使用绝对路径，而是相对于相应服务软件设定的根路径
+
+关于 SSH 公钥认证
+==================
+后面要介绍的基于 SSH 的 Git 服务器搭建和使用，其基础是 SSH 公钥认证，因此要单独辟出一章加以介绍。
+
+关于公钥认证的原理，维基百科上的这个条目是一个很好的起点： http://en.wikipedia.org/wiki/Public-key_cryptography
+
+如果你的主目录下不存在 .ssh 目录，说明你的 SSH 公钥/私钥对尚未创建。可以用这个命令创建：
+
+::
+
+  $ ssh-keygen
+
+该命令会在用户主目录下创建 .ssh 目录，并在其中创建两个文件：
+
+* id_rsa
+
+  私钥文件。是基于 RSA 算法创建。该私钥文件要妥善保管，不要泄漏。
+
+* id_rsa.pub
+
+  公钥文件。和 id_rsa 文件是一对儿，该文件作为公钥文件，可以公开。
+
+创建了自己的公钥/私钥对后，就可以使用下面的命令，实现无口令登录远程服务器，即用公钥认证取代口令认证。
+
+::
+
+  $ ssh-copy-id -i .ssh/id_rsa.pub user@machine
+
+说明:
+
+* 该命令会提示输入用户 user 在 machine 上的 ssh 登录口令
+* 当此命令执行成功后，再以 user 用户登录 machine 远程主机时，不必输入口令直接登录
+* 该命令实际上将 .ssh/id_rsa.pub 公钥文件追加到远程主机 machine 的 user 主目录下的 .ssh/authorized_keys 文件中
+
+
+在实际应用中，有时需要使用多套公钥/私钥对，例如：
+
+* 使用缺省的公钥访问 git 帐号，获取 shell，进行管理员维护工作
+* 使用单独创建的公钥访问 git 帐号，执行 git 命令
+* 访问 github 采用其他公钥
+
+如何创建指定名称的公钥/私钥对呢？还是用 ssh-keygen 命令：
+
+::
+
+  $ ssh-keygen -f ~/.ssh/<filename>
+
+注：
+
+* 将 <filename> 替换为有意义的名称
+* 会在 ~/.ssh 目录下创建指定的公钥/私钥对
+  文件 <filename> 是私钥，文件 <filename>.pub 是公钥
+
+将新生成的公钥添加到远程主机的 .ssh/authorized_keys 文件中，建立新的公钥认证。例如:
+
+::
+
+  $ ssh-copy-id -i .ssh/<filename>.pub user@machine
+
+这样，就有两个公钥用于登录主机 machine，那么当执行下面的 ssh 登录指令，用到的是那个公钥呢？
+
+::
+
+  $ ssh user@machine
+
+当然是缺省公钥 ~/.ssh/id_rsa.pub 。那么如何用新建的公钥连接 machine 呢？
+
+SSH 的客户端配置文件 ~/.ssh/config 可以通过创建主机别名，在连接主机时，使用特定的公钥。例如 ~/.ssh/config 文件中的下列配置：
+
+::
+
+  host bj
+    user git
+    hostname 192.168.0.2
+    port 22
+    identityfile ~/.ssh/jiangxin
+
+当执行
+
+::
+
+  $ ssh bj
+
+或者执行
+
+::
+
+  $ git clone bj:path/to/repo.git
+
+
+含义为：
+
+* 登录的 SSH 主机为 192.168.0.2
+* 登录时使用的用户名为 git
+* 认证时使用的公钥文件为 ~/.ssh/jiangxin.pub
+
+
+
