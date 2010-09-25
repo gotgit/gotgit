@@ -1,2 +1,30 @@
 SVN用户到Git的转换
 ==================
+
+
+
+git-svn
+
+::
+
+  $ git ci --amend
+  $ git svn dcommit
+  Cannot dcommit with a dirty index.  Commit your changes first, or stash them with `git stash'.
+   at /usr/lib/git-core/git-svn line 499
+
+  $ git ci
+  # On branch master
+   nothing to commit (working directory clean)
+  $ git stash
+   No local changes to save
+  $ git svn dcommit
+  Committing to https://pysvnmanager.svn.sourceforge.net/svnroot/pysvnmanager/trunk ...
+        M       pysvnmanager/hooks/init/hook1.4/post-revprop-change
+        M       pysvnmanager/hooks/init/hook1.5/post-revprop-change
+  Committed r186
+        M       pysvnmanager/hooks/init/hook1.4/post-revprop-change
+        M       pysvnmanager/hooks/init/hook1.5/post-revprop-change
+  r186 = 87901ee211a87d2982132407cc19400457b70c61 (refs/remotes/branches/trunk)
+  No changes between current HEAD and refs/remotes/branches/trunk
+
+
