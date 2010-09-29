@@ -536,6 +536,8 @@ Gitolite 授权详解
 
 * repo 指令后面的版本库也可以用正则表达式定义的 `通配符版本库` 。
 
+  正则表达式匹配时，会自动在 `通配符版本库` 的前后加上前缀 `^` 和后缀 `$`。这一点和后面将介绍的正则引用（refex）完全不同。
+
   ::
 
     repo ossxp/.+
@@ -550,15 +552,23 @@ Gitolite 授权详解
 
    C, R, RW, RW+, RWC, RW+C, RWD, RW+D, RWCD, RW+CD 。
 
-* 权限后面包含一个可选的 ref 列表（正则表达式）
+* 权限后面包含一个可选的 ref（正则表达式）列表
 
-* 权限后面也可以包含一个以 NAME/ 开头的路径列表，进行基于路径的授权。
+  正则表达式格式的引用，简称正则引用（refex），对 Git 版本库的引用（分支，里程碑等）进行匹配。
+
+  如果在授权指令中省略正则引用，意味着对全部的 Git 引用（分支，里程碑等）都有效。
+
+  正则引用如果不以 `refs/` 开头，会自动添加 `refs/heads/` 作为前缀。
+
+  正则引用如果不以 `$` 结尾，意味着后面可以匹配任意字符，相当于添加 `.*$` 作为后缀。
+
+* 权限后面也可以包含一个以 `NAME/` 开头的路径列表，进行基于路径的授权。
 
 * 授权指令以等号（=）为标记分为前后两段，等号后面的是用户列表。
 
-  用户之间用空格分隔，可以使用用户组。
+  用户之间用空格分隔，并且可以使用用户组。
 
-不同的授权关键字有不同的含义，有的授权关键字只用在特定的场合。
+不同的授权关键字有不同的含义，有的授权关键字只用在 **特定** 的场合。
 
 * C
 
@@ -593,16 +603,29 @@ Gitolite 的授权非常强大也非常复杂，因此从版本库授权的实�
 
 ::
 
-  @admin = jiangxin
-  @dev   = dev1 dev2 dev3 badboy
-  @test  = test1 test2 test3
+  1  @admin = jiangxin
+  2  @dev   = dev1 dev2 badboy jiangxin
+  3  @test  = test1 test2
+  4
+  5  repo testing
+  6      R = @test
+  7      - = badboy
+  8      RW = @dev test1
+  9      RW+ = @admin
 
-  repo testing
-      R = @test
-      RW = @dev test1
-      W = dev4
-      RW+ = @admin
-      - = badboy
+说明：
+
+* 用户 `test1` 对版本库具有写的权限。
+
+  第8行定义了 test1 用户具有读写权限。
+
+* 用户 `jiangxin` 对版本库具有写的权限，并能强制PUSH。
+
+* 禁用指令，让用户 `badboy` 对版本库只具有读操作的权限。
+
+  虽然 badboy 属于 dev 用户组，并且第8条指令赋予 @dev 组写的权限，但是因为第7条的禁用指令，导致 `badboy` 只有读操作权限，而没有写操作。
+
+  注意：第 7 条指令不能限制 badboy 读取版本库，因为限制指令只在授权的第二阶段起作用，即只对写操作起作用。
 
 
 对 ref 的写授权
@@ -610,11 +633,39 @@ Gitolite 的授权非常强大也非常复杂，因此从版本库授权的实�
 
 * 分支的读写授权
 
+  授权文件：
+
+  ::
+
+    repo testing
+
+        ...
+
+        RW      refs/tags/v[0-9]        =   jiangxin 
+        -       refs/tags/v[0-9]        =   dev1 dev2 @others
+        RW      refs/tags/              =   jiangxin dev1 dev2 @others
+
+  - 用户 jiangxin 可以写任何里程碑，包括以 v 加上数字开头的里程碑。
+  - 用户 dev1, dev2 和 @others 组，只能写除了以 v 加上数字开头之外的其他里程碑。
+  - 其中以 `-` 开头的授权指令建立禁用规则。禁用规则只在授权的第二阶段有效，因此不能对用户的读取进行限制！
 
 * 分支的删除授权
 
 
+
 * 分支的创建授权
+
+
+最
+
+    #   RW      refs/tags/v[0-9]        =   junio
+        #   RW      refs/tags/              =   junio linus pasky @others
+
+# if you use "deny" rules, however, you can do this (a "deny" rule just uses
+# "-" instead of "R" or "RW" or "RW+" in the permission field)
+
+
+
 
 对路径的写授权
 ^^^^^^^^^^^^^^
@@ -697,6 +748,8 @@ Gitolite 维护的版本库位于安装用户主目录下的 repositories 目录
       RW                  = dev1 dev2
 
 管理员 jinagxin 可以创建路径符合正则表达式 "`ossxp/.+`" 的版本库，用户 dev1 和 dev2 对版本库具有读写（但是没有强制更新）权限。
+
+使用该方法创建版本库后，创建者的 uid 将被记录在版本库目录下的 gl-creator 文件中。该帐号具有对该版本库最高的权限。该通配符版本库的授权指令中如果出现 `CREATOR` 将被创建者的 uid 替换。
 
 * 本地建库
 
