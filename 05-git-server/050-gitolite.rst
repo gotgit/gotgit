@@ -536,7 +536,7 @@ Gitolite 授权详解
 
 * repo 指令后面的版本库也可以用正则表达式定义的 `通配符版本库` 。
 
-  正则表达式匹配时，会自动在 `通配符版本库` 的前后加上前缀 `^` 和后缀 `$`。这一点和后面将介绍的正则引用（refex）完全不同。
+  正则表达式匹配时，会自动在 `通配符版本库` 的前后加上前缀 `^` 和后缀 `$` 。这一点和后面将介绍的正则引用（refex）完全不同。
 
   ::
 
@@ -596,8 +596,8 @@ Gitolite 授权详解
 
 Gitolite 的授权非常强大也非常复杂，因此从版本库授权的实际案例来学习非常行之有效。
 
-版本库读写和rewind的授权
-^^^^^^^^^^^^^^^^^^^^^^^^
+对整个版本库进行授权
+^^^^^^^^^^^^^^^^^^^^
 
 授权文件如下：
 
@@ -617,61 +617,240 @@ Gitolite 的授权非常强大也非常复杂，因此从版本库授权的实�
 
 * 用户 `test1` 对版本库具有写的权限。
 
-  第8行定义了 test1 用户具有读写权限。
+  第6行定义了 `test1` 所属的用户组 `@test` 具有只读权限。第8行定义了 test1 用户具有读写权限。
+
+  Gitolite 的实现是读权限和写权限分别进行判断并汇总（并集），从而 `test1` 用户具有读写权限。
 
 * 用户 `jiangxin` 对版本库具有写的权限，并能强制PUSH。
 
+  第9行授权指令中的加号（+）含义是允许强制 PUSH。
+
 * 禁用指令，让用户 `badboy` 对版本库只具有读操作的权限。
 
-  虽然 badboy 属于 dev 用户组，并且第8条指令赋予 @dev 组写的权限，但是因为第7条的禁用指令，导致 `badboy` 只有读操作权限，而没有写操作。
+  第 7 条指令以减号（-）开始，是一条禁用指令。禁用指令只在授权的第二阶段起作用，即只对写操作起作用。
+  
+  该指令不能禁用 `badboy` 用户的读权限，在第8行的指令中， `badboy` 所在的 `@dev` 组拥有读取权限。但禁用规则会对写操作起作用，导致 `badboy` 只有读操作权限，而没有写操作。
 
-  注意：第 7 条指令不能限制 badboy 读取版本库，因为限制指令只在授权的第二阶段起作用，即只对写操作起作用。
+
+通配符版本库的授权
+^^^^^^^^^^^^^^^^^^
+
+授权文件如下：
+
+::
+
+  1  @administrators = jiangxin admin
+  2  @dev   = dev1 dev2 badboy
+  3  @test  = test1 test2
+  4
+  5  repo sandbox/.+$
+  6      C = @administrators
+  7      R = @test
+  8      - = badboy
+  9      RW = @dev test1
+
+这个授权文件中的版本库名称中使用了正则表达式，在 sandbox 下的任意版本库。
+
+.. tip::
+
+    正则表达式末尾的 `$` 有着特殊的含义，代表匹配字符串的结尾，明确告诉 Gitolite 这个版本库是通配符版本库。
+  
+    因为加号 `+` 既可以作为普通字符出现在版本库的命名中，又可以作为正则表达式中特殊含义的字符，如果 Gitolite 将授权文件中的通配符版本库误判为普通版本库，就会自动在服务器端创建该版本库，这是可能管理员不希望发生的。
+    
+    在版本库结尾添加一个 `$` 字符，就明确表示该版本库为正则表达式定义的通配符版本库。
+  
+    我修改了 Gitolite 的代码，能正确判断部分正则表达式，但是最好还是对简单的正则表达式添加 `^` 作为前缀，或者添加 `$` 作为后缀，避免误判。
 
 
-对 ref 的写授权
-^^^^^^^^^^^^^^^
+正则表达式定义的通配符版本库不会自动创建。需要管理员手动创建。
 
-* 分支的读写授权
+Gitolite 原来对通配符版本库的实现是克隆即创建，但是这样很容易因为录入错误导致错误的版本库意外被创建。群英汇改进的 Gitolite 需要通过 PUSH 创建版本库。
 
-  授权文件：
+以 `admin` 用户的身份创建版本库 `sandbox/repos1.git` 。
+
+::
+
+  $ git push git-admin-server:sandbox/repos1.git master
+
+创建完毕后，我们对各个用户的权限进行测试，会发现：
+
+* 用户 `admin` 对版本库具有写的权限。
+
+  这并不是因为第6行的授权指令为 `@administrators` 授予了 C 的权限。而是因为该版本库是由 `admin` 用户创建的，创建者具有对版本库完全的读写权限。
+  
+  服务器端该版本库目录自动生成的 `gl-creator` 文件记录了创建者 ID 为 `admin` 。
+
+* 用户 `jiangxin` 对版本库没有读写权限。
+
+  虽然用户 `jiangxin` 和用户 `admin` 一样都可以在 `sandbox/` 下创建版本库，但是由于 `sandbox/repos1.git` 已经存在并且不是 `jiangxin` 用户创建的，所以 `jiangxin` 用户没有任何权限，不能读写。
+
+* 和之前的例子相同的是：
+
+  - 用户 `test1` 对版本库具有写的权限。
+  - 禁用指令，让用户 `badboy` 对版本库只具有读操作的权限。
+
+* 版本库的创建者还可以使用 setperms 命令为版本库添加授权。具体用法参见下面的示例。
+
+用户创建自己的版本库
+^^^^^^^^^^^^^^^^^^^^
+
+授权文件如下：
+
+::
+
+  1  @administrators = jiangxin admin
+  2
+  3  repo users/CREATOR/.+$
+  4      C = @all
+  5      R = @administrators 
+
+说明：
+
+* 用户可以在自己的名字空间（ `/usrs/<userid>/` ）下，自己创建版本库。
 
   ::
 
-    repo testing
+    $ git push dev1@server:users/dev1/repos1.git master
 
-        ...
+* 设置管理员组对任何用户在 `users/` 目录下创建的版本库都有只读权限。
+* 用户可以使用 setperms 为自己的版本库进行二次授权
 
-        RW      refs/tags/v[0-9]        =   jiangxin 
-        -       refs/tags/v[0-9]        =   dev1 dev2 @others
-        RW      refs/tags/              =   jiangxin dev1 dev2 @others
+  ::
 
-  - 用户 jiangxin 可以写任何里程碑，包括以 v 加上数字开头的里程碑。
-  - 用户 dev1, dev2 和 @others 组，只能写除了以 v 加上数字开头之外的其他里程碑。
-  - 其中以 `-` 开头的授权指令建立禁用规则。禁用规则只在授权的第二阶段有效，因此不能对用户的读取进行限制！
+    $ ssh dev1@server setperms users/dev1/repos1.git
+    R = dev2
+    RW = jiangxin
+    ^D
 
-* 分支的删除授权
+  即在输入 setperms 命令后，进入一个编辑界面，输入 ^D（Ctrl+D）结束编辑。也可以使用输入重定向，先将授权写入文件再用 setperms 命令加载。
+
+* 用户可以使用 getperms 查看对自己版本库的授权
+
+  ::
+
+    $ ssh dev1@server getperms users/dev1/repos1.git
+    R = dev2
+    RW = jiangxin
+
+对引用的授权：传统模式
+^^^^^^^^^^^^^^^^^^^^^^
+
+传统的引用授权，指的是授权指令中不包含 `RWC`, `RWD`, `RWCD`, `RW+C`, `RW+D`, `RW+CD` 授权关键字，只采用 `RW`, `RW+` 的传统授权关键字。
+
+在只使用传统的授权关键字的情况下，有如下注意事项：
+
+* rewind 必须拥有 `+` 的授权。
+* 创建引用必须拥有 `W` 的授权。
+* 删除引用必须拥有 `+` 的授权。
+* 如果没有在授权指令中提供引用相关的参数，相当于提供 `refs/.*` 作为引用的参数，意味着对所有引用均有效。
+
+授权文件：
+
+::
+
+  1  @administrators = jiangxin admin
+  2  @dev   = dev1 dev2 badboy
+  3
+  4  repo test/repo1
+  5      RW+ = @administrators
+  6      RW master refs/heads/feature/ = @dev
+  7      R   = @test
+
+说明:
+
+* 第6条规则看似只对 master 和 `refs/heads/feature/*` 的引用授权，实际上 `@dev` 可以读取所有名字空间的引用。这是因为读取操作无法获得 ref 相关内容。
+
+  即用户组 `@dev` 的用户只能对 master 分支，以及以 `feature/` 开头的分支进行写操作，但不能强制 PUSH 和删除。至于其他分支和里程碑，则只能读不能写。
+
+* 版本库 `test/repo1`，管理员组用户 `jiangxin` 和 `admin` 可以任意创建和删除引用，并且可以强制 PUSH。
+
+* 至于用户组 `@test` 的用户，因为使用了 R 授权指令，所以不涉及到分支的写授权，因为认证的第一关就过不了。
+
+对引用的授权：扩展模式
+^^^^^^^^^^^^^^^^^^^^^^
+
+扩展模式的引用授权，指的是该版本库的授权指令出现了下列授权关键字中的一个或多个：`RWC`, `RWD`, `RWCD`, `RW+C`, `RW+D`, `RW+CD` 。
+
+* rewind 必须拥有 `+` 的授权。
+* 创建引用必须拥有 `C` 的授权。
+* 删除引用必须拥有 `D` 的授权。
+
+授权文件：
+
+::
+
+  repo test/repo2
+      RW+C = @administrators 
+      RW+  = @dev
+      RW   = @test
+
+  repo test/repo3
+      RW+CD = @administrators 
+      RW+C  = @dev
+      RW    = @test
 
 
+说明：
 
-* 分支的创建授权
+对于版本库 `test/repo2.git` ：
+
+* 用户组 `@administrators` 中的用户，具有创建和删除引用的权限，并且能强制 PUSH。
+* 用户组 `@dev` 中的用户，不能创建引用，但可以删除引用，以及可以强制 PUSH。
+* 用户组 `@test` 中的用户，可以 PUSH 到任何引用，但是不能创建引用，不能删除引用，也不能强制 PUSH。
+
+对于版本库 `test/repo3.git` ：
+
+* 用户组 `@administrators` 中的用户，具有创建和删除引用的权限，并且能强制 PUSH。
+* 用户组 `@dev` 中的用户，可以创建引用，并能够强制 PUSH，但不能删除引用，
+* 用户组 `@test` 中的用户，可以 PUSH 到任何引用，但是不能创建引用，不能删除引用，也不能强制 PUSH。
 
 
-最
+对引用的授权：禁用规则的使用
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    #   RW      refs/tags/v[0-9]        =   junio
-        #   RW      refs/tags/              =   junio linus pasky @others
+授权文件：
 
-# if you use "deny" rules, however, you can do this (a "deny" rule just uses
-# "-" instead of "R" or "RW" or "RW+" in the permission field)
+::
+
+  1  repo testing
+  
+         ...
+
+  12     RW      refs/tags/v[0-9]        =   jiangxin 
+  13     -       refs/tags/v[0-9]        =   dev1 dev2 @others
+  14     RW      refs/tags/              =   jiangxin dev1 dev2 @others
+
+说明：
+
+* 用户 jiangxin 可以写任何里程碑，包括以 v 加上数字开头的里程碑。
+* 用户 dev1, dev2 和 @others 组，只能写除了以 v 加上数字开头之外的其他里程碑。
+* 其中以 `-` 开头的授权指令建立禁用规则。禁用规则只在授权的第二阶段有效，因此不能对用户的读取进行限制！
 
 
+用户分支
+^^^^^^^^
 
+和创建用户空间的版本库类似，还可以在一个版本库内，允许管理自己名字空间下的分支。在正则引用的参数中出现的 `USER` 关键字会被替换为用户的 ID。
+
+授权文件：
+
+::
+
+  repo test/repo4
+      RW+CD = @administrators 
+      RW+CD refs/personal/USER/  = @all
+      RW+    master = @dev
+
+说明：
+
+* 用户组 `@administrators` 中的用户，对所有引用具有创建和删除引用的权限，并且能强制 PUSH。
+* 所有用户都可以在 `refs/personal/<userid>/` （自己的名字空间）下创建、删除引用。但是不能修改其他人的引用。
+* 用户组 `@dev` 中的用户，对 master 分支具有读写和强制更新的权限，但是不能删除。
 
 对路径的写授权
 ^^^^^^^^^^^^^^
 
-对通配符版本库的授权
-^^^^^^^^^^^^^^^^^^^^
+在正则引用的地方用 NAME/ 标识路径，进行路径的写授权。
 
 
 创建新版本库
