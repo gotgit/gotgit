@@ -80,6 +80,7 @@
 #######################
 
 .. include:: ./05-git-server/010-http.rst
+.. include:: ./05-git-server/015-gitweb.rst
 .. include:: ./05-git-server/020-git.rst
 .. include:: ./05-git-server/030-ssh.rst
 .. include:: ./05-git-server/040-gitosis.rst
