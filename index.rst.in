@@ -83,8 +83,8 @@
 .. include:: ./05-git-server/015-gitweb.rst
 .. include:: ./05-git-server/020-git.rst
 .. include:: ./05-git-server/030-ssh.rst
-.. include:: ./05-git-server/040-gitosis.rst
-.. include:: ./05-git-server/050-gitolite.rst
+.. include:: ./05-git-server/040-gitolite.rst
+.. include:: ./05-git-server/050-gitosis.rst
 .. include:: ./05-git-server/060-github-like.rst
 
 第六部分: 迁移到Git
