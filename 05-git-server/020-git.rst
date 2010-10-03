@@ -1,18 +1,66 @@
 Git 协议
 ========
 
-Git 提供一个名为 git-daemon 的服务软件，在 9418 端口上提供 Git 版本库的只读服务。
-虽然 git-daemon 也可以支持写操作，但因为 git-daemon 没有提供认证支持，因此没有人胆敢配置
-git-daemon 提供匿名的写服务。
+Git 软件包中自带一个名为 git-daemon 的服务软件，可以运行在 9418 端口上，提供 Git 版本库的只读服务。虽然 git-daemon 也可以支持写操作，但因为 git-daemon 没有提供认证支持，因此没有人胆敢配置 git-daemon 提供匿名的写服务。
 
-使用 git-daemon 是提供 Git 版本库只读服务，效率很高，而且在操作过程有进度显示，远比 HTTP 协议方便。
-因此成为开源 Git 版本库只读服务的首选。
+使用 git-daemon 提供 Git 版本库只读服务，效率很高，而且在操作过程有进度显示，远比 HTTP 哑通讯协议方便（Git 1.6.6 之后的版本已经支持智能 HTTP 通讯协议）。因此 git-daemon 很久一来，一直是 Git 版本库开放只读服务的首选。
 
-关于 git-dameon 的配置，参见： http://www.kernel.org/pub/software/scm/git/docs/git-daemon.html
+Git 软件包本身提供了 git-daemon，因此只要安装了 Git，一般就已经安装了 git-daemon。缺省 git-daemon 并没有运行，需要对其进行配置以服务方式运行。
 
-Git 协议（由 git-daemon 提供的服务）缺点：
+**最简单的方式，是以 inetd 服务方式运行。**
+
+可以运行在 inetd 服务器方式运行。在配置文件 `/etc/inetd.conf` 中添加设置如下:
+
+::
+
+  git stream tcp nowait nobody  /usr/bin/git
+      git daemon --inetd --verbose --export-all
+      /gitroot/foo /gitroot/bar
+
+说明：
+
+* 以 `nobody` 用户身份执行 git daemon 服务。
+
+* 缺省 git daemon 只对包含文件 `git-daemon-export-ok` 的版本库提供服务。使用参数 `--export-all` 后，无论版本库是否存在标识文件 `git-daemon-export-ok` ，都对版本库提供 git 访问服务。
+
+* 后面的两个参数是版本库。
+
+  也可以通过 `--base-path=<path>` 参数，设置版本库的根，对于这个目录下的所有版本库提供访问服务。例如下面的 inetd 配置：
+
+  ::
+
+    git stream tcp nowait nobody  /usr/bin/git
+        git daemon --inetd --verbose --export-all
+        --base-path=/var/cache /var/cache/git
+
+**通过 runit 提供服务**
+
+runit 是类似于 sysvinit 的服务管理进程，但是更简单。在 Debian/Ubuntu 上的软件包 `git-daemon-run` 就是基于 runit 启动 git-daemon 服务。
+
+* 安装 `git-daemon-run` ：
+
+  ::
+
+    $ sudo aptitude install git-daemon-run
+
+* 配置 `git-daemon-run` ：
+
+  缺省的服务配置文件： `/etc/sv/git-daemon/run` 。
+
+  ::
+
+    #!/bin/sh
+    exec 2>&1
+    echo 'git-daemon starting.'
+    exec chpst -ugitdaemon \
+      "$(git --exec-path)"/git-daemon --verbose --export-all --base-path=/var/cache /var/cache/git
+
+  和之前的 inetd 运行方式相比，以独立的服务进程启动，相应速度更快。
+
+缺省版本库中需要存在文件 `git-daemon-export-ok` ，git-daemon 才对此版本库提供服务。不过可以通过启动 git-daemon 时提供的参数 `--export-all` ，无论版本库是否存在标识文件 `git-daemon-export-ok` ，都对版本库提供 git 访问服务。
+
+通过 git-daemon 提供的 Git 访问协议存在这局限性：
 
 * 不支持认证。管理员大概可以做的只是配置防火墙，限制某个网段用户的使用。
 * 只能提供匿名的版本库读取服务。因为写操作没有授权控制，因此一般不用。
-
 

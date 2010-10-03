@@ -119,6 +119,7 @@ Gitweb 配置
   - 为每个tree 添加 snapshot 链接
 
     ::
+
       $feature{'pickaxe'}{'default'} = [1];
       $feature{'pickaxe'}{'override'} = 1;
       $feature{'snapshot'}{'default'} = ['zip', 'tgz'];
