@@ -1143,15 +1143,138 @@ Gitolite 的原始实现是通配符版本库的管理员在对不存在的版�
 除了钩子脚本要注意以外，还要确保服务器端版本库目录的权限和属主。
 
 
-版本库镜像
-----------
-TODO: 
+对 Gitolite 的改进
+------------------
 
-参见： `doc/mirroring.mkd`
+笔者对 Gitolite 进行扩展和改进，涉及到的内容主要包括：
+
+* 通配符版本库的创建方式和授权。
+
+  原来的实现是克隆即创建（克隆者需要被授予 C 的权限）。同时还要通过另外的授权语句为用户设置 RW 权限，否则创建者没有读和写权限。
+
+  新的实现是通过 PUSH 创建版本库（PUSH 者需要被授予 C 权限）。不必再为创建者赋予 RW 等权限，创建者自动具有对版本库最高的授权。
+
+* 避免通配符版本库误判。
+
+  通配符版本库误判，会导致在服务器端创建错误的版本库。新的设计还可以在通配符版本库的正则表达式前或后添加 `^` 或 `$` 字符，而不会造成授权文件编辑错误。
+
+* 改变缺省配置。
+
+  缺省安装即支持通配符版本库。
+
+* 版本库重定向。
+
+  Gitosis 的一个很重要的功能：版本库名称重定向，没有在 Gitolite 中实现。我们为 Gitolite 增加了这个功能。
+
+  在Git服务器架设的开始，版本库的命名可能非常随意，例如 redmine 的版本库直接放在根下，例如： `redmine-0.9.x.git`, `redmine-1.0.x.git`, ...  当 `redmine` 项目越来越复杂，可能就需要将其放在子目录下进行管理，例如放到 `ossxp/redmine/` 目录下。
+
+  只需要在 Gitolite 的授权文件中添加下面一行 map 语句，就可以实现版本库名称重定向。使用旧的地址的用户不必重新检出，可以继续使用。
+
+  ::
+
+    map (redmine.*) = ossxp/redmine/$1
+
+Gitolite 功能拓展
+------------------
+
+版本库镜像
+++++++++++
+
+Git 版本库控制系统往往并不需要设计特别的容灾备份，因为每一个Git用户就是一个备份。但是下面的情况，就很有必要考虑容灾了。
+
+* Git 版本库的使用者很少（每个库可能只有一个用户）。
+* 版本库检出只限制在办公区并且服务器也在办公区内（所有鸡蛋在一个篮子里）。
+* Git 版本库采用集中式的应用模型，需要建立双机热备（以便在故障出现时，实现快速的服务器切换）。
+
+Gitolite 提供了服务器间版本库同步的设置。原理是：
+
+* 主服务器通过配置文件 `~/.gitolite.rc` 中的变量 `$ENV{GL_SLAVES}` 设置镜像服务器的地址。
+* 从服务器通过配置文件 `~/.gitolite.rc` 中的变量 `$GL_SLAVE_MODE` 设置从服务器模式。
+* 从主服务器端运行脚本 `gl-mirror-sync` 可以实现批量的版本库镜像。
+* 主服务器的每一个版本库都配置 `post-receive` 钩子，一旦有提交，即时同步到镜像版本库。
+
+在多个服务器之间设置 Git 库镜像的方法是：
+
+* 每个服务器都要安装 Gitolite 软件，而且要启用 `post-receive` 钩子。
+
+  缺省的钩子在源代码的 `hooks/common` 目录下，名称为 `post-receive.mirrorpush` ，要将其改名为 `post-receive` 。否则版本库的 `post-receive` 脚本不能生效。
+
+* 主服务器配置到从服务器的公钥认证，并且配置使用特殊的 SHELL： `gl-mirror-shell` 。
+
+  这是因为主服务器在向从服务器同步版本库的时候，如果从服务器版本库没有创建，直接通过 SSH 登录到从服务器，执行创建命令。因此需要通过一个特殊的SHELL，能够同时支持 Gitolite 的授权访问以及 SHELL 环境。这个特殊的 SHELL 就是 `gl-mirror-shell` 。而且这个 SHELL，通过特殊的环境变量绕过服务器的权限检查，避免因为授权问题导致同步失败。
+
+  实际应用中，不光主服务器，每个服务器都进行类似设置，目的是主从服务器可能相互切换。
+
+  在 Gitolite 不同的安装模式下， `gl-mirror-shell` 的安装位置可能不同。下面的命令用于在服务器端设置其他服务器访问时使用这个特殊的 SHELL。
+
+  假设在服务器 foo 上，安装来自服务器 bar 和 baz 的公钥认证。公钥分别是 bar.pub 和 baz.pub。
+
+  - 对于在客户端安装方式部署的 Gitolite：
+
+    ::
+
+      # 在服务器 foo 上执行:
+      $ export GL_ADMINDIR=` cd $HOME;perl -e 'do ".gitolite.rc"; print $GL_ADMINDIR'`
+      $ cat bar.pub baz.pub |
+          sed -e 's,^,command="'$GL_ADMINDIR'/src/gl-mirror-shell" ,' >> ~/.ssh/authorized_keys
+
+  - 对于在服务器端安装方式部署的 Gitolite， `gl-mirror-shell` 直接就可以在路径中找到。
+
+    ::
+
+      # 在服务器 foo 上执行:
+      $ cat bar.pub baz.pub |
+          sed -e 's,^,command="'$(which gl-mirror-shell)'" ,' >> ~/.ssh/authorized_keys
+
+  在 foo 服务器上设置完毕，可以从服务器 bar 或者 baz 上远程执行：
+
+  - 执行命令后退出
+
+    ::
+
+      $ ssh git@foo pwd
+
+  - 进入 shell
+
+    ::
+
+      $ ssh git@foo bash -i
+
+* 在从服务器上设置配置文件 `~/.gitolite.rc` 。
+
+  进行如下设置后，将不允许用户直接 PUSH 到从服务器。但是主服务器仍然可以 PUSH 到从服务器，是因为主服务器版本库在 PUSH 到从服务器时，使用了特殊的环境变量，能够跳过从服务器版本库的 `update` 脚本。
+
+  ::
+
+    $GL_SLAVE_MODE = 1
+
+* 在主服务器上设置配置文件 `~/.gitolite.rc` 。
+
+  需要配置到从服务器的 SSH 连接，可以设置多个，用空格分隔。注意使用单引号，避免 @ 字符被 Perl 当作数组解析。
+
+  ::
+
+    $ENV{GL_SLAVES} = 'gitolite@bar gitolite@baz';
+
+* 在主服务器端执行 `gl-mirror-sync` 进行一次完整的数据同步。
+
+  需要以 Gitolite 安装用户身份（如git）执行。例如在服务器 foo 上执行到从服务器 bar 的同步。
+
+  ::
+
+    $ gl-mirror-sync gitolite@bar
+
+* 之后，每当用户向主版本库同步，都会通过版本库的 `post-receive` 钩子即时同步到从版本库。
+
+* 主从版本库的切换。
+
+  切换非常简单，就是修改 `~/.gitolite.rc` 配置文件，修改 `$GL_SLAVE_MODE` 设置：主服务器设置为 0，从服务器设置为1。 
 
 
 Gitweb 和 Gitdaemon 支持
-------------------------
+++++++++++++++++++++++++
+
+Gitweb 
 TODO:
 
   * for daemon, create the file `git-daemon-export-ok` in the repository
@@ -1200,7 +1323,7 @@ There is also a special user called gitweb to specify gitweb access; useful if y
 Remember gitolite lets you specify the access control specs in bits and pieces, so you can keep all the daemon/gitweb access in one place, even if each repo has more specific branch-level access config specified elsewhere. Here's an example, using really short reponames because I'm lazy:
 
 setting a gitweb description for a wildcard-matched repo
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Similar to the getperm/setperm commands, there are the getdesc/setdesc commands, thanks to Teemu.
 
@@ -1260,51 +1383,12 @@ Of course some other authentication method can be used (e.g. mod_ldap) as long a
 Gitweb allows you to specify a subroutine to decide on access. We use that feature and tie it to gitolite. Configuration example can be found in contrib/gitweb/.
 
 
-对 Gitolite 的改进
-------------------
-
-笔者对 Gitolite 进行扩展和改进，涉及到的内容主要包括：
-
-* 通配符版本库的创建方式和授权。
-
-  原来的实现是克隆即创建（克隆者需要被授予 C 的权限）。同时还要通过另外的授权语句为用户设置 RW 权限，否则创建者没有读和写权限。
-
-  新的实现是通过 PUSH 创建版本库（PUSH 者需要被授予 C 权限）。不必再为创建者赋予 RW 等权限，创建者自动具有对版本库最高的授权。
-
-* 避免通配符版本库误判。
-
-  通配符版本库误判，会导致在服务器端创建错误的版本库。新的设计还可以在通配符版本库的正则表达式前或后添加 `^` 或 `$` 字符，而不会造成授权文件编辑错误。
-
-* 改变缺省配置。
-
-  缺省安装即支持通配符版本库。
-
-* 版本库重定向。
-
-  Gitosis 的一个很重要的功能：版本库名称重定向，没有在 Gitolite 中实现。我们为 Gitolite 增加了这个功能。
-
-  在Git服务器架设的开始，版本库的命名可能非常随意，例如 redmine 的版本库直接放在根下，例如： `redmine-0.9.x.git`, `redmine-1.0.x.git`, ...  当 `redmine` 项目越来越复杂，可能就需要将其放在子目录下进行管理，例如放到 `ossxp/redmine/` 目录下。
-
-  只需要在 Gitolite 的授权文件中添加下面一行 map 语句，就可以实现版本库名称重定向。使用旧的地址的用户不必重新检出，可以继续使用。
-
-  ::
-
-    map (redmine.*) = ossxp/redmine/$1
-
-Gitolite 参考
--------------
+其他功能拓展和参考
+++++++++++++++++++
 
 Gitolite 源码的 doc 目录包含用 `markdown` 标记语言编写的手册，可以直接在 `Github` 上查看。也可以使用 `markdown` 的文档编辑工具将 `.mkd` 文档转换为 html 文档。转换工具很多，有：rdiscount, Bluefeather, Maruku, BlueCloth2 等等。
 
 在这些参考文档中，你可以发现 Gitolite 包含的更多的小功能或者秘籍，包括：
-
-* 自定义钩子脚本。
-
-  因为 Gitolite 占用了几个钩子脚本，如果需要对同名钩子进行扩展，Gitolite 提供了级联的钩子脚本，将定制放在级联的钩子脚本里。
-
-  例如：通过自定义 gitolite-admin 的 post-update.secondary 脚本，以实现无需登录服务器，更改 `.gitolite.rc` 文件。参见： `doc/shell-games.mkd` 。
-
-  关于钩子脚本的创建和维护，参见： `doc/hook-propagation.mkd` 。
 
 * 版本库设置。
 
@@ -1321,6 +1405,20 @@ Gitolite 源码的 doc 目录包含用 `markdown` 标记语言编写的手册，
 * 多级管理员授权。
 
   可以为不同版本库设定管理员，操作 gitolite-admin 库的部分授权文件。参见： `doc/5-delegation.mkd` 。
+
+* 自定义钩子脚本。
+
+  因为 Gitolite 占用了几个钩子脚本，如果需要对同名钩子进行扩展，Gitolite 提供了级联的钩子脚本，将定制放在级联的钩子脚本里。
+
+  例如：通过自定义 gitolite-admin 的 post-update.secondary 脚本，以实现无需登录服务器，更改 `.gitolite.rc` 文件。参见： `doc/shell-games.mkd` 。
+
+  关于钩子脚本的创建和维护，参见： `doc/hook-propagation.mkd` 。
+
+* 管理员自定义命令。
+
+  通过设置配置文件中的 `$GL_ADC_PATH` 变量，在远程执行该目录下的可执行脚本，如: `rmrepo` 。
+
+  具体参考： `doc/admin-defined-commands.mkd` 。
 
 * 创建匿名 SSH 认证。
 
