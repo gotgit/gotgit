@@ -32,9 +32,11 @@ Gitolite 的实现机制概括如下：
 
     ::
 
-      command="/home/git/.gitolite/src/gl-auth-command jiangxin",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-rsa AAAAB3N...
+      command="/home/git/.gitolite/src/gl-auth-command jiangxin",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-rsa <公钥内容来自于 jiangxin.pub ...>
 
-  - 更新服务器端的授权文件
+  - 更新服务器端的授权文件 `~/.gitolite/conf/gitolite.conf`
+
+  - 编译授权文件 `~/.gitolite/conf/gitolite.conf-compiled.pm`
 
 * 用户可以用 git 命令访问授权的版本库
 
@@ -99,7 +101,7 @@ Gitolite 安装可以在客户端执行，而不需要在服务器端操作，�
 
   ::
 
-    $ git clone git@github.com:ossxp-com/gitolite.git
+    $ git clone git://github.com/ossxp-com/gitolite.git
 
 * 进入 gitolite/src 目录，执行安装。
 
@@ -289,7 +291,7 @@ Gitolite 安装可以在客户端执行，而不需要在服务器端操作，�
 
     ::
 
-      $ git clone git@github.com:ossxp-com/gitolite.git
+      $ git clone git://github.com/ossxp-com/gitolite.git
 
     创建目录。
 
@@ -463,12 +465,23 @@ Gitolite 安装可以在客户端执行，而不需要在服务器端操作，�
     remote:         the following users (pubkey files in parens) do not appear in the config file:
     remote: dev1(dev1.pub),dev2(dev2.pub),jiangxin(jiangxin.pub)
 
-在执行 git push 后的输出中，以 remote 标识的输出是服务器端执行 `post-update` 钩子脚本的输出。其中的警告是说新添加的三个用户在授权文件中没有被引用。接下来我们便看看如何修改授权文件，以及如何为用户添加授权。
+如果我们这时查看服务器端 ~git/.ssh/authorized_keys 文件，会发现新增的用户公钥也附加其中：
+
+::
+
+  # gitolite start
+  command="/home/git/.gitolite/src/gl-auth-command admin",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty    <用户admin的公钥...>
+  command="/home/git/.gitolite/src/gl-auth-command dev1",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty     <用户dev1的公钥...>
+  command="/home/git/.gitolite/src/gl-auth-command dev2",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty     <用户dev2的公钥...>
+  command="/home/git/.gitolite/src/gl-auth-command jiangxin",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty <用户jiangxin的公钥...>
+  # gitolite end
+
+在之前执行 git push 后的输出中，以 remote 标识的输出是服务器端执行 `post-update` 钩子脚本的输出。其中的警告是说新添加的三个用户在授权文件中没有被引用。接下来我们便看看如何修改授权文件，以及如何为用户添加授权。
 
 更改授权
 +++++++++
 
-新用户添加完毕，可能需要重新进行授权。更改授权的方法也非常简单，即修改 conf/gitolite.cong 配置文件，提交并 push。
+新用户添加完毕，可能需要重新进行授权。更改授权的方法也非常简单，即修改 conf/gitolite.conf 配置文件，提交并 push。
 
 * 管理员进入 gitolite-admin 本地克隆版本库中，编辑 conf/gitolite.conf 。
 
