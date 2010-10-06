@@ -137,7 +137,7 @@ Gitosis 服务初始化，就是初始化一个 gitosis-admin 库，并为管理
 
 * 确保 gitosis-admin 版本库的钩子脚本可执行。
 
-    $ sudo chmod 755 ~git/repositories/gitosis-admin.git/hooks/post-update
+    $ sudo chmod a+x ~git/repositories/gitosis-admin.git/hooks/post-update
 
 管理 Gitosis
 --------------
@@ -204,7 +204,7 @@ Gitosis 服务初始化，就是初始化一个 gitosis-admin 库，并为管理
 
   - 用户从不同的客户端主机访问有着不同的公钥，如果希望使用同一个用户名进行授权，可以按照 `username@host.pub` 方式命名公钥文件，和名为 `username@pub` 的公钥指向同一个用户 `username` 。
   
- -  也支持邮件地址格式的公钥，即形如 `username@gmail.com.pub` 的公钥。Gitosis 能够很智能的区分是以邮件地址命名的公钥还是相同用户在不同主机上的公钥。如果是邮件地址命名的公钥，将以整个邮件地址作为用户名。
+  - 也支持邮件地址格式的公钥，即形如 `username@gmail.com.pub` 的公钥。Gitosis 能够很智能的区分是以邮件地址命名的公钥还是相同用户在不同主机上的公钥。如果是邮件地址命名的公钥，将以整个邮件地址作为用户名。
 
 * 管理员进入 gitosis-admin 本地克隆版本库中，复制新用户公钥到 keydir 目录。
 
@@ -335,6 +335,7 @@ Gitosis 缺省设置
   3  #loglevel=DEBUG
   4  gitweb = yes
   5  daemon = yes
+  6  generate-files-in = /home/git/gitosis
 
 其中：
 
@@ -351,6 +352,11 @@ Gitosis 缺省设置
 * 第5行，启用 git-daemon 的整合。
 
   即新创建的版本库中，创建文件 `git-daemon-export-ok` 。
+
+* 第6行，设置创建的项目列表文件（供 gitweb 使用）所在的目录。
+
+  缺省即为安装用户的主目录下的 gitosis 目录。
+
 
 管理版本库 gitosis-admin
 +++++++++++++++++++++++++
@@ -370,7 +376,7 @@ Gitosis 缺省设置
 定义用户组和授权
 +++++++++++++++++
 
-下面的两个示例小节定义了两个用户组，并且用到了路径变幻的指令。
+下面的两个示例小节定义了两个用户组，并且用到了路径变换的指令。
 
 ::
 
@@ -399,7 +405,7 @@ Gitosis 缺省设置
 
 * 第2行，设定该用户组包含用户 jiangxin 以及用户组 @gitosis-admin 的所有用户。
 
-* 第3行，设定该用户组可以创建及读写和通配符 ossxp/** 匹配的版本库。
+* 第3行，设定该用户组具有创建及读写与通配符 ossxp/** 匹配的版本库。
 
   两个星号匹配任意字符包括路径分隔符（/）。此功能属于笔者扩展的功能。
 
@@ -409,7 +415,7 @@ Gitosis 缺省设置
 
 * 第5行，是 Gitosis 特有的版本库名称重定位功能。
 
-  即对 redmine-* 匹配的版本库，先经过名称重定位，在名称前面加上 `ossxp/remdine` 。其中 \1 命中的版本库名称。
+  即对 redmine-* 匹配的版本库，先经过名称重定位，在名称前面加上 `ossxp/remdine` 。其中 \\1 代表匹配的整个版本库名称。
 
   用户组 @ossxp-admin 的用户对于重定位后的版本库，具有 admin （创建和读写）权限。
 
@@ -428,102 +434,49 @@ Gitosis 缺省设置
 Gitweb 整合
 +++++++++++
 
-当在 [gitosis] 小节中启用 Gitweb 整合后，就可以通过 [repo name] 小节设置版本库和 gitweb 的整合。
+Gitosis 和 Gitweb 的整合，提供了两个方面的内容。一个是可以设置版本库的描述信息，用于在 gitweb 的项目列表页面显示。另外一个是自动生成项目的列表文件供 Gitweb 参卡，避免 Gitweb 使用效率低的目录递归搜索查找 Git 版本库列表。
 
 
+例如在 gitosis.conf 中下面的配置用于对 redmine-1.0.x 版本库的 Gitweb 整合进行设置。
 
-版本库授权案例
----------------
+::
 
-Gitosis 的授权非常强大也非常复杂，因此从版本库授权的实际案例来学习非常行之有效。
+  1  [repo ossxp/redmine/redmine-1.0.x]
+  2  gitweb = yes
+  3  owner = Jiang Xin
+  4  description = Redmine 1.0.x 群英汇定制开发
 
-其他人可以读取我的版本库
-+++++++++++++++++++++++++
+* 第1行，repo 小节用于设置版本库的 Gitweb 整合。
 
+  版本库的实际路径是用版本库缺省的根（即在 [gitosis] 小节中定义的或者缺省的）加上此小节中的版本库路径组合而成的。
 
-Gistore 内置的 Git 服务
-+++++++++++++++++++++++++
+* 第2行，启用 Gitweb 整合。如果省略，使用全局 [gitosis] 小节中 gitweb 的设置。
 
+* 第3行，用于设置版本库的属主。
+
+* 第4行，用于设置版本库的描述信息，显示在 Gitweb 的版本库列表中。
+
+每一个 repo 小节所指向的版本库，如果启用了 Gitweb 选项，则版本库名称汇总到一个项目列表文件中。该项目列表文件缺省保存在 `~/gitosis/projects.list` 中。
 
 
 创建新版本库
 -------------
 
-Gitosis 维护的版本库位于安装用户主目录下的 repositories 目录中，即如果安装用户为 `git` ，则版本库都创建在 /home/git/repositories 目录之下。可以通过配置文件 .gitosis.rc 修改缺省的版本库的根路径。
+Gitosis 维护的版本库位于安装用户主目录下的 repositories 目录中，即如果安装用户为 `git` ，则版本库都创建在 /home/git/repositories 目录之下。可以通过配置文件 gitosis.conf 修改缺省的版本库的根路径。
 
-::
+可以直接在服务器端创建，或者在客户端远程创建版本库。
 
-  $REPO_BASE="repositories";
+**克隆即创建，还是PUSH即创建？**
 
+在客户端远程创建版本库时，Gitosis 的原始实现是对版本库具有 writable （读写）权限的用户，对不存在的版本库执行克隆操作时，自动创建。但是我认为这不是一个好的实践，会经常因为克隆的 URL 写错，导致在服务器端创建垃圾版本库。笔者改进的实现如下：
 
-有多种创建版本库的方式。一种是在授权文件中用 repo 指令设置版本库（未使用正则表达式的版本库）的授权，当对 gitosis-admin 版本库执行 git push 操作，自动在服务端创建新的版本库。另外一种方式是在授权文件中用正则表达式定义的版本库，不会即时创建，而是被授权的用户在远程创建后PUSH到服务器上完成创建。
+* 增加了名为 admin（或 init）的授权指令，只有具有此授权的用户，才能够创建版本库。
+* 只具有 writable（或 write）权限的用户，不能在服务器上创建版本库。
+* 不通过克隆创建版本库，而是在对版本库进行 PUSH 的时候进行创建。当克隆一个不存在的版本库，会报错退出。
 
-注意，在授权文件中创建的版本库名称不要带 .git 后缀，在创建版本库过程中会自动在版本库后面追加 .git 后缀。
+远程在服务器上创建版本库的方法如下：
 
-在配置文件中出现的版本库，即时生成
-++++++++++++++++++++++++++++++++++
-
-我们尝试在授权文件 `gitosis.conf` 中加入一段新的版本库授权指令，而这个版本库尚不存在。新添加到授权文件中的内容：
-
-::
-
-  repo testing2
-      RW+                 = @all
-
-然后将授权文件的修改提交并 PUSH 到服务器，我们会看到授权文件中添加新授权的版本库 testing2 被自动创建。
-
-::
-
-  $ git push
-  Counting objects: 7, done.
-  Delta compression using up to 2 threads.
-  Compressing objects: 100% (3/3), done.
-  Writing objects: 100% (4/4), 375 bytes, done.
-  Total 4 (delta 1), reused 0 (delta 0)
-  remote: Already on 'master'
-  remote: creating testing2...
-  remote: Initialized empty Git repository in /home/git/repositories/testing2.git/
-  To gitadmin.bj:gitosis-admin.git
-     278e54b..b6f05c1  master -> master
-
-注意其中带 remote 标识的输出，我们看到版本库 testing2.git 被自动初始化了。
-
-此外使用版本库组的语法（即用 @ 创建的组，用作版本库），也会被自动创建。例如下面的授权文件片段设定了一个包含两个版本库的组 `@testing` ，当将新配置文件 PUSH 到服务器上的时候，会自动创建 `testing3.git` 和 `testing4.git` 。
-
-::
-
-  @testing = testing3 testing4
-   
-  repo @testing
-      RW+                 = @all
-
-还有一种版本库语法，是用正则表达式定义的版本库，这类版本库因为所指的版本库并不确定，因此不会自动创建。
-
-
-通配符版本库，管理员通过push创建
-+++++++++++++++++++++++++++++++++
-
-通配符版本库是用正则表达式语法定义的版本库，所指的非某一个版本库而是和名称相符的一组版本库。首先要想使用通配符版本库，需要在服务器端安装用户（如 `git` ）用户的主目录下的配置文件 `.gitosis.rc` 中，包含如下配置：
-
-::
-
-  $GL_WILDREPOS = 1;
-
-使用通配符版本库，可以对一组版本库进行授权，非常有效。但是版本库的创建则不像前面介绍的那样，不会在授权文件 PUSH 到服务器时创建，而是拥有版本库创建授权（C）的用户手工进行创建。
-
-对于用通配符设置的版本库，用 C 指令指定能够创建此版本库的管理员（拥有创建版本库的授权）。例如：
-
-::
-
-  repo ossxp/.+
-      C                   = jiangxin
-      RW                  = dev1 dev2
-
-管理员 jinagxin 可以创建路径符合正则表达式 "`ossxp/.+`" 的版本库，用户 dev1 和 dev2 对版本库具有读写（但是没有强制更新）权限。
-
-使用该方法创建版本库后，创建者的 uid 将被记录在版本库目录下的 gl-creator 文件中。该帐号具有对该版本库最高的权限。该通配符版本库的授权指令中如果出现 `CREATOR` 将被创建者的 uid 替换。
-
-* 本地建库
+* 首先，本地建库。
 
   ::
 
@@ -532,11 +485,11 @@ Gitosis 维护的版本库位于安装用户主目录下的 repositories 目录�
      $ git init 
      $ git commit --allow-empty
 
-* 使用 git remote 指令添加远程的源
+* 使用 git remote 指令添加远程的源。
 
   ::
 
-     $ git remote add origin jiangxin@server:ossxp/somerepo.git
+     $ git remote add origin git@server:ossxp/somerepo.git
 
 * 运行 git push 完成在服务器端版本库的创建
 
@@ -544,66 +497,41 @@ Gitosis 维护的版本库位于安装用户主目录下的 repositories 目录�
 
      $ git push origin master
 
-**克隆即创建，还是PUSH即创建？**
 
-Gitosis 的原始实现是通配符版本库的管理员在对不存在的版本库执行 clone 操作时，自动创建。但是我认为这不是一个好的实践，会经常因为 clone 的 URL 写错，导致在服务器端创建垃圾版本库。因此我重新改造了 gitosis 通配符版本库创建的实现，改为在对版本库进行 PUSH 的时候进行创建，而 clone 一个不存在的版本库，会报错退出。
+轻量级管理的 Git 服务
++++++++++++++++++++++
 
+轻量级管理的含义是不采用缺省的稍显复杂的管理模式（远程克隆 gitosis-admin 库，修改并 PUSH 的管理模式），而是直接在服务器端通过预先定制的配置文件提供 Git 服务。这种轻量级管理模式，对于为某些应用建立快速的 Git 库服务提供了便利。
 
-直接在服务器端创建
-+++++++++++++++++++
-
-当版本库的数量很多的时候，在服务器端直接通过 git 命令创建或者通过复制创建可能会更方便。但是要注意，在服务器端手工创建的版本库和 Gitosis 创建的版本库最大的不同在于钩子脚本。如果不能为手工创建的版本库正确设定版本库的钩子，会导致失去一些 Gitosis 特有的功能。例如：失去分支授权的功能。
-
-一个由 Gitosis 创建的版本库，hooks 目录下有三个钩子脚本实际上链接到 gitosis 安装目录下的相应的脚本文件中：
+首先创建一个专用帐号，并设置该用户只能执行 gitosis-serve 命令。例如创建帐号 gistore，通过修改 /etc/ssh/sshd_config 配置文件，实现限制该帐号登录的可执行命令。
 
 ::
 
-  gitosis-hooked -> /home/git/.gitosis/hooks/common/gitosis-hooked
-  post-receive.mirrorpush -> /home/git/.gitosis/hooks/common/post-receive.mirrorpush
-  update -> /home/git/.gitosis/hooks/common/update
+  Match user gistore
+      ForceCommand gitosis-serve gistore
+      X11Forwarding no
+      AllowTcpForwarding no
+      AllowAgentForwarding no
+      PubkeyAuthentication yes
+      #PasswordAuthentication no
 
-那么手工在服务器上创建的版本库，有没有自动更新钩子脚本的方法呢？
+上述配置信息告诉 SSH 服务器，凡是以 gistore 用户登录的帐号，强制执行 Gitosis 的命令。
 
-有，就是重新执行一遍 gitosis 的安装，会自动更新版本库的钩子脚本。安装过程一路按回车即可。
+然后，在该用户的主目录下创建一个配置文件 `.gitosis.conf` （注意文件名前面的点号），如下：
 
 ::
 
-  $ cd gitosis/src
-  $ ./gl-easy-install git 192.168.0.2 admin
+  [gitosis]                                                                                                                                                   
+  repositories = /etc/gistore/tasks
+  gitweb = yes
+  daemon = no
 
+  [group gistore]
+  members = gistore
+  map readonly * = (.*):\1/repo
 
-除了钩子脚本要注意以外，还要确保服务器端版本库目录的权限和属主。
+上述配置的含义是：
 
-
-对 Gitosis 的改进
-------------------
-
-笔者对 Gitosis 进行扩展和改进，涉及到的内容主要包括：
-
-* 通配符版本库的创建方式和授权。
-
-  原来的实现是克隆即创建（克隆者需要被授予 C 的权限）。同时还要通过另外的授权语句为用户设置 RW 权限，否则创建者没有读和写权限。
-
-  新的实现是通过 PUSH 创建版本库（PUSH 者需要被授予 C 权限）。不必再为创建者赋予 RW 等权限，创建者自动具有对版本库最高的授权。
-
-* 避免通配符版本库误判。
-
-  通配符版本库误判，会导致在服务器端创建错误的版本库。新的设计还可以在通配符版本库的正则表达式前或后添加 `^` 或 `$` 字符，而不会造成授权文件编辑错误。
-
-* 改变缺省配置。
-
-  缺省安装即支持通配符版本库。
-
-* 版本库重定向。
-
-  Gitosis 的一个很重要的功能：版本库名称重定向，没有在 Gitosis 中实现。我们为 Gitosis 增加了这个功能。
-
-  在Git服务器架设的开始，版本库的命名可能非常随意，例如 redmine 的版本库直接放在根下，例如： `redmine-0.9.x.git`, `redmine-1.0.x.git`, ...  当 `redmine` 项目越来越复杂，可能就需要将其放在子目录下进行管理，例如放到 `ossxp/redmine/` 目录下。
-
-  只需要在 Gitosis 的授权文件中添加下面一行 map 语句，就可以实现版本库名称重定向。使用旧的地址的用户不必重新检出，可以继续使用。
-
-  ::
-
-    map (redmine.*) = ossxp/redmine/$1
-
+* 用户 gistore 才能够访问 /etc/gistore/tasks 下的 Git 库。
+* 版本库的名称要经过变换，例如 system 库会变换为实际路径 `/etc/gistore/tasks/system/repo.git` 。
 
