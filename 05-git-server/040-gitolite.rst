@@ -1287,114 +1287,31 @@ Gitolite 提供了服务器间版本库同步的设置。原理是：
 Gitweb 和 Gitdaemon 支持
 ++++++++++++++++++++++++
 
-Gitweb 
-TODO:
+Gitolite 和 git-daemon 的整合很简单，就是在版本库目录中创建一个空文件 `git-daemon-export-ok` 。
 
-  * for daemon, create the file `git-daemon-export-ok` in the repository
-  * for gitweb, add the repo (plus owner name, if given) to the list of
-    projects to be served by gitweb (see the config file variable
-    `$PROJECTS_LIST`, which should have the same value you specified for
-    `$projects_list` when setting up gitweb)
-  * put the description, if given, in `$repo/description`
+Gitolite 和 Gitweb 的整合，则提供了两个方面的内容。一个是可以设置版本库的描述信息，用于在 gitweb 的项目列表页面显示。另外一个是自动生成项目的列表文件供 Gitweb 参卡，避免 Gitweb 使用效率低的目录递归搜索查找 Git 版本库列表。
 
-
-This is a feature that I personally do not use (corporate environments don't like unauthenticated access of any kind to any repo!), but someone wanted it, so here goes.
-
-To make a repo or repo group accessible via "git daemon", just give read permission to the special user "daemon". See the faq, tips, etc document for easy ways to specify access for multiple repositories.
-
-There's a special user called "gitweb" also, which works the same way. However, setting a description for the project also enables gitweb permissions so you may as well use that method and kill two birds with one stone, like so:
-
-gitolite = "fast, secure, access control for git in a corporate environment"
-
-You can also specify an owner for gitweb to show, if you like:
-
-gitolite "Sitaram Chamarty" = "fast, secure, access control for git in a corporate environment"
-
-Note that gitolite does not install or configure gitweb/daemon -- that is a one-time setup you must do separately. All this does is:
-
-    * for daemon, create the file git-daemon-export-ok in the repository
-    * for gitweb, add the repo (plus owner name, if given) to the list of projects to be served by gitweb (see the config file variable $PROJECTS_LIST, which should have the same value you specified for $projects_list when setting up gitweb)
-    * put the description, if given, in $repo/description
-
-The "compile" script will keep these files consistent with the config settings -- this includes removing such settings/files if you remove "read" permissions for the special usernames or remove the description line.
-
-
-easier to specify gitweb "description" and gitweb/daemon access
-
-To enable access to a repo via gitweb and create a "description" for it to show up on the webpage, just add a line like this, anywhere in the config file:
-
-reponame = "one line of description"
-
-You can also specify an "owner":
-
-reponame "owner name" = "one line of description"
-
-To enable access to one or more repos via git daemon, just give "read" permissions to the special username daemon.
-
-There is also a special user called gitweb to specify gitweb access; useful if you don't care about specifying individual descriptions for each repo and just want to quickly enable gitweb access to one or more repos.
-
-Remember gitolite lets you specify the access control specs in bits and pieces, so you can keep all the daemon/gitweb access in one place, even if each repo has more specific branch-level access config specified elsewhere. Here's an example, using really short reponames because I'm lazy:
-
-setting a gitweb description for a wildcard-matched repo
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Similar to the getperm/setperm commands, there are the getdesc/setdesc commands, thanks to Teemu.
-
-
-**在授权文件中，为 gitweb, gitdaemon 授权**
-
-难道 gitweb 和 gitdaemon 支持远程版本库？
+可以在授权文件中设定版本库的描述信息，并在 gitolite-admin 管理库更新时创建到版本库的 description 文件中。
 
 ::
 
-  # maybe near the top of the file, for ease of access:
+  reponame = "one line of description"
+  reponame "owner name" = "one line of description"
 
-  @only_web       = r1 r2 r3
-  @only_daemon    = r4 r5 r6
-  @web_and_daemon = r7 r8 r9
+* 第1行，为名为 `reponame` 的版本库设定描述。
+* 第1行，同时设定版本库的属主名称，和一行版本库描述。
 
-  repo @only_web
-      R   = gitweb
-  repo @only_daemon
-      R   = daemon
-  repo @web_and_daemon
-      R   = gitweb
-      R   = daemon
+对于通配符版本库，使用这种方法则很不现实。Gitolite 提供了 SSH 子命令，供版本库的创建者使用。
 
-  # ...maybe much later in the file:
+::
 
-  repo r1
-      # normal developer access lists for r1 and its branches/tags in the
-      # usual way
+  $ ssh git@server setdesc description...
+  $ ssh git@server getdesc
 
-  repo r2
-  # ...and so on...
+* 第一条指令用于设置版本库的描述信息。
+* 第二条指令显示版本库的描述信息。
 
-
-
-**Gitweb 的 http 授权整合**
-
-easier to link gitweb authorisation with gitolite
-
-Over and above whether a repo is even shown by gitweb, you may want to further restrict people, allowing them to view only those repos for which they have been given read access by gitolite.
-
-This requires that:
-
-    * you have to have some sort of HTTP auth on your web server (out of my scope, sorry!)
-    * the HTTP auth should use the same username (like "sitaram") as used in the gitolite config (for the corresponding user)
-
-Normally a superuser sets up passwords for users using the "htpasswd" command, but this is an administrative chore.
-
-Robin Smidsrød had the great idea that, since each user already has pubkey access to git@server, this gives us a very neat way of using gitolite to let the users manage their own HTTP passwords. Here's how:
-
-    * setup apache so that the htaccess file it looks for is owned by the "git" user
-    * in the ~/.gitolite.rc file, look for the variable $HTPASSWD_FILE and point it to this file
-    * tell your users to type in ssh git@server htpasswd to set or change their HTTP passwords
-
-Of course some other authentication method can be used (e.g. mod_ldap) as long as the usernames match.
-
-Gitweb allows you to specify a subroutine to decide on access. We use that feature and tie it to gitolite. Configuration example can be found in contrib/gitweb/.
-
+至于生成 Gitweb 所用的项目列表文件，缺省创建在用户主目录下的 `projects.list` 文件中。对于所有启用 Gitweb 的 [repo] 小节设定的版本库，或者通过版本库描述隐式声明的版本库加入到版本库列表中。
 
 其他功能拓展和参考
 ++++++++++++++++++
@@ -1457,4 +1374,4 @@ Gitolite 源码的 doc 目录包含用 `markdown` 标记语言编写的手册，
 
   如果在同一个服务器上以 svn+ssh 方式运行 Subversion 服务器，可以使用同一套公钥，同时为用户提供 Git 和 Subversion 服务。
 
-* SSH 问题诊断
+* HTTP 口令文件维护。通过 htpasswd SSH 子命令实现。
