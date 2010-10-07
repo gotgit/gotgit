@@ -1,0 +1,25 @@
+词语翻译
+========
+
+ref
+
+
+
+参考资料
+========
+
+
+
+
+http://www.pcworld.idg.com.au/article/129776/after_controversy_torvalds_begins_work_git_/
+
+* Though BitMover allowed Linux developers to use a free version of its software for kernel development, the company was unhappy with efforts by developer Andrew Tridgell to develop an open source version of the BitKeeper client.
+
+* Linus Torvalds has quipped about the name "git", which is British English slang for a stupid or unpleasant person:[4] "I'm an egotistical [sic] bastard, and I name all my projects after myself. First Linux, now git."[5][6]
+
+
+http://lwn.net/Articles/131657/
+
+* Git is not a source code management (SCM) system. It is, instead, a set of low-level utilities (Linus compares it to a special-purpose filesystem) which can be used to construct an SCM system. Much of the higher-level work is yet to be done, so the interface that most developers will work with remains unclear. 
+* At the lower levels, Git implements two data structures: an object database, and a directory cache. The object database can contain three types of objects: 
+

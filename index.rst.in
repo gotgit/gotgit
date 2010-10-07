@@ -98,9 +98,9 @@
 第七部分: Git应用
 #################
 
-.. include:: ./07-git-app/010-backup.rst
-.. include:: ./07-git-app/020-binary-diff.rst
-.. include:: ./07-git-app/030-gitweb.rst
+.. include:: ./07-git-app/010-etckeeper.rst
+.. include:: ./07-git-app/020-gistore.rst
+.. include:: ./07-git-app/030-binary-diff.rst
 .. include:: ./07-git-app/040-git-gui.rst
 .. include:: ./07-git-app/050-windows.rst
 
