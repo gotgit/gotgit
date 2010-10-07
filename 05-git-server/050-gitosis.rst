@@ -51,7 +51,7 @@ Gitosis 因为是 Gitolite 的鼻祖，因此下面的 Gitosis 实现机理，�
 
 * 当管理员授权，用户可以远程在服务器上创建新版本库
 
-下面介绍 Gitosis 的部署和使用。在示例中，服务器的IP地址为 `192.168.0.2` 。
+下面介绍 Gitosis 的部署和使用。在下面的示例中，约定：服务器的名称为 `server` ，Gitolite 的安装帐号为 `git` 。 
 
 
 安装 Gitosis

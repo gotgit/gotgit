@@ -1,10 +1,10 @@
 Gitolite 服务架设
 ==================
-Gitolite 是一款 Perl 语言开发的 Git 服务管理工具，通过公钥对用户进行认证，并能够通过配置文件对用户进行基于分支和路径的写操作的精细授权。Gitolite 采用的是 SSH 协议并且大量的使用了SSH公钥认证，因此需要您对 SSH 非常熟悉，无论是管理员还是普通用户。因此在开始之前，请确认已经通读过之前的“SSH 协议”一章。
+Gitolite 是一款 Perl 语言开发的 Git 服务管理工具，通过公钥对用户进行认证，并能够通过配置文件对写操作进行基于分支和路径的的精细授权。Gitolite 采用的是 SSH 协议并且使用 SSH 公钥认证，因此需要您对 SSH 非常熟悉，无论是管理员还是普通用户。因此在开始之前，请确认已经通读过之前的“SSH 协议”一章。
 
-Gitolite 的官方网址是: http://github.com/sitaramc/gitolite 。从的提交日志里可以看出作者是 Sitaram Chamarty，最早的提交开始于 2009年8月。作者是受到了 Gitosis 的启发，开发了这款功能更为强大和易于安装的软件。Gitolite 的命名，作者的原意是 Gitosis 和 lite 的组合，不过因为 Gitolite 的功能越来越强大，已经超越了 Gitosis，因此作者笑称 Gitolite 可以看作是轻量级的 Github（github-lite）。
+Gitolite 的官方网址是: http://github.com/sitaramc/gitolite 。从提交日志里可以看出作者是 Sitaram Chamarty，最早的提交开始于 2009年8月。作者是受到了 Gitosis 的启发，开发了这款功能更为强大和易于安装的软件。Gitolite 的命名，作者的原意是 Gitosis 和 lite 的组合，不过因为 Gitolite 的功能越来越强大，已经超越了 Gitosis，因此作者笑称 Gitolite 可以看作是 Github-lite —— 轻量级的 Github。
 
-我是在2010年8月才发现 Gitolite 这个项目，并尝试将公司基于 Gitosis 的管理系统迁移至 Gitolite。在迁移和使用过程中，增加和改进了一些实现，如：通配符版本库的创建过程，创建者授权，版本库名称映射等。本文关于 Gitolite 的介绍也是基于我改进的 Gitosis 的版本。
+我是在2010年8月才发现 Gitolite 这个项目，并尝试将公司基于 Gitosis 的管理系统迁移至 Gitolite。在迁移和使用过程中，增加和改进了一些实现，如：通配符版本库的创建过程，对创建者的授权，版本库名称映射等。本文关于 Gitolite 的介绍也是基于我改进的 Gitosis 的版本。
 
 * 原作者的版本库地址：
 
@@ -16,37 +16,37 @@ Gitolite 的官方网址是: http://github.com/sitaramc/gitolite 。从的提交
 
 Gitolite 的实现机制概括如下：
 
-* Gitolite 安装在服务器(server.name) 某个帐号之下，例如 `git` 帐号
+* Gitolite 安装在服务器( `server` ) 某个帐号之下，例如 `git` 帐号。
 
-* 管理员通过 git 命令检出名为 gitolite-admin 的版本库
+* 管理员通过 git 命令检出名为 gitolite-admin 的版本库。
 
   ::
 
-    $ git clone git@server.name:gitolite-admin.git
+    $ git clone git@server:gitolite-admin.git
 
-* 管理员将 git 用户的公钥保存在 gitolite-admin 库的 keydir 目录下，并编辑 conf/gitolite.conf 文件为用户授权
+* 管理员将 git 用户的公钥保存在 gitolite-admin 库的 keydir 目录下，并编辑 conf/gitolite.conf 文件为用户授权。
 
-* 当管理员对 gitolite-admin 库的修改提交并 PUSH 到服务器之后，服务器上 gitolite-admin 版本库的钩子脚本将执行相应的设置工作
+* 当管理员对 gitolite-admin 库的修改提交并 PUSH 到服务器之后，服务器上 gitolite-admin 版本库的钩子脚本将执行相应的设置工作。
 
-  - 新用户公钥自动追加到服务器端安装帐号的 .ssh/authorized_keys 中，并设置该用户的 shell 为 gitolite 的一条命令 `gl-auth-command`
+  - 新用户公钥自动追加到服务器端安装帐号的 .ssh/authorized_keys 中，并设置该用户的 shell 为 gitolite 的一条命令 `gl-auth-command` 。
 
     ::
 
       command="/home/git/.gitolite/src/gl-auth-command jiangxin",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-rsa <公钥内容来自于 jiangxin.pub ...>
 
-  - 更新服务器端的授权文件 `~/.gitolite/conf/gitolite.conf`
+  - 更新服务器端的授权文件 `~/.gitolite/conf/gitolite.conf` 。
 
-  - 编译授权文件 `~/.gitolite/conf/gitolite.conf-compiled.pm`
+  - 编译授权文件 `~/.gitolite/conf/gitolite.conf-compiled.pm` 。
 
-* 用户可以用 git 命令访问授权的版本库
+* 用户可以用 git 命令访问授权的版本库。
 
-* 当用户以 git 用户登录 ssh 服务时，因为公钥认证的相关设置，不再直接进入 shell 环境，而是打印服务器端 git 库授权信息后马上退出
+* 当用户以 git 用户登录 ssh 服务时，因为公钥认证的相关设置，不再直接进入 shell 环境，而是打印服务器端 git 库授权信息后马上退出。
 
   即用户不会通过 git 用户进入服务器的 shell，也就不会对系统的安全造成威胁。
 
-* 当管理员授权，用户可以远程在服务器上创建新版本库
+* 当管理员授权，用户可以远程在服务器上创建新版本库。
 
-下面介绍 Gitolite 的部署和使用。在示例中，服务器的IP地址为 `192.168.0.2` 。
+下面介绍 Gitolite 的部署和使用。在下面的示例中，约定：服务器的名称为 `server` ，Gitolite 的安装帐号为 `git` ，管理员的 ID 为 `admin` 。 
 
 
 安装 Gitolite
@@ -81,7 +81,7 @@ Gitolite 要求 git 的版本必须是 1.6.2 或以上的版本，并且服务�
 
 ::
 
-  $ ssh-copy-id git@192.168.0.2
+  $ ssh-copy-id git@server
 
 至此，我们已经完成了安装 git 服务的准备工作，可以开始安装 Gitolite 服务软件了。
 
@@ -92,8 +92,9 @@ Gitolite 的安装/升级
 
 Gitolite 安装可以在客户端执行，而不需要在服务器端操作，非常方便。安装 Gitolite 的前提是:
 
-* 已经在服务器端创建了专有帐号，如 git
-* 管理员能够以 git 用户身份通过公钥认证，无口令方式登录方式登录服务器
+* 已经在服务器端创建了专有帐号，如 `git` 。
+
+* 管理员能够以 git 用户身份通过公钥认证，无口令方式登录方式登录服务器。
 
 安装和升级都可以按照下面的步骤进行：
 
@@ -103,12 +104,14 @@ Gitolite 安装可以在客户端执行，而不需要在服务器端操作，�
 
     $ git clone git://github.com/ossxp-com/gitolite.git
 
-* 进入 gitolite/src 目录，执行安装。
+* 进入 `gitolite/src` 目录，执行安装。
 
   ::
 
     $ cd gitolite/src
-    $ ./gl-easy-install git 192.168.0.2 admin
+    $ ./gl-easy-install git server admin
+
+  命令 `gl-easy-install` 的第一个参数 `git` 是服务器上创建的专用帐号ID，第二个参数 `server` 是服务器IP或者域名，第三个参数 `admin` 是管理员ID。
 
 * 首先显示版本信息。
 
@@ -127,7 +130,7 @@ Gitolite 安装可以在客户端执行，而不需要在服务器端操作，�
 
 * 自动创建名为 admin 的私钥/公钥对。
 
-  gl-easy-install 命令行的最后一个参数即用于设定管理员id，这里设置为 admin。
+  `gl-easy-install` 命令行的最后一个参数即用于设定管理员ID，这里设置为 `admin` 。
 
   ::
 
@@ -178,7 +181,7 @@ Gitolite 安装可以在客户端执行，而不需要在服务器端操作，�
 
     host gitolite
          user git
-         hostname 192.168.0.2
+         hostname server
          port 22
          identityfile ~/.ssh/admin
 
@@ -221,20 +224,20 @@ Gitolite 安装可以在客户端执行，而不需要在服务器端操作，�
 
   * $GL_BIG_CONFIG = 0;
 
-    如果授权文件非常复杂，更改此项配置为1，以免产生庞大的授权编译文件
+    如果授权文件非常复杂，更改此项配置为1，以免产生庞大的授权编译文件。
 
   * $GL_WILDREPOS = 1;
 
-    缺省支持通配符版本库授权
+    缺省支持通配符版本库授权。
 
-  该配置文件为 perl 语法，注意保持文件格式和语法。退出 vi 编辑器，输入 ":q"。
+  该配置文件为 perl 语法，注意保持文件格式和语法。退出 vi 编辑器，输入 ":q" （不带引号）。
 
 * 至此完成安装。
 
 关于 SSH 主机别名
 +++++++++++++++++
 
-在安装过程中，gitolite 创建了名为 admin 的公钥/私钥对，以名为 admin.pub 的公钥连接服务器，由 gitolite 提供服务。但是如果直接连接服务器，使用的是缺省的公钥，会直接进入 shell。
+在安装过程中，gitolite 创建了名为 admin 的公钥/私钥对，以名为 `admin.pub` 的公钥连接服务器，由 gitolite 提供服务。但是如果直接连接服务器，使用的是缺省的公钥，会直接进入 shell。
 
 那么如何能够根据需要选择不同的公钥来连接 git 服务器呢？
 
@@ -245,7 +248,7 @@ Gitolite 安装可以在客户端执行，而不需要在服务器端操作，�
 
   host gitolite
        user git
-       hostname 192.168.0.2
+       hostname server
        port 22
        identityfile ~/.ssh/admin 
 
@@ -255,7 +258,7 @@ Gitolite 安装可以在客户端执行，而不需要在服务器端操作，�
 
   ::
 
-    $ ssh git@192.168.0.2
+    $ ssh git@server
 
 * 像下面这样输入 SSH 命令，则不会进入 shell。因为使用名为 admin.pub 的公钥，会显示 git 授权信息并马上退出。
 
@@ -277,6 +280,7 @@ Gitolite 安装可以在客户端执行，而不需要在服务器端操作，�
 2. 将管理员公钥复制到服务器上。
 
   管理员在客户端执行下面的命令：
+
   ::
 
     $ scp ~/.ssh/id_rsa.pub server:/tmp/admin.pub
@@ -323,7 +327,7 @@ Gitolite 安装可以在客户端执行，而不需要在服务器端操作，�
   ::
 
     $ sudo su - git
-    $ gl-setup /tmp/admin.pub.
+    $ gl-setup /tmp/admin.pub
 
 5. 管理员在客户端，克隆 gitolite-admin 库
 
@@ -342,12 +346,12 @@ Gitolite 安装可以在客户端执行，而不需要在服务器端操作，�
 管理 Gitolite
 --------------
 
-管理员克隆 gitolit-admin 管理库
+管理员克隆 gitolite-admin 管理库
 ++++++++++++++++++++++++++++++++
 
-当 gitolite 安装完成后，在服务器端自动创建了一个用于 gitolite 自身管理的 git 库: gitolite-admin.git 。
+当 gitolite 安装完成后，在服务器端自动创建了一个用于 gitolite 自身管理的 git 库: `gitolite-admin.git` 。
 
-克隆 gitolite-admin.git 库。别忘了使用 ssh 主机别名：
+克隆 `gitolite-admin.git` 库。别忘了使用SSH主机别名：
 
 ::
 
@@ -371,13 +375,13 @@ Gitolite 安装可以在客户端执行，而不需要在服务器端操作，�
   $ ls keydir/
   admin.pub
 
-我们可以看出 gitolite-admin 目录下有两个目录 conf 和 keydir。
+我们可以看出 `gitolite-admin` 目录下有两个目录 `conf/` 和 `keydir/` 。
 
-* keydir/admin.pub 文件
+* `keydir/admin.pub` 文件
 
-  keydir 目录下初始时只有一个用户公钥，即 amdin 用户的公钥。
+  目录 `keydir` 下初始时只有一个用户公钥，即 amdin 用户的公钥。
 
-* conf/gitolite.conf 文件
+* `conf/gitolite.conf` 文件
 
   该文件为授权文件。初始内容为:
 
@@ -465,7 +469,7 @@ Gitolite 安装可以在客户端执行，而不需要在服务器端操作，�
     remote:         the following users (pubkey files in parens) do not appear in the config file:
     remote: dev1(dev1.pub),dev2(dev2.pub),jiangxin(jiangxin.pub)
 
-如果我们这时查看服务器端 ~git/.ssh/authorized_keys 文件，会发现新增的用户公钥也附加其中：
+如果我们这时查看服务器端 `~git/.ssh/authorized_keys` 文件，会发现新增的用户公钥也附加其中：
 
 ::
 
@@ -483,7 +487,7 @@ Gitolite 安装可以在客户端执行，而不需要在服务器端操作，�
 
 新用户添加完毕，可能需要重新进行授权。更改授权的方法也非常简单，即修改 conf/gitolite.conf 配置文件，提交并 push。
 
-* 管理员进入 gitolite-admin 本地克隆版本库中，编辑 conf/gitolite.conf 。
+* 管理员进入 `gitolite-admin` 本地克隆版本库中，编辑 `conf/gitolite.conf` 。
 
   ::
 
@@ -501,9 +505,9 @@ Gitolite 安装可以在客户端执行，而不需要在服务器端操作，�
 
       @team1 = dev1 dev2 jiangxin
 
-  * 编辑完毕退出。我们可以用 git diff 命令查看改动：
+  * 编辑完毕退出。我们可以用 `git diff` 命令查看改动：
 
-    我们还修改了版本库 testing 的授权，将 @all 用户组改为我们新建立的 @team1 用户组。
+    我们还修改了版本库 `testing` 的授权，将 `@all` 用户组改为我们新建立的 `@team1` 用户组。
 
     ::
 
@@ -534,7 +538,7 @@ Gitolite 安装可以在客户端执行，而不需要在服务器端操作，�
     $ git add conf/gitolite.conf
     $ git commit -q -m "new team @team1 auth for repo testing."
 
-* 执行 git push，同步到服务器，才真正完成授权文件的编辑。
+* 执行 `git push` ，同步到服务器，才真正完成授权文件的编辑。
 
   我们可以注意到，PUSH 后的输出中没有了警告。
 
@@ -583,25 +587,27 @@ Gitolite 授权详解
 在上面的示例中，我们演示了很多授权指令。
 
 * 第1行，定义了用户组 @admin，包含两个用户 jiangxin 和 wangsheng。
+
 * 第3-4行，定义了版本库 gitolite-admin。并指定只有用户 jiangxin 才能够访问，并拥有读(R)写(W)和强制更新(+)的权限。
+
 * 第6行，通过正则表达式定义了一组版本库，即在 ossxp/ 目录下的所有版本库。
 
-  * 第7行，用户组 @admin 中的用户，可以在 ossxp 目录下创建版本库。
+* 第7行，用户组 `@admin` 中的用户，可以在 `ossxp/` 目录下创建版本库。
 
-    创建版本库的用户，具有对版本库操作的所有权限。
+  创建版本库的用户，具有对版本库操作的所有权限。
 
-  * 第8行，所有用户都可以读写 ossxp 目录下的版本库，但不能强制更新。
+* 第8行，所有用户都可以读写 `ossxp` 目录下的版本库，但不能强制更新。
 
-* 第9行开始，定义的 testing 版本库授权使用了引用授权语法。
+* 第9行开始，定义的 `testing` 版本库授权使用了引用授权语法。
 
-  * 第11行，用户组 @admin 对所有的分支和里程碑拥有读写、重置、添加和删除的授权。
-  * 第12行，用户 junio 可以读写 master 分支。（还包括名字以 master 开头的其他分支，如果有的话）。
-  * 第13行，用户 junio 可以读写、强制更新、创建以及删除 pu 开头的分支。
-  * 第14行，用户 pasky 可以读写 cogito 分支。 (仅此分支，精确匹配）。
+* 第11行，用户组 `@admin` 对所有的分支和里程碑拥有读写、重置、添加和删除的授权。
+* 第12行，用户 `junio` 可以读写 `master` 分支。（还包括名字以 master 开头的其他分支，如果有的话）。
+* 第13行，用户 `junio` 可以读写、强制更新、创建以及删除 `pu` 开头的分支。
+* 第14行，用户 `pasky` 可以读写 `cogito` 分支。 (仅此分支，精确匹配）。
 
 定义用户组和版本库组
 ++++++++++++++++++++
-在 conf/gitolite.conf 授权文件中，可以定义用户组或者版本库组。组名称以@开头，可以包含一个或多个成员。成员之间用空格分开。
+在 `conf/gitolite.conf` 授权文件中，可以定义用户组或者版本库组。组名称以 `@` 字符开头，可以包含一个或多个成员。成员之间用空格分开。
 
 * 例如定义管理员组：
 
@@ -633,9 +639,9 @@ Gitolite 授权详解
       RW                  = @dev @test
       R                   = @all
 
-每一个版本库授权都以一条 repo 指令开始。
+每一个版本库授权都以一条 `repo` 指令开始。
 
-* repo 指令后面是版本库列表，版本之间用空格分开，还可以包括版本库组。
+* 指令 `repo` 后面是版本库列表，版本之间用空格分开，还可以包括版本库组。
 
   注意：版本库名称不要添加 `.git` 后缀。在版本库创建过程中会自动添加 `.git` 后缀。
 
@@ -663,7 +669,7 @@ Gitolite 授权详解
 
    C, R, RW, RW+, RWC, RW+C, RWD, RW+D, RWCD, RW+CD 。
 
-* 权限后面包含一个可选的 ref（正则表达式）列表。
+* 权限后面包含一个可选的 refex（正则引用）列表。
 
   正则表达式格式的引用，简称正则引用（refex），对 Git 版本库的引用（分支，里程碑等）进行匹配。
 
@@ -705,7 +711,7 @@ Gitolite 授权详解
 Gitolite 授权机制
 +++++++++++++++++
 
-Gitolite 的授权实际分为两个阶段，第一个阶段称为前Git阶段，即在 Git 命令执行前，由 SSH 链接触发的 gl-auth-command 命令执行的授权检查。包括：
+Gitolite 的授权实际分为两个阶段，第一个阶段称为前Git阶段，即在 Git 命令执行前，由 SSH 链接触发的 `gl-auth-command` 命令执行的授权检查。包括：
 
 * 版本库的读。
 
@@ -723,7 +729,7 @@ Gitolite 的授权实际分为两个阶段，第一个阶段称为前Git阶段�
 
   仅对正则表达式定义的通配符版本库有效。即拥有 `C` 授权的用户，可以创建和对应正则表达式匹配的版本库。同时该用户也拥有对版本库的读写权限。
 
-对授权的第二个阶段的检查，实际上是通过 update 钩子脚本进行的。
+对授权的第二个阶段的检查，实际上是通过 `update` 钩子脚本进行的。
 
 * 因为版本库的读操作不执行 `update` 钩子，所以读操作只在授权的第一个阶段（前Git阶段）进行检查，授权的第二个阶段对版本库的读授权无任何影响。
 
@@ -1150,7 +1156,7 @@ Gitolite 的原始实现是通配符版本库的管理员在对不存在的版�
 ::
 
   $ cd gitolite/src
-  $ ./gl-easy-install git 192.168.0.2 admin
+  $ ./gl-easy-install git server admin
 
 
 除了钩子脚本要注意以外，还要确保服务器端版本库目录的权限和属主。

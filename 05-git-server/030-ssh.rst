@@ -1,7 +1,7 @@
 SSH 协议
 ========
 
-SSH 协议用于为 Git 提供远程写操作，是远程写操作的标准服务甚至是唯一服务。因为 SSH 认证本身的限制，可能唯一的缺点是：无法提供匿名的读取服务。
+SSH 协议用于为 Git 提供远程读写操作，是远程写操作的标准服务，在智能HTTP协议出现之前，甚至是写操作的唯一标准服务。
 
 对于拥有 SHELL 权限的 SSH 登录帐号，可以直接用下面的 git 命令访问，例如：
 
@@ -23,7 +23,7 @@ SSH 协议来实现 Git 服务，有如下方式：
 
   Gitosis 和 Gitolite 就是实现该方式的两个服务器软件。
 
-标准ssh帐号和专用ssh帐号的区别在于：
+标准SSH帐号和专用SSH帐号的区别在于：
 
   +----------------------------+---------------------------------+---------------------------+
   |                            | 标准SSH                         | Gitosis/Gitolite          |
@@ -51,18 +51,25 @@ SSH 协议来实现 Git 服务，有如下方式：
 
 实际上，标准SSH，也可以用公钥认证的方式实现所有用户共用同一个帐号。不过这类似于把一个公共帐号的登录口令同时告诉给多个人。
 
-* 创建一个公共帐号，例如 anonymous
+* 在服务器端(server)创建一个公共帐号，例如 `anonymous` 。
 
-* 管理员收集需要访问 git 服务的用户公钥。如: user1.pub, user2.pub
+* 管理员收集需要访问 git 服务的用户公钥。如: `user1.pub`, `user2.pub` 。
 
-* 使用 ssh-copy-id 命令将各个 git 用户的公钥加入公钥认证列表中
+* 使用 `ssh-copy-id` 命令远程将各个 git 用户的公钥加入服务器(server)的公钥认证列表中。
 
   ::
 
-    $ ssh-copy-id -i user1.pub anonymous@192.168.0.2
-    $ ssh-copy-id -i user2.pub anonymous@192.168.0.2
+    $ ssh-copy-id -i user1.pub anonymous@server
+    $ ssh-copy-id -i user2.pub anonymous@server
 
-* 在服务器端的 anonymous 用户主目录下建立 git 库，就可以实现多个用户利用同一个系统帐号(git) 访问 Git 服务了
+  如果直接在服务器上操作，则直接将文件追加到 `authorized_keys` 文件中。
+
+  ::
+
+    $ cat /path/to/user1.pub >> ~anonymous/.ssh/authorized_keys
+    $ cat /path/to/user2.pub >> ~anonymous/.ssh/authorized_keys
+
+* 在服务器端的 `anonymous` 用户主目录下建立 git 库，就可以实现多个用户利用同一个系统帐号(git) 访问 Git 服务了。
 
 这样做除了免除了逐一设置帐号，以及用户无需口令认证之外，标准SSH部署 Git 服务的缺点一个也不少，而且因为用户之间无法区分，更无法进行针对用户授权。
 
@@ -71,7 +78,7 @@ SSH 协议来实现 Git 服务，有如下方式：
 SSH 公钥认证
 ------------
 
-关于公钥认证的原理，维基百科上的这个条目是一个很好的起点： http://en.wikipedia.org/wiki/Public-key_cryptography
+关于公钥认证的原理，维基百科上的这个条目是一个很好的起点： http://en.wikipedia.org/wiki/Public-key_cryptography 。
 
 如果你的主目录下不存在 .ssh 目录，说明你的 SSH 公钥/私钥对尚未创建。可以用这个命令创建：
 
@@ -87,35 +94,33 @@ SSH 公钥认证
 
 * id_rsa.pub
 
-  公钥文件。和 id_rsa 文件是一对儿，该文件作为公钥文件，可以公开。
+  公钥文件。和 `id_rsa` 文件是一对儿，该文件作为公钥文件，可以公开。
 
 创建了自己的公钥/私钥对后，就可以使用下面的命令，实现无口令登录远程服务器，即用公钥认证取代口令认证。
 
 ::
 
-  $ ssh-copy-id -i .ssh/id_rsa.pub user@machine
+  $ ssh-copy-id -i .ssh/id_rsa.pub user@server
 
 说明:
 
-* 该命令会提示输入用户 user 在 machine 上的 ssh 登录口令
-* 当此命令执行成功后，再以 user 用户登录 machine 远程主机时，不必输入口令直接登录
-* 该命令实际上将 .ssh/id_rsa.pub 公钥文件追加到远程主机 machine 的 user 主目录下的 .ssh/authorized_keys 文件中
+* 该命令会提示输入用户 user 在 server 上的SSH登录口令。
+* 当此命令执行成功后，再以 user 用户登录 server 远程主机时，不必输入口令直接登录。
+* 该命令实际上将 `.ssh/id_rsa.pub` 公钥文件追加到远程主机 server 的 user 主目录下的 `.ssh/authorized_keys` 文件中。
 
+检查公钥认证是否生效，运行SSH到远程主机，正常的话应该直接登录成功。如果要求输入口令则表明公钥认证配置存在问题。如果SSH服务存在问题，可以通过查看服务器端的 `/var/log/auth.log` 进行诊断。
 
-TODO: authorized_keys 文件的结构
-
-TODO: /var/log/auth.log 可以诊断为何登录失败
 
 SSH 主机别名
 ------------
 
 在实际应用中，有时需要使用多套公钥/私钥对，例如：
 
-* 使用缺省的公钥访问 git 帐号，获取 shell，进行管理员维护工作
-* 使用单独创建的公钥访问 git 帐号，执行 git 命令
-* 访问 github 采用其他公钥
+* 使用缺省的公钥访问 git 帐号，获取 shell，进行管理员维护工作。
+* 使用单独创建的公钥访问 git 帐号，执行 git 命令。
+* 访问 github（免费的Git服务托管商）采用其他公钥。
 
-如何创建指定名称的公钥/私钥对呢？还是用 ssh-keygen 命令：
+如何创建指定名称的公钥/私钥对呢？还是用 `ssh-keygen` 命令，如下：
 
 ::
 
@@ -123,23 +128,23 @@ SSH 主机别名
 
 注：
 
-* 将 <filename> 替换为有意义的名称
-* 会在 ~/.ssh 目录下创建指定的公钥/私钥对
-  文件 <filename> 是私钥，文件 <filename>.pub 是公钥
+* 将 <filename> 替换为有意义的名称。
+* 会在 ~/.ssh 目录下创建指定的公钥/私钥对。
+  文件 <filename> 是私钥，文件 <filename>.pub 是公钥。
 
 将新生成的公钥添加到远程主机的 .ssh/authorized_keys 文件中，建立新的公钥认证。例如:
 
 ::
 
-  $ ssh-copy-id -i .ssh/<filename>.pub user@machine
+  $ ssh-copy-id -i .ssh/<filename>.pub user@server
 
-这样，就有两个公钥用于登录主机 machine，那么当执行下面的 ssh 登录指令，用到的是那个公钥呢？
+这样，就有两个公钥用于登录主机 server，那么当执行下面的 ssh 登录指令，用到的是那个公钥呢？
 
 ::
 
-  $ ssh user@machine
+  $ ssh user@server
 
-当然是缺省公钥 ~/.ssh/id_rsa.pub 。那么如何用新建的公钥连接 machine 呢？
+当然是缺省公钥 ~/.ssh/id_rsa.pub 。那么如何用新建的公钥连接 server 呢？
 
 SSH 的客户端配置文件 ~/.ssh/config 可以通过创建主机别名，在连接主机时，使用特定的公钥。例如 ~/.ssh/config 文件中的下列配置：
 
@@ -147,7 +152,7 @@ SSH 的客户端配置文件 ~/.ssh/config 可以通过创建主机别名，在�
 
   host bj
     user git
-    hostname 192.168.0.2
+    hostname bj.ossxp.com
     port 22
     identityfile ~/.ssh/jiangxin
 
@@ -166,15 +171,15 @@ SSH 的客户端配置文件 ~/.ssh/config 可以通过创建主机别名，在�
 
 含义为：
 
-* 登录的 SSH 主机为 192.168.0.2
-* 登录时使用的用户名为 git
-* 认证时使用的公钥文件为 ~/.ssh/jiangxin.pub
+* 登录的 SSH 主机为 `bj.ossxp.com` 。
+* 登录时使用的用户名为 git 。
+* 认证时使用的公钥文件为 `~/.ssh/jiangxin.pub` 。
 
-SSH 服务器配置
---------------
-
-TODO: /etc/ssh/sshd_config 设置某些用户的 SHELL
-
-TODO: 用 /etc/passwd 设置用户的shell
-
-TODO: 在 ~/.ssh/authorized_keys 用 command 设置用户的 shell
+.. SSH 服务器配置
+.. --------------
+.. 
+.. TODO: /etc/ssh/sshd_config 设置某些用户的 SHELL
+.. 
+.. TODO: 用 /etc/passwd 设置用户的shell
+.. 
+.. TODO: 在 ~/.ssh/authorized_keys 用 command 设置用户的 shell
