@@ -74,9 +74,9 @@ Linux / Unix 的用户对 `/etc` 目录都是再熟悉不过了，在这个最�
 使用 etckeeper
 ---------------
 
+实际上由于 etckeeper 已经和系统的包管理工具进行了整合（如 Debian/Ubuntu 的 apt，Redhat 上的 yum 等），etckeeper 可以免维护运行。即一旦有软件包安装或删除，对 `/etc` 目录下的改动会自动执行提交操作。
 
+当然也可以随时以 `root` 用户身份调用 `etckeeper commit` 命令对 `/etc` 目录的改动手动进行提交。
 
-
-揭密 etckeeper
----------------
+剩下的工作就交给 Git 了。可以在 `/etc` 目录执行 `git log`, `git show` 等操作。但要注意以 root 用户身份运行，因为 `/etc/.git` 目录的权限不允许普通用户操作。
 
