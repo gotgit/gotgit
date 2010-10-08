@@ -320,5 +320,17 @@ Gistore 的备份项管理
 Gistore 双机备份
 ----------------
 
-使用 Gitosis 架设 Git 服务器，提供远程主机访问本机的 Git 库。
+Gistore 备份库的主体就是 `repo.git` ，一个 Git 库。我们可以通过架设一个 Git 库，远程主机通过克隆该备份库实现双机备份甚至是异地备份。而且最酷的是，整个数据同步的过程是可视的、快速的和无痛的，感谢伟大而又神奇的 Git。
+
+最好使用公钥认证的基于SSH的Git服务器架设，因为一是可以实现无口令的数据同步，二是增加安全性，因为备份数据中可能包含敏感数据。
+
+还有我们可以直接利用现成的 `/etc/gistore/tasks` 目录作为版本库的根。当然我们还需要通过一个地址变换的小巧门，实现 Git 服务的架设。即：
+
+::
+
+  $ git clone gistore@server:system.git
+                                |
+                                +----------> Gitosis ----------> /etc/gistore/tasks/system/repo.git
+
+Gitosis 服务器软件的地址变换魔法正好可以帮助我们实现。在前面 Gitosis 的最后一个章节我们介绍的正是如何架设一个供 Gistore 双机备份的 Git 服务。请参考 TODO。
 

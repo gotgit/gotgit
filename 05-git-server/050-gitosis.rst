@@ -499,9 +499,11 @@ Gitosis 维护的版本库位于安装用户主目录下的 repositories 目录�
 
 
 轻量级管理的 Git 服务
-+++++++++++++++++++++
+---------------------
 
 轻量级管理的含义是不采用缺省的稍显复杂的管理模式（远程克隆 gitosis-admin 库，修改并 PUSH 的管理模式），而是直接在服务器端通过预先定制的配置文件提供 Git 服务。这种轻量级管理模式，对于为某些应用建立快速的 Git 库服务提供了便利。
+
+例如在使用备份工具 Gistore 进行文件备份时，可以用 Gitosis 架设轻量级的 Git 服务，可以在远程使用 Git 命令进行双机甚至是异地备份。
 
 首先创建一个专用帐号，并设置该用户只能执行 gitosis-serve 命令。例如创建帐号 gistore，通过修改 /etc/ssh/sshd_config 配置文件，实现限制该帐号登录的可执行命令。
 
@@ -521,7 +523,7 @@ Gitosis 维护的版本库位于安装用户主目录下的 repositories 目录�
 
 ::
 
-  [gitosis]                                                                                                                                                   
+  [gitosis]
   repositories = /etc/gistore/tasks
   gitweb = yes
   daemon = no
