@@ -95,16 +95,20 @@
 .. include:: ./06-migrate/030-hg.rst
 .. include:: ./06-migrate/040-smart-migrate.rst
 
-第七部分: Git应用
-#################
+第七部分: Git的其它应用
+#######################
 
 .. include:: ./07-git-app/010-etckeeper.rst
 .. include:: ./07-git-app/020-gistore.rst
 .. include:: ./07-git-app/030-binary-diff.rst
-.. include:: ./07-git-app/040-git-gui.rst
-.. include:: ./07-git-app/050-windows.rst
 
-第八部分: 附录
+第八部分: Git工具
+#################
+
+.. include:: ./08-git-tools/040-git-gui.rst
+.. include:: ./08-git-tools/050-windows.rst
+
+第九部分: 附录
 ##############
 
 .. include:: ./90-app/010-cvs-git-table.rst
