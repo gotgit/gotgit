@@ -66,7 +66,7 @@
 .. include:: ./03-adv-git/040-git-remote.rst
 .. include:: ./03-adv-git/050-git-secret.rst
 
-第四部分: Git使用模型
+第四部分: Git协同模型
 #####################
 
 .. include:: ./04-git-model/010-central-model.rst
