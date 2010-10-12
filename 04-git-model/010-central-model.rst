@@ -6,3 +6,18 @@
 
 集中式协同模型
 ==============
+
+对分支的写进行授权
+
+每个人只能在特定的名字空间下创建分支
+
+和 SVN 等分布式版本库类似，在 PUSH 时遇到冲突时，每个程序员独立完成冲突解决
+
+高级别程序员，可以到用户分支 fetch/pull，并 push 到协作分支（如 master）
+
+服务器部署 gitolite
+
+*  管理员克隆 gitolit-admin 库
+*  添加成员公钥到 keydir 目录: username.pub
+*  修改授权文件 conf/gitolite.conf
+
