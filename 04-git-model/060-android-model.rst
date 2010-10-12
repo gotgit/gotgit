@@ -127,6 +127,8 @@ TODO
 * 参数 --repo-branch
 * 参数 --no-repo-verify
 
+实际上，完成 repo.git 版本库的克隆，这个 repo 引导脚本就江郎才尽了，init 子命令的后续处理（以及其它子命令）都交给刚刚克隆出来的 `.repo/repo/main.py` 来继续执行。
+
 **索引库是什么？从哪里下载？**
 
 索引库实际上只包含一个 `default.xml` 文件。这个 XML 文件定义了多个版本库和本地地址的映射关系，是 repo 工作的指引文件。所以在使用 repo 引导脚本进行初始化的时候，必须通过 -u 参数指定索引库的源地址。
@@ -194,18 +196,84 @@ TODO
 * 第9行定义一个项目，该项目的远程版本库相对路径为："platform/build"，在工作区克隆的位置为："build"。
 * 第10行，即 project 元素的子元素 copyfile，定义了项目克隆后的一个附加动作：拷贝文件从 "core/root.mk" 至 "Makefile"。
 * 第13行后后续的100多行定义了其它160个项目，都是采用类似的 project 元素语法。name 参数定义远程版本库的相对路径，path 参数定义克隆到本地工作区的路径。
+* 还可以出现 manifest-server 元素，其 url 属性定义了 manifest_server 的值。 TODO
 
 同步项目
 ---------
+
+在工作区，执行下面的命令，会参照 `.repo/manifest.xml` 索引文件，将项目所有相关的版本库全部克隆出来。不过请在读过本节内容之后再尝试执行这条命令。
+
+::
+
+  $ repo sync
+
+对于 Android，这个操作需要通过网络传递 1.6GB 的内容，如果带宽不是很高的化，可能会花掉几个小时甚至是一天的时间。
+
+也可以仅克隆感兴趣的项目，在 `repo sync` 后面跟上项目的名称。项目的名称来自于 `.repo/manifest.xml` 这个 XML 文件中 project 元素的 name 属性值。例如克隆 platform/build 项目：
+
+::
+
+  $ repo sync platform/build
+
+Repo 有一个功能，我们可以在这里展示。就是 repo 支持通过本地索引文件覆盖缺省的索引文件。即可以在 `.repo` 目录下创建 `local_manifest.xml` 文件覆盖 `.repo/manifest.xml` 文件的设置。
+
+在工作目录下运行下面的命令，可以创建一个 local_manifest.xml。这个本地定制的索引文件来自缺省文件，但是删除了 remote 元素和 default 元素，并将所有的 project 元素都重命名为 remove-project 元素。
+
+::
+
+  $ sed -e '/<remote/,+4 d' -e 's/<project/<remove-project/g' \
+    -e 's/project>/remove-project>/g' \
+    < .repo/manifest.xml > .repo/local_manifest.xml
+
+这样处理之后，你会发现当执行 `repo sync` 不会检出任何项目，甚至会删除已经下载的项目。
+
+local_manifest.xml 支持前面介绍的索引文件的所有语法，需要注意的是：
+
+* 不能出现重复定义的 remote 元素。这就是为什么上面的脚本要删除来自缺省 manifest.xml 的 remote 元素。
+* 不能出现 default 元素，只能有一个。
+* 不能出现重复的 project 定义（name 属性不能相同），但是可以通过 remove-project 元素将缺省索引中定义的 project 删除再重新定义。
+
+试着编辑 .repo/local_manifest.xml ，在其中再添加几个 project 元素，然后试着用 `repo sync` 命令进行同步。
+
+Repo 的子命令是 Git 命令的简单封装
+-----------------------------------
+
+init 命令
++++++++++
+
+
+Repo 子命令的使用
+-----------------
 
 
 建立 android 代码库本地镜像
 ----------------------------
 
+Android 的代码库众多而且庞大，如果一个开发团队每个人都去执行 `repo init -u` ，再执行 `repo sync` 从 Android 服务器克隆版本库的话，多大的网络带宽恐怕都不够用。唯一的办法是本地建立一个 Android 版本库的镜像。
+
+建立本地镜像非常简单，就是在执行 `repo init -u` 初始化的时候，附带上 `--mirror` 参数。
+
+::
+
+  $ mkdir android-mirror-dir
+  $ cd android-mirror-dir
+  $ repo init --mirror -u git://android.git.kernel.org/platform/manifest.git 
+
+之后执行 `repo sync` 就可以安装 Android 的 Git 服务器方式来组织版本库，创建一个 Android 版本库镜像。
+
+实际上附带了 `--mirror` 参数执行 `repo init -u` 命令，会在克隆的 `.repo/manifests.git` 下的 `config` 中记录配置信息：
+
+::
+
+  [repo]
+      mirror = true
+
 从 android 的工作区到代码库镜像
 --------------------------------
 
-如果想镜像 Android Repo 代码库，却忘了在 `repo init` 的时候带上 `--mirror` 参数。可以运行下面的脚本 `work2repo.py` 。
+当执行 `repo sync` 命令将 android 众多的版本库克隆到本地后，各个项目在工作区中的部署和实际在服务器端的部署是不同的。这个在之前介绍 repo 的索引库机制的时候，就已经介绍过了。
+
+那么如果之前没有用镜像的方法同步 Android 版本库，难道要重新执行一遍么？要知道重新同步一份 Android 版本库是非常慢的。我自己就遇到了这个问题，不过既然有 manifest.xml 文件，我们完全可以对工作区进行反向操作，将工作区转换为镜像服务器的结构。下面就是一个示例脚本，这个脚本没有采用 dom 方式读取 xml，而是直接的行读取，因此尚有改进的空间。
 
 脚本 `work2repo.py` 如下：
 
@@ -274,6 +342,17 @@ TODO
 * 将原来 android 代码同步的目录中的 android_repos_root/ 下的目录和文件全部移动到新的 Android 同步目录中。
 
 * 执行 `repo sync` 和 Android 上游同步。
+
+
+Android 本地代码库镜像的管理
+--------------------------------
+
+镜像服务器定期和 Android 上游进行同步，因为保持了同样的分支命名空间，因此 Android 的 manifest.git 库仍然可以对镜像服务器的 Git 库使用，除了需要将 remote 中的内容进行调整。
+
+不要在 Android 代码库中现有的任何分支中提交，以免和镜像服务器在同步的时候改动被覆盖。而是创立带有本团队标识的分支名维护自己的代码。
+
+需要创建一个自己的 manifest 库。可以参考 Android 上游的 manifest 库创建。
+
 
 
 好东西不能 android 独享
