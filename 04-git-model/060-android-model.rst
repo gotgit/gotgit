@@ -39,7 +39,7 @@ Android 版本库众多的原因，主要原因是版本库太大以及 Git 不�
 关于 repo
 ----------
 
-如前所述，repo 是 Google 开发的用于管理 Android 版本库的一个工具。当安装好 repo 这一工具后，就可以使用 repo 对 Android 数量众多的版本库进行管理了。
+如前所述，repo 是 Google 开发的用于管理 Android 版本库的一个工具。Repo 在 Git 基础之上构建，简化了对多个 Git 版本库的管理。
 
 repo 的使用过程大致如下：
 
@@ -49,15 +49,155 @@ repo 的使用过程大致如下：
 * 同时对 160 多个版本库执行切换分支操作，切换到某个分支。
 
 
-安装 repo
-----------
+安装 repo 引导脚本
+-------------------
 
+首先下载 repo 的引导脚本，你可以使用 wget, curl 甚至浏览器从地址 http://android.git.kernel.org/repo 下载。并把 repo 脚本设置为可执行，并复制到可执行的路径中。在 Linux 上可以用下面的指令将 repo 下载并复制到用户主目录的 bin 目录下。
 
-解剖 repo
-----------
+::
 
-用 repo 获取 android 代码库
-----------------------------
+  $ curl http://android.git.kernel.org/repo > ~/bin/repo 
+  $ chmod a+x ~/bin/repo
+
+下载并保存 repo 引导脚本后，建立一个工作目录，在工作目录中执行 repo 脚本完成 repo 完整的下载以及项目索引版本库（manifest.git）的下载。
+
+::
+
+  $ mkdir working-directory-name
+  $ cd working-directory-name
+  $ repo init -u git://android.git.kernel.org/platform/manifest.git 
+
+为什么说下载的 repo 只是一个引导文件（bootstrap）而不是直接称为 repo 呢？因为 repo 的大部分功能代码不在其中，下载的只是一个帮助完成整个 repo 程序的继续下载和加载工具。如果你是一个程序员，对 repo 的执行比较好奇，我们可以一起分析一下 repo 引导脚本。否则可以跳到下一节。
+
+看看 repo 引导脚本的前几行（为方便描述，把注释和版权信息过滤掉了），会发现一个神奇的魔法：
+
+::
+
+  1   #!/bin/sh
+  2   
+  3   REPO_URL='git://android.git.kernel.org/tools/repo.git'
+  4   REPO_REV='stable'
+  5   
+  6   magic='--calling-python-from-/bin/sh--'
+  7   """exec" python -E "$0" "$@" """#$magic"
+  8   if __name__ == '__main__':
+  9     import sys
+  10    if sys.argv[-1] == '#%s' % magic:
+  11      del sys.argv[-1]
+  12  del magic
+
+Repo 引导脚本是用什么语言开发的？这是一个问题。
+
+* 第1行，有经验的 Linux 开发者会知道此脚本是用 Shell 脚本语言开发的。
+* 第7行，是这个魔法的最神奇之处。即是一条合法的 shell 语句，又是一条合法的 python 语句。
+* 第7行作为 shell 语句，执行 exec，用 python 调用本脚本，并替换本进程。三引号在这里相当于一个空字串和一个单独的引号。
+* 第7行作为 python 语句，三引号定义的是一个字符串，字符串后面是一个注释。
+* 实际上第1行到第7行，即是合法的 shell 语句又是合法的 python 语句。从第8行开始后面都是 python 脚本了。
+* Repo 引导脚本无论是使用 shell 执行，或是用 python 执行，效果都相当于使用 python 执行此脚本。
+
+**Repo 真正的位置在哪里？**
+
+在引导脚本 repo 的 main 函数，首先调用 _FindRepo 函数，从当前目录开始依次向上递归查找 `.repo/repo/main.py` 文件。
+
+::
+
+  def main(orig_args):
+    main, dir = _FindRepo()
+
+函数 _FindRepo 返回找到的 `.repo/repo/main.py` 脚本文件，以及包含 repo/main.py 的 `.repo` 目录。如果找到 `.repo/repo/main.py` 脚本，则把程序的控制权交给 `.repo/repo/main.py` 脚本。（省略了在 repo 开发库中执行情况的判断）
+
+在我们下载 repo 引导脚本后，没有初始化之前，当然不会存在 `.repo/repo/main.py` 脚本，这时必须进行初始化操作。
+
+初始化操作会从 android 的代码中克隆 repo.git 库，到当前目录下的 `.repo/repo` 目录下。在完成 repo.git 克隆之后，再次运行 _FindRepo 并把控制权交给找到的 .repo/repo/main.py 脚本文件，重新对 repo 命令进行处理。
+
+**从哪里下载 repo.git ？**
+
+在 repo 引导脚本的前几行，定义了缺省的 repo.git 的版本库位置以及要检出的缺省分支。
+
+::
+
+  REPO_URL='git://android.git.kernel.org/tools/repo.git'
+  REPO_REV='stable'
+
+如果不想从缺省任务获取 repo，或者不想获取稳定版（stable分支）的 repo，可以在 `repo init` 子命令中通过下面的参数覆盖缺省的设置，从指定的源地址克隆 repo 代码库。
+
+TODO 
+
+* 参数 --repo-url
+* 参数 --repo-branch
+* 参数 --no-repo-verify
+
+**索引库是什么？从哪里下载？**
+
+索引库实际上只包含一个 `default.xml` 文件。这个 XML 文件定义了多个版本库和本地地址的映射关系，是 repo 工作的指引文件。所以在使用 repo 引导脚本进行初始化的时候，必须通过 -u 参数指定索引库的源地址。
+
+索引库的下载，是通过 `repo init` 命令初始化时，用 -u 参数指定索引库的位置。例如 repo 针对 Android 代码库进行初始化时执行的命令：
+
+::
+
+  $ repo init -u git://android.git.kernel.org/platform/manifest.git 
+
+Repo 引导脚本的 init 子命令可以使用下列和索引库相关的参数：
+
+TODO 
+
+* 参数 -u ( --manifest-url )
+* 参数 -b ( --manifest-branch )
+* 参数 --mirror
+* 其它参数： 
+
+  - -o ( --origin ) 使用指定的名称作为 remote 名称，否则为 origin。
+  - -m ( --manifest-name ) 
+
+索引库和索引文件
+----------------
+
+当执行完毕 `repo init` 之后，工作目录内空空如也。实际上有一个 .repo 目录。在该目录下除了一个包含 repo 的实现的 repo 库克隆外，就是 manifest 库的克隆，以及一个符号链接链接到索引库中的 default.xml 文件。
+
+::
+
+  $ ls -lF .repo/
+  drwxr-xr-x 3 jiangxin jiangxin 4096 2010-10-11 18:57 manifests/
+  drwxr-xr-x 8 jiangxin jiangxin 4096 2010-10-11 10:08 manifests.git/
+  lrwxrwxrwx 1 jiangxin jiangxin   21 2010-10-11 10:07 manifest.xml -> manifests/default.xml
+  drwxr-xr-x 7 jiangxin jiangxin 4096 2010-10-11 10:07 repo/
+
+在工作目录下的 `.repo/manifest.xml` 文件就是 Android 项目的众多版本库的索引文件。Repo 命令的操作，都要参考这个索引文件。
+
+我们打开索引文件，会看到如下内容：
+
+::
+
+    1  <?xml version="1.0" encoding="UTF-8"?>
+    2  <manifest>
+    3    <remote  name="korg"
+    4             fetch="git://android.git.kernel.org/"
+    5             review="review.source.android.com" />
+    6    <default revision="master"
+    7             remote="korg" />
+    8  
+    9    <project path="build" name="platform/build">
+   10      <copyfile src="core/root.mk" dest="Makefile" />
+   11    </project>
+   12  
+   13    <project path="bionic" name="platform/bionic" />
+
+         ...
+       
+  181  </manifest>
+
+这个文件不太复杂，是么？
+
+* 这个XML的顶级元素是 `manifest` ，见第2行和第181行。
+* 第3行通过一个 remote 元素，定义了名为 korg（kernel.org缩写）的源，其 Git 库的基址为 `git://android.git.kernel.org/` ，还定义了代码审核服务器的地址 `review.source.android.com` 。还可以定义更多的 remote 元素，这里只定义了一个。
+* 第6行用于设置各个项目缺省的远程源地址（remote）为 korg, 缺省的分支为 `master` 。当然各个项目（project元素）可以定义自己的 remote 和 revision 覆盖该缺省配置。
+* 第9行定义一个项目，该项目的远程版本库相对路径为："platform/build"，在工作区克隆的位置为："build"。
+* 第10行，即 project 元素的子元素 copyfile，定义了项目克隆后的一个附加动作：拷贝文件从 "core/root.mk" 至 "Makefile"。
+* 第13行后后续的100多行定义了其它160个项目，都是采用类似的 project 元素语法。name 参数定义远程版本库的相对路径，path 参数定义克隆到本地工作区的路径。
+
+同步项目
+---------
+
 
 建立 android 代码库本地镜像
 ----------------------------
@@ -139,4 +279,5 @@ repo 的使用过程大致如下：
 好东西不能 android 独享
 -----------------------
 
+作为示例，在 github 上放上 repo, manifests.git 库，克隆 topgit, gitolite, gitosis 库。
 
