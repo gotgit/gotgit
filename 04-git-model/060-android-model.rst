@@ -1,7 +1,7 @@
-Android 协同模型
-================
+Android 式多版本库协同
+======================
 
-Android 是谷歌(Google)开发的手持设备的操作系统，提供了当前最为吸引眼球的开源的手机操作平台，大有超越苹果(Apple.com)的专有的 IOS 的趋势。Android 的源代码就是使用 Git 进行维护的。
+Android 是谷歌(Google)开发的手持设备的操作系统，提供了当前最为吸引眼球的开源的手机操作平台，大有超越苹果(Apple.com)的专有的 IOS 的趋势。Android 的源代码就是使用 Git 进行维护的，Android 项目在源代码管理上有两个伟大的创造，一个是用 Python 语言开发名为 repo 的命令行工具用于多版本库的管理，另外一个是用 Java 开发的名为 Gerrit 的代码审核服务器。本节我们重点介绍 repo 是如何管理多代码库的。
 
 Android 的源代码的 Git 库有 160 多个（截止置2010年10月）：
 
@@ -15,7 +15,7 @@ Android 的源代码的 Git 库有 160 多个（截止置2010年10月）：
 
 * 160 个其它的版本库...
 
-如果我要是吧 160 多个版本库都列在这里，恐怕各位的下巴会掉下来。那么为什么 Android 的版本库这么多呢？怎么管理这么复杂的版本库呢？
+如果我要是把 160 多个版本库都列在这里，恐怕各位的下巴会掉下来。那么为什么 Android 的版本库这么多呢？怎么管理这么复杂的版本库呢？
 
 Android 版本库众多的原因，主要原因是版本库太大以及 Git 不能部分检出。Android 的版本库有接近 2 个GB之多。如果所有的东西都放在一个库中，而某个开发团队感兴趣的可能就是某个驱动，或者是某个应用，却要下载如此庞大的版本库，是有些说不过去。
 
@@ -28,13 +28,15 @@ Android 版本库众多的原因，主要原因是版本库太大以及 Git 不�
 * 如果要将所有的子模组都切换到某个分支（如 master）进行修改，必须自己通过脚本对这 160 多个版本库一一切换。
 * Android 有多个版本：android-1.0, android-1.5, ..., android-2.2_r1.3, ... 如何维护这么多的版本呢？也许索引库要通过分支和里程碑，和子模组的各个不同的提交状态进行对应。但是由于子模组的状态只是一个提交ID，如何管理分支，我真的给不出答案。
 
-上面是在你拥有 Android 上游版本库提交权限的情况下。但是大部分基于 Android 定制的公司恐怕没有这个权限，就需要在本地建立版本库镜像，协同本地团队的开发，如果采用“子模组”方式，会有多么麻烦呢？
-
-* 要对这 160 多个版本库分别镜像，保存在本地个 Git 服务器中。
-* 本地创建一个 Git 索引版本库，并建立这 160 多个版本库的索引。因为URL不同，你不能指望直接把上游的索引库拿来用。
-* 本地开发的分支管理，肯定是一团糟。因为子模组无法对应于某个分支或里程碑。
-
 幸好，上面只是假设。聪明的 Google 程序设计师一早就考虑到了 Git 子模组的局限性以及版本库管理的问题，开发出了 repo 这一工具。
+
+Android 之父安迪.鲁宾在回应乔布斯谈及 Android 复杂的言论时，在 Twitter (http://twitter.com/Arubin) 上留了下面这段简短的话：
+
+::
+
+  the definition of open: "mkdir android ; cd android ; repo init -u git://android.git.kernel.org/platform/manifest.git ; repo sync ; make"
+
+是的，就是 repo 让 Android 变得如此简单。
 
 关于 repo
 ----------
@@ -43,13 +45,16 @@ Repo 是 Google 开发的用于管理 Android 版本库的一个工具。Repo �
 
 repo 的使用过程大致如下：
 
-* 运行 `repo init` 命令，克隆 Android 的一个索引库。这个索引库和我们前面假设的“子模组”方式工作的索引库不同，是通过 XML 技术建立的版本库索引。
-* 索引库中的 manifest.xml 文件，列出了 160 多个版本库的克隆方式。包括版本库的地址和工作区地址的对应关系，以及分支的对应关系。
+* 运行 `repo init` 命令，克隆 Android 的一个清单库。这个清单库和我们前面假设的“子模组”方式工作的索引库不同，是通过 XML 技术建立的版本库清单。
+
+* 清单库中的 manifest.xml 文件，列出了 160 多个版本库的克隆方式。包括版本库的地址和工作区地址的对应关系，以及分支的对应关系。
+
 * 运行 `repo sync` 命令，开始同步，即分别克隆这 160 多个版本库到本地的工作区中。
+
 * 同时对 160 多个版本库执行切换分支操作，切换到某个分支。
 
 
-安装 repo 以及索引库的初始化
+安装 repo 以及清单库的初始化
 -----------------------------
 
 首先下载 repo 的引导脚本，你可以使用 wget, curl 甚至浏览器从地址 http://android.git.kernel.org/repo 下载。并把 repo 脚本设置为可执行，并复制到可执行的路径中。在 Linux 上可以用下面的指令将 repo 下载并复制到用户主目录的 bin 目录下。
@@ -100,9 +105,9 @@ Repo 引导脚本是用什么语言开发的？这是一个问题。
 
 在我们下载 repo 引导脚本后，没有初始化之前，当然不会存在 `.repo/repo/main.py` 脚本，这时必须进行初始化操作。
 
-repo 和索引库的初始化
+repo 和清单库的初始化
 ---------------------
-下载并保存 repo 引导脚本后，建立一个工作目录，这个工作目录将作为 Android 的工作区目录。在工作目录中执行 `repo init -u <url>` 完成 repo 完整的下载以及项目索引版本库（manifest.git）的下载。
+下载并保存 repo 引导脚本后，建立一个工作目录，这个工作目录将作为 Android 的工作区目录。在工作目录中执行 `repo init -u <url>` 完成 repo 完整的下载以及项目清单版本库（manifest.git）的下载。
 
 ::
 
@@ -116,9 +121,9 @@ Repo init 要完成如下操作：
 
   初始化操作会从 android 的代码中克隆 repo.git 库，到当前目录下的 `.repo/repo` 目录下。在完成 repo.git 克隆之后，`repo init` 命令会将控制权交给工作区的 `.repo/repo/main.py` 这个刚刚从 repo.git 库克隆来的脚本文件，继续进行初始化。
 
-* 克隆 android 的索引库 manifest.git（地址来自于 -u 参数）。
+* 克隆 android 的清单库 manifest.git（地址来自于 -u 参数）。
 
-  克隆的索引库位于 `.repo/manifests.git` 中，并本地克隆到 `.repo/manifests` 。索引文件 `.repo/manifest.xml` 是符号链接指向 `.repo/manifests/default.xml` 。
+  克隆的清单库位于 `.repo/manifests.git` 中，并本地克隆到 `.repo/manifests` 。清单文件 `.repo/manifest.xml` 是符号链接指向 `.repo/manifests/default.xml` 。
 
 * 提问用户的姓名和邮件地址，如果和 Git 缺省的用户名、邮件地址不同，则记录在 `.repo/manifests.git` 库的 config 文件中。
 
@@ -143,37 +148,37 @@ TODO
 
 实际上，完成 repo.git 版本库的克隆，这个 repo 引导脚本就江郎才尽了，init 子命令的后续处理（以及其它子命令）都交给刚刚克隆出来的 `.repo/repo/main.py` 来继续执行。
 
-**索引库是什么？从哪里下载？**
+**清单库是什么？从哪里下载？**
 
-索引库实际上只包含一个 `default.xml` 文件。这个 XML 文件定义了多个版本库和本地地址的映射关系，是 repo 工作的指引文件。所以在使用 repo 引导脚本进行初始化的时候，必须通过 -u 参数指定索引库的源地址。
+清单库实际上只包含一个 `default.xml` 文件。这个 XML 文件定义了多个版本库和本地地址的映射关系，是 repo 工作的指引文件。所以在使用 repo 引导脚本进行初始化的时候，必须通过 -u 参数指定清单库的源地址。
 
-索引库的下载，是通过 `repo init` 命令初始化时，用 -u 参数指定索引库的位置。例如 repo 针对 Android 代码库进行初始化时执行的命令：
+清单库的下载，是通过 `repo init` 命令初始化时，用 -u 参数指定清单库的位置。例如 repo 针对 Android 代码库进行初始化时执行的命令：
 
 ::
 
   $ repo init -u git://android.git.kernel.org/platform/manifest.git 
 
-Repo 引导脚本的 init 子命令可以使用下列和索引库相关的参数：
+Repo 引导脚本的 init 子命令可以使用下列和清单库相关的参数：
 
-* 参数 -u ( --manifest-url ) ： 设定索引库的 Git 服务器地址。
+* 参数 -u ( --manifest-url ) ： 设定清单库的 Git 服务器地址。
 
-* 参数 -b ( --manifest-branch ) ： 检出索引库特定分支。
+* 参数 -b ( --manifest-branch ) ： 检出清单库特定分支。
 
 * 参数 --mirror ： 只在 repo 第一次初始化的时候使用，以和 Android 服务器同样的结构在本地建立镜像。
 
-* 参数 -m ( --manifest-name ) ：当有多个索引文件，可以指定索引库的某个索引文件为有效的索引文件。缺省为 default.xml。
+* 参数 -m ( --manifest-name ) ：当有多个清单文件，可以指定清单库的某个清单文件为有效的清单文件。缺省为 default.xml。
 
 Repo 初始化命令（repo init）可以执行多次：
 
-* 不带参数的执行 `repo init` ，从上游的索引库获取新的索引文件 `default.xml` 。
-* 使用参数 -u ( --manifest-url ) 执行 `repo init` ，会重新设定上游的索引库地址，并重新同步。
-* 使用参数 -b ( --manifest-branch ) 执行 `repo init` ，会使用索引库的不同分支，以便在使用 `repo sync` 时将项目同步到不同的里程碑。
-* 但是不能使用 --mirror 命令，该命名只能在第一次初始化时执行。我们会在后面看到一个将工作区转换为版本库镜像的接近方案。
+* 不带参数的执行 `repo init` ，从上游的清单库获取新的清单文件 `default.xml` 。
+* 使用参数 -u ( --manifest-url ) 执行 `repo init` ，会重新设定上游的清单库地址，并重新同步。
+* 使用参数 -b ( --manifest-branch ) 执行 `repo init` ，会使用清单库的不同分支，以便在使用 `repo sync` 时将项目同步到不同的里程碑。
+* 但是不能使用 --mirror 命令，该命名只能在第一次初始化时执行。那么如何将已经按照工作区模式同步的版本库转换为镜像模式呢？我们会在后面看到一个解决方案。
 
-索引库和索引文件
+清单库和清单文件
 ----------------
 
-当执行完毕 `repo init` 之后，工作目录内空空如也。实际上有一个 .repo 目录。在该目录下除了一个包含 repo 的实现的 repo 库克隆外，就是 manifest 库的克隆，以及一个符号链接链接到索引库中的 default.xml 文件。
+当执行完毕 `repo init` 之后，工作目录内空空如也。实际上有一个 .repo 目录。在该目录下除了一个包含 repo 的实现的 repo 库克隆外，就是 manifest 库的克隆，以及一个符号链接链接到清单库中的 default.xml 文件。
 
 ::
 
@@ -183,9 +188,9 @@ Repo 初始化命令（repo init）可以执行多次：
   lrwxrwxrwx 1 jiangxin jiangxin   21 2010-10-11 10:07 manifest.xml -> manifests/default.xml
   drwxr-xr-x 7 jiangxin jiangxin 4096 2010-10-11 10:07 repo/
 
-在工作目录下的 `.repo/manifest.xml` 文件就是 Android 项目的众多版本库的索引文件。Repo 命令的操作，都要参考这个索引文件。
+在工作目录下的 `.repo/manifest.xml` 文件就是 Android 项目的众多版本库的清单文件。Repo 命令的操作，都要参考这个清单文件。
 
-我们打开索引文件，会看到如下内容：
+我们打开清单文件，会看到如下内容：
 
 ::
 
@@ -215,12 +220,12 @@ Repo 初始化命令（repo init）可以执行多次：
 * 第9行定义一个项目，该项目的远程版本库相对路径为："platform/build"，在工作区克隆的位置为："build"。
 * 第10行，即 project 元素的子元素 copyfile，定义了项目克隆后的一个附加动作：拷贝文件从 "core/root.mk" 至 "Makefile"。
 * 第13行后后续的100多行定义了其它160个项目，都是采用类似的 project 元素语法。name 参数定义远程版本库的相对路径，path 参数定义克隆到本地工作区的路径。
-* 还可以出现 manifest-server 元素，其 url 属性定义了通过 XMLRPC 提供实时更新索引的服务器URL。只有当执行 `repo sync --smart-sync` 的时候，才会检查该值，并用动态获取的 manifest 去掉缺省的索引。
+* 还可以出现 manifest-server 元素，其 url 属性定义了通过 XMLRPC 提供实时更新清单的服务器URL。只有当执行 `repo sync --smart-sync` 的时候，才会检查该值，并用动态获取的 manifest 去掉缺省的清单。
 
 同步项目
 ---------
 
-在工作区，执行下面的命令，会参照 `.repo/manifest.xml` 索引文件，将项目所有相关的版本库全部克隆出来。不过请在读过本节内容之后再尝试执行这条命令。
+在工作区，执行下面的命令，会参照 `.repo/manifest.xml` 清单文件，将项目所有相关的版本库全部克隆出来。不过请在读过本节内容之后再尝试执行这条命令。
 
 ::
 
@@ -234,9 +239,9 @@ Repo 初始化命令（repo init）可以执行多次：
 
   $ repo sync platform/build
 
-Repo 有一个功能，我们可以在这里展示。就是 repo 支持通过本地索引文件覆盖缺省的索引文件。即可以在 `.repo` 目录下创建 `local_manifest.xml` 文件覆盖 `.repo/manifest.xml` 文件的设置。
+Repo 有一个功能，我们可以在这里展示。就是 repo 支持通过本地清单文件覆盖缺省的清单文件。即可以在 `.repo` 目录下创建 `local_manifest.xml` 文件覆盖 `.repo/manifest.xml` 文件的设置。
 
-在工作目录下运行下面的命令，可以创建一个 local_manifest.xml。这个本地定制的索引文件来自缺省文件，但是删除了 remote 元素和 default 元素，并将所有的 project 元素都重命名为 remove-project 元素。
+在工作目录下运行下面的命令，可以创建一个 local_manifest.xml。这个本地定制的清单文件来自缺省文件，但是删除了 remote 元素和 default 元素，并将所有的 project 元素都重命名为 remove-project 元素。这实际相当于对原有的清单文件“取反”。
 
 ::
 
@@ -244,28 +249,21 @@ Repo 有一个功能，我们可以在这里展示。就是 repo 支持通过本
     -e 's/project>/remove-project>/g' \
     < .repo/manifest.xml > .repo/local_manifest.xml
 
-这样处理之后，你会发现当执行 `repo sync` 不会检出任何项目，甚至会删除已经下载的项目。
+用下面的这条命令可以看到 repo 运行时实际获取到的清单。这个清单来自于 .repo/manifest.xml 和 .repo/local_manifest.xml 两个文件的汇总。
 
-本地定制的索引文件 `local_manifest.xml` 支持前面介绍的索引文件的所有语法，需要注意的是：
+::
+
+  $ repo manifest -o -
+
+当执行 `repo sync` 命令是，实际上就是依据合并后的清单文件进行同步。如果清单被自定义清单取反，就不会检出任何项目，甚至会删除已经下载的项目。
+
+本地定制的清单文件 `local_manifest.xml` 支持前面介绍的清单文件的所有语法，需要注意的是：
 
 * 不能出现重复定义的 remote 元素。这就是为什么上面的脚本要删除来自缺省 manifest.xml 的 remote 元素。
 * 不能出现 default 元素，仅为全局仅能有一个。
-* 不能出现重复的 project 定义（name 属性不能相同），但是可以通过 remove-project 元素将缺省索引中定义的 project 删除再重新定义。
+* 不能出现重复的 project 定义（name 属性不能相同），但是可以通过 remove-project 元素将缺省清单中定义的 project 删除再重新定义。
 
 试着编辑 .repo/local_manifest.xml ，在其中再添加几个 project 元素，然后试着用 `repo sync` 命令进行同步。
-
-If a repo sync shows sync conflicts:
-
-   1. View the files that are unmerged (status code = U).
-   2. Edit the conflict regions as necessary.
-   3. Change into the relevant project directory, run git add and git commit for the files in question, and then "rebase" the changes. For example:
-      $ cd bionic
-      $ git add bionic/*
-      $ git commit
-      $ git rebase --continue
-
-   4. When the rebase is complete start the entire sync again:
-      $ repo syncbionic proj2 proj3 ... projN 
 
 
 Repo 的命令集
@@ -275,9 +273,9 @@ Repo 子命令实际上是 Git 命令的简单或者复杂的封装。每一个 
 
 init 命令
 +++++++++
-子命令  init，完成的主要是检出索引版本库（manifest.git），并配置 Git 用户的用户名和邮件地址。
+子命令  init，完成的主要是检出清单版本库（manifest.git），并配置 Git 用户的用户名和邮件地址。
 
-实际上，你完全可以进入到 `.repo/manifests` 目录，用 git 命令操作索引库。对 manifests 的修改不会因为执行 `repo init` 而丢失，除非是处于未跟踪状态。
+实际上，你完全可以进入到 `.repo/manifests` 目录，用 git 命令操作清单库。对 manifests 的修改不会因为执行 `repo init` 而丢失，除非是处于未跟踪状态。
 
 sync 命令
 +++++++++
@@ -429,7 +427,7 @@ Android 的代码库众多而且庞大，如果一个开发团队每个人都去
 从 android 的工作区到代码库镜像
 --------------------------------
 
-当执行 `repo sync` 命令将 android 众多的版本库克隆到本地后，各个项目在工作区中的部署和实际在服务器端的部署是不同的。这个在之前介绍 repo 的索引库机制的时候，就已经介绍过了。
+当执行 `repo sync` 命令将 android 众多的版本库克隆到本地后，各个项目在工作区中的部署和实际在服务器端的部署是不同的。这个在之前介绍 repo 的清单库机制的时候，就已经介绍过了。
 
 当 repo 工作区使用不带 `--mirror` 的 `repo init -u` 初始化并完成同步后，如果再次执行 `repo init` 并附带了 `--mirror` 参数，repo 会报错退出："fatal: --mirror not supported on existing client"。实际上 "--mirror" 参数只能对尚未初始化的 repo 工作区执行。
 
