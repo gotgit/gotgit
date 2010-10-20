@@ -1,3 +1,65 @@
+备忘
+=====
+
+Git 协议
+--------
+SSH 协议的语法有：
+
+SCP 风格:: URI_SCP = re.compile(r'^([^@:]*@?[^:/]{1,}):')
+  : 不能设定端口，除非试用别名
+
+schema 风格 :: URI_ALL = re.compile(r'^([a-z][a-z+]*)://([^@/]*@?[^/]*)/')
+  可以设定端口 ssh://user@host:port/
+  ssh://, git+ssh:// ssh+git://
+
+what is valid ref name?
+-------------------------
+
+git.check_ref_format "heads/xxxxxxxx"
+
+
+
+git describe 命令
+------------------
+显示当前最近的 tag，如果在最近的 tag 基础上有新的提交，则用最近的tag 加上 "-g<commit-id>"
+
+
+
+版本
+-----
+^+rev : 取反？
+
+::
+
+       Thus, the following command:
+
+                   $ git rev-list foo bar ^baz
+
+       means "list all the commits which are reachable from foo or bar, but not from baz".
+
+       A special notation "<commit1>..<commit2>" can be used as a short-hand for "^<commit1> <commit2>". For example,
+       either of the following may be used interchangeably:
+
+                   $ git rev-list origin..HEAD
+                   $ git rev-list HEAD ^origin
+
+
+       Another special notation is "<commit1>...<commit2>" which is useful for merges. The resulting set of commits is
+       the symmetric difference between the two operands. The following two commands are equivalent:
+
+                   $ git rev-list A B --not $(git merge-base --all A B)
+                   $ git rev-list A...B
+
+
+
+
+Git 钩子
+--------
+* repo/hooks/commit-msg
+* repo/hooks/pre-auto-gc
+
+
+
 词语翻译
 ========
 

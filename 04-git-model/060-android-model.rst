@@ -39,7 +39,7 @@ Android 版本库众多的原因，主要原因是版本库太大以及 Git 不�
 关于 repo
 ----------
 
-如前所述，repo 是 Google 开发的用于管理 Android 版本库的一个工具。Repo 在 Git 基础之上构建，简化了对多个 Git 版本库的管理。
+Repo 是 Google 开发的用于管理 Android 版本库的一个工具。Repo 并不是用于取代 Git，是用 Python 对 Git 进行了一定的封装，简化了对多个 Git 版本库的管理。对于 repo 管理下的版本库的任何一个，都还是需要使用 Git 命令进行操作。
 
 repo 的使用过程大致如下：
 
@@ -49,8 +49,8 @@ repo 的使用过程大致如下：
 * 同时对 160 多个版本库执行切换分支操作，切换到某个分支。
 
 
-安装 repo 引导脚本
--------------------
+安装 repo 以及索引库的初始化
+-----------------------------
 
 首先下载 repo 的引导脚本，你可以使用 wget, curl 甚至浏览器从地址 http://android.git.kernel.org/repo 下载。并把 repo 脚本设置为可执行，并复制到可执行的路径中。在 Linux 上可以用下面的指令将 repo 下载并复制到用户主目录的 bin 目录下。
 
@@ -58,14 +58,6 @@ repo 的使用过程大致如下：
 
   $ curl http://android.git.kernel.org/repo > ~/bin/repo 
   $ chmod a+x ~/bin/repo
-
-下载并保存 repo 引导脚本后，建立一个工作目录，在工作目录中执行 repo 脚本完成 repo 完整的下载以及项目索引版本库（manifest.git）的下载。
-
-::
-
-  $ mkdir working-directory-name
-  $ cd working-directory-name
-  $ repo init -u git://android.git.kernel.org/platform/manifest.git 
 
 为什么说下载的 repo 只是一个引导文件（bootstrap）而不是直接称为 repo 呢？因为 repo 的大部分功能代码不在其中，下载的只是一个帮助完成整个 repo 程序的继续下载和加载工具。如果你是一个程序员，对 repo 的执行比较好奇，我们可以一起分析一下 repo 引导脚本。否则可以跳到下一节。
 
@@ -108,7 +100,29 @@ Repo 引导脚本是用什么语言开发的？这是一个问题。
 
 在我们下载 repo 引导脚本后，没有初始化之前，当然不会存在 `.repo/repo/main.py` 脚本，这时必须进行初始化操作。
 
-初始化操作会从 android 的代码中克隆 repo.git 库，到当前目录下的 `.repo/repo` 目录下。在完成 repo.git 克隆之后，再次运行 _FindRepo 并把控制权交给找到的 .repo/repo/main.py 脚本文件，重新对 repo 命令进行处理。
+repo 和索引库的初始化
+---------------------
+下载并保存 repo 引导脚本后，建立一个工作目录，这个工作目录将作为 Android 的工作区目录。在工作目录中执行 `repo init -u <url>` 完成 repo 完整的下载以及项目索引版本库（manifest.git）的下载。
+
+::
+
+  $ mkdir working-directory-name
+  $ cd working-directory-name
+  $ repo init -u git://android.git.kernel.org/platform/manifest.git 
+
+Repo init 要完成如下操作：
+
+* 完成 repo 这一工具的完整下载，因为现在我们有的不过是 repo 的引导程序。
+
+  初始化操作会从 android 的代码中克隆 repo.git 库，到当前目录下的 `.repo/repo` 目录下。在完成 repo.git 克隆之后，`repo init` 命令会将控制权交给工作区的 `.repo/repo/main.py` 这个刚刚从 repo.git 库克隆来的脚本文件，继续进行初始化。
+
+* 克隆 android 的索引库 manifest.git（地址来自于 -u 参数）。
+
+  克隆的索引库位于 `.repo/manifests.git` 中，并本地克隆到 `.repo/manifests` 。索引文件 `.repo/manifest.xml` 是符号链接指向 `.repo/manifests/default.xml` 。
+
+* 提问用户的姓名和邮件地址，如果和 Git 缺省的用户名、邮件地址不同，则记录在 `.repo/manifests.git` 库的 config 文件中。
+
+* 命令 `repo init` 还可以附带 `--mirror` 参数，以建立和上游 Android 的版本库一模一样的镜像。我们会在后面的章节介绍。
 
 **从哪里下载 repo.git ？**
 
@@ -141,15 +155,20 @@ TODO
 
 Repo 引导脚本的 init 子命令可以使用下列和索引库相关的参数：
 
-TODO 
+* 参数 -u ( --manifest-url ) ： 设定索引库的 Git 服务器地址。
 
-* 参数 -u ( --manifest-url )
-* 参数 -b ( --manifest-branch )
-* 参数 --mirror
-* 其它参数： 
+* 参数 -b ( --manifest-branch ) ： 检出索引库特定分支。
 
-  - -o ( --origin ) 使用指定的名称作为 remote 名称，否则为 origin。
-  - -m ( --manifest-name ) 
+* 参数 --mirror ： 只在 repo 第一次初始化的时候使用，以和 Android 服务器同样的结构在本地建立镜像。
+
+* 参数 -m ( --manifest-name ) ：当有多个索引文件，可以指定索引库的某个索引文件为有效的索引文件。缺省为 default.xml。
+
+Repo 初始化命令（repo init）可以执行多次：
+
+* 不带参数的执行 `repo init` ，从上游的索引库获取新的索引文件 `default.xml` 。
+* 使用参数 -u ( --manifest-url ) 执行 `repo init` ，会重新设定上游的索引库地址，并重新同步。
+* 使用参数 -b ( --manifest-branch ) 执行 `repo init` ，会使用索引库的不同分支，以便在使用 `repo sync` 时将项目同步到不同的里程碑。
+* 但是不能使用 --mirror 命令，该命名只能在第一次初始化时执行。我们会在后面看到一个将工作区转换为版本库镜像的接近方案。
 
 索引库和索引文件
 ----------------
@@ -196,7 +215,7 @@ TODO
 * 第9行定义一个项目，该项目的远程版本库相对路径为："platform/build"，在工作区克隆的位置为："build"。
 * 第10行，即 project 元素的子元素 copyfile，定义了项目克隆后的一个附加动作：拷贝文件从 "core/root.mk" 至 "Makefile"。
 * 第13行后后续的100多行定义了其它160个项目，都是采用类似的 project 元素语法。name 参数定义远程版本库的相对路径，path 参数定义克隆到本地工作区的路径。
-* 还可以出现 manifest-server 元素，其 url 属性定义了 manifest_server 的值。 TODO
+* 还可以出现 manifest-server 元素，其 url 属性定义了通过 XMLRPC 提供实时更新索引的服务器URL。只有当执行 `repo sync --smart-sync` 的时候，才会检查该值，并用动态获取的 manifest 去掉缺省的索引。
 
 同步项目
 ---------
@@ -207,7 +226,7 @@ TODO
 
   $ repo sync
 
-对于 Android，这个操作需要通过网络传递 1.6GB 的内容，如果带宽不是很高的化，可能会花掉几个小时甚至是一天的时间。
+对于 Android，这个操作需要通过网络传递接近 2 个GB的内容，如果带宽不是很高的化，可能会花掉几个小时甚至是一天的时间。
 
 也可以仅克隆感兴趣的项目，在 `repo sync` 后面跟上项目的名称。项目的名称来自于 `.repo/manifest.xml` 这个 XML 文件中 project 元素的 name 属性值。例如克隆 platform/build 项目：
 
@@ -227,23 +246,162 @@ Repo 有一个功能，我们可以在这里展示。就是 repo 支持通过本
 
 这样处理之后，你会发现当执行 `repo sync` 不会检出任何项目，甚至会删除已经下载的项目。
 
-local_manifest.xml 支持前面介绍的索引文件的所有语法，需要注意的是：
+本地定制的索引文件 `local_manifest.xml` 支持前面介绍的索引文件的所有语法，需要注意的是：
 
 * 不能出现重复定义的 remote 元素。这就是为什么上面的脚本要删除来自缺省 manifest.xml 的 remote 元素。
-* 不能出现 default 元素，只能有一个。
+* 不能出现 default 元素，仅为全局仅能有一个。
 * 不能出现重复的 project 定义（name 属性不能相同），但是可以通过 remove-project 元素将缺省索引中定义的 project 删除再重新定义。
 
 试着编辑 .repo/local_manifest.xml ，在其中再添加几个 project 元素，然后试着用 `repo sync` 命令进行同步。
 
-Repo 的子命令是 Git 命令的简单封装
------------------------------------
+If a repo sync shows sync conflicts:
+
+   1. View the files that are unmerged (status code = U).
+   2. Edit the conflict regions as necessary.
+   3. Change into the relevant project directory, run git add and git commit for the files in question, and then "rebase" the changes. For example:
+      $ cd bionic
+      $ git add bionic/*
+      $ git commit
+      $ git rebase --continue
+
+   4. When the rebase is complete start the entire sync again:
+      $ repo syncbionic proj2 proj3 ... projN 
+
+
+Repo 的命令集
+--------------
+
+Repo 子命令实际上是 Git 命令的简单或者复杂的封装。每一个 repo 子命令都对应于 repo 源码树中 `subcmds` 目录下的一个同名的 Python 文件。通过阅读代码，我们可以更加深入的了解 repo 子命令的封装。
 
 init 命令
 +++++++++
+子命令  init，完成的主要是检出索引版本库（manifest.git），并配置 Git 用户的用户名和邮件地址。
+
+实际上，你完全可以进入到 `.repo/manifests` 目录，用 git 命令操作索引库。对 manifests 的修改不会因为执行 `repo init` 而丢失，除非是处于未跟踪状态。
+
+sync 命令
++++++++++
+如果某个项目版本库尚不存在，则执行 `repo sync` 命令相当于执行 `git clone` 。
+
+如果项目版本库已经存在，则相当于执行下面的两个命令：
+
+* git remote update
+
+  相当于对每一个 remote 源执行 fetch 操作。
+
+* git rebase origin/branch
+
+  针对当前分支的跟踪分支，执行 rebase 操作。不采用 merge 而是采用 rebase，目的是减少提交数量，方便评审(Gerrit)。
+
+start 命令
++++++++++++
+
+repo start newbranchname [project-list ]
+
+Starts a new branch for development.
+
+The newbranchname argument should provide a short description of the change you are trying to make to the projects.If you don't know, consider using the name default.
+
+The project-list specifies which projects will participate in this topic branch. You can specify project-list as a list of names or a list of paths to local working directories for the projects:
+repo start default [proj1 proj2 ... projN ]
+
+"." is a useful shorthand for the project in the current working directory.
+
+status 命令
++++++++++++
+
+repo status [project-list ]
+
+Shows the status of the current working directory. You can specify project-list as a list of names or a list of paths to local source directories for the projects:
+repo status [proj1 proj2 ... projN ]
+
+To see the status for only the current branch, run
+repo status .
+
+The status information will be listed by project. For each file in the project, a two-letter code is used:
+
+    * In the left-most column, an uppercase letter indicates what is happening in the index (the staged files) when compared to the last committed state.
+
+    * In the next column, a lowercase letter indicates what is happening in the working directory when compared to the index (what is staged).
+
+Character   Meaning
+A   The file is added (brand new). Can only appear in the first column.
+M or m
+  The file already exists but has been modified in some way.
+D or d
+  The file has been deleted.
+R   The file has been renamed. Can only appear in the first column. The new name is also shown on the line.
+C   The file has been copied from another file. Can only appear in the first column. The source is also shown.
+T   Only the file's mode (executable or not) has been changed. Can only appear in the first column.
+U   The file has merge conflicts and is still unmerged. Can only appear in the first column.
+-   The file state is unmodified. A hyphen in bothcolumns means this is a new file, unknown to Git. After you run git add on this file, repo status will show A-, indicating the file has been added.
+
+For example, if you edit the file main.py within the appeng project without staging the changes, then repo status might show
+
+project appeng/
+-mmain.py
+
+If you go on to stage the changes to main.py by running git add, then repo status might show
+
+project appeng/
+M- main.py
+
+If you then make further edits to the already-staged main.py and make edits to another file within the project, app.yaml, then repo status might show
+
+project appeng/
+-mapp.yaml
+Mm main.py 
+
+branches 命令
++++++++++++++
+
+diff 命令
++++++++++++++
+
+prune 命令
++++++++++++++
+repo prune [project-list ]
+
+Prunes (deletes) topics that are already merged.
+
+You can specify project-list as a list of names or a list of paths to local source directories for the projects:
+repo prune [proj1 proj2 ... projN ]
+
+upload 命令
+++++++++++++
 
 
-Repo 子命令的使用
------------------
+download 命令
+++++++++++++++
+
+download
+repo download target change
+
+Downloads the specified change into the specified local directory. (Added to Repo as of version 1.0.4.)
+
+For example, to download change 1241 into your platform/frameworks/base directory:
+$ repo download platform/frameworks/base 1241
+
+A"repo sync"should effectively remove any commits retrieved via "repo download".Or, you can check out the remote branch; e.g., "git checkout m/master".
+
+Note: As of Jan. 26, 2009, there is a mirroring lag of approximately 5 minutes between when a change is visible on the web in Gerrit and when repo download will be able to find it, because changes are actually downloaded off the git://android.git.kernel.org/ mirror farm. There will always be a slight mirroring lag as Gerrit pushes newly uploaded changes out to the mirror farm.
+
+forall 迭代器
+++++++++++++++
+
+forall
+repo forall [project-list ] -c command [arg. ..]
+
+Runs a shell command in each project.
+
+You can specify project-list as a list of names or a list of paths to local source directories for the projects
+
+
+
+Gerrit —— Repo 的评审服务器
+---------------------------
+
+https://review.source.android.com/Documentation/user-upload.html
 
 
 建立 android 代码库本地镜像
@@ -273,76 +431,79 @@ Android 的代码库众多而且庞大，如果一个开发团队每个人都去
 
 当执行 `repo sync` 命令将 android 众多的版本库克隆到本地后，各个项目在工作区中的部署和实际在服务器端的部署是不同的。这个在之前介绍 repo 的索引库机制的时候，就已经介绍过了。
 
-那么如果之前没有用镜像的方法同步 Android 版本库，难道要重新执行一遍么？要知道重新同步一份 Android 版本库是非常慢的。我自己就遇到了这个问题，不过既然有 manifest.xml 文件，我们完全可以对工作区进行反向操作，将工作区转换为镜像服务器的结构。下面就是一个示例脚本，这个脚本没有采用 dom 方式读取 xml，而是直接的行读取，因此尚有改进的空间。
+当 repo 工作区使用不带 `--mirror` 的 `repo init -u` 初始化并完成同步后，如果再次执行 `repo init` 并附带了 `--mirror` 参数，repo 会报错退出："fatal: --mirror not supported on existing client"。实际上 "--mirror" 参数只能对尚未初始化的 repo 工作区执行。
 
-脚本 `work2repo.py` 如下：
+那么如果之前没有用镜像的方法同步 Android 版本库，难道要为创建代码库镜像在重新执行一次 repo 同步么？要知道重新同步一份 Android 版本库是非常慢的。我自己就遇到了这个问题。
+
+不过既然有 manifest.xml 文件，我们完全可以对工作区进行反向操作，将工作区转换为镜像服务器的结构。下面就是一个示例脚本，这个脚本利用了已有的 repo 代码进行实现，所以看着很简洁。 8-)
+
+脚本 `work2mirror.py` 如下：
 
 ::
 
   #!/usr/bin/python
+  # -*- coding: utf-8 -*-
 
-  import re, os, sys
-  import shutil
+  import os, sys, shutil
 
-  # 匹配 manifest.xml 中类似这样的行： <project path="device/common" name="device/common" />
-  PATTERN = re.compile(ur'^\s*\<project path="(?P<path>[^"]+)" name="(?P<repo>[^"]+)"\s*/?\s*\>\s*$')
+  cwd = os.path.abspath( os.path.dirname( __file__ ) )
+  repodir = os.path.join( cwd, '.repo' )
+  S_repo = 'repo'
+  TRASHDIR = 'old_work_tree'
 
-  def worktree_to_repo( manifest, work_tree, repo_root):
-      work_tree = os.path.realpath( work_tree )
-      repo_root = os.path.realpath( repo_root )
+  if not os.path.exists( os.path.join(repodir, S_repo) ):
+      print >> sys.stderr, "Must run under repo work_dir root."
+      sys.exit(1)
 
-      if not os.access( manifest, os.R_OK ):
-          print >> sys.stderr, "File %s is not readable." % manifest
-          return 1
-      f = open( manifest, 'r' )
-      for line in f.readlines():
-          m = PATTERN.match(line)
-          if m:
-              # path 是 Android 某模块的本地工作路径下的 .git 目录
-              path = os.path.join( work_tree, m.group('path'), ".git" )
-              # repo 是 Android 某模块的版本库实际路径
-              repo = os.path.join( repo_root, m.group('repo') + ".git" )
+  sys.path.insert( 0, os.path.join(repodir, S_repo) )
+  from manifest_xml import XmlManifest
 
-              # 移动模块的工作区中的 .git 目录到实际的版本库路径
-              if os.path.exists( path ):
-                  if not os.path.exists( os.path.dirname(repo) ):
-                      os.makedirs( os.path.dirname(repo) )
-                  print "Rename %s to %s." % (path, repo)
-                  os.rename( path, repo )
+  manifest = XmlManifest( repodir )
 
-              if os.path.exists ( os.path.join( repo, 'config' ) ):
-                  # 修改版本库的配置
-                  os.chdir( repo )
-                  os.system( "git config core.bare true" )
-                  os.system( "git config remote.korg.fetch '+refs/heads/*:refs/heads/*'" )
+  if manifest.IsMirror:
+      print >> sys.stderr, "Already mirror, exit."
+      sys.exit(1)
 
-                  # 删除 remotes 分支，因为作为版本库镜像不需要 remote 分支
-                  if os.path.exists ( os.path.join( repo, 'refs', 'remotes' ) ):
-                      print "Delete " + os.path.join( repo, 'refs', 'remotes' )
-                      shutil.rmtree( os.path.join( repo, 'refs', 'remotes' ) )
-      return 0
+  trash = os.path.join( cwd, TRASHDIR )
 
-  if len(sys.argv) < 4:
-      print >> sys.stderr, "Usage: python %s <manifest.xml> <work_tree> <new_repo_root>" % sys.argv[0]
-  else:
-      sys.exit( worktree_to_repo( sys.argv[1], sys.argv[2], sys.argv[3] ) )
+  for project in manifest.projects.itervalues():
+      # 移动旧的版本库路径到镜像模式下新的版本库路径
+      newgitdir = os.path.join( cwd, '%s.git' % project.name )
+      if os.path.exists( project.gitdir ) and project.gitdir != newgitdir:
+          if not os.path.exists( os.path.dirname(newgitdir) ):
+              os.makedirs( os.path.dirname(newgitdir) )
+          print "Rename %s to %s." % (project.gitdir, newgitdir)
+          os.rename( project.gitdir, newgitdir )
 
-使用方法如下：
+      # 移动工作区到待删除目录
+      if project.worktree and os.path.exists( project.worktree ):
+          newworktree = os.path.join( trash, project.relpath )
+          if not os.path.exists( os.path.dirname(newworktree) ):
+              os.makedirs( os.path.dirname(newworktree) )
+          print "Move old worktree %s to %s." % (project.worktree, newworktree )
+          os.rename( project.worktree, newworktree )
 
-* 首先进入 Android 代码下载的根目录下，创建一个空目录 `android_repos_root` 。
+      if os.path.exists ( os.path.join( newgitdir, 'config' ) ):
+          # 修改版本库的配置
+          os.chdir( newgitdir )
+          os.system( "git config core.bare true" )
+          os.system( "git config remote.korg.fetch '+refs/heads/*:refs/heads/*'" )
 
-* 如下命令行执行 `work2repo.py` 脚本，将工作区的 .git 目录，重新按照 Android 版本库的命名空间进行组织。
+          # 删除 remotes 分支，因为作为版本库镜像不需要 remote 分支
+          if os.path.exists ( os.path.join( newgitdir, 'refs', 'remotes' ) ):
+              print "Delete " + os.path.join( newgitdir, 'refs', 'remotes' )
+              shutil.rmtree( os.path.join( newgitdir, 'refs', 'remotes' ) )
 
-  ::
+  # 设置 menifest 为镜像
+  mp = manifest.manifestProject
+  mp.config.SetString('repo.mirror', 'true')
 
-    $ python work2repo.py .repo/manifest.xml ./ android_repos_root/
 
-* 然后在另外的目录执行 `repo init --mirror` 命令。
+使用方法很简单，只要将脚本放在 Android 工作区下，执行就可以了。执行完毕会将原有工作区的目录移动到 `old_work_tree` 子目录下，在确认原有工作区没有未提交的数据后，直接删除 `old_work_tree` 即可。
 
-* 将原来 android 代码同步的目录中的 android_repos_root/ 下的目录和文件全部移动到新的 Android 同步目录中。
+::
 
-* 执行 `repo sync` 和 Android 上游同步。
-
+  $ python work2mirror.py
 
 Android 本地代码库镜像的管理
 --------------------------------
