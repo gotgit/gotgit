@@ -30,7 +30,7 @@ Android 版本库众多的原因，主要原因是版本库太大以及 Git 不�
 
 幸好，上面只是假设。聪明的 Google 程序设计师一早就考虑到了 Git 子模组的局限性以及版本库管理的问题，开发出了 repo 这一工具。
 
-Android 之父安迪.鲁宾在回应乔布斯谈及 Android 复杂的言论时，在 Twitter (http://twitter.com/Arubin) 上留了下面这段简短的话：
+Android 之父安迪·鲁宾在回应乔布斯谈及 Android 的开放性造成麻烦的言论时，在 Twitter (http://twitter.com/Arubin) 上留了下面这段简短的话：
 
 ::
 
@@ -86,7 +86,7 @@ repo 的使用过程大致如下：
 Repo 引导脚本是用什么语言开发的？这是一个问题。
 
 * 第1行，有经验的 Linux 开发者会知道此脚本是用 Shell 脚本语言开发的。
-* 第7行，是这个魔法的最神奇之处。即是一条合法的 shell 语句，又是一条合法的 python 语句。
+* 第7行，是这个魔法的最神奇之处。既是一条合法的 shell 语句，又是一条合法的 python 语句。
 * 第7行作为 shell 语句，执行 exec，用 python 调用本脚本，并替换本进程。三引号在这里相当于一个空字串和一个单独的引号。
 * 第7行作为 python 语句，三引号定义的是一个字符串，字符串后面是一个注释。
 * 实际上第1行到第7行，即是合法的 shell 语句又是合法的 python 语句。从第8行开始后面都是 python 脚本了。
@@ -220,12 +220,12 @@ Repo 初始化命令（repo init）可以执行多次：
 * 第9行定义一个项目，该项目的远程版本库相对路径为："platform/build"，在工作区克隆的位置为："build"。
 * 第10行，即 project 元素的子元素 copyfile，定义了项目克隆后的一个附加动作：拷贝文件从 "core/root.mk" 至 "Makefile"。
 * 第13行后后续的100多行定义了其它160个项目，都是采用类似的 project 元素语法。name 参数定义远程版本库的相对路径，path 参数定义克隆到本地工作区的路径。
-* 还可以出现 manifest-server 元素，其 url 属性定义了通过 XMLRPC 提供实时更新清单的服务器URL。只有当执行 `repo sync --smart-sync` 的时候，才会检查该值，并用动态获取的 manifest 去掉缺省的清单。
+* 还可以出现 manifest-server 元素，其 url 属性定义了通过 XMLRPC 提供实时更新清单的服务器URL。只有当执行 `repo sync --smart-sync` 的时候，才会检查该值，并用动态获取的 manifest 覆盖掉缺省的清单。
 
 同步项目
 ---------
 
-在工作区，执行下面的命令，会参照 `.repo/manifest.xml` 清单文件，将项目所有相关的版本库全部克隆出来。不过请在读过本节内容之后再尝试执行这条命令。
+在工作区，执行下面的命令，会参照 `.repo/manifest.xml` 清单文件，将项目所有相关的版本库全部克隆出来。不过最好请在读完本节内容之后再尝试执行这条命令。
 
 ::
 
@@ -239,9 +239,9 @@ Repo 初始化命令（repo init）可以执行多次：
 
   $ repo sync platform/build
 
-Repo 有一个功能，我们可以在这里展示。就是 repo 支持通过本地清单文件覆盖缺省的清单文件。即可以在 `.repo` 目录下创建 `local_manifest.xml` 文件覆盖 `.repo/manifest.xml` 文件的设置。
+Repo 有一个功能，我们可以在这里展示。就是 repo 支持通过本地清单，对缺省的清单文件进行补充以及覆盖。即可以在 `.repo` 目录下创建 `local_manifest.xml` 文件，其内容会和 `.repo/manifest.xml` 文件的内容进行合并。
 
-在工作目录下运行下面的命令，可以创建一个 local_manifest.xml。这个本地定制的清单文件来自缺省文件，但是删除了 remote 元素和 default 元素，并将所有的 project 元素都重命名为 remove-project 元素。这实际相当于对原有的清单文件“取反”。
+在工作目录下运行下面的命令，可以创建一个本地清单文件。这个本地定制的清单文件来自缺省文件，但是删除了 remote 元素和 default 元素，并将所有的 project 元素都重命名为 remove-project 元素。这实际相当于对原有的清单文件“取反”。
 
 ::
 
@@ -255,7 +255,7 @@ Repo 有一个功能，我们可以在这里展示。就是 repo 支持通过本
 
   $ repo manifest -o -
 
-当执行 `repo sync` 命令是，实际上就是依据合并后的清单文件进行同步。如果清单被自定义清单取反，就不会检出任何项目，甚至会删除已经下载的项目。
+当执行 `repo sync` 命令时，实际上就是依据合并后的清单文件进行同步。如果清单中的项目被自定义清单全部“取反”，执行同步就不会同步任何项目，甚至会删除已经完成同步的项目。
 
 本地定制的清单文件 `local_manifest.xml` 支持前面介绍的清单文件的所有语法，需要注意的是：
 
@@ -263,22 +263,32 @@ Repo 有一个功能，我们可以在这里展示。就是 repo 支持通过本
 * 不能出现 default 元素，仅为全局仅能有一个。
 * 不能出现重复的 project 定义（name 属性不能相同），但是可以通过 remove-project 元素将缺省清单中定义的 project 删除再重新定义。
 
-试着编辑 .repo/local_manifest.xml ，在其中再添加几个 project 元素，然后试着用 `repo sync` 命令进行同步。
+试着编辑 `.repo/local_manifest.xml` ，在其中再添加几个 project 元素，然后试着用 `repo sync` 命令进行同步。
 
 
 Repo 的命令集
 --------------
 
-Repo 子命令实际上是 Git 命令的简单或者复杂的封装。每一个 repo 子命令都对应于 repo 源码树中 `subcmds` 目录下的一个同名的 Python 文件。通过阅读代码，我们可以更加深入的了解 repo 子命令的封装。
+Repo 子命令实际上是 Git 命令的简单或者复杂的封装。每一个 repo 子命令都对应于 repo 源码树中 `subcmds` 目录下的一个同名的 Python 文件。每一个 repo 子命令都可以通过下面的命令获得帮助。
+
+::
+
+  $ repo help init
+
+通过阅读代码，我们可以更加深入的了解 repo 子命令的封装。
 
 init 命令
 +++++++++
-子命令  init，完成的主要是检出清单版本库（manifest.git），并配置 Git 用户的用户名和邮件地址。
+
+如前所述，子命令  init，完成的主要是检出清单版本库（manifest.git），并配置 Git 用户的用户名和邮件地址。
 
 实际上，你完全可以进入到 `.repo/manifests` 目录，用 git 命令操作清单库。对 manifests 的修改不会因为执行 `repo init` 而丢失，除非是处于未跟踪状态。
 
 sync 命令
 +++++++++
+
+如前所述，sync 子命令用于参照清单文件克隆/同步版本库。
+
 如果某个项目版本库尚不存在，则执行 `repo sync` 命令相当于执行 `git clone` 。
 
 如果项目版本库已经存在，则相当于执行下面的两个命令：
@@ -294,95 +304,197 @@ sync 命令
 start 命令
 +++++++++++
 
-repo start newbranchname [project-list ]
+repo start 子命令实际上是对 `git checkout -b` 命令的封装。为指定的项目或者所有项目（--all），以清单文件中设定的项目的版本为基础，创建特性分支。特性分支由命令的第一个参数指定。相当于执行 checkout -b 。
 
-Starts a new branch for development.
+用法:
 
-The newbranchname argument should provide a short description of the change you are trying to make to the projects.If you don't know, consider using the name default.
+::
 
-The project-list specifies which projects will participate in this topic branch. You can specify project-list as a list of names or a list of paths to local working directories for the projects:
-repo start default [proj1 proj2 ... projN ]
-
-"." is a useful shorthand for the project in the current working directory.
+  repo start <newbranchname> [--all | <project>...]
 
 status 命令
 +++++++++++
 
-repo status [project-list ]
+repo status 子命令实际上是对 `git diff-index`, `git diff-files` 命令的封装，同时显示暂存区的状态和本地文件修改的状态。
 
-Shows the status of the current working directory. You can specify project-list as a list of names or a list of paths to local source directories for the projects:
-repo status [proj1 proj2 ... projN ]
+用法：
 
-To see the status for only the current branch, run
-repo status .
+::
 
-The status information will be listed by project. For each file in the project, a two-letter code is used:
+  repo status [<project>...]
 
-    * In the left-most column, an uppercase letter indicates what is happening in the index (the staged files) when compared to the last committed state.
 
-    * In the next column, a lowercase letter indicates what is happening in the working directory when compared to the index (what is staged).
+示例输出：
 
-Character   Meaning
-A   The file is added (brand new). Can only appear in the first column.
-M or m
-  The file already exists but has been modified in some way.
-D or d
-  The file has been deleted.
-R   The file has been renamed. Can only appear in the first column. The new name is also shown on the line.
-C   The file has been copied from another file. Can only appear in the first column. The source is also shown.
-T   Only the file's mode (executable or not) has been changed. Can only appear in the first column.
-U   The file has merge conflicts and is still unmerged. Can only appear in the first column.
--   The file state is unmodified. A hyphen in bothcolumns means this is a new file, unknown to Git. After you run git add on this file, repo status will show A-, indicating the file has been added.
+::
 
-For example, if you edit the file main.py within the appeng project without staging the changes, then repo status might show
+  project repo/                                   branch devwork
+   -m     subcmds/status.py
+   ...
 
-project appeng/
--mmain.py
+上面示例输出显示了 repo 项目的 devwork 分支的修改状态。
 
-If you go on to stage the changes to main.py by running git add, then repo status might show
+* 每个小节的首行显示项目名称，以及所在分支名称。
+* 之后显示该项目中文件变更状态。头两个字母显示变更状态，后面显示文件名或者其它变更信息。
+* 第一个字母表示暂存区的文件修改状态。
 
-project appeng/
-M- main.py
+  其实是 `git-diff-index` 命令输出中的状态标识并大写显示。
 
-If you then make further edits to the already-staged main.py and make edits to another file within the project, app.yaml, then repo status might show
+  - -:  没有改变
+  - A:  添加          （不在HEAD中，  在暂存区                ）
+  - M:  修改          （  在HEAD中，  在暂存区，内容不同      ）
+  - D:  删除          （  在HEAD中，不在暂存区                ）
+  - R:  重命名        （不在HEAD中，  在暂存区，路径修改      ）
+  - C:  拷贝          （不在HEAD中，  在暂存区，从其它文件拷贝）
+  - T:  文件状态改变  （  在HEAD中，  在暂存区，内容相同      ）
+  - U:  未合并，需要冲突解决
 
-project appeng/
--mapp.yaml
-Mm main.py 
+* 第二个字母表示工作区文件的更改状态。
+
+  其实是 `git-diff-files` 命令输出中的状态标识并小写显示。
+
+  - -:  新/未知       （不在暂存区，  在工作区                ）
+  - m:  修改          （  在暂存区，  在工作区，被修改        ）
+  - d:  删除          （  在暂存区，不在工作区                ）
+
+* 两个表示状态的字母后面，显示文件名信息。如果有文件重命名还会显示改变前后的文件名以及文件的相似度。
+
+abandon 命令
++++++++++++++
+
+repo abandon 子命令实际上是对 `git branch -D` 命令的封装。该命令非常危险，直接删除分支，请慎用。
+
+用法：
+
+::
+
+  repo abandon <branchname> [<project>...]
+
+checkout 命令
++++++++++++++
+
+repo checkout 子命令实际上是对 `git checkout` 命令的封装。检出之前由 repo start 创建的分支。
+
+用法：
+
+::
+
+  repo checkout <branchname> [<project>...]
 
 branches 命令
 +++++++++++++
 
+repo branches 读取各个项目的分支列表并汇总显示。该命令实际上是通过直接读取 `.git/refs` 目录下的版本索引来获取分支列表的。
+
+用法：
+
+::
+
+  repo branches [<project>...]
+
+
+输出示例：
+
+::
+
+  *P nocolor                   | in repo
+     repo2                     |
+
+* 第一个字段显示分支的状态：是否是当前分支，分支是否发布到代码审核服务器上？
+* 第一个字母若显示星号(*)，含义是此分支为当前分支
+* 第二个字母若为大写字母 P，则含义是分支所有提交都发布到代码审核服务器上了。 
+* 第二个字母若为小写字母 p，则含义是只有部分提交被发布到代码审核服务器上。
+* 若不显示P或者p，则表明分支尚未发布。
+* 第二个字段为分支名。
+* 第三个字段为以竖线（|）开始的字符串，表示该分支存在于哪些项目中。
+
+  - | in all projects
+
+    该分支处于所有项目中。
+
+  - | in project1 project2 
+
+    该分支只在特定项目中定义。如: project1, project2。
+
+  - | not in project1
+
+   该分支不存在于这些项目中。即除了 project1 项目外，其它项目都包含此分支。
+
+
 diff 命令
 +++++++++++++
 
-prune 命令
-+++++++++++++
-repo prune [project-list ]
+repo diff 子命令实际上是对 `git diff` 命令的封装，用以分别显示各个项目工作区下的文件差异。
 
-Prunes (deletes) topics that are already merged.
+用法：
 
-You can specify project-list as a list of names or a list of paths to local source directories for the projects:
-repo prune [proj1 proj2 ... projN ]
+::
 
-upload 命令
-++++++++++++
+  repo diff [<project>...]
 
-
-download 命令
+stage 命令
 ++++++++++++++
 
-download
-repo download target change
+repo stage 子命令实际上是对 `git add --interactive` 命令的封装，用以对各个项目工作区中的改动（修改、添加等）进行挑选以加入暂存区。
 
-Downloads the specified change into the specified local directory. (Added to Repo as of version 1.0.4.)
+用法：
 
-For example, to download change 1241 into your platform/frameworks/base directory:
-$ repo download platform/frameworks/base 1241
+:: 
 
-A"repo sync"should effectively remove any commits retrieved via "repo download".Or, you can check out the remote branch; e.g., "git checkout m/master".
+  repo stage -i [<project>...]
 
-Note: As of Jan. 26, 2009, there is a mirroring lag of approximately 5 minutes between when a change is visible on the web in Gerrit and when repo download will be able to find it, because changes are actually downloaded off the git://android.git.kernel.org/ mirror farm. There will always be a slight mirroring lag as Gerrit pushes newly uploaded changes out to the mirror farm.
+
+upload 命令
+++++++++++++++
+
+repo upload 相当于 `git push` ，但是又有很大的不同。执行 `repo upload` 不是将版本库改动推送到克隆时的远程服务器，而是用 SSH 协议（特殊端口）推送到代码审查服务器（由 Gerrit 软件架设）的特殊引用上。代码审核服务器会对推送进行特殊处理，将新的提交显示为一个待审核的修改集，并进入代码审查流程。只有当审核通过，才会合并到官方正式的版本库中。
+
+用法：
+
+:: 
+
+  repo upload [--re --cc] {[<project>]... | --replace <project>}
+
+  参数：
+    -h, --help            显示帮助信息。
+    -t                    发送本地分支名称到 Gerrit 代码审核服务器。
+    --replace             发送此分支的更新补丁集。注意使用该参数，只能指定一个项目。
+    --re=REVIEWERS, --reviewers=REVIEWERS
+                          要求有指定的人员进行审核。
+    --cc=CC               同时发送通知到如下邮件地址。
+
+**确定推送服务器的端口**
+
+分支改动的推送是发给代码审核服务器，而不是下载代码的服务器。使用的协议是 SSH 协议，但是使用的并非标准端口。如何确认代码审核服务器上提供的特殊 SSH 端口呢？
+
+在执行 repo upload 命令时，repo 会通过访问代码审核Web服务器的 "/ssh_info" 的 Url 获取 SSH 服务端口，缺省 29418。这个端口，就是 `repo upload` 发起推送的服务器的 SSH 服务端口。
+
+**修订集修改后重新传送**
+
+当已经通过 `repo upload` 命令在代码审查服务器上提交了一个修订集，会得到一个修订号。关于此次修订的相关讨论会发送到提交者的邮箱中。如果修订集有误没有通过审核，可以重新修改代码，再次向代码审核服务器上传修订集。
+
+一个修订集修改后再次上传，如果修订集的 ID 不变是非常有用的，因为这样相关的修订集都在代码审核服务器的同一个界面中显示。
+
+在执行 `repo upload` 时会弹出一个编辑界面，提示在方括号中输入修订集编号，否则会在代码审查服务器上创建新的ID。有一个办法可以不用手工输入修订集，如下：
+
+::
+
+  repo upload --replace project_name
+
+当使用 `--replace` 参数后，repo 会检查本地版本库名为 `refs/published/branch_name` 的特殊引用，获得其对应的哈希值。然后在代码审核服务器的 `refs/changes/` 命名空间下的特殊引用，匹配的名称中即包含变更集ID，直接用此变更集ID作为新的变更集ID提交到代码审核服务器。
+
+
+upload 命令
+++++++++++++++
+
+repo upload 子命令实际上是对 `git add --interactive` 命令的封装，用以对各个项目工作区中的改动（修改、添加等）进行挑选以加入暂存区。
+
+用法：
+
+:: 
+
+  repo stage -i [<project>...]
+
 
 forall 迭代器
 ++++++++++++++
@@ -405,7 +517,7 @@ https://review.source.android.com/Documentation/user-upload.html
 建立 android 代码库本地镜像
 ----------------------------
 
-Android 的代码库众多而且庞大，如果一个开发团队每个人都去执行 `repo init -u` ，再执行 `repo sync` 从 Android 服务器克隆版本库的话，多大的网络带宽恐怕都不够用。唯一的办法是本地建立一个 Android 版本库的镜像。
+Android 为企业提供一个新的市场，无论大企业，小企业都是处于同一个起跑线上。研究 Android 尤其是 Android 系统核心或者是驱动的开发，首先需要做的就是本地克隆建立一套 Android 版本库管理机制。 因为 Android 的代码库是那么庞杂，如果一个开发团队每个人都去执行 `repo init -u` ，再执行 `repo sync` 从 Android 服务器克隆版本库的话，多大的网络带宽恐怕都不够用。唯一的办法是本地建立一个 Android 版本库的镜像。
 
 建立本地镜像非常简单，就是在执行 `repo init -u` 初始化的时候，附带上 `--mirror` 参数。
 

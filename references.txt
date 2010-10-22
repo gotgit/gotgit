@@ -1,6 +1,50 @@
 备忘
 =====
 
+blob
+---------------
+
+
+refs
+------------------------
+引用
+
+
+
+staging area : 暂存区
+------------------------
+
+字典的解释
+
+<--- 朗道英汉字典5.0 --->
+staging area
+【医】 遣送区
+<--- Dict.cn --->
+staging area
+部队从一个战场转往另一个战场的集结地
+
+
+git config
+-------------------
+
+$ git config --global core.editor emacs
+
+$ git config --global merge.tool vimdiff
+
+Git 可以理解 kdiff3，tkdiff，meld，xxdiff，emerge，vimdiff，gvimdiff，ecmerge，和 opendiff 等合并工具的输出信息。
+
+repository
+--------------
+
+仓库
+
+remote repos: 远程仓库
+
+review
+-----------
+代码审查
+
+
 Git 协议
 --------
 SSH 协议的语法有：
