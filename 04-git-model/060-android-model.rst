@@ -54,8 +54,8 @@ repo 的使用过程大致如下：
 * 同时对 160 多个版本库执行切换分支操作，切换到某个分支。
 
 
-安装 repo 以及清单库的初始化
------------------------------
+安装 repo
+----------
 
 首先下载 repo 的引导脚本，你可以使用 wget, curl 甚至浏览器从地址 http://android.git.kernel.org/repo 下载。并把 repo 脚本设置为可执行，并复制到可执行的路径中。在 Linux 上可以用下面的指令将 repo 下载并复制到用户主目录的 bin 目录下。
 
@@ -266,253 +266,6 @@ Repo 有一个功能，我们可以在这里展示。就是 repo 支持通过本
 试着编辑 `.repo/local_manifest.xml` ，在其中再添加几个 project 元素，然后试着用 `repo sync` 命令进行同步。
 
 
-Repo 的命令集
---------------
-
-Repo 子命令实际上是 Git 命令的简单或者复杂的封装。每一个 repo 子命令都对应于 repo 源码树中 `subcmds` 目录下的一个同名的 Python 文件。每一个 repo 子命令都可以通过下面的命令获得帮助。
-
-::
-
-  $ repo help init
-
-通过阅读代码，我们可以更加深入的了解 repo 子命令的封装。
-
-init 命令
-+++++++++
-
-如前所述，子命令  init，完成的主要是检出清单版本库（manifest.git），并配置 Git 用户的用户名和邮件地址。
-
-实际上，你完全可以进入到 `.repo/manifests` 目录，用 git 命令操作清单库。对 manifests 的修改不会因为执行 `repo init` 而丢失，除非是处于未跟踪状态。
-
-sync 命令
-+++++++++
-
-如前所述，sync 子命令用于参照清单文件克隆/同步版本库。
-
-如果某个项目版本库尚不存在，则执行 `repo sync` 命令相当于执行 `git clone` 。
-
-如果项目版本库已经存在，则相当于执行下面的两个命令：
-
-* git remote update
-
-  相当于对每一个 remote 源执行 fetch 操作。
-
-* git rebase origin/branch
-
-  针对当前分支的跟踪分支，执行 rebase 操作。不采用 merge 而是采用 rebase，目的是减少提交数量，方便评审(Gerrit)。
-
-start 命令
-+++++++++++
-
-repo start 子命令实际上是对 `git checkout -b` 命令的封装。为指定的项目或者所有项目（--all），以清单文件中设定的项目的版本为基础，创建特性分支。特性分支由命令的第一个参数指定。相当于执行 checkout -b 。
-
-用法:
-
-::
-
-  repo start <newbranchname> [--all | <project>...]
-
-status 命令
-+++++++++++
-
-repo status 子命令实际上是对 `git diff-index`, `git diff-files` 命令的封装，同时显示暂存区的状态和本地文件修改的状态。
-
-用法：
-
-::
-
-  repo status [<project>...]
-
-
-示例输出：
-
-::
-
-  project repo/                                   branch devwork
-   -m     subcmds/status.py
-   ...
-
-上面示例输出显示了 repo 项目的 devwork 分支的修改状态。
-
-* 每个小节的首行显示项目名称，以及所在分支名称。
-* 之后显示该项目中文件变更状态。头两个字母显示变更状态，后面显示文件名或者其它变更信息。
-* 第一个字母表示暂存区的文件修改状态。
-
-  其实是 `git-diff-index` 命令输出中的状态标识并大写显示。
-
-  - -:  没有改变
-  - A:  添加          （不在HEAD中，  在暂存区                ）
-  - M:  修改          （  在HEAD中，  在暂存区，内容不同      ）
-  - D:  删除          （  在HEAD中，不在暂存区                ）
-  - R:  重命名        （不在HEAD中，  在暂存区，路径修改      ）
-  - C:  拷贝          （不在HEAD中，  在暂存区，从其它文件拷贝）
-  - T:  文件状态改变  （  在HEAD中，  在暂存区，内容相同      ）
-  - U:  未合并，需要冲突解决
-
-* 第二个字母表示工作区文件的更改状态。
-
-  其实是 `git-diff-files` 命令输出中的状态标识并小写显示。
-
-  - -:  新/未知       （不在暂存区，  在工作区                ）
-  - m:  修改          （  在暂存区，  在工作区，被修改        ）
-  - d:  删除          （  在暂存区，不在工作区                ）
-
-* 两个表示状态的字母后面，显示文件名信息。如果有文件重命名还会显示改变前后的文件名以及文件的相似度。
-
-abandon 命令
-+++++++++++++
-
-repo abandon 子命令实际上是对 `git branch -D` 命令的封装。该命令非常危险，直接删除分支，请慎用。
-
-用法：
-
-::
-
-  repo abandon <branchname> [<project>...]
-
-checkout 命令
-+++++++++++++
-
-repo checkout 子命令实际上是对 `git checkout` 命令的封装。检出之前由 repo start 创建的分支。
-
-用法：
-
-::
-
-  repo checkout <branchname> [<project>...]
-
-branches 命令
-+++++++++++++
-
-repo branches 读取各个项目的分支列表并汇总显示。该命令实际上是通过直接读取 `.git/refs` 目录下的版本索引来获取分支列表的。
-
-用法：
-
-::
-
-  repo branches [<project>...]
-
-
-输出示例：
-
-::
-
-  *P nocolor                   | in repo
-     repo2                     |
-
-* 第一个字段显示分支的状态：是否是当前分支，分支是否发布到代码审核服务器上？
-* 第一个字母若显示星号(*)，含义是此分支为当前分支
-* 第二个字母若为大写字母 P，则含义是分支所有提交都发布到代码审核服务器上了。 
-* 第二个字母若为小写字母 p，则含义是只有部分提交被发布到代码审核服务器上。
-* 若不显示P或者p，则表明分支尚未发布。
-* 第二个字段为分支名。
-* 第三个字段为以竖线（|）开始的字符串，表示该分支存在于哪些项目中。
-
-  - | in all projects
-
-    该分支处于所有项目中。
-
-  - | in project1 project2 
-
-    该分支只在特定项目中定义。如: project1, project2。
-
-  - | not in project1
-
-   该分支不存在于这些项目中。即除了 project1 项目外，其它项目都包含此分支。
-
-
-diff 命令
-+++++++++++++
-
-repo diff 子命令实际上是对 `git diff` 命令的封装，用以分别显示各个项目工作区下的文件差异。
-
-用法：
-
-::
-
-  repo diff [<project>...]
-
-stage 命令
-++++++++++++++
-
-repo stage 子命令实际上是对 `git add --interactive` 命令的封装，用以对各个项目工作区中的改动（修改、添加等）进行挑选以加入暂存区。
-
-用法：
-
-:: 
-
-  repo stage -i [<project>...]
-
-
-upload 命令
-++++++++++++++
-
-repo upload 相当于 `git push` ，但是又有很大的不同。执行 `repo upload` 不是将版本库改动推送到克隆时的远程服务器，而是用 SSH 协议（特殊端口）推送到代码审查服务器（由 Gerrit 软件架设）的特殊引用上。代码审核服务器会对推送进行特殊处理，将新的提交显示为一个待审核的修改集，并进入代码审查流程。只有当审核通过，才会合并到官方正式的版本库中。
-
-用法：
-
-:: 
-
-  repo upload [--re --cc] {[<project>]... | --replace <project>}
-
-  参数：
-    -h, --help            显示帮助信息。
-    -t                    发送本地分支名称到 Gerrit 代码审核服务器。
-    --replace             发送此分支的更新补丁集。注意使用该参数，只能指定一个项目。
-    --re=REVIEWERS, --reviewers=REVIEWERS
-                          要求有指定的人员进行审核。
-    --cc=CC               同时发送通知到如下邮件地址。
-
-**确定推送服务器的端口**
-
-分支改动的推送是发给代码审核服务器，而不是下载代码的服务器。使用的协议是 SSH 协议，但是使用的并非标准端口。如何确认代码审核服务器上提供的特殊 SSH 端口呢？
-
-在执行 repo upload 命令时，repo 会通过访问代码审核Web服务器的 "/ssh_info" 的 Url 获取 SSH 服务端口，缺省 29418。这个端口，就是 `repo upload` 发起推送的服务器的 SSH 服务端口。
-
-**修订集修改后重新传送**
-
-当已经通过 `repo upload` 命令在代码审查服务器上提交了一个修订集，会得到一个修订号。关于此次修订的相关讨论会发送到提交者的邮箱中。如果修订集有误没有通过审核，可以重新修改代码，再次向代码审核服务器上传修订集。
-
-一个修订集修改后再次上传，如果修订集的 ID 不变是非常有用的，因为这样相关的修订集都在代码审核服务器的同一个界面中显示。
-
-在执行 `repo upload` 时会弹出一个编辑界面，提示在方括号中输入修订集编号，否则会在代码审查服务器上创建新的ID。有一个办法可以不用手工输入修订集，如下：
-
-::
-
-  repo upload --replace project_name
-
-当使用 `--replace` 参数后，repo 会检查本地版本库名为 `refs/published/branch_name` 的特殊引用，获得其对应的哈希值。然后在代码审核服务器的 `refs/changes/` 命名空间下的特殊引用，匹配的名称中即包含变更集ID，直接用此变更集ID作为新的变更集ID提交到代码审核服务器。
-
-
-upload 命令
-++++++++++++++
-
-repo upload 子命令实际上是对 `git add --interactive` 命令的封装，用以对各个项目工作区中的改动（修改、添加等）进行挑选以加入暂存区。
-
-用法：
-
-:: 
-
-  repo stage -i [<project>...]
-
-
-forall 迭代器
-++++++++++++++
-
-forall
-repo forall [project-list ] -c command [arg. ..]
-
-Runs a shell command in each project.
-
-You can specify project-list as a list of names or a list of paths to local source directories for the projects
-
-
-
-Gerrit —— Repo 的评审服务器
----------------------------
-
-https://review.source.android.com/Documentation/user-upload.html
-
 
 建立 android 代码库本地镜像
 ----------------------------
@@ -536,12 +289,9 @@ Android 为企业提供一个新的市场，无论大企业，小企业都是处
   [repo]
       mirror = true
 
-从 android 的工作区到代码库镜像
---------------------------------
+**从 android 的工作区到代码库镜像**
 
-当执行 `repo sync` 命令将 android 众多的版本库克隆到本地后，各个项目在工作区中的部署和实际在服务器端的部署是不同的。这个在之前介绍 repo 的清单库机制的时候，就已经介绍过了。
-
-当 repo 工作区使用不带 `--mirror` 的 `repo init -u` 初始化并完成同步后，如果再次执行 `repo init` 并附带了 `--mirror` 参数，repo 会报错退出："fatal: --mirror not supported on existing client"。实际上 "--mirror" 参数只能对尚未初始化的 repo 工作区执行。
+在初始化 repo 工作区时，如果使用不带 `--mirror` 参数的 `repo init -u` ，并完成代码同步后，如果再次执行 `repo init` 并附带了 `--mirror` 参数，repo 会报错退出："fatal: --mirror not supported on existing client"。实际上 "--mirror" 参数只能对尚未初始化的 repo 工作区执行。
 
 那么如果之前没有用镜像的方法同步 Android 版本库，难道要为创建代码库镜像在重新执行一次 repo 同步么？要知道重新同步一份 Android 版本库是非常慢的。我自己就遇到了这个问题。
 
@@ -615,19 +365,382 @@ Android 为企业提供一个新的市场，无论大企业，小企业都是处
 
   $ python work2mirror.py
 
-Android 本地代码库镜像的管理
---------------------------------
+**创建新的清单库，或修改原有清单库**
 
-镜像服务器定期和 Android 上游进行同步，因为保持了同样的分支命名空间，因此 Android 的 manifest.git 库仍然可以对镜像服务器的 Git 库使用，除了需要将 remote 中的内容进行调整。
+建立了 Android 代码库的本地镜像后，如果不对 manifest 清单版本库进行定制，在使用 `repo sync` 同步代码的时候，仍然使用 Android 官方的代码库同步代码，使得本地的镜像版本库形同虚设。解决办法是创建一个自己的 manifest 库，或者在原有清单库中建立一个分支加以修改。如果创建新的清单库，参考 Android 上游的 manifest 清单库进行创建。
 
-不要在 Android 代码库中现有的任何分支中提交，以免和镜像服务器在同步的时候改动被覆盖。而是创立带有本团队标识的分支名维护自己的代码。
+Repo 的命令集
+--------------
 
-需要创建一个自己的 manifest 库。可以参考 Android 上游的 manifest 库创建。
+Repo 子命令实际上是 Git 命令的简单或者复杂的封装。每一个 repo 子命令都对应于 repo 源码树中 `subcmds` 目录下的一个同名的 Python 文件。每一个 repo 子命令都可以通过下面的命令获得帮助。
+
+::
+
+  $ repo help <command>
+
+通过阅读代码，我们可以更加深入的了解 repo 子命令的封装。
+
+repo init 命令
+++++++++++++++
+
+如前所述，子命令  init，完成的主要是检出清单版本库（manifest.git），并配置 Git 用户的用户名和邮件地址。
+
+实际上，你完全可以进入到 `.repo/manifests` 目录，用 git 命令操作清单库。对 manifests 的修改不会因为执行 `repo init` 而丢失，除非是处于未跟踪状态。
+
+repo sync 命令
+++++++++++++++
+
+如前所述，sync 子命令用于参照清单文件克隆/同步版本库。
+
+如果某个项目版本库尚不存在，则执行 `repo sync` 命令相当于执行 `git clone` 。
+
+如果项目版本库已经存在，则相当于执行下面的两个命令：
+
+* git remote update
+
+  相当于对每一个 remote 源执行 fetch 操作。
+
+* git rebase origin/branch
+
+  针对当前分支的跟踪分支，执行 rebase 操作。不采用 merge 而是采用 rebase，目的是减少提交数量，方便评审(Gerrit)。
+
+repo start 命令
+++++++++++++++++
+
+repo start 子命令实际上是对 `git checkout -b` 命令的封装。为指定的项目或者所有项目（--all），以清单文件中设定的项目的版本为基础，创建特性分支。特性分支由命令的第一个参数指定。相当于执行 checkout -b 。
+
+用法:
+
+::
+
+  repo start <newbranchname> [--all | <project>...]
+
+repo status 命令
+++++++++++++++++
+
+repo status 子命令实际上是对 `git diff-index`, `git diff-files` 命令的封装，同时显示暂存区的状态和本地文件修改的状态。
+
+用法：
+
+::
+
+  repo status [<project>...]
 
 
+示例输出：
+
+::
+
+  project repo/                                   branch devwork
+   -m     subcmds/status.py
+   ...
+
+上面示例输出显示了 repo 项目的 devwork 分支的修改状态。
+
+* 每个小节的首行显示项目名称，以及所在分支名称。
+* 之后显示该项目中文件变更状态。头两个字母显示变更状态，后面显示文件名或者其它变更信息。
+* 第一个字母表示暂存区的文件修改状态。
+
+  其实是 `git-diff-index` 命令输出中的状态标识并大写显示。
+
+  - -:  没有改变
+  - A:  添加          （不在HEAD中，  在暂存区                ）
+  - M:  修改          （  在HEAD中，  在暂存区，内容不同      ）
+  - D:  删除          （  在HEAD中，不在暂存区                ）
+  - R:  重命名        （不在HEAD中，  在暂存区，路径修改      ）
+  - C:  拷贝          （不在HEAD中，  在暂存区，从其它文件拷贝）
+  - T:  文件状态改变  （  在HEAD中，  在暂存区，内容相同      ）
+  - U:  未合并，需要冲突解决
+
+* 第二个字母表示工作区文件的更改状态。
+
+  其实是 `git-diff-files` 命令输出中的状态标识并小写显示。
+
+  - -:  新/未知       （不在暂存区，  在工作区                ）
+  - m:  修改          （  在暂存区，  在工作区，被修改        ）
+  - d:  删除          （  在暂存区，不在工作区                ）
+
+* 两个表示状态的字母后面，显示文件名信息。如果有文件重命名还会显示改变前后的文件名以及文件的相似度。
+
+repo checkout 命令
+++++++++++++++++++
+
+repo checkout 子命令实际上是对 `git checkout` 命令的封装。检出之前由 repo start 创建的分支。
+
+用法：
+
+::
+
+  repo checkout <branchname> [<project>...]
+
+repo branches 命令
+++++++++++++++++++
+
+repo branches 读取各个项目的分支列表并汇总显示。该命令实际上是通过直接读取 `.git/refs` 目录下的引用来获取分支列表，以及分支的发布状态等。
+
+用法：
+
+::
+
+  repo branches [<project>...]
+
+
+输出示例：
+
+::
+
+  *P nocolor                   | in repo
+     repo2                     |
+
+* 第一个字段显示分支的状态：是否是当前分支，分支是否发布到代码审核服务器上？
+* 第一个字母若显示星号(*)，含义是此分支为当前分支
+* 第二个字母若为大写字母 P，则含义是分支所有提交都发布到代码审核服务器上了。 
+* 第二个字母若为小写字母 p，则含义是只有部分提交被发布到代码审核服务器上。
+* 若不显示P或者p，则表明分支尚未发布。
+* 第二个字段为分支名。
+* 第三个字段为以竖线（|）开始的字符串，表示该分支存在于哪些项目中。
+
+  - | in all projects
+
+    该分支处于所有项目中。
+
+  - | in project1 project2 
+
+    该分支只在特定项目中定义。如: project1, project2。
+
+  - | not in project1
+
+   该分支不存在于这些项目中。即除了 project1 项目外，其它项目都包含此分支。
+
+
+repo diff 命令
+++++++++++++++++++
+
+repo diff 子命令实际上是对 `git diff` 命令的封装，用以分别显示各个项目工作区下的文件差异。
+
+用法：
+
+::
+
+  repo diff [<project>...]
+
+repo stage 命令
++++++++++++++++++++
+
+repo stage 子命令实际上是对 `git add --interactive` 命令的封装，用以对各个项目工作区中的改动（修改、添加等）进行挑选以加入暂存区。
+
+用法：
+
+:: 
+
+  repo stage -i [<project>...]
+
+
+repo upload 命令
++++++++++++++++++++
+
+repo upload 相当于 `git push` ，但是又有很大的不同。执行 `repo upload` 不是将版本库改动推送到克隆时的远程服务器，而是推送到代码审查服务器（由 Gerrit 软件架设）的特殊引用上，使用的是 SSH 协议（特殊端口）。代码审核服务器会对推送的提交进行特殊处理，将新的提交显示为一个待审核的修改集，并进入代码审查流程。只有当审核通过，才会合并到官方正式的版本库中。
+
+用法：
+
+:: 
+
+  repo upload [--re --cc] {[<project>]... | --replace <project>}
+
+  参数：
+    -h, --help            显示帮助信息。
+    -t                    发送本地分支名称到 Gerrit 代码审核服务器。
+    --replace             发送此分支的更新补丁集。注意使用该参数，只能指定一个项目。
+    --re=REVIEWERS, --reviewers=REVIEWERS
+                          要求有指定的人员进行审核。
+    --cc=CC               同时发送通知到如下邮件地址。
+
+**确定推送服务器的端口**
+
+分支改动的推送是发给代码审核服务器，而不是下载代码的服务器。使用的协议是 SSH 协议，但是使用的并非标准端口。如何确认代码审核服务器上提供的特殊 SSH 端口呢？
+
+在执行 repo upload 命令时，repo 会通过访问代码审核Web服务器的 "/ssh_info" 的 Url 获取 SSH 服务端口，缺省 29418。这个端口，就是 `repo upload` 发起推送的服务器的 SSH 服务端口。
+
+**修订集修改后重新传送**
+
+当已经通过 `repo upload` 命令在代码审查服务器上提交了一个修订集，会得到一个修订号。关于此次修订的相关讨论会发送到提交者的邮箱中。如果修订集有误没有通过审核，可以重新修改代码，再次向代码审核服务器上传修订集。
+
+一个修订集修改后再次上传，如果修订集的 ID 不变是非常有用的，因为这样相关的修订集都在代码审核服务器的同一个界面中显示。
+
+在执行 `repo upload` 时会弹出一个编辑界面，提示在方括号中输入修订集编号，否则会在代码审查服务器上创建新的ID。有一个办法可以不用手工输入修订集，如下：
+
+::
+
+  repo upload --replace project_name
+
+当使用 `--replace` 参数后，repo 会检查本地版本库名为 `refs/published/branch_name` 的特殊引用，获得其对应的哈希值。然后在代码审核服务器的 `refs/changes/` 命名空间下的特殊引用，匹配的名称中即包含变更集ID，直接用此变更集ID作为新的变更集ID提交到代码审核服务器。
+
+**Gerrit 服务器魔法**
+
+repo upload 命令执行推送，实际上会以类似如下的命令行格式进行调用：
+
+::
+
+  git push --receive-pack='gerrit receive-pack --reviewer charlie@example.com' ssh://review.example.com:29418/project HEAD:refs/for/master
+
+当 Gerrit 服务器接收到 git push 请求后，会自动将对分支的提交转换为 change_id，显示于 Gerrit 的提交审核界面中。Gerrit 的魔法破解的关键点就在于 git push 命令的 --receive-pack 参数。即提交交由 gerrit-receive-pack 命令执行，进入非标准的 git 处理流程，将提交转换为在 `refs/changes` 命名空间下的引用，而不在 `refs/for` 命名空加下创建引用。
+
+
+repo download 命令
++++++++++++++++++++
+
+repo download 命令主要用于代码审核者下载和评估贡献者提交的修订。贡献者的修订在 git 版本库中以 `refs/changes/<changeid>/<patchset>` 引用方式命名（缺省的 patchset 为1），和其它 Git 引用一样，用 `git fetch` 获取，该引用所指向的最新的提交就是贡献者待审核的修订。使用 repo download 命令实际上就是用 `git fetch` 获取到对应项目的 refs/changes/<changeid>/patchset>` 引用，并自动切换到对应的引用上。
+
+用法：
+
+:: 
+
+  repo download {project change[/patchset]}...
+
+repo rebase 命令
++++++++++++++++++++
+
+repo rebase 子命令实际上是对 `git rebase` 命令的封装，该命令的参数也作为 `git rebase` 命令的参数。但 -i 参数仅当对一个项执行时有效。
+
+用法：
+
+:: 
+
+  命令行: repo rebase {[<project>...] | -i <project>...}
+
+  参数:
+    -h, --help          显示帮助并退出
+    -i, --interactive   交互式的变基（仅对一个项目时有效）
+    -f, --force-rebase  向 git rebase 命令传递 --force-rebase 参数
+    --no-ff             向 git rebase 命令传递 -no-ff 参数
+    -q, --quiet         向 git rebase 命令传递 --quiet 参数
+    --autosquash        向 git rebase 命令传递 --autosquash  参数
+    --whitespace=WS     向 git rebase 命令传递 --whitespace  参数
+
+
+repo prune 命令
++++++++++++++++++++
+
+repo prune 子命令实际上是对 `git branch -d` 命令的封装，该命令用于扫描项目的各个分支，并删除已经合并的分支。
+
+用法：
+
+:: 
+
+  repo prune [<project>...]
+
+
+repo abandon 命令
+++++++++++++++++++
+
+相比 repo prune 命令，repo abandon 命令更具破坏性，因为 repo abandon 是对 `git branch -D` 命令的封装。该命令非常危险，直接删除分支，请慎用。
+
+用法：
+
+::
+
+  repo abandon <branchname> [<project>...]
+
+
+其它命令
+++++++++++++++
+
+* grep
+
+  相当于对 `git grep` 的封装，用于在项目文件中进行内容查找。
+
+* smartsync
+
+  相当于用 -s 参数执行 `repo sync` 。
+
+* forall
+
+  迭代器，可以对 repo 管理的项目进行迭代。
+
+* manifest
+
+  显示 manifest 文件内容。
+
+* version
+
+  显示 repo 的版本号。
+
+* selfupdate
+
+  用于 repo 自身的更新。如果提供 --repo-upgraded 参数，还会更新各个项目的钩子脚本。
+
+
+Repo 命令的工作流
+------------------
+
+下图是 repo 的工作流，每一个代码贡献都起始于 `repo start` 创建本地工作分支，最终都以 `repo upload` 命令将代码补丁发布于代码审核服务器。
+::
+
+  +------------+
+  | Git Server | --+------> repo init                : repo 和清单库初始化
+  +------------+   |
+                   +------> repo sync                : 根据清单执行项目初始化
+                            
+                            repo start               : 创建本地分支
+                            
+                            git add
+                            git status
+                            git commit
+                            
+                            repo status              : 项目状态汇总
+  +---------------+
+  | Review Server | <-+---- repo upload              : 修订上传代码审核服务器
+  +---------------+   |      
+                      |     git commit --amend       : 针对审核意见进行修改再提交
+                      |
+                      +---- repo upload --replace    : 以相同的修订编号向代码审核服务器重新上传修订
+
+                            repo prune               : 删除以合并分支
 
 好东西不能 android 独享
 -----------------------
 
-作为示例，在 github 上放上 repo, manifests.git 库，克隆 topgit, gitolite, gitosis 库。
+通过前面的介绍，我们已经能够体会到 repo 的精巧。的确 repo 巧妙的实现了多 Git 版本库的管理。而其中清单版本库，使得 repo 这一工具并没有被限制在某个项目中使用，repo 可以被任何项目使用。下面我们就介绍两种 repo 的使用模式，将 repo 引入自己的（非 android）项目中。
+
+Repo + Gerrit 模式
+++++++++++++++++++
+
+Repo 和 Gerrit 是 Android 代码管理的两大支柱。正如前面我们在 repo 工作流中介绍的，部分的repo命令从 git 服务器读取，这个 git 服务器可以是只读的版本库控制服务器，还有部分 repo 命令（repo upload, repo download）访问的是代码审核服务器，其中 repo upload 命令还要向代码审核服务器进行 git push 操作。
+
+在不改动 repo 的情况下引入 repo 来维护自己的项目（多个版本库组成），必须搭建 Gerrit 代码审核服务器。
+
+搭建项目的版本控制系统环境的一般方法为：
+
+* 用 git-daemon 或者 http 服务搭建 Git 服务器。具体搭建方法参见后面服务器搭建章节。
+* 导入 repo.git 工具库。非必须，只是为了减少不必要的互联网操作。
+* 还可以在内部 http 服务器维护一个定制的 repo 引导脚本。非必须。
+* 建立 Gerrit 代码审核服务器。我们会在后面的章节讨论 Gerrit 代码审核服务器的安装和使用。
+* 将相关的子项目代码库一一创建。
+* 建立一个 manifest.git 清单库，其中 remote 元素的 fetch 属性指向只读 git 服务器地址，review 属性指向代码审核服务器地址。示例如下：
+
+  ::
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <manifest>
+      <remote  name="example"
+               fetch="git://git.example.net/"
+               review="review.example.net" />
+      <default revision="master"
+               remote="example" />
+
+      ...
+
+Repo + Gerrit 模式
+++++++++++++++++++
+
+Repo 和 Gerrit 是 Android 代码管理的两大支柱。正如前面我们在 repo 工作流中介绍的，部分的repo命令从 git 服务器读取，这个 git 服务器可以是只读的版本库控制服务器，还有部分 repo 命令（repo upload, repo download）访问的是代码审核服务器，其中 repo upload 命令还要向代码审核服务器进行 git push 操作。
+
+在不改动 repo 的情况下引入 repo 来维护自己的项目（多个版本库组成），必须搭建 Gerrit 代码审核服务器。
+
+搭建项目的版本控制系统环境的一般方法为：
+
+Repo 无审核模式
+++++++++++++++++++
+
+
 
