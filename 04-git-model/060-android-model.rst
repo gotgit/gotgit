@@ -730,17 +730,35 @@ Repo 和 Gerrit 是 Android 代码管理的两大支柱。正如前面我们在 
 
       ...
 
-Repo + Gerrit 模式
-++++++++++++++++++
-
-Repo 和 Gerrit 是 Android 代码管理的两大支柱。正如前面我们在 repo 工作流中介绍的，部分的repo命令从 git 服务器读取，这个 git 服务器可以是只读的版本库控制服务器，还有部分 repo 命令（repo upload, repo download）访问的是代码审核服务器，其中 repo upload 命令还要向代码审核服务器进行 git push 操作。
-
-在不改动 repo 的情况下引入 repo 来维护自己的项目（多个版本库组成），必须搭建 Gerrit 代码审核服务器。
-
-搭建项目的版本控制系统环境的一般方法为：
-
 Repo 无审核模式
 ++++++++++++++++++
 
+Gerrit 代码审核服务器部署比较麻烦，更不要说 Gerrit 用户界面学习过程和用户使用习惯的更改带来的困难了。因此很可能很多项目组希望在使用 repo 的时候，脱离 Gerrit 代码审核服务器，而是直接跟 Git 服务器打交道。这也是可以实现的，但是有如下问题需要重点关注。
 
+* repo start 命令创建本地分支时，需要使用和上游同样的分支名。
+
+  如果使用不同的分支名，上传时需要提供复杂的引用描述。下面的示例先通过 `repo manifest` 命令确认上游清单库缺省的分支名，再使用该分支名作为本地分支名执行 `repo start` 。示例如下：
+
+  ::
+
+    $ repo manifest -o - | grep default
+      <default remote="bj" revision="master"/>
+
+    $ repo start master --all
+
+* 上传代码，不能使用 `repo upload` ，而需要使用 `git push` 命令。
+
+  可以利用 `repo forall` 迭代器实现批命令方式执行。例如：
+
+  ::
+
+    repo forall -c git push
+
+* 如果清单库中的上游 git 库地址用的是只读地址，需要为本地版本库一一更改上游版本库地址。
+
+  可以使用 forall 迭代器，批量为版本库设置 `git push` 时的版本库地址。下面的命令使用了环境变量 `$REPO_PROJECT` 是实现批量设置的关键。
+
+  ::
+
+    repo forall -c 'git remote set-url --push bj android@bj.ossxp.com:android/${REPO_PROJECT}.git'
 
