@@ -733,11 +733,13 @@ Repo 和 Gerrit 是 Android 代码管理的两大支柱。正如前面我们在 
 Repo 无审核模式
 ++++++++++++++++++
 
-Gerrit 代码审核服务器部署比较麻烦，更不要说 Gerrit 用户界面学习过程和用户使用习惯的更改带来的困难了。因此很可能很多项目组希望在使用 repo 的时候，脱离 Gerrit 代码审核服务器，而是直接跟 Git 服务器打交道。这也是可以实现的，但是有如下问题需要重点关注。
+Gerrit 代码审核服务器部署比较麻烦，更不要说 Gerrit 用户界面学习过程和用户使用习惯的更改带来的困难了。而且在一个固定的团队内部使用 repo 可能真的没有必要使用 Gerrit，因为团队成员都应该熟悉 Git 的操作，团队成员的编程能力都可信，单元测试质量由提交者保证，集成测试由单独的测试团队进行，即团队拥有一套完整、成型的研发工作流，Gerrit 并不适合引入。
+
+脱离了 Gerrit 服务器，直接跟 Git 服务器打交道，repo 可以工作么？是的，可以利用 repo forall 迭代器实现多项目代码的 PUSH，其中有如下关键点需要重点关注。
 
 * repo start 命令创建本地分支时，需要使用和上游同样的分支名。
 
-  如果使用不同的分支名，上传时需要提供复杂的引用描述。下面的示例先通过 `repo manifest` 命令确认上游清单库缺省的分支名，再使用该分支名作为本地分支名执行 `repo start` 。示例如下：
+  如果使用不同的分支名，上传时需要提供复杂的引用描述。下面的示例先通过 `repo manifest` 命令确认上游清单库缺省的分支名为 master，再使用该分支名（master）作为本地分支名执行 `repo start` 。示例如下：
 
   ::
 
@@ -761,4 +763,299 @@ Gerrit 代码审核服务器部署比较麻烦，更不要说 Gerrit 用户界�
   ::
 
     repo forall -c 'git remote set-url --push bj android@bj.ossxp.com:android/${REPO_PROJECT}.git'
+
+改进的 Repo 无审核模式
++++++++++++++++++++++++
+
+前面介绍的使用 repo forall 迭代器实现无审核服务器模式下向上游提交代码，只是权宜之计，尤其是用 repo start 建立工作分支要求和上游一致，实在是有点强人所难。
+
+我改造了 repo，增加了两个新的子命令 `repo config` 和 `repo push` ，让 repo 可以脱离 Gerrit 服务器直接向上游提交。代码托管在 Github 上: http://github.com/ossxp-com/repo.git 。下面简单介绍一下如何使用改造之后的 repo。
+
+下载改造后的 repo 引导脚本
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+建议使用改造后的 repo 引导脚本替换原脚本，否则在执行 repo init 命令需要提供额外的 `--no-repo-verify` 参数，以及 `--repo-url` 和 `--repo-branch` 参数。
+
+::
+
+  $ curl http://github.com/ossxp-com/repo/raw/master/repo > ~/bin/repo
+  $ chmod a+x ~/bin/repo
+
+用 repo 从 Github 上检出测试项目
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+如果安装了改造后的 repo 引导脚本，使用下面的命令初始化 repo 及清单库。
+
+::
+
+  $ mkdir test
+  $ cd test
+  $ repo init -u git://github.com/ossxp-com/manifest.git
+  $ repo sync
+
+如果用的是老的 repo 脚本，用下面的命令。
+
+::
+
+  $ mkdir test
+  $ cd test
+  $ repo init --repo-url=git://github.com/ossxp-com/repo.git \
+    --repo-branch=master --no-repo-verify \
+    -u git://github.com/ossxp-com/manifest.git
+  $ repo sync
+
+当子项目代码全部同步完成后，执行 make 命令。可以看到各个子项目的版本以及清单库的版本。
+
+::
+  $ make
+  Version of test1:    1:0.2-dev
+  Version of test2:    2:0.2
+  Version of manifest: current
+
+用 repo config 命令设置 pushurl
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+现在如果进入到各个子项目目录，是无法成功执行 git push 命令的，因为上游 Git 库的地址是一个只读访问的 URL，无法提供写服务。我们可以用新增的 `repo config` 命令设置当执行 `git push` 时的 URL 地址。
+
+::
+
+  $ repo config repo.pushurl ssh://git@github.com/ossxp-com/
+
+设置成功后，可以使用 repo config repo.pushurl 查看设置。
+
+::
+
+  $ repo config repo.pushurl
+  ssh://git@github.com/ossxp-com/
+
+创建本地工作分支
+~~~~~~~~~~~~~~~~
+
+使用下面的命令创建一个工作分支 `jiangxin` 。
+
+::
+
+  $ repo start jiangxin --all
+
+使用 `repo branches` 命令可以查看当前所有的子项目都属于 `jiangxin` 分支
+
+::
+
+  $ repo branches
+  *  jiangxin                  | in all projects
+
+参照下面的方法修改 test/test1 子项目。对 test/test2 项目也作类似修改。
+
+::
+
+  $ cd test/test1
+  $ echo "1:0.2-jiangxin" > version
+  $ git diff
+  diff --git a/version b/version
+  index 37c65f8..a58ac04 100644
+  --- a/version
+  +++ b/version
+  @@ -1 +1 @@
+  -1:0.2-dev
+  +1:0.2-jiangxin
+  $ repo status
+  # on branch jiangxin
+  project test/test1/                             branch jiangxin
+   -m     version
+  $ git add -u
+  $ git commit -m "0.2-dev -> 0.2-jiangxin"
+
+执行 make 命令，看看各个项目的改变。
+
+::
+
+  $ make
+  Version of test1:    1:0.2-jiangxin
+  Version of test2:    2:0.2-jiangxin
+  Version of manifest: current
+
+PUSH 到远程服务器
+~~~~~~~~~~~~~~~~~~~ 
+
+直接执行 `repo push` 就可以将各个项目的改动进行提交。
+
+::
+
+  $ repo push
+
+如果有多个项目同时进行了改动，为了避免出错，会弹出编辑器显示有改动需要提交的项目列表。
+
+::
+
+  # Uncomment the branches to upload:
+  #
+  # project test/test1/:
+  #  branch jiangxin ( 1 commit, Mon Oct 25 18:04:51 2010 +0800):
+  #         4f941239 0.2-dev -> 0.2-jiangxin
+  #
+  # project test/test2/:
+  #  branch jiangxin ( 1 commit, Mon Oct 25 18:06:51 2010 +0800):
+  #         86683ece 0.2-dev -> 0.2-jiangxin
+
+每一行前面的井号是注释，被忽略的行。将希望提交的分支前的注释去掉，就可以将该项目的分支执行推送动作。如下我们把两个分支的注释都去掉了，要对这两个项目当前分支的改动 push 到上游服务器。
+
+::
+
+  # Uncomment the branches to upload:                                                                                                                         
+  #
+  # project test/test1/:
+  branch jiangxin ( 1 commit, Mon Oct 25 18:04:51 2010 +0800):
+  #         4f941239 0.2-dev -> 0.2-jiangxin
+  #
+  # project test/test2/:
+  branch jiangxin ( 1 commit, Mon Oct 25 18:06:51 2010 +0800):
+  #         86683ece 0.2-dev -> 0.2-jiangxin
+
+保存退出（如果使用 vi 编辑器，输入 :wq 执行保存退出）后，马上开始对选择的各个项目执行 git push。
+
+::
+
+  Counting objects: 5, done.
+  Delta compression using up to 2 threads.
+  Compressing objects: 100% (2/2), done.
+  Writing objects: 100% (3/3), 293 bytes, done.
+  Total 3 (delta 0), reused 0 (delta 0)
+  To ssh://git@github.com/ossxp-com/test1.git
+     27aee23..4f94123  jiangxin -> master
+  Counting objects: 5, done.
+  Writing objects: 100% (3/3), 261 bytes, done.
+  Total 3 (delta 0), reused 0 (delta 0)
+  To ssh://git@github.com/ossxp-com/test2.git
+     7f0841d..86683ec  jiangxin -> master
+
+  --------------------------------------------
+  [OK    ] test/test1/     jiangxin
+  [OK    ] test/test2/     jiangxin
+
+从提交日志我们可以看出来本地的工作分支 jiangxin 的改动被推送的远程服务器的 master 分支（本地工作分支跟踪的上游分支）。
+
+我们再次执行 repo push ，会显示没有项目需要提交。
+
+::
+
+  $ repo push
+  no branches ready for upload
+
+
+在远程服务器创建新分支
+~~~~~~~~~~~~~~~~~~~~~~~
+
+如果我们想在服务器双创建一个新的分支，该如何操作呢？
+
+::
+
+  $ repo start feature1 --all
+  $ repo push --new_branch
+
+经过同样的编辑器选择之后，自动调用 git push ，在服务器上创建新分支 `feature1` 。
+
+::
+
+  Total 0 (delta 0), reused 0 (delta 0)
+  To ssh://git@github.com/ossxp-com/test1.git
+   * [new branch]      feature1 -> feature1
+  Total 0 (delta 0), reused 0 (delta 0)
+  To ssh://git@github.com/ossxp-com/test2.git
+   * [new branch]      feature1 -> feature1
+
+  --------------------------------------------
+  [OK    ] test/test1/     feature1
+  [OK    ] test/test2/     feature1
+
+我们也可以用 git ls-remote 命令查看远程服务器上的分支。
+
+::
+
+  $ git ls-remote git://github.com/ossxp-com/test1.git refs/heads/*
+  4f9412399bf8093e880068477203351829a6b1fb        refs/heads/feature1
+  4f9412399bf8093e880068477203351829a6b1fb        refs/heads/master
+  b2b246b99ca504f141299ecdbadb23faf6918973        refs/heads/test-0.1
+
+我们注意到 feature1 和 master 分支引用指向相同的 SHA1 哈希值，这是因为我们直接从 master 分支创建的 feature1 分支。
+
+通过不同的清单库版本，切换到不同分支
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+换用不同的清单库，需要建立新的工作区，并且在执行 repo init 时，通过 -b 参数指定清单库的分支。
+
+::
+
+  $ mkdir test-0.1
+  $ cd test-0.1
+  $ repo init -u git://github.com/ossxp-com/manifest.git -b test-0.1
+  $ repo sync
+
+当子项目代码全部同步完成后，执行 make 命令。可以看到各个子项目的版本以及清单库的版本不同于之前的输出。
+
+::
+
+  $ make
+  Version of test1:    1:0.1.4
+  Version of test2:    2:0.1.3-dev
+  Version of manifest: current-2-g12f9080
+
+
+我们可以用 repo manifest 命令来查看清单库。
+
+::
+
+  $ repo manifest -o -
+  <?xml version="1.0" encoding="UTF-8"?>
+  <manifest>
+    <remote fetch="git://github.com/ossxp-com/" name="github"/>
+    
+    <default remote="github" revision="refs/heads/test-0.1"/>
+    
+    <project name="test1" path="test/test1">
+      <copyfile dest="Makefile" src="root.mk"/>
+    </project>
+    <project name="test2" path="test/test2"/>
+  </manifest>
+
+仔细看上面的清单文件，可以注意到缺省的版本指向到 `refs/heads/test-0.1` 引用所指向的分支 `test-0.1` 。
+
+如果我们在子项目中修改、提交，然后使用 repo push 会将改动推送的远程版本库的 test-0.1 分支中。
+
+
+切换到清单库里程碑版本
+~~~~~~~~~~~~~~~~~~~~~~
+
+执行如下命令，我们可以查看清单库包含的里程碑版本：
+
+::
+
+  $ git ls-remote --tags git://github.com/ossxp-com/manifest.git
+  43e5783a58b46e97270785aa967f09046734c6ab        refs/tags/current
+  3a6a6da36840e716a14d52252e7b40e6ba6cbdea        refs/tags/current^{}
+  4735d32613eb50a6c3472cc8087ebf79cc46e0c0        refs/tags/v0.1
+  fb1a1b7302a893092ce8b356e83170eee5863f43        refs/tags/v0.1^{}
+  b23884d9964660c8dd34b343151aaf968a744400        refs/tags/v0.1.1
+  9c4c287069e29d21502472acac34f28896d7b5cc        refs/tags/v0.1.1^{}
+  127d9789cd4312ed279a7fa683c43eec73d2b28b        refs/tags/v0.1.2
+  47aaa83866f6d910a118a9a19c2ac3a2a5819b3e        refs/tags/v0.1.2^{}
+  af3abb7ed0a9ef7063e9d814510c527287c92ef6        refs/tags/v0.1.3
+  99c69bcfd7e2e7737cc62a7d95f39c6b9ffaf31a        refs/tags/v0.1.3^{}
+
+我们可以从任意里程碑版本的清单库初始化整个项目。
+
+::
+
+  $ mkdir v0.1.2
+  $ cd v0.1.2
+  $ repo init -u git://github.com/ossxp-com/manifest.git -b refs/tags/v0.1.2
+  $ repo sync
+
+当子项目代码全部同步完成后，执行 make 命令。可以看到各个子项目的版本以及清单库的版本不同于之前的输出。
+
+::
+
+  $ make
+  Version of test1:    1:0.1.2
+  Version of test2:    2:0.1.2
+  Version of manifest: v0.1.2
 
