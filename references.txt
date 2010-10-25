@@ -1,6 +1,12 @@
 备忘
 =====
 
+^{} 是什么语法？
+
+71f197d2be9daf326bf6b7639871c5e754fb386b        refs/tags/v1.0
+56d0b573eae2dff09a5e225138055ea07d5de0d8        refs/tags/v1.0^{}
+
+
 blob
 ---------------
 
