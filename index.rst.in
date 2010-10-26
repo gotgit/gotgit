@@ -115,4 +115,6 @@
 .. include:: ./90-app/010-cvs-git-table.rst
 .. include:: ./90-app/020-svn-git-table.rst
 .. include:: ./90-app/030-hg-git-table.rst
+.. include:: ./90-app/050-freemind.rst
+.. include:: ./90-app/060-cygwin.rst
 .. include:: ./90-app/040-quilt.rst
