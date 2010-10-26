@@ -104,15 +104,15 @@
 .. include:: ./07-git-app/020-gistore.rst
 .. include:: ./07-git-app/030-binary-diff.rst
 
-第八部分: Git工具
-#################
+第八部分: Windows 和 Git
+########################
 
-.. include:: ./08-git-tools/040-git-gui.rst
-.. include:: ./08-git-tools/050-windows.rst
+.. include:: ./08-git-tools/010-windows.rst
 
 第九部分: 附录
 ##############
 
+.. include:: ./90-app/070-git-apps.rst
 .. include:: ./90-app/010-cvs-git-table.rst
 .. include:: ./90-app/020-svn-git-table.rst
 .. include:: ./90-app/030-hg-git-table.rst
