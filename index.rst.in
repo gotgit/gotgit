@@ -64,6 +64,7 @@
 .. include:: ./03-adv-git/020-git-branch.rst
 .. include:: ./03-adv-git/030-conflict.rst
 .. include:: ./03-adv-git/040-git-remote.rst
+.. include:: ./03-adv-git/045-git-hooks.rst
 .. include:: ./03-adv-git/050-git-secret.rst
 
 第四部分: Git协同模型
