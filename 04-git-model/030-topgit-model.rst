@@ -203,7 +203,7 @@ tg create 命令用于创建新的特性分支。用法：
 
 tg create 命令会创建新的特性分支 refs/heads/NAME，跟踪变基分支 refs/top-bases/NAME，并且在项目根目录下创建文件 .topdeps 和 .topmsg 。会提示用户编辑 .topmsg 文件，输入详细的特性分支描述信息。
 
-例如在当前分支 master 下输入命令：
+例如在一个示例版本库，分支 master 下输入命令：
 
 ::
 
@@ -405,7 +405,7 @@ tg update 命令用于更新分支，即从依赖的分支或上游跟踪的分�
   Up-to-date.
 
 tg summary 命令
-++++++++++++++
++++++++++++++++
 
 tg summary 命令用于显示 Topgit 管理的特性分支的列表及各个分支的状态。用法：
 
@@ -468,8 +468,6 @@ tg summary 命令用于显示 Topgit 管理的特性分支的列表及各个分�
 
 * 标识 '>' ：（t/feature3 分支之前的大于号) 用于标记当前所处的特性分支。
 * 标记 '0' ：（t/feature2 分支前的数字 0） 含义是该分支中没有提交，这一个建立后尚未使用或废弃的分支。
-'D' marks that it is out-of-date wrt. its dependencies,
-
 * 标记 'D' ： 表明该分支处于过时（out-of-date）状态。可能是一个或多个依赖的分支包含了新的提交，尚未合并到此特性分支。可以用 `tg info` 命令看出到底是由于哪个依赖分支的改动导致该特性分支处于过时状态。
 * 标记 'B' ： 之前我们的演示中出现过，表明该分支处于 Break 状态，即可能由于冲突未解决或者其它原因导致该特性分支的基（base）相对该分支的头（head）不匹配。refs/top-bases 下的跟踪变基分支迁移了，但是特性分支未完成迁移。
 * 标记 '!' ： 表明该特性分支所依赖的分支不存在。
@@ -480,29 +478,47 @@ tg summary 命令用于显示 Topgit 管理的特性分支的列表及各个分�
 * 如果没有出现 'l/r/L/R' ： 表明该版本库尚未设置远程跟踪版本库（没有remote）。
 * 一般带有标记 'r' 的是最常见的，也是最正常的。
 
-下面我们通过 tg remote 为我们的测试版本库建立一个对应的远程跟踪版本库。
+下面我们通过 tg remote 为我们的测试版本库建立一个对应的远程跟踪版本库，然后我们就能在 tg summary 的输出中看到标识符 'l/r' 等。
 
 tg remote 命令
 ++++++++++++++
 
-tg  命令用于创建新的特性分支。用法：
+tg remote 命令用于为远程跟踪版本库设置 Topgit 的特性分支的关联，在和该远程版本库进行 fetch, pull 等操作时能够同步 Topgit 相关分支。
 
 ::
 
-  tg [...] 
+  tg [...] remote [--populate] [REMOTE]
 
-其中：
+其中 REMOTE 为远程跟踪版本库的名称，如“origin”，会自动在该远程源的配置中增加 refs/top-bases 下引用的同步。下面的示例中前面用加号标记的行就是当执行 `tg remote origin` 后增加的设置。
 
+::
 
+   [remote "origin"]
+          url = /path/to/test1.git
+          fetch = +refs/heads/*:refs/remotes/origin/*
+  +       fetch = +refs/top-bases/*:refs/remotes/origin/top-bases/*
+
+如果使用 --populate 参数，会设置缺省的 Topgit 远程版本库，并会做一次 git fetch 操作。当执行 tg 命令时，如果不用 '-r remote' 全局参数，默认使用设置的缺省 Topgit 远程版本库。
+
+下面我们为前面测试的版本库设置一个远程的跟踪版本库。
+
+先创建一个裸版本库 test1.git 。
 
 ::
 
   $ git init --bare /path/to/test1.git
   Initialized empty Git repository in /path/to/test1.git/
 
+然后在测试版本库中注册名为 origin 的远程版本库为刚刚创建的版本库。
+
 ::
  
   $ git remote add origin /path/to/test1.git
+
+执行 git push，将主线同步到远程的版本库。
+
+::
+
   $ git push origin master
   Counting objects: 7, done.
   Delta compression using up to 2 threads.
@@ -519,89 +535,102 @@ tg  命令用于创建新的特性分支。用法：
 
   $ tg remote --populate origin
 
-::
-
- [remote "origin"]
-        url = /path/to/test1.git
-        fetch = +refs/heads/*:refs/remotes/origin/*
-+       fetch = +refs/top-bases/*:refs/remotes/origin/top-bases/*
-+[topgit]
-+       remote = origin
+会在当前的版本库的 .git/config 文件中添加设置（以加号开头的行）：
 
 ::
 
-$ tg summary 
-  l     t/feature1                      [PATCH] t/feature1
- 0l     t/feature2                      [PATCH] t/feature2
-> l     t/feature3                      [PATCH] t/feature3
+   [remote "origin"]
+          url = /path/to/test1.git
+          fetch = +refs/heads/*:refs/remotes/origin/*
+  +       fetch = +refs/top-bases/*:refs/remotes/origin/top-bases/*
+  +[topgit]
+  +       remote = origin
 
+这时我们再执行 tg summary 会看到分支前面都有标记 'l'，即本地提交比远程版本库要新。
 
-$ tg push t/feature2
-Counting objects: 5, done.
-Delta compression using up to 2 threads.
-Compressing objects: 100% (3/3), done.
-Writing objects: 100% (4/4), 457 bytes, done.
-Total 4 (delta 0), reused 0 (delta 0)
-Unpacking objects: 100% (4/4), done.
-To /path/to/test1.git
- * [new branch]      t/feature2 -> t/feature2
- * [new branch]      refs/top-bases/t/feature2 -> refs/top-bases/t/feature2
+::
 
-$ tg summary 
-  l     t/feature1                      [PATCH] t/feature1
- 0r     t/feature2                      [PATCH] t/feature2
-> l     t/feature3                      [PATCH] t/feature3
+  $ tg summary 
+    l     t/feature1                      [PATCH] t/feature1
+   0l     t/feature2                      [PATCH] t/feature2
+  > l     t/feature3                      [PATCH] t/feature3
 
+我们将 t/feature2 的特性分支推送到远程版本库。
 
+::
+
+  $ tg push t/feature2
+  Counting objects: 5, done.
+  Delta compression using up to 2 threads.
+  Compressing objects: 100% (3/3), done.
+  Writing objects: 100% (4/4), 457 bytes, done.
+  Total 4 (delta 0), reused 0 (delta 0)
+  Unpacking objects: 100% (4/4), done.
+  To /path/to/test1.git
+   * [new branch]      t/feature2 -> t/feature2
+   * [new branch]      refs/top-bases/t/feature2 -> refs/top-bases/t/feature2
+
+再来看看 tg summary 的输出，会看到 t/feature2 的标识变为 'r'，即远程和本地相同步。
+
+::
+
+  $ tg summary 
+    l     t/feature1                      [PATCH] t/feature1
+   0r     t/feature2                      [PATCH] t/feature2
+  > l     t/feature3                      [PATCH] t/feature3
+
+使用 `tg push --all` (改进过的Topgit)，会将所有的 topgit 分支推送到远程版本库。之后再来看 tg summary 的输出。
+
+::
+
+  $ tg summary 
+    r     t/feature1                      [PATCH] t/feature1
+   0r     t/feature2                      [PATCH] t/feature2
+  > r     t/feature3                      [PATCH] t/feature3
+
+如果版本库设置了多个远程版本库，要针对每一个远程版本库执行 `tg remote <REMOTE>` ，但只能有一个远程的源用 `--populate` 参数调用 `tg remote` 将其设置为缺省的远程版本库。
 
 tg push 命令
 ++++++++++++++
 
-tg  命令用于创建新的特性分支。用法：
+在前面 tg remote 的介绍中，我们已经看到了 tg push 命令。tg push 命令用于将 Topgit 特性分支及对应的变基跟踪分支推送到远程版本库。用法：
 
 ::
 
-  tg [...] 
+  tg [...] push [--dry-run] [--no-deps] [--tgish-only] [--all|branch*]
 
-其中：
+tg push 命令后面的参数指定要推送给远程服务器的分支列表，如果省略则推送当前分支。改进的 tg push 可以不提供任何分支，只提供 --all 参数就可以将所有 Topgit 特性分支推送到远程版本库。
 
-
+参数 --dry-run 是测试执行效果，不真正执行。--no-deps 参数含义是不推送依赖的分支，缺省推送。--tgish-only 参数的含义是只推送 Topgit 特性分支，缺省指定的所有分支都进行推送。
 
 tg depend 命令
 ++++++++++++++
 
-tg  命令用于创建新的特性分支。用法：
+tg depend 命令目前仅实现了为当前的 Topgit 特性分支增加新的依赖。用法：
 
 ::
 
-  tg [...] 
+  tg [...] depend add NAME 
 
-其中：
-
-
+会将 NAME 加入到文件 .topdeps 中，并将 NAME 分支向该特性分支以及变基跟踪分支进行合并操作。虽然 Topgit 可以检查到分支的循环依赖，但还是要注意合理的设置分支的依赖，合并重复的依赖。
 
 tg base 命令
 ++++++++++++++
 
-tg  命令用于创建新的特性分支。用法：
-
-::
-
-  tg [...] 
-
-其中：
-
+tg base 命令用于显示特性分支的基（base）当前的 commit-id。用法：
 
 tg delete 命令
 ++++++++++++++
 
-tg  命令用于创建新的特性分支。用法：
+tg delete 命令用于删除 Topgit 特性分支以及其对应的变基跟踪分支。用法：
 
 ::
 
-  tg [...] 
+  tg [...] delete [-f] NAME
 
-其中：
+缺省只删除没有改动的分支，即标记为 '0' 的分支，除非使用 '-f' 参数。
+
+目前此命令尚不能自动清除其分支中对删除分支的依赖，还需要手工调整 .topdeps 文件，删除不存在分支的依赖。
 
 
 tg export 命令
