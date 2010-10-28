@@ -1,53 +1,22 @@
-整合管理员协同模型
+金字塔式协同模型
 ==================
 
-没有集中式的服务器
+自从分布式版本库控制系统（Mercurial/Hg, Bazaar, Git 等）诞生之后，有越来越多的开源项目迁移了自己的版本控制系统，从 Subversion 或 CVS 迁移到分布式版本控制系统。因为众多的开源项目逐渐认识到，集中式的版本控制管理方式阻止了更多的人参与项目的开发，对项目的发展不利。
 
-每个人通过 ssh 授权，对他人开放版本库访问
+集中式版本控制系统的最大问题是，如果没有在服务器端授权，就无法提交，也就无法保存自己的更改。开源项目虽然允许所有人访问代码库，但是不可能开放写操作授权给所有的人，否则代码质量无法控制。然而使用分布式版本控制系统，任何人都在本地克隆一个和远程版本库一模一样的版本库，本地的版本库允许任何操作，这就极大的调动了开发者投入项目研究的积极性。
 
-整合管理员：负责整合各个开发者的版本库，并维护一个公共的整合版本库
+分布式的开发必然带来协同的问题，如何能够让一个素不相识的开发者将他的贡献提交到项目中？如何能够最大化的发动和汇聚全球智慧？开源社区逐渐发展出金字塔模型，这也是必然之选。
 
-基于 SSH 公钥认证的 Git 服务器： gitosis
-
-简单部署的 gitosis~lite
+金字塔模型的含义是，虽然理论上每个开发者的版本库都是平等的，但是会有一个公众认可的权威的版本库，这个版本库由一个或者多个核心开发者负责维护（具有推送的权限）。核心的开发人员负责审核其它贡献者的提交，审核可以通过邮件传递的补丁或者访问（pull）贡献者开放的代码库进行。由此构成了由核心开发团队为顶层的所有贡献者共同参与的开发者金字塔。
 
 ::
 
-    aptitude 或者 easy-install 安装
-    创建一个帐号如 gitosis，并设置登录口令
-    设置 /etc/ssh/sshd_config
-        Match user gitosis
-    ForceCommand gitosis-serve gitosis
-    X11Forwarding no
-    AllowTcpForwarding no
-    AllowAgentForwarding no
-    PubkeyAuthentication yes
-    #PasswordAuthentication no    
-    其他人如果想无口令登录，执行命令： ssh-copy-id
-    在 gitosis 用户主目录下，创建一个 .gitosis.conf 文件
+                                  +-----+
+                                  | git |
+                                  |  库 |
+                                  +-----+
 
-        [gitosis]
-        repositories = /gitroot
-        loglevel=DEBUG
-        gitweb = no
-        daemon = no
+Linux 社区就是典型的金字塔结构。Linus Torvalds 的版本库被公认为是官方的版本库，允许核心成员的提交。其它贡献者的提交必须经过一个或多个核心成员的审核后才能经由核心成员代为推送的到官方版本库。
 
-        [group readers]
-        members = @all
-        readonly = repos1 repos2
-
-        # [group writers]
-        # members = @all
-        # writable = repos3 repos4
-
-问题： 向别人开放的带工作区的版本库 push 失败
-
-receive.denyCurrentBranch 缺省是 refuse，导致不能向含工作目录的库 push
-
-
-设置几个开发负责人。开发负责人本身也是程序员
-
-每个人负责管理多个程序员的提交
-
-从程序员版本库 Fetch/Pull，再由开发负责人统一 PUSH 到公共服务器
+采用这种金字塔式协同模型不需要复杂和 Git 服务器设置，尤其是贡献者只需要提供一个只读的 Git 库就可以了。在后面介绍服务器架设的章节，会介绍 http 和 git-daemon 两种最简单的只读 Git 服务器的架设。
 
