@@ -73,9 +73,10 @@
 .. include:: ./04-git-model/010-central-model.rst
 .. include:: ./04-git-model/020-integrate-admin-model.rst
 .. include:: ./04-git-model/030-topgit-model.rst
-.. include:: ./04-git-model/040-subtree-model.rst
-.. include:: ./04-git-model/050-submodule-model.rst
+.. include:: ./04-git-model/040-submodule-model.rst
+.. include:: ./04-git-model/050-subtree-model.rst
 .. include:: ./04-git-model/060-android-model.rst
+.. include:: ./04-git-model/070-git-svn.rst
 
 第五部分: 搭建Git服务器
 #######################
