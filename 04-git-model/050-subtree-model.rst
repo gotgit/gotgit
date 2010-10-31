@@ -1,7 +1,275 @@
-子树合并协同模型
+子树合并
 ================
-上游版本库作为子目录
 
+使用子树合并，同样可以实现在一个项目中引用其它项目的数据。但是和子模组方式不同的是，使用子树合并，外部的版本库整个复制到本版本库中并建立跟踪关联。使用子树合并模型，使得对源自外部版本库的数据的访问和本版本库数据的访问没有区别，也可以对其进行本地的修改，并且能够通过子树合并的方式将对源自外部版本库的改动和本地的修改相合并。
+
+引入外部版本库
+---------------
+
+为演示子树合并，我们需要至少准备两个版本库，一个是将被作为子目录引入的版本库 util.git ，另外一个是主版本库 main.git 。
+
+::
+
+  $ git --git-dir=/path/to/util.git init --bare
+  $ git --git-dir=/path/to/main.git init --bare
+
+在本地检出这两个版本库：
+
+::
+
+  $ git clone /path/to/util.git
+  $ git clone /path/to/main.git
+
+我们需要为这两个空版本库添加些数据。非常简单，每个版本库下我们只创建两个文件： Makefile 和 version。当执行 make 命令时显示 version 文件的内容。
+
+例如 Makefile 文件的内容如下。
+
+::
+
+  all:
+      @cat version
+
+我们之前尝试的 git fetch 命令都是获取同一项目的版本库的内容。其实命令 git fetch 并不禁止你用它获取不同项目的版本库数据。当然你也可以用 git pull，但是那样将把两个项目的文件彻底混杂在一起，对于我们这个示例来说，因为两个项目具有同样的文件 Makefile 和 version，使用 git pull 将导致冲突，是我们不愿意出现的。
+
+为了便于以后对外部版本库的跟踪，在使用 git fetch 时，最好先在 main 版本库中注册远程版本库 util.git。
+
+::
+
+  $ git remote add util /path/to/util.git
+
+  $ git remote -v
+  origin  /path/to/main.git/ (fetch)
+  origin  /path/to/main.git/ (push)
+  util    /path/to/util.git (fetch)
+  util    /path/to/util.git (push)
+
+  $ git fetch util
+
+  $ git branch -a
+  * master
+    remotes/origin/master
+    remotes/util/master
+
+我们基于 remotes/util/master 创建一个本地分支，我们会看到根目录的 Makefile 和 version 属于原 util.git 版本库，而非 main.git 版本库。
+
+::
+
+  $ make
+  main v2010.1
+
+  $ git checkout -b util-branch util/master
+  Branch util-branch set up to track remote branch master from util.
+  Switched to a new branch 'util-branch'
+
+  $ git branch -a
+    master
+  * util-branch
+    remotes/origin/master
+    remotes/util/master
+
+  $ make
+  util v3.0
+
+像这样在 main.git 中引入 util.git 显然不能满足我们需要，因为在包含 main 版本库数据的 master 分支访问不到只有在 util-branch 分支中才出现的 util 版本库数据。我们需要做进一步的工作，将两个版本库的内容合并到一个分支中。
+
+子目录方式合并外部版本库
+-------------------------
+
+下面我们就用 git 的 read-tree, write-tree, commit-tree 子命令实现将 util-branch 分支所包含的 util.git 版本库的目录树以子目录（lib/）型式添加到 master 分支。
+
+我们先来看看 util-branch 分支当前最新提交所包含的目录树。
+
+::
+
+  $ git cat-file -p util-branch
+  tree 0c743e49e11019678c8b345e667504cb789431ae
+  parent f21f9c10cc248a4a28bf7790414baba483f1ec15
+  author Jiang Xin <jiangxin@ossxp.com> 1288494998 +0800
+  committer Jiang Xin <jiangxin@ossxp.com> 1288494998 +0800
+
+  util v2.0 -> v3.0
+
+这是 util-branch 分支中最新提交所包含的信息。我们记住该提交对应的 tree id 为： 0c743e4 。
+
+查看 tree 0c743e4 所包含的内容。
+
+::
+
+  $ git cat-file -p 0c743e4
+  100644 blob 07263ff95b4c94275f4b4735e26ea63b57b3c9e3    Makefile
+  100644 blob bebe6b10eb9622597dd2b641efe8365c3638004e    version
+
+我们切换到 master 分支，如下方式调用 git read-tree 将 util-branch 的目录树读取到当前分支 lib 目录下。
+
+::
+
+  $ git checkout master
+
+  $ git read-tree --prefix=lib util-branch
+
+  $ git status
+  # On branch master
+  # Changes to be committed:
+  #   (use "git reset HEAD <file>..." to unstage)
+  #
+  #       new file:   lib/Makefile
+  #       new file:   lib/version
+  #
+  # Changed but not updated:
+  #   (use "git add/rm <file>..." to update what will be committed)
+  #   (use "git checkout -- <file>..." to discard changes in working directory)
+  #
+  #       deleted:    lib/Makefile
+  #       deleted:    lib/version
+  #
+
+  $ git checkout -- lib
+
+  $ git status
+  # On branch master
+  # Changes to be committed:
+  #   (use "git reset HEAD <file>..." to unstage)
+  #
+  #       new file:   lib/Makefile
+  #       new file:   lib/version
+  #
+
+调用 git read-tree 只是更新了 index，所以上面我们还用一条 `git checkout -- lib` 命令更新了工作区 lib 目录的内容。
+
+现在我们还不能提交，因为现在提交体现不出来两个分支的合并关系。
+
+我们调用 `git write-tree` 将 index （暂存区）的目录树保存下来。
+
+::
+
+  $ git write-tree
+  2153518409d218609af40babededec6e8ef51616
+  
+  $ git cat-file -p 2153518409d218609af40babededec6e8ef51616
+  100644 blob 07263ff95b4c94275f4b4735e26ea63b57b3c9e3    Makefile
+  040000 tree 0c743e49e11019678c8b345e667504cb789431ae    lib
+  100644 blob 638c7b7c6bdbde1d29e0b55b165f755c8c4332b5    version
+
+我们要记住调用 `git write-tree` 后形成的新的 tree id： 2153518。同时我们也注意到，该 treeid 指向的目录树中包含的 lib 目录的 treeid 和之前我们查看过的 util-branch 分支最新提交对应的 treeid 一样是 0c743e4。
+
+然后要调用 git commit-tree 来产生新的提交。之所以不用 `git commit` 而使用底层命令，是因为我们要为此新的提交指定两个 parents，让这个提交看起来是两棵树的合并。这两棵树分别是 master 分支和 util-branch 分支。
+
+::
+
+  $ git rev-parse HEAD
+  911b1af2e0c95a2fc1306b8dea707064d5386c2e
+  $ git rev-parse util-branch
+  12408a149bfa78a4c2d4011f884aa2adb04f0934
+
+就以上面两个 revid 为 parents，我们对树 2153518409d218609af40babededec6e8ef51616 执行提交。
+
+::
+
+  $ echo "subtree merge" | git commit-tree 2153518409d218609af40babededec6e8ef51616 \
+  > -p 911b1af2e0c95a2fc1306b8dea707064d5386c2e \
+  > -p 12408a149bfa78a4c2d4011f884aa2adb04f0934
+  62ae6cc3f9280418bdb0fcf6c1e678905b1fe690
+
+提交之后产生一个新的 commit id。我们需要把当前的 master 分支重置到此 commitid。
+
+::
+  
+  $ git reset 62ae6cc3f9280418bdb0fcf6c1e678905b1fe690
+
+我们查看一下提交日记及分支图，我们可以看到我们通过复杂的 git read-tree, git write-tree 和 git commit-tree 制造的提交，的确将两个不同版本库合并到一起了。
+
+::
+
+  $ git log --graph --pretty=oneline
+  *   62ae6cc3f9280418bdb0fcf6c1e678905b1fe690 subtree merge
+  |\  
+  | * 12408a149bfa78a4c2d4011f884aa2adb04f0934 util v2.0 -> v3.0
+  | * f21f9c10cc248a4a28bf7790414baba483f1ec15 util v1.0 -> v2.0
+  | * 76db0ad729db9fdc5be043f3b4ed94ddc945cd7f util v1.0
+  * 911b1af2e0c95a2fc1306b8dea707064d5386c2e main v2010.1
+
+我们看看现在的 master 分支。
+
+::
+
+  $ git cat-file -p HEAD
+  tree 2153518409d218609af40babededec6e8ef51616
+  parent 911b1af2e0c95a2fc1306b8dea707064d5386c2e
+  parent 12408a149bfa78a4c2d4011f884aa2adb04f0934
+  author Jiang Xin <jiangxin@ossxp.com> 1288498186 +0800
+  committer Jiang Xin <jiangxin@ossxp.com> 1288498186 +0800
+
+  subtree merge
+
+  $ git cat-file -p 2153518409d218609af40babededec6e8ef51616
+  100644 blob 07263ff95b4c94275f4b4735e26ea63b57b3c9e3    Makefile
+  040000 tree 0c743e49e11019678c8b345e667504cb789431ae    lib
+  100644 blob 638c7b7c6bdbde1d29e0b55b165f755c8c4332b5    version
+
+
+整个过程非常繁琐，但是不要担心，我们只需要对原理了解清楚，后面我会介绍一个 Git 插件实现子树合并操作的封装。
+
+利用子树合并跟踪上游改动
+------------------------
+
+如果合并子树（lib 目录）的上游（即 util.git）包含了新的提交，如何将 util.git 的新提交合并过来呢？这就要用到名为 subtree 的合并策略。
+
+在执行子树合并之前，我们先切换到 util-branch 分支，获取远程版本库改动。
+
+::
+
+  $ git checkout util-branch
+
+  $ git pull
+  remote: Counting objects: 8, done.
+  remote: Compressing objects: 100% (4/4), done.
+  remote: Total 6 (delta 0), reused 0 (delta 0)
+  Unpacking objects: 100% (6/6), done.
+  From /path/to/util
+     12408a1..5aba14f  master     -> util/master
+  Updating 12408a1..5aba14f
+  Fast-forward
+   version |    2 +-
+   1 files changed, 1 insertions(+), 1 deletions(-)
+
+  $ git checkout master
+
+在切换回 master 分支后，如果这时我们执行 `git merge util-branch` ，会将 uitl-branch 的数据直接合并到 master 分支的根目录下，而我们希望合并发生在 lib 目录中，这就需要如下方式进行调用。
+
+如果 git 的版本小于 1.7，直接使用 subtree 合并策略。
+
+::
+
+  $ git merge -s subtree util-branch
+
+如果 git 的版本是 1.7 之后（含1.7）的版本，则可以使用缺省的 recursive 合并策略，通过参数 subtree=<prefix> 在合并时使用正确的子树进行匹配合并。避免了使用 subtree 合并策略时的猜测。
+
+::
+
+  $ git merge -Xsubtree=lib util-branch
+
+我们再来看看执行子树合并之后的分支图示。
+
+::
+
+  $ git log --graph --pretty=oneline
+  *   f1a33e55eea04930a500c18a24a8bd009ecd9ac2 Merge branch 'util-branch'
+  |\  
+  | * 5aba14fd347fc22cd8fbd086c9f26a53276f15c9 util v3.1 -> v3.2
+  | * a6d53dfcf78e8a874e9132def5ef87a2b2febfa5 util v3.0 -> v3.1
+  * |   62ae6cc3f9280418bdb0fcf6c1e678905b1fe690 subtree merge
+  |\ \  
+  | |/  
+  | * 12408a149bfa78a4c2d4011f884aa2adb04f0934 util v2.0 -> v3.0
+  | * f21f9c10cc248a4a28bf7790414baba483f1ec15 util v1.0 -> v2.0
+  | * 76db0ad729db9fdc5be043f3b4ed94ddc945cd7f util v1.0
+  * 911b1af2e0c95a2fc1306b8dea707064d5386c2e main v2010.1
+
+子树拆分
+----------
+
+git subtree 子命令
+-------------------
 
 kernel.org > Pub > Software > Scm > Git > Docs > Howto > Using-merge-subtree <http://www.kernel.org/pub/software/scm/git/docs/howto/using-merge-subtree.html>
 
@@ -24,6 +292,13 @@ git subtree plugin from
 
 git-subtree(1)
 ==============
+
+-P <prefix> 是必选参数。除了 git subtree add 之外，其它子命令，该前缀指向的子目录必须存在。
+
+如果命令是 merge 和 split，后面只跟 <commit> 参数，不能跟路径。
+    die "Error: Use --prefix instead of bare filenames."
+
+缓存目录：.git/subtree-cache/$$
 
 NAME
 ----

@@ -28,6 +28,25 @@ http://www.turingbook.com/
 4. 清华: http://www.tupwk.com.cn/xsmin.asp
 ++++++++++++++++++++++++++++++++++++++++++++
 
+
+
+git rev-parse
+++++++++++++++++
+
+最全能的语法
+
+--is-inside-git-dir
+--is-inside-work-tree
+--is-bare-repository
+--show-cdup
+--parseopt
+
+--revs-only: 
+--no-revs: 
+--no-flags: 
+
+
+
 ^{} 是什么语法？
 
 71f197d2be9daf326bf6b7639871c5e754fb386b        refs/tags/v1.0
