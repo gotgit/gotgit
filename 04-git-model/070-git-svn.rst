@@ -113,7 +113,7 @@ Git-svn 作为 Git 软件包的一部分，当 Git 从源码包进行安装时�
   +-----+
         |
         v
-  git svn fetch
+  git svn rebase
         |
         v
   git svn dcommit
@@ -235,30 +235,177 @@ Git-svn 作为 Git 软件包的一部分，当 Git 从源码包进行安装时�
   传输文件数据.
   提交后的版本为 5。
 
-我们在执行 `git svn dcommit` 向 subversion 服务器推送我们最新的两个提交之前，我们先尝试在
-
-
-首先用 git svn clone 命令对 Subversion 进行克隆，创建一个包含 git-svn 扩展的本地 Git 库。
+好的，我们已经模拟了一个用户先于我们更改了 Subversion 版本库。现在回到我们用 git-svn 克隆的本地版本库，执行 `git svn dcommit` 操作，将我们在 Git 中的提交推送的 Subversion 版本库中。
 
 ::
 
+  $ git svn dcommit
+  Committing to file:///path/to/svn/repos/trunk ...
+  事务过时: 文件 “/trunk/README” 已经过时 at /usr/lib/git-core/git-svn line 572
 
-$ mkdir gitsvn
-$ cd gitsvn
-$ git svn clone file:///path/to/svn/repos/trunk
-Initialized empty Git repository in /data/tmp/git/gitsvn/trunk/.git/
-r1 = 2c73d657dfc3a1ceca9d465b0b98f9e123b92bb4 (refs/remotes/git-svn)
-        A       README
-r2 = 1863f91b45def159a3ed2c4c4c9428c25213f956 (refs/remotes/git-svn)
-Checked out HEAD:
-  file:///path/to/svn/repos/trunk r2
+显然，由于 Subversion 版本库中包含了新的提交，导致我们执行 `git svn dcommit` 出错。这时我们需执行 `git svn fetch` 命令，以从 Subversion 版本库获取更新。
 
+::
 
+  $ git svn fetch
+          M       README
+  r5 = fae6dab863ed2152f71bcb2348d476d47194fdd4 (refs/remotes/trunk)
+  15:37:08 jiangxin@hp:/my/workspace/git-svn-demo$ git st
+  # On branch master
+  nothing to commit (working directory clean)
 
+当我们获取了新的 Subversion 提交之后，我们需要执行 `git svn rebase` 将我们 Git 中未推送到 Subversion 的提交通过变基（rebase）形成包含 Subversion 最新提交的线性提交。这是因为 Subversion 的提交都是线性的。
 
+::
 
-git-svn 用 Perl 语言开发
+  $ git svn rebase
+  First, rewinding head to replay your work on top of it...
+  Applying: my hack 1.
+  Using index info to reconstruct a base tree...
+  Falling back to patching base and 3-way merge...
+  Auto-merging README
+  CONFLICT (content): Merge conflict in README
+  Failed to merge in the changes.
+  Patch failed at 0001 my hack 1.
+  
+  When you have resolved this problem run "git rebase --continue".
+  If you would prefer to skip this patch, instead run "git rebase --skip".
+  To restore the original branch and stop rebasing run "git rebase --abort".
+  
+  rebase refs/remotes/trunk: command returned error: 1
 
-测试环境搭建
-------------
+果不其然，变基时发生了冲突，这是因为 Subversion 中他人的修改和我们在 Git 库中的修改都改动了同一个文件，并且改动了相近的行。下面按照 `git rebase` 冲突解决的一般步骤进行，直到成功完成变基操作。
 
+先编辑 README 文件，以解决冲突。
+
+::
+
+  $ git status
+  # Not currently on any branch.
+  # Unmerged paths:
+  #   (use "git reset HEAD <file>..." to unstage)
+  #   (use "git add/rm <file>..." as appropriate to mark resolution)
+  #
+  #       both modified:      README
+  #
+  no changes added to commit (use "git add" and/or "git commit -a")
+  15:49:30 jiangxin@hp:/my/workspace/git-svn-demo$ vi README 
+
+处于冲突状态的 REAEME 文件内容。
+
+::
+
+  <<<<<<< HEAD
+  HELLO.
+  =======
+  hello
+  I am fine.
+  >>>>>>> my hack 1.
+
+下面是我们修改后的内容。保存退出。
+
+::
+
+  HELLO.
+  I am fine.
+
+执行 git add 命令解决冲突
+
+::
+
+  $ git add README
+
+调用 `git rebase --continue` 完成变基操作。
+
+::
+
+  $ git rebase --continue
+  Applying: my hack 1.
+  Applying: my hack 2.
+  Using index info to reconstruct a base tree...
+  Falling back to patching base and 3-way merge...
+  Auto-merging README
+
+看看变基之后的 Git 库日志：
+
+::
+
+  $ git log 
+  commit e382f2e99eca07bc3a92ece89f80a7a5457acfd8
+  Author: Jiang Xin <jiangxin@ossxp.com>
+  Date:   Thu Nov 4 15:05:47 2010 +0800
+  
+      my hack 2.
+  
+  commit 6e7e0c7dccf5a072404a28f06ce0c83d77988b0b
+  Author: Jiang Xin <jiangxin@ossxp.com>
+  Date:   Thu Nov 4 15:05:32 2010 +0800
+  
+      my hack 1.
+  
+  commit fae6dab863ed2152f71bcb2348d476d47194fdd4
+  Author: jiangxin <jiangxin@f79726c4-f016-41bd-acd5-6c9acb7664b2>
+  Date:   Thu Nov 4 07:15:58 2010 +0000
+  
+      hello -> HELLO.
+      
+      git-svn-id: file:///path/to/svn/repos/trunk@5 f79726c4-f016-41bd-acd5-6c9acb7664b2
+  
+  commit 1863f91b45def159a3ed2c4c4c9428c25213f956
+  Author: jiangxin <jiangxin@f79726c4-f016-41bd-acd5-6c9acb7664b2>
+  Date:   Mon Nov 1 05:49:41 2010 +0000
+  
+      hello
+      
+      git-svn-id: file:///path/to/svn/repos/trunk@2 f79726c4-f016-41bd-acd5-6c9acb7664b2
+  
+  commit 2c73d657dfc3a1ceca9d465b0b98f9e123b92bb4
+  Author: jiangxin <jiangxin@f79726c4-f016-41bd-acd5-6c9acb7664b2>
+  Date:   Mon Nov 1 05:47:03 2010 +0000
+  
+      initialized.
+      
+      git-svn-id: file:///path/to/svn/repos/trunk@1 f79726c4-f016-41bd-acd5-6c9acb7664b2
+
+当变基操作成功完成后，我们再执行 `git svn dcommit` 向 Subversion 推送我们在 Git 库中的两个新提交。
+
+::
+
+  $ git svn dcommit
+  Committing to file:///path/to/svn/repos/trunk ...
+          M       README
+  Committed r6
+          M       README
+  r6 = d0eb86bdfad4720e0a24edc49ec2b52e50473e83 (refs/remotes/trunk)
+  No changes between current HEAD and refs/remotes/trunk
+  Resetting to the latest refs/remotes/trunk
+  Unstaged changes after reset:
+  M       README
+          M       README
+  Committed r7
+          M       README
+  r7 = 69f4aa56eb96230aedd7c643f65d03b618ccc9e5 (refs/remotes/trunk)
+  No changes between current HEAD and refs/remotes/trunk
+  Resetting to the latest refs/remotes/trunk
+
+推送之后本地 Git 库中最新的两个提交的提交说明中也嵌入了 `git-svn-id:` 标签。这个标签的作用非常重要，我们在下一节予以介绍。
+
+::
+
+  $ git log -2
+  commit 69f4aa56eb96230aedd7c643f65d03b618ccc9e5
+  Author: jiangxin <jiangxin@f79726c4-f016-41bd-acd5-6c9acb7664b2>
+  Date:   Thu Nov 4 07:56:38 2010 +0000
+  
+      my hack 2.
+      
+      git-svn-id: file:///path/to/svn/repos/trunk@7 f79726c4-f016-41bd-acd5-6c9acb7664b2
+  
+  commit d0eb86bdfad4720e0a24edc49ec2b52e50473e83
+  Author: jiangxin <jiangxin@f79726c4-f016-41bd-acd5-6c9acb7664b2>
+  Date:   Thu Nov 4 07:56:37 2010 +0000
+  
+      my hack 1.
+      
+      git-svn-id: file:///path/to/svn/repos/trunk@6 f79726c4-f016-41bd-acd5-6c9acb7664b2
+  
