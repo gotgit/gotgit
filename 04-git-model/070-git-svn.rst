@@ -416,28 +416,177 @@ git-svn 的奥秘
 
 Git-svn 只是在本地 Git 库中增加了一些附加的设置，特殊的引用，和引入附加的可重建的数据库实现对 Subversion 版本库的跟踪。
 
-.git/config 文件
-+++++++++++++++++++++++++
+Git 库配置文件的扩展及分支映射
+++++++++++++++++++++++++++++++
 
-.git/svn/.metadata 文件
-+++++++++++++++++++++++++
+当执行 `git svn init` 或者 `git svn clone` 时，git-svn 会通过在 Git 库的配置文件中增加一个小节，记录 Subversion 版本库的URL，以及 Subversion 分支/里程碑和本地 Git 库的引用之间的对应关系。
 
-跟踪 SVN 的 refs/remotes 下的引用
-+++++++++++++++++++++++++++++++++
+例如：当我们执行 `git svn clone -s file:///path/to/svn/repos` 指令时，会在创建的本地 Git 库的配置文件 `.git/config` 中引入下面新的配置：
 
-Git 日志中的 git-svn-id 标签
-+++++++++++++++++++++++++++++++++
+::
 
-.git/svn/ 下的 Git-SVN 版本映射
-+++++++++++++++++++++++++++++++++
+  [svn-remote "svn"]
+          url = file:///path/to/svn/repos
+          fetch = trunk:refs/remotes/trunk
+          branches = branches/*:refs/remotes/*
+          tags = tags/*:refs/remotes/tags/*
+
+缺省 svn-remote 的名字为 "svn"，所以新增的配置小节的名字为： `[svn-remote "svn"]` 。在 git-svn 克隆时，可以使用 `--remote` 参数设置不同的 svn-remote 名称，但是并不建议使用。因为一旦使用 `--remote` 参数更改 svn-remote 名称，必须在 git-svn 的其它命令中都使用 --remote 参数，否则报告 `[svn-remote "svn"]` 配置小节未找到。
+
+在该小节中主要的配置有：
+
+* url = <URL>
+
+  设置 Subversion 版本库的地址
+
+* fetch = <svn-path>:<git-refspec>
+
+  Subversion 的开发主线和 Git 版本库引用的对应关系。
+
+  在上例中 Subversion 的 trunk 目录对应于 Git 的 refs/remotes/trunk 引用。
+
+* branches = <svn-path>:<git-refspec>
+
+  Subversion 的开发分支和 Git 版本库引用的对应关系。可以包含多条 branches 的设置，以便将分散在不同目录下的分支汇总。
+
+  在上例中 Subversion 的 branches 子目录下一级子目录（branches/*）所代表的分支在 Git 的 refs/remotes/ 下建立引用。
+
+* tags = <svn-path>:<git-refspec>
+
+  Subversion 的里程碑和 Git 版本库引用的对应关系。可以包含多条 tags 的设置，以便将分散在不同目录下的里程碑汇总。
+
+  在上例中 Subversion 的 tags 子目录下一级子目录（tags/*）所代表的里程碑在 Git 的 refs/remotes/tags 下建立引用。
+
+我们可以看到 Subversion 的主线和分支缺省都直接被映射到 `refs/remotes/` 下。如 trunk 主线对应于 `refs/remotes/trunk` ，分支 demo-1.0 对应于 `refs/remotes/demo-1.0` 。Subversion 的里程碑因为有可能和分支同名，因此被映射到 `refs/remotes/tags/` 之下，这样就里程碑和分支的映射放到不同目录下，不会互相影响。
+
+Git 工作分支和 Subversion 如何对应？
+++++++++++++++++++++++++++++++++++++
+
+Git 缺省工作的分支是 master，而我们看到上例中的 Subversion 主线在 Git 中对应的远程分支为 `refs/remotes/trunk` 。那么在执行 `git svn rebase` 是，git-svn 是如何知道当前的 HEAD 对应的分支基于哪个 Subversion 跟踪分支进行变基？还有就是执行 `git svn dcommit` 时，当前的工作分支应该将改动推送到哪个 Subversion 分支中去呢？
+
+我们很自然会按照 Git 的方式进行思考，期望在 `.git/config` 配置文件中找到类似 `[branch master]` 之类的配置小节。实际上，在 git-svn 的 Git 库的配置文件中可能根本就不存在 `[branch ...]` 小节。那么 git-svn 是如何确定当前 Git 工作分支和远程 Subversion 版本库的分支建立对应的呢？
+
+其实奥秘就在 Git 的日志中。当我们在工作区执行 `git log` 时，我们会看到包含 `git-svn-id:` 标识的特殊日志。发现的最近的一个 `git-svn-id:` 标识会确定当前分支提交的 Subversion 分支。
+
+下面继续上一节的示例，我们先切换到分支，并将提交推送到 Subversion 的分支 demo-1.0 中。
+
+首先在 Git 库中我们会看到有一个对应于 Subversion 分支的远程分支和一个对应于 Subversion 里程碑的远程引用。
+
+::
+
+  $ git branch -r
+    demo-1.0
+    tags/v1.0
+    trunk
+
+然后我们基于远程分支 `demo-1.0` 建立本地工作分支 `myhack` 。
+
+::
+
+  $ git checkout -b myhack refs/remotes/demo-1.0
+  Switched to a new branch 'myhack'
+  $ git branch
+    master
+  * myhack
+
+我们在 `myhack` 分支做一些改动，并提交。
+
+::
+
+  $ echo "Git" >> README 
+  $ git add -u
+  $ git commit -m "say hello to Git."
+  [myhack d391fd7] say hello to Git.
+   1 files changed, 1 insertions(+), 0 deletions(-)
+
+下面我们看看 Git 的提交日志。
+
+::
+
+  $ git log --first-parent
+  commit d391fd75c33f62307c3add1498987fa3eb70238e
+  Author: Jiang Xin <jiangxin@ossxp.com>
+  Date:   Fri Nov 5 09:40:21 2010 +0800
+
+      say hello to Git.
+
+  commit 1adcd5526976fe2a796d932ff92d6c41b7eedcc4
+  Author: jiangxin <jiangxin@f79726c4-f016-41bd-acd5-6c9acb7664b2>
+  Date:   Mon Nov 1 05:54:19 2010 +0000
+
+      new branch: demo-1.0
+      
+      git-svn-id: file:///path/to/svn/repos/branches/demo-1.0@3 f79726c4-f016-41bd-acd5-6c9acb7664b2
+
+  commit 1863f91b45def159a3ed2c4c4c9428c25213f956
+  Author: jiangxin <jiangxin@f79726c4-f016-41bd-acd5-6c9acb7664b2>
+  Date:   Mon Nov 1 05:49:41 2010 +0000
+
+      hello
+      
+      git-svn-id: file:///path/to/svn/repos/trunk@2 f79726c4-f016-41bd-acd5-6c9acb7664b2
+
+  commit 2c73d657dfc3a1ceca9d465b0b98f9e123b92bb4
+  Author: jiangxin <jiangxin@f79726c4-f016-41bd-acd5-6c9acb7664b2>
+  Date:   Mon Nov 1 05:47:03 2010 +0000
+
+      initialized.
+      
+      git-svn-id: file:///path/to/svn/repos/trunk@1 f79726c4-f016-41bd-acd5-6c9acb7664b2
 
 
+看到了上述 Git 日志中出现的第一个 `git-svn-id:` 标识的内容为：
+
+::
+
+  git-svn-id: file:///path/to/svn/repos/branches/demo-1.0@3 f79726c4-f016-41bd-acd5-6c9acb7664b2
+
+这就是说，当我们需要将 Git 提交推送给 Subversion 服务器时，需要推送到地址： `file:///path/to/svn/repos/branches/demo-1.0` 。
+
+我们执行 `git svn dcommit` ，果然是推送到 Subversion 的 demo-1.0 分支。
+
+::
+
+  $ git svn dcommit
+  Committing to file:///path/to/svn/repos/branches/demo-1.0 ...
+          M       README
+  Committed r8
+          M       README
+  r8 = a8b32d1b533d308bef59101c1f2c9a16baf91e48 (refs/remotes/demo-1.0)
+  No changes between current HEAD and refs/remotes/demo-1.0
+  Resetting to the latest refs/remotes/demo-1.0
+
+其它辅助文件
++++++++++++++
+
+在 Git 版本库中，git-svn 在 `.git/svn` 目录下保存了一些索引文件，便于 git-svn 更加快速的执行。
+
+文件 `.git/svn/.metadata` 文件是类似于 `.git/config` 文件一样的 INI 文件，其中保存了版本库的 URL，版本库 UUID，分支和里程碑的最后获取的版本号等。
+
+::
+
+  ; This file is used internally by git-svn
+  ; You should not have to edit it
+  [svn-remote "svn"]
+          reposRoot = file:///path/to/svn/repos
+          uuid = f79726c4-f016-41bd-acd5-6c9acb7664b2
+          branches-maxRev = 8
+          tags-maxRev = 8
+
+在 `.git/svn/refs/remotes` 目录下以各个分支和里程碑为名的各个子目录下都包含一个 `.rev_map.<SVN-UUID>` 的索引文件，这个文件用于记录 Subversion 的提交 ID 和 Git 的提交 ID 的映射。
+
+目录 `.git/svn` 的辅助文件由 git-svn 维护，不要手工修改否则会造成 git-svn 不能正常工作。
+ 
 多样的 git-svn 克隆模式
 ------------------------
 
-在前面的 git-svn 示例中，我们使用 `git svn clone` 命令完成对远程版本库的克隆。在实际使用中，我更喜欢使用 `git svn init` 命令。
+在前面的 git-svn 示例中，我们使用 `git svn clone` 命令完成对远程版本库的克隆，实际上 `git svn clone` 相当于两条命令，即：
 
-命令 `git svn init` 只完成两个工作。一个是在本地建立一个空的 Git 版本库，另外是修改 .git/config 文件，在其中建立 Subversion 和 Git 之间的分支映射关系。该命令的用法是：
+::
+
+  git svn clone = git svn init + git svn fetch
+
+命令 `git svn init` 只完成两个工作。一个是在本地建立一个空的 Git 版本库，另外是修改 .git/config 文件，在其中建立 Subversion 和 Git 之间的分支映射关系。在实际使用中，我更喜欢使用 `git svn init` 命令，因为这样可以对 Subversion 和 Git 的分支映射进行手工修改。该命令的用法是：
 
 ::
 
@@ -454,10 +603,172 @@ Git 日志中的 git-svn-id 标签
       --prefix <arg>
       --username <arg>
 
+其中 `--username` 参数用于设定远程 Subversion 服务器认证时提供的用户名。参数 `--prefix` 用于设置在 Git 的 `refs/remotes` 下保存引用时使用的前缀。参数 `--ignore-paths` 后面跟一个正则表达式定义忽略的文件列表，这些文件将不予克隆。
+
+最常用的参数是 `-s` 。该参数和我们前面演示的 `git clone` 命令中的一样，即使用标准的分支/里程碑部署方式克隆 Subversion 版本库。Subversion 约定俗成使用 trunk 目录跟踪主线的开发，使用 branches 目录保存各个分支，使用 tags 目录来记录里程碑。
+
+即命令:
+
+::
+
+  $ git svn init -s file:///path/to/svn/repos
+
+和下面的命令等效：
+
+::
+
+  $ git svn init -T trunk -b branches -t tags file:///path/to/svn/repos
+
+有的 Subversion 版本库的分支可能分散于不同的目录下，例如有的位于 branches 目录，有的位于 sandbox 目录，则可以用下面命令：
+
+::
+
+  $ git svn init -T trunk -b branches -b sandbox -t tags file:///path/to/svn/repos test
+  Initialized empty Git repository in /my/workspace/test/.git/
+
+我们查看本地克隆版本库的配置文件：
+
+::
+
+  $ cat test/.git/config 
+  [core]
+          repositoryformatversion = 0
+          filemode = true
+          bare = false
+          logallrefupdates = true
+  [svn-remote "svn"]
+          url = file:///path/to/svn/repos
+          fetch = trunk:refs/remotes/trunk
+          branches = branches/*:refs/remotes/*
+          branches = sandbox/*:refs/remotes/*
+          tags = tags/*:refs/remotes/tags/*
+
+我们看到在 `[svn-remote "svn"]` 小节中包含了两条 branches 配置，这就会实现将 Subversion 分散于不同目录的分支都克隆出来。如果担心 Subversion 的 branches 目录和 sandbox 目录下出现同名的分支导致在 Git 库的 `refs/remotes/` 下造成覆盖，可以在版本库尚未执行 `git svn fetch` 之前编辑 `.git/config` 文件，避免可能出现的覆盖。例如编辑后的 `[svn-remote "svn"]` 配置小节：
+
+::
+
+  [svn-remote "svn"]
+          url = file:///path/to/svn/repos
+          fetch = trunk:refs/remotes/trunk
+          branches = branches/*:refs/remotes/branches/*
+          branches = sandbox/*:refs/remotes/sandbox/*
+          tags = tags/*:refs/remotes/tags/*
+
+如果项目的分支或里程碑非常多，也可以修改 `[svn-remote "svn"]` 配置小节中的版本号通配符，使得只获取部分分支或里程碑。例如下面的配置小节：
+
+::
+
+  [svn-remote "svn"]
+          url = http://server.org/svn
+          fetch = trunk/src:refs/remotes/trunk
+          branches = branches/{red,green}/src:refs/remotes/branches/*
+          tags = tags/{1.0,2.0}/src:refs/remotes/tags/*
+
+
+如果只关心 Subversion 的某个分支甚至某个子目录，而不关心其它分支或目录，那就更简单了，不带参数的执行 `git svn init` 针对 Subversion 的某个具体路径执行初始化就可以了。
+
+::
+
+  $ git svn init file:///path/to/svn/repos/trunk
+
+有的情况下，版本库太大，而且对历史不感兴趣，可以只克隆最近的部分提交。这时可以通过 `git svn fetch` 命令的 `-r` 参数实现部分提交的克隆。
+
+::
+
+  $ git svn init file:///path/to/svn/repos/trunk test 
+  Initialized empty Git repository in /my/workspace/test/.git/
+  $ cd test
+  $ git svn fetch -r 6:HEAD
+          A       README
+  r6 = 053b641b7edd2f1a59a007f27862d98fe5bcda57 (refs/remotes/git-svn)
+          M       README
+  r7 = 75c17ea61d8527334855a51e65ac98c981f545d7 (refs/remotes/git-svn)
+  Checked out HEAD:
+    file:///path/to/svn/repos/trunk r7
+
+当然也可以使用 `git svn clone` 命令实现部分克隆：
+
+::
+
+  $ git svn clone -r 6:HEAD file:///path/to/svn/repos/trunk test 
+  Initialized empty Git repository in /my/workspace/test/.git/
+          A       README
+  r6 = 053b641b7edd2f1a59a007f27862d98fe5bcda57 (refs/remotes/git-svn)
+          M       README
+  r7 = 75c17ea61d8527334855a51e65ac98c981f545d7 (refs/remotes/git-svn)
+  Checked out HEAD:
+    file:///path/to/svn/repos/trunk r7
+  
 
 共享 git-svn 的克隆库
 ---------------------
 
+当一个 Subversion 版本库非常庞大而且和不在同一个局域网内，执行 `git svn clone` 可能需要花费很多时间。为了避免因重复执行 `git svn clone` 导致时间上的浪费，可以将一个已经使用 git-svn 克隆出来的 Git 库共享，其他人基于此 Git 进行克隆，然后再用特殊的方法重建和 Subversion 的关联。还记得我们之前提到过，`.git/svn` 目录下的辅助文件可以重建么？
+
+例如我们通过工作区中已经存在的 git-svn-demo 执行克隆。
+
+::
+
+  $ git clone git-svn-demo myclone
+  Initialized empty Git repository in /my/workspace/myclone/.git/
+
+我们进入新的克隆中，会发现新的克隆缺乏跟踪 Subversion 分支的引用，即 `refs/remotes/trunk` 等。
+
+::
+
+  $ cd myclone/
+  $ git br -a
+  * master
+    remotes/origin/HEAD -> origin/master
+    remotes/origin/master
+    remotes/origin/myhack
+
+这是因为 Git 克隆缺省不复制远程版本库的 `refs/remotes/` 下的引用。我们可以用 `git fetch` 命令获取 `refs/remotes` 的引用。
+
+::
+
+  $ git fetch origin refs/remotes/*:refs/remotes/*
+  From /my/workspace/git-svn-demo
+   * [new branch]      demo-1.0   -> demo-1.0
+   * [new branch]      tags/v1.0  -> tags/v1.0
+   * [new branch]      trunk      -> trunk
+
+现在我们的这个从 git-svn 库中克隆出来的版本库已经有了相同的 Subversion 跟踪分支，但是 `.git/config` 文件还缺乏相应的 `[svn-remote "svn"]` 配置。我们可以通过使用同样的 `git svn init` 命令实现。
+
+::
+
+  $ pwd
+  /my/workspace/myclone
+
+  $ git svn init -s file:///path/to/svn/repos
+
+  $ git config --get-regexp 'svn-remote.*'
+  svn-remote.svn.url file:///path/to/svn/repos
+  svn-remote.svn.fetch trunk:refs/remotes/trunk
+  svn-remote.svn.branches branches/*:refs/remotes/*
+  svn-remote.svn.tags tags/*:refs/remotes/tags/*
+
+但是我们的克隆版本库相比用 git-svn 克隆的版本库还缺乏 `.git/svn` 下的辅助文件，我们可以用 `git svn fetch` 命令重建。
+
+::
+
+  $ git svn fetch
+  Rebuilding .git/svn/refs/remotes/trunk/.rev_map.f79726c4-f016-41bd-acd5-6c9acb7664b2 ...
+  r1 = 2c73d657dfc3a1ceca9d465b0b98f9e123b92bb4
+  r2 = 1863f91b45def159a3ed2c4c4c9428c25213f956
+  r5 = fae6dab863ed2152f71bcb2348d476d47194fdd4
+  r6 = d0eb86bdfad4720e0a24edc49ec2b52e50473e83
+  r7 = 69f4aa56eb96230aedd7c643f65d03b618ccc9e5
+  Done rebuilding .git/svn/refs/remotes/trunk/.rev_map.f79726c4-f016-41bd-acd5-6c9acb7664b2
+  Rebuilding .git/svn/refs/remotes/demo-1.0/.rev_map.f79726c4-f016-41bd-acd5-6c9acb7664b2 ...
+  r3 = 1adcd5526976fe2a796d932ff92d6c41b7eedcc4
+  r8 = a8b32d1b533d308bef59101c1f2c9a16baf91e48
+  Done rebuilding .git/svn/refs/remotes/demo-1.0/.rev_map.f79726c4-f016-41bd-acd5-6c9acb7664b2
+  Rebuilding .git/svn/refs/remotes/tags/v1.0/.rev_map.f79726c4-f016-41bd-acd5-6c9acb7664b2 ...
+  r4 = c12aa40c494b495a846e73ab5a3c787ca1ad81e9
+  Done rebuilding .git/svn/refs/remotes/tags/v1.0/.rev_map.f79726c4-f016-41bd-acd5-6c9acb7664b2
+
+至此，我们从 git-svn 克隆库二次克隆的 Git 库，已经和原生的 git-svn 库一样使用 git-svn 命令了。
 
 git-svn 的局限
 --------------
