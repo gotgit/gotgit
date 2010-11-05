@@ -449,13 +449,13 @@ Git 库配置文件的扩展及分支映射
 
   Subversion 的开发分支和 Git 版本库引用的对应关系。可以包含多条 branches 的设置，以便将分散在不同目录下的分支汇总。
 
-  在上例中 Subversion 的 branches 子目录下一级子目录（branches/*）所代表的分支在 Git 的 refs/remotes/ 下建立引用。
+  在上例中 Subversion 的 branches 子目录下一级子目录（branches/\*）所代表的分支在 Git 的 refs/remotes/ 下建立引用。
 
 * tags = <svn-path>:<git-refspec>
 
   Subversion 的里程碑和 Git 版本库引用的对应关系。可以包含多条 tags 的设置，以便将分散在不同目录下的里程碑汇总。
 
-  在上例中 Subversion 的 tags 子目录下一级子目录（tags/*）所代表的里程碑在 Git 的 refs/remotes/tags 下建立引用。
+  在上例中 Subversion 的 tags 子目录下一级子目录（tags/\*）所代表的里程碑在 Git 的 refs/remotes/tags 下建立引用。
 
 我们可以看到 Subversion 的主线和分支缺省都直接被映射到 `refs/remotes/` 下。如 trunk 主线对应于 `refs/remotes/trunk` ，分支 demo-1.0 对应于 `refs/remotes/demo-1.0` 。Subversion 的里程碑因为有可能和分支同名，因此被映射到 `refs/remotes/tags/` 之下，这样就里程碑和分支的映射放到不同目录下，不会互相影响。
 
@@ -748,11 +748,11 @@ Git 缺省工作的分支是 master，而我们看到上例中的 Subversion 主
   svn-remote.svn.branches branches/*:refs/remotes/*
   svn-remote.svn.tags tags/*:refs/remotes/tags/*
 
-但是我们的克隆版本库相比用 git-svn 克隆的版本库还缺乏 `.git/svn` 下的辅助文件，我们可以用 `git svn fetch` 命令重建。
+但是我们的克隆版本库相比用 git-svn 克隆的版本库还缺乏 `.git/svn` 下的辅助文件，我们可以用 `git svn rebase` 命令重建，同时也可以变基到 Subversion 相应分支的最新提交上。
 
 ::
 
-  $ git svn fetch
+  $ git svn rebase 
   Rebuilding .git/svn/refs/remotes/trunk/.rev_map.f79726c4-f016-41bd-acd5-6c9acb7664b2 ...
   r1 = 2c73d657dfc3a1ceca9d465b0b98f9e123b92bb4
   r2 = 1863f91b45def159a3ed2c4c4c9428c25213f956
@@ -760,6 +760,13 @@ Git 缺省工作的分支是 master，而我们看到上例中的 Subversion 主
   r6 = d0eb86bdfad4720e0a24edc49ec2b52e50473e83
   r7 = 69f4aa56eb96230aedd7c643f65d03b618ccc9e5
   Done rebuilding .git/svn/refs/remotes/trunk/.rev_map.f79726c4-f016-41bd-acd5-6c9acb7664b2
+  Current branch master is up to date.
+
+如果我们执行 `git svn fetch` 则会对所有的分支进行重建。
+
+::
+
+  $ git svn fetch
   Rebuilding .git/svn/refs/remotes/demo-1.0/.rev_map.f79726c4-f016-41bd-acd5-6c9acb7664b2 ...
   r3 = 1adcd5526976fe2a796d932ff92d6c41b7eedcc4
   r8 = a8b32d1b533d308bef59101c1f2c9a16baf91e48
@@ -773,4 +780,9 @@ Git 缺省工作的分支是 master，而我们看到上例中的 Subversion 主
 git-svn 的局限
 --------------
 
+Subversion 和 Git 的分支实现有着巨大的不同。Subversion 的分支和里程碑，是用轻量级拷贝实现的，虽然创建分支和里程碑的速度也很快，但是很难维护。即使 Subversion 在 1.5 之后引入了 `svn:mergeinfo` 属性对合并过程进行标记，但是也不可能让 Subversion 的分支逻辑更清晰。git-svn 无须利用 svn:mergeinfo 属性也可实现对 Subversion 合并的追踪，在合并的时候也不会对 svn:mergeinfo 属性进行更改，因此在使用 git-svn 操作时，如果在不同分支间进行合并，会导致 Subversion 的 svn:mergeinfo 属性没有相应的更新，导致 Subversion 用户进行合并时因为重复合并导致冲突。
+
+简而言之，在使用 git-svn 时尽量不要在不同的分支之间进行合并，而是尽量在一个分支下线性的提交。这种线性的提交会很好的推送到 Subversion 服务器中。
+
+如果真的需要在不同的 Subversion 分支之间合并，尽量使用 Subversion 的客户端（svn 1.5 版本或以上）执行，因为这样可以正确的记录 svn:mergeinfo 属性。当 Subversion 完成分支合并后，在 git-svn 的克隆库中执行 `git svn rebase` 命令获取最新的 Subversion 提交并变基到相应的跟踪分支中。
 
