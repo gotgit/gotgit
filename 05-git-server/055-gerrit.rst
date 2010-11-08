@@ -7,9 +7,58 @@ Gerrit Code Review started as a simple set of patches to Rietveld, and was origi
 
 Gerrit2 is a complete rewrite of the Gerrit fork, completely changing the implementation from Python on Google App Engine, to Java on a J2EE servlet container and a SQL database. 
 
+Gerrit 是由 Java 开发的，封装为一个 jar 包: gerrit.jar 。提供 Git 代码审核功能，包括一个代码审核的 Web 界面，以及一个重新实现的 Git 服务器，以便强制 Git 必须使用 Gerrit 的代码审核工作流，即：每一个 Git 提交先转换为一个代码审核任务，经过检验和审核后，授权用户可以直接通过 Gerrit 的 Web 界面将审核通过的代码合并到Git 版本库中。
 
-Gerrit 的部署
---------------
+Android Review 服务器
+----------------------
+
+Android Review 服务器就是一个最典型的 Gerrit 应用，我们可以通过它一窥 Gerrit 的风采。
+
+Gerrit 的 Web 服务
++++++++++++++++++++
+
+Gerrit 的 Web 界面提供了 Git 代码审核功能，此外还包括与此相关的用户注册，授权管理，项目管理等功能。
+
+
+Gerrit 的 SSH 服务
++++++++++++++++++++
+
+我们看看 Android 的代码审核服务器。
+
+::
+
+  $ curl -L -k http://review.source.android.com/ssh_info
+  review.source.android.com 29418
+
+含义是 Gerrit 服务器打开的 SSH 服务位于 review.source.android.com 服务器的 29418 端口。
+
+Gerrit 提供的 SSH 服务最主要的就是 Git 相关操作，如 git fetch, git pull, git fetch 等。我们会在后面进行演示。
+
+可以从 Gerrit 的 SSH 服务器中通过 scp 命令拷贝文件。
+
+::
+
+  $ scp -P 29418 -p -r review.source.android.com:/ gerrit-files
+
+  $ find gerrit-files -type f
+  gerrit-files/bin/gerrit-cherry-pick
+  gerrit-files/hooks/commit-msg
+
+
+可以向 SSH 服务器输入 gerrit 命令。例如显示项目列表。
+
+::
+
+  $ ssh -p 29418 review.source.android.com gerrit ls-projects
+  device/common
+  device/htc/common
+  ...
+
+除此之外，还可以执行 Gerrit 相关的管理命令，如创建项目、数据库操作等。具体参见文档： Documentation/cmd-index.html 。
+
+
+架设 Gerrit 的服务器
+---------------------
 
 从下面的地址下载 Gerrit ： http://code.google.com/p/gerrit/downloads/list 。
 
@@ -155,6 +204,9 @@ Gerrit 需要一个数据库，目前支持 PostgreSQL, MySQL 以及嵌入式的
     GERRIT_SITE=/home/gerrit/review_site
     NO_START=0
 
+
+
+
 Gerrit 的配置
 --------------
 
@@ -226,6 +278,81 @@ TODO: 截图：邮件地址确认对话框。
 
 查看用户的分组。
 
+数据库操作
+-----------
+
+我们缺省以内置 H2 数据库方式进行部署，操作 H2 数据库 Gerrit 提供了两种方法。
+
+通过 ssh 命令可以修改运行中的 Gerrit 数据库。因为是跨网络使用，需要进行公钥认证，只有管理员才有权限执行。
+
+::
+
+  $ ssh -p 29418 review.example.com gerrit gsql
+
+
+而下面的命令，只能在 Gerrit 服务器停止的情况下使用，修改 Gerrit 数据库。因为是在服务器端直接操作数据库文件，因此无须认证。
+
+::
+
+  $ java -jar gerrit.war gsql
+
+当连接上数据库管理接口后，便出现 "gerrit>" 提示符，在该提示符下可以输入 SQL 命令。
+
+::
+
+  gerrit> show databases;
+   SCHEMA_NAME
+   ------------------
+   PUBLIC
+   INFORMATION_SCHEMA
+  (2 rows; 2 ms)
+
+  gerrit> show tables;
+   TABLE_NAME                  | TABLE_SCHEMA
+   ----------------------------+-------------
+   ACCOUNTS                    | PUBLIC
+   ACCOUNT_AGREEMENTS          | PUBLIC
+   ACCOUNT_DIFF_PREFERENCES    | PUBLIC
+   ACCOUNT_EXTERNAL_IDS        | PUBLIC
+   ACCOUNT_GROUPS              | PUBLIC
+   ACCOUNT_GROUP_AGREEMENTS    | PUBLIC
+   ACCOUNT_GROUP_MEMBERS       | PUBLIC
+   ACCOUNT_GROUP_MEMBERS_AUDIT | PUBLIC
+   ACCOUNT_GROUP_NAMES         | PUBLIC
+   ACCOUNT_PATCH_REVIEWS       | PUBLIC
+   ACCOUNT_PROJECT_WATCHES     | PUBLIC
+   ACCOUNT_SSH_KEYS            | PUBLIC
+   APPROVAL_CATEGORIES         | PUBLIC
+   APPROVAL_CATEGORY_VALUES    | PUBLIC
+   CHANGES                     | PUBLIC
+   CHANGE_MESSAGES             | PUBLIC
+   CONTRIBUTOR_AGREEMENTS      | PUBLIC
+   PATCH_COMMENTS              | PUBLIC
+   PATCH_SETS                  | PUBLIC
+   PATCH_SET_ANCESTORS         | PUBLIC
+   PATCH_SET_APPROVALS         | PUBLIC
+   PROJECTS                    | PUBLIC
+   REF_RIGHTS                  | PUBLIC
+   SCHEMA_VERSION              | PUBLIC
+   STARRED_CHANGES             | PUBLIC
+   SYSTEM_CONFIG               | PUBLIC
+   TRACKING_IDS                | PUBLIC
+  (27 rows; 65 ms)
+
+  gerrit> select * from system_config;
+   REGISTER_EMAIL_PRIVATE_KEY           | SITE_PATH                | ADMIN_GROUP_ID | ANONYMOUS_GROUP_ID | REGISTERED_GROUP_ID | WILD_PROJECT_NAME  | BATCH_USERS_GROUP_ID | SINGLETON
+   -------------------------------------+--------------------------+----------------+--------------------+---------------------+--------------------+----------------------+----------
+   fsHu/uJUqI6gGCZLzbuE+cnK1ySB7sej6/E= | /home/gerrit/review_site | 1              | 2                  | 3                   | -- All Projects -- | 4                    | X
+  (1 row; 3 ms)
+
+  gerrit> select * from projects;
+   DESCRIPTION                            | USE_CONTRIBUTOR_AGREEMENTS | USE_SIGNED_OFF_BY | SUBMIT_TYPE | PARENT_NAME | NAME
+   ---------------------------------------+----------------------------+-------------------+-------------+-------------+-------------------
+   Rights inherited by all other projects | N                          | N                 | M           | NULL        | -- All Projects --
+   测试项目                                   | N                          | N                 | M           | NULL        | new/project
+  (2 rows; 2 ms)
+
+
 项目管理
 -----------
 
@@ -236,7 +363,9 @@ Create Through SSH
 
 Creating a new repository over SSH is perhaps the easiest way to configure a new project:
 
-ssh -p 29418 review.example.com gerrit create-project --name new/project
+::
+
+  $ ssh -p 29418 review.example.com gerrit create-project --name new/project
 
 Manual Creation
 
@@ -260,14 +389,16 @@ One insert is needed to register a project with Gerrit.
 Note
   Note that the .git suffix is not typically included in the project name, as it looks cleaner in the web when not shown. Gerrit automatically assumes that project.git is the Git repository for a project named project.
 
-INSERT INTO projects
-(use_contributor_agreements
- ,submit_type
- ,name)
-VALUES
-('N'
-,'M'
-,'new/project');
+::
+
+  INSERT INTO projects
+  (use_contributor_agreements
+   ,submit_type
+   ,name)
+  VALUES
+  ('N'
+  ,'M'
+  ,'new/project');
 
 Change Submit Action
 
@@ -347,6 +478,35 @@ approved and then submitted.  Pushing to "refs/heads/" bypasses review
 entirely, and just enters the commits directly into the branch.  The latter
 path does not check committer identity, and is designed for the case you are
 trying to work through right now.  :-) 
+
+ACL
+-----
+
+上传改动
+---------
+
+Documentation/user-upload.html
+
+Gerrit supports three methods of uploading changes:
+
+    *
+
+      Use repo upload, to create changes for review
+    *
+
+      Use git push, to create changes for review
+    *
+
+      Use git push, and bypass code review
+
+Change-id
+------------
+
+通过钩子，提交自动在提交说明中生成 Change-id 。这个 Change-id 被用于确定变更集编号。
+
+
+参见： Documentation/user-changeid.html
+
 
 ACL
 -----
