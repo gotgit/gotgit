@@ -1,6 +1,95 @@
 Gerrit 代码审核服务器
 =====================
 
+谷歌 Android 开源项目在 Git 的使用上有两个重要的创新，一个是为多版本库协同而引入的 repo，这在之前我们已经详细讨论过。另外一个重要的创新就是 Gerrit —— 代码审核服务器。Gerrit 为 Git 引入的代码审核是强制性的，就是说除非特别的授权设置，向 Git 版本库的推送（Push）必须要经过 Gerrit 服务器，修订必须经过代码审核的一套工作流之后，才可能经批准并纳入正式代码库中。
+
+首先贡献者的代码通过 git 命令（或 repo 封装）推送到 Gerrit 管理下的 Git 版本库，推送的提交转化为一个一个的代码审核任务，审核任务可以通过 `refs/changes/` 下的引用访问到。代码审核者可以通过 Web 界面查看审核任务、代码变更，通过 Web 界面做出通过代码审核或者打回等决定。测试者也可以通过 `refs/changes/` 之下的引用获取（fetch）修订对其进行测试，如果测试通过就可以将该评审任务设置为校验通过（verified）。最后经过了审核和校验的修订可以通过 Gerrit 界面中提交动作合并到版本库对应的分支中。
+
+在 Android 项目的网站的代码贡献流程图更为详细的介绍了 Gerrit 代码审核服务器的工作流程。
+
+  .. figure:: images/gerrit-workflow.png
+     :scale: 80
+
+     Gerrit 代码审核工作流
+
+Gerrit 的实现原理
+-----------------
+
+**SSH 协议的 Git 服务器**
+
+Gerrit 本身基于 SSH 协议实现了一套 Git 服务器，这样就可以对 Git 数据推送进行更为精确的控制，为强制审核的实现建立了基础。
+
+Gerrit 提供的 Git 服务的端口并非标准的 22 端口，缺省是 29418 端口。可以访问 Gerrit 的 Web 界面得到这个端口。对 Android 项目的代码审核服务器，访问 https://review.source.android.com/ssh_info 就可以查看到 Git 服务的服务器域名和开放的端口。下面我们用 curl 命令查看网页的输出。
+
+::
+
+  $ curl -L -k http://review.source.android.com/ssh_info
+  review.source.android.com 29418
+
+**特殊引用 refs/for/<branch-name> 和 refs/changes/nn/<task-id>/m**
+
+Gerrit 的 Git 服务器，禁止用户向 `refs/heads` 命名空间下的引用执行推送（除非特别的授权），即不允许用户直接向分支进行提交。为了让开发者能够向 Git 服务器提交修订，Gerrit 的 Git 服务器只允许用户向特殊的引用 `refs/for/<branch-name>` 下执行推送，其中 `<branch-name>` 即为开发者的工作分支。向 `refs/for/<branch-name>` 命名空间下推送并不会在其中创建引用，而是为新的提交分配一个 ID，称为 task-id ，并为该 task-id 的访问建立如下格式的引用 `refs/changes/nn/<task-id>/m` ，其中：
+
+* task-id 为 Gerrit 为评审任务顺序分配的全局唯一的号码。
+* nn 为 task-id 的后两位数，位数不足用零补齐。即 nn 为 task-id 除以 100 的余数。
+* m 为修订号，该 task-id 的首次提交修订号为 1，如果该修订被打回，重新提交修订号会自增。
+
+**Git 库的钩子脚本 hooks/commit-msg**
+
+为了保证已经提交审核的修订通过审核入库后，被别的分支 cherry-pick 后再推送至服务器时不会产生新的重复的评审任务，Gerrit 设计了一套方法，即要求每个提交包含唯一的 Change-Id，这个 Change-Id 因为出现在日志中，当执行 cherry-pick 时也会保持，Gerrit 一旦发现新的提交包含了已经处理过的 `Change-Id` ，就不再为该修订创建新的评审任务和 task-id，而直接将提交入库。
+
+为了实现 Git 提交中包含唯一的 Change-Id，Gerrit 提供了一个钩子脚本，放在开发者本地 Git 库中（hooks/commit-msg）。这个钩子脚本在用户提交时自动在提交说明中创建以 "Change-Id: " 及包含 `git hash-object` 命令产生的哈希值的唯一标识。当 Gerrit 获取到用户向 `refs/for/<branch-name>` 推送的提交中包含 "Change-Id: I..." 的变更 ID，如果该 Change-Id 之前没有见过，会创建一个新的评审任务并分配新的 task-id，并在 Gerrit 的数据库中保存 Change-Id 和 Task-Id 的关联。
+
+如果当用户的提交因为某种原因被要求打回重做，开发者修改之后重新推送到 Gerrit 时就要注意在提交说明中使用相同的 “Change-Id” （使用 --amend 提交即可保持提交说明），以免创建新的评审任务，还要在推送时将当前分支推送到 `refs/changes/nn/task-id/m` 中。其中 `nn` 和 `task-id` 和之前提交的评审任务的修订相同，m 则要人工选择一个新的修订号。
+
+以上说起来很复杂，但是在实际操作中只要使用 repo 这一工具，就相对容易多了。
+
+**其余一切交给 Web**
+
+Gerrit 另外一个重要的组件就是 Web 服务器，通过 Web 服务器实现对整个评审工作流的控制。关于 Gerrit 工作流，参见在本章开头出现的 Gerrit 工作流程图。
+
+感受一下 Gerrit 的魅力？直接访问 Android 项目的 Gerrit 网站： https://review.source.android.com/ 。
+
+  .. figure:: images/android-gerrit-merged.png
+     :scale: 70
+
+     Android 项目代码审核网站
+
+Android 项目的评审网站，匿名即可访问。点击菜单中的 “Merged” 显示了已经通过评审合并到代码库中的审核任务。下面的一个界面就是 Andorid 一个已经合并到代码库中的历史评审任务。
+
+  .. figure:: images/android-gerrit-16993.png
+     :scale: 70
+
+     Android 项目的 16993 号评审
+
+在该界面我们可以看到：
+
+* URL 中显示的评审任务编号为 16993。
+* 该评审任务的 Change-Id 以字母 I 开头，包含了一个唯一的 40 位 SHA1 哈希。
+* 整个评审任务有三个人参与，一个人进行了检查（verify），两个人进行了代码审核。
+* 该评审任务的状态为已合并：“merged”。
+* 该评审任务总共包含两个补丁集： Patch set 1 和 Patch set 2。
+* 补丁集的下载方法是: `repo download platform/sdk 16993/2` 。
+
+如果使用 repo 命令获取补丁集是非常方便的，因为封装后的 repo 屏蔽掉了 Gerrit 的一些实现细节，例如补丁集在 Git 库中的存在位置。如前所述，补丁集实际保存在 `refs/changes` 命名空间下。使用 `git ls-remote` 命令，从 Gerrit 维护的代码库中我们可以看到补丁集对应的引用名称。
+
+::
+
+  $ git ls-remote ssh://review.source.android.com:29418/platform/sdk refs/changes/93/16993*
+  5fb1e79b01166f5192f11c5f509cf51f06ab023d        refs/changes/93/16993/1
+  d342ef5b41f07c0202bc26e2bfff745b7c86d5a7        refs/changes/93/16993/2
+
+接下来我们就来介绍一下 Gerrit 服务器的部署和使用方法。
+
+Android Review 服务器
+----------------------
+
+
+
+
+Gerrit 服务器的出现不是偶然的，
+
+
 Gerrit 名字的由来。
 
 Gerrit Code Review started as a simple set of patches to Rietveld, and was originally built to service AOSP. This quickly turned into a fork as we added access control features that Guido van Rossum did not want to see complicating the Rietveld code base. As the functionality and code were starting to become drastically different, a different name was needed. Gerrit calls back to the original namesake of Rietveld, Gerrit Rietveld, a Dutch architect.
@@ -8,9 +97,6 @@ Gerrit Code Review started as a simple set of patches to Rietveld, and was origi
 Gerrit2 is a complete rewrite of the Gerrit fork, completely changing the implementation from Python on Google App Engine, to Java on a J2EE servlet container and a SQL database. 
 
 Gerrit 是由 Java 开发的，封装为一个 jar 包: gerrit.jar 。提供 Git 代码审核功能，包括一个代码审核的 Web 界面，以及一个重新实现的 Git 服务器，以便强制 Git 必须使用 Gerrit 的代码审核工作流，即：每一个 Git 提交先转换为一个代码审核任务，经过检验和审核后，授权用户可以直接通过 Gerrit 的 Web 界面将审核通过的代码合并到Git 版本库中。
-
-Android Review 服务器
-----------------------
 
 Android Review 服务器就是一个最典型的 Gerrit 应用，我们可以通过它一窥 Gerrit 的风采。
 
