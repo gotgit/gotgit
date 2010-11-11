@@ -15,6 +15,8 @@ Gerrit 代码审核服务器
 Gerrit 的实现原理
 -----------------
 
+Gerrit 更准确的说应该称为 Gerrit2。因为 Android 项目最早使用的评审服务器 Gerrit 不是今天这个样子，最早版本的 Gerrit 是用 Python 开发运行于 Google App Engine 上，是从 Python 之父 Guido van Rossum 开发的 Rietveld 分支而来。我们这里讨论的 Gerrit 实为 Gerrit2，是用 Java 语言实现的。从 `这里 <http://code.google.com/p/gerrit/wiki/Background>`_ 可以看到 Gerrit 更为详尽的发展历史。
+
 **SSH 协议的 Git 服务器**
 
 Gerrit 本身基于 SSH 协议实现了一套 Git 服务器，这样就可以对 Git 数据推送进行更为精确的控制，为强制审核的实现建立了基础。
@@ -26,21 +28,21 @@ Gerrit 提供的 Git 服务的端口并非标准的 22 端口，缺省是 29418 
   $ curl -L -k http://review.source.android.com/ssh_info
   review.source.android.com 29418
 
-**特殊引用 refs/for/<branch-name> 和 refs/changes/nn/<task-id>/m**
+**特殊引用 refs/for/<branch-name> 和 refs/changes/nn/<review-id>/m**
 
-Gerrit 的 Git 服务器，禁止用户向 `refs/heads` 命名空间下的引用执行推送（除非特别的授权），即不允许用户直接向分支进行提交。为了让开发者能够向 Git 服务器提交修订，Gerrit 的 Git 服务器只允许用户向特殊的引用 `refs/for/<branch-name>` 下执行推送，其中 `<branch-name>` 即为开发者的工作分支。向 `refs/for/<branch-name>` 命名空间下推送并不会在其中创建引用，而是为新的提交分配一个 ID，称为 task-id ，并为该 task-id 的访问建立如下格式的引用 `refs/changes/nn/<task-id>/m` ，其中：
+Gerrit 的 Git 服务器，禁止用户向 `refs/heads` 命名空间下的引用执行推送（除非特别的授权），即不允许用户直接向分支进行提交。为了让开发者能够向 Git 服务器提交修订，Gerrit 的 Git 服务器只允许用户向特殊的引用 `refs/for/<branch-name>` 下执行推送，其中 `<branch-name>` 即为开发者的工作分支。向 `refs/for/<branch-name>` 命名空间下推送并不会在其中创建引用，而是为新的提交分配一个 ID，称为 review-id ，并为该 review-id 的访问建立如下格式的引用 `refs/changes/nn/<review-id>/m` ，其中：
 
-* task-id 为 Gerrit 为评审任务顺序分配的全局唯一的号码。
-* nn 为 task-id 的后两位数，位数不足用零补齐。即 nn 为 task-id 除以 100 的余数。
-* m 为修订号，该 task-id 的首次提交修订号为 1，如果该修订被打回，重新提交修订号会自增。
+* review-id 为 Gerrit 为评审任务顺序分配的全局唯一的号码。
+* nn 为 review-id 的后两位数，位数不足用零补齐。即 nn 为 review-id 除以 100 的余数。
+* m 为修订号，该 review-id 的首次提交修订号为 1，如果该修订被打回，重新提交修订号会自增。
 
 **Git 库的钩子脚本 hooks/commit-msg**
 
-为了保证已经提交审核的修订通过审核入库后，被别的分支 cherry-pick 后再推送至服务器时不会产生新的重复的评审任务，Gerrit 设计了一套方法，即要求每个提交包含唯一的 Change-Id，这个 Change-Id 因为出现在日志中，当执行 cherry-pick 时也会保持，Gerrit 一旦发现新的提交包含了已经处理过的 `Change-Id` ，就不再为该修订创建新的评审任务和 task-id，而直接将提交入库。
+为了保证已经提交审核的修订通过审核入库后，被别的分支 cherry-pick 后再推送至服务器时不会产生新的重复的评审任务，Gerrit 设计了一套方法，即要求每个提交包含唯一的 Change-Id，这个 Change-Id 因为出现在日志中，当执行 cherry-pick 时也会保持，Gerrit 一旦发现新的提交包含了已经处理过的 `Change-Id` ，就不再为该修订创建新的评审任务和 review-id，而直接将提交入库。
 
-为了实现 Git 提交中包含唯一的 Change-Id，Gerrit 提供了一个钩子脚本，放在开发者本地 Git 库中（hooks/commit-msg）。这个钩子脚本在用户提交时自动在提交说明中创建以 "Change-Id: " 及包含 `git hash-object` 命令产生的哈希值的唯一标识。当 Gerrit 获取到用户向 `refs/for/<branch-name>` 推送的提交中包含 "Change-Id: I..." 的变更 ID，如果该 Change-Id 之前没有见过，会创建一个新的评审任务并分配新的 task-id，并在 Gerrit 的数据库中保存 Change-Id 和 Task-Id 的关联。
+为了实现 Git 提交中包含唯一的 Change-Id，Gerrit 提供了一个钩子脚本，放在开发者本地 Git 库中（hooks/commit-msg）。这个钩子脚本在用户提交时自动在提交说明中创建以 "Change-Id: " 及包含 `git hash-object` 命令产生的哈希值的唯一标识。当 Gerrit 获取到用户向 `refs/for/<branch-name>` 推送的提交中包含 "Change-Id: I..." 的变更 ID，如果该 Change-Id 之前没有见过，会创建一个新的评审任务并分配新的 review-id，并在 Gerrit 的数据库中保存 Change-Id 和 review-id 的关联。
 
-如果当用户的提交因为某种原因被要求打回重做，开发者修改之后重新推送到 Gerrit 时就要注意在提交说明中使用相同的 “Change-Id” （使用 --amend 提交即可保持提交说明），以免创建新的评审任务，还要在推送时将当前分支推送到 `refs/changes/nn/task-id/m` 中。其中 `nn` 和 `task-id` 和之前提交的评审任务的修订相同，m 则要人工选择一个新的修订号。
+如果当用户的提交因为某种原因被要求打回重做，开发者修改之后重新推送到 Gerrit 时就要注意在提交说明中使用相同的 “Change-Id” （使用 --amend 提交即可保持提交说明），以免创建新的评审任务，还要在推送时将当前分支推送到 `refs/changes/nn/review-id/m` 中。其中 `nn` 和 `review-id` 和之前提交的评审任务的修订相同，m 则要人工选择一个新的修订号。
 
 以上说起来很复杂，但是在实际操作中只要使用 repo 这一工具，就相对容易多了。
 
@@ -81,78 +83,42 @@ Android 项目的评审网站，匿名即可访问。点击菜单中的 “Merge
 
 接下来我们就来介绍一下 Gerrit 服务器的部署和使用方法。
 
-Android Review 服务器
-----------------------
-
-
-
-
-Gerrit 服务器的出现不是偶然的，
-
-
-Gerrit 名字的由来。
-
-Gerrit Code Review started as a simple set of patches to Rietveld, and was originally built to service AOSP. This quickly turned into a fork as we added access control features that Guido van Rossum did not want to see complicating the Rietveld code base. As the functionality and code were starting to become drastically different, a different name was needed. Gerrit calls back to the original namesake of Rietveld, Gerrit Rietveld, a Dutch architect.
-
-Gerrit2 is a complete rewrite of the Gerrit fork, completely changing the implementation from Python on Google App Engine, to Java on a J2EE servlet container and a SQL database. 
-
-Gerrit 是由 Java 开发的，封装为一个 jar 包: gerrit.jar 。提供 Git 代码审核功能，包括一个代码审核的 Web 界面，以及一个重新实现的 Git 服务器，以便强制 Git 必须使用 Gerrit 的代码审核工作流，即：每一个 Git 提交先转换为一个代码审核任务，经过检验和审核后，授权用户可以直接通过 Gerrit 的 Web 界面将审核通过的代码合并到Git 版本库中。
-
-Android Review 服务器就是一个最典型的 Gerrit 应用，我们可以通过它一窥 Gerrit 的风采。
-
-Gerrit 的 Web 服务
-+++++++++++++++++++
-
-Gerrit 的 Web 界面提供了 Git 代码审核功能，此外还包括与此相关的用户注册，授权管理，项目管理等功能。
-
-
-Gerrit 的 SSH 服务
-+++++++++++++++++++
-
-我们看看 Android 的代码审核服务器。
-
-::
-
-  $ curl -L -k http://review.source.android.com/ssh_info
-  review.source.android.com 29418
-
-含义是 Gerrit 服务器打开的 SSH 服务位于 review.source.android.com 服务器的 29418 端口。
-
-Gerrit 提供的 SSH 服务最主要的就是 Git 相关操作，如 git fetch, git pull, git fetch 等。我们会在后面进行演示。
-
-可以从 Gerrit 的 SSH 服务器中通过 scp 命令拷贝文件。
-
-::
-
-  $ scp -P 29418 -p -r review.source.android.com:/ gerrit-files
-
-  $ find gerrit-files -type f
-  gerrit-files/bin/gerrit-cherry-pick
-  gerrit-files/hooks/commit-msg
-
-
-可以向 SSH 服务器输入 gerrit 命令。例如显示项目列表。
-
-::
-
-  $ ssh -p 29418 review.source.android.com gerrit ls-projects
-  device/common
-  device/htc/common
-  ...
-
-除此之外，还可以执行 Gerrit 相关的管理命令，如创建项目、数据库操作等。具体参见文档： Documentation/cmd-index.html 。
-
-
 架设 Gerrit 的服务器
 ---------------------
 
-从下面的地址下载 Gerrit ： http://code.google.com/p/gerrit/downloads/list 。
+**下载 war 包**
 
-在下载页面会有一个类似 Gerrit-x.x.x.war 的 war 包，下载并另存为 Gerrit.war 。这个文件就是 Gerrit 的全部。为节约篇幅，就不介绍如何从源码编译 Gerrit 的 war 包了。
+Gerrit 是由 Java 开发的，封装为一个 war 包: gerrit.war ，安装非常简洁。如果需要从源码编译出 war 包，可以参照文档: http://gerrit.googlecode.com/svn/documentation/2.1.5/dev-readme.html 。不过最简单的就是从 Google Code 上直接下载编译号的 war 包。 
 
-Gerrit 需要一个数据库，目前支持 PostgreSQL, MySQL 以及嵌入式的 H2 数据库。我们直接使用 H2 数据库就好了。
+从下面的地址下载 Gerrit 的 war 包： http://code.google.com/p/gerrit/downloads/list 。在下载页面会有一个文件名类似 Gerrit-x.x.x.war 的 war 包，这个文件就是 Gerrit 的全部。我们使用的是 2.1.5.1 版本，把下载的 Gerrit-2.1.5.1.war 包重命名为 Gerrit.war 。我们下面的介绍就是基于这个版本。
 
-创建一个 gerrit 用户，并以该用户身份执行安装。
+**数据库选择**
+
+Gerrit 需要数据库来维护账户信息、跟踪评审任务等。目前支持的数据库类型有 PostgreSQL, MySQL 以及嵌入式的 H2 数据库。
+
+选择使用缺省的 H2 内置数据库是最简单的，因为这样无须任何设置。如果想使用更为熟悉的 PostgreSQL 或者 MySQL，则预先建立数据库。
+
+对于 PostgreSQL，我们在数据库中创建一个用户 gerrit，并创建一个数据库 reviewdb。
+
+::
+
+  createuser -A -D -P -E gerrit
+  createdb -E UTF-8 -O gerrit reviewdb
+
+对于 MySQL，我们在数据库中创建一个用户 gerrit 并为其设置口令（不要真如下面的将口令置为 secret），并创建一个数据库 reviewdb。
+
+::
+
+  $ mysql -u root
+
+  mysql> CREATE USER 'gerrit'@'localhost' IDENTIFIED BY 'secret';
+  mysql> CREATE DATABASE reviewdb default character set 'utf8';
+  mysql> GRANT ALL ON reviewdb.* TO 'gerrit'@'localhost';
+  mysql> FLUSH PRIVILEGES;
+
+**以一个专用用户帐号执行安装**
+
+在系统中创建一个专用的用户帐号如：gerrit。以该用户身份执行安装，将 Gerrit 的配置文件、内置数据库、war 包等都自动安装在该用户主目录下的特定目录中。
 
 ::
 
@@ -161,13 +127,14 @@ Gerrit 需要一个数据库，目前支持 PostgreSQL, MySQL 以及嵌入式的
   $ cd ~gerrit
   $ java -jar gerrit.war init -d review_site
 
-会提问一系列问题。
+在安装过程中会提问一系列问题。
 
 * 创建相关目录。
 
+  缺省 Grerit 在安装用户主目录下创建 review_site 并把相关文件安装在这个目录之下。Git 版本库的根路径缺省位于此目录之下 的 git 目录中。
   ::
 
-    *** Gerrit Code Review 2.1.5
+    *** Gerrit Code Review 2.1.5.1
     *** 
     
     Create '/home/gerrit/review_site' [Y/n]? 
@@ -177,7 +144,9 @@ Gerrit 需要一个数据库，目前支持 PostgreSQL, MySQL 以及嵌入式的
     
     Location of Git repositories   [git]: 
     
-* 数据库类型。
+* 选择数据库类型。
+
+  选择 H2 数据库是简单的选择，无须额外的配置。
 
   ::
 
@@ -186,9 +155,13 @@ Gerrit 需要一个数据库，目前支持 PostgreSQL, MySQL 以及嵌入式的
     
     Database server type           [H2/?]: 
     
-* 询问认证类型。
+* 设置 Gerrit Web 界面认证的类型。
 
-  输入问号可以查看其它可选的认证类型。
+  缺省为 openid，即使用任何支持 OpenID 的认证源（如 Google, Yahoo）进行身份认证。此模式支持用户自建帐号，当用户通过 OpenID 认证源的认证后，Gerrit 会自动从认证源获取相关属性如用户全名和邮件地址等信息创建帐号。Android 项目的 Gerrit 服务器即采用此认证模式。
+  
+  如果有可用的 LDAP 服务器，那么 ldap 或者 ldap_bind 也是非常好的认证方式，可以直接使用 LDAP 中的已有帐号进行认证，不过此认证方式下 Gerrit 的自建帐号功能关闭。此安装示例我们选择的就是 LDAP 认证方式。
+  
+  http 认证也是可选的认证方式，此认证方式需要配置 Apache 的反向代理并在 Apache 中配置 Web 站点的口令认证，通过口令认证后 Gerrit 在创建帐号的过程中会询问用户的邮件地址并发送确认邮件。
 
   ::
 
@@ -203,9 +176,15 @@ Gerrit 需要一个数据库，目前支持 PostgreSQL, MySQL 以及嵌入式的
              ldap
              ldap_bind
              development_become_any_account
-    Authentication method          [OPENID/?]: http
+    Authentication method          [OPENID/?]: ldap
+    LDAP server                    [ldap://localhost]: 
+    LDAP username                  : 
+    Account BaseDN                 : dc=foo,dc=bar
+    Group BaseDN                   [dc=foo,dc=bar]: 
     
 * 发送邮件设置。
+
+  缺省使用本机的 SMTP 发送邮件。
 
   ::
 
@@ -219,6 +198,8 @@ Gerrit 需要一个数据库，目前支持 PostgreSQL, MySQL 以及嵌入式的
     
 * Java 相关设置。
 
+  使用 OpenJava 和 Sun Java 均可。Gerrit 的 war 包要复制到 review_site/bin 目录中。
+
   ::
 
     *** Container Process
@@ -230,6 +211,8 @@ Gerrit 需要一个数据库，目前支持 PostgreSQL, MySQL 以及嵌入式的
     Copying gerrit.war to /home/gerrit/review_site/bin/gerrit.war
     
 * SSH 服务相关设置。
+
+  Gerrit 的基于 SSH 协议的 Git 服务非常重要，缺省的端口为 29418。换做其它端口也无妨，因为 repo 可以自动探测到该端口。
 
   ::
 
@@ -249,18 +232,25 @@ Gerrit 需要一个数据库，目前支持 PostgreSQL, MySQL 以及嵌入式的
     
 * HTTP 服务相关设置。
 
+  缺省启用内置的 HTTP 服务器，端口为 8080，如果该端口被占用（如 Tomcat），则需要更换为其它端口，否则服务启动失败。如下例就换做了 8888 端口。
+
   ::
 
     *** HTTP Daemon
     ***
 
     Behind reverse proxy           [y/N]? y
-    Proxy uses SSL (https://)      [y/N]? 
-    Subdirectory on proxy server   [/]: /gerrit 
+    Proxy uses SSL (https://)      [y/N]? y
+    Subdirectory on proxy server   [/]: /gerrit
     Listen on address              [*]: 
-    Listen on port                 [8080]: 8888
-    
+    Listen on port                 [8081]: 8888
+    Canonical URL                  [https://localhost/gerrit]:         
+
+    Initialized /home/gerrit/review_site
+
 * 启动 Gerrit 服务器。
+
+  配置完成自动启动 Gerrit 服务。
 
   ::
 
@@ -271,7 +261,7 @@ Gerrit 需要一个数据库，目前支持 PostgreSQL, MySQL 以及嵌入式的
     Waiting for server to start ... OK
     Opening browser ...
 
-* 设置服务自动启动。
+* 设置开机时服务自动启动。
 
   Gerrit 服务的启动脚本支持 start, stop, restart 参数，可以作为 init 脚本开机自动执行。
 
@@ -290,36 +280,9 @@ Gerrit 需要一个数据库，目前支持 PostgreSQL, MySQL 以及嵌入式的
     GERRIT_SITE=/home/gerrit/review_site
     NO_START=0
 
+**配置 Apache 代理访问**
 
-
-
-Gerrit 的配置
---------------
-
-编辑 Gerrit 的配置文件 /home/gerrit/review_site/etc/gerrit.config 可以修改上面的配置。
-
-::
-
-  [gerrit]
-    basePath = git
-  [database]
-    type = H2
-    database = db/ReviewDB
-  [auth]
-    type = HTTP
-  [sendemail]
-    smtpServer = localhost
-  [container]
-    user = gerrit
-    javaHome = /usr/lib/jvm/java-6-sun-1.6.0.21/jre
-  [sshd]
-    listenAddress = *:29418
-  [httpd]
-    listenUrl = proxy-http://*:8888/gerrit
-  [cache]
-    directory = cache
-
-配置 Apache 的反向代理：
+缺省 Gerrit 的 Web 服务端口为 8080，通过 Apache 的反向代理就可以使用标准的 80 (http) 或者 443 (https) 来访问 Gerrit 的 Web 界面。
 
 ::
 
@@ -335,6 +298,13 @@ Gerrit 的配置
           Allow from all
     </Proxy>
 
+    ProxyPass /gerrit/ http://127.0.0.1:8888/gerrit/
+  </VirtualHost> 
+
+如果要配置 Gerrit 的 http 认证，则还需要在上面的配置中插入 Http Base 认证的设置。
+
+::
+
     <Location /gerrit/login/>
       AuthType Basic
       AuthName "Gerrit Code Review"
@@ -342,10 +312,7 @@ Gerrit 的配置
       AuthUserFile /home/gerrit/review_site/etc/gerrit.passwd
     </Location>
 
-    ProxyPass /gerrit/ http://127.0.0.1:8888/gerrit/
-  </VirtualHost> 
-
-在上面的 Apache 配置中，我们为 Gerrit 增加了口令认证的设置，口令文件保存在 /home/gerrit/review_site/etc/gerrit.passwd 中。我们可以用 htpasswd 命令维护该口令文件。
+在上面的配置中，我们指定了口令文件的位置：/home/gerrit/review_site/etc/gerrit.passwd 。我们可以用 htpasswd 命令维护该口令文件。
 
 ::
 
@@ -354,33 +321,103 @@ Gerrit 的配置
   Re-type new password: 
   Adding password for user jiangxin
 
-打开浏览器，弹出认证对话框，输入正确的用户名和口令，显示管理界面。第一个用户是默认的管理员。
+**关于 LDAP 认证**
 
-TODO: 截图：邮件地址确认对话框。
+如果采用 LDAP 认证，Gerrit 会自动从 LDAP 服务器中获取相应的字段属性。如果使用 OpenLDAP，Gerrit 会从 mail 字段获取邮件地址，从 displayName 字段获取用户全名。如果使用 Active Directory 则用 givenName 和 sn 字段的值拼接形成用户全名。
 
-邮件地址确认后，进入管理界面。
+至此为止，Gerrit 服务安装完成，下面我们来看看如何配置 Gerrit。
 
-配置公钥。 TODO 
+Gerrit 的配置
+-------------
 
-查看用户的分组。
+Gerrit 的配置文件保存在部署目录下的 `etc/gerrit.conf` 文件中。如果对安装时的配置不满意，可以手工修改配置文件，重启 Gerrit 服务即可。
 
-数据库操作
------------
-
-我们缺省以内置 H2 数据库方式进行部署，操作 H2 数据库 Gerrit 提供了两种方法。
-
-通过 ssh 命令可以修改运行中的 Gerrit 数据库。因为是跨网络使用，需要进行公钥认证，只有管理员才有权限执行。
+全部采用缺省配置时的配置文件：
 
 ::
 
-  $ ssh -p 29418 review.example.com gerrit gsql
+  [gerrit]
+          basePath = git
+          canonicalWebUrl = http://localhost:8080/
+  [database]
+          type = H2
+          database = db/ReviewDB
+  [auth]
+          type = OPENID
+  [sendemail]
+          smtpServer = localhost
+  [container]
+          user = gerrit
+          javaHome = /usr/lib/jvm/java-6-openjdk/jre
+  [sshd]
+          listenAddress = *:29418
+  [httpd]
+          listenUrl = http://*:8080/
+  [cache]
+          directory = cache
 
-
-而下面的命令，只能在 Gerrit 服务器停止的情况下使用，修改 Gerrit 数据库。因为是在服务器端直接操作数据库文件，因此无须认证。
+如果采用 LDAP 认证，下面的配置文件片断配置了一个支持匿名绑定的 LDAP 服务器配置。
 
 ::
 
-  $ java -jar gerrit.war gsql
+  [auth]
+    type = LDAP
+  [ldap]
+    server = ldap://localhost
+    accountBase = dc=foo,dc=bar
+    groupBase = dc=foo,dc=bar
+
+如果采用 MySQL 而非缺省的 H2 数据库，下面的配置文件显示了相关配置。
+
+::
+
+  [database]
+          type = MYSQL
+          hostname = localhost
+          database = reviewdb
+          username = gerrit
+
+LDAP 绑定或者数据库连接的用户口令保存在 etc/secure.config 文件中。
+
+::
+
+  [database]
+    password = secret
+
+下面的配置将 Web 服务架设在 Apache 反向代理的后面。
+
+::
+
+  [httpd]
+          listenUrl = proxy-https://*:8081/gerrit
+
+Gerrit 的数据库访问
+--------------------
+
+之所以要对数据库访问多说几句，是因为大部分用户都会选用内置的 H2 数据库，如何操作 H2 数据库可能大部分用户并不了解。
+
+Gerrit 提供了两种方式操作 H2 数据库。一种是数据库脱机方式，即 Gerrit 服务处于停止状态，可以用 gerrit.jar 提供的接口访问 H2 数据库。进入 Gerrit 部署目录，以 gerrit 用户身份执行下面的命令即可进入数据库控制台。
+
+::
+
+  $ java -jar bin/gerrit.war gsql
+  Welcome to Gerrit Code Review 2.1.5.1
+  (H2 1.2.134 (2010-04-23))
+
+  Type '\h' for help.  Type '\r' to clear the buffer.
+
+  gerrit> 
+
+当出现 gerrit> 提示符时，就可以输入 SQL 语句操作数据库了。
+
+第一种方式操作 H2 数据库显然很不方便，可能唯一的好处是不需要认证，因为是直接在服务器端进行操作。如果在 Gerrit 服务不停止的情况下，我们可以用另外一种方法访问数据库，就是通过 Gerrit 提供的 SSH 协议来访问数据库。采用 SSH 协议远程访问需要用到公钥认证，马上我们就要在后面介绍 Gerrit 服务器用户帐号的创建，第一个注册的用户就是管理员，管理员通过上传公钥到服务器就可以用管理员的身份连接 SSH 服务器，执行相应的命令了。
+
+下面的命令就是用管理员公钥登录 Gerrit 的 SSH 服务器，操作数据库。我们演示用的是本机地址（localhost），操作远程服务器也可以，只要拥有管理员授权。
+
+::
+
+  $ ssh -p 29418 localhost gerrit gsql
+
 
 当连接上数据库管理接口后，便出现 "gerrit>" 提示符，在该提示符下可以输入 SQL 命令。
 
@@ -437,6 +474,82 @@ TODO: 截图：邮件地址确认对话框。
    Rights inherited by all other projects | N                          | N                 | M           | NULL        | -- All Projects --
    测试项目                                   | N                          | N                 | M           | NULL        | new/project
   (2 rows; 2 ms)
+
+
+
+
+
+
+
+
+
+
+Gerrit 的账户设置
+------------------
+
+第一个 Gerrit 账户自动称为权限最高的管理员，因此 Gerrit 安装完毕后的第一件事情就是立即注册或者登录，以便初始化管理员帐号。
+
+下面的 Gerrit 演示是以 LDAP 为认证，所以只要
+
+
+
+TODO: 截图：邮件地址确认对话框。
+
+邮件地址确认后，进入管理界面。
+
+配置公钥。 TODO 
+
+查看用户的分组。
+
+
+数据库操作
+-----------
+
+
+
+Android Review 服务器就是一个最典型的 Gerrit 应用，我们可以通过它一窥 Gerrit 的风采。
+
+Gerrit 的 Web 服务
++++++++++++++++++++
+
+Gerrit 的 Web 界面提供了 Git 代码审核功能，此外还包括与此相关的用户注册，授权管理，项目管理等功能。
+
+
+Gerrit 的 SSH 服务
++++++++++++++++++++
+
+我们看看 Android 的代码审核服务器。
+
+::
+
+  $ curl -L -k http://review.source.android.com/ssh_info
+  review.source.android.com 29418
+
+含义是 Gerrit 服务器打开的 SSH 服务位于 review.source.android.com 服务器的 29418 端口。
+
+Gerrit 提供的 SSH 服务最主要的就是 Git 相关操作，如 git fetch, git pull, git fetch 等。我们会在后面进行演示。
+
+可以从 Gerrit 的 SSH 服务器中通过 scp 命令拷贝文件。
+
+::
+
+  $ scp -P 29418 -p -r review.source.android.com:/ gerrit-files
+
+  $ find gerrit-files -type f
+  gerrit-files/bin/gerrit-cherry-pick
+  gerrit-files/hooks/commit-msg
+
+
+可以向 SSH 服务器输入 gerrit 命令。例如显示项目列表。
+
+::
+
+  $ ssh -p 29418 review.source.android.com gerrit ls-projects
+  device/common
+  device/htc/common
+  ...
+
+除此之外，还可以执行 Gerrit 相关的管理命令，如创建项目、数据库操作等。具体参见文档： Documentation/cmd-index.html 。
 
 
 项目管理
@@ -600,7 +713,7 @@ ACL
 http://gerrit.googlecode.com/svn/documentation/2.1.5/access-control.html#category_FORG
 
 Gerrit Code Review - Access Controls
-version 2.1.5
+version 2.1.5.1
 Table of Contents
 System Groups
 Administrators
@@ -975,7 +1088,7 @@ Note
   Restart the Gerrit web application and reload all browsers after making any database changes to approval categories. Browsers are sent the list of known categories when they first visit the site, and don't notice changes until the page is closed and opened again, or is reloaded.
 
 Part of Gerrit Code Review
-Version 2.1.5
+Version 2.1.5.1
 Last updated 24-Aug-2010 11:06:24 PDT
 
 
@@ -988,7 +1101,7 @@ Last updated 24-Aug-2010 11:06:24 PDT
 创建 '$site_path'/replication.config 文件
 
 [remote "host-one"]
-  url = gerrit2@host-one.example.com:/some/path/${name}.git
+  url = gerrit@host-one.example.com:/some/path/${name}.git
 
 [remote "pubmirror"]
   url = mirror1.us.some.org:/pub/git/${name}.git
