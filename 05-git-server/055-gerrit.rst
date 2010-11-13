@@ -109,10 +109,11 @@ Gerrit 需要数据库来维护账户信息、跟踪评审任务等。目前支�
 
 ::
 
-  $ mysql -u root
+  $ mysql -u root -p
 
   mysql> CREATE USER 'gerrit'@'localhost' IDENTIFIED BY 'secret';
-  mysql> CREATE DATABASE reviewdb default character set 'utf8';
+  mysql> CREATE DATABASE reviewdb;
+  mysql> ALTER DATABASE reviewdb charset=latin1;
   mysql> GRANT ALL ON reviewdb.* TO 'gerrit'@'localhost';
   mysql> FLUSH PRIVILEGES;
 
@@ -243,7 +244,7 @@ Gerrit 需要数据库来维护账户信息、跟踪评审任务等。目前支�
     Proxy uses SSL (https://)      [y/N]? y
     Subdirectory on proxy server   [/]: /gerrit
     Listen on address              [*]: 
-    Listen on port                 [8081]: 8888
+    Listen on port                 [8081]: 
     Canonical URL                  [https://localhost/gerrit]:         
 
     Initialized /home/gerrit/review_site
@@ -261,74 +262,84 @@ Gerrit 需要数据库来维护账户信息、跟踪评审任务等。目前支�
     Waiting for server to start ... OK
     Opening browser ...
 
-* 设置开机时服务自动启动。
-
-  Gerrit 服务的启动脚本支持 start, stop, restart 参数，可以作为 init 脚本开机自动执行。
-
-  ::
-
-    $ sudo ln -snf /home/gerrit/review_site/bin/gerrit.sh /etc/init.d/gerrit.sh
-    $ sudo ln -snf ../init.d/gerrit.sh /etc/rc2.d/S90gerrit
-    $ sudo ln -snf ../init.d/gerrit.sh /etc/rc3.d/S90gerrit
-
-* 创建服务自启动的配置文件。
-
-  服务启动脚本 /etc/init.d/gerrit.sh 需要通过 /etc/default/gerritcodereview 提供一些缺省配置。以下面内容创建该文件。
-
-  ::
-
-    GERRIT_SITE=/home/gerrit/review_site
-    NO_START=0
-
-**配置 Apache 代理访问**
-
-缺省 Gerrit 的 Web 服务端口为 8080，通过 Apache 的反向代理就可以使用标准的 80 (http) 或者 443 (https) 来访问 Gerrit 的 Web 界面。
+如果上面的安装过程正确，并且服务正确启动之后，我们会看到 Gerrit 服务打开两个端口，这两个端口是我们在 Gerrit 安装时指定的，可能和下面的示例有所不同。
 
 ::
 
-  <VirtualHost *:80>
-    ServerName review.moon.ossxp.com
+  $ sudo netstat -ltnp | grep -i gerrit
+  tcp        0      0 0.0.0.0:8081            0.0.0.0:*               LISTEN      26383/GerritCodeRev
+  tcp        0      0 0.0.0.0:29418           0.0.0.0:*               LISTEN      26383/GerritCodeRev
 
-    ProxyRequests Off
-    ProxyVia Off
-    ProxyPreserveHost On
+**设置开机时服务自动启动**
 
-    <Proxy *>
-          Order deny,allow
-          Allow from all
-    </Proxy>
+Gerrit 服务的启动脚本支持 start, stop, restart 参数，可以作为 init 脚本开机自动执行。
 
-    ProxyPass /gerrit/ http://127.0.0.1:8888/gerrit/
-  </VirtualHost> 
+::
+
+  $ sudo ln -snf /home/gerrit/review_site/bin/gerrit.sh /etc/init.d/gerrit.sh
+  $ sudo ln -snf ../init.d/gerrit.sh /etc/rc2.d/S90gerrit
+  $ sudo ln -snf ../init.d/gerrit.sh /etc/rc3.d/S90gerrit
+
+服务自动启动脚本 /etc/init.d/gerrit.sh 需要通过 /etc/default/gerritcodereview 提供一些缺省配置。以下面内容创建该文件。
+
+::
+
+  GERRIT_SITE=/home/gerrit/review_site
+  NO_START=0
+
+**Gerrit 认证方式的选择**
+
+如果是开放服务的 Gerrit 服务，使用 OpenId 认证是最好的方法，就像谷歌 Android 项目的代码审核服务器配置的那样。任何人只要在具有 OpenId provider 的网站上（如 Google，Yahoo 等）具有帐号，就可以直接通过 OpenId 注册，Gerrit 会在您登录 OpenId provider 网站成功后，自动获取（经过您的确认）您在 OpenId provider 站点上的部分注册信息（如用户全名或者邮件地址）在 Gerrit 上自动为您创建帐号。
+
+如果架设有 LDAP 服务器，并且用户帐号都在 LDAP 中进行管理，那么采用 LDAP 认证也是非常好的方法。登录时提供的用户名和口令通过 LDAP 服务器验证之后，Gerrit 会自动从 LDAP 服务器中获取相应的字段属性，为用户创建帐号。创建的帐号的用户全名和邮件地址因为来自于 LDAP，因此不能在 Gerrit 更改，但是用户可以注册新的邮件地址。我配置 LDAP 认证时遇到了一个问题就是创建帐号的用户全名是空白，这是因为在 LDAP 相关的字段没有填写的原因。如果 LDAP 服务器使用的是 OpenLDAP，Gerrit 会从 displayName 字段获取用户全名，如果使用 Active Directory 则用 givenName 和 sn 字段的值拼接形成用户全名。
+
+Gerrit 还支持使用 HTTP 认证，这种认证方式需要架设 Apache 反向代理，在 Apache 中配置 HTTP 认证。当用户访问 Gerrit 网站首先需要通过 Apache 配置的 HTTP Basic Auth 认证，当 Gerrit 发现用户已经登录后，会要求用户确认邮件地址。当用户邮件地址确认后，再填写其它必须的字段完成帐号注册。HTTP 认证方式的缺点除了在口令文件管理上需要管理员手工维护比较麻烦之外，还有一个缺点就是用户一旦登录成功后，想退出登录或者更换其它用户帐号登录变得非常麻烦，除非关闭浏览器。关于切换用户有一个小窍门：例如 Gerrit 登录 URL 为 https://server/gerrit/login/ ，则用浏览器访问 https://nobody:wrongpass@server/gerrit/login/ ，即用错误的用户名和口令覆盖掉浏览器缓存的认证用户名和口令，这样就可以重新认证了。
+
+在后面的 Gerrit 演示和介绍中，为了设置帐号的方便，我们使用了 HTTP 认证，因此下面再介绍一下 HTTP 认证的配置方法。
+
+**配置 Apache 代理访问 Gerrit**
+
+缺省 Gerrit 的 Web 服务端口为 8080 或者 8081，通过 Apache 的反向代理就可以使用标准的 80 (http) 或者 443 (https) 来访问 Gerrit 的 Web 界面。
+
+::
+
+  ProxyRequests Off
+  ProxyVia Off
+  ProxyPreserveHost On
+
+  <Proxy *>
+        Order deny,allow
+        Allow from all
+  </Proxy>
+
+  ProxyPass /gerrit/ http://127.0.0.1:8081/gerrit/
 
 如果要配置 Gerrit 的 http 认证，则还需要在上面的配置中插入 Http Base 认证的设置。
 
 ::
 
-    <Location /gerrit/login/>
-      AuthType Basic
-      AuthName "Gerrit Code Review"
-      Require valid-user
-      AuthUserFile /home/gerrit/review_site/etc/gerrit.passwd
-    </Location>
+  <Location /gerrit/login/>
+    AuthType Basic
+    AuthName "Gerrit Code Review"
+    Require valid-user
+    AuthUserFile /home/gerrit/review_site/etc/gerrit.passwd
+  </Location>
 
 在上面的配置中，我们指定了口令文件的位置：/home/gerrit/review_site/etc/gerrit.passwd 。我们可以用 htpasswd 命令维护该口令文件。
 
 ::
 
-  $ htpasswd -c -m /home/gerrit/review_site/etc/gerrit.passwd jiangxin
+  $ touch /home/gerrit/review_site/etc/gerrit.passwd
+
+  $ htpasswd -m /home/gerrit/review_site/etc/gerrit.passwd jiangxin
   New password: 
   Re-type new password: 
   Adding password for user jiangxin
 
-**关于 LDAP 认证**
+至此为止，Gerrit 服务安装完成。在正式使用 Gerrit 之前，我们先来研究一下 Gerrit 的配置文件，以免安装过程中遗漏或错误的设置影响使用。
 
-如果采用 LDAP 认证，Gerrit 会自动从 LDAP 服务器中获取相应的字段属性。如果使用 OpenLDAP，Gerrit 会从 mail 字段获取邮件地址，从 displayName 字段获取用户全名。如果使用 Active Directory 则用 givenName 和 sn 字段的值拼接形成用户全名。
-
-至此为止，Gerrit 服务安装完成，下面我们来看看如何配置 Gerrit。
-
-Gerrit 的配置
--------------
+Gerrit 的配置文件
+-----------------
 
 Gerrit 的配置文件保存在部署目录下的 `etc/gerrit.conf` 文件中。如果对安装时的配置不满意，可以手工修改配置文件，重启 Gerrit 服务即可。
 
@@ -394,9 +405,11 @@ LDAP 绑定或者数据库连接的用户口令保存在 etc/secure.config 文�
 Gerrit 的数据库访问
 --------------------
 
-之所以要对数据库访问多说几句，是因为大部分用户都会选用内置的 H2 数据库，如何操作 H2 数据库可能大部分用户并不了解。
+之所以要对数据库访问多说几句，是因为一些对 Gerrit 的设置往往在 Web 界面无法配置，需要我们直接修改数据库，而大部分用户在安装 Gerrit 时都会选用内置的 H2 数据库，如何操作 H2 数据库可能大部分用户并不了解。
 
-Gerrit 提供了两种方式操作 H2 数据库。一种是数据库脱机方式，即 Gerrit 服务处于停止状态，可以用 gerrit.jar 提供的接口访问 H2 数据库。进入 Gerrit 部署目录，以 gerrit 用户身份执行下面的命令即可进入数据库控制台。
+实际上无论选择何种数据库，Gerrit 都提供了两种数据库操作的命令行接口。第一种方法是在服务器端调用 gerrit.war 包中的命令入口，另外一种方法是远程 SSH 调用接口。
+
+对于第一种方法，需要在服务器端执行，而且如果使用的是 H2 内置数据库还需要先将 Gerrit 服务停止。先以安装用户身份进入 Gerrit 部署目录下，在执行命令调用 gerrit.war 包，如下：
 
 ::
 
@@ -410,25 +423,20 @@ Gerrit 提供了两种方式操作 H2 数据库。一种是数据库脱机方式
 
 当出现 gerrit> 提示符时，就可以输入 SQL 语句操作数据库了。
 
-第一种方式操作 H2 数据库显然很不方便，可能唯一的好处是不需要认证，因为是直接在服务器端进行操作。如果在 Gerrit 服务不停止的情况下，我们可以用另外一种方法访问数据库，就是通过 Gerrit 提供的 SSH 协议来访问数据库。采用 SSH 协议远程访问需要用到公钥认证，马上我们就要在后面介绍 Gerrit 服务器用户帐号的创建，第一个注册的用户就是管理员，管理员通过上传公钥到服务器就可以用管理员的身份连接 SSH 服务器，执行相应的命令了。
+第一种方式需要登录到服务器上，而且操作 H2 数据库时还要预先停止服务，显然很不方便。但是这种方法也有存在的必要，就是不需要认证，尤其是在管理员帐号尚未建立之前就可以查看和更改数据库。
 
-下面的命令就是用管理员公钥登录 Gerrit 的 SSH 服务器，操作数据库。我们演示用的是本机地址（localhost），操作远程服务器也可以，只要拥有管理员授权。
+当在 Gerrit 上注册了第一个帐号就，即拥有了管理员帐号，正确为该帐号配置公钥之后，就可以访问 Gerrit 提供的 SSH 登录服务。Gerrit 的 SSH 协议提供第二个访问数据库的接口。下面的命令就是用管理员公钥登录 Gerrit 的 SSH 服务器，操作数据库。我们演示用的是本机地址（localhost），操作远程服务器也可以，只要拥有管理员授权。
 
 ::
 
   $ ssh -p 29418 localhost gerrit gsql
 
 
-当连接上数据库管理接口后，便出现 "gerrit>" 提示符，在该提示符下可以输入 SQL 命令。
+即连接 Gerrit 的 SSH 服务，运行命令 `gerrit gsql` 。当连接上数据库管理接口后，便出现 "gerrit>" 提示符，在该提示符下可以输入 SQL 命令。下面的示例中使用的数据库后端为 H2 内置数据库。
+
+我们可以输入 `show tables` 命令显示数据库列表。
 
 ::
-
-  gerrit> show databases;
-   SCHEMA_NAME
-   ------------------
-   PUBLIC
-   INFORMATION_SCHEMA
-  (2 rows; 2 ms)
 
   gerrit> show tables;
    TABLE_NAME                  | TABLE_SCHEMA
@@ -462,35 +470,31 @@ Gerrit 提供了两种方式操作 H2 数据库。一种是数据库脱机方式
    TRACKING_IDS                | PUBLIC
   (27 rows; 65 ms)
 
-  gerrit> select * from system_config;
-   REGISTER_EMAIL_PRIVATE_KEY           | SITE_PATH                | ADMIN_GROUP_ID | ANONYMOUS_GROUP_ID | REGISTERED_GROUP_ID | WILD_PROJECT_NAME  | BATCH_USERS_GROUP_ID | SINGLETON
-   -------------------------------------+--------------------------+----------------+--------------------+---------------------+--------------------+----------------------+----------
-   fsHu/uJUqI6gGCZLzbuE+cnK1ySB7sej6/E= | /home/gerrit/review_site | 1              | 2                  | 3                   | -- All Projects -- | 4                    | X
-  (1 row; 3 ms)
+输入 `show columns` 命令显示数据库的表结构。
 
-  gerrit> select * from projects;
-   DESCRIPTION                            | USE_CONTRIBUTOR_AGREEMENTS | USE_SIGNED_OFF_BY | SUBMIT_TYPE | PARENT_NAME | NAME
-   ---------------------------------------+----------------------------+-------------------+-------------+-------------+-------------------
-   Rights inherited by all other projects | N                          | N                 | M           | NULL        | -- All Projects --
-   测试项目                                   | N                          | N                 | M           | NULL        | new/project
-  (2 rows; 2 ms)
+::
 
+  gerrit> show columns from system_config;
+   FIELD                      | TYPE         | NULL | KEY | DEFAULT
+   ---------------------------+--------------+------+-----+--------
+   REGISTER_EMAIL_PRIVATE_KEY | VARCHAR(36)  | NO   |     | ''
+   SITE_PATH                  | VARCHAR(255) | YES  |     | NULL
+   ADMIN_GROUP_ID             | INTEGER(10)  | NO   |     | 0
+   ANONYMOUS_GROUP_ID         | INTEGER(10)  | NO   |     | 0
+   REGISTERED_GROUP_ID        | INTEGER(10)  | NO   |     | 0
+   WILD_PROJECT_NAME          | VARCHAR(255) | NO   |     | ''
+   BATCH_USERS_GROUP_ID       | INTEGER(10)  | NO   |     | 0
+   SINGLETON                  | VARCHAR(1)   | NO   | PRI | ''
+  (8 rows; 52 ms)
 
+关于 H2 数据库更多的 SQL 语法，参考： http://www.h2database.com/html/grammar.html 。
 
+下面我们开始介绍 Gerrit 的使用。
 
-
-
-
-
-
-
-Gerrit 的账户设置
-------------------
+第一个注册帐号：Gerrit 管理员
+------------------------------
 
 第一个 Gerrit 账户自动称为权限最高的管理员，因此 Gerrit 安装完毕后的第一件事情就是立即注册或者登录，以便初始化管理员帐号。
-
-下面的 Gerrit 演示是以 LDAP 为认证，所以只要
-
 
 
 TODO: 截图：邮件地址确认对话框。
@@ -502,21 +506,15 @@ TODO: 截图：邮件地址确认对话框。
 查看用户的分组。
 
 
-数据库操作
------------
 
 
+管理员访问 SSH 的管理接口
+--------------------------
 
-Android Review 服务器就是一个最典型的 Gerrit 应用，我们可以通过它一窥 Gerrit 的风采。
+用户命令：
 
-Gerrit 的 Web 服务
-+++++++++++++++++++
+$ ssh -p 29418 review.example.com gerrit ls-projects
 
-Gerrit 的 Web 界面提供了 Git 代码审核功能，此外还包括与此相关的用户注册，授权管理，项目管理等功能。
-
-
-Gerrit 的 SSH 服务
-+++++++++++++++++++
 
 我们看看 Android 的代码审核服务器。
 
@@ -552,190 +550,80 @@ Gerrit 提供的 SSH 服务最主要的就是 Git 相关操作，如 git fetch, 
 除此之外，还可以执行 Gerrit 相关的管理命令，如创建项目、数据库操作等。具体参见文档： Documentation/cmd-index.html 。
 
 
-项目管理
+管理员命令：
+
+gerrit create-account
+
+    Create a new batch/role account.
+
+    $ cat ~/.ssh/id_watcher.pub | ssh -p 29418 review.example.com gerrit create-account --ssh-key - watcher
+
+gerrit create-group
+
+    Create a new account group.
+
+gerrit create-project
+
+    Create a new project and associated Git repository.
+
+gerrit flush-caches
+
+    Flush some/all server caches from memory.
+
+gerrit gsql
+
+    Administrative interface to active database.
+
+    数据库管理
+
+$ java -jar gerrit.war gsql
+Welcome to Gerrit Code Review v2.0.25
+(PostgreSQL 8.3.8)
+
+Type '\h' for help.  Type '\r' to clear the buffer.
+
+gerrit> update accounts set ssh_user_name = 'alice' where account_id=1;
+UPDATE 1; 1 ms
+gerrit> \q
+Bye
+
+
+
+gerrit set-project-parent
+
+    Change the project permissions are inherited from.
+
+gerrit show-caches
+
+    Display current cache statistics.
+
+gerrit show-connections
+
+    Display active client SSH connections.
+
+gerrit show-queue
+
+    Display the background work queues, including replication.
+
+gerrit replicate
+
+    Manually trigger replication, to recover a node.
+
+kill
+
+    Kills a scheduled or running task.
+
+ps
+
+    Alias for gerrit show-queue.
+
+suexec
+
+    Execute a command as any registered user account.
+
+
+用户组管理
 -----------
-
-All Git repositories under gerrit.basePath must be registered in the Gerrit database in order to be accessed through SSH, or through the web interface.
-
-
-Create Through SSH
-
-Creating a new repository over SSH is perhaps the easiest way to configure a new project:
-
-::
-
-  $ ssh -p 29418 review.example.com gerrit create-project --name new/project
-
-Manual Creation
-
-Projects may also be manually registered with the database.
-Create Git Repository
-
-Create a Git repository under gerrit.basePath:
-
-git --git-dir=$base_path/new/project.git init
-
-Tip
-  By tradition the repository directory name should have a .git suffix.
-
-To also make this repository available over the anonymous git:// protocol, don’t forget to create a git-daemon-export-ok file:
-
-touch $base_path/new/project.git/git-daemon-export-ok
-
-Register Project
-
-One insert is needed to register a project with Gerrit.
-Note
-  Note that the .git suffix is not typically included in the project name, as it looks cleaner in the web when not shown. Gerrit automatically assumes that project.git is the Git repository for a project named project.
-
-::
-
-  INSERT INTO projects
-  (use_contributor_agreements
-   ,submit_type
-   ,name)
-  VALUES
-  ('N'
-  ,'M'
-  ,'new/project');
-
-Change Submit Action
-
-The method Gerrit uses to submit a change to a project can be modified by any project owner through the project console, Admin > Projects. The following methods are supported:
-
-    *
-
-      Fast Forward Only
-
-      This method produces a strictly linear history. All merges must be handled on the client, prior to uploading to Gerrit for review.
-
-      To submit a change, the change must be a strict superset of the destination branch. That is, the change must already contain the tip of the destination branch at submit time.
-    *
-
-      Merge If Necessary
-
-      This is the default for a new project (and why \'M' is suggested above in the insert statement).
-
-      If the change being submitted is a strict superset of the destination branch, then the branch is fast-forwarded to the change. If not, then a merge commit is automatically created. This is identical to the classical git merge behavior, or git merge \--ff.
-    *
-
-      Always Merge
-
-      Always produce a merge commit, even if the change is a strict superset of the destination branch. This is identical to the behavior of git merge \--no-ff, and may be useful if the project needs to follow submits with git log \--first-parent.
-    *
-
-      Cherry Pick
-
-      Always cherry pick the patch set, ignoring the parent lineage and instead creating a brand new commit on top of the current branch head.
-
-      When cherry picking a change, Gerrit automatically appends onto the end of the commit message a short summary of the change’s approvals, and a URL link back to the change on the web. The committer header is also set to the submitter, while the author header retains the original patch set author.
-
-Registering Additional Branches
-
-Branches can be created over the SSH port by any git push client, if the user has been granted the Push Branch > Create Branch (or higher) access right.
-
-Additional branches can also be created through the web UI, assuming at least one commit already exists in the project repository. A project owner can create additional branches under Admin > Projects > Branches. Enter the new branch name, and the starting Git revision. Branch names that don’t start with refs/ will automatically have refs/heads/ prefixed to ensure they are a standard Git branch name. Almost any valid SHA-1 expression can be used to specify the starting revision, so long as it resolves to a commit object. Abbreviated SHA-1s are not supported.
-
-版本库管理
-------------
-
-Go into the '-- All Projects ---' entry under Admin>Projects and grant the
-following:
-
-  Category: Push Branch
-  Group: Administrators
-  Min: +1
-  Max: +3
-
-  Category: Push Annotated Tag
-  Group: Administrators
-  Min: +1
-  Max: +3
-
-After doing those two grants, you can then push the branches directly using
-git push, e.g.:
-
-  git push --all ssh://you@gerrit:29418/project.git
-
-Once all projects are pushed, you can delete the two grants you had given
-Administrators.  The advantage of pushing through Gerrit's SSHD like this is
-the branches table will be automatically populated in the database, so
-unlike what Simon Wilkinson describes, you won't need to manually insert
-each branch for each project. 
-
-
-
-
-
-No, use:
-
-  git push ssh://user@gerrit:29418/project1 HEAD:refs/heads/master
-
-since you want to directly push into the branch, rather than create code
-reviews.  Pushing to prefix "refs/for/" creates code reviews which must be
-approved and then submitted.  Pushing to "refs/heads/" bypasses review
-entirely, and just enters the commits directly into the branch.  The latter
-path does not check committer identity, and is designed for the case you are
-trying to work through right now.  :-) 
-
-ACL
------
-
-上传改动
----------
-
-Documentation/user-upload.html
-
-Gerrit supports three methods of uploading changes:
-
-    *
-
-      Use repo upload, to create changes for review
-    *
-
-      Use git push, to create changes for review
-    *
-
-      Use git push, and bypass code review
-
-Change-id
-------------
-
-通过钩子，提交自动在提交说明中生成 Change-id 。这个 Change-id 被用于确定变更集编号。
-
-
-参见： Documentation/user-changeid.html
-
-
-ACL
------
-
-http://gerrit.googlecode.com/svn/documentation/2.1.5/access-control.html#category_FORG
-
-Gerrit Code Review - Access Controls
-version 2.1.5.1
-Table of Contents
-System Groups
-Administrators
-Anonymous Users
-Registered Users
-Account Groups
-Project Access Control Lists
-OpenID Authentication
-All Projects
-Per-Project
-Categories
-Owner
-Read Access
-Upload Access
-Push Tag
-Push Branch
-Forge Identity
-Verified
-Code Review
-Submit
-Your Category Here
-
 Access controls in Gerrit are group based. Every user account is a member of one or more groups, and access and privileges are granted to those groups. Groups cannot be nested, and access rights cannot be granted to individual users.
 System Groups
 
@@ -792,6 +680,15 @@ It is permissible for a group to own itself, allowing the group members to direc
 Newly created groups are automatically created as owning themselves, with the creating user as the only member. This permits the group creator to add additional members, and change the owner to another group if desired.
 
 It is somewhat common to create two groups at the same time, for example Foo and Foo-admin, where the latter group Foo-admin owns both itself and also group Foo. Users who are members of Foo-admin can thus control the membership of Foo, without actually having the access rights granted to Foo. This configuration can help prevent accidental submits when the members of Foo have submit rights on a project, and the members of Foo-admin typically do not need to have such rights.
+
+
+
+
+用户授权管理
+---------------
+
+http://gerrit.googlecode.com/svn/documentation/2.1.5/access-control.html#category_FORG
+
 Project Access Control Lists
 
 A system wide access control list affecting all projects is stored in project "-- All Projects --". This inheritance can be configured through gerrit set-project-parent.
@@ -872,7 +769,7 @@ The Owner category controls which groups can modify the project's configuration.
 
 Note that project owners implicitly have branch creation or deletion through the web UI, but not through SSH. To get SSH branch access project owners must grant an access right to a group they are a member of, just like for any other user.
 
-Ownership over a particular branch subspace may be delegated by entering a branch pattern. To delegate control over all branches that begin with qa/ to the QA group, add Owner category for reference refs/heads/qa/*. Members of the QA group can further refine access, but only for references that begin with refs/heads/qa/.
+Ownership over a particular branch subspace may be delegated by entering a branch pattern. To delegate control over all branches that begin with qa/ to the QA group, add Owner category for reference `refs/heads/qa/*` . Members of the QA group can further refine access, but only for references that begin with refs/heads/qa/.
 Read Access
 
 The Read Access category controls visibility to the project's changes, comments, code diffs, and Git access over SSH or HTTP. A user must have Read Access +1 in order to see a project, its changes, or any of its data.
@@ -882,6 +779,8 @@ This category has a special behavior, where the per-project ACL is evaluated bef
 For an open source, public Gerrit installation it is common to grant Read Access +1 to Anonymous Users in the -- All Projects -- ACL, enabling casual browsing of any project's changes, as well as fetching any project's repository over SSH or HTTP. New projects can be temporarily hidden from public view by granting Read Access -1 to Anonymous Users and granting Read Access +1 to the project owner's group within the per-project ACL.
 
 For a private Gerrit installation using a trusted HTTP authentication source, granting Read Access +1 to Registered Users may be more typical, enabling read access only to those users who have been able to authenticate through the HTTP access controls. This may be suitable in a corporate deployment if the HTTP access control is already restricted to the correct set of users.
+
+
 Upload Access
 
 The Read Access +2 permits the user to upload a commit to the project's refs/for/BRANCH namespace, creating a new change for code review.
@@ -901,41 +800,34 @@ This category is intended to be used to publish tags when a project reaches a st
 
 The range of values is:
 
-    *
-
-      +1 Create Signed Tag
+    * +1 Create Signed Tag
 
       A new signed tag may be created. The tagger email address must be verified for the current user.
-    *
 
-      +2 Create Annotated Tag
+    * +2 Create Annotated Tag
 
       A new annotated (unsigned) tag may be created. The tagger email address must be verified for the current user.
 
 To push tags created by users other than the current user (such as tags mirrored from an upstream project), Forge Identity +2 must be also granted in addition to Push Tag >= +1.
 
-To push lightweight (non annotated) tags, grant Push Branch +2 Create Branch for reference name refs/tags/*, as lightweight tags are implemented just like branches in Git.
+To push lightweight (non annotated) tags, grant Push Branch +2 Create Branch for reference name `refs/tags/*`, as lightweight tags are implemented just like branches in Git.
 
-To delete or overwrite an existing tag, grant Push Branch +3 Force Push Branch; Delete Branch for reference name refs/tags/*, as deleting a tag requires the same permission as deleting a branch.
+To delete or overwrite an existing tag, grant Push Branch +3 Force Push Branch; Delete Branch for reference name `refs/tags/*`, as deleting a tag requires the same permission as deleting a branch.
 Push Branch
 
 This category permits users to push directly into a branch over SSH, bypassing any code review process that would otherwise be used.
 
 This category has several possible values:
 
-    *
-
-      +1 Update Branch
+    * +1 Update Branch
 
       Any existing branch can be fast-forwarded to a new commit. Creation of new branches is rejected. Deletion of existing branches is rejected. This is the safest mode as commits cannot be discarded.
-    *
 
-      +2 Create Branch
+    * +2 Create Branch
 
       Implies Update Branch, but also allows the creation of a new branch if the name does not not already designate an existing branch name. Like update branch, existing commits cannot be discarded.
-    *
 
-      +3 Force Push Branch; Delete Branch
+    * +3 Force Push Branch; Delete Branch
 
       Implies both Update Branch and Create Branch, but also allows an existing branch to be deleted. Since a force push is effectively a delete immediately followed by a create, but performed atomically on the server and logged, this level also permits forced push updates to branches. This level may allow existing commits to be discarded from a project history.
 
@@ -998,41 +890,38 @@ DELETE FROM approval_category_values WHERE category_id = 'VRIF';
 If a Gerrit installation wants to modify the description text associated with these category values, the text can be updated in the name column of the category_id = 'VRIF' rows in the approval_category_values table.
 
 Additional values could also be added to this category, to allow it to behave more like Code Review (below). Insert -2 and +2 value rows into the approval_category_values with category_id set to VRIF to get the same behavior.
+
 Note
+
   A restart is required after making database changes. See below.
+
 Code Review
 
 The code review category can have any meaning the project desires. It was originally invented by the Android Open Source Project to mean I read the code and it seems reasonably correct.
 
 The range of values is:
 
-    *
-
-      -2 Do not submit
+    * -2 Do not submit
 
       The code is so horribly incorrect/buggy/broken that it must not be submitted to this project, or to this branch.
 
       Any -2 blocks submit.
-    *
 
-      -1 I would prefer that you didn't submit this
+    * -1 I would prefer that you didn't submit this
 
       The code doesn't look right, or could be done differently, but the reviewer is willing to live with it as-is if another reviewer accepts it, perhaps because it is better than what is currently in the project. Often this is also used by contributors who don't like the change, but also aren't responsible for the project long-term and thus don't have final say on change submission.
 
       Does not block submit.
-    *
 
-      0 No score
+    * 0 No score
 
       Didn't try to perform the code review task, or glanced over it but don't have an informed opinion yet.
-    *
 
-      +1 Looks good to me, but someone else must approve
+    * +1 Looks good to me, but someone else must approve
 
       The code looks right to this reviewer, but the reviewer doesn't have access to the +2 value for this category. Often this is used by contributors to a project who were able to review the change and like what it is doing, but don't have final approval over what gets submitted.
-    *
 
-      +2 Looks good to me, approved
+    * +2 Looks good to me, approved
 
       Basically the same as +1, but for those who have final say over how the project will develop.
 
@@ -1057,34 +946,42 @@ Keep in mind that category definitions are currently global to the entire Gerrit
 
 For example, to define a new 3-valued category that behaves exactly like Verified, but has different names/labels:
 
-INSERT INTO approval_categories
-  (name
-  ,position
-  ,function_name
-  ,category_id)
-VALUES
-  ('Copyright Check'
-  ,3
-  'MaxWithBlock'
-  ,'copy');
+::
 
-INSERT INTO approval_category_values
-  (category_id,value,name)
-VALUES
-  ('copy', -1, 'Do not have copyright');
+  INSERT INTO approval_categories
+    (name
+    ,position
+    ,function_name
+    ,category_id)
 
-INSERT INTO approval_category_values
-  (category_id,value,name)
-VALUES
-  ('copy', 0, 'No score');
+  VALUES
+    ('Copyright Check'
+    ,3
+    'MaxWithBlock'
+    ,'copy');
 
-INSERT INTO approval_category_values
-  (category_id,value,name)
-VALUES
-  ('copy', 1, 'Copyright clear');
+  INSERT INTO approval_category_values
+    (category_id,value,name)
+
+  VALUES
+    ('copy', -1, 'Do not have copyright');
+
+  INSERT INTO approval_category_values
+    (category_id,value,name)
+
+  VALUES
+    ('copy', 0, 'No score');
+
+  INSERT INTO approval_category_values
+    (category_id,value,name)
+
+  VALUES
+    ('copy', 1, 'Copyright clear');
 
 The new column will appear at the end of the table (in position 3), and -1 Do not have copyright will block submit, while +1 Copyright clear is required to enable submit.
+
 Note
+
   Restart the Gerrit web application and reload all browsers after making any database changes to approval categories. Browsers are sent the list of known categories when they first visit the site, and don't notice changes until the page is closed and opened again, or is reloaded.
 
 Part of Gerrit Code Review
@@ -1093,8 +990,179 @@ Last updated 24-Aug-2010 11:06:24 PDT
 
 
 
-版本库钩子
+
+项目的创建
 -----------
+
+创建项目
+++++++++++
+
+用 Web 界面创建
+
+Create Through SSH
+
+Creating a new repository over SSH is perhaps the easiest way to configure a new project:
+
+::
+
+  $ ssh -p 29418 review.example.com gerrit create-project --name new/project
+
+Change Submit Action
+
+The method Gerrit uses to submit a change to a project can be modified by any project owner through the project console, Admin > Projects. The following methods are supported:
+
+    *
+
+      Fast Forward Only
+
+      This method produces a strictly linear history. All merges must be handled on the client, prior to uploading to Gerrit for review.
+
+      To submit a change, the change must be a strict superset of the destination branch. That is, the change must already contain the tip of the destination branch at submit time.
+    *
+
+      Merge If Necessary
+
+      This is the default for a new project (and why \'M' is suggested above in the insert statement).
+
+      If the change being submitted is a strict superset of the destination branch, then the branch is fast-forwarded to the change. If not, then a merge commit is automatically created. This is identical to the classical git merge behavior, or git merge \--ff.
+    *
+
+      Always Merge
+
+      Always produce a merge commit, even if the change is a strict superset of the destination branch. This is identical to the behavior of git merge \--no-ff, and may be useful if the project needs to follow submits with git log \--first-parent.
+    *
+
+      Cherry Pick
+
+      Always cherry pick the patch set, ignoring the parent lineage and instead creating a brand new commit on top of the current branch head.
+
+      When cherry picking a change, Gerrit automatically appends onto the end of the commit message a short summary of the change’s approvals, and a URL link back to the change on the web. The committer header is also set to the submitter, while the author header retains the original patch set author.
+
+
+从已有版本库创建新项目
+++++++++++++++++++++++++
+
+All Git repositories under gerrit.basePath must be registered in the Gerrit database in order to be accessed through SSH, or through the web interface.
+
+Projects may also be manually registered with the database.
+Create Git Repository
+
+Create a Git repository under gerrit.basePath:
+
+git --git-dir=$base_path/new/project.git init
+
+Tip
+  By tradition the repository directory name should have a .git suffix.
+
+To also make this repository available over the anonymous git:// protocol, don’t forget to create a git-daemon-export-ok file:
+
+touch $base_path/new/project.git/git-daemon-export-ok
+
+Register Project
+
+One insert is needed to register a project with Gerrit.
+
+Note
+
+  Note that the .git suffix is not typically included in the project name, as it looks cleaner in the web when not shown. Gerrit automatically assumes that project.git is the Git repository for a project named project.
+
+::
+
+  INSERT INTO projects
+  (use_contributor_agreements
+   ,submit_type
+   ,name)
+  VALUES
+  ('N'
+  ,'M'
+  ,'new/project');
+
+注册分支
+++++++++++++
+
+Branches can be created over the SSH port by any git push client, if the user has been granted the Push Branch > Create Branch (or higher) access right.
+
+Additional branches can also be created through the web UI, assuming at least one commit already exists in the project repository. A project owner can create additional branches under Admin > Projects > Branches. Enter the new branch name, and the starting Git revision. Branch names that don’t start with refs/ will automatically have refs/heads/ prefixed to ensure they are a standard Git branch name. Almost any valid SHA-1 expression can be used to specify the starting revision, so long as it resolves to a commit object. Abbreviated SHA-1s are not supported.
+
+
+版本库数据库的初始化
+----------------------
+
+如何用 git push 导入项目内容。而不是要对提交一一审核？
+
+Go into the '-- All Projects ---' entry under Admin>Projects and grant the
+following:
+
+  Category: Push Branch
+  Group: Administrators
+  Min: +1
+  Max: +3
+
+  Category: Push Annotated Tag
+  Group: Administrators
+  Min: +1
+  Max: +3
+
+After doing those two grants, you can then push the branches directly using
+git push, e.g.:
+
+  git push --all ssh://you@gerrit:29418/project.git
+
+Once all projects are pushed, you can delete the two grants you had given
+Administrators.  The advantage of pushing through Gerrit's SSHD like this is
+the branches table will be automatically populated in the database, so
+unlike what Simon Wilkinson describes, you won't need to manually insert
+each branch for each project. 
+
+No, use:
+
+  git push ssh://user@gerrit:29418/project1 HEAD:refs/heads/master
+
+since you want to directly push into the branch, rather than create code
+reviews.  Pushing to prefix "refs/for/" creates code reviews which must be
+approved and then submitted.  Pushing to "refs/heads/" bypasses review
+entirely, and just enters the commits directly into the branch.  The latter
+path does not check committer identity, and is designed for the case you are
+trying to work through right now.  :-) 
+
+
+审核工作流管理
+--------------------
+
+Documentation/user-upload.html
+
+Gerrit supports three methods of uploading changes:
+
+    *
+
+      Use repo upload, to create changes for review
+    *
+
+      Use git push, to create changes for review
+    *
+
+      Use git push, and bypass code review
+
+
+Gerrit 下开发者的工作方式
+--------------------------
+
+本地版本库的钩子设置
+
+通过钩子，提交自动在提交说明中生成 Change-id 。这个 Change-id 被用于确定变更集编号。
+
+
+参见： Documentation/user-changeid.html
+
+Gerrit 下审核者的工作方式
+--------------------------
+
+Gerrit 下确认者的工作方式
+--------------------------
+
+
+
+
 
 版本库复制
 -----------
@@ -1131,7 +1199,7 @@ At startup Gerrit reads the following files (if they exist) and uses them to cus
 
       The CSS rules are inlined into the top of the HTML page, inside of a <style> tag. These rules can be used to support styling the elements within either the header or the footer.
   
-The *.html files must be valid XHTML, with one root element, typically a single <div> tag. The server parses it as XML, and then inserts the root element into the host page. If a file has more than one root level element, Gerrit will not start.
+The `*.html` files must be valid XHTML, with one root element, typically a single <div> tag. The server parses it as XML, and then inserts the root element into the host page. If a file has more than one root level element, Gerrit will not start.
 
 静态图片可以放到 /static 目录下。
 
@@ -1180,76 +1248,4 @@ git config --file $site_path/etc/gerrit.config gitweb.url http://example.com/git
 After updating '$site_path'/etc/gerrit.config, the Gerrit server must be restarted and clients must reload the host page to see the change.
 
 
-命令行式管理
--------------
-
-用户命令：
-
-$ ssh -p 29418 review.example.com gerrit ls-projects
-
-
-管理员命令：
-
-gerrit create-account
-
-    Create a new batch/role account.
-
-    $ cat ~/.ssh/id_watcher.pub | ssh -p 29418 review.example.com gerrit create-account --ssh-key - watcher
-
-gerrit create-group
-
-    Create a new account group.
-
-gerrit create-project
-
-    Create a new project and associated Git repository.
-
-gerrit flush-caches
-
-    Flush some/all server caches from memory.
-
-gerrit gsql
-
-    Administrative interface to active database.
-
-    数据库管理
-
-$ java -jar gerrit.war gsql
-Welcome to Gerrit Code Review v2.0.25
-(PostgreSQL 8.3.8)
-
-Type '\h' for help.  Type '\r' to clear the buffer.
-
-gerrit> update accounts set ssh_user_name = 'alice' where account_id=1;
-UPDATE 1; 1 ms
-gerrit> \q
-Bye
-
-
-
-gerrit set-project-parent
-
-    Change the project permissions are inherited from.
-
-gerrit show-caches
-
-    Display current cache statistics.
-gerrit show-connections
-
-    Display active client SSH connections.
-gerrit show-queue
-
-    Display the background work queues, including replication.
-gerrit replicate
-
-    Manually trigger replication, to recover a node.
-kill
-
-    Kills a scheduled or running task.
-ps
-
-    Alias for gerrit show-queue.
-suexec
-
-    Execute a command as any registered user account.
 
