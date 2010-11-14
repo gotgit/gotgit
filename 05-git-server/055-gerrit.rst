@@ -7,7 +7,7 @@ Gerrit 代码审核服务器
 
 在 Android 项目的网站的代码贡献流程图更为详细的介绍了 Gerrit 代码审核服务器的工作流程。
 
-  .. figure:: images/gerrit-workflow.png
+  .. figure:: images/gerrit/gerrit-workflow.png
      :scale: 80
 
      Gerrit 代码审核工作流
@@ -52,14 +52,14 @@ Gerrit 另外一个重要的组件就是 Web 服务器，通过 Web 服务器实
 
 感受一下 Gerrit 的魅力？直接访问 Android 项目的 Gerrit 网站： https://review.source.android.com/ 。
 
-  .. figure:: images/android-gerrit-merged.png
+  .. figure:: images/gerrit/android-gerrit-merged.png
      :scale: 70
 
      Android 项目代码审核网站
 
 Android 项目的评审网站，匿名即可访问。点击菜单中的 “Merged” 显示了已经通过评审合并到代码库中的审核任务。下面的一个界面就是 Andorid 一个已经合并到代码库中的历史评审任务。
 
-  .. figure:: images/android-gerrit-16993.png
+  .. figure:: images/gerrit/android-gerrit-16993.png
      :scale: 70
 
      Android 项目的 16993 号评审
@@ -249,20 +249,16 @@ Gerrit 需要数据库来维护账户信息、跟踪评审任务等。目前支�
 
     Initialized /home/gerrit/review_site
 
-* 启动 Gerrit 服务器。
+**启动 Gerrit 服务**
 
-  配置完成自动启动 Gerrit 服务。
+Gerrit 服务正确安装后，运行 Gerrit 启动脚本启动 Gerrit 服务。
 
   ::
 
-    Initialized /home/gerrit/review_site
-    Executing /home/gerrit/review_site/bin/gerrit.sh start
-    
+    $ /home/gerrit/review_site/bin/gerrit.sh start
     Starting Gerrit Code Review: OK
-    Waiting for server to start ... OK
-    Opening browser ...
 
-如果上面的安装过程正确，并且服务正确启动之后，我们会看到 Gerrit 服务打开两个端口，这两个端口是我们在 Gerrit 安装时指定的，可能和下面的示例有所不同。
+服务正确启动之后，我们会看到 Gerrit 服务打开两个端口，这两个端口是我们在 Gerrit 安装时指定的。您的输出和下面的示例可能略有不同。
 
 ::
 
@@ -270,7 +266,7 @@ Gerrit 需要数据库来维护账户信息、跟踪评审任务等。目前支�
   tcp        0      0 0.0.0.0:8081            0.0.0.0:*               LISTEN      26383/GerritCodeRev
   tcp        0      0 0.0.0.0:29418           0.0.0.0:*               LISTEN      26383/GerritCodeRev
 
-**设置开机时服务自动启动**
+**设置 Gerrit 服务开机自动启动**
 
 Gerrit 服务的启动脚本支持 start, stop, restart 参数，可以作为 init 脚本开机自动执行。
 
@@ -421,11 +417,11 @@ Gerrit 的数据库访问
 
   gerrit> 
 
-当出现 gerrit> 提示符时，就可以输入 SQL 语句操作数据库了。
+当出现 "gerrit>" 提示符时，就可以输入 SQL 语句操作数据库了。
 
 第一种方式需要登录到服务器上，而且操作 H2 数据库时还要预先停止服务，显然很不方便。但是这种方法也有存在的必要，就是不需要认证，尤其是在管理员帐号尚未建立之前就可以查看和更改数据库。
 
-当在 Gerrit 上注册了第一个帐号就，即拥有了管理员帐号，正确为该帐号配置公钥之后，就可以访问 Gerrit 提供的 SSH 登录服务。Gerrit 的 SSH 协议提供第二个访问数据库的接口。下面的命令就是用管理员公钥登录 Gerrit 的 SSH 服务器，操作数据库。我们演示用的是本机地址（localhost），操作远程服务器也可以，只要拥有管理员授权。
+当在 Gerrit 上注册了第一个帐号，即拥有了管理员帐号，正确为该帐号配置公钥之后，就可以访问 Gerrit 提供的 SSH 登录服务。Gerrit 的 SSH 协议提供第二个访问数据库的接口。下面的命令就是用管理员公钥登录 Gerrit 的 SSH 服务器，操作数据库。我们演示用的是本机地址（localhost），操作远程服务器也可以，只要拥有管理员授权。
 
 ::
 
@@ -494,19 +490,59 @@ Gerrit 的数据库访问
 第一个注册帐号：Gerrit 管理员
 ------------------------------
 
-第一个 Gerrit 账户自动称为权限最高的管理员，因此 Gerrit 安装完毕后的第一件事情就是立即注册或者登录，以便初始化管理员帐号。
+第一个 Gerrit 账户自动成为权限最高的管理员，因此 Gerrit 安装完毕后的第一件事情就是立即注册或者登录，以便初始化管理员帐号。下面我们的示例是在本机(localhost) 以 HTTP 认证方式架设的 Gerrit 审核服务器。当我们第一次访问的时候，会弹出非常眼熟的 HTTP Basic Auth 认证界面：
+
+.. figure:: images/gerrit/gerrit-account-http-auth.png
+   :scale: 80
+
+   Http Basic Auth 认证界面
+
+输入正确的用户名和口令登录后，系统自动创建 ID 为 1000000 的帐号，该帐号是第一个注册的帐号，会自动该被赋予管理员身份。因为使用的是 HTTP 认证，用户的邮件地址等个人信息尚未确定，因此登录后首先进入到个人信息设置界面。
+
+.. figure:: images/gerrit/gerrit-account-init-1.png
+   :scale: 80
+
+   Gerrit 第一次登录后的个人信息设置界面
+   
+在上面我们可以看到在菜单中有 “Admin” 菜单项，说明当前登录的用户被赋予了管理员权限。在下面的联系方式确认对话框中有一个注册新邮件地址的按钮，点击该按钮弹出邮件地址录入对话框。
+
+.. figure:: images/gerrit/gerrit-account-init-2.png
+   :scale: 80
+
+   输入个人的邮件地址
+
+必须输入一个有效的邮件地址以便能够收到确认邮件。这个邮件地址非常重要，因为 Git 代码提交时在提交说明中出现的邮件地址需要和这个地址一致。当填写了邮件地址后，会收到一封确认邮件，点击邮件中的确认链接会重新进入到 Gerrit 界面。
+
+.. figure:: images/gerrit/gerrit-account-init-4-settings-username.png
+   :scale: 80
+
+   邮件地址确认后进入 Gerrit 界面
+
+我们在 Full Name 字段输入用户名，点击保存更改后，右上角显示的 “Anonymous Coward” 就会显示为登录用户的姓名和邮件地址。
+
+接下来需要做的最重要的一件事就是配置公钥。通过该公钥，注册用户可以通过 SSH 协议向 Gerrit 的 Git 服务器提交，如果具有管理员权限还能够远程管理 Gerrit 服务器。
+
+.. figure:: images/gerrit/gerrit-account-init-5-settings-ssh-pubkey.png
+   :scale: 80
+
+   Gerrit 的SSH公钥设置界面
+
+在文本框中粘贴公钥。关于如何生成和管理公钥，可以参见 SSH 服务架设相关章节。TODO
+
+点击 “Add” 按钮，完成公钥的添加。添加的公钥就会显示在列表中。一个用户可以添加多个公钥。
+
+.. figure:: images/gerrit/gerrit-account-init-6-settings-ssh-pubkey-added.png
+   :scale: 80
+
+   用户的公钥列表
+
+我们点击左侧的 “Groups” （用户组）菜单项，可以看到当前用户所属的分组。
 
 
-TODO: 截图：邮件地址确认对话框。
+.. figure:: images/gerrit/gerrit-account-init-7-settings-groups.png
+   :scale: 80
 
-邮件地址确认后，进入管理界面。
-
-配置公钥。 TODO 
-
-查看用户的分组。
-
-
-
+   Gerrit 用户所属的用户组
 
 管理员访问 SSH 的管理接口
 --------------------------
