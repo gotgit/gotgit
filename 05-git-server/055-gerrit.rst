@@ -643,9 +643,9 @@ Gerrit 的数据库访问
 
    Gerrit 中项目列表
 
-在项目列表中我们可以看到除了我们新建的 new/project 项目之外还有一个名为“-- All Projects --”的项目，其实它并非一个真实存在的项目，只是为了项目授权管理的方便，在“-- All Projects --” 中建立的项目授权能够被其它项目共享。
+在项目列表中我们可以看到除了我们新建的 new/project 项目之外还有一个名为“-- All Projects --”的项目，其实它并非一个真实存在的项目，只是为了项目授权管理的方便 —— 在“-- All Projects --” 中建立的项目授权能够被其它项目共享。
 
-在服务器端也可以看到 Gerrit 部署中版本库根目录下已经有同名的 Git 被创建。
+在服务器端也可以看到 Gerrit 部署中版本库根目录下已经有同名的 Git 版本库被创建。
 
 ::
 
@@ -653,7 +653,7 @@ Gerrit 的数据库访问
   /home/gerrit/review_site/git/new/project.git
 
 
-这个新的版本库刚刚初始化，尚未包括任何数据，我们是否可以通过 `git push` 向该版本库推送一些初始数据呢？下面我们用 Gerrit 的 SSH 协议克隆该版本库，并尝试向其推送数据。
+这个新的版本库刚刚初始化，尚未包括任何数据。我们是否可以通过 `git push` 向该版本库推送一些初始数据呢？下面我们用 Gerrit 的 SSH 协议克隆该版本库，并尝试向其推送数据。
 
 ::
 
@@ -681,20 +681,23 @@ Gerrit 的数据库访问
 
 向Gerrit 的 Git 版本库推送失败，远程 Git 服务器返回错误信息：“prohibited by Gerrit”。这是因为 Gerrit 缺省不允许直接向分支推送，而是需要向 `refs/for/<branch-name>` 的特殊引用进行推送以便将提交转换为评审任务。
 
-但是如果我们希望将版本库的历史提交不经审核直接推送到 Gerrit 维护的 Git 版本库中可以么？是的，只要通过 Gerrit 的管理界面为该项目授权，允许某个用户组（如 Administrators 组）的用户可以向分支推送。（注意该授权在推送完毕后尽快撤销，以免被滥用）
+但是如果我们希望将版本库的历史提交不经审核直接推送到 Gerrit 维护的 Git 版本库中可以么？是的，只要通过 Gerrit 的管理界面为该项目授权：允许某个用户组（如 Administrators 组）的用户可以向分支推送。（注意该授权在推送完毕后尽快撤销，以免被滥用）
 
+Gerrit 的界面对用户非常友好。例如在添加授权的界面中，只要在用户组的输入框中输入前几个字母，就会弹出用户组列表供选择。
 
 .. figure:: images/gerrit/gerrit-project-3-acl-create-branch.png
    :scale: 70
 
-   为项目添加授权
+   添加授权的界面
+
+添加授权完毕后，项目 “new/project” 的授权列表就会出现新增的为 Administrators 管理员添加的 “+2: Create Branch” 授权。
 
 .. figure:: images/gerrit/gerrit-project-4-acl-created-branch.png
    :scale: 70
 
-   为项目添加授权
+   添加授权后的授权列表
 
-如上图，我们为 new/project 的 Administrators 管理员用户组添加了 “+2: Create Branch” 授权，这样我们就能够向 Git 版本库推送了。我们再执行一次推送任务，看看能否成功。
+因为已经为管理员分配了直接向 `refs/heads/*` 引用推送的授权，这样我们就能够向 Git 版本库推送数据了。我们再执行一次推送任务，看看能否成功。
 
 ::
 
@@ -708,7 +711,7 @@ Gerrit 的数据库访问
 
 推送又失败了，但是服务器端返回的错误信息不同。上一次出错返回的是“prohibited by Gerrit”，而这一次返回的错误信息是“you are not committer”。
 
-我们看看提交日志：
+这是为什么呢？我们看看提交日志：
 
 ::
 
@@ -748,7 +751,7 @@ Gerrit 的数据库访问
   To ssh://localhost:29418/new/project.git
    * [new branch]      master -> master
 
-看这次提交成功了！之所以成功，是因为提交者的邮件地址更改了。我们看看重新提交的日志，可以发现 Author 和 Commit 的邮件地址的不同，Commit 字段的邮件地址和注册时使用的邮件地址相同。
+看这次提交成功了！之所以成功，是因为提交者的邮件地址更改了。我们看看重新提交的日志，可以发现 Author 和 Commit 的邮件地址的不同，而 Commit 字段的邮件地址和注册时使用的邮件地址相同。
 
 ::
 
@@ -759,16 +762,16 @@ Gerrit 的数据库访问
 
       initialized
 
-注意，版本库初始化完成之后，最好将我们为项目新增的“Push Branch”类型的授权删除，对新的提交强制使用 Gerrit 的评审流程。
+注意，版本库初始化完成之后，应尽快将我们为项目新增的“Push Branch”类型的授权删除，对新的提交强制使用 Gerrit 的评审流程。
 
 从已有 Git 库创建项目
 ---------------------
 
-如果项目拥有很多版本库，希望迁移到 Gerrit 中，一个一个创建并执行 `git push` 命令推送很是麻烦，有没有什么简单的办法呢？
+如果已经拥有很多版本库，希望从这些版本库创建 Gerrit 项目，如果像上面介绍的那样一个一个的创建项目，再执行 `git push` 命令推送已经包含历史数据的版本库，将是十分麻烦的事情。那么有没有什么简单的办法呢？我们可以通过下面的步骤，实现多项目的快速创建。
 
-首先将已有版本库创建到 Gerrit 的版本库根目录下，其版本库名称将会成为项目名（除去 .git 后缀）。注意创建（或克隆）的版本库应为裸版本库，即使用 `--bare` 参数创建。
+首先将已有版本库创建到 Gerrit 的版本库根目录下。注意版本库名称将会成为项目名（除去 .git 后缀），而且创建（或克隆）的版本库应为裸版本库，即使用 `--bare` 参数创建。
 
-下面我们在 Gerrit 的 Git 版本库根目录下创建名为 hello.git 的版本库。示例中偷懒了一下，直接从 new/project 克隆到 hello.git：
+例如我们在 Gerrit 的 Git 版本库根目录下创建名为 hello.git 的版本库。下面的示例中我偷了一下懒，直接从 new/project 克隆到 hello.git 。 :)
 
 ::
 
@@ -870,13 +873,13 @@ Gerrit 的数据库访问
 
 * 对于管理员：根据第3条策略，管理员能够读取任意版本库。
 
-上面的授权策略定义的评审流程是不完整的。虽然提交能够进入评审流程，因为登录用户（注册用户）可以将提交以评审任务方式上传，而且注册用户可以将评审任务标记为“+1: 看起来不错，但需其他人认可”。但是评审任务没有人有权限可以将其提交——合并到正式版本库中，即没人能够对评审任务做最终的确认及提交。
+上面的授权策略仅仅对评审流程进行了部分设置。如：提交能够进入评审流程，因为登录用户（注册用户）可以将提交以评审任务方式上传；注册用户可以将评审任务标记为“+1: 看起来不错，但需其他人认可”。但是没有人有权限可以将评审任务提交——合并到正式版本库中，即没人能够对评审任务做最终的确认及提交，因此评审流程是不完整的。
 
 要想实现对评审最终确认的授权，有两种方法可以实现，一种是赋予特定用户 Verified 类别中的 “+1: Verified” 的授权，另外一个方法是赋予特定用户 Code Review 类别中更高级别的授权：“+2: Looks good to me, approved”。要想实现对经过确认的评审任务提交，还需要赋予特定用户 Submit 类别中的 “+1: Submit” 授权。
 
 下面的示例中，我们创建两个新的用户组 Reviewer 和 Verifier，并为其赋予相应的授权。
 
-创建用户组，我们可以通过 Web 界面或者命令行。通过 Web 界面添加用户组，选择“Admin” 菜单下的“Groups” 子菜单。
+创建用户组，我们可以通过 Web 界面或者命令行。如果通过 Web 界面添加用户组，选择“Admin” 菜单下的“Groups” 子菜单。
 
 .. figure:: images/gerrit/gerrit-addgroup-1.png
    :scale: 70
@@ -908,7 +911,7 @@ Gerrit 的数据库访问
 
    为 Reviewer 用户组建立授权
 
-我们分别为两个新建立的用户组分配授权，最终在前面的缺省授权列表的基础上，补充了下面新的授权。
+我们分别为两个新建立的用户组分配授权，如下面的表格所示。编号从 6 还是，是因为我们补充的授权是建立在前面的缺省授权列表的基础上的。
 
   +--------+-----------------+-------------------+-----------------+-------------------------------------------------------+
   | 编号   | 类别            | 用户组名称        | 引用名称        | 权限范围                                              |
@@ -921,519 +924,289 @@ Gerrit 的数据库访问
   |        |                 |                   |                 +-------------------------------------------------------+
   |        |                 |                   |                 | +1: Verified                                          |
   +--------+-----------------+-------------------+-----------------+-------------------------------------------------------+
-  | 8      | Submit          | Reviewer          | refs/*          | +1: Submit                                            |
-  +--------+-----------------+-------------------+-----------------+-------------------------------------------------------+
-  | 9      | Submit          | Verifier          | refs/*          | +1: Submit                                            |
+  | 8      | Submit          | Verifier          | refs/*          | +1: Submit                                            |
   +--------+-----------------+-------------------+-----------------+-------------------------------------------------------+
 
 这样，我们就为 Gerrit 所有的项目设定了可用的评审工作流。
 
+Gerrit 评审工作流实战
+----------------------
 
-To keep the schema simple to manage, groups cannot be nested. Only individual user accounts can be added as a member.
+我们分别再注册两个用户帐号 dev1@moon.ossxp.com 和 dev2@moon.ossxp.com，两个用户分别属于 Reviewer 用户组和 Verifier 用户组。这样我们的 Gerrit 部署中就拥有了三个用户帐号，我们用帐号 jiangxin 进行代码提交，用 dev1 帐号对任务进行代码审核，用 dev2 用户对审核任务进行最终的确认。
 
-Every group has one other group designated as its owner. Users who are members of the owner group can:
+开发者在本地版本库中工作
+++++++++++++++++++++++++++
 
-    *
+Repo 是 Gerrit 的最佳伴侣，凡是需要和 Gerrit 版本库交互的工作都封装在 repo 命令中。关于 repo 的用法我们在上一部分的 repo 多版本库协同的章节中已经详细介绍了。这里我们只介绍开发者如何只使用 git 命令来和 Gerrit 服务器交互。这样也可以使我们能更深入的理解 repo 和 gerrit 整合的机制。
 
-      Add users to this group
-    *
-
-      Remove users from this group
-    *
-
-      Change the name of this group
-    *
-
-      Change the description of this group
-    *
-
-      Change the owner of this group, to another group
-
-It is permissible for a group to own itself, allowing the group members to directly manage who their peers are.
-
-Newly created groups are automatically created as owning themselves, with the creating user as the only member. This permits the group creator to add additional members, and change the owner to another group if desired.
-
-It is somewhat common to create two groups at the same time, for example Foo and Foo-admin, where the latter group Foo-admin owns both itself and also group Foo. Users who are members of Foo-admin can thus control the membership of Foo, without actually having the access rights granted to Foo. This configuration can help prevent accidental submits when the members of Foo have submit rights on a project, and the members of Foo-admin typically do not need to have such rights.
-
-
-
-
-用户授权管理
----------------
-
-http://gerrit.googlecode.com/svn/documentation/2.1.5/access-control.html#category_FORG
-
-Project Access Control Lists
-
-A system wide access control list affecting all projects is stored in project "-- All Projects --". This inheritance can be configured through gerrit set-project-parent.
-
-Per-project access control lists are also supported.
-
-Users are permitted to use the maximum range granted to any of their groups in an approval category. For example, a user is a member of Foo Leads, and the following ACLs are granted on a project:
-Group   Reference Name  Category  Range
-Anonymous Users   refs/heads/*  Code Review   -1..+1
-Registered Users  refs/heads/*  Code Review   -1..+2
-Foo Leads   refs/heads/*  Code Review   -2..0
-
-Then the effective range permitted to be used by the user is -2..+2, as the user is a member of all three groups (see above about the system groups) and the maximum range is chosen (so the lowest value granted to any group, and the highest value granted to any group).
-
-Reference-level access control is also possible.
-
-Permissions can be set on a single reference name to match one branch (e.g. refs/heads/master), or on a reference namespace (e.g. refs/heads/*) to match any branch starting with that prefix. So a permission with refs/heads/* will match refs/heads/master and refs/heads/experimental, etc.
-
-Reference names can also be described with a regular expression by prefixing the reference name with ^. For example ^refs/heads/[a-z]{1,8} matches all lower case branch names between 1 and 8 characters long. Within a regular expression . is a wildcard matching any character, but may be escaped as \..
-
-References can have the current user name automatically included, creating dynamic access controls that change to match the currently logged in user. For example to provide a personal sandbox space to all developers, refs/heads/sandbox/${username}/* allowing the user joe to use refs/heads/sandbox/joe/foo.
-
-When evaluating a reference-level access right, Gerrit will use the full set of access rights to determine if the user is allowed to perform a given action. For example, if a user is a member of Foo Leads, they are reviewing a change destined for the refs/heads/qa branch, and the following ACLs are granted on the project:
-Group   Reference Name  Category  Range
-Registered Users  refs/heads/*  Code Review   -1..+1
-Foo Leads   refs/heads/*  Code Review   -2..+2
-QA Leads  refs/heads/qa   Code Review   -2..+2
-
-Then the effective range permitted to be used by the user is -2..+2, as the user's membership of Foo Leads effectively grant them access to the entire reference space, thanks to the wildcard.
-
-Gerrit also supports exclusive reference-level access control.
-
-It is possible to configure Gerrit to grant an exclusive ref level access control so that only users of a specific group can perform an operation on a project/reference pair. This is done by prefixing the reference specified with a -.
-
-For example, if a user who is a member of Foo Leads tries to review a change destined for branch refs/heads/qa in a project, and the following ACLs are granted:
-Group   Reference Name  Category  Range
-Registered Users  refs/heads/*  Code Review   -1..+1
-Foo Leads   refs/heads/*  Code Review   -2..+2
-QA Leads  -refs/heads/qa  Code Review   -2..+2
-
-Then this user will not have Code Review rights on that change, since there is an exclusive access right in place for the refs/heads/qa branch. This allows locking down access for a particular branch to a limited set of users, bypassing inherited rights and wildcards.
-
-In order to grant the ability to Code Review to the members of Foo Leads, in refs/heads/qa then the following access rights would be needed:
-Group   Reference Name  Category  Range
-Registered Users  refs/heads/*  Code Review   -1..+1
-Foo Leads   refs/heads/*  Code Review   -2..+2
-QA Leads  -refs/heads/qa  Code Review   -2..+2
-Foo Leads   refs/heads/qa   Code Review   -2..+2
-OpenID Authentication
-
-If the Gerrit instance is configured to use OpenID authentication, an account's effective group membership will be restricted to only the Anonymous Users and Registered Users groups, unless all of its OpenID identities match one or more of the patterns listed in the auth.trustedOpenID list from gerrit.config.
-All Projects
-
-Any access right granted to a group within -- All Projects -- is automatically inherited by every other project in the same Gerrit instance. These rights can be seen, but not modified, in any other project's Access administration tab.
-
-Only members of the group Administrators may edit the access control list for -- All Projects --.
-
-Ownership of this project cannot be delegated to another group. This restriction is by design. Granting ownership to another group gives nearly the same level of access as membership in Administrators does, as group members would be able to alter permissions for every managed project.
-Per-Project
-
-The per-project ACL is evaluated before the global -- All Projects -- ACL, permitting some limited override capability to project owners. This behavior is generally only useful on the Read Access category when granting -1 No Access within a specific project to deny access to a group.
-Categories
-
-Gerrit comes pre-configured with several default categories that can be granted to groups within projects, enabling functionality for that group's members.
-Owner
-
-The Owner category controls which groups can modify the project's configuration. Users who are members of an owner group can:
-
-    *
-
-      Change the project description
-    *
-
-      Create/delete a branch through the web UI (not SSH)
-    *
-
-      Grant/revoke any access rights, including Owner
-
-Note that project owners implicitly have branch creation or deletion through the web UI, but not through SSH. To get SSH branch access project owners must grant an access right to a group they are a member of, just like for any other user.
-
-Ownership over a particular branch subspace may be delegated by entering a branch pattern. To delegate control over all branches that begin with qa/ to the QA group, add Owner category for reference `refs/heads/qa/*` . Members of the QA group can further refine access, but only for references that begin with refs/heads/qa/.
-Read Access
-
-The Read Access category controls visibility to the project's changes, comments, code diffs, and Git access over SSH or HTTP. A user must have Read Access +1 in order to see a project, its changes, or any of its data.
-
-This category has a special behavior, where the per-project ACL is evaluated before the global all projects ACL. If the per-project ACL has granted Read Access -1, and does not otherwise grant Read Access +1, then a Read Access +1 in the all projects ACL is ignored. This behavior is useful to hide a handful of projects on an otherwise public server.
-
-For an open source, public Gerrit installation it is common to grant Read Access +1 to Anonymous Users in the -- All Projects -- ACL, enabling casual browsing of any project's changes, as well as fetching any project's repository over SSH or HTTP. New projects can be temporarily hidden from public view by granting Read Access -1 to Anonymous Users and granting Read Access +1 to the project owner's group within the per-project ACL.
-
-For a private Gerrit installation using a trusted HTTP authentication source, granting Read Access +1 to Registered Users may be more typical, enabling read access only to those users who have been able to authenticate through the HTTP access controls. This may be suitable in a corporate deployment if the HTTP access control is already restricted to the correct set of users.
-
-
-Upload Access
-
-The Read Access +2 permits the user to upload a commit to the project's refs/for/BRANCH namespace, creating a new change for code review.
-
-Rather than place this permission in its own category, its chained into the Read Access category as a higher level of access. A user must be able to clone or fetch the project in order to create a new commit on their local system, so in practice they must also have Read Access +1 to even develop a change. Therefore upload access implies read access by simply being a higher level of it.
-
-For an open source, publlation, it is common to grant Read Access +1..+2 to Registered Users in the -- All Projects -- ACL. For more private installations, its common to simply grant Read Access +1..+2 to all users of a project.
-Push Tag
-
-This category permits users to push an annotated tag object over SSH into the project's repository. Typically this would be done with a command line such as:
-
-git push ssh://USER@HOST:PORT/PROJECT tag v1.0
-
-Tags must be annotated (created with git tag -a or git tag -s), should exist in the refs/tags/ namespace, and should be new.
-
-This category is intended to be used to publish tags when a project reaches a stable release point worth remembering in history.
-
-The range of values is:
-
-    * +1 Create Signed Tag
-
-      A new signed tag may be created. The tagger email address must be verified for the current user.
-
-    * +2 Create Annotated Tag
-
-      A new annotated (unsigned) tag may be created. The tagger email address must be verified for the current user.
-
-To push tags created by users other than the current user (such as tags mirrored from an upstream project), Forge Identity +2 must be also granted in addition to Push Tag >= +1.
-
-To push lightweight (non annotated) tags, grant Push Branch +2 Create Branch for reference name `refs/tags/*`, as lightweight tags are implemented just like branches in Git.
-
-To delete or overwrite an existing tag, grant Push Branch +3 Force Push Branch; Delete Branch for reference name `refs/tags/*`, as deleting a tag requires the same permission as deleting a branch.
-Push Branch
-
-This category permits users to push directly into a branch over SSH, bypassing any code review process that would otherwise be used.
-
-This category has several possible values:
-
-    * +1 Update Branch
-
-      Any existing branch can be fast-forwarded to a new commit. Creation of new branches is rejected. Deletion of existing branches is rejected. This is the safest mode as commits cannot be discarded.
-
-    * +2 Create Branch
-
-      Implies Update Branch, but also allows the creation of a new branch if the name does not not already designate an existing branch name. Like update branch, existing commits cannot be discarded.
-
-    * +3 Force Push Branch; Delete Branch
-
-      Implies both Update Branch and Create Branch, but also allows an existing branch to be deleted. Since a force push is effectively a delete immediately followed by a create, but performed atomically on the server and logged, this level also permits forced push updates to branches. This level may allow existing commits to be discarded from a project history.
-
-This category is primarily useful for projects that only want to take advantage of Gerrit's access control features and do not need its code review functionality. Projects that need to require code reviews should not grant this category.
-
-
-Forge Identity
-
-Normally Gerrit requires the author and the committer identity lines in a Git commit object (or tagger line in an annotated tag) to match one of the registered email addresses of the uploading user. This permission allows users to bypass that validation, which may be necessary when mirroring changes from an upstream project.
-
-    *
-
-      +1 Forge Author Identity
-
-      Permits the use of an unverified author line in commit objects. This can be useful when applying patches received by email from 3rd parties, when cherry-picking changes written by others across branches, or when amending someone else's commit to fix up a minor problem before submitting.
-
-      By default this is granted to Registered Users in all projects, but a site administrator may disable it if verified authorship is required.
-    *
-
-      +2 Forge Committer or Tagger Identity
-
-      Implies Forge Author Identity, but also allows the use of an unverified committer line in commit objects, or an unverified tagger line in annotated tag objects. Typically this is only required when mirroring commits from an upstream project repository.
-    *
-
-      +3 Forge Gerrit Code Review Server Identity
-
-      Implies Forge Committer or Tagger Identity as well as Forge Author Identity, but additionally allows the use of the server's own name and email on the committer line of a new commit object. This should only be necessary when force pushing a commit history which has been rewritten by git filter-branch and that contains merge commits previously created by this Gerrit Code Review server.
-
-Verified
-
-The verified category can have any meaning the project desires. It was originally invented by the Android Open Source Project to mean compiles, passes basic unit tests.
-
-The range of values is:
-
-    *
-
-      -1 Fails
-
-      Tried to compile, but got a compile error, or tried to run tests, but one or more tests did not pass.
-
-      Any -1 blocks submit.
-    *
-
-      0 No score
-
-      Didn't try to perform the verification tasks.
-    *
-
-      +1 Verified
-
-      Compiled (and ran tests) successfully.
-
-      Any +1 enables submit.
-
-In order to submit a change, the change must have a +1 Verified in this category from at least one authorized user, and no -1 Fails from an authorized user. Thus, -1 Fails can block a submit, while +1 Verified enables a submit.
-
-If a Gerrit installation does not wish to use this category in any project, it can be deleted from the database:
-
-DELETE FROM approval_categories      WHERE category_id = 'VRIF';
-DELETE FROM approval_category_values WHERE category_id = 'VRIF';
-
-If a Gerrit installation wants to modify the description text associated with these category values, the text can be updated in the name column of the category_id = 'VRIF' rows in the approval_category_values table.
-
-Additional values could also be added to this category, to allow it to behave more like Code Review (below). Insert -2 and +2 value rows into the approval_category_values with category_id set to VRIF to get the same behavior.
-
-Note
-
-  A restart is required after making database changes. See below.
-
-Code Review
-
-The code review category can have any meaning the project desires. It was originally invented by the Android Open Source Project to mean I read the code and it seems reasonably correct.
-
-The range of values is:
-
-    * -2 Do not submit
-
-      The code is so horribly incorrect/buggy/broken that it must not be submitted to this project, or to this branch.
-
-      Any -2 blocks submit.
-
-    * -1 I would prefer that you didn't submit this
-
-      The code doesn't look right, or could be done differently, but the reviewer is willing to live with it as-is if another reviewer accepts it, perhaps because it is better than what is currently in the project. Often this is also used by contributors who don't like the change, but also aren't responsible for the project long-term and thus don't have final say on change submission.
-
-      Does not block submit.
-
-    * 0 No score
-
-      Didn't try to perform the code review task, or glanced over it but don't have an informed opinion yet.
-
-    * +1 Looks good to me, but someone else must approve
-
-      The code looks right to this reviewer, but the reviewer doesn't have access to the +2 value for this category. Often this is used by contributors to a project who were able to review the change and like what it is doing, but don't have final approval over what gets submitted.
-
-    * +2 Looks good to me, approved
-
-      Basically the same as +1, but for those who have final say over how the project will develop.
-
-      Any +2 enables submit.
-
-In order to submit a change, the change must have a +2 Looks good to me, approved in this category from at least one authorized user, and no -2 Do not submit from an authorized user. Thus -2 can block a submit, while +2 can enable it.
-
-If a Gerrit installation does not wish to use this category in any project, it can be deleted from the database:
-
-DELETE FROM approval_categories      WHERE category_id = 'CRVW';
-DELETE FROM approval_category_values WHERE category_id = 'CRVW';
-
-If a Gerrit installation wants to modify the description text associated with these category values, the text can be updated in the name column of the category_id = 'CRVW' rows in the approval_categogories table. The default values VRIF and CVRF used for the categories described above are simply that, defaults, and have no special meaning to Gerrit. The other standard category_id values like OWN, READ, SUBM, pTAG and pHD have special meaning and should not be modified or reused.
-
-The position column of approval_categories controls which column of the Approvals table the category appears in, providing some layout control to the administrator.
-
-All MaxWithBlock categories must have at least one positive value in the approval_category_values table, or else submit will never be enabled.
-
-To permit blocking submits, ensure a negative value is defined for your new category. If you do not wish to have a blocking submit level for your category, do not define values less than 0.
-
-Keep in mind that category definitions are currently global to the entire Gerrit instance, and affect all projects hosted on it. Any change to a category definition affects everyone.
-
-For example, to define a new 3-valued category that behaves exactly like Verified, but has different names/labels:
+首先克隆 Gerrit 管理的版本库，使用 Gerrit 提供的运行于 29418 端口的 SSH 协议。
 
 ::
 
-  INSERT INTO approval_categories
-    (name
-    ,position
-    ,function_name
-    ,category_id)
+  $ git clone ssh://localhost:29418/hello.git
+  Cloning into hello...
+  remote: Counting objects: 3, done
+  remote: Compressing objects: 100% (3/3)
+  Receiving objects: 100% (3/3), done.
 
-  VALUES
-    ('Copyright Check'
-    ,3
-    'MaxWithBlock'
-    ,'copy');
+然后拷贝 Gerrit 服务器提供的 commit-msg 钩子脚本。
 
-  INSERT INTO approval_category_values
-    (category_id,value,name)
+::
 
-  VALUES
-    ('copy', -1, 'Do not have copyright');
+  $ cd hello
+  $ scp -P 29418 -p localhost:/hooks/commit-msg .git/hooks/
 
-  INSERT INTO approval_category_values
-    (category_id,value,name)
+别忘了修改 Git 配置中提交者的邮件地址，以便和 Gerrit 中注册的地址保持一致。不使用 `--global` 参数调用 `git config` 可以只对本版本库的提交设定提交者邮件。
 
-  VALUES
-    ('copy', 0, 'No score');
+::
 
-  INSERT INTO approval_category_values
-    (category_id,value,name)
+  $ git config user.email jiangxin@moon.ossxp.com
 
-  VALUES
-    ('copy', 1, 'Copyright clear');
+然后我们修改 readme.txt 文件，并提交。注意提交的时候我们使用了 "-s" 参数，目的是在提交说明中加入 "Signed-off-by:" 标记，这在 Gerrit 提交中可能是必须的。
 
-The new column will appear at the end of the table (in position 3), and -1 Do not have copyright will block submit, while +1 Copyright clear is required to enable submit.
+::
 
-Note
-
-  Restart the Gerrit web application and reload all browsers after making any database changes to approval categories. Browsers are sent the list of known categories when they first visit the site, and don't notice changes until the page is closed and opened again, or is reloaded.
-
-Part of Gerrit Code Review
-Version 2.1.5.1
-Last updated 24-Aug-2010 11:06:24 PDT
+  $ echo "gerrit review test" >> readme.txt
+  $ git commit -a -s -m "readme.txt hacked." 
+  [master c65ab49] readme.txt hacked.
+   1 files changed, 1 insertions(+), 0 deletions(-)
 
 
-注册分支
-++++++++++++
+我们查看一下提交日志，会看到其中有特殊的标签。
 
-Branches can be created over the SSH port by any git push client, if the user has been granted the Push Branch > Create Branch (or higher) access right.
+::
 
-Additional branches can also be created through the web UI, assuming at least one commit already exists in the project repository. A project owner can create additional branches under Admin > Projects > Branches. Enter the new branch name, and the starting Git revision. Branch names that don’t start with refs/ will automatically have refs/heads/ prefixed to ensure they are a standard Git branch name. Almost any valid SHA-1 expression can be used to specify the starting revision, so long as it resolves to a commit object. Abbreviated SHA-1s are not supported.
+  $ git log --pretty=full -1
+  commit c65ab490f6d3dc36429b8f1363b6191357202f2e
+  Author: Jiang Xin <jiangxin@moon.ossxp.com>
+  Date:   Mon Nov 15 17:50:08 2010 +0800
 
+      readme.txt hacked.
+      
+      Change-Id: Id7c9d88ebf5dac2d19a7e0896289de1ae6fb6a90
+      Signed-off-by: Jiang Xin <jiangxin@moon.ossxp.com>
 
-版本库数据库的初始化
-----------------------
+提交说明中出现了 “Change-Id:” 标签，这个标签是由钩子脚本 "commit-msg" 自动生成的。至于这个标签的含义，在前面 Gerrit 的实现原理中我们介绍过。
 
-如何用 git push 导入项目内容。而不是要对提交一一审核？
+好了，我们准备把这个提交 PUSH 到服务器上吧。
 
-Go into the '-- All Projects ---' entry under Admin>Projects and grant the
-following:
+开发者向审核服务器提交
++++++++++++++++++++++++
 
-  Category: Push Branch
-  Group: Administrators
-  Min: +1
-  Max: +3
+由 Gerrit 控制的 Git 版本库不能直接提交，因为正确设置的 Gerrit 服务器，会拒绝用户直接向 `refs/heads/*` 推送。
 
-  Category: Push Annotated Tag
-  Group: Administrators
-  Min: +1
-  Max: +3
+::
 
-After doing those two grants, you can then push the branches directly using
-git push, e.g.:
+  $ git status
+  # On branch master
+  # Your branch is ahead of 'origin/master' by 1 commit.
+  #
+  nothing to commit (working directory clean)
 
-  git push --all ssh://you@gerrit:29418/project.git
+  $ git push
+  Counting objects: 5, done.
+  Writing objects: 100% (3/3), 332 bytes, done.
+  Total 3 (delta 0), reused 0 (delta 0)
+  To ssh://localhost:29418/hello.git
+   ! [remote rejected] master -> master (prohibited by Gerrit)
+  error: failed to push some refs to 'ssh://localhost:29418/hello.git'
 
-Once all projects are pushed, you can delete the two grants you had given
-Administrators.  The advantage of pushing through Gerrit's SSHD like this is
-the branches table will be automatically populated in the database, so
-unlike what Simon Wilkinson describes, you won't need to manually insert
-each branch for each project. 
+直接推送就会出现遇到 “prohibited by Gerrit” 的错误。
 
-No, use:
+正确的做法是向特殊的引用推送，这样 Gerrit 会自动将新提交转换为评审任务。
 
-  git push ssh://user@gerrit:29418/project1 HEAD:refs/heads/master
+::
 
-since you want to directly push into the branch, rather than create code
-reviews.  Pushing to prefix "refs/for/" creates code reviews which must be
-approved and then submitted.  Pushing to "refs/heads/" bypasses review
-entirely, and just enters the commits directly into the branch.  The latter
-path does not check committer identity, and is designed for the case you are
-trying to work through right now.  :-) 
+  $ git push origin HEAD:refs/for/master
+  Counting objects: 5, done.
+  Writing objects: 100% (3/3), 332 bytes, done.
+  Total 3 (delta 0), reused 0 (delta 0)
+  To ssh://localhost:29418/hello.git
+   * [new branch]      HEAD -> refs/for/master
 
+看到了么，向 refs/for/master 推送成功。
 
-审核工作流管理
---------------------
+审核评审任务
+++++++++++++++
 
-Documentation/user-upload.html
+以 Dev1 用户登录 Gerrit 网站，点击“All”菜单下的“Open”标签，可以新提交到 Gerrit 状态为 Open 的评审任务。
 
-Gerrit supports three methods of uploading changes:
+.. figure:: images/gerrit/gerrit-review-1-tasklist.png
+   :scale: 70
 
-    *
+   Gerrit 评审任务列表
 
-      Use repo upload, to create changes for review
-    *
+点击该评审任务，显示关于此评审任务的详细信息。
 
-      Use git push, to create changes for review
-    *
+.. figure:: images/gerrit/gerrit-review-2-changeid_full.png
+   :scale: 70
 
-      Use git push, and bypass code review
+   Gerrit 评审任务概述
 
+我们从 URL 地址栏可以看到该评审任务的评审编号为1。目前该评审任务有一个补丁集（Patch Set 1），我们可以点击 “Diff All Side-by-Side” 查看变更集，以决定该提交是否应该被接受。作为测试，先让此次提交通过代码审核，于是以 Dev1 用户身份点击 “Review” 按钮。
 
-Gerrit 下开发者的工作方式
---------------------------
+点击 “Review” 按钮后，弹出代码评审对话框，如下：
 
-本地版本库的钩子设置
+.. figure:: images/gerrit/gerrit-review-3-review-approved.png
+   :scale: 70
 
-通过钩子，提交自动在提交说明中生成 Change-id 。这个 Change-id 被用于确定变更集编号。
+   Gerrit 任务评审对话框
 
+选择 “+2: Looks good to me, approved.”，点击按钮 “Publish Comments” 以通过评审。注意因为没有给 Dev1 用户（Reviewer用户组）授予 Submit 权限，因此此时 Dev1 还不能将此审核任务提交。
 
-参见： Documentation/user-changeid.html
+当 Dev1 用户做出通过评审的决定后，代码提交者 jiangxin 会收到一封邮件。
 
-Gerrit 下审核者的工作方式
---------------------------
+.. figure:: images/gerrit/gerrit-review-4-review-mail-notify.png
+   :scale: 70
 
-Gerrit 下确认者的工作方式
---------------------------
+   Gerrit 通知邮件
 
+评审任务没有通过测试
++++++++++++++++++++++
 
-
-
-
-版本库复制
------------
-创建 '$site_path'/replication.config 文件
-
-[remote "host-one"]
-  url = gerrit@host-one.example.com:/some/path/${name}.git
-
-[remote "pubmirror"]
-  url = mirror1.us.some.org:/pub/git/${name}.git
-  url = mirror2.us.some.org:/pub/git/${name}.git
-  url = mirror3.us.some.org:/pub/git/${name}.git
-  push = +refs/heads/*
-  push = +refs/tags/*
-  threads = 3
-  authGroup = Public Mirror Group
-  authGroup = Second Public Mirror Group
+下面我们以 Dev2 帐号登录 Gerrit，查看处于打开状态的评审任务，会看到评审任务1 的代码评审已经通过，但是尚未进行测试检查（Verify）。于是 Dev2 可以下载该补丁集，在本机进行测试。
 
 
-定制 Gerrit 界面
+.. figure:: images/gerrit/gerrit-review-5-review-verify-view.png
+   :scale: 70
+
+   Gerrit 评审任务显示
+
+假设测试没有通过，Dev2 用户点击该评审任务的 “Review” 按钮，重置该任务的评审状态。
+
+.. figure:: images/gerrit/gerrit-review-6-review-verify-failed.png
+   :scale: 70
+
+   Gerrit 评审任务未通过
+
+我们注意到 Dev2 用户的评审对话框有三个按钮，多出的 “Publish and Submit” 按钮是因为 Dev2 拥有 Submit 授权。Dev2 用户在上面的对话框中，选择了“-1: Fails”，当点击“Publish Comments” 按钮，该评审任务的评审记录被重置，同时提交者和其它评审参与者会收到通知邮件。
+
+.. figure:: images/gerrit/gerrit-review-7-review-mail-notify-failed.png
+   :scale: 70
+
+   Gerrit 通知邮件：评审未通过
+
+
+重新提交新的补丁集
 ------------------
 
-At startup Gerrit reads the following files (if they exist) and uses them to customize the HTML page it sends to clients:
+提交者收到代码被打回的邮件，一定很难过。不过这恰恰说明了我们的软件过程已经相当的完善，现在发现问题总比在集成测试时甚至被客户发现要好的多吧。
 
-    * '$site_path'/etc/GerritSiteHeader.html
+根据评审者和检验者的提示，开发者对代码进行重新修改。下面的 bugfix 过程仅仅是一个简单的示例，bugfix 没有这么简单的，对么？ ;-)
 
-      HTML is inserted below the menu bar, but above any page content. This is a good location for an organizational logo, or links to other systems like bug tracking.
+::
 
-    * '$site_path'/etc/GerritSiteFooter.html
+  $ echo "fixed" >> readme.txt
 
-      HTML is inserted at the bottom of the page, below all other content, but just above the footer rule and the "Powered by Gerrit Code Review (v….)" message shown at the extreme bottom.
+重新修改后，需要使用 "--amend" 参数进行提交，即使用前次提交的日志重新提交，这一点非常重要。因为这样就会对原提交说明中的 “Change-Id:” 标签予以原样保留，当我们再将新提交推送到服务器时，Gerrit 不会为新提交生成新的评审任务编号而是会重用原有的任务编号，将新提交转化为老的评审任务的新的补丁集。
 
-    * '$site_path'/etc/GerritSite.css
+我们在执行 `git commit --amend` 时，可以修改提交说明，但是注意不要删除 Change-Id 标签，更不能修改它。
 
-      The CSS rules are inlined into the top of the HTML page, inside of a <style> tag. These rules can be used to support styling the elements within either the header or the footer.
-  
-The `*.html` files must be valid XHTML, with one root element, typically a single <div> tag. The server parses it as XML, and then inserts the root element into the host page. If a file has more than one root level element, Gerrit will not start.
+::
 
-静态图片可以放到 /static 目录下。
+  $ git add -u
+  $ git commit --amend
 
-Static image files can also be served from '$site_path'/static, and may be referenced in GerritSite{Header,Footer}.html or GerritSite.css by the relative URL static/$name (e.g. static/logo.png).
+  readme.txt hacked with bugfix.                                                                                                                              
+
+  Change-Id: Id7c9d88ebf5dac2d19a7e0896289de1ae6fb6a90
+  Signed-off-by: Jiang Xin <jiangxin@moon.ossxp.com>
+
+  # Please enter the commit message for your changes. Lines starting
+  # with '#' will be ignored, and an empty message aborts the commit.
+  # On branch master
+  # Your branch is ahead of 'origin/master' by 1 commit.
+  #
+  # Changes to be committed:
+  #   (use "git reset HEAD^1 <file>..." to unstage)
+  #
+  # modified:   readme.txt
+  #
+
+提交成功后，我们执行 `git ls-remote` 命令会看到 Gerrit 维护的 Git 库中只有一个评审任务（编号1），且该评审任务只有一个补丁集（Patch Set 1）。
+
+::
+
+  $ git ls-remote origin
+  82c8fc3805d57cc0d17d58e1452e21428910fd2d        HEAD
+  c65ab490f6d3dc36429b8f1363b6191357202f2e        refs/changes/01/1/1
+  82c8fc3805d57cc0d17d58e1452e21428910fd2d        refs/heads/master
+
+我们把修改后的提交推送到 Gerrit 管理下的 Git 版本库中。注意依旧推送到 `refs/for/master` 引用中。
+
+::
+
+  $ git push origin HEAD:refs/for/master
+  Counting objects: 5, done.
+  Writing objects: 100% (3/3), 353 bytes, done.
+  Total 3 (delta 0), reused 0 (delta 0)
+  To ssh://localhost:29418/hello.git
+   * [new branch]      HEAD -> refs/for/master
+
+推送成功后，我们再执行 `git ls-remote` 命令，我们会看到唯一的评审任务（编号1）有了两个补丁集。
+
+::
+
+  $ git ls-remote origin
+  82c8fc3805d57cc0d17d58e1452e21428910fd2d        HEAD
+  c65ab490f6d3dc36429b8f1363b6191357202f2e        refs/changes/01/1/1
+  1df9e8e05fcf97a46588488918a476abd1df8121        refs/changes/01/1/2
+  82c8fc3805d57cc0d17d58e1452e21428910fd2d        refs/heads/master
+
+新修订集通过评审
+++++++++++++++++++
+
+当提交者重新针对评审任务进行提交时，原评审任务的审核者会收到通知邮件，提醒有新的补丁集等待评审。
+
+.. figure:: images/gerrit/gerrit-review-8-2-review-new-patchset-mail-notify.png
+   :scale: 70
+
+   Gerrit 通知邮件：新补丁集
+
+登录 Gerrit 的 Web 界面，可以看到评审任务1 有了新的补丁集。
+
+.. figure:: images/gerrit/gerrit-review-8-review-new-patchset.png
+   :scale: 70
+
+   Gerrit 新补丁集显示
+
+再经过代码审核和测试，这次 Dev2 用户决定让评审通过，点击了 “Publish and Submit” 按钮。Submit（提交）动作会将评审任务（refs/changes/01/1/2）合并到对应分支（master）。下图显示的是通过评审完成合并的评审任务1。
+
+.. figure:: images/gerrit/gerrit-review-9-review-patchset-merged.png
+   :scale: 70
+
+   Gerrit 合并后的评审任务
 
 
-Gitweb 整合
------------
+从远程版本库更新
+++++++++++++++++++
 
-内置的 Git web 整合
+当 Dev1 和 Dev2 用户完成代码评审，提交者会收到多封通知邮件。这其中最让人激动的就是代码被接受并合并到开发主线（master）中，这是多么另开发者感到荣耀的啊。
 
-In the internal configuration, Gerrit inspects the request, enforces its project level access controls, and directly executes gitweb.cgi if the user is authorized to view the page.
+.. figure:: images/gerrit/gerrit-review-10-review-merged-mail-notify.png
+   :scale: 70
 
-To enable the internal configuration, set gitweb.cgi with the path of the installed CGI. This defaults to /usr/lib/cgi-bin/gitweb.cgi, which is a common installation path for the gitweb package on Linux distributions.
+   Gerrit 通知邮件：修订已合并
 
-git config --file $site_path/etc/gerrit.config gitweb.cgi /usr/lib/cgi-bin/gitweb.cgi
+代码提交者执行 `git pull` ，和 Gerrit 管理的版本库同步。
 
-After updating '$site_path'/etc/gerrit.config, the Gerrit server must be restarted and clients must reload the host page to see the change.
+::
 
-Configuration
+  $ git ls-remote origin
+  1df9e8e05fcf97a46588488918a476abd1df8121        HEAD
+  c65ab490f6d3dc36429b8f1363b6191357202f2e        refs/changes/01/1/1
+  1df9e8e05fcf97a46588488918a476abd1df8121        refs/changes/01/1/2
+  1df9e8e05fcf97a46588488918a476abd1df8121        refs/heads/master
 
-Most of the gitweb configuration file is handled automatically by Gerrit Code Review. Site specific overrides can be placed in '$site_path'/etc/gitweb_config.perl, as this file is loaded as part of the generated configuration file.
-
-Logo and CSS
-
-If the package-manager installed CGI (/usr/lib/cgi-bin/gitweb.cgi) is being used, the stock CSS and logo files will be served from either /usr/share/gitweb or /var/www.
-
-Otherwise, Gerrit expects gitweb.css and git-logo.png to be found in the same directory as the CGI script itself. This matches with the default source code distribution, and most custom installations.
-Access Control
-
-Access controls for internally managed gitweb page views are enforced using the standard project READ +1 permission.
-
-
-外部的 Git web 整合
-
-External/Unmanaged gitweb
-
-In the external configuration, gitweb runs under the control of an external web server, and Gerrit access controls are not enforced.
-
-To enable the external gitweb integration, set gitweb.url with the URL of your gitweb CGI.
-
-The CGI’s $projectroot should be the same directory as gerrit.basePath, or a fairly current replica. If a replica is being used, ensure it uses a full mirror, so the refs/changes/* namespace is available.
-
-git config --file $site_path/etc/gerrit.config gitweb.url http://example.com/gitweb.cgi
-
-After updating '$site_path'/etc/gerrit.config, the Gerrit server must be restarted and clients must reload the host page to see the change.
+  $ git pull
+  From ssh://localhost:29418/hello
+     82c8fc3..1df9e8e  master     -> origin/master
+  Already up-to-date.
 
 
+更多 Gerrit 参考
+------------------
 
+Gerrit 涉及到的内容非常庞杂，还有诸如和 Gitweb, git-daemon 整合，Gerrit 界面定制等功能，恕不在此一一列举。可以直接参考 Gerrit 网站上的帮助。
+
+参见： http://gerrit.googlecode.com/svn/documentation/
