@@ -557,7 +557,7 @@ Gerrit 的数据库访问
 
 当在 Gerrit 个人配置界面中设置了公钥之后，就可以连接 Gerrit 的 SSH 服务器执行命令，我们的示例使用的是本机 localhost，其实远程IP地址一样可以。只是对于远程主机需要确认端口不要被防火墙拦截，Gerrit 的 SSH 服务器使用特殊的端口，缺省是 29418。
 
-任何用户都可以通过 SSH 连接执行 `gerrit ls-projects` 命令查看项目列表。如果命令没有输出，是因为项目尚未建立。
+任何用户都可以通过 SSH 连接执行 `gerrit ls-projects` 命令查看项目列表。下面的命令没有输出，是因为项目尚未建立。
 
 ::
 
@@ -820,38 +820,114 @@ Gerrit 的数据库访问
 定义评审工作流
 ---------------
 
-用户组管理
------------
-Access controls in Gerrit are group based. Every user account is a member of one or more groups, and access and privileges are granted to those groups. Groups cannot be nested, and access rights cannot be granted to individual users.
-System Groups
+刚刚安装好的 Gerrit 的评审工作流并不完整，还不能正常的开展评审工作，需要我们对项目授权进行设置以定制适合的评审工作流。
 
-Gerrit comes with 3 system groups, with special access privileges and membership management. The identity of these groups is set in the system_config table within the database, so the groups can be renamed after installation if desired.
-Administrators
+缺省安装的 Gerrit 中只有下面内置的四个用户组。
 
-This is the Gerrit "root" identity.
+  +--------------------------+-------------------------------+
+  | 用户组                   | 说明                          |
+  +==========================+===============================+
+  | Administrators           | Gerrit 管理员                 |
+  +--------------------------+-------------------------------+
+  | Anonymous Users          | 任何用户，登录或未登录        |
+  +--------------------------+-------------------------------+
+  | Non-Interactive Users    | Gerrit 中执行批处理的用户     |
+  +--------------------------+-------------------------------+
+  | Registered Users         | 任何登录用户                  |
+  +--------------------------+-------------------------------+
 
-Users in the Administrators group can perform any action under the Admin menu, to any group or project, without further validation of any other access controls. In most installations only those users who have direct filesystem and database access would be placed into this group.
+未登录的用户只属于 Anonymous Users，登录用户则同时拥有 Anonymous Users 和 Registered Users 的权限。对于管理员则还拥有 Administrators 用户组权限。
 
-Membership in the Administrators group does not imply any other access rights. Administrators do not automatically get code review approval or submit rights in projects. This is a feature designed to permit administrative users to otherwise access Gerrit as any other normal user would, without needing two different accounts.
-Anonymous Users
+我们查看全局（伪项目“-- All Projects --”）的初始权限设置。会看到类似下面的表格：
 
-All users are automatically a member of this group. Users who are not signed in are a member of only this group, and no others.
+  +--------+-----------------+-------------------+-----------------+-------------------------------------------------------+
+  | 编号   | 类别            | 用户组名称        | 引用名称        | 权限范围                                              |
+  +========+=================+===================+=================+=======================================================+
+  | 1      | Code Review     | Registered Users  | refs/heads/*    | -1: I would prefer that you didn't submit this        |
+  |        |                 |                   |                 +-------------------------------------------------------+
+  |        |                 |                   |                 | +1: Looks good to me, but someone else must approve   |
+  +--------+-----------------+-------------------+-----------------+-------------------------------------------------------+
+  | 2      | Forge Identity  | Registered Users  | refs/*          | +1: Forge Author Identity                             |
+  +--------+-----------------+-------------------+-----------------+-------------------------------------------------------+
+  | 3      | Read Access     | Administrators    | refs/*          | +1: Read access                                       |
+  +--------+-----------------+-------------------+-----------------+-------------------------------------------------------+
+  | 4      | Read Access     | Anonymous Users   | refs/*          | +1: Read access                                       |
+  +--------+-----------------+-------------------+-----------------+-------------------------------------------------------+
+  | 5      | Read Access     | Registered Users  | refs/*          | +2: Upload permission                                 |
+  +--------+-----------------+-------------------+-----------------+-------------------------------------------------------+
 
-Any access rights assigned to this group are inherited by all users.
+对此表格中的授权解读如下：
 
-Administrators and project owners can grant access rights to this group in order to permit anonymous users to view project changes, without requiring sign in first. Currently it is only worthwhile to grant Read Access to this group as Gerrit requires an account identity for all other operations.
-Registered Users
+* 对于匿名用户：根据第4条授权策略，匿名用户能够读取任意版本库。
 
-All signed-in users are automatically a member of this group (and also Anonymous Users, see above).
+* 对于注册用户：根据第5条授权策略，注册用户具有比第四条授权高一个等级的权限，即注册用户除了具有读取版本库权限外，还可以向版本库的 `refs/for/<branch-name>` 引用推送，产生评审任务的权限。
 
-Any access rights assigned to this group are inherited by all users as soon as they sign-in to Gerrit. If OpenID authentication is being employed, moving from only Anonymous Users into this group is very easy. Caution should be taken when assigning any permissions to this group.
+  之所以这种可写的权限也放在“Read Access”类别中，是因为 Git 的写操作必须建立在拥有读权限之上，因此 Gerrit 将其与读取都放在“Read Access”归类之下，只不过更高一个级别。
 
-It is typical to assign Code Review -1..+1 to this group, allowing signed-in users to vote on a change, but not actually cause it to become approved or rejected.
+* 对于注册用户：根据第2条授权策略，在向服务器推送提交的时候，忽略对提交中 Author 字段的邮件地址检查。这个我们在之前已经讨论过。
 
-Registered users are always permitted to make and publish comments on any change in any project they have Read Access to.
-Account Groups
+* 对于注册用户：根据第1条授权策略，注册用户具有代码审核的一般权限，即能够将评审任务设置为“+1”级别（看起来不错，但需要通过他人认可），或者将评审任务标记为“-1”，即评审任务没有通过不能提交。
 
-Account groups contain a list of zero or more user account members, added individually by a group owner. Any user account listed as a group member is given any access rights granted to the group.
+* 对于管理员：根据第3条策略，管理员能够读取任意版本库。
+
+上面的授权策略定义的评审流程是不完整的。虽然提交能够进入评审流程，因为登录用户（注册用户）可以将提交以评审任务方式上传，而且注册用户可以将评审任务标记为“+1: 看起来不错，但需其他人认可”。但是评审任务没有人有权限可以将其提交——合并到正式版本库中，即没人能够对评审任务做最终的确认及提交。
+
+要想实现对评审最终确认的授权，有两种方法可以实现，一种是赋予特定用户 Verified 类别中的 “+1: Verified” 的授权，另外一个方法是赋予特定用户 Code Review 类别中更高级别的授权：“+2: Looks good to me, approved”。要想实现对经过确认的评审任务提交，还需要赋予特定用户 Submit 类别中的 “+1: Submit” 授权。
+
+下面的示例中，我们创建两个新的用户组 Reviewer 和 Verifier，并为其赋予相应的授权。
+
+创建用户组，我们可以通过 Web 界面或者命令行。通过 Web 界面添加用户组，选择“Admin” 菜单下的“Groups” 子菜单。
+
+.. figure:: images/gerrit/gerrit-addgroup-1.png
+   :scale: 70
+
+   Gerrit 用户组创建
+
+输入用户组名称后，点击 “Create Group” 按钮。进入创建用户组后的设置页。
+
+.. figure:: images/gerrit/gerrit-addgroup-2.png
+   :scale: 70
+
+   Gerrit 用户组设置页
+
+我们注意到在用户设置页面中有一个 Owners 字段名称和用户组名称相同，实际上这是 Gerrit 关于用户组的一个特别的功能。一个用户组可以设置另外一个用户组为本用户组的 Owners，属于 Owners 用户组的用户实际上相当于本用户组的管理者，可以添加用户、修改用户组名称等。不过一般最常用的设置是使用同名的用户组作为 Owners。
+
+在用户组设置页面的最下面，是用户组用户分配对话框，可以将用户分配到用户组中。注意 Gerrit 的用户组不能包含，即只能将用户分配到用户组中。
+
+下面是我们添加了两个新用户组后的用户组列表：
+
+.. figure:: images/gerrit/gerrit-addgroup-3-list.png
+   :scale: 70
+
+   Gerrit 用户组列表
+
+接下来要为新的用户组授权，需要访问“Admin”菜单下的“Projects”子菜单，点击对应的项目进入权限编辑界面。为了简便起见，我们选择“-- All Projects --”，对其授权的更改可以被所有其它的项目共享。下面是我们为 Reviewer 用户组建立授权过程的页面。
+
+.. figure:: images/gerrit/gerrit-acl-1-reviewer.png
+   :scale: 70
+
+   为 Reviewer 用户组建立授权
+
+我们分别为两个新建立的用户组分配授权，最终在前面的缺省授权列表的基础上，补充了下面新的授权。
+
+  +--------+-----------------+-------------------+-----------------+-------------------------------------------------------+
+  | 编号   | 类别            | 用户组名称        | 引用名称        | 权限范围                                              |
+  +========+=================+===================+=================+=======================================================+
+  | 6      | Code Review     | Reviewer          | refs/*          | -2: Do not submit                                     |
+  |        |                 |                   |                 +-------------------------------------------------------+
+  |        |                 |                   |                 | +2: Looks good to me, approved                        |
+  +--------+-----------------+-------------------+-----------------+-------------------------------------------------------+
+  | 7      | Verified        | Verifier          | refs/*          | -1: Fails                                             |
+  |        |                 |                   |                 +-------------------------------------------------------+
+  |        |                 |                   |                 | +1: Verified                                          |
+  +--------+-----------------+-------------------+-----------------+-------------------------------------------------------+
+  | 8      | Submit          | Reviewer          | refs/*          | +1: Submit                                            |
+  +--------+-----------------+-------------------+-----------------+-------------------------------------------------------+
+  | 9      | Submit          | Verifier          | refs/*          | +1: Submit                                            |
+  +--------+-----------------+-------------------+-----------------+-------------------------------------------------------+
+
+这样，我们就为 Gerrit 所有的项目设定了可用的评审工作流。
+
 
 To keep the schema simple to manage, groups cannot be nested. Only individual user accounts can be added as a member.
 
