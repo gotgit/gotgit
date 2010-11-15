@@ -426,6 +426,12 @@ Gerrit 的数据库访问
 ::
 
   $ ssh -p 29418 localhost gerrit gsql
+  Welcome to Gerrit Code Review 2.1.5.1
+  (H2 1.2.134 (2010-04-23))
+
+  Type '\h' for help.  Type '\r' to clear the buffer.
+
+  gerrit> 
 
 
 即连接 Gerrit 的 SSH 服务，运行命令 `gerrit gsql` 。当连接上数据库管理接口后，便出现 "gerrit>" 提示符，在该提示符下可以输入 SQL 命令。下面的示例中使用的数据库后端为 H2 内置数据库。
@@ -487,34 +493,34 @@ Gerrit 的数据库访问
 
 下面我们开始介绍 Gerrit 的使用。
 
-第一个注册帐号：Gerrit 管理员
-------------------------------
+立即注册为 Gerrit 管理员
+-------------------------
 
 第一个 Gerrit 账户自动成为权限最高的管理员，因此 Gerrit 安装完毕后的第一件事情就是立即注册或者登录，以便初始化管理员帐号。下面我们的示例是在本机(localhost) 以 HTTP 认证方式架设的 Gerrit 审核服务器。当我们第一次访问的时候，会弹出非常眼熟的 HTTP Basic Auth 认证界面：
 
 .. figure:: images/gerrit/gerrit-account-http-auth.png
-   :scale: 80
+   :scale: 100
 
    Http Basic Auth 认证界面
 
 输入正确的用户名和口令登录后，系统自动创建 ID 为 1000000 的帐号，该帐号是第一个注册的帐号，会自动该被赋予管理员身份。因为使用的是 HTTP 认证，用户的邮件地址等个人信息尚未确定，因此登录后首先进入到个人信息设置界面。
 
 .. figure:: images/gerrit/gerrit-account-init-1.png
-   :scale: 80
+   :scale: 70
 
    Gerrit 第一次登录后的个人信息设置界面
    
 在上面我们可以看到在菜单中有 “Admin” 菜单项，说明当前登录的用户被赋予了管理员权限。在下面的联系方式确认对话框中有一个注册新邮件地址的按钮，点击该按钮弹出邮件地址录入对话框。
 
 .. figure:: images/gerrit/gerrit-account-init-2.png
-   :scale: 80
+   :scale: 100
 
    输入个人的邮件地址
 
-必须输入一个有效的邮件地址以便能够收到确认邮件。这个邮件地址非常重要，因为 Git 代码提交时在提交说明中出现的邮件地址需要和这个地址一致。当填写了邮件地址后，会收到一封确认邮件，点击邮件中的确认链接会重新进入到 Gerrit 界面。
+必须输入一个有效的邮件地址以便能够收到确认邮件。这个邮件地址非常重要，因为 Git 代码提交时在提交说明中出现的邮件地址需要和这个地址一致。当填写了邮件地址后，会收到一封确认邮件，点击邮件中的确认链接会重新进入到 Gerrit 帐号设置界面。
 
 .. figure:: images/gerrit/gerrit-account-init-4-settings-username.png
-   :scale: 80
+   :scale: 70
 
    邮件地址确认后进入 Gerrit 界面
 
@@ -523,7 +529,7 @@ Gerrit 的数据库访问
 接下来需要做的最重要的一件事就是配置公钥。通过该公钥，注册用户可以通过 SSH 协议向 Gerrit 的 Git 服务器提交，如果具有管理员权限还能够远程管理 Gerrit 服务器。
 
 .. figure:: images/gerrit/gerrit-account-init-5-settings-ssh-pubkey.png
-   :scale: 80
+   :scale: 70
 
    Gerrit 的SSH公钥设置界面
 
@@ -532,7 +538,7 @@ Gerrit 的数据库访问
 点击 “Add” 按钮，完成公钥的添加。添加的公钥就会显示在列表中。一个用户可以添加多个公钥。
 
 .. figure:: images/gerrit/gerrit-account-init-6-settings-ssh-pubkey-added.png
-   :scale: 80
+   :scale: 70
 
    用户的公钥列表
 
@@ -540,123 +546,279 @@ Gerrit 的数据库访问
 
 
 .. figure:: images/gerrit/gerrit-account-init-7-settings-groups.png
-   :scale: 80
+   :scale: 70
 
    Gerrit 用户所属的用户组
+
+第一个注册的用户同时属于三个用户组，一个是管理员用户组（Administrators），另外两个分别是 Anonymous Users （任何用户）和 Registered Users（注册用户）。
 
 管理员访问 SSH 的管理接口
 --------------------------
 
-用户命令：
+当在 Gerrit 个人配置界面中设置了公钥之后，就可以连接 Gerrit 的 SSH 服务器执行命令，我们的示例使用的是本机 localhost，其实远程IP地址一样可以。只是对于远程主机需要确认端口不要被防火墙拦截，Gerrit 的 SSH 服务器使用特殊的端口，缺省是 29418。
 
-$ ssh -p 29418 review.example.com gerrit ls-projects
-
-
-我们看看 Android 的代码审核服务器。
+任何用户都可以通过 SSH 连接执行 `gerrit ls-projects` 命令查看项目列表。如果命令没有输出，是因为项目尚未建立。
 
 ::
 
-  $ curl -L -k http://review.source.android.com/ssh_info
-  review.source.android.com 29418
+  $ ssh -p 29418 localhost gerrit ls-projects
 
-含义是 Gerrit 服务器打开的 SSH 服务位于 review.source.android.com 服务器的 29418 端口。
-
-Gerrit 提供的 SSH 服务最主要的就是 Git 相关操作，如 git fetch, git pull, git fetch 等。我们会在后面进行演示。
-
-可以从 Gerrit 的 SSH 服务器中通过 scp 命令拷贝文件。
+可以执行 scp 命令从 Gerrit 的 SSH 服务器中拷贝文件。
 
 ::
 
-  $ scp -P 29418 -p -r review.source.android.com:/ gerrit-files
+  $ scp -P 29418 -p -r localhost:/ gerrit-files
 
   $ find gerrit-files -type f
   gerrit-files/bin/gerrit-cherry-pick
   gerrit-files/hooks/commit-msg
 
+我们可以看出 Gerrit 服务器提供了两个文件可以通过 scp 下载，其中 commit-msg 脚本文件应该放在用户本地 Git 库的钩子目录中以便在生成的提交中包含唯一的 Change-Id。在之前的 Gerrit 原理中我们介绍过。
 
-可以向 SSH 服务器输入 gerrit 命令。例如显示项目列表。
+除了普通用户可以执行的命令外，管理员还可以通过 SSH 连接执行 Gerrit 相关的管理命令。例如之前我们介绍的管理数据库：
 
 ::
 
-  $ ssh -p 29418 review.source.android.com gerrit ls-projects
-  device/common
-  device/htc/common
-  ...
+  $ ssh -p 29418 localhost gerrit gsql
+  Welcome to Gerrit Code Review 2.1.5.1
+  (H2 1.2.134 (2010-04-23))
 
-除此之外，还可以执行 Gerrit 相关的管理命令，如创建项目、数据库操作等。具体参见文档： Documentation/cmd-index.html 。
+  Type '\h' for help.  Type '\r' to clear the buffer.
+
+  gerrit>
+
+此外管理员还可以通过 SSH 连接执行帐号创建，项目创建等管理操作，可以执行下面的命令查看帮助信息。
+
+::
+
+  $ ssh -p 29418 localhost gerrit --help
+  gerrit COMMAND [ARG ...] [--] [--help (-h)]
+  
+   --          : end of options
+   --help (-h) : display this help text
+  
+  Available commands of gerrit are:
+  
+     approve
+     create-account
+     create-group
+     create-project
+     flush-caches
+     gsql
+     ls-projects
+     query
+     receive-pack
+     replicate
+     review
+     set-project-parent
+     show-caches
+     show-connections
+     show-queue
+     stream-events
+  
+  See 'gerrit COMMAND --help' for more information.
+
+更多的帮助信息，还可以参考 Gerrit 版本库中的帮助文件： Documentation/cmd-index.html 。
+
+创建新项目
+----------
+
+一个 Gerrit 项目对应于一个同名的 Git 库，同时拥有一套可定制的评审流程。创建一个新的 Gerrit 项目就会在对应的版本库根目录下创建 Git 库。管理员可以使用命令行创建新项目。
+
+::
+
+  $ ssh -p 29418 localhost gerrit create-project --name new/project
+
+当执行 `gerrit ls-projects` 命令，可以看到新项目创建已经成功创建。
+
+::
+
+  $ ssh -p 29418 localhost gerrit ls-projects
+  new/project
+
+在 Gerrit 的 Web 管理界面，我们也可以看到新项目已经建立。
+
+.. figure:: images/gerrit/gerrit-project-1-list.png
+   :scale: 70
+
+   Gerrit 中项目列表
+
+在项目列表中我们可以看到除了我们新建的 new/project 项目之外还有一个名为“-- All Projects --”的项目，其实它并非一个真实存在的项目，只是为了项目授权管理的方便，在“-- All Projects --” 中建立的项目授权能够被其它项目共享。
+
+在服务器端也可以看到 Gerrit 部署中版本库根目录下已经有同名的 Git 被创建。
+
+::
+
+  $ ls -d /home/gerrit/review_site/git/new/project.git
+  /home/gerrit/review_site/git/new/project.git
 
 
-管理员命令：
+这个新的版本库刚刚初始化，尚未包括任何数据，我们是否可以通过 `git push` 向该版本库推送一些初始数据呢？下面我们用 Gerrit 的 SSH 协议克隆该版本库，并尝试向其推送数据。
 
-gerrit create-account
+::
 
-    Create a new batch/role account.
+  $ git clone ssh://localhost:29418/new/project.git myproject
+  Cloning into myproject...
+  warning: You appear to have cloned an empty repository.
 
-    $ cat ~/.ssh/id_watcher.pub | ssh -p 29418 review.example.com gerrit create-account --ssh-key - watcher
+  $ cd myproject/
 
-gerrit create-group
+  $ echo hello > readme.txt
 
-    Create a new account group.
+  $ git add readme.txt
 
-gerrit create-project
+  $ git commit -m "initialized."
+  [master (root-commit) 15a549b] initialized.
+   1 files changed, 1 insertions(+), 0 deletions(-)
+   create mode 100644 readme.txt
+  09:58:54 jiangxin@hp:~/tmp/myproject$ git push origin master
+  Counting objects: 3, done.
+  Writing objects: 100% (3/3), 222 bytes, done.
+  Total 3 (delta 0), reused 0 (delta 0)
+  To ssh://localhost:29418/new/project.git
+   ! [remote rejected] master -> master (prohibited by Gerrit)
+  error: failed to push some refs to 'ssh://localhost:29418/new/project.git'
 
-    Create a new project and associated Git repository.
+向Gerrit 的 Git 版本库推送失败，远程 Git 服务器返回错误信息：“prohibited by Gerrit”。这是因为 Gerrit 缺省不允许直接向分支推送，而是需要向 `refs/for/<branch-name>` 的特殊引用进行推送以便将提交转换为评审任务。
 
-gerrit flush-caches
-
-    Flush some/all server caches from memory.
-
-gerrit gsql
-
-    Administrative interface to active database.
-
-    数据库管理
-
-$ java -jar gerrit.war gsql
-Welcome to Gerrit Code Review v2.0.25
-(PostgreSQL 8.3.8)
-
-Type '\h' for help.  Type '\r' to clear the buffer.
-
-gerrit> update accounts set ssh_user_name = 'alice' where account_id=1;
-UPDATE 1; 1 ms
-gerrit> \q
-Bye
+但是如果我们希望将版本库的历史提交不经审核直接推送到 Gerrit 维护的 Git 版本库中可以么？是的，只要通过 Gerrit 的管理界面为该项目授权，允许某个用户组（如 Administrators 组）的用户可以向分支推送。（注意该授权在推送完毕后尽快撤销，以免被滥用）
 
 
+.. figure:: images/gerrit/gerrit-project-3-acl-create-branch.png
+   :scale: 70
 
-gerrit set-project-parent
+   为项目添加授权
 
-    Change the project permissions are inherited from.
+.. figure:: images/gerrit/gerrit-project-4-acl-created-branch.png
+   :scale: 70
 
-gerrit show-caches
+   为项目添加授权
 
-    Display current cache statistics.
+如上图，我们为 new/project 的 Administrators 管理员用户组添加了 “+2: Create Branch” 授权，这样我们就能够向 Git 版本库推送了。我们再执行一次推送任务，看看能否成功。
 
-gerrit show-connections
+::
 
-    Display active client SSH connections.
+  $ git push origin master
+  Counting objects: 3, done.
+  Writing objects: 100% (3/3), 222 bytes, done.
+  Total 3 (delta 0), reused 0 (delta 0)
+  To ssh://localhost:29418/new/project.git
+   ! [remote rejected] master -> master (you are not committer jiangxin@ossxp.com)
+  error: failed to push some refs to 'ssh://localhost:29418/new/project.git'
 
-gerrit show-queue
+推送又失败了，但是服务器端返回的错误信息不同。上一次出错返回的是“prohibited by Gerrit”，而这一次返回的错误信息是“you are not committer”。
 
-    Display the background work queues, including replication.
+我们看看提交日志：
 
-gerrit replicate
+::
 
-    Manually trigger replication, to recover a node.
+  $ git log --pretty=full
+  commit 15a549bac6bd03ad36e643984fed554406480b2c
+  Author: Jiang Xin <jiangxin@ossxp.com>
+  Commit: Jiang Xin <jiangxin@ossxp.com>
 
-kill
+      initialized.
 
-    Kills a scheduled or running task.
+提交者 Committer 为“Jiang Xin <jiangxin@ossxp.com>”，而我在 Gerrit 中注册的用户的邮件地址是“jiangxin@moon.ossxp.com”，两者之间的不一致，导致 Gerrit 再一次拒绝了我们的提交。如果我们再到 Gerrit 看一下 new/project 的权限设置，会看到这样一条授权：
 
-ps
+::
 
-    Alias for gerrit show-queue.
+  Category        Group Name        Reference Name  Permitted Range
+  ========        ==========        ==============  ===============
+  Forge Identity  Registered Users  refs/*          +1: Forge Author Identity
 
-suexec
+这条授权的含义是提交中的 Author 字段不进行邮件地址是否注册的检查，但是要对 Commit 字段进行邮件地址检查。如果增加一个更高级别的“Forge Identity”授权，也可以忽略对 Committer 的邮件地址检查，但是我们尽量不要对授权进行非必须的改动，因为我们可以在提交的时候使用注册的邮件地址。
 
-    Execute a command as any registered user account.
+下面我们就通过 `git config` 命令修改提交时所用的邮件地址，和 Gerrit 注册时用的地址保持一致。然后我们用 `--amend` 参数重新执行提交以便让修改后的提交者邮件地址在提交中生效。
 
+::
+
+  $ git config user.email jiangxin@moon.ossxp.com
+
+  $ git commit --amend -m initialized
+  [master 82c8fc3] initialized
+   Author: Jiang Xin <jiangxin@ossxp.com>
+   1 files changed, 1 insertions(+), 0 deletions(-)
+   create mode 100644 readme.txt
+
+  $ git push origin master
+  Counting objects: 3, done.
+  Writing objects: 100% (3/3), 233 bytes, done.
+  Total 3 (delta 0), reused 0 (delta 0)
+  To ssh://localhost:29418/new/project.git
+   * [new branch]      master -> master
+
+看这次提交成功了！之所以成功，是因为提交者的邮件地址更改了。我们看看重新提交的日志，可以发现 Author 和 Commit 的邮件地址的不同，Commit 字段的邮件地址和注册时使用的邮件地址相同。
+
+::
+
+  $ git log --pretty=full
+  commit 82c8fc3805d57cc0d17d58e1452e21428910fd2d
+  Author: Jiang Xin <jiangxin@ossxp.com>
+  Commit: Jiang Xin <jiangxin@moon.ossxp.com>
+
+      initialized
+
+注意，版本库初始化完成之后，最好将我们为项目新增的“Push Branch”类型的授权删除，对新的提交强制使用 Gerrit 的评审流程。
+
+从已有 Git 库创建项目
+---------------------
+
+如果项目拥有很多版本库，希望迁移到 Gerrit 中，一个一个创建并执行 `git push` 命令推送很是麻烦，有没有什么简单的办法呢？
+
+首先将已有版本库创建到 Gerrit 的版本库根目录下，其版本库名称将会成为项目名（除去 .git 后缀）。注意创建（或克隆）的版本库应为裸版本库，即使用 `--bare` 参数创建。
+
+下面我们在 Gerrit 的 Git 版本库根目录下创建名为 hello.git 的版本库。示例中偷懒了一下，直接从 new/project 克隆到 hello.git：
+
+::
+
+  $ git clone --mirror /home/gerrit/review_site/git/new/project.git /home/gerrit/review_site/git/hello.git
+  Cloning into bare repository /home/gerrit/review_site/git/hello.git...
+  done.
+
+这时我们查看版本库列表，却看不到新建立的名为 hello.git 的 Git 库出现在项目列表中。
+
+::
+
+  $ ssh -p 29418 localhost gerrit ls-projects
+  new/project
+
+我们可以通过修改 Gerrit 数据库来注册新项目，即连接到 Gerrit 数据库，输入 SQL 插入语句。
+
+::
+
+  $ ssh -p 29418 localhost gerrit gsql
+  Welcome to Gerrit Code Review 2.1.5.1
+  (H2 1.2.134 (2010-04-23))
+
+  Type '\h' for help.  Type '\r' to clear the buffer.
+
+  gerrit> INSERT INTO projects
+       -> (use_contributor_agreements ,submit_type ,name)
+       -> VALUES
+       -> ('N' ,'M' ,'hello');
+  UPDATE 1; 1 ms
+  gerrit> 
+
+注意 SQL 语句中的项目名称是版本库名称除去 `.git` 后缀的部分。在数据库插入数据后，我们再来查看项目列表就可以看到新注册的项目了。
+
+::
+
+  $ ssh -p 29418 localhost gerrit ls-projects
+  hello
+  new/project
+
+我们可以登录到 Gerrit 项目对新建立的项目进行相关设置。例如修改项目的说明，项目的提交策略，是否要求提交说明中必须包含“Signed-off-by”信息等。
+
+.. figure:: images/gerrit/gerrit-project-5-newproject-settings.png
+   :scale: 70
+
+   项目基本设置
+
+这种通过修改数据库从已有版本库创建项目的方法适合大批量的项目创建。下面我们就对新建立的 hello 进行一次完成的 Gerrit 评审流程。
+
+定义评审工作流
+---------------
 
 用户组管理
 -----------
@@ -868,6 +1030,8 @@ This category has several possible values:
       Implies both Update Branch and Create Branch, but also allows an existing branch to be deleted. Since a force push is effectively a delete immediately followed by a create, but performed atomically on the server and logged, this level also permits forced push updates to branches. This level may allow existing commits to be discarded from a project history.
 
 This category is primarily useful for projects that only want to take advantage of Gerrit's access control features and do not need its code review functionality. Projects that need to require code reviews should not grant this category.
+
+
 Forge Identity
 
 Normally Gerrit requires the author and the committer identity lines in a Git commit object (or tagger line in an annotated tag) to match one of the registered email addresses of the uploading user. This permission allows users to bypass that validation, which may be necessary when mirroring changes from an upstream project.
@@ -1024,94 +1188,6 @@ Part of Gerrit Code Review
 Version 2.1.5.1
 Last updated 24-Aug-2010 11:06:24 PDT
 
-
-
-
-项目的创建
------------
-
-创建项目
-++++++++++
-
-用 Web 界面创建
-
-Create Through SSH
-
-Creating a new repository over SSH is perhaps the easiest way to configure a new project:
-
-::
-
-  $ ssh -p 29418 review.example.com gerrit create-project --name new/project
-
-Change Submit Action
-
-The method Gerrit uses to submit a change to a project can be modified by any project owner through the project console, Admin > Projects. The following methods are supported:
-
-    *
-
-      Fast Forward Only
-
-      This method produces a strictly linear history. All merges must be handled on the client, prior to uploading to Gerrit for review.
-
-      To submit a change, the change must be a strict superset of the destination branch. That is, the change must already contain the tip of the destination branch at submit time.
-    *
-
-      Merge If Necessary
-
-      This is the default for a new project (and why \'M' is suggested above in the insert statement).
-
-      If the change being submitted is a strict superset of the destination branch, then the branch is fast-forwarded to the change. If not, then a merge commit is automatically created. This is identical to the classical git merge behavior, or git merge \--ff.
-    *
-
-      Always Merge
-
-      Always produce a merge commit, even if the change is a strict superset of the destination branch. This is identical to the behavior of git merge \--no-ff, and may be useful if the project needs to follow submits with git log \--first-parent.
-    *
-
-      Cherry Pick
-
-      Always cherry pick the patch set, ignoring the parent lineage and instead creating a brand new commit on top of the current branch head.
-
-      When cherry picking a change, Gerrit automatically appends onto the end of the commit message a short summary of the change’s approvals, and a URL link back to the change on the web. The committer header is also set to the submitter, while the author header retains the original patch set author.
-
-
-从已有版本库创建新项目
-++++++++++++++++++++++++
-
-All Git repositories under gerrit.basePath must be registered in the Gerrit database in order to be accessed through SSH, or through the web interface.
-
-Projects may also be manually registered with the database.
-Create Git Repository
-
-Create a Git repository under gerrit.basePath:
-
-git --git-dir=$base_path/new/project.git init
-
-Tip
-  By tradition the repository directory name should have a .git suffix.
-
-To also make this repository available over the anonymous git:// protocol, don’t forget to create a git-daemon-export-ok file:
-
-touch $base_path/new/project.git/git-daemon-export-ok
-
-Register Project
-
-One insert is needed to register a project with Gerrit.
-
-Note
-
-  Note that the .git suffix is not typically included in the project name, as it looks cleaner in the web when not shown. Gerrit automatically assumes that project.git is the Git repository for a project named project.
-
-::
-
-  INSERT INTO projects
-  (use_contributor_agreements
-   ,submit_type
-   ,name)
-  VALUES
-  ('N'
-  ,'M'
-  ,'new/project');
 
 注册分支
 ++++++++++++
