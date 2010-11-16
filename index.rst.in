@@ -3,7 +3,7 @@
 ==================
 
 ------------
-版本控制宝典
+版本控制之美
 ------------
 
 :作者: |AuthorOSSXP|_
@@ -104,6 +104,7 @@
 .. include:: ./07-git-app/010-etckeeper.rst
 .. include:: ./07-git-app/020-gistore.rst
 .. include:: ./07-git-app/030-binary-diff.rst
+.. include:: ./07-git-app/040-cloud-storage.rst
 
 第八部分: Windows 和 Git
 ########################
