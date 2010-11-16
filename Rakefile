@@ -9,13 +9,16 @@
 
 ENV["DOC_REV"]= "0.1"
 
+
 require 'docbones'
 source_suffix = '.rst'
 ::Docbones.setup source_suffix
 
+ENV["DOC_INDEX"]=ENV["DOC_INDEX"]? ENV["DOC_INDEX"] : "index"
+
 PROJ.root= "."
 PROJ.name = "gitbook"
-PROJ.index = "index"
+PROJ.index = ENV["DOC_INDEX"]
 PROJ.output = "../../output"
 PROJ.images = "images"
 PROJ.css_path = "common/nf.lightbox.css,common/doc.css"
@@ -26,4 +29,9 @@ PROJ.default_dpi = 120
 
 task:default do
   sh 'rake -T'
+end
+
+task:test do
+  ENV["DOC_INDEX"] = "test"
+  sh 'rake html'
 end
