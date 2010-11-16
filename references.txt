@@ -1,5 +1,7 @@
 amoblin
 
+版本库整理： write-tree, => commit , gc
+
 
 备忘
 =====
