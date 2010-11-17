@@ -110,7 +110,7 @@
 第八部分: Windows 和 Git
 ########################
 
-.. include:: ./08-git-tools/010-windows.rst
+.. include:: ./08-windows/010-windows.rst
 
 第九部分: 附录
 ##############
