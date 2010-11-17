@@ -1,5 +1,49 @@
+随着 Git 版本控制系统的成熟，越来越多的项目把版本控制系统迁移到了 Git 上。如果您也正打算进行版本控制系统的迁移，下面介绍的版本库迁移方法和注意事项会给您提供帮助。
 
-
+首先会介绍几个著名的开源版本控制系统 CVS, Subversion, Mercurial 如何迁移到 Git 上，还会介绍通过 Git 子树的方法整理 Git 版本库。对于其它版本控制系统，会在最后介绍一个一般性的版本库迁移方法。
 
 CVS用户到Git的转换
 ==================
+
+还有用户在使用 CVS 么？CVS 是最早广泛使用的版本控制系统，因为设计上的原因导致缺乏现代版本控制系统的一些必须功能，如：没有原子提交，分支管理不便（慢），分支合并困难因为合并过程缺乏跟踪，不支持文件名/目录名的修改等等。很多 CVS 的用户都已经转换到 Subversion 这一更好的集中式版本控制系统了。如果您的版本控制系统还是 CVS，那么可以考虑直接迁移到 Git。
+
+CVS 到 Git 迁移可以使用工具 cvs2svn 。cvs2svn 是一个用于将 CVS 版本库迁移到 Subversion 或 Git 的工具。因为这款工具最早是由 Subversion 团队开发用于将 CVS 版本库迁移至 Subversion 的，因此命名为 cvs2svn 。cvs2svn 将 CVS 转换为 Subversion 版本库的过程一直以稳定著称，在 cvs2svn 2.1 版开始，增加了将 CVS 版本库转换为 Git 版本库的功能，无疑让这个工具更具生命力，也减少了之前 CVS 到 Git 库的转换环节。在推出 cvs2git 功能之前，通常的 CVS 到 Git 迁移路径是用 cvs2svn 将 CVS 版本库迁移到 Subversion 版本库，再用 git-svn 将 Subversion 版本库迁移到 Git。
+
+关于 cvs2svn 及 cvs2git 可以参考下面的链接：
+
+* http://cvs2svn.tigris.org/cvs2svn.html
+* http://cvs2svn.tigris.org/cvs2git.html
+
+安装 cvs2svn（含 cvs2git）
+++++++++++++++++++++++++++
+
+大部分 Linux 发行版都提供 cvs2svn 的发布包，可以直接用平台自带的 cvs2svn 软件包。cvs2svn 在 2.1 版本之后开始引入了到 Git 库的转换，直到 2.3.0 版本才有了独立的 cvs2git 转换脚本，cvs2git 正在逐渐完善当中，因此尽量选择最新版本的 cvs2svn 。
+
+例如在 Debian 或 Ubuntu 下，可以通过下面命令查看源里面的 cvs2svn 版本。
+
+::
+
+  $ aptitude versions cvs2svn
+  p   2.1.1-1               stable                     990 
+  pi  2.3.0-2               testing,unstable           1001
+
+
+可以看出 Debian 的 Testing 和 Sid 的仓库中才有 2.3.0 版本的 cvs2svn。于是我们执行下面的命令安装在 Testing 版本才有的 2.3.0-2 版本的 cvs2svn：
+
+::
+
+  $ sudo aptitude cvs2svn/testing
+
+
+
+git://repo.or.cz/cvs2svn.git
+
+
+如果对应的 Linux 发行版没有对应的版本
+ptitude versions -t stable cvs2svn
+p   2.1.1-1                                                                             stable                                                          990 
+pi  2.3.0-2                                                                             testing,unstable                                                1001k
+因为 安装 cvs2svn 
+
+**encoding 和 fallback-encoding**
+
