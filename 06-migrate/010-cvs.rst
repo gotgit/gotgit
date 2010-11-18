@@ -266,13 +266,9 @@ cvs2svn 软件包提供了一个 cvs2git 的配置示例文件，见源码中的
         #fallback_encoding='ascii'
         )
 
-* 是否只转换主线，不转换分支。如果选择是，将 `False` 修改为 `True` 。
+* 是否忽略 `.cvsignore` 文件？缺省保留 `.cvsignore` 文件。
 
-  ::
-
-    ctx.trunk_only = False
-
-* 是否忽略 .cvsignore 文件？因为 cvs2git 没有将 .cvsignore 文件转换为 .gitignore 文件，如果不保留设置为 False。
+  无论选择保留或是不保留，最好在转换后手工进行 `.cvsignore` 到 `.gitignore` 的转换。因为 cvs2git 不能自动将 .cvsignore 文件转换为 .gitignore 文件。
 
   ::
 
@@ -280,66 +276,51 @@ cvs2svn 软件包提供了一个 cvs2git 的配置示例文件，见源码中的
 
 * 对文件换行符等的处理。下面的配置原本是针对 CVS 到 Subversion 的属性转换，但是也会影响到 Git 转换时的换行符设置。
 
-  维持默认值即可。
+  维持默认值比较安全。
 
   ::
 
     ctx.file_property_setters.extend([
-        # To read mime types from a file and use them to set svn:mime-type
-        # based on the filename extensions, uncomment the following line
-        # and specify a filename (see
-        # http://en.wikipedia.org/wiki/Mime.types for information about
-        # mime.types files):
+        # 基于配置文件设置文件的 mime 类型
         #MimeMapper(r'/etc/mime.types', ignore_case=False),
 
-        # Omit the svn:eol-style property from any files that are listed
-        # as binary (i.e., mode '-kb') in CVS:
+        # 对于二进制文件（-kb模式）不设置 svn:eol-style 属性（对于 Subverson 来说）
         CVSBinaryFileEOLStyleSetter(),
 
-        # If the file is binary and its svn:mime-type property is not yet
-        # set, set svn:mime-type to 'application/octet-stream'.
+        # 如果文件是二进制，并且 svn:mime-type 没有设置，将其设置为 'application/octet-stream'。
         CVSBinaryFileDefaultMimeTypeSetter(),
 
-        # To try to determine the eol-style from the mime type, uncomment
-        # the following line:
+        # 如果希望根据文件的 mime 类型来判断文件的换行符，打开下面注释
         #EOLStyleFromMimeTypeSetter(),
 
-        # Choose one of the following lines to set the default
-        # svn:eol-style if none of the above rules applied.  The argument
-        # is the svn:eol-style that should be applied, or None if no
-        # svn:eol-style should be set (i.e., the file should be treated as
-        # binary).
-        #
-        # The default is to treat all files as binary unless one of the
-        # previous rules has determined otherwise, because this is the
-        # safest approach.  However, if you have been diligent about
-        # marking binary files with -kb in CVS and/or you have used the
-        # above rules to definitely mark binary files as binary, then you
-        # might prefer to use 'native' as the default, as it is usually
-        # the most convenient setting for text files.  Other possible
-        # options: 'CRLF', 'CR', 'LF'.
+        # 如果上面的规则没有为文件设置换行符类型，则为 svn:eol-style 设置缺省类型。
+        # （二进制文件除外）
+        # 缺省把文件视为二进制，不为其设置换行符类型，这样最安全。
+        # 如果确认 CVS 的二进制文件都已经设置了 -kb 参数，或者使用上面的规则能够对
+        # 文件类型做出正确判断，也可以使用下面参数为非二进制文件设置缺省换行符号。
+        ## 'native': 服务器端文件的换行符保存为 LF，客户端根据需要自动转换。
+        ## 'CRLF':   服务器端文件的换行符保存为 CRLF，客户端亦为 CRLF。
+        ## 'CR':     服务器端文件的换行符保存为 CR，客户端亦为 CR。
+        ## 'LF':     服务器端文件的换行符保存为 LF，客户端亦为 LF。
         DefaultEOLStyleSetter(None),
-        #DefaultEOLStyleSetter('native'),
 
-        # Prevent svn:keywords from being set on files that have
-        # svn:eol-style unset.
+        # 如果文件没有设置 svn:eol-style ，也不为其设置 svn:keywords 属性
         SVNBinaryFileKeywordsPropertySetter(),
 
-        # If svn:keywords has not been set yet, set it based on the file's
-        # CVS mode:
+        # 如果 svn:keywords 未色环只，基于文件的 CVS 模式进行设置。
         KeywordsPropertySetter(config.SVN_KEYWORDS_VALUE),
 
-        # Set the svn:executable flag on any files that are marked in CVS as
-        # being executable:
+        # 设置文件的 svn:executable 属性，如果文件在 CVS 中标记为可执行文件。
         ExecutablePropertySetter(),
-
-        # The following causes keywords to be collapsed in all text to be
-        # committed:
-        KeywordHandlingPropertySetter('collapsed'),
-
         ])
-    ctx.revision_property_setters.extend([
-        ])
+
+* 是否只迁移主线，忽略分支和里程碑？
+
+  缺省对所有分支和里程碑都进行转换。如果选择忽略分支和里程碑，将 `False` 修改为 `True` 。
+
+  ::
+
+    ctx.trunk_only = False
 
 * 分支和里程碑迁移及转换。
 
@@ -361,7 +342,7 @@ cvs2svn 软件包提供了一个 cvs2git 的配置示例文件，见源码中的
         # CollateSymbolsPass with this option enabled.
         #SymbolHintsFileRule('symbol-hints.txt'),
 
-        # To force all symbols matching a regular expression to be
+        # 为避免To force all symbols matching a regular expression to be
         # converted as branches, add rules like the following:
         #ForceBranchRegexpStrategyRule(r'branch.*'),
 
