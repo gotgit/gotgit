@@ -1,13 +1,13 @@
-随着 Git 版本控制系统的成熟，越来越多的项目把版本控制系统迁移到了 Git 上。如果您也正打算进行版本控制系统的迁移，下面介绍的版本库迁移方法和注意事项会给您提供帮助。
+随着 Git 版本控制系统的成熟，越来越多的项目把版本控制系统迁移到了 Git 上。迁移大多是无损的，即迁移到 Git 后忠实的保留之前的变更历史，保留分支和里程碑。如果您也正打算进行版本控制系统的迁移，下面介绍的版本库迁移方法和注意事项会给您提供帮助。
 
 首先会介绍几个著名的开源版本控制系统 CVS, Subversion, Mercurial 如何迁移到 Git 上，还会介绍通过 Git 子树的方法整理 Git 版本库。对于其它版本控制系统，会在最后介绍一个一般性的版本库迁移方法。
 
 CVS用户到Git的转换
 ==================
 
-还有用户在使用 CVS 么？CVS 是最早广泛使用的版本控制系统，因为设计上的原因导致缺乏现代版本控制系统的一些必须功能，如：没有原子提交，分支管理不便（慢），分支合并困难因为合并过程缺乏跟踪，不支持文件名/目录名的修改等等。很多 CVS 的用户都已经转换到 Subversion 这一更好的集中式版本控制系统了。如果您的版本控制系统还是 CVS，那么可以考虑直接迁移到 Git。
+CVS 是最早广泛使用的版本控制系统，因为其服务器端存储结构的简单直白，至今仍受到不少粉丝的钟爱。但是毕竟是几十年前的产物，因为设计上的原因导致缺乏现代版本控制系统的一些必须功能，如：没有原子提交，分支管理不便（慢），分支合并困难因为合并过程缺乏跟踪，不支持文件名/目录名的修改等等。很多 CVS 的用户都已经转换到 Subversion 这一更好的集中式版本控制系统了。如果您的版本控制系统还是 CVS，那么可以考虑直接迁移到 Git。
 
-CVS 到 Git 迁移可以使用工具 cvs2svn 。cvs2svn 是一个用于将 CVS 版本库迁移到 Subversion 或 Git 的工具。因为这款工具最早是由 Subversion 团队开发用于将 CVS 版本库迁移至 Subversion 的，因此命名为 cvs2svn 。cvs2svn 将 CVS 转换为 Subversion 版本库的过程一直以稳定著称，在 cvs2svn 2.1 版开始，增加了将 CVS 版本库转换为 Git 版本库的功能，无疑让这个工具更具生命力，也减少了之前 CVS 到 Git 库的转换环节。在推出 cvs2git 功能之前，通常的 CVS 到 Git 迁移路径是用 cvs2svn 将 CVS 版本库迁移到 Subversion 版本库，再用 git-svn 将 Subversion 版本库迁移到 Git。
+CVS 到 Git 迁移可以使用 cvs2svn 软件包中的 cvs2git。为什么该项目叫做 cvs2svn 而非 cvs2git 呢？这是因为该项目最早是为 CVS 版本库迁移到 Subversion 版本库服务的，只是最近才增加了 CVS 版本转换为 Git 版本库的功能。cvs2svn 将 CVS 转换为 Subversion 版本库的过程一直以稳定著称，在 cvs2svn 2.1 版开始，增加了将 CVS 版本库转换为 Git 版本库的功能，无疑让这个工具更具生命力，也减少了之前 CVS 到 Git 库的转换环节。在推出 cvs2git 功能之前，通常的 CVS 到 Git 迁移路径是用 cvs2svn 将 CVS 版本库迁移到 Subversion 版本库，再用 git-svn 将 Subversion 版本库迁移到 Git。
 
 关于 cvs2svn 及 cvs2git 可以参考下面的链接：
 
@@ -34,16 +34,524 @@ CVS 到 Git 迁移可以使用工具 cvs2svn 。cvs2svn 是一个用于将 CVS �
 
   $ sudo aptitude cvs2svn/testing
 
+如果对应的 Linux 发行版没有对应的版本也可以从源码开始安装。cvs2svn 的官方版本库在 `http://cvs2svn.tigris.org/svn/cvs2svn/trunk` ，已经有人将 cvs2svn 项目转换为 Git 库。我们可以从 Git 库下载源码，安装 cvs2svn。
+
+* 下载 cvs2svn 源代码
+
+  ::
+
+    $ git clone git://repo.or.cz/cvs2svn.git
+
+* 进入 cvs2svn 源码目录，安装 cvs2svn
+
+  ::
+
+    $ cd cvs2svn
+    $ sudo make install
+
+* 安装 手册
+
+  ::
+
+    $ sudo make man
+
+cvs2svn 对其它软件包的依赖：
+
+* Python: 2.4 或以上版本，但是 Python 3.x 暂不支持。
+* RCS: 如果在转换中使用了 --use-rcs，就需要安装 RCS 软件包。参见： `http://www.cs.purdue.edu/homes/trinkle/RCS/` 。
+* CVS: 如果在转换中使用了 --use-cvs，就需要安装 CVS 软件包。参见： `http://ccvs.cvshome.org/` 。
+* Git: 1.5.4.4 或以上的版本。之前版本的 Git 的 "git fast-import" 命令有 Bug，加载 cvs2git 导出文件有问题。
 
 
-git://repo.or.cz/cvs2svn.git
+版本库转换（命令行参数）
+++++++++++++++++++++++++
 
+转换 CVS 版本库的注意事项：
 
-如果对应的 Linux 发行版没有对应的版本
-ptitude versions -t stable cvs2svn
-p   2.1.1-1                                                                             stable                                                          990 
-pi  2.3.0-2                                                                             testing,unstable                                                1001k
-因为 安装 cvs2svn 
+* 使用 cvs2git 对 CVS 版本库转换，必须在 CVS 的服务器端执行，即 cvs2git 必须能够通过文件系统直接访问 CVS 版本库中的 `,v` 文件。
 
-**encoding 和 fallback-encoding**
+* 在转换前，确保所有人的修改都已经提交到 CVS 版本库中。
 
+* 在转换前，停止 CVS 版本库的访问，以免在转换过程中有新提交写入。
+
+* 在转换前，对原始版本库进行备份，以免误操作对版本库造成永久的破坏。
+
+* 在转换完成后，永久停止 CVS 版本库的写入服务，可以仅开放只读服务。
+
+  这是由于 cvs2git 是一次性操作，不能对 CVS 后续提交执行增量式的到 Git 库转换，因此当 CVS 版本库转换完毕后，须停止 CVS 服务。
+
+* 先做小规模的试验性转换。
+
+  转换 CVS 版本库切忌一上来就对整个版本库进行转换，等到发现日志乱码、文件名乱码、提交者 ID 不完全后重新转换会浪费大量时间。
+
+  应该先选择 CVS 版本库中的部分文件和目录作为样本，进行小规模的转换测试。
+
+* 不要对包含 CVSROOT 目录的版本库的根进行操作，可以先对服务器目录布局进行调整。
+
+  如果转换直接针对包含 CVSROOT 目录的版本库根目录进行操作，会导致 CVSROOT 目录下的文件及更改历史也被纳入到 Git 版本库，这是不需要的。
+
+**检查CVS版本库中的文件名乱码**
+
+CVS 中保存的数据在服务器端直接和同名文件（文件多了一个 ,v 后缀）相对应，当转换的CVS版本库是从其它平台（如 Windows）拷贝过来的，就可能因为平台本身字符集不一致导致中文文件名包含乱码，在CVS版本库转换过程造成乱码。可以先对有问题的目录名和文件名进行重命名，转换为当前平台正确的编码。
+
+**小规模的转换试验**
+
+前面提到过，最好先进行小规模的转换试验，然后再对整个版本库进行转换。例如版本库是如下方式部署：CVSROOT 为 /cvshome/user，需要将之下的 jiangxin/homepage/worldhello 转换为一个 Git 版本库。我们先检查一下版本库中的数据，找出典型的目录用于转换。
+
+典型的数据是这样的：包含中文文件名，并且日志中包含中文。例如在版本库中，我们执行 CVS 查看日志命令，看到类似下面的输出。
+
+::
+
+  RCS file: /cvshome/user/jiangxin/homepage/worldhello/archive/2003/.mhonarc.db,v
+  Working file: archive/2003/.mhonarc.db
+  head: 1.16
+  branch:
+  locks: strict
+  access list:
+  symbolic names:
+  keyword substitution: kv
+  total revisions: 16;    selected revisions: 16
+  description:
+  ----------------------------
+  revision 1.16
+  date: 2004-09-21 15:56:30 +0800;  author: jiangxin;  state: Exp;  lines: +3 -3;  commitid: c2c414fdea20000;
+  <D0><U+07B8><C4><D3>ʼ<FE><B5><D8><A3><BB>
+  <D0><U+07B8><C4><CB><D1><CB><F7><D2><FD><C7>棻
+  ----------------------------
+
+日志乱码是因为 CVS 并没有对日志的字符转换为统一的 Unicode。此版本库之前用 CVSNT 维护，缺省字符集为 gbk 。那么我们就先对有乱码的这一个目录进行一下试验性的转换。
+
+* 调用 cvs2git 执行转换，产生两个导出文件。这两个导出文件将作为 Git 版本库创建时的导入文件。
+
+  命令行用了两个 `--encoding` 参数设置编码，会依次进行尝试将日志中的非 ascii 字符转换为 Unicode 。
+
+  ::
+
+    $ cvs2git --blobfile git-blob.dat --dumpfile git-dump.dat \
+      --encoding utf8 --encoding gbk --username cvs2git \
+      /cvshome/user/jiangxin/homepage/worldhello/archive/2003/
+
+* 成功导出后，产生两个导出文件，一个保存各个文件的各个不同版本的数据内容，即我们在命令行指定的输出文件 git-blob.dat。另外一个文件是上面命令行指定的 git-dump.dat 用于保存各个提交相关信息（提交者、提交时间、提交日志等）。
+
+  ::
+
+    $ du -sh git*dat
+    9.8M    git-blob.dat
+    24K     git-dump.dat
+
+  我们可以看出保存文件内容的导出文件 (git-blob.dat) 相对更大一些。
+
+* 创建空的 Git 库，从 cvs2git 的导出文件导入数据。
+
+  ::
+
+    $ mkdir test
+    $ cd test
+    $ git init
+    $ cat ../git-blob.dat ../git-dump.dat | git fast-import
+
+* 检查导出结果。
+
+  ::
+
+    $ git reset HEAD
+    $ git checkout .
+    $ git log -1
+    commit 8334587cb241076bcd2e710b321e8e16b5e46bba
+    Author: jiangxin <>
+    Date:   Tue Sep 21 07:56:31 2004 +0000
+
+        修改邮件地址；
+        修改搜索引擎；
+
+很好，导出的 Git 库的日志，中文乱码问题已经解决。但是我们发现提交日志中的 Author 对应的提交者不完整：缺乏邮件地址。这是因为 CVS 的提交者仅为用户登录 ID，而 Git 的提交者信息还要包含邮件地址。cvs2git 提供参数实现两种提交者ID的转换，不过需要通过配置文件予以指定，这就需要采用下面介绍的转换方法。
+
+版本库转换（配置文件）
+++++++++++++++++++++++++
+
+使用命令行参数调用 cvs2git 麻烦、可重用性差，而且可配置项有限。采用 cvs2git 配置文件模式运行不但能够简化 cvs2git 的命令行参数，而且能够提供更多的命令行无法提供的配置项，可以更精确的对 CVS 到 Git 版本库转换进行定制。
+
+cvs2svn 软件包提供了一个 cvs2git 的配置示例文件，见源码中的 `cvs2git-example.options` ，您可以在这里访问到：
+
+    http://repo.or.cz/w/cvs2svn.git/blob/HEAD:/cvs2git-example.options
+
+将该示例文件在本地复制一份，对其进行更改。该文件是 Python 代码格式，修改该文件时要注意缩进不要随意更改，因为缩进也是 Python 语法的一部分。可以考虑针对下列选项进行定制。
+
+* 必须在配置文件中设置要转换的 CVS 版本库位置，而不能在命令行进行设置。
+
+  使用配置文件方式运行 cvs2git，必须在配置文件中指定版本库位置。在配置文件的最后面 `run_options` 的 `set_project` 方法中指定。
+
+  ::
+
+    run_options.set_project(
+        # The filesystem path to the part of the CVS repository (*not* a
+        # CVS working copy) that should be converted.  This may be a
+        # subdirectory (i.e., a module) within a larger CVS repository.
+        r'/cvshome/user/jiangxin/homepage/worldhello/archive/2003/',
+
+* 导出文件的位置也在配置文件中预先设置好了，也不能再在命令行中设置。
+
+  - 导出 CVS 版本文件的内容至 blob 导出文件： '`cvs2svn-tmp/git-blob.dat`'。
+
+    缺省使用 "cvs" 命令做导出，最稳定。
+
+    ::
+
+      ctx.revision_collector = GitRevisionCollector(
+          'cvs2svn-tmp/git-blob.dat',
+
+          #RCSRevisionReader(co_executable=r'co'),
+          CVSRevisionReader(cvs_executable=r'cvs'),
+          )
+
+  - 另外一个导出文件的位置设定。缺省位置： '`cvs2svn-tmp/git-dump.dat`'。
+
+    ::
+
+      ctx.output_option = GitOutputOption(
+          os.path.join(ctx.tmpdir, 'git-dump.dat'),
+
+          # The blobs will be written via the revision recorder, so in
+          # OutputPass we only have to emit references to the blob marks:
+          GitRevisionMarkWriter(),
+
+          # Optional map from CVS author names to git author names:
+          author_transforms=author_transforms,
+          )
+
+* 设置无提交用户信息时使用的用户名。这个用户名可以用接下来的用户映射转换为 Git 用户名。
+
+  ::
+
+    ctx.username = 'cvs2svn'
+
+* 建立 CVS 用户和 Git 用户之间的映射。Git 用户名可以用 Python 的 tuple 语法 `(name, email)` 或者用字符串 "name <email>" 来表示。
+
+  ::
+
+    author_transforms={
+        'jiangxin'  : ('Jiang Xin', 'jiangxin@ossxp.com'),
+        'dev1'      : u'开发者1 <dev1@ossxp.com>',
+
+        'cvs2svn'   : 'cvs2svn <admin@example.com>',
+        }
+
+* 字符集编码。即如何转换日志中的用户名、提交说明以及文件名的编码。
+
+  对于可能在日志中出现中，必须做出下面类似设置。编码的顺序对输出也会有影响，一般将 'utf8' 放在 'gbk' 之前能保证当日志中同时出现两种编码时都能正常转换。（这是因为部分中文的 UTF8 编码在 GBK 中也存在古怪的对应）
+
+  ::
+
+    ctx.cvs_author_decoder = CVSTextDecoder(
+        [
+            'utf8',
+            'gbk',
+            ],
+        fallback_encoding='gbk'
+        )
+
+    ctx.cvs_log_decoder = CVSTextDecoder(
+        [
+            'utf8',
+            'gbk',
+            ],
+        fallback_encoding='gbk'
+        )
+
+    ctx.cvs_filename_decoder = CVSTextDecoder(
+        [
+            'utf8',
+            'gbk',
+            ],
+        #fallback_encoding='ascii'
+        )
+
+* 是否只转换主线，不转换分支。如果选择是，将 `False` 修改为 `True` 。
+
+  ::
+
+    ctx.trunk_only = False
+
+* 是否忽略 .cvsignore 文件？因为 cvs2git 没有将 .cvsignore 文件转换为 .gitignore 文件，如果不保留设置为 False。
+
+  ::
+
+    ctx.keep_cvsignore = True
+
+* 对文件换行符等的处理。下面的配置原本是针对 CVS 到 Subversion 的属性转换，但是也会影响到 Git 转换时的换行符设置。
+
+  维持默认值即可。
+
+  ::
+
+    ctx.file_property_setters.extend([
+        # To read mime types from a file and use them to set svn:mime-type
+        # based on the filename extensions, uncomment the following line
+        # and specify a filename (see
+        # http://en.wikipedia.org/wiki/Mime.types for information about
+        # mime.types files):
+        #MimeMapper(r'/etc/mime.types', ignore_case=False),
+
+        # Omit the svn:eol-style property from any files that are listed
+        # as binary (i.e., mode '-kb') in CVS:
+        CVSBinaryFileEOLStyleSetter(),
+
+        # If the file is binary and its svn:mime-type property is not yet
+        # set, set svn:mime-type to 'application/octet-stream'.
+        CVSBinaryFileDefaultMimeTypeSetter(),
+
+        # To try to determine the eol-style from the mime type, uncomment
+        # the following line:
+        #EOLStyleFromMimeTypeSetter(),
+
+        # Choose one of the following lines to set the default
+        # svn:eol-style if none of the above rules applied.  The argument
+        # is the svn:eol-style that should be applied, or None if no
+        # svn:eol-style should be set (i.e., the file should be treated as
+        # binary).
+        #
+        # The default is to treat all files as binary unless one of the
+        # previous rules has determined otherwise, because this is the
+        # safest approach.  However, if you have been diligent about
+        # marking binary files with -kb in CVS and/or you have used the
+        # above rules to definitely mark binary files as binary, then you
+        # might prefer to use 'native' as the default, as it is usually
+        # the most convenient setting for text files.  Other possible
+        # options: 'CRLF', 'CR', 'LF'.
+        DefaultEOLStyleSetter(None),
+        #DefaultEOLStyleSetter('native'),
+
+        # Prevent svn:keywords from being set on files that have
+        # svn:eol-style unset.
+        SVNBinaryFileKeywordsPropertySetter(),
+
+        # If svn:keywords has not been set yet, set it based on the file's
+        # CVS mode:
+        KeywordsPropertySetter(config.SVN_KEYWORDS_VALUE),
+
+        # Set the svn:executable flag on any files that are marked in CVS as
+        # being executable:
+        ExecutablePropertySetter(),
+
+        # The following causes keywords to be collapsed in all text to be
+        # committed:
+        KeywordHandlingPropertySetter('collapsed'),
+
+        ])
+    ctx.revision_property_setters.extend([
+        ])
+
+* 分支和里程碑迁移及转换。
+
+  ::
+
+    global_symbol_strategy_rules = [
+        # It is possible to specify manually exactly how symbols should be
+        # converted and what line of development should be used as the
+        # preferred parent.  To do so, create a file containing the symbol
+        # hints and enable the following option.
+        #
+        # The format of the hints file is described in the documentation
+        # for the --symbol-hints command-line option.  The file output by
+        # the --write-symbol-info (i.e., ctx.symbol_info_filename) option
+        # is in the same format.  The simplest way to use this option is
+        # to run the conversion through CollateSymbolsPass with
+        # --write-symbol-info option, copy the symbol info and edit it to
+        # create a hints file, then re-start the conversion at
+        # CollateSymbolsPass with this option enabled.
+        #SymbolHintsFileRule('symbol-hints.txt'),
+
+        # To force all symbols matching a regular expression to be
+        # converted as branches, add rules like the following:
+        #ForceBranchRegexpStrategyRule(r'branch.*'),
+
+        # To force all symbols matching a regular expression to be
+        # converted as tags, add rules like the following:
+        #ForceTagRegexpStrategyRule(r'tag.*'),
+
+        # To force all symbols matching a regular expression to be
+        # excluded from the conversion, add rules like the following:
+        #ExcludeRegexpStrategyRule(r'unknown-.*'),
+
+        # Sometimes people use "cvs import" to get their own source code
+        # into CVS.  This practice creates a vendor branch 1.1.1 and
+        # imports the code onto the vendor branch as 1.1.1.1, then copies
+        # the same content to the trunk as version 1.1.  Normally, such
+        # vendor branches are useless and they complicate the SVN history
+        # unnecessarily.  The following rule excludes any branches that
+        # only existed as a vendor branch with a single import (leaving
+        # only the 1.1 revision).  If you want to retain such branches,
+        # comment out the following line.  (Please note that this rule
+        # does not exclude vendor *tags*, as they are not so easy to
+        # identify.)
+        ExcludeTrivialImportBranchRule(),
+
+        # To exclude all vendor branches (branches that had "cvs import"s
+        # on them but no other kinds of commits), uncomment the following
+        # line:
+        #ExcludeVendorBranchRule(),
+
+        # Usually you want this rule, to convert unambiguous symbols
+        # (symbols that were only ever used as tags or only ever used as
+        # branches in CVS) the same way they were used in CVS:
+        UnambiguousUsageRule(),
+
+        # If there was ever a commit on a symbol, then it cannot be
+        # converted as a tag.  This rule causes all such symbols to be
+        # converted as branches.  If you would like to resolve such
+        # ambiguities manually, comment out the following line:
+        BranchIfCommitsRule(),
+
+        # Last in the list can be a catch-all rule that is used for
+        # symbols that were not matched by any of the more specific rules
+        # above.  (Assuming that BranchIfCommitsRule() was included above,
+        # then the symbols that are still indeterminate at this point can
+        # sensibly be converted as branches or tags.)  Include at most one
+        # of these lines.  If none of these catch-all rules are included,
+        # then the presence of any ambiguous symbols (that haven't been
+        # disambiguated above) is an error:
+
+        # Convert ambiguous symbols based on whether they were used more
+        # often as branches or as tags:
+        HeuristicStrategyRule(),
+        # Convert all ambiguous symbols as branches:
+        #AllBranchRule(),
+        # Convert all ambiguous symbols as tags:
+        #AllTagRule(),
+
+        # The last rule is here to choose the preferred parent of branches
+        # and tags, that is, the line of development from which the symbol
+        # sprouts.
+        HeuristicPreferredParentRule(),
+        ]
+
+    # Should CVSItem -> Changeset database files be memory mapped?  In
+    # some tests, using memory mapping speeded up the overall conversion
+    # by about 5%.  But this option can cause the conversion to fail with
+    # an out of memory error if the conversion computer runs out of
+    # virtual address space (e.g., when running a very large conversion on
+    # a 32-bit operating system).  Therefore it is disabled by default.
+    # Uncomment the following line to allow these database files to be
+    # memory mapped.
+    #changeset_database.use_mmap_for_cvs_item_to_changeset_table = True
+
+    run_options.set_project(
+        # The filesystem path to the part of the CVS repository (*not* a
+        # CVS working copy) that should be converted.  This may be a
+        # subdirectory (i.e., a module) within a larger CVS repository.
+        r'test-data/main-cvsrepos',
+
+        # A list of symbol transformations that can be used to rename
+        # symbols in this project.
+        symbol_transforms=[
+            # Use IgnoreSymbolTransforms like the following to completely
+            # ignore symbols matching a regular expression when parsing
+            # the CVS repository, for example to avoid warnings about
+            # branches with two names and to choose the preferred name.
+            # It is *not* recommended to use this instead of
+            # ExcludeRegexpStrategyRule; though more efficient,
+            # IgnoreSymbolTransforms are less flexible and don't exclude
+            # branches correctly.  The argument is a Python-style regular
+            # expression that has to match the *whole* CVS symbol name:
+            #IgnoreSymbolTransform(r'nightly-build-tag-.*')
+
+            # RegexpSymbolTransforms transform symbols textually using a
+            # regular expression.  The first argument is a Python regular
+            # expression pattern and the second is a replacement pattern.
+            # The pattern is matched against each symbol name.  If it
+            # matches the whole symbol name, then the symbol name is
+            # replaced with the corresponding replacement text.  The
+            # replacement can include substitution patterns (e.g., r'\1'
+            # or r'\g<name>').  Typically you will want to use raw strings
+            # (strings with a preceding 'r', like shown in the examples)
+            # for the regexp and its replacement to avoid backslash
+            # substitution within those strings.
+            #RegexpSymbolTransform(r'release-(\d+)_(\d+)',
+            #                      r'release-\1.\2'),
+            #RegexpSymbolTransform(r'release-(\d+)_(\d+)_(\d+)',
+            #                      r'release-\1.\2.\3'),
+
+            # Simple 1:1 character replacements can also be done.  The
+            # following transform, which converts backslashes into forward
+            # slashes, should usually be included:
+            ReplaceSubstringsSymbolTransform('\\','/'),
+
+            # This last rule eliminates leading, trailing, and repeated
+            # slashes within the output symbol names:
+            NormalizePathsSymbolTransform(),
+            ],
+
+        # See the definition of global_symbol_strategy_rules above for a
+        # description of this option:
+        symbol_strategy_rules=global_symbol_strategy_rules,
+        )
+
+**使用配置文件的 cvs2git 转换过程**
+
+参照上面的方法，从缺省的 cvs2git 配置文件定制，在本地创建一个文件，例如名为 `cvs2git.options` 文件。
+
+* 使用 cvs2git 配置文件，命令行大大简化了。
+
+  ::
+
+    $ cvs2git --options cvs2git.options
+
+* 成功导出后，产生两个导出文件，都保存在 cvs2git-tmp 目录中。
+
+  一个保存各个文件的各个不同版本的数据内容，即我们在命令行指定的输出文件 git-blob.dat。另外一个文件是上面命令行指定的 git-dump.dat 用于保存各个提交相关信息（提交者、提交时间、提交日志等）。
+
+  我们可以看出保存文件内容的导出文件相对更大一些。
+
+  ::
+
+    $ du -sh cvs2svn-tmp/*
+    9.8M    cvs2svn-tmp/git-blob.dat
+    24K     cvs2svn-tmp/git-dump.dat
+
+* 创建空的 Git 库，从 cvs2git 的导出文件导入数据。
+
+  ::
+
+    $ mkdir test
+    $ cd test
+    $ git init
+    $ cat ../cvs2svn-tmp/git-blob.dat ../cvs2svn-tmp/git-dump.dat | git fast-import
+
+* 检查导出结果。
+
+  ::
+
+    $ git reset HEAD
+    $ git checkout .
+    $ git log -1
+    commit e3f12f57a77cbffcf62e19012507d041f1c9b03d
+    Author: Jiang Xin <jiangxin@ossxp.com>
+    Date:   Tue Sep 21 07:56:31 2004 +0000
+
+        修改邮件地址；
+        修改搜索引擎；
+
+我们可以看到，这一次的转换结果不但日志中的中文可以显示，而且提交者ID 也转换成了 Git 的风格。
+
+修改 `cvs2git.optoins` 中的 CVS 版本库地址，开始正式的转换过程。
+
+迁移后版本库检查
++++++++++++++++++
+
+完成迁移还不能立刻说大功告成，还需要进行细致的检验。
+
+**图片文件被破坏**
+
+最典型的错误就是转换后部分图片被破坏导致无法显示。这是怎么造成的呢？
+
+CVS 缺省将提交的文件以文本方式添加，除非用户在添加文件时使用了 "-kb" 参数。用命令行提交的用户经常会忘记，这就导致一些二进制文件（如图片文件）被以文本文件的方式添加到其中。文本文件在 CVS 检入和检出时会进行换行符转换，在服务器端换行符保存为 LF，在 Windows 上检出时为 CRLF。如果误做文本文件方式添加的图片中恰好出现 `CRLF` ，则在 Windows 上似乎没有问题（仍然是 `CRLF` ），但是 CVS 库转换成 Git 库后，图片文件在 Windows 上再检出时文件数据中原来 CRLF 被换成了 LF，导致文件被破坏。
+
+出现这种情况是 CVS 版本库使用和管理上出现了问题，应该在 CVS 版本库中对有问题的文件重新设置属性，标记为二进制文件。然后再进行 CVS 版本库到 Git 库的转换。
+
+**.cvsignore 文件的转换**
+
+CVS 版本库中可能存在 `.cvsignore` 文件用于设置文件忽略，相当于 Git 版本库中的 `.gitignore` 。因为当前版本的 cvs2git 不能自动将 .cvsignore 转换为 .gitignore,需要在版本库迁移后手工完成。CVS 的 `.cvsignore` 文件只对目录内文件有效，不会向下作用到子目录上，这一点和 Git 的 `.gitignore` 相区别。还有不同就是 .cvsignore 文件每一行用空格分割多个忽略，而 Git 每个忽略为单独的一行。
+
+**迁移后的测试**
+
+一个简单的检查方法是，在同一台机器上分别用 CVS 和 Git 检出（或克隆），然后比较本地的差异。要在不同的系统上（Windows，Linux）分别进行测试。
