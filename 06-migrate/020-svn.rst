@@ -1,30 +1,60 @@
 SVN用户到Git的转换
 ==================
 
+Subversion 版本库到 Git 版本库的转换，最好的方法就是 git-svn。而 git-svn 的使用方法在前面 “Git 和 SVN 协同模型” 一章我们已经详细介绍过。在这里我们主要介绍一下版本库迁移时的注意事项。
 
+在迁移之前要确认一个问题，Subversion 迁移到 Git 库之后，Subversion 还继续使用么？我的意思是说还允许向 Subversion 提交么？
 
-git-svn
+如果回答是，那么直接查看 “Git 和 SVN 协同模型” 一章，而不要理会下面的内容。因为下面的迁移动作是一次性的，不再支持 Subversion 版本库到 Git 的持续迁移。
 
-::
+**需要提交中出现 `git-svn-id:` 么？**
 
-  $ git ci --amend
-  $ git svn dcommit
-  Cannot dcommit with a dirty index.  Commit your changes first, or stash them with `git stash'.
-   at /usr/lib/git-core/git-svn line 499
+如果一次性、永久性的将 Subverison 迁移到 Git 库，可以选择 `git-svn-id:` 标识不在转换后 Git 的提交日志中出现。就是在 git-svn 的 `clone` 或者 `init` 子命令行中使用参数： `--no-metadata` 。Git 库的配置会自动配置 svn-remote.noMetadata 为 1。之后执行 `git svn fetch` 时就不会在日志中产生 `git-svn-id:` 的标识。
 
-  $ git ci
-  # On branch master
-   nothing to commit (working directory clean)
-  $ git stash
-   No local changes to save
-  $ git svn dcommit
-  Committing to https://pysvnmanager.svn.sourceforge.net/svnroot/pysvnmanager/trunk ...
-        M       pysvnmanager/hooks/init/hook1.4/post-revprop-change
-        M       pysvnmanager/hooks/init/hook1.5/post-revprop-change
-  Committed r186
-        M       pysvnmanager/hooks/init/hook1.4/post-revprop-change
-        M       pysvnmanager/hooks/init/hook1.5/post-revprop-change
-  r186 = 87901ee211a87d2982132407cc19400457b70c61 (refs/remotes/branches/trunk)
-  No changes between current HEAD and refs/remotes/branches/trunk
+**Subversion 用户名到 Git 用户名的映射**
 
+缺省转后 Git 库的提交者 ID 为如下格式： `userid <userid@SVN-REPOS-UUID>` 即在邮件地址域名处以 SVN 版本库的 UUID 代替。可以在执行 `git svn fetch` 时通过下面的参数提供一个映射文件完成 SVN 用户名到 Git 用户名的转换。
 
+  ::
+
+    -A<filename>, --authors-file=<filename>
+
+即用 `-A` 或者 `--authors-file` 参数给出一个映射文件，这个文件帮助 git-svn 将 Subversion 用户名映射为 Git 用户名。此文件的每一行定义一个用户名映射，每一行的格式为：
+
+  ::
+
+    loginname = User Name <user@example.com>
+
+也可以通过下面的命令在 Git 库的 config 文件中设置，这样就不必在每次执行 `git svn fetch` 都带上这个参数。
+
+  ::
+
+    $ git config svn.authorsfile /path/to/authersfile
+
+当设定了用户映射文件后，如果在执行 `git svn fetch` 是发现 SVN 的用户在该映射文件中没有定义，转换过程被中断。需要重新编辑用户映射文件，补充新的用户映射后，再重新执行 git-svn 命令。
+
+**将Subversion分支和里程碑直接转换为 Git 分支和里程碑，不要放在 `refs/remotes` 下**
+
+使用缺省参数执行 SVN 到 Git 的转换时，SVN 的里程碑和分支转换到 Git 库的 `refs/remotes` 引用下。即 Git 的配置文件中会出现：
+
+  ::
+
+    [svn-remote "svn"]
+            fetch = trunk:refs/remotes/trunk
+            branches = branches/*:refs/remotes/*
+            tags = tags/*:refs/remotes/tags/*
+
+在执行 `git svn init` 之后，可以直接编辑 Git 配置文件，将其内容调整如下：
+
+  ::
+
+    [svn-remote "svn"]
+            fetch = trunk:refs/heads/master
+            branches = branches/*:refs/heads/*
+            tags = tags/*:refs/tags/*
+
+之后再执行 `git svn fetch` 后，就可以实现 SVN 的分支和里程碑正确的转换为 Git 库的里程碑。否则就需要将 `.git/refs/remots/` 下的引用移动到 `.git/refs/heads` 以及 `.git/refs/tags` 下。
+
+**清除 git-svn 的中间文件**
+
+git-svn 的中间文件位于目录 `.git/svn` 下，删除此目录完成对 git-svn 转换数据库文件的清理。
