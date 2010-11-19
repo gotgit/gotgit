@@ -1,6 +1,50 @@
 git 调查
-https://www.survs.com/results/33Q0OZZE/MV653KSPI2
 
+
+
+TODO
+========
+
+* 前言重新组织，尤其是适用对象。重新组织后给编辑看。
+
+  + 每个电脑的使用者，都有版本控制的需要。Git 是版本控制的 Dream tools。
+
+    dropbox, 网盘, github
+
+    +-------+                                 +-------+
+    |       |                                 |       |
+    |  pc1  | <-----> (VirtualHost) <-------> |  pc2  |
+    |       |          (usb drive)            |       |
+    +-------+         (cloud storage)         +-------+
+
+    +-------+                                          +-------+
+    |       |                                          |       |
+    |  pc1  | <-----> (VirtualHost with git) <-------> |  pc2  |
+    |       |          (usb drive with git)            |       |
+    +-------+               (GitHub)                   +-------+
+  
+
+* Git 工具介绍章节，以 Git 调查的结果做引子。
+
+  https://www.survs.com/results/33Q0OZZE/MV653KSPI2
+
+* Git 独奏模式
+
+  Git 起步介绍，如何一个人进行版本控制
+
+* 揭开面纱系列。放在每个 Git 基础章节的最后。
+
+  + 揭开面纱1: 
+  
+    - .git 目录：版本库真实位置，可以修改不同的位置。
+    - Git 存储效率: 两个相同文件提交，Git 空间有变化么？
+    - Git config: 通过环境变量设定，修改任意 INI 文件。参考 git-svn
+
+  + 揭开面纱2:
+
+    - DAG: Directed Acylic Graph.
+    - Git 提交的奥秘: 
+    - 引用的奥秘：
 
 版本库整理： write-tree, => commit , gc
 
