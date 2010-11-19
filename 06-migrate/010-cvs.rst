@@ -17,7 +17,7 @@ CVS 到 Git 迁移可以使用 cvs2svn 软件包中的 cvs2git。为什么该项
 安装 cvs2svn（含 cvs2git）
 --------------------------
 
-大部分 Linux 发行版都提供 cvs2svn 的发布包，可以直接用平台自带的 cvs2svn 软件包。cvs2svn 在 2.1 版本之后开始引入了到 Git 库的转换，直到 2.3.0 版本才有了独立的 cvs2git 转换脚本，cvs2git 正在逐渐完善当中，因此尽量选择最新版本的 cvs2svn 。
+大部分 Linux 发行版都提供 cvs2svn 的发布包，可以直接用平台自带的 cvs2svn 软件包。cvs2svn 在 2.1 版本之后开始引入了到 Git 库的转换，2.3.0 版本有了独立的 cvs2git 转换脚本，cvs2git 正在逐渐完善当中，因此尽量选择最新版本的 cvs2svn 。
 
 例如在 Debian 或 Ubuntu 下，可以通过下面命令查看源里面的 cvs2svn 版本。
 
@@ -42,14 +42,14 @@ CVS 到 Git 迁移可以使用 cvs2svn 软件包中的 cvs2git。为什么该项
 
     $ git clone git://repo.or.cz/cvs2svn.git
 
-* 进入 cvs2svn 源码目录，安装 cvs2svn
+* 进入 cvs2svn 源码目录，安装 cvs2svn。
 
   ::
 
     $ cd cvs2svn
     $ sudo make install
 
-* 安装 手册
+* 安装用户手册。
 
   ::
 
@@ -57,7 +57,7 @@ CVS 到 Git 迁移可以使用 cvs2svn 软件包中的 cvs2git。为什么该项
 
 cvs2svn 对其它软件包的依赖：
 
-* Python: 2.4 或以上版本，但是 Python 3.x 暂不支持。
+* Python 2.4 或以上版本，但是 Python 3.x 暂不支持。
 * RCS: 如果在转换中使用了 --use-rcs，就需要安装 RCS 软件包。参见： `http://www.cs.purdue.edu/homes/trinkle/RCS/` 。
 * CVS: 如果在转换中使用了 --use-cvs，就需要安装 CVS 软件包。参见： `http://ccvs.cvshome.org/` 。
 * Git: 1.5.4.4 或以上的版本。之前版本的 Git 的 "git fast-import" 命令有 Bug，加载 cvs2git 导出文件有问题。
@@ -327,145 +327,39 @@ cvs2svn 软件包提供了一个 cvs2git 的配置示例文件，见源码中的
   ::
 
     global_symbol_strategy_rules = [
-        # It is possible to specify manually exactly how symbols should be
-        # converted and what line of development should be used as the
-        # preferred parent.  To do so, create a file containing the symbol
-        # hints and enable the following option.
-        #
-        # The format of the hints file is described in the documentation
-        # for the --symbol-hints command-line option.  The file output by
-        # the --write-symbol-info (i.e., ctx.symbol_info_filename) option
-        # is in the same format.  The simplest way to use this option is
-        # to run the conversion through CollateSymbolsPass with
-        # --write-symbol-info option, copy the symbol info and edit it to
-        # create a hints file, then re-start the conversion at
-        # CollateSymbolsPass with this option enabled.
-        #SymbolHintsFileRule('symbol-hints.txt'),
 
-        # 为避免To force all symbols matching a regular expression to be
-        # converted as branches, add rules like the following:
+        # 和正则表达式匹配的 CVS 标识，转换为 Git 的分支。
         #ForceBranchRegexpStrategyRule(r'branch.*'),
 
-        # To force all symbols matching a regular expression to be
-        # converted as tags, add rules like the following:
+        # 和正则表达式匹配的 CVS 标识，转换为 Git 的里程碑。
         #ForceTagRegexpStrategyRule(r'tag.*'),
 
-        # To force all symbols matching a regular expression to be
-        # excluded from the conversion, add rules like the following:
+        # 忽略和正则表达式匹配的 CVS 标识，不进行（到Git分支/里程碑）转换。
         #ExcludeRegexpStrategyRule(r'unknown-.*'),
 
-        # Sometimes people use "cvs import" to get their own source code
-        # into CVS.  This practice creates a vendor branch 1.1.1 and
-        # imports the code onto the vendor branch as 1.1.1.1, then copies
-        # the same content to the trunk as version 1.1.  Normally, such
-        # vendor branches are useless and they complicate the SVN history
-        # unnecessarily.  The following rule excludes any branches that
-        # only existed as a vendor branch with a single import (leaving
-        # only the 1.1 revision).  If you want to retain such branches,
-        # comment out the following line.  (Please note that this rule
-        # does not exclude vendor *tags*, as they are not so easy to
-        # identify.)
-        ExcludeTrivialImportBranchRule(),
-
-        # To exclude all vendor branches (branches that had "cvs import"s
-        # on them but no other kinds of commits), uncomment the following
-        # line:
-        #ExcludeVendorBranchRule(),
-
-        # Usually you want this rule, to convert unambiguous symbols
-        # (symbols that were only ever used as tags or only ever used as
-        # branches in CVS) the same way they were used in CVS:
-        UnambiguousUsageRule(),
-
-        # If there was ever a commit on a symbol, then it cannot be
-        # converted as a tag.  This rule causes all such symbols to be
-        # converted as branches.  If you would like to resolve such
-        # ambiguities manually, comment out the following line:
-        BranchIfCommitsRule(),
-
-        # Last in the list can be a catch-all rule that is used for
-        # symbols that were not matched by any of the more specific rules
-        # above.  (Assuming that BranchIfCommitsRule() was included above,
-        # then the symbols that are still indeterminate at this point can
-        # sensibly be converted as branches or tags.)  Include at most one
-        # of these lines.  If none of these catch-all rules are included,
-        # then the presence of any ambiguous symbols (that haven't been
-        # disambiguated above) is an error:
-
-        # Convert ambiguous symbols based on whether they were used more
-        # often as branches or as tags:
+        # 岐义的CVS标识的处理选项。
+        # 缺省根据使用频率自动确定转换为分支或里程碑。
         HeuristicStrategyRule(),
-        # Convert all ambiguous symbols as branches:
+        # 或者全部转换为分支。
         #AllBranchRule(),
-        # Convert all ambiguous symbols as tags:
+        # 或者全部转换为里程碑。
         #AllTagRule(),
 
-        # The last rule is here to choose the preferred parent of branches
-        # and tags, that is, the line of development from which the symbol
-        # sprouts.
-        HeuristicPreferredParentRule(),
-        ]
-
-    # Should CVSItem -> Changeset database files be memory mapped?  In
-    # some tests, using memory mapping speeded up the overall conversion
-    # by about 5%.  But this option can cause the conversion to fail with
-    # an out of memory error if the conversion computer runs out of
-    # virtual address space (e.g., when running a very large conversion on
-    # a 32-bit operating system).  Therefore it is disabled by default.
-    # Uncomment the following line to allow these database files to be
-    # memory mapped.
-    #changeset_database.use_mmap_for_cvs_item_to_changeset_table = True
+        ...
 
     run_options.set_project(
-        # The filesystem path to the part of the CVS repository (*not* a
-        # CVS working copy) that should be converted.  This may be a
-        # subdirectory (i.e., a module) within a larger CVS repository.
-        r'test-data/main-cvsrepos',
+
+        ...
 
         # A list of symbol transformations that can be used to rename
         # symbols in this project.
         symbol_transforms=[
-            # Use IgnoreSymbolTransforms like the following to completely
-            # ignore symbols matching a regular expression when parsing
-            # the CVS repository, for example to avoid warnings about
-            # branches with two names and to choose the preferred name.
-            # It is *not* recommended to use this instead of
-            # ExcludeRegexpStrategyRule; though more efficient,
-            # IgnoreSymbolTransforms are less flexible and don't exclude
-            # branches correctly.  The argument is a Python-style regular
-            # expression that has to match the *whole* CVS symbol name:
-            #IgnoreSymbolTransform(r'nightly-build-tag-.*')
-
-            # RegexpSymbolTransforms transform symbols textually using a
-            # regular expression.  The first argument is a Python regular
-            # expression pattern and the second is a replacement pattern.
-            # The pattern is matched against each symbol name.  If it
-            # matches the whole symbol name, then the symbol name is
-            # replaced with the corresponding replacement text.  The
-            # replacement can include substitution patterns (e.g., r'\1'
-            # or r'\g<name>').  Typically you will want to use raw strings
-            # (strings with a preceding 'r', like shown in the examples)
-            # for the regexp and its replacement to avoid backslash
-            # substitution within those strings.
+            # 是否需要重新命名里程碑？第一个参数用于匹配，第二个参数用于替换。
             #RegexpSymbolTransform(r'release-(\d+)_(\d+)',
             #                      r'release-\1.\2'),
             #RegexpSymbolTransform(r'release-(\d+)_(\d+)_(\d+)',
             #                      r'release-\1.\2.\3'),
 
-            # Simple 1:1 character replacements can also be done.  The
-            # following transform, which converts backslashes into forward
-            # slashes, should usually be included:
-            ReplaceSubstringsSymbolTransform('\\','/'),
-
-            # This last rule eliminates leading, trailing, and repeated
-            # slashes within the output symbol names:
-            NormalizePathsSymbolTransform(),
-            ],
-
-        # See the definition of global_symbol_strategy_rules above for a
-        # description of this option:
-        symbol_strategy_rules=global_symbol_strategy_rules,
-        )
 
 **使用配置文件的 cvs2git 转换过程**
 
@@ -520,6 +414,10 @@ cvs2svn 软件包提供了一个 cvs2git 的配置示例文件，见源码中的
 -----------------
 
 完成迁移还不能立刻说大功告成，还需要进行细致的检验。
+
+**文件名和日志的中文**
+
+如果转换过程参考了前面的步骤和注意事项，文件名和版本库提交日志中的中文不应该出现乱码。
 
 **图片文件被破坏**
 
