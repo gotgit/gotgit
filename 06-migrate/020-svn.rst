@@ -1,15 +1,17 @@
-SVN用户到Git的转换
-==================
+SVN版本库到Git的迁移
+====================
 
-Subversion 版本库到 Git 版本库的转换，最好的方法就是 git-svn。而 git-svn 的使用方法在前面 “Git 和 SVN 协同模型” 一章我们已经详细介绍过。在这里我们主要介绍一下版本库迁移时的注意事项。
+Subversion 版本库到 Git 版本库的转换，最好的方法就是 git-svn。而 git-svn 的使用方法在前面 “Git 和 SVN 协同模型” 一章我们已经详细介绍过。本章的内容我们不再对 git-svn 的用法做过多的重复，只在这里强调一下版本库迁移时的注意事项，相关 git-svn 内容还请参照前面的内容。
 
-在迁移之前要确认一个问题，Subversion 迁移到 Git 库之后，Subversion 还继续使用么？我的意思是说还允许向 Subversion 提交么？
+在迁移之前要确认一个问题，Subversion 转换到 Git 库之后，Subversion 还继续使用么？我的意思是说还允许向 Subversion 提交么？
 
-如果回答是，那么直接查看 “Git 和 SVN 协同模型” 一章，而不要理会下面的内容。因为下面的迁移动作是一次性的，不再支持 Subversion 版本库到 Git 的持续迁移。
+如果回答是，那么直接查看 “Git 和 SVN 协同模型” 一章，用 Git 作为前端工具来操作 Subversion 版本库，而不要理会下面的内容。因为下面描述的迁移步骤针对的是一次性的 Subversion 到 Git 版本库的迁移。
 
-**需要提交中出现 `git-svn-id:` 么？**
+**需要提交中出现 git-svn-id 标识么？**
 
-如果一次性、永久性的将 Subverison 迁移到 Git 库，可以选择 `git-svn-id:` 标识不在转换后 Git 的提交日志中出现。就是在 git-svn 的 `clone` 或者 `init` 子命令行中使用参数： `--no-metadata` 。Git 库的配置会自动配置 svn-remote.noMetadata 为 1。之后执行 `git svn fetch` 时就不会在日志中产生 `git-svn-id:` 的标识。
+如果一次性、永久性的将 Subverison 迁移到 Git 库，可以选择 `git-svn-id:` 标识不在转换后 Git 的提交日志中出现，这样转换后的 Git 库根本看不出来曾经用 Subversion 版本库维护过。
+
+在 git-svn 的 `clone` 或者 `init` 子命令行中使用参数： `--no-metadata` 。Git 库的配置会自动配置 svn-remote.noMetadata 为 1。之后执行 `git svn fetch` 时就不会在日志中产生 `git-svn-id:` 的标识。
 
 **Subversion 用户名到 Git 用户名的映射**
 
@@ -33,9 +35,11 @@ Subversion 版本库到 Git 版本库的转换，最好的方法就是 git-svn�
 
 当设定了用户映射文件后，如果在执行 `git svn fetch` 是发现 SVN 的用户在该映射文件中没有定义，转换过程被中断。需要重新编辑用户映射文件，补充新的用户映射后，再重新执行 git-svn 命令。
 
-**将Subversion分支和里程碑直接转换为 Git 分支和里程碑，不要放在 `refs/remotes` 下**
+**将Subversion分支和里程碑直接转换为 Git 分支和里程碑，不要放在 refs/remotes 下**
 
-使用缺省参数执行 SVN 到 Git 的转换时，SVN 的里程碑和分支转换到 Git 库的 `refs/remotes` 引用下。即 Git 的配置文件中会出现：
+使用缺省参数执行 SVN 到 Git 的转换时，SVN 的里程碑和分支转换到 Git 库的 `refs/remotes` 引用下。这会导致其他人从转换后的 Git 库克隆时，看不到 Subversion 原有的分支和里程碑。
+
+当以缺省参数执行 `git svn init` 时，Git 的配置文件中会生成下面的配置：
 
   ::
 
@@ -44,7 +48,7 @@ Subversion 版本库到 Git 版本库的转换，最好的方法就是 git-svn�
             branches = branches/*:refs/remotes/*
             tags = tags/*:refs/remotes/tags/*
 
-在执行 `git svn init` 之后，可以直接编辑 Git 配置文件，将其内容调整如下：
+可以直接编辑 Git 配置文件，将其内容调整如下：
 
   ::
 
@@ -57,4 +61,4 @@ Subversion 版本库到 Git 版本库的转换，最好的方法就是 git-svn�
 
 **清除 git-svn 的中间文件**
 
-git-svn 的中间文件位于目录 `.git/svn` 下，删除此目录完成对 git-svn 转换数据库文件的清理。
+git-svn 的中间文件位于目录 "`.git/svn`" 下，删除此目录完成对 git-svn 转换数据库文件的清理。

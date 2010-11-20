@@ -2,8 +2,8 @@
 
 首先会介绍几个著名的开源版本控制系统 CVS, Subversion, Mercurial 如何迁移到 Git 上，还会介绍通过 Git 子树的方法整理 Git 版本库。对于其它版本控制系统，会在最后介绍一个一般性的版本库迁移方法。
 
-CVS用户到Git的转换
-==================
+CVS版本库到Git的迁移
+====================
 
 CVS 是最早广泛使用的版本控制系统，因为其服务器端存储结构的简单直白，至今仍受到不少粉丝的钟爱。但是毕竟是几十年前的产物，因为设计上的原因导致缺乏现代版本控制系统的一些必须功能，如：没有原子提交，分支管理不便（慢），分支合并困难因为合并过程缺乏跟踪，不支持文件名/目录名的修改等等。很多 CVS 的用户都已经转换到 Subversion 这一更好的集中式版本控制系统了。如果您的版本控制系统还是 CVS，那么可以考虑直接迁移到 Git。
 
@@ -175,18 +175,17 @@ cvs2svn 软件包提供了一个 cvs2git 的配置示例文件，见源码中的
 
     http://repo.or.cz/w/cvs2svn.git/blob/HEAD:/cvs2git-example.options
 
-将该示例文件在本地复制一份，对其进行更改。该文件是 Python 代码格式，修改该文件时要注意缩进不要随意更改，因为缩进也是 Python 语法的一部分。可以考虑针对下列选项进行定制。
+将该示例文件在本地复制一份，对其进行更改。该文件是 Python 代码格式，以 '#'（井号）开始的行是注释，文件缩进不要随意更改，因为缩进也是 Python 语法的一部分。可以考虑针对下列选项进行定制。
 
-* 必须在配置文件中设置要转换的 CVS 版本库位置，而不能在命令行进行设置。
+* 设置 CVS 版本库位置。
 
-  使用配置文件方式运行 cvs2git，必须在配置文件中指定版本库位置。在配置文件的最后面 `run_options` 的 `set_project` 方法中指定。
+  使用配置文件方式运行 cvs2git，只能在配置文件中设置要转换的 CVS 版本库位置，而不能在命令行进行设置。具体说是在配置文件的最后面 `run_options` 的 `set_project` 方法中指定。
 
   ::
 
     run_options.set_project(
-        # The filesystem path to the part of the CVS repository (*not* a
-        # CVS working copy) that should be converted.  This may be a
-        # subdirectory (i.e., a module) within a larger CVS repository.
+        # CVS 版本库的位置（不是工作区，而是包含,v 文件的版本库）
+        # 可以是版本库下的子目录。
         r'/cvshome/user/jiangxin/homepage/worldhello/archive/2003/',
 
 * 导出文件的位置也在配置文件中预先设置好了，也不能再在命令行中设置。
@@ -413,7 +412,7 @@ cvs2svn 软件包提供了一个 cvs2git 的配置示例文件，见源码中的
 迁移后版本库检查
 -----------------
 
-完成迁移还不能立刻说大功告成，还需要进行细致的检验。
+完成迁移还不能算是大功告成，还需要进行细致的检验。
 
 **文件名和日志的中文**
 
