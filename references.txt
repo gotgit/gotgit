@@ -30,52 +30,31 @@ TODO
 
 * 揭开面纱系列。放在每个 Git 基础章节的最后。
 
-* Git 独奏模式（1）: 最先用到的 Git 命令
-
-  * 操作
-
-    git init: 创建版本库: 一条命令即可： git init
-
-    git add:
-
-    git ci:
-
-    git config: who are you
-
-    Git ci? 别名
-
-  + 揭开面纱1: 
-  
-    - .git 目录：版本库真实位置，可以修改不同的位置。
-    - Git 命令的实际位置和实现。git-command 和 git command
-    - Git config: 通过环境变量设定，修改任意 INI 文件。参考 git-svn
-
-    - 全局唯一ID和全球唯一ID。SHA1 哈希算法介绍以及冲突的可能性概率计算。
-    - Git 存储效率: 两个相同文件提交，Git 空间有变化么？
-
-* Git 独奏模式（2）: 古怪的 git add
-
-  + 操作
-
-    - 修改文件，执行 git ci 没有提交？
-    - 删除文件，如何？
-    - 如何取消 stage？
-  
-* Git 独奏模式（3）: 浏览版本库
-
-  + 操作
-
-    - git log
-    - git log --graph
-    - 查看历史文件
-
   + 揭开面纱2:
 
     - stage 以及 stage 的灵活变更集
     - DAG: Directed Acylic Graph.
-    - Git 对象: blob, tree
+    - Git databae is stupid simple: Git 对象: blob, tree, commit, tag
     - Git 提交的奥秘: 
     - 引用的奥秘：
+
+* Git 独奏模式（4）: Git 效率
+
+  + 操作
+
+    - 大文件，多次复制和重命名
+    - 文件内容跟踪
+
+* Git 独奏模式（5）: 后悔药
+
+  + 操作
+
+    - 游标
+    - git reset
+    - 对最新提交的重置，最简单的操作：git commit --amend
+    - git rebase
+
+
 
 
 * Git 协作模式
