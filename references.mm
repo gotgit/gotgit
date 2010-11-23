@@ -2449,6 +2449,73 @@
 <font NAME="Serif" SIZE="14"/>
 </node>
 </node>
+<node COLOR="#00b439" ID="ID_1540388880" 
+	TEXT="多个远程版本库">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+</node>
+</node>
+<node COLOR="#0033ff" FOLDED="true" ID="ID_241320967" POSITION="right" 
+	TEXT="Git 其它内容">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="Serif" SIZE="18"/>
+<node COLOR="#00b439" FOLDED="true" ID="ID_497159056" 
+	TEXT="git ls-tree">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_158650374" 
+	TEXT="git ls-tree -r 命令可以递归查看">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" ID="ID_1242975695" 
+	TEXT="git grep">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1177062367" 
+	TEXT="instaweb">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_386475477" 
+	TEXT="&#xa;If you don’t want to fire up Tk, you can also browse your repository&#xa;quickly via the git instaweb command. This will basically fire up a&#xa;web server running the gitweb (http://git.or.cz/gitwiki/Gitweb) CGI script&#xa;using lighttpd, apache or webrick. It then tries to automatically fire up&#xa;your default web browser and points it at the new server.&#xa;$ git instaweb --httpd=webrick&#xa;[2008-04-08 20:32:29] INFO WEBrick 1.3.1&#xa;[2008-04-08 20:32:29] INFO ruby 1.8.4 (2005-12-24) [i686-&#xa;darwin8.8.2]&#xa;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_328071214" 
+	TEXT="git gc">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_182713492" 
+	TEXT="多长时间整理一次?">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_358793755" 
+	TEXT="是否需要设置 gc.auto?">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_660180163" 
+	TEXT="$ git config --global gc.auto 1"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1731754977" 
+	TEXT="git fsck 可以查看哪些 blob 没有被引用">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_640289668" 
+	TEXT="$ git fsck&#xa;dangling tree 8276318347b8e971733ca5fab77c8f5018c75261&#xa;dangling blob 2302a5a4baec369fb631bb89cfe287cc002dc049&#xa;dangling blob cb54512d0a989dcfb2d78a7f3c8909f76ad2326a&#xa;dangling tree 8e1088e1cc1bc67e0ef01e018707dcb07a2a562b&#xa;dangling blob 5e069ed35afae29015b6622fe715c0aee10112ad&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_957665703" 
+	TEXT="git prune 可以删除没有用的文件">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_316957658" 
+	TEXT="$ git prune -n&#xa;2302a5a4baec369fb631bb89cfe287cc002dc049&#xa;5e069ed35afae29015b6622fe715c0aee10112ad&#xa;8276318347b8e971733ca5fab77c8f5018c75261&#xa;8e1088e1cc1bc67e0ef01e018707dcb07a2a562b&#xa;cb54512d0a989dcfb2d78a7f3c8909f76ad2326a&#xa;$ git prune&#xa;$ git fsck&#xa;$&#xa;blob&#xa;blob&#xa;tree&#xa;tree&#xa;blob&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
 </node>
 <node COLOR="#0033ff" FOLDED="true" ID="ID_180033128" POSITION="right" 
 	TEXT="Git 命令索引">
