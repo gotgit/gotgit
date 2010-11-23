@@ -18,3 +18,19 @@ Linux 社区就是典型的金字塔结构。Linus Torvalds 的版本库被公�
 
 采用这种金字塔式协同模型不需要复杂和 Git 服务器设置，尤其是贡献者只需要提供一个只读的 Git 库就可以了。在下一部分服务器架设的相关章节，会介绍 http 和 git-daemon 两种最简单的只读 Git 服务器的架设。
 
+TODO:
+
+git commit -s 为提交增加 SignOff by: 标识。
+
+为了防止因忘记 git add 导致提交不完整，应该在提交完成后，执行 git status 查看是否有未提交的变更，再执行  git show HEAD 检查提交：改动和日志说明。
+
+
+提交贡献的方式：共享版本库。git-daemon, http smart server 可以帮助你。或者直接用 github。
+
+通过 patch 文件。
+
+* git apply /tmp/patch-ruby-client.patch
+* git apply --check 0001-seeing-if-this-helps-the-gem.patch 
+
+cherry-pick: 将特性分支的某个提交贡献。
+

@@ -52,10 +52,292 @@
 <font NAME="Serif" SIZE="16"/>
 </node>
 </node>
+<node COLOR="#0033ff" FOLDED="true" ID="ID_996144378" POSITION="right" 
+	TEXT="Git 版本演进">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="Serif" SIZE="18"/>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1002140911" 
+	TEXT="1.7.4">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_1353977648" 
+	TEXT="分支名称不能以减号（-）开始了。">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_514551657" 
+	TEXT=" * The option parsers of various commands that create new branch (or    rename existing ones to a new name) were too loose and users were    allowed to call a branch with a name that begins with a dash by    creative abuse of their command line options, which only lead to    burn themselves.  The name of a branch cannot begin with a dash    now. "/>
+</node>
+<node COLOR="#990000" ID="ID_1313454464" 
+	TEXT="系统范围的属性放在 /etc/gitattributes 下，可以用 core.attributesfile 来定制。">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" ID="ID_641667772" 
+	TEXT="git read-tree  需要使用 --empty 清空 index。原来版本可以不加 --empty 未来将被取消。">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1478661715" 
+	TEXT="可以扩展 git-shell">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_361144147" 
+	TEXT=" * you can extend &quot;git shell&quot;, which is often used on boxes that allow&#xa;   git-only login over ssh as login shell, with custom set of&#xa;   commands.&#xa;"/>
+</node>
+<node COLOR="#990000" ID="ID_1589699353" 
+	TEXT="git log -G&lt;pattern&gt; ： 只显示匹配正则表达式的日志">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_148721287" 
+	TEXT="git merge --log 增加选项（--log=47）可以显示超过20个条目">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_595517981" 
+	TEXT=" * &quot;git merge --log&quot; used to limit the resulting merge log to 20&#xa;   entries; this is now customizable by giving e.g. &quot;--log=47&quot;.&#xa;"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_171792862" 
+	TEXT="git diff 和 git grep 对 fortran 的支持">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1817659865" 
+	TEXT=" * &quot;git diff&quot; and &quot;git grep&quot; learned how functions and subroutines&#xa;   in Fortran look like.&#xa;"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_26821308" 
+	TEXT="1.7.3">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_326279428" 
+	TEXT="git-gui 更新">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1168417067" 
+	TEXT="    * git-gui, now at version 0.13.0, got various updates and a new&#xa;        maintainer, Pat Thoyts.&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_527467018" 
+	TEXT="Git web 的配置直接生效。之前版本只在启动时生效。">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_1362700867" 
+	TEXT="    * Gitweb allows its configuration to change per each request; it used to&#xa;        read the configuration once upon startup.&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1679600004" 
+	TEXT="当 git 发现一个损坏的对象，报告包含它的文件。">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_1167826262" 
+	TEXT="    * When git finds a corrupt object, it now reports the file that contains&#xa;        it.&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_947196584" 
+	TEXT="git checkout 支持 -B 参数，相当于可以强制创建新分支。">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_383096967" 
+	TEXT="    * &quot;git checkout -B &lt;it&gt;&quot; is a shorter way to say &quot;git branch -f &lt;it&gt;&quot;&#xa;        followed by &quot;git checkout &lt;it&gt;&quot;.&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1017955800" 
+	TEXT="git clean 命令支持 -e 参数，排除一些文件不必清理">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_1267651196" 
+	TEXT="    * &quot;git clean&quot; learned &quot;-e&quot; (&quot;--exclude&quot;) option.&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" ID="ID_1915520198" 
+	TEXT="当执行 git merge 可以对目录变成文件或相反，支持的更好。">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" ID="ID_1980042025" 
+	TEXT="git fetch $url 命令在不使用 refspec 时出错的问题已经解决。可能影响很长时间了。">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="messagebox_warning"/>
+</node>
+<node COLOR="#990000" ID="ID_672909703" 
+	TEXT="解决了：当配置了 diff.noprefix ，git rebase 工作不好。">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="messagebox_warning"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1534725170" 
+	TEXT="当执行  diff， status 命令时，可以通过 diff.ignoresubmodules 忽略子模组的改变">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_1997284823" 
+	TEXT="    * diff.ignoresubmodules configuration variable can be used to squelch the&#xa;        differences in submodules reported when running commands (e.g. &quot;diff&quot;,&#xa;        &quot;status&quot;, etc.) at the superproject level.&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1656226009" 
+	TEXT="http.useragent 选项可以伪装为某种浏览器，以欺骗防火墙">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_1819565233" 
+	TEXT="    * http.useragent configuration can be used to lie who you are to your&#xa;        restrictive firewall.&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_571745435" 
+	TEXT="git rebase --strategy 支持 -X 参数以传递所选 strategy 可用的附加参数">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_39282596" 
+	TEXT="    * &quot;git rebase --strategy &lt;s&gt;&quot; learned &quot;-X&quot; option to pass extra options&#xa;        that are understood by the chosen merge strategy.&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1089792426" 
+	TEXT="git rebase -i 支持 exec 选项，可以在两个步骤之间运行一个命令。">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_151217568" 
+	TEXT="    * &quot;git rebase -i&quot; learned &quot;exec&quot; that you can insert into the insn sheet&#xa;        to run a command between its steps.&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1559961518" 
+	TEXT="git rebase 在变基时遇到很多二进制变更（不冲突）会更快。">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_1167378875" 
+	TEXT="    * &quot;git rebase&quot; between branches that have many binary changes that do&#xa;        not conflict should be faster.&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_795091466" 
+	TEXT="git rebase 读取 rebase.autosquash 设置，就像使用了 --autosquash 参数">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_57453508" 
+	TEXT=" * &quot;git rebase -i&quot; peeks into rebase.autosquash configuration and acts as&#xa;   if you gave --autosquash from the command line.">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1143217323" 
+	TEXT="当 git checkout 和 git merge 因为本地存在修改而不工作时，以前只显示一个可能会丢失的文件，现在显示多个文件。">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_1715058906" 
+	TEXT="    * When &quot;git checkout&quot; or &quot;git merge&quot; refuse to proceed in order to&#xa;        protect local modification to your working tree, they used to stop&#xa;        after showing just one path that might be lost.  They now show all,&#xa;        in a format that is easier to read.&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" ID="ID_1220606126" 
+	TEXT="&quot;git -c foo=bar subcmd&quot; did not work well for subcmd that is not&#xa;   implemented as a built-in command.   ">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="messagebox_warning"/>
+</node>
+<node COLOR="#990000" ID="ID_752814557" 
+	TEXT="    * Hunk headers produced for C# files by &quot;git diff&quot; and friends show more&#xa;        relevant context than before.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1489349200" 
+	TEXT="1.7.2">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_802982994" 
+	TEXT="git cherry-pick 和 git revert 参数支持版本范围了！">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_1200000649" 
+	TEXT=" * &quot;git cherry-pick&quot; learned to pick a range of commits&#xa;   (e.g. &quot;cherry-pick A..B&quot; and &quot;cherry-pick --stdin&quot;), so did &quot;git&#xa;   revert&quot;; these do not support the nicer sequencing control &quot;rebase&#xa;   [-i]&quot; has, though.&#xa;"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1826224759" 
+	TEXT="增加了 core.eol 配置和 text/eol 属性，设置文件的换行符">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_1761534072" 
+	TEXT=" * core.eol configuration and text/eol attributes are the new way to control&#xa;   the end of line conventions for files in the working tree.&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_912417015" 
+	TEXT="配置 core.autocrlf 更加安全了。只对新文件，以及以LF-only格式的版本库文件起作用。&#xa;为了对版本库中使用了 CRLF 换行符的文件进行标准化，请使用新的 eol/text 属性。">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_1161450988" 
+	TEXT=" * core.autocrlf has been made safer - it will now only handle line&#xa;   endings for new files and files that are LF-only in the&#xa;   repository. To normalize content that has been checked in with&#xa;   CRLF, use the new eol/text attributes."/>
+</node>
+<node COLOR="#990000" ID="ID_627208393" 
+	TEXT=" * The whitespace rules used in &quot;git apply --whitespace&quot; and &quot;git diff&quot;&#xa;   gained a new member in the family (tab-in-indent) to help projects with&#xa;   policy to indent only with spaces.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_52986892" 
+	TEXT=":/&lt;string&gt; 现在支持正则表达式，而不再是从头匹配日志了。">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_281404178" 
+	TEXT=" * &apos;:/&lt;string&gt;&apos; notation to look for a commit now takes regular expression&#xa;   and it is not anchored at the beginning of the commit log message&#xa;   anymore (this is a backward incompatible change).">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_378477505" 
+	TEXT="支持 git checkout --orphan 参数创建一个空的分支。">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_1976543874" 
+	TEXT=" * &quot;git checkout --orphan newbranch&quot; is similar to &quot;-b newbranch&quot; but&#xa;   prepares to create a root commit that is not connected to any existing&#xa;   commit.&#xa;"/>
+</node>
+<node COLOR="#990000" ID="ID_1001228511" 
+	TEXT=" * &quot;git blame&quot; applies the textconv filter to the contents it works&#xa;   on, when available.&#xa;&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_537358478" 
+	TEXT="DISCOVERY_ACROSS_FILESYSTEM 环境变量告诉 Git 在向上查询 .git 目录的时候不要在文件系统边界停止，一直搜索到/。">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_589428921" 
+	TEXT=" * When working from a subdirectory, by default, git does not look for its&#xa;   metadirectory &quot;.git&quot; across filesystems, primarily to help people who&#xa;   have invocations of git in their custom PS1 prompts, as being outside&#xa;   of a git repository would look for &quot;.git&quot; all the way up to the root&#xa;   directory, and NFS mounts are often slow.  DISCOVERY_ACROSS_FILESYSTEM&#xa;   environment variable can be used to tell git not to stop at a&#xa;   filesystem boundary.&#xa;&#xa;"/>
+</node>
+<node COLOR="#990000" ID="ID_1358770686" 
+	TEXT=" * &quot;git&quot; wrapper learned &quot;-c name=value&quot; option to override configuration    variable from the command line. ">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+</node>
 <node COLOR="#0033ff" FOLDED="true" ID="ID_705771263" POSITION="right" 
 	TEXT="Git 安装">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="Serif" SIZE="18"/>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1943723592" 
+	TEXT="git 说明">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_163866761" 
+	TEXT="////////////////////////////////////////////////////////////////&#xa;&#xa;  GIT - the stupid content tracker&#xa;&#xa;////////////////////////////////////////////////////////////////&#xa;&#xa;&quot;git&quot; can mean anything, depending on your mood.&#xa;&#xa; - random three-letter combination that is pronounceable, and not&#xa;   actually used by any common UNIX command.  The fact that it is a&#xa;   mispronunciation of &quot;get&quot; may or may not be relevant.&#xa; - stupid. contemptible and despicable. simple. Take your pick from the&#xa;   dictionary of slang.&#xa; - &quot;global information tracker&quot;: you&apos;re in a good mood, and it actually&#xa;   works for you. Angels sing, and a light suddenly fills the room.&#xa; - &quot;goddamn idiotic truckload of sh*t&quot;: when it breaks&#xa;&#xa;Git is a fast, scalable, distributed revision control system with an&#xa;unusually rich command set that provides both high-level operations&#xa;and full access to internals.&#xa;&#xa;Git is an Open Source project covered by the GNU General Public License.&#xa;It was originally written by Linus Torvalds with help of a group of&#xa;hackers around the net. It is currently maintained by Junio C Hamano.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_869235119" 
+	TEXT="Git 文档">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_1299420099" 
+	TEXT="Documentation/RelNotes">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1194600228" 
+	TEXT="Documentation/technical">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1220118444" 
+	TEXT="Documentation/howto">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_307259825" 
+	TEXT="Documentation/*.txt ： 命令帮助">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_580181661" 
 	TEXT="Linux 下的安装">
 <edge STYLE="bezier" WIDTH="thin"/>
@@ -136,15 +418,31 @@
 	TEXT="Mac 下安装">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_1828158588" 
+	TEXT="最简单的方式是下载一个图形化的 Git 安装软件">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_828548872" LINK="http://code.google.com/p/git-osx-installer" 
+	TEXT="code.google.com &gt; P &gt; Git-osx-installer">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1305051246" 
+	TEXT="使用 MacPorts 安装">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_627469172" LINK="http://www.macports.org" 
+	TEXT="MacPorts (http://www.macports.org)."/>
+<node COLOR="#111111" ID="ID_1588658270" 
+	TEXT="$ sudo port install git-core +svn +doc +bash_completion +gitweb"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1786486760" 
+	TEXT="Mac Ports">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1220925992" 
+	TEXT="$ sudo port install git-core"/>
+</node>
+</node>
 <node COLOR="#990000" ID="ID_1238691862" 
 	TEXT="Mac 10.4 – Tiger&#xa;There are some requirements you’ll have to install before you can&#xa;compile Git. Expat can be installed roughly like this:&#xa;curl -O http://surfnet.dl.sourceforge.net/sourceforge/expat/&#xa;expat-2.0.1.tar.gz&#xa;tar zxvf expat-2.0.1.tar.gz&#xa;cd expat-2.0.1&#xa;./configure --prefix=/usr/local&#xa;make&#xa;make check&#xa;sudo make install&#xa;cd ..&#xa;">
 <font NAME="Serif" SIZE="14"/>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1786486760" 
-	TEXT="Mac Ports">
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_1220925992" 
-	TEXT="$ sudo port install git-core"/>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_222454979" 
 	TEXT="Mac 10.5">
@@ -157,9 +455,11 @@
 	TEXT="Windows">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
-<node COLOR="#990000" ID="ID_435486463" 
-	TEXT="Msysgit">
+<node COLOR="#990000" FOLDED="true" ID="ID_435486463" 
+	TEXT="msysGit">
 <font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1353517893" LINK="http://code.google.com/p/msysgit" 
+	TEXT="code.google.com &gt; P &gt; Msysgit"/>
 </node>
 <node COLOR="#990000" ID="ID_1330993112" 
 	TEXT="cygwin">
@@ -1130,6 +1430,15 @@
 	TEXT="引用指向一个提交"/>
 <node COLOR="#111111" ID="ID_879042389" 
 	TEXT="分支的历史是和相关的。"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_297596540" 
+	TEXT="git reflog">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_1311492716" 
+	TEXT="RefLog Shortnames&#xa;&#xa;One of the things Git does in the background while you’re working away is keep a reflog — a log of where your HEAD and branch references have been for the last few months.&#xa;&#xa;You can see your reflog by using git reflog:&#xa;&#xa;$ git reflog&#xa;734713b... HEAD@{0}: commit: fixed refs handling, added gc auto, updated&#xa;d921970... HEAD@{1}: merge phedders/rdocs: Merge made by recursive.&#xa;1c002dd... HEAD@{2}: commit: added some blame and merge stuff&#xa;1c36188... HEAD@{3}: rebase -i (squash): updating HEAD&#xa;95df984... HEAD@{4}: commit: # This is a combination of two commits.&#xa;1c36188... HEAD@{5}: rebase -i (squash): updating HEAD&#xa;7e05da5... HEAD@{6}: rebase -i (pick): updating HEAD&#xa;&#xa;Every time your branch tip is updated for any reason, Git stores that information for you in this temporary history. And you can specify older commits with this data, as well. If you want to see the fifth prior value of the HEAD of your repository, you can use the @{n} reference that you see in the reflog output:&#xa;&#xa;$ git show HEAD@{5}&#xa;&#xa;You can also use this syntax to see where a branch was some specific amount of time ago. For instance, to see where your master branch was yesterday, you can type&#xa;&#xa;">
+<font NAME="Serif" SIZE="14"/>
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1549301818" 
@@ -2311,6 +2620,19 @@
 </node>
 </node>
 </node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_897846578" 
+	TEXT="分支管理 SOP">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_6816277" 
+	TEXT="参考 Git 的管理： maintain-git.txt">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1945503704" 
+	TEXT="The policy.&#xa;&#xa; - Feature releases are numbered as vX.Y.Z and are meant to&#xa;   contain bugfixes and enhancements in any area, including&#xa;   functionality, performance and usability, without regression.&#xa;&#xa; - Maintenance releases are numbered as vX.Y.Z.W and are meant&#xa;   to contain only bugfixes for the corresponding vX.Y.Z feature&#xa;   release and earlier maintenance releases vX.Y.Z.V (V &lt; W).&#xa;&#xa; - &apos;master&apos; branch is used to prepare for the next feature&#xa;   release. In other words, at some point, the tip of &apos;master&apos;&#xa;   branch is tagged with vX.Y.Z.&#xa;&#xa; - &apos;maint&apos; branch is used to prepare for the next maintenance&#xa;   release.  After the feature release vX.Y.Z is made, the tip&#xa;   of &apos;maint&apos; branch is set to that release, and bugfixes will&#xa;   accumulate on the branch, and at some point, the tip of the&#xa;   branch is tagged with vX.Y.Z.1, vX.Y.Z.2, and so on.&#xa;&#xa; - &apos;next&apos; branch is used to publish changes (both enhancements&#xa;   and fixes) that (1) have worthwhile goal, (2) are in a fairly&#xa;   good shape suitable for everyday use, (3) but have not yet&#xa;   demonstrated to be regression free.  New changes are tested&#xa;   in &apos;next&apos; before merged to &apos;master&apos;.&#xa;&#xa; - &apos;pu&apos; branch is used to publish other proposed changes that do&#xa;   not yet pass the criteria set for &apos;next&apos;.&#xa;&#xa; - The tips of &apos;master&apos;, &apos;maint&apos; and &apos;next&apos; branches will always&#xa;   fast-forward, to allow people to build their own&#xa;   customization on top of them.&#xa;&#xa; - Usually &apos;master&apos; contains all of &apos;maint&apos;, &apos;next&apos; contains all&#xa;   of &apos;master&apos; and &apos;pu&apos; contains all of &apos;next&apos;.&#xa;&#xa; - The tip of &apos;master&apos; is meant to be more stable than any&#xa;   tagged releases, and the users are encouraged to follow it.&#xa;&#xa; - The &apos;next&apos; branch is where new action takes place, and the&#xa;   users are encouraged to test it so that regressions and bugs&#xa;   are found before new topics are merged to &apos;master&apos;.&#xa;&#xa; - &apos;pu&apos; branch is used to publish other proposed changes that do&#xa;   not yet pass the criteria set for &apos;next&apos;.&#xa;&#xa; - The tips of &apos;master&apos;, &apos;maint&apos; and &apos;next&apos; branches will always&#xa;   fast-forward, to allow people to build their own&#xa;   customization on top of them.&#xa;&#xa; - Usually &apos;master&apos; contains all of &apos;maint&apos;, &apos;next&apos; contains all&#xa;   of &apos;master&apos; and &apos;pu&apos; contains all of &apos;next&apos;.&#xa;&#xa; - The tip of &apos;master&apos; is meant to be more stable than any&#xa;   tagged releases, and the users are encouraged to follow it.&#xa;&#xa; - The &apos;next&apos; branch is where new action takes place, and the&#xa;   users are encouraged to test it so that regressions and bugs&#xa;   are found before new topics are merged to &apos;master&apos;.&#xa;&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+</node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1915878443" 
 	TEXT="总结：">
 <edge STYLE="bezier" WIDTH="thin"/>
@@ -2419,6 +2741,15 @@
 </node>
 <node COLOR="#990000" ID="ID_1996763168" 
 	TEXT="我们已经知道如何操作本地分支，对于远程版本库的分支如何操作以及和本地分支的关系如何？">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1532593470" 
+	TEXT="git config 配置中的 .merge 和 .rebase">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_319938031" 
+	TEXT="See `branch.&lt;name&gt;.rebase` in linkgit:git-config[1] if you want to make `git pull` always use `{litdd}rebase` instead of merging. ">
 <font NAME="Serif" SIZE="14"/>
 </node>
 </node>
@@ -2600,6 +2931,31 @@
 <font NAME="Serif" SIZE="16"/>
 </node>
 </node>
+<node COLOR="#0033ff" FOLDED="true" ID="ID_64232537" POSITION="right" 
+	TEXT="Git 定制">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="Serif" SIZE="18"/>
+<node COLOR="#00b439" ID="ID_83627666" 
+	TEXT="git config 各个选项">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" ID="ID_426928459" 
+	TEXT="模板">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" ID="ID_1455669451" 
+	TEXT="属性">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" ID="ID_1778813255" 
+	TEXT="git hooks">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+</node>
+</node>
 <node COLOR="#0033ff" FOLDED="true" ID="ID_241320967" POSITION="right" 
 	TEXT="Git 其它内容">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
@@ -2658,6 +3014,15 @@
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" ID="ID_316957658" 
 	TEXT="$ git prune -n&#xa;2302a5a4baec369fb631bb89cfe287cc002dc049&#xa;5e069ed35afae29015b6622fe715c0aee10112ad&#xa;8276318347b8e971733ca5fab77c8f5018c75261&#xa;8e1088e1cc1bc67e0ef01e018707dcb07a2a562b&#xa;cb54512d0a989dcfb2d78a7f3c8909f76ad2326a&#xa;$ git prune&#xa;$ git fsck&#xa;$&#xa;blob&#xa;blob&#xa;tree&#xa;tree&#xa;blob&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_640899539" 
+	TEXT="git notes">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_861826055" 
+	TEXT="可以为提交说明添加评注。">
 <font NAME="Serif" SIZE="14"/>
 </node>
 </node>
