@@ -46,6 +46,126 @@
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 </node>
+<node COLOR="#00b439" ID="ID_190902118" 
+	TEXT="Since Linus had (and still has) a passionate dislike of just about all&#xa;existing source code management systems, he decided to write his&#xa;own. Thus, in April of 2005, Git was born. A few months later, in July,&#xa;maintenance was turned over to Junio Hamano, who has maintained&#xa;the project ever since.&#xa;“I’m an egotistical bastard, and I name all my projects after myself.&#xa;First Linux, now git.” – Linus&#xa;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+</node>
+</node>
+<node COLOR="#0033ff" FOLDED="true" ID="ID_705771263" POSITION="right" 
+	TEXT="Git 安装">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="Serif" SIZE="18"/>
+<node COLOR="#00b439" FOLDED="true" ID="ID_580181661" 
+	TEXT="Linux 下的安装">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_1213896275" 
+	TEXT="  $ make configure ;# as yourself&#xa;  $ ./configure --prefix=/usr ;# as yourself&#xa;  $ make all doc ;# as yourself&#xa;  # make install install-doc install-html;# as root&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_600654023" 
+	TEXT="$ wget http://kernel.org/pub/software/scm/git/git-&#xa;1.5.4.4.tar.bz2&#xa;$ tar jxpvf git-1.5.4.4.tar.bz2&#xa;$ cd git-1.5.4.4&#xa;$ make prefix=/usr all doc info&#xa;$ sudo make prefix=/usr install install-doc install-info&#xa;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_420945151" 
+	TEXT="git 还是 git-core">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_450704299" 
+	TEXT="原因是很早就有一款软件占用了 git 这一名称： gnuit">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1866983047" 
+	TEXT="gnuit">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_603527454" 
+	TEXT=" GNU Interactive Tools, a file browser/viewer and process viewer/killer&#xa; gnuit (GNU Interactive Tools) is a set of interactive text-mode tools,&#xa; closely integrated with the shell.  It contains an extensible file&#xa; system browser (similar to Norton Commander and XTree), an ASCII/hex&#xa; file viewer, a process viewer/killer and some other related utilities&#xa; and shell scripts.  It can be used to increase the speed and&#xa; efficiency of most of the daily tasks such as copying and moving&#xa; files and directories, invoking editors, compressing and&#xa; uncompressing files, creating and expanding archives, compiling&#xa; programs, sending mail, etc.  It looks nice, has colors (if the&#xa; standard ANSI color sequences are supported) and is user-friendly.&#xa; .&#xa; One of the main advantages of gnuit is its flexibility.  It is not&#xa; limited to a given set of commands.  The configuration file can be&#xa; easily enhanced, allowing the user to add new commands or file&#xa; operations, depending on its needs or preferences.&#xa;Homepage: http://www.gnu.org/software/gnuit/&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_296073571" 
+	TEXT="Debian 老版本的 git 包实为 gnuit 包">
+<node COLOR="#111111" ID="ID_1371883243" 
+	TEXT="git:&#xa;  已安装：  1:1.7.2.3-2&#xa;  候选软件包：1:1.7.2.3-2&#xa;  版本列表：&#xa; *** 1:1.7.2.3-2 0&#xa;        990 http://mirrors.bj.ossxp.com/debian/ testing/main amd64 Packages&#xa;         80 http://mirrors.bj.ossxp.com/debian/ sid/main amd64 Packages&#xa;        100 /var/lib/dpkg/status&#xa;     4.9.4-1 0&#xa;         70 http://mirrors.bj.ossxp.com/debian/ stable/main amd64 Packages&#xa;"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_886958634" 
+	TEXT="dpkg -s">
+<node COLOR="#111111" ID="ID_800498408" 
+	TEXT="Package: git&#xa;Priority: optional&#xa;Section: utils&#xa;Installed-Size: 60&#xa;Maintainer: Ian Beckwith &lt;ianb@erislabs.net&gt;&#xa;Architecture: all&#xa;Source: gnuit&#xa;Version: 4.9.4-1&#xa;Depends: gnuit&#xa;Filename: pool/main/g/gnuit/git_4.9.4-1_all.deb&#xa;Size: 12138&#xa;MD5sum: 9f4ed528dc0b09b3567bd78a460aca6e&#xa;SHA1: 764c981be227bbac7339d9f78f7ffe6827ddd83c&#xa;SHA256: a5302c20887c6e2cc5f4af6d610ec7d74b4cf63288f0efa39f8e249da32f4635&#xa;Description: transitional dummy package which can be safely removed&#xa; This is a transitional dummy package to pull in the renamed&#xa; gnuit package. It can be safely removed.&#xa;"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_309921020" 
+	TEXT="Debian 最早 Git  只好叫做 git-core">
+<node COLOR="#111111" ID="ID_815385924" 
+	TEXT="git-core:&#xa;  已安装：  1:1.7.2.3-2&#xa;  候选软件包：1:1.7.2.3-2&#xa;  版本列表：&#xa; *** 1:1.7.2.3-2 0&#xa;        990 http://mirrors.bj.ossxp.com/debian/ testing/main amd64 Packages&#xa;         80 http://mirrors.bj.ossxp.com/debian/ sid/main amd64 Packages&#xa;        100 /var/lib/dpkg/status&#xa;     1:1.5.6.5-3+lenny3.2 0&#xa;         70 http://mirrors.bj.ossxp.com/debian-security/ stable/updates/main amd64 Packages&#xa;     1:1.5.6.5-3+lenny3.1 0&#xa;         70 http://mirrors.bj.ossxp.com/debian/ stable/main amd64 Packages&#xa;"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1960475671" 
+	TEXT="dpkg -s">
+<node COLOR="#111111" ID="ID_382899462" 
+	TEXT="Package: git-core&#xa;Priority: optional&#xa;Section: devel&#xa;Installed-Size: 6944&#xa;Maintainer: Gerrit Pape &lt;pape@smarden.org&gt;&#xa;Architecture: amd64&#xa;Version: 1:1.5.6.5-3+lenny3.1&#xa;Replaces: cogito (&lt;&lt; 0.16rc2-0), git-completion&#xa;Provides: git-completion&#xa;Depends: libc6 (&gt;= 2.7-1), libcurl3-gnutls (&gt;= 7.16.2-1), libexpat1 (&gt;= 1.95.8), zlib1g (&gt;= 1:1.2.0), perl-modules, liberror-perl, libdigest-sha1-perl&#xa;Recommends: patch, less, rsync, ssh-client&#xa;Suggests: git-doc, git-arch, git-cvs, git-svn, git-email, git-daemon-run, git-gui, gitk, gitweb&#xa;Conflicts: git (&lt;&lt; 4.3.20-11), git-completion, qgit (&lt;&lt; 1.5.5)&#xa;Filename: pool/main/g/git-core/git-core_1.5.6.5-3+lenny3.1_amd64.deb&#xa;Size: 3419794&#xa;MD5sum: 6ce2265e04a19bf21988494d4357adeb&#xa;SHA1: e7e30c35d4eed8b9ce1615ce05a302d62047f0a8&#xa;SHA256: c426cd77bbc9d4fa09d8b872b9b9c382a62d667ef43a1b2ab072f7c98ed5b2e7&#xa;Description: fast, scalable, distributed revision control system&#xa; Git is popular version control system designed to handle very large&#xa; projects with speed and efficiency; it is used mainly for various open&#xa; source projects, most notably the Linux kernel.&#xa; .&#xa; Git falls in the category of distributed source code management tools.&#xa; Every Git working directory is a full-fledged repository with full&#xa; revision tracking capabilities, not dependent on network access or a&#xa; central server.&#xa; .&#xa; This package provides the git main components with minimal dependencies.&#xa; Additional functionality, e.g. a graphical user interface and revision&#xa; tree visualizer, tools for interoperating with other VCS&apos;s, or a web&#xa; interface, is provided as separate git* packages.&#xa;Tag: devel::rcs, implemented-in::{c,perl,shell}, interface::commandline, network::client, role::program, works-with::file, works-with::software:source&#xa;&#xa;"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1536033833" 
+	TEXT="Debian 最新的 git 包提供 Git 软件">
+<node COLOR="#111111" ID="ID_112080065" 
+	TEXT="git:&#xa;  已安装：  1:1.7.2.3-2&#xa;  候选软件包：1:1.7.2.3-2&#xa;  版本列表：&#xa; *** 1:1.7.2.3-2 0&#xa;        990 http://mirrors.bj.ossxp.com/debian/ testing/main amd64 Packages&#xa;         80 http://mirrors.bj.ossxp.com/debian/ sid/main amd64 Packages&#xa;        100 /var/lib/dpkg/status&#xa;     4.9.4-1 0&#xa;         70 http://mirrors.bj.ossxp.com/debian/ stable/main amd64 Packages&#xa;"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1910686336" 
+	TEXT="dpkg -s">
+<node COLOR="#111111" ID="ID_867847012" 
+	TEXT="Package: git&#xa;Priority: optional&#xa;Section: vcs&#xa;Installed-Size: 10548&#xa;Maintainer: Gerrit Pape &lt;pape@smarden.org&gt;&#xa;Architecture: amd64&#xa;Version: 1:1.7.2.3-2&#xa;Replaces: cogito (&lt;&lt; 0.16rc2-0), git-core (&lt;= 1:1.7.0.4-1)&#xa;Provides: git-completion, git-core&#xa;Depends: libc6 (&gt;= 2.3.4), libcurl3-gnutls (&gt;= 7.16.2-1), libexpat1 (&gt;= 1.95.8), zlib1g (&gt;= 1:1.2.0), perl-modules, liberror-perl&#xa;Recommends: patch, less, rsync, ssh-client&#xa;Suggests: git-doc, git-arch, git-cvs, git-svn, git-email, git-daemon-run, git-gui, gitk, gitweb&#xa;Conflicts: git-core (&lt;= 1:1.7.0.4-1)&#xa;Breaks: cogito (&lt;= 0.18.2+), git-buildpackage (&lt;&lt; 0.4.38), gitosis (&lt;&lt; 0.2+20090917-7), gitpkg (&lt;&lt; 0.15), guilt (&lt;&lt; 0.33), qgit (&lt;&lt; 1.5.5), stgit (&lt;&lt; 0.15), stgit-contrib (&lt;&lt; 0.15)&#xa;Filename: pool/main/g/git/git_1.7.2.3-2_amd64.deb&#xa;Size: 5270132&#xa;MD5sum: 6c6d1847c91001ac1ed0c97c6a9992bc&#xa;SHA1: 66b4d0594031daf617b7c277b6ac3ccfd41bf5eb&#xa;SHA256: 8f4e8dc6464c38436b59fe6e0b9f1fbb70ed6e74692bf832d169c445e0730664&#xa;Description: fast, scalable, distributed revision control system&#xa; Git is popular version control system designed to handle very large&#xa; projects with speed and efficiency; it is used for many high profile&#xa; open source projects, most notably the Linux kernel.&#xa; .&#xa; Git falls in the category of distributed source code management tools.&#xa; Every Git working directory is a full-fledged repository with full&#xa; revision tracking capabilities, not dependent on network access or a&#xa; central server.&#xa; .&#xa; This package provides the git main components with minimal dependencies.&#xa; Additional functionality, e.g. a graphical user interface and revision&#xa; tree visualizer, tools for interoperating with other VCS&apos;s, or a web&#xa; interface, is provided as separate git* packages.&#xa;Homepage: http://git-scm.com/&#xa;Tag: implemented-in::c, interface::text-mode, role::dummy, role::program, scope::utility, suite::gnu, uitoolkit::ncurses, use::browsing, works-with::file, works-with::software:running&#xa;"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1460656238" 
+	TEXT="Debian 最新的 git-core 包依赖新版本的 git 包">
+<node COLOR="#111111" ID="ID_538712220" 
+	TEXT="git-core:&#xa;  已安装：  1:1.7.2.3-2&#xa;  候选软件包：1:1.7.2.3-2&#xa;  版本列表：&#xa; *** 1:1.7.2.3-2 0&#xa;        990 http://mirrors.bj.ossxp.com/debian/ testing/main amd64 Packages&#xa;         80 http://mirrors.bj.ossxp.com/debian/ sid/main amd64 Packages&#xa;        100 /var/lib/dpkg/status&#xa;     1:1.5.6.5-3+lenny3.2 0&#xa;         70 http://mirrors.bj.ossxp.com/debian-security/ stable/updates/main amd64 Packages&#xa;     1:1.5.6.5-3+lenny3.1 0&#xa;         70 http://mirrors.bj.ossxp.com/debian/ stable/main amd64 Packages&#xa;"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_560481168" 
+	TEXT="dpkg -s">
+<node COLOR="#111111" ID="ID_1783571111" 
+	TEXT="Package: git-core&#xa;Priority: optional&#xa;Section: vcs&#xa;Installed-Size: 28&#xa;Maintainer: Gerrit Pape &lt;pape@smarden.org&gt;&#xa;Architecture: all&#xa;Source: git&#xa;Version: 1:1.7.2.3-2&#xa;Depends: git (&gt;&gt; 1:1.7.0.2)&#xa;Filename: pool/main/g/git/git-core_1.7.2.3-2_all.deb&#xa;Size: 1326&#xa;MD5sum: 899bd23a36fe74b05d4c7b7b2e0be5d8&#xa;SHA1: c90e70895731c4d8bfb4b284f14628f8fbbbee1a&#xa;SHA256: 8be7a21bd50de7dd719a5b22268d1930a730eff4650a67e7b731ac6d9c5743c0&#xa;Description: fast, scalable, distributed revision control system (obsolete)&#xa; Git is popular version control system designed to handle very large&#xa; projects with speed and efficiency; it is used for many high profile&#xa; open source projects, most notably the Linux kernel.&#xa; .&#xa; Git falls in the category of distributed source code management tools.&#xa; Every Git working directory is a full-fledged repository with full&#xa; revision tracking capabilities, not dependent on network access or a&#xa; central server.&#xa; .&#xa; This is a transitional dummy package.  The &apos;git-core&apos; package has been&#xa; renamed to &apos;git&apos;, which has been installed automatically.  This&#xa; git-core package is now obsolete, and can safely be removed from the&#xa; system.&#xa;Homepage: http://git-scm.com/&#xa;Tag: devel::rcs, implemented-in::{c,perl,shell}, interface::commandline, network::client, network::server, protocol::http, protocol::ssh, role::program, scope::application, works-with::{file,software:source,vcs}&#xa;"/>
+</node>
+</node>
+</node>
+<node COLOR="#990000" ID="ID_1534081128" 
+	TEXT="$ apt-get git-core&#xa;$ yum install git-core ">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1839388168" 
+	TEXT="Mac 下安装">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_1238691862" 
+	TEXT="Mac 10.4 – Tiger&#xa;There are some requirements you’ll have to install before you can&#xa;compile Git. Expat can be installed roughly like this:&#xa;curl -O http://surfnet.dl.sourceforge.net/sourceforge/expat/&#xa;expat-2.0.1.tar.gz&#xa;tar zxvf expat-2.0.1.tar.gz&#xa;cd expat-2.0.1&#xa;./configure --prefix=/usr/local&#xa;make&#xa;make check&#xa;sudo make install&#xa;cd ..&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1786486760" 
+	TEXT="Mac Ports">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1220925992" 
+	TEXT="$ sudo port install git-core"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_222454979" 
+	TEXT="Mac 10.5">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_199506283" 
+	TEXT="Mac 10.5 – Leopard&#xa;The easiest way to install is most likely the “Git OSX Installer”:http://&#xa;code.google.com/p/git-osx-installer/, which you can get from Google&#xa;Code, and has just recently been linked to as the official Mac ver-&#xa;sion on the Git homepage. Just download and run the DMG from the&#xa;website.&#xa;If you want to compile from source, all the requirements are installed&#xa;with the developer CD. You can just download the Git source and&#xa;compile pretty easily if the developer tools are installed.&#xa;Finally, MacPorts is also an easy option if you have that installed.&#xa;For an in-depth tutorial on installations under Leopard, see this&#xa;article (http://blog.kineticweb.com/articles/2007/10/30/compiling-git-for-mac-os-x-&#xa;leopard-10-5)&#xa;"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_938474165" 
+	TEXT="Windows">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_435486463" 
+	TEXT="Msysgit">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1330993112" 
+	TEXT="cygwin">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
 </node>
 <node COLOR="#0033ff" FOLDED="true" ID="ID_1873664526" POSITION="right" 
 	TEXT="Git 基础（单用户（solo）">
@@ -866,7 +986,7 @@
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_570563852" 
-	TEXT="撤销操作">
+	TEXT="撤销操作（删除核弹起爆码）">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" FOLDED="true" ID="ID_1275319654" 
@@ -1010,6 +1130,31 @@
 	TEXT="引用指向一个提交"/>
 <node COLOR="#111111" ID="ID_879042389" 
 	TEXT="分支的历史是和相关的。"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1549301818" 
+	TEXT="DAG 畅想">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_767712039" 
+	TEXT="可能构成环路，导致死循环么？ Git 根本不用在死循环判断上浪费一行代码">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_146324981" 
+	TEXT="以一个树状的 DAG 说明，如何从一点递归到根。对于版本控制来说，见到历史。">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_356306062" 
+	TEXT="对于 Subversion 做到这样很难。因为其线性提交。">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_296498879" 
+	TEXT="可否包括多颗树？可以，不对版本库进行检查。">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1844858118" 
+	TEXT="子树模型提供了一个不同版本库避免冲突的结合方案。">
+<font NAME="Serif" SIZE="14"/>
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_617927665" 
@@ -2517,6 +2662,38 @@
 </node>
 </node>
 </node>
+<node COLOR="#0033ff" FOLDED="true" ID="ID_1872967347" POSITION="right" 
+	TEXT="Git 工具">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="Serif" SIZE="18"/>
+<node COLOR="#00b439" FOLDED="true" ID="ID_995570865" 
+	TEXT="gitk">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_333132495" 
+	TEXT="fast, scalable, distributed revision control system (revision tree visualizer)&#xa; Git is popular version control system designed to handle very large&#xa; projects with speed and efficiency; it is used for many high profile&#xa; open source projects, most notably the Linux kernel.&#xa; .&#xa; Git falls in the category of distributed source code management tools.&#xa; Every Git working directory is a full-fledged repository with full&#xa; revision tracking capabilities, not dependent on network access or a&#xa; central server.&#xa; .&#xa; This package provides the gitk program, a tcl/tk revision tree visualizer.&#xa;Homepage: http://git-scm.com/&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1293015054" 
+	TEXT="gitg">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_1596076267" 
+	TEXT="git repository viewer for gtk+/GNOME&#xa; gitg is a fast GTK2 git repository browser for the GNOME desktop.&#xa; It currently features:&#xa; .&#xa;  * Loading large repositories very fast&#xa;  * Show/browse repository history&#xa;  * Show highlighted revision diff&#xa;  * Browse file tree of a revision and export by drag and drop&#xa;  * Search in the revision history on subject, author or hash&#xa;  * Switch between history view of branches easily&#xa;  * Commit view providing per hunk stage/unstage and commit&#xa;Homepage: http://trac.novowork.com/gitg/&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1801029123" 
+	TEXT="qgit">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_1186169511" 
+	TEXT="Qt application for viewing GIT trees&#xa; With qgit you will be able to browse revision tree, view patch content&#xa; and changed files, graphically following different development branches.&#xa; Main features:&#xa;  - View revisions, diffs, files history, files annotation, archive tree.&#xa;  - Commit changes visually cherry picking modified files.&#xa;  - Apply or format patch series from selected commits, drag and&#xa;    drop commits between two instances of qgit.&#xa;  - qgit implements a GUI for the most common StGIT commands like push/pop&#xa;    and apply/format patches. You can also create new patches or refresh&#xa;    current top one using the same semantics of git commit, i.e.&#xa;    cherry picking single modified files.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+</node>
 <node COLOR="#0033ff" FOLDED="true" ID="ID_180033128" POSITION="right" 
 	TEXT="Git 命令索引">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
@@ -2540,20 +2717,6 @@
 	TEXT="git ">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
-</node>
-</node>
-<node COLOR="#0033ff" FOLDED="true" ID="ID_705771263" POSITION="right" 
-	TEXT="Git 安装">
-<edge STYLE="sharp_bezier" WIDTH="8"/>
-<font NAME="Serif" SIZE="18"/>
-<node COLOR="#00b439" FOLDED="true" ID="ID_1536404812" 
-	TEXT="源码">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
-<node COLOR="#990000" ID="ID_1213896275" 
-	TEXT="  $ make configure ;# as yourself&#xa;  $ ./configure --prefix=/usr ;# as yourself&#xa;  $ make all doc ;# as yourself&#xa;  # make install install-doc install-html;# as root&#xa;">
-<font NAME="Serif" SIZE="14"/>
-</node>
 </node>
 </node>
 <node COLOR="#0033ff" FOLDED="true" ID="ID_179605721" POSITION="right" 
