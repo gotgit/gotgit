@@ -56,6 +56,117 @@
 	TEXT="Git 版本演进">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="Serif" SIZE="18"/>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1382353423" 
+	TEXT="新内容">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_1458306811" 
+	TEXT="sparse checkout">
+<arrowlink DESTINATION="ID_1175431394" ENDARROW="Default" ENDINCLINATION="496;0;" ID="Arrow_ID_528443662" STARTARROW="None" STARTINCLINATION="496;0;"/>
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_672690286" 
+	TEXT="init 时的模板">
+<arrowlink DESTINATION="ID_1873318436" ENDARROW="Default" ENDINCLINATION="385;0;" ID="Arrow_ID_1295226355" STARTARROW="None" STARTINCLINATION="385;0;"/>
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_932135575" 
+	TEXT="git cherry-pick 和 git revert 支持版本范围">
+<arrowlink DESTINATION="ID_802982994" ENDARROW="Default" ENDINCLINATION="307;0;" ID="Arrow_ID_810873421" STARTARROW="None" STARTINCLINATION="307;0;"/>
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1188644332" 
+	TEXT="core.eol 和 text/eol 属性">
+<arrowlink DESTINATION="ID_1826224759" ENDARROW="Default" ENDINCLINATION="423;0;" ID="Arrow_ID_83864035" STARTARROW="None" STARTINCLINATION="423;0;"/>
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1058200960" 
+	TEXT="git status --ignored 可以显示忽略的文件">
+<arrowlink DESTINATION="ID_1190862969" ENDARROW="Default" ENDINCLINATION="484;0;" ID="Arrow_ID_937212414" STARTARROW="None" STARTINCLINATION="484;0;"/>
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1207534196" 
+	TEXT="git checkout --orphan">
+<arrowlink DESTINATION="ID_378477505" ENDARROW="Default" ENDINCLINATION="622;0;" ID="Arrow_ID_634206484" STARTARROW="None" STARTINCLINATION="622;0;"/>
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1281981464" 
+	TEXT="git status -s -b">
+<arrowlink DESTINATION="ID_472554416" ENDARROW="Default" ENDINCLINATION="736;0;" ID="Arrow_ID_1628952368" STARTARROW="None" STARTINCLINATION="736;0;"/>
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_22869168" 
+	TEXT="git merge -Xsubtree=path/to/dir">
+<arrowlink DESTINATION="ID_750449377" ENDARROW="Default" ENDINCLINATION="453;0;" ID="Arrow_ID_881115965" STARTARROW="None" STARTINCLINATION="453;0;"/>
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1342349696" 
+	TEXT="git rebase 命令也支持 -X 参数。">
+<arrowlink DESTINATION="ID_571745435" ENDARROW="Default" ENDINCLINATION="598;0;" ID="Arrow_ID_1769794447" STARTARROW="None" STARTINCLINATION="598;0;"/>
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_394112014" 
+	TEXT="git branch origin --delete branch： 删除远程分支的新语法">
+<arrowlink DESTINATION="ID_410954959" ENDARROW="Default" ENDINCLINATION="378;0;" ID="Arrow_ID_1625689504" STARTARROW="None" STARTINCLINATION="378;0;"/>
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1384571588" 
+	TEXT="git rebase -i 支持 fixup 命令">
+<arrowlink DESTINATION="ID_1885089706" ENDARROW="Default" ENDINCLINATION="436;0;" ID="Arrow_ID_858133395" STARTARROW="None" STARTINCLINATION="436;0;"/>
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" ID="ID_1845192798" 
+	TEXT="git remote set-url">
+<arrowlink DESTINATION="ID_1856626110" ENDARROW="Default" ENDINCLINATION="596;0;" ID="Arrow_ID_1339127841" STARTARROW="None" STARTINCLINATION="596;0;"/>
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_403948176" 
+	TEXT="git status 在 1.7 版本支持 -s 参数">
+<arrowlink DESTINATION="ID_1647068944" ENDARROW="Default" ENDINCLINATION="388;0;" ID="Arrow_ID_988979998" STARTARROW="None" STARTINCLINATION="388;0;"/>
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1861062746" 
+	TEXT="git 1.6.6 起，提供智能HTTP支持">
+<arrowlink DESTINATION="ID_376577638" ENDARROW="Default" ENDINCLINATION="241;0;" ID="Arrow_ID_401487274" STARTARROW="None" STARTINCLINATION="241;0;"/>
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1000616699" 
+	TEXT="git 1.6.6 起，当检出一个不存在分支，但是在 remotes 中存在，自动创建本地跟踪分支。">
+<arrowlink DESTINATION="ID_1573102995" ENDARROW="Default" ENDINCLINATION="242;0;" ID="Arrow_ID_1420657099" STARTARROW="None" STARTINCLINATION="242;0;"/>
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_25188869" 
+	TEXT="git 1.6.6 起，git commit -c/-C/--amend 参数，使用新的 committer ID，而不用原 log 中的。">
+<arrowlink DESTINATION="ID_289042464" ENDARROW="Default" ENDINCLINATION="300;0;" ID="Arrow_ID_1069921645" STARTARROW="None" STARTINCLINATION="300;0;"/>
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1120410514" 
+	TEXT="git 1.6.6 起，新的 git notes 命令，可以为提交附加注释">
+<arrowlink DESTINATION="ID_357086736" ENDARROW="Default" ENDINCLINATION="585;0;" ID="Arrow_ID_166593595" STARTARROW="None" STARTINCLINATION="585;0;"/>
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1176516418" 
+	TEXT="git 1.6.6 起，git rebase -i 支持 reword 参数，修改历史提交的说明">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_599598790" 
+	TEXT="git 1.6.6 起，git-svn 支持  svn 1.5的  mergetrack。">
+<arrowlink DESTINATION="ID_562935013" ENDARROW="Default" ENDINCLINATION="397;0;" ID="Arrow_ID_1062677327" STARTARROW="None" STARTINCLINATION="397;0;"/>
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_791961332" 
+	TEXT="git 1.5.6，core.ignorecase 可以对大小写不敏感的文件系统提供支持">
+<arrowlink DESTINATION="ID_1286567135" ENDARROW="Default" ENDINCLINATION="377;0;" ID="Arrow_ID_1839525646" STARTARROW="None" STARTINCLINATION="377;0;"/>
+<arrowlink DESTINATION="ID_1286567135" ENDARROW="Default" ENDINCLINATION="377;0;" ID="Arrow_ID_646282505" STARTARROW="None" STARTINCLINATION="377;0;"/>
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1669471019" 
+	TEXT="git 1.5.4, git ci --allow-empty">
+<arrowlink DESTINATION="ID_1054041252" ENDARROW="Default" ENDINCLINATION="1281;0;" ID="Arrow_ID_1202135371" STARTARROW="None" STARTINCLINATION="1281;0;"/>
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1002140911" 
 	TEXT="1.7.4">
 <edge STYLE="bezier" WIDTH="thin"/>
@@ -249,6 +360,16 @@
 <node COLOR="#111111" ID="ID_1200000649" 
 	TEXT=" * &quot;git cherry-pick&quot; learned to pick a range of commits&#xa;   (e.g. &quot;cherry-pick A..B&quot; and &quot;cherry-pick --stdin&quot;), so did &quot;git&#xa;   revert&quot;; these do not support the nicer sequencing control &quot;rebase&#xa;   [-i]&quot; has, though.&#xa;"/>
 </node>
+<node COLOR="#990000" FOLDED="true" ID="ID_635893099" 
+	TEXT="git cherry-pick 和 git-revert 支持 --strategy 参数了">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_1604019951" 
+	TEXT=" * &quot;git cherry-pick&quot; and &quot;git revert&quot; learned --strategy option to specify&#xa;   the merge strategy to be used when performing three-way merges.&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
 <node COLOR="#990000" FOLDED="true" ID="ID_1826224759" 
 	TEXT="增加了 core.eol 配置和 text/eol 属性，设置文件的换行符">
 <font NAME="Serif" SIZE="14"/>
@@ -266,6 +387,12 @@
 <icon BUILTIN="info"/>
 <node COLOR="#111111" ID="ID_1161450988" 
 	TEXT=" * core.autocrlf has been made safer - it will now only handle line&#xa;   endings for new files and files that are LF-only in the&#xa;   repository. To normalize content that has been checked in with&#xa;   CRLF, use the new eol/text attributes."/>
+</node>
+<node COLOR="#990000" ID="ID_1190862969" 
+	TEXT=" * &quot;git status [-s] --ignored&quot; can be used to list ignored paths.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
 </node>
 <node COLOR="#990000" ID="ID_627208393" 
 	TEXT=" * The whitespace rules used in &quot;git apply --whitespace&quot; and &quot;git diff&quot;&#xa;   gained a new member in the family (tab-in-indent) to help projects with&#xa;   policy to indent only with spaces.&#xa;">
@@ -288,6 +415,106 @@
 <node COLOR="#111111" ID="ID_1976543874" 
 	TEXT=" * &quot;git checkout --orphan newbranch&quot; is similar to &quot;-b newbranch&quot; but&#xa;   prepares to create a root commit that is not connected to any existing&#xa;   commit.&#xa;"/>
 </node>
+<node COLOR="#990000" ID="ID_1632468552" 
+	TEXT=" * &quot;git diff --word-diff=&lt;mode&gt;&quot; extends the existing &quot;--color-words&quot;&#xa;   option, making it more useful in color-challenged environments.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_472554416" 
+	TEXT=" * &quot;git status -s -b&quot; shows the current branch in the output.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" ID="ID_688470198" 
+	TEXT=" * &quot;git status&quot; learned &quot;--ignore-submodules&quot; option.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" ID="ID_1679241762" 
+	TEXT=" * &quot;git help -w&quot; learned &quot;chrome&quot; and &quot;chromium&quot; browsers.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" ID="ID_711992749" 
+	TEXT=" * &quot;git notes prune&quot; learned &quot;-n&quot; (dry-run) and &quot;-v&quot; options, similar to&#xa;   what &quot;git prune&quot; has.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" ID="ID_328957149" 
+	TEXT=" * &quot;git remote&quot; learned &quot;set-branches&quot; subcommand.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_527495663" 
+	TEXT="解决了 file:// 协议中出现 % 的问题">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="messagebox_warning"/>
+<node COLOR="#111111" ID="ID_1063583180" 
+	TEXT=" * We didn&apos;t URL decode &quot;file:///path/to/repo&quot; correctly when path/to/repo&#xa;   had percent-encoded characters (638794c, 9d2e942, ce83eda, 3c73a1d)."/>
+</node>
+<node COLOR="#990000" ID="ID_1757862963" 
+	TEXT=" * The regexp to detect function headers used by &quot;git diff&quot; for PHP has&#xa;   been enhanced for visibility modifiers (public, protected, etc.) to&#xa;   better support PHP5.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1876033116" 
+	TEXT=" * &quot;diff.noprefix&quot; configuration variable can be used to implicitly&#xa;   ask for &quot;diff --no-prefix&quot; behaviour.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1850195503" 
+	TEXT=" * &quot;git for-each-ref&quot; learned &quot;%(objectname:short)&quot; that gives the object&#xa;   name abbreviated.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_597764004" 
+	TEXT=" * &quot;git format-patch&quot; learned --signature option and format.signature&#xa;   configuration variable to customize the e-mail signature used in the&#xa;   output.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1957809845" 
+	TEXT=" * Various options to &quot;git grep&quot; (e.g. --count, --name-only) work better&#xa;   with binary files.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_912960538" 
+	TEXT=" * &quot;git grep&quot; learned &quot;-Ovi&quot; to open the files with hits in your editor.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1986689095" 
+	TEXT=" * &quot;git log --decorate&quot; shows commit decorations in various colours.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1544041030" 
+	TEXT=" * &quot;git log --follow &lt;path&gt;&quot; follows across copies (it used to only follow&#xa;   renames).  This may make the processing more expensive.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1232038261" 
+	TEXT=" * &quot;git log --pretty=format:&lt;template&gt;&quot; specifier learned &quot;% &lt;something&gt;&quot;&#xa;   magic that inserts a space only when %&lt;something&gt; expands to a&#xa;   non-empty string; this is similar to &quot;%+&lt;something&gt;&quot; magic, but is&#xa;   useful in a context to generate a single line output.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_197032726" 
+	TEXT=" * &quot;git patch-id&quot; can be fed a mbox without getting confused by the&#xa;   signature line in the format-patch output.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_499106353" 
+	TEXT=" * &quot;git rev-list A..B&quot; learned --ancestry-path option to further limit&#xa;   the result to the commits that are on the ancestry chain between A and&#xa;   B (i.e. commits that are not descendants of A are excluded).&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1260421500" 
+	TEXT=" * &quot;git show -5&quot; is equivalent to &quot;git show --do-walk 5&quot;; this is similar&#xa;   to the update to make &quot;git show master..next&quot; walk the history,&#xa;   introduced in 1.6.4.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_823321367" 
+	TEXT=" * Various &quot;gitweb&quot; enhancements and clean-ups, including syntax&#xa;   highlighting, &quot;plackup&quot; support for instaweb, .fcgi suffix to run&#xa;   it as FastCGI script, etc.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_426462981" 
+	TEXT=" * The test harness has been updated to produce TAP-friendly output.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1181885261" 
+	TEXT=" * Many documentation improvement patches are also included.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_383370029" 
+	TEXT=" * &quot;git cvsserver&quot; can be told to use pserver; its password file can be&#xa;   stored outside the repository.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
 <node COLOR="#990000" ID="ID_1001228511" 
 	TEXT=" * &quot;git blame&quot; applies the textconv filter to the contents it works&#xa;   on, when available.&#xa;&#xa;">
 <font NAME="Serif" SIZE="14"/>
@@ -300,6 +527,578 @@
 </node>
 <node COLOR="#990000" ID="ID_1358770686" 
 	TEXT=" * &quot;git&quot; wrapper learned &quot;-c name=value&quot; option to override configuration    variable from the command line. ">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_573848694" 
+	TEXT="1.7.1">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_1873318436" 
+	TEXT="git init 可以检查 init.templatedir 配置的模板目录">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_953360056" 
+	TEXT=" * &quot;git init&quot; can be told to look at init.templatedir configuration&#xa;   variable (obviously that has to come from either /etc/gitconfig or&#xa;   $HOME/.gitconfig).&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1610082031" 
+	TEXT="TEMPLATE DIRECTORY&#xa;       The template directory contains files and directories that will be copied to the $GIT_DIR after it is created.&#xa;&#xa;       The template directory used will (in order):&#xa;&#xa;       ·   The argument given with the --template option.&#xa;&#xa;       ·   The contents of the $GIT_TEMPLATE_DIR environment variable.&#xa;&#xa;       ·   The init.templatedir configuration variable.&#xa;&#xa;       ·   The default template directory: /usr/share/git-core/templates.&#xa;&#xa;       The default template directory includes some directory structure, some suggested &quot;exclude patterns&quot;, and copies of sample &quot;hook&quot; files. The&#xa;       suggested patterns and hook files are all modifiable and extensible.&#xa;&#xa;"/>
+</node>
+<node COLOR="#990000" ID="ID_624451505" 
+	TEXT=" * &quot;git notes&quot; command has been rewritten in C and learned many commands&#xa;   and features to help you carry notes forward across rebases and amends.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" ID="ID_1446785559" 
+	TEXT=" * &quot;git reset&quot; learned &quot;--keep&quot; option that lets you discard commits&#xa;   near the tip while preserving your local changes in a way similar&#xa;   to how &quot;git checkout branch&quot; does.">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" ID="ID_776560351" 
+	TEXT=" * &quot;git request-pull&quot; identifies the commit the request is relative to in&#xa;   a more readable way.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1330094415" 
+	TEXT="一些命令如 git svn, http 界面等交互式询问口令，可以通过 GIT_ASKPASS 设置外部程序读取口令">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1478313828" 
+	TEXT=" * Some commands (e.g. svn and http interfaces) that interactively ask&#xa;   for a password can be told to use an external program given via&#xa;   GIT_ASKPASS.&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_41776530" 
+	TEXT="冲突的标识更易让 diff3 等识别">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_931924444" 
+	TEXT=" * Conflict markers that lead the common ancestor in diff3-style output&#xa;   now have a label, which hopefully would help third-party tools that&#xa;   expect one.&#xa;"/>
+</node>
+<node COLOR="#990000" ID="ID_1471313774" 
+	TEXT=" * &quot;git am&quot; learned &quot;--keep-cr&quot; option to handle inputs that are&#xa;   a mixture of changes to files with and without CRLF line endings.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1360681956" 
+	TEXT=" * &quot;git cvsimport&quot; learned -R option to leave revision mapping between&#xa;   CVS revisions and resulting git commits.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_636336495" 
+	TEXT=" * &quot;git diff --submodule&quot; notices and describes dirty submodules.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_188558849" 
+	TEXT=" * &quot;git for-each-ref&quot; learned %(symref), %(symref:short) and %(flag)&#xa;   tokens.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_672671253" 
+	TEXT=" * &quot;git hash-object --stdin-paths&quot; can take &quot;--no-filters&quot; option now.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1436326505" 
+	TEXT=" * &quot;git grep&quot; learned &quot;--no-index&quot; option, to search inside contents that&#xa;   are not managed by git.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1277976163" 
+	TEXT=" * &quot;git grep&quot; learned --color=auto/always/never.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1953379108" 
+	TEXT=" * &quot;git grep&quot; learned to paint filename and line-number in colors.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_534895962" 
+	TEXT=" * &quot;git log -p --first-parent -m&quot; shows one-parent diff for merge&#xa;   commits, instead of showing combined diff.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1972688678" 
+	TEXT=" * &quot;git merge-file&quot; learned to use custom conflict marker size and also&#xa;   to use the &quot;union merge&quot; behaviour.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_476752935" 
+	TEXT=" * &quot;git status&quot; notices and describes dirty submodules.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1926944721" 
+	TEXT=" * &quot;git svn&quot; should work better when interacting with repositories&#xa;   with CRLF line endings.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1223400416" 
+	TEXT=" * &quot;git imap-send&quot; learned to support CRAM-MD5 authentication.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1718360383" 
+	TEXT=" * &quot;gitweb&quot; installation procedure can use &quot;minified&quot; js/css files&#xa;   better.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_379311746" 
+	TEXT=" * Various documentation updates.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1070179243" 
+	TEXT="1.7.0">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_1775879331" 
+	TEXT="当向远程带工作区版本库的当前分支 push 时，禁止！（1.6.2以后就已经开始警告了）">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_861857010" 
+	TEXT=" * &quot;git push&quot; into a branch that is currently checked out (i.e. pointed at by&#xa;   HEAD in a repository that is not bare) is refused by default.&#xa;&#xa;   Similarly, &quot;git push $there :$killed&quot; to delete the branch $killed&#xa;   in a remote repository $there, when $killed branch is the current&#xa;   branch pointed at by its HEAD, will be refused by default.&#xa;&#xa;   Setting the configuration variables receive.denyCurrentBranch and&#xa;   receive.denyDeleteCurrent to &apos;ignore&apos; in the receiving repository&#xa;   can be used to override these safety features.&#xa;"/>
+</node>
+<node COLOR="#990000" ID="ID_739710898" 
+	TEXT="git-svn 支持 Subversion 的 merge tracks。">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1175431394" 
+	TEXT="稀疏检出支持只检出部分工作区文件">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_1004796795" 
+	TEXT=" * &quot;sparse checkout&quot; feature allows only part of the work tree to be  checked out. ">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1170051309" 
+	TEXT="设置 core.sparseCheckout 为 on"/>
+<node COLOR="#111111" ID="ID_1408659630" 
+	TEXT="Sparse checkout&#xa;&#xa;&quot;Sparse checkout&quot; allows to sparsely populate working directory. It uses skip-worktree bit (see git-update-index(1)) to tell Git whether a file on working directory is worth looking at.&#xa;&#xa;&quot;git read-tree&quot; and other merge-based commands (&quot;git merge&quot;, &quot;git checkout&quot;…) can help maintaining skip-worktree bitmap and working directory update. $GIT_DIR/info/sparse-checkout is used to define the skip-worktree reference bitmap. When &quot;git read-tree&quot; needs to update working directory, it will reset skip-worktree bit in index based on this file, which uses the same syntax as .gitignore files. If an entry matches a pattern in this file, skip-worktree will be set on that entry. Otherwise, skip-worktree will be unset.&#xa;&#xa;Then it compares the new skip-worktree value with the previous one. If skip-worktree turns from unset to set, it will add the corresponding file back. If it turns from set to unset, that file will be removed.&#xa;&#xa;While $GIT_DIR/info/sparse-checkout is usually used to specify what files are in. You can also specify what files are _not_ in, using negate patterns. For example, to remove file &quot;unwanted&quot;:&#xa;&#xa;*&#xa;!unwanted&#xa;&#xa;Another tricky thing is fully repopulating working directory when you no longer want sparse checkout. You cannot just disable &quot;sparse checkout&quot; because skip-worktree are still in the index and you working directory is still sparsely populated. You should re-populate working directory with the $GIT_DIR/info/sparse-checkout file content as follows:&#xa;&#xa;*&#xa;&#xa;Then you can disable sparse checkout. Sparse checkout support in &quot;git read-tree&quot; and similar commands is disabled by default. You need to turn core.sparseCheckout on in order to have sparse checkout support.&#xa;"/>
+<node COLOR="#111111" ID="ID_511482883" 
+	TEXT="$ git clone ~/git/git&#xa;$ cd git&#xa;$ ls|wc -l&#xa;361&#xa;$ git config core.sparsecheckout true&#xa;$ echo ppc/ &gt; .git/info/sparse-checkout&#xa;$ echo perl/ &gt;&gt; .git/info/sparse-checkout&#xa;$ git read-tree -m -u HEAD&#xa;$ ls&#xa;perl/  ppc/&#xa;"/>
+<node COLOR="#111111" ID="ID_921099678" 
+	TEXT="Checkout sub directories in git (sparse checkouts)&#xa;&#xa;SVN externals is a really nice feature I used a lot. Switching to git I was really missing it. Of course there is git-submodule but it’s not the same. Now, with version 1.7 git supports so called sparse checkouts which allow you to only include specific sub directories of a repository in your project. You still need to clone the whole repository, but afterwards you can tell git to only show the specified sub directories.&#xa;&#xa;Here is how it works:&#xa;&#xa;   1. clone the other repository (in my case, for a Rails app, I did it in vendor/plugins/)&#xa;&#xa;      git clone &lt;repository_url&gt; &lt;directory&gt;&#xa;&#xa;   2. cd to &lt;directory&gt;&#xa;&#xa;      cd &lt;directory&gt;&#xa;&#xa;   3. enable sparsecheckout&#xa;&#xa;      git config core.sparsecheckout true&#xa;&#xa;   4. add directories you want to have in your checkout to .git/info/sparse-checkout, e.g.&#xa;&#xa;      echo app/models/ &gt; .git/info/sparse-checkout&#xa;      echo lib/ &gt;&gt; .git/info/sparse-checkout&#xa;&#xa;   5. run read-tree&#xa;&#xa;      git read-tree -m -u HEAD&#xa;&#xa;ls now shows&#xa;&#xa;app lib&#xa;&#xa;Forgot a directory you wanted to include? Just repeat step 4 and 5."/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_515274876" 
+	TEXT="git fetch 增加了 --all 参数，获取所有跟踪上游。（1.6.6 即支持）">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_1731241106" 
+	TEXT=" * &quot;git fetch --all&quot; can now be used in place of &quot;git remote update&quot;.">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_750449377" 
+	TEXT="git merge 可以传递参数">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_718813018" 
+	TEXT=" * &quot;git merge&quot; learned to pass options specific to strategy-backends.  E.g.&#xa;&#xa;    - &quot;git merge -Xsubtree=path/to/directory&quot; can be used to tell the subtree&#xa;      strategy how much to shift the trees explicitly.&#xa;                                                                                                                                                            &#xa;    - &quot;git merge -Xtheirs&quot; can be used to auto-merge as much as possible,&#xa;      while discarding your own changes and taking merged version in&#xa;      conflicted regions.&#xa;"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_410954959" 
+	TEXT="删除分支可以使用新语法">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_1405789984" 
+	TEXT=" * &quot;git push&quot; learned &quot;git push origin --delete branch&quot;, a syntactic sugar&#xa;   for &quot;git push origin :branch&quot;.&#xa;"/>
+</node>
+<node COLOR="#990000" ID="ID_1647068944" 
+	TEXT="git status 在 1.7 版本支持 -s 参数">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_649723620" 
+	TEXT="git push --upstream">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_1616575731" 
+	TEXT=" * &quot;git push&quot; learned &quot;git push --set-upstream origin forker:forkee&quot; that&#xa;   lets you configure your &quot;forker&quot; branch to later pull from &quot;forkee&quot;&#xa;   branch at &quot;origin&quot;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1885089706" 
+	TEXT="git rebase -i 支持 fixup 命令">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_1048397282" 
+	TEXT=" * &quot;git rebase -i&quot; learned new action &quot;fixup&quot; that squashes the change&#xa;   but does not affect existing log message.&#xa;"/>
+<node COLOR="#111111" ID="ID_526881727" 
+	TEXT=" * &quot;git rebase -i&quot; also learned --autosquash option that is useful&#xa;   together with the new &quot;fixup&quot; action.&#xa;"/>
+</node>
+<node COLOR="#990000" ID="ID_1856626110" 
+	TEXT=" * &quot;git remote&quot; learned set-url subcommand that updates (surprise!) url&#xa;   for an existing remote nickname.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" ID="ID_859224047" 
+	TEXT="HTTP 认证可以使用除 basic 认证外的 digest 认证">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1671704539" 
+	TEXT=" * A new syntax &quot;&lt;branch&gt;@{upstream}&quot; can be used on the command line to&#xa;   substitute the name of the &quot;upstream&quot; of the branch.  Missing branch&#xa;   defaults to the current branch, so &quot;git fetch &amp;&amp; git merge @{upstream}&quot;&#xa;   will be equivalent to &quot;git pull&quot;.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" ID="ID_1236579405" 
+	TEXT=" * &quot;git checkout A...B&quot; is a way to detach HEAD at the merge base between&#xa;   A and B.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1002208138" 
+	TEXT="其它">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1742665431" 
+	TEXT=" * Various commands given by the end user (e.g. diff.type.textconv,&#xa;   and GIT_EDITOR) can be specified with command line arguments.  E.g. it&#xa;   is now possible to say &quot;[diff &quot;utf8doc&quot;] textconv = nkf -w&quot;.&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1914856080" 
+	TEXT=" * &quot;git send-email&quot; does not make deep threads by default when sending a&#xa;   patch series with more than two messages.  All messages will be sent&#xa;   as a reply to the first message, i.e. cover letter.&#xa;&#xa;   It has been possible already to configure send-email to send &quot;shallow thread&quot;&#xa;   by setting sendemail.chainreplyto configuration variable to false.  The&#xa;   only thing this release does is to change the default when you haven&apos;t&#xa;   configured that variable.&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1071476024" 
+	TEXT=" * More performance improvement patches for msysgit port.">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1168678555" 
+	TEXT=" * &quot;git diff&quot; traditionally treated various &quot;ignore whitespace&quot; options&#xa;   only as a way to filter the patch output.  &quot;git diff --exit-code -b&quot;&#xa;   exited with non-zero status even if all changes were about changing the&#xa;   amount of whitespace and nothing else;  and &quot;git diff -b&quot; showed the&#xa;   &quot;diff --git&quot; header line for such a change without patch text.&#xa;&#xa;   In this release, the &quot;ignore whitespaces&quot; options affect the semantics&#xa;   of the diff operation.  A change that does not affect anything but&#xa;   whitespaces is reported with zero exit status when run with&#xa;   --exit-code, and there is no &quot;diff --git&quot; header for such a change.">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_843923492" 
+	TEXT=" * External diff and textconv helpers are now executed using the shell.&#xa;   This makes them consistent with other programs executed by git, and&#xa;   allows you to pass command-line parameters to the helpers. Any helper&#xa;   paths containing spaces or other metacharacters now need to be&#xa;   shell-quoted.  The affected helpers are GIT_EXTERNAL_DIFF in the&#xa;   environment, and diff.*.command and diff.*.textconv in the config&#xa;   file.&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_385608324" 
+	TEXT=" * The --max-pack-size argument to &apos;git repack&apos;, &apos;git pack-objects&apos;, and&#xa;   &apos;git fast-import&apos; was assuming the provided size to be expressed in MiB,&#xa;   unlike the corresponding config variable and other similar options accepting&#xa;   a size value.  It is now expecting a size expressed in bytes, with a possible&#xa;   unit suffix of &apos;k&apos;, &apos;m&apos;, or &apos;g&apos;.&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1800206833" 
+	TEXT="1.7.0 和之前版本的兼容性问题">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_1005622121" 
+	TEXT="当向远程带工作区版本库的当前分支 push 时，警告。实际在 1.6.2 就引入了。">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1159865590" 
+	TEXT=" * &quot;git push&quot; into a branch that is currently checked out (i.e. pointed at by&#xa;   HEAD in a repository that is not bare) is refused by default.&#xa;&#xa;   Similarly, &quot;git push $there :$killed&quot; to delete the branch $killed&#xa;   in a remote repository $there, when $killed branch is the current&#xa;   branch pointed at by its HEAD, will be refused by default.&#xa;&#xa;   Setting the configuration variables receive.denyCurrentBranch and&#xa;   receive.denyDeleteCurrent to &apos;ignore&apos; in the receiving repository&#xa;   can be used to override these safety features.&#xa;"/>
+<node COLOR="#111111" ID="ID_1673420217" 
+	TEXT=" * &quot;git push&quot; into a branch that is currently checked out (i.e. pointed by&#xa;   HEAD in a repository that is not bare) will be refused by default.&#xa;&#xa;   Similarly, &quot;git push $there :$killed&quot; to delete the branch $killed&#xa;   in a remote repository $there, when $killed branch is the current&#xa;   branch pointed at by its HEAD, will be refused by default.&#xa;&#xa;   Setting the configuration variables receive.denyCurrentBranch and&#xa;   receive.denyDeleteCurrent to &apos;ignore&apos; in the receiving repository&#xa;   can be used to override these safety features.  Versions of git&#xa;   since 1.6.2 have issued a loud warning when you tried to do these&#xa;   operations without setting the configuration, so repositories of&#xa;   people who still need to be able to perform such a push should&#xa;   already have been future proofed.&#xa;&#xa;   Please refer to:&#xa;&#xa;   http://git.or.cz/gitwiki/GitFaq#non-bare&#xa;   http://thread.gmane.org/gmane.comp.version-control.git/107758/focus=108007&#xa;&#xa;   for more details on the reason why this change is needed and the&#xa;   transition process that already took place so far.&#xa;"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1253461329" 
+	TEXT="1.6.6">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_1971651865" 
+	TEXT="git fsck 缺省使用 --full 参数，如果希望使用原来快速模式 ，可以用 --no-full 参数（在1.5.4之后就支持者 --no-full 参数了）。">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_941336105" 
+	TEXT=" * &quot;git fsck&quot; by default checks the packfiles (i.e. &quot;--full&quot; is the&#xa;   default); you can turn it off with &quot;git fsck --no-full&quot;.&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" ID="ID_376577638" 
+	TEXT="git fetch 支持智能  HTTP">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" ID="ID_1573102995" 
+	TEXT="git 1.6.6 起，当检出一个不存在分支，但是在 remotes 中存在，自动创建本地跟踪分支。">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_289042464" 
+	TEXT="git commit -c/-C/--amend 参数，使用新的 committer ID，而不用原 log 中的。">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1105463259" 
+	TEXT=" * &quot;git commit -c/-C/--amend&quot; can be told with a new &quot;--reset-author&quot; option&#xa;   to ignore authorship information in the commit it is taking the message&#xa;   from.&#xa;"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1176376225" 
+	TEXT="git fetch 增加了 --all 参数，获取所有跟踪上游。（1.6.6 即支持）">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_400788295" 
+	TEXT=" * &quot;git fetch --all&quot; can now be used in place of &quot;git remote update&quot;.">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1055299445" 
+	TEXT=" * &quot;git fetch&quot; learned --all and --multiple options, to run fetch from&#xa;   many repositories, and --prune option to remove remote tracking&#xa;   branches that went stale.  These make &quot;git remote update&quot; and &quot;git&#xa;   remote prune&quot; less necessary (there is no plan to remove &quot;remote&#xa;   update&quot; nor &quot;remote prune&quot;, though).&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" ID="ID_764335338" 
+	TEXT=" * &quot;git instaweb&quot; knows how to talk with mod_cgid to apache2.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_699936559" 
+	TEXT="git rebase -i 支持 reword 参数，修改历史提交的说明">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_733761588" 
+	TEXT=" * &quot;git rebase -i&quot; learned &quot;reword&quot; that acts like &quot;edit&quot; but immediately&#xa;   starts an editor to tweak the log message without returning control to&#xa;   the shell, which is done by &quot;edit&quot; to give an opportunity to tweak the&#xa;   contents.&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" ID="ID_562935013" 
+	TEXT=" * &quot;git svn&quot; learned to read SVN 1.5+ and SVK merge tickets.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" ID="ID_1217223988" 
+	TEXT=" * &quot;git svn&quot; learned to recreate empty directories tracked only by SVN.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1447725313" 
+	TEXT=" * &quot;git describe&quot; can be told to add &quot;-dirty&quot; suffix with &quot;--dirty&quot; option. ">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_477480258" 
+	TEXT=" * &quot;git grep&quot; can use -F (fixed strings) and -i (ignore case) together.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_325088979" 
+	TEXT=" * import-tars contributed fast-import frontend learned more types of&#xa;   compressed tarballs.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_115705365" 
+	TEXT=" * &quot;git log --decorate&quot; shows the location of HEAD as well.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1446678635" 
+	TEXT=" * &quot;git log&quot; and &quot;git rev-list&quot; learned to take revs and pathspecs from&#xa;   the standard input with the new &quot;--stdin&quot; option.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_609091979" 
+	TEXT=" * &quot;--pretty=format&quot; option to &quot;log&quot; family of commands learned:&#xa;&#xa;   . to wrap text with the &quot;%w()&quot; specifier.&#xa;   . to show reflog information with &quot;%g[sdD]&quot; specifier.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_357086736" 
+	TEXT="新的 git notes 命令，可以为提交附加注释">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1732949801" 
+	TEXT=" * &quot;git notes&quot; command to annotate existing commits.&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" ID="ID_898585434" 
+	TEXT=" * &quot;git merge&quot; (and &quot;git pull&quot;) learned --ff-only option to make it fail&#xa;   if the merge does not result in a fast-forward.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1684951903" 
+	TEXT=" * &quot;git mergetool&quot; learned to use p4merge.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_802260172" 
+	TEXT=" * &quot;git send-email&quot; can be told with &quot;--envelope-sender=auto&quot; to use the&#xa;   same address as &quot;From:&quot; address as the envelope sender address.">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1816183958" 
+	TEXT=" * &quot;git send-email&quot; will issue a warning when it defaults to the&#xa;   --chain-reply-to behaviour without being told by the user and&#xa;   instructs to prepare for the change of the default in 1.7.0 release.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_966213929" 
+	TEXT=" * In &quot;git submodule add &lt;repository&gt; &lt;path&gt;&quot;, &lt;path&gt; is now optional and&#xa;   inferred from &lt;repository&gt; the same way &quot;git clone &lt;repository&gt;&quot; does.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1779387905" 
+	TEXT=" * &quot;gitweb&quot; can optionally render its &quot;blame&quot; output incrementally (this&#xa;   requires JavaScript on the client side).&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_30771611" 
+	TEXT=" * Author names shown in gitweb output are links to search commits by the&#xa;   author.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" ID="ID_1719050810" 
+	TEXT="1.6.5">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" ID="ID_1903717576" 
+	TEXT="1.6.4">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" ID="ID_250002113" 
+	TEXT="1.6.3">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" ID="ID_178661559" 
+	TEXT="1.6.2">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" ID="ID_798318685" 
+	TEXT="1.6.1">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" ID="ID_1006937695" 
+	TEXT="1.6.0">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1178646984" 
+	TEXT="1.5.6（基础版本）">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<icon BUILTIN="gohome"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_1286567135" 
+	TEXT="core.ignorecase 可以对大小写不敏感的文件系统提供支持">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_595025543" 
+	TEXT="* core.ignorecase configuration variable can be used to work better on   filesystems that are not case sensitive. ">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1441775252" 
+	TEXT="* &quot;git init&quot; now autodetects the case sensitivity of the filesystem and&#xa;  sets core.ignorecase accordingly.&#xa;"/>
+</node>
+<node COLOR="#990000" ID="ID_413026257" 
+	TEXT="* &quot;git init --bare&quot; is a synonym for &quot;git --bare init&quot; now.">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_721605042" 
+	TEXT="* &quot;git cherry-pick&quot; and &quot;git revert&quot; can add a sign-off">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1570694201" 
+	TEXT="* &quot;git branch&quot; (and &quot;git checkout -b&quot;) can be told to set up&#xa;  branch.&lt;name&gt;.rebase automatically, so that later you can say &quot;git pull&quot;&#xa;  and magically cause &quot;git pull --rebase&quot; to happen.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1315433003" 
+	TEXT="* &quot;git clone&quot; was rewritten in C.  This will hopefully help cloning a   repository with insane number of refs. ">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_431032935" 
+	TEXT="1.5.5">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_942196338" 
+	TEXT=" * &quot;git gc&quot; now automatically prunes unreachable objects that are two&#xa;   weeks old or older.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" ID="ID_1155030838" 
+	TEXT=" * &quot;git branch&quot; (and &quot;git checkout -b&quot;) to branch from a local branch can&#xa;   optionally set &quot;branch.&lt;name&gt;.merge&quot; to mark the new branch to build on&#xa;   the other local branch, when &quot;branch.autosetupmerge&quot; is set to&#xa;   &quot;always&quot;, or when passing the command line option &quot;--track&quot; (this option&#xa;   was ignored when branching from local branches).  By default, this does&#xa;   not happen when branching from a local branch.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_970676210" 
+	TEXT=" * &quot;git checkout&quot; to switch to a branch that has &quot;branch.&lt;name&gt;.merge&quot; set&#xa;   (i.e. marked to build on another branch) reports how much the branch&#xa;   and the other branch diverged.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1488328671" 
+	TEXT=" * &quot;git commit&quot; learned a new hook &quot;prepare-commit-msg&quot; that can&#xa;   inspect what is going to be committed and prepare the commit&#xa;   log message template to be edited.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_569277201" 
+	TEXT=" * A pattern &quot;foo/&quot; in .gitignore file now matches a directory&#xa;   &quot;foo&quot;.  Pattern &quot;foo&quot; also matches as before.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_956118664" 
+	TEXT=" * You can be warned when core.autocrlf conversion is applied in&#xa;   such a way that results in an irreversible conversion.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_889814542" 
+	TEXT=" * &quot;git help &lt;alias&gt;&quot; now reports &quot;&apos;git &lt;alias&gt;&apos; is alias to &lt;what&gt;&quot;,&#xa;   instead of saying &quot;No manual entry for git-&lt;alias&gt;&quot;.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_288387704" 
+	TEXT=" * &quot;git stash&quot; learned &quot;pop&quot; command, that applies the latest stash and&#xa;   removes it from the stash, and &quot;drop&quot; command to discard the named&#xa;   stash entry.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1210722729" 
+	TEXT=" * &quot;git checkout&quot; is rewritten in C.&#xa;&#xa; * &quot;git remote&quot; is rewritten in C.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="button_ok"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1121010630" 
+	TEXT="1.5.4">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_710440610" 
+	TEXT="不再提供 git-command 命令，而是用 git command 取而代之">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_662415801" 
+	TEXT=" * From v1.6.0, git will by default install dashed form of commands&#xa;   (e.g. &quot;git-commit&quot;) outside of users&apos; normal $PATH, and will install&#xa;   only selected commands (&quot;git&quot; itself, and &quot;gitk&quot;) in $PATH.  This&#xa;   implies:&#xa;&#xa;   - Using dashed forms of git commands (e.g. &quot;git-commit&quot;) from the&#xa;     command line has been informally deprecated since early 2006, but&#xa;     now it officially is, and will be removed in the future.  Use&#xa;     dash-less forms (e.g. &quot;git commit&quot;) instead.&#xa;&#xa;   - Using dashed forms from your scripts, without first prepending the&#xa;     return value from &quot;git --exec-path&quot; to the scripts&apos; PATH, has been&#xa;     informally deprecated since early 2006, but now it officially is.&#xa;&#xa;   - Use of dashed forms with &quot;PATH=$(git --exec-path):$PATH; export&#xa;     PATH&quot; early in your script is not deprecated with this change.&#xa;&#xa;   Users are strongly encouraged to adjust their habits and scripts now&#xa;   to prepare for this change.&#xa;"/>
+</node>
+<node COLOR="#990000" ID="ID_270281812" 
+	TEXT=" * The post-receive hook was introduced in March 2007 to supersede&#xa;   the post-update hook, primarily to overcome the command line length&#xa;   limitation of the latter.  Use of post-update hook will be deprecated&#xa;   in future versions of git, starting from v1.6.0.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_346053373" 
+	TEXT=" * Value &quot;true&quot; for color.diff and color.status configuration used to&#xa;   mean &quot;always&quot; (even when the output is not going to a terminal).&#xa;   This has been corrected to mean the same thing as &quot;auto&quot;.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1054041252" 
+	TEXT=" * &quot;git commit --allow-empty&quot; allows you to create a single-parent    commit that records the same tree as its parent, overriding the usual    safety valve.">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" ID="ID_1773416176" 
+	TEXT=" * &quot;git commit --amend&quot; can amend a merge that does not change the tree&#xa;   from its first parent.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" ID="ID_1172672754" 
+	TEXT=" * &quot;git commit&quot; has been rewritten in C. ">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="help"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_660389910" 
+	TEXT="1.5.3">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_1257652" 
+	TEXT="新命令： &quot;git stash&quot; allows you to quickly save away your work in&#xa;    progress and replay it later on an updated state.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1313647537" 
+	TEXT="新命令： &quot;git rebase&quot; learned an &quot;interactive&quot; mode that let you&#xa;    pick and reorder which commits to rebuild.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_847700637" 
+	TEXT="  - $GIT_WORK_TREE environment variable can be used together with     $GIT_DIR to work in a subdirectory of a working tree that is     not located at &quot;$GIT_DIR/..&quot;. ">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1789880206" 
+	TEXT="  - &quot;git log&quot; learned a new option &quot;--follow&quot;, to follow&#xa;    renaming history of a single file.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1113985459" 
+	TEXT="1.5.2">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_714769439" 
+	TEXT="新命令  - &quot;subtree&quot; merge strategy allows another project to be merged in as     your subdirectory. ">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" ID="ID_1408747441" 
+	TEXT="  - &quot;git add -u&quot; is a quick way to do the first stage of &quot;git     commit -a&quot; (i.e. update the index to match the working     tree); it obviously does not make a commit. ">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" ID="ID_337068020" 
+	TEXT="* The packfile format now optionally supports 64-bit index.&#xa;&#xa;  This release supports the &quot;version 2&quot; format of the .idx&#xa;  file.  This is automatically enabled when a huge packfile&#xa;  needs more than 32-bit to express offsets of objects in the&#xa;  pack.">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1982665055" 
+	TEXT="* Plumbing level gitattributes support.&#xa;&#xa;  The gitattributes mechanism allows you to add &apos;attributes&apos; to&#xa;  paths in your project, and affect the way certain git&#xa;  operations work.  Currently you can influence if a path is&#xa;  considered a binary or text (the former would be treated by&#xa;  &apos;git diff&apos; not to produce textual output; the latter can go&#xa;  through the line endings conversion process in repositories&#xa;  with core.autocrlf set), expand and unexpand &apos;$Id$&apos; keyword&#xa;  with blob object name, specify a custom 3-way merge driver,&#xa;  and specify a custom diff driver.  You can also apply&#xa;  arbitrary filter to contents on check-in/check-out codepath&#xa;  but this feature is an extremely sharp-edged razor and needs&#xa;  to be handled with caution (do not use it unless you&#xa;  understand the earlier mailing list discussion on keyword&#xa;  expansion).  These conversions apply when checking files in&#xa;  or out, and exporting via git-archive.">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1409043535" 
+	TEXT="* Plumbing level superproject support.&#xa;&#xa;  You can include a subdirectory that has an independent git&#xa;  repository in your index and tree objects of your project&#xa;  (&quot;superproject&quot;).  This plumbing (i.e. &quot;core&quot;) level&#xa;  superproject support explicitly excludes recursive behaviour.&#xa;&#xa;  The &quot;subproject&quot; entries in the index and trees of a superproject&#xa;  are incompatible with older versions of git.  Experimenting with&#xa;  the plumbing level support is encouraged, but be warned that&#xa;  unless everybody in your project updates to this release or&#xa;  later, using this feature would make your project&#xa;  inaccessible by people with older versions of git.">
 <font NAME="Serif" SIZE="14"/>
 </node>
 </node>
@@ -464,6 +1263,19 @@
 <node COLOR="#990000" ID="ID_1330993112" 
 	TEXT="cygwin">
 <font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_860297350" 
+	TEXT="Git 帮助">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_1392933056" 
+	TEXT="浏览器查看帮助">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_444766905" 
+	TEXT="git help git -w"/>
+<node COLOR="#111111" ID="ID_1715836094" 
+	TEXT="git help checkout -w"/>
 </node>
 </node>
 </node>
