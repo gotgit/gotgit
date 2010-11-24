@@ -1102,6 +1102,20 @@
 <font NAME="Serif" SIZE="14"/>
 </node>
 </node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1596680974" 
+	TEXT="1.5.1">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_1040385957" 
+	TEXT="  - A new configuration &quot;core.symlinks&quot; can be used to disable     symlinks on filesystems that do not support them; they are     checked out as regular files instead. ">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" ID="ID_296633439" 
+	TEXT="1.5.0">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+</node>
 </node>
 <node COLOR="#0033ff" FOLDED="true" ID="ID_705771263" POSITION="right" 
 	TEXT="Git 安装">
