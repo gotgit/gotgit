@@ -61,9 +61,11 @@
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" ID="ID_1458306811" 
-	TEXT="sparse checkout">
+	TEXT="git 1.7.0 开始，支持稀疏检出（sparse checkout）">
 <arrowlink DESTINATION="ID_1175431394" ENDARROW="Default" ENDINCLINATION="496;0;" ID="Arrow_ID_528443662" STARTARROW="None" STARTINCLINATION="496;0;"/>
 <font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
 </node>
 <node COLOR="#990000" ID="ID_672690286" 
 	TEXT="init 时的模板">
@@ -99,6 +101,7 @@
 	TEXT="git merge -Xsubtree=path/to/dir">
 <arrowlink DESTINATION="ID_750449377" ENDARROW="Default" ENDINCLINATION="453;0;" ID="Arrow_ID_881115965" STARTARROW="None" STARTINCLINATION="453;0;"/>
 <font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
 </node>
 <node COLOR="#990000" ID="ID_1342349696" 
 	TEXT="git rebase 命令也支持 -X 参数。">
@@ -130,6 +133,8 @@
 	TEXT="git 1.6.6 起，提供智能HTTP支持">
 <arrowlink DESTINATION="ID_376577638" ENDARROW="Default" ENDINCLINATION="241;0;" ID="Arrow_ID_401487274" STARTARROW="None" STARTINCLINATION="241;0;"/>
 <font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
 </node>
 <node COLOR="#990000" ID="ID_1000616699" 
 	TEXT="git 1.6.6 起，当检出一个不存在分支，但是在 remotes 中存在，自动创建本地跟踪分支。">
@@ -145,15 +150,20 @@
 	TEXT="git 1.6.6 起，新的 git notes 命令，可以为提交附加注释">
 <arrowlink DESTINATION="ID_357086736" ENDARROW="Default" ENDINCLINATION="585;0;" ID="Arrow_ID_166593595" STARTARROW="None" STARTINCLINATION="585;0;"/>
 <font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
 </node>
 <node COLOR="#990000" ID="ID_1176516418" 
 	TEXT="git 1.6.6 起，git rebase -i 支持 reword 参数，修改历史提交的说明">
 <font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
 </node>
 <node COLOR="#990000" ID="ID_599598790" 
 	TEXT="git 1.6.6 起，git-svn 支持  svn 1.5的  mergetrack。">
 <arrowlink DESTINATION="ID_562935013" ENDARROW="Default" ENDINCLINATION="397;0;" ID="Arrow_ID_1062677327" STARTARROW="None" STARTINCLINATION="397;0;"/>
 <font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
 </node>
 <node COLOR="#990000" ID="ID_791961332" 
 	TEXT="git 1.5.6，core.ignorecase 可以对大小写不敏感的文件系统提供支持">
@@ -165,6 +175,19 @@
 	TEXT="git 1.5.4, git ci --allow-empty">
 <arrowlink DESTINATION="ID_1054041252" ENDARROW="Default" ENDINCLINATION="1281;0;" ID="Arrow_ID_1202135371" STARTARROW="None" STARTINCLINATION="1281;0;"/>
 <font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1958435139" 
+	TEXT="从 1.5.4 开始，不在使用  git-command，而是用  git command">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" ID="ID_819728988" 
+	TEXT="git 1.5.0 开始出现的浅克隆">
+<arrowlink DESTINATION="ID_269406994" ENDARROW="Default" ENDINCLINATION="733;0;" ID="Arrow_ID_320154676" STARTARROW="None" STARTINCLINATION="733;0;"/>
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1002140911" 
@@ -909,35 +932,209 @@
 <font NAME="Serif" SIZE="14"/>
 </node>
 </node>
-<node COLOR="#00b439" ID="ID_1719050810" 
+<node COLOR="#00b439" FOLDED="true" ID="ID_1719050810" 
 	TEXT="1.6.5">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_614711157" 
+	TEXT="git clone 不在复制 refs 下除了 heads, tags 外的引用">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_790125804" 
+	TEXT=" * &quot;git clone&quot; does not grab objects that it does not need (i.e.&#xa;   referenced only from refs outside refs/heads and refs/tags&#xa;   hierarchy) anymore.&#xa;"/>
 </node>
-<node COLOR="#00b439" ID="ID_1903717576" 
+<node COLOR="#990000" FOLDED="true" ID="ID_915333998" 
+	TEXT="gc 和 .git 下文件的 mtime 相关？">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_698460521" 
+	TEXT=" * &quot;git clone&quot; run locally hardlinks or copies the files in .git/ to&#xa;   newly created repository.  It used to give new mtime to copied files,&#xa;   but this delayed garbage collection to trigger unnecessarily in the&#xa;   cloned repository.  We now preserve mtime for these files to avoid&#xa;   this issue.&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1089962016" 
+	TEXT="git replace 命令和 refs/replace/">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_57588445" 
+	TEXT=" * refs/replace/ hierarchy is designed to be usable as a replacement&#xa;   of the &quot;grafts&quot; mechanism, with the added advantage that it can be&#xa;   transferred across repositories.&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" ID="ID_773427270" 
+	TEXT="git clone --recursive 参数，直接初始化 子模组。">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" ID="ID_297426783" 
+	TEXT="支持 git init this 。直接创建子目录，并克隆">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" ID="ID_68365358" 
+	TEXT=" * &quot;git instaweb&quot; optionally can use mongoose as the web server.">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1903717576" 
 	TEXT="1.6.4">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_154750986" 
+	TEXT="* Git-over-ssh transport on Windows supports PuTTY plink and TortoisePlink.">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
 </node>
-<node COLOR="#00b439" ID="ID_250002113" 
+<node COLOR="#990000" FOLDED="true" ID="ID_113258859" 
+	TEXT="增加 remote.$name.pushurl">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_1947274560" 
+	TEXT=" * &quot;git push $name&quot; honors remote.$name.pushurl if present before&#xa;   using remote.$name.url.  In other words, the URL used for fetching&#xa;   and pushing can be different.&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1052460274" 
+	TEXT="git am 支持 StGIT">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_1574260622" 
+	TEXT=" * &quot;git am&quot; accepts StGIT series file as its input. ">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" ID="ID_253983951" 
+	TEXT=" * &quot;git add --edit&quot; lets users edit the whole patch text to fine-tune what&#xa;   is added to the index.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_250002113" 
 	TEXT="1.6.3">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_1219038649" 
+	TEXT="git 配置中的布尔值是 yes/no ，还可以是 on/off">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_1461051787" 
+	TEXT="* Boolean configuration variable yes/no can be written as on/off.">
+<font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#00b439" ID="ID_178661559" 
+</node>
+<node COLOR="#990000" ID="ID_223733961" 
+	TEXT="* &quot;--oneline&quot; is a synonym for &quot;--pretty=oneline --abbrev-commit&quot;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1650751061" 
+	TEXT="* @{-1} is a new way to refer to the last branch you were on introduced in&#xa;  1.6.2, but the initial implementation did not teach this to a few&#xa;  commands.  Now the syntax works with &quot;branch -m @{-1} newname&quot;.&#xa;">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_284916482" 
+	TEXT="git branch -v -v">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_792050738" 
+	TEXT="* &quot;git-branch -v -v&quot; is a new way to get list of names for branches and the&#xa;  &quot;upstream&quot; branch for them.&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1181351741" 
+	TEXT="git config -e 可以打开配置文件直接编辑">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_925317149" 
+	TEXT="* git-config learned -e option to open an editor to edit the config file   directly.">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" ID="ID_1345899858" 
+	TEXT="* You can give --date=&lt;format&gt; option to git-blame. ">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_585472460" 
+	TEXT="* git-imap-send learned to work around Thunderbird&apos;s inability to easily   disable format=flowed with a new configuration, imap.preformattedHTML.  ">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_178661559" 
 	TEXT="1.6.2">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_1854665092" 
+	TEXT="@{-1} 上一次工作的分支">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_1622452000" 
+	TEXT="* @{-1} is a way to refer to the last branch you were on.  This is   accepted not only where an object name is expected, but anywhere   a branch name is expected and acts as if you typed the branch name.   E.g. &quot;git branch --track mybranch @{-1}&quot;, &quot;git merge @{-1}&quot;, and   &quot;git rev-parse --symbolic-full-name @{-1}&quot; would work as expected.  "/>
 </node>
-<node COLOR="#00b439" ID="ID_798318685" 
+<node COLOR="#990000" FOLDED="true" ID="ID_1147901916" 
+	TEXT="git checkout - ： 检出上次工作分支">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_964650680" 
+	TEXT="* &quot;git checkout -&quot; is a shorthand for &quot;git checkout @{-1}&quot;. ">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_798318685" 
 	TEXT="1.6.1">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_447530033" 
+	TEXT="* &quot;git svn&quot; can rebuild an out-of-date rev_map file.">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
 </node>
-<node COLOR="#00b439" ID="ID_1006937695" 
+<node COLOR="#990000" ID="ID_540080135" 
+	TEXT="* &quot;git svn branch&quot; can create new branches on the other end. ">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" ID="ID_1171341079" 
+	TEXT="* &quot;git describe --tags&quot; favours closer lightweight tags than farther   annotated tags now. ">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1006937695" 
 	TEXT="1.6.0">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_34978065" 
+	TEXT="从 1.5.4 开始，不在使用  git-command，而是用  git command">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_417952020" 
+	TEXT="An ancient merge strategy &quot;stupid&quot; has been removed.">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1800640013" 
+	TEXT="git-clone --mirror 以裸版本库方式克隆，非常方便">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_473956048" 
+	TEXT="&quot;git-clone --mirror&quot; is a handy way to set up a bare mirror repository."/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_528335561" 
+	TEXT="stash 过期">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_903249304" 
+	TEXT="* By default, stash entries never expire.  Set reflogexpire in [gc   &quot;refs/stash&quot;] to a reasonable value to get traditional auto-expiration   behaviour back"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1261388683" 
+	TEXT="git add -i 支持 edit">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_547163094" 
+	TEXT="* &quot;git-add -i&quot; has a new action &apos;e/dit&apos; to allow you edit the patch hunk&#xa;  manually.&#xa;"/>
+</node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1178646984" 
 	TEXT="1.5.6（基础版本）">
@@ -1116,9 +1313,86 @@
 	TEXT="  - A new configuration &quot;core.symlinks&quot; can be used to disable     symlinks on filesystems that do not support them; they are     checked out as regular files instead. ">
 <font NAME="Serif" SIZE="14"/>
 </node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1472978148" 
+	TEXT="git name-rev 可以通过 --refs=&lt;pattern&gt; 显示符合表达式的tag">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1082992486" 
+	TEXT="&#xa;  - &quot;git name-rev&quot; learned --refs=&lt;pattern&gt;, to limit the tags&#xa;    used for naming the given revisions only to the ones&#xa;    matching the given pattern.&#xa;">
+<font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#00b439" ID="ID_296633439" 
+</node>
+<node COLOR="#990000" ID="ID_1414888467" 
+	TEXT="git mergetool 工具可以帮助使用图形化工具完成冲突解决。">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1110271514" 
+	TEXT="引入了 &apos;:/message text&apos; 定位语法">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1644159716" 
+	TEXT="  - You can name a commit object with its first line of the&#xa;    message.  The syntax to use is &apos;:/message text&apos;.  E.g.&#xa;&#xa;    $ git show &quot;:/object name: introduce &apos;:/&lt;oneline prefix&gt;&apos; notation&quot;&#xa;&#xa;    means the same thing as:&#xa;&#xa;    $ git show 28a4d940443806412effa246ecc7768a21553ec7&#xa;"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_818525294" 
+	TEXT="选项 core.autocrlf">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_270622424" 
+	TEXT="  - core.autocrlf configuration, when set to &apos;true&apos;, makes git&#xa;    to convert CRLF at the end of lines in text files to LF when&#xa;    reading from the filesystem, and convert in reverse when&#xa;    writing to the filesystem.  The variable can be set to&#xa;    &apos;input&apos;, in which case the conversion happens only while&#xa;    reading from the filesystem but files are written out with&#xa;    LF at the end of lines.  Currently, which paths to consider&#xa;    &apos;text&apos; (i.e. be subjected to the autocrlf mechanism) is&#xa;    decided purely based on the contents, but the plan is to&#xa;    allow users to explicitly override this heuristic based on&#xa;    paths.&#xa;"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_296633439" 
 	TEXT="1.5.0">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_1855351852" 
+	TEXT="对 Index 的改进">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_549048241" 
+	TEXT="* Index manipulation&#xa;&#xa; - git-add is to add contents to the index (aka &quot;staging area&quot;&#xa;   for the next commit), whether the file the contents happen to&#xa;   be is an existing one or a newly created one.&#xa;&#xa; - git-add without any argument does not add everything&#xa;   anymore.  Use &apos;git-add .&apos; instead.  Also you can add&#xa;   otherwise ignored files with an -f option.&#xa;&#xa; - git-add tries to be more friendly to users by offering an&#xa;   interactive mode (&quot;git-add -i&quot;).&#xa;&#xa; - git-commit &lt;path&gt; used to refuse to commit if &lt;path&gt; was&#xa;   different between HEAD and the index (i.e. update-index was&#xa;   used on it earlier).  This check was removed.&#xa;&#xa; - git-rm is much saner and safer.  It is used to remove paths&#xa;   from both the index file and the working tree, and makes sure&#xa;   you are not losing any local modification before doing so.&#xa;&#xa; - git-reset &lt;tree&gt; &lt;paths&gt;... can be used to revert index&#xa;   entries for selected paths.&#xa;&#xa; - git-update-index is much less visible.  Many suggestions to&#xa;   use the command in git output and documentation have now been&#xa;   replaced by simpler commands such as &quot;git add&quot; or &quot;git rm&quot;.&#xa;"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1694751947" 
+	TEXT="版本库布局的改进。如远程版本库的分支放在 refs/remotes 下而不是混在当前空间下。">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_578754894" 
+	TEXT="* Repository layout and objects transfer&#xa;&#xa; - The data for origin repository is stored in the configuration&#xa;   file $GIT_DIR/config, not in $GIT_DIR/remotes/, for newly&#xa;   created clones.  The latter is still supported and there is&#xa;   no need to convert your existing repository if you are&#xa;   already comfortable with your workflow with the layout.&#xa;&#xa; - git-clone always uses what is known as &quot;separate remote&quot;&#xa;   layout for a newly created repository with a working tree.&#xa;&#xa;   A repository with the separate remote layout starts with only&#xa;   one default branch, &apos;master&apos;, to be used for your own&#xa;   development.  Unlike the traditional layout that copied all&#xa;   the upstream branches into your branch namespace (while&#xa;   renaming their &apos;master&apos; to your &apos;origin&apos;), the new layout&#xa;   puts upstream branches into local &quot;remote-tracking branches&quot;&#xa;   with their own namespace. These can be referenced with names&#xa;   such as &quot;origin/$upstream_branch_name&quot; and are stored in&#xa;   .git/refs/remotes rather than .git/refs/heads where normal&#xa;   branches are stored.&#xa;&#xa;   This layout keeps your own branch namespace less cluttered,&#xa;   avoids name collision with your upstream, makes it possible&#xa;   to automatically track new branches created at the remote&#xa;   after you clone from it, and makes it easier to interact with&#xa;   more than one remote repository (you can use &quot;git remote&quot; to&#xa;   add other repositories to track).  There might be some&#xa;   surprises:&#xa;"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_269406994" 
+	TEXT="浅克隆。即只克隆最新的几次提交。主要用途是研究最近提交的代码，以及通过邮件发送补丁。">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1128564114" 
+	TEXT="* Shallow clones&#xa;&#xa; - There is a partial support for &apos;shallow&apos; repositories that&#xa;   keeps only recent history.  A &apos;shallow clone&apos; is created by&#xa;   specifying how deep that truncated history should be&#xa;   (e.g. &quot;git clone --depth 5 git://some.where/repo.git&quot;).&#xa;&#xa;   Currently a shallow repository has number of limitations:&#xa;&#xa;   - Cloning and fetching _from_ a shallow clone are not&#xa;     supported (nor tested -- so they might work by accident but&#xa;     they are not expected to).&#xa;&#xa;   - Pushing from nor into a shallow clone are not expected to&#xa;     work.&#xa;&#xa;   - Merging inside a shallow repository would work as long as a&#xa;     merge base is found in the recent history, but otherwise it&#xa;     will be like merging unrelated histories and may result in&#xa;     huge conflicts.&#xa;&#xa;   but this would be more than adequate for people who want to&#xa;   look at near the tip of a big project with a deep history and&#xa;   send patches in e-mail format.                                                                                                                           "/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1665798290" 
+	TEXT="版本库日志字符集">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1074870150" 
+	TEXT="* I18n&#xa;&#xa; - We have always encouraged the commit message to be encoded in&#xa;   UTF-8, but the users are allowed to use legacy encoding as&#xa;   appropriate for their projects.  This will continue to be the&#xa;   case.  However, a non UTF-8 commit encoding _must_ be&#xa;   explicitly set with i18n.commitencoding in the repository&#xa;   where a commit is made; otherwise git-commit-tree will&#xa;   complain if the log message does not look like a valid UTF-8&#xa;   string.&#xa;&#xa; - The value of i18n.commitencoding in the originating&#xa;   repository is recorded in the commit object on the &quot;encoding&quot;&#xa;   header, if it is not UTF-8.  git-log and friends notice this,&#xa;   and reencodes the message to the log output encoding when&#xa;   displaying, if they are different.  The log output encoding&#xa;   is determined by &quot;git log --encoding=&lt;encoding&gt;&quot;,&#xa;   i18n.logoutputencoding configuration, or i18n.commitencoding&#xa;   configuration, in the decreasing order of preference, and&#xa;   defaults to UTF-8.&#xa;&#xa; - Tools for e-mailed patch application now default to -u&#xa;   behavior; i.e. it always re-codes from the e-mailed encoding&#xa;   to the encoding specified with i18n.commitencoding.  This&#xa;   unfortunately forces projects that have happily been using a&#xa;   legacy encoding without setting i18n.commitencoding to set&#xa;   the configuration, but taken with other improvement, please&#xa;   excuse us for this very minor one-time inconvenience.&#xa;"/>
+</node>
+<node COLOR="#990000" ID="ID_929514760" 
+	TEXT="从 1.4.2 起，loose object 的信息头格式改变，以便更易打包和访问">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_257705503" 
+	TEXT="从 1.4.3 起，packfile 的存储更有效率">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1084112474" 
+	TEXT="从 1.4.4 开始，git pack-refs 在打包时对 refs 引用进行打包，以便访问更有效率">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_920542571" 
+	TEXT="gitweb 从 1.4.0 开始成为 git 的一部分">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1259521511" 
+	TEXT="reflog 是 git 1.4.0 的发明">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1818169356" 
+	TEXT=" - reflog is an v1.4.0 invention.  This allows you to name a&#xa;   revision that a branch used to be at (e.g. &quot;git diff&#xa;   master@{yesterday} master&quot; allows you to see changes since&#xa;   yesterday&apos;s tip of the branch).&#xa;"/>
+</node>
+</node>
+<node COLOR="#00b439" ID="ID_279184571" 
+	TEXT="1.4.4">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 </node>
@@ -3304,6 +3578,7 @@
 	TEXT="访问 Git 对象的语法">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
+<icon BUILTIN="info"/>
 <node COLOR="#990000" ID="ID_1914007866" 
 	TEXT="40 hash">
 <font NAME="Serif" SIZE="14"/>
@@ -3397,6 +3672,15 @@
 	TEXT="访问 stage 中的文件。如果 stage 0, 可以省略0和一个冒号，如 :Readme"/>
 <node COLOR="#111111" ID="ID_801271217" 
 	TEXT="在合并的时候，stage 1 代表公共的祖先。stage 2 代表目标分支版本（当前分支版本），stage3 代表要合并的版本。"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1451317442" 
+	TEXT="@{-1} 上一次工作的分支">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_1884039479" 
+	TEXT="* @{-1} is a way to refer to the last branch you were on.  This is   accepted not only where an object name is expected, but anywhere   a branch name is expected and acts as if you typed the branch name.   E.g. &quot;git branch --track mybranch @{-1}&quot;, &quot;git merge @{-1}&quot;, and   &quot;git rev-parse --symbolic-full-name @{-1}&quot; would work as expected.  "/>
+<node COLOR="#111111" ID="ID_417589927" 
+	TEXT="* @{-1} is a new way to refer to the last branch you were on introduced in   1.6.2, but the initial implementation did not teach this to a few   commands.  Now the syntax works with &quot;branch -m @{-1} newname&quot;. "/>
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_527892004" 
