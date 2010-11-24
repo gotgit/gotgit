@@ -1106,6 +1106,12 @@
 	TEXT="1.5.1">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_231444885" 
+	TEXT="git diff --no-index pathA pathB">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+</node>
 <node COLOR="#990000" ID="ID_1040385957" 
 	TEXT="  - A new configuration &quot;core.symlinks&quot; can be used to disable     symlinks on filesystems that do not support them; they are     checked out as regular files instead. ">
 <font NAME="Serif" SIZE="14"/>
