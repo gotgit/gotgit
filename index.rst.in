@@ -115,6 +115,7 @@
 第九部分: 附录
 ##############
 
+.. include:: ./90-app/005-git-changelog.rst
 .. include:: ./90-app/070-git-apps.rst
 .. include:: ./90-app/010-cvs-git-table.rst
 .. include:: ./90-app/020-svn-git-table.rst
