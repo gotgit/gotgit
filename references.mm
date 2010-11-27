@@ -2356,6 +2356,10 @@
 	TEXT="Step 5: 文件忽略排除影响">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_1513579147" 
+	TEXT="git clean 命令，小心误删文件">
+<font NAME="Serif" SIZE="14"/>
+</node>
 <node COLOR="#990000" ID="ID_740129745" 
 	TEXT="两种文件忽略方式">
 <font NAME="Serif" SIZE="14"/>
@@ -2399,6 +2403,10 @@
 </node>
 <node COLOR="#990000" ID="ID_1082968153" 
 	TEXT="Git 版本库创建的模板？定制模板就可以实现 info/exclude 文件的自动定义">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_428815862" 
+	TEXT="git status --ignore 查看忽略文件">
 <font NAME="Serif" SIZE="14"/>
 </node>
 </node>
@@ -2504,6 +2512,10 @@
 </node>
 <node COLOR="#111111" ID="ID_411539511" 
 	TEXT="git log -1">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_103596009" 
+	TEXT="1.7.4开始，git log -G&lt;pattern&gt; ： 只显示匹配正则表达式的日志">
 <font NAME="Serif" SIZE="12"/>
 </node>
 </node>
@@ -4047,6 +4059,19 @@
 <font NAME="Serif" SIZE="12"/>
 </node>
 </node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1692345880" 
+	TEXT="里程碑/分支名称的合法性问题">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1282356050" 
+	TEXT="1.7.4开始，分支名称不能以减号（-）开始了。">
+<font NAME="Serif" SIZE="12"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_1789485369" 
+	TEXT=" * The option parsers of various commands that create new branch (or    rename existing ones to a new name) were too loose and users were    allowed to call a branch with a name that begins with a dash by    creative abuse of their command line options, which only lead to    burn themselves.  The name of a branch cannot begin with a dash    now. "/>
+</node>
+<node COLOR="#111111" ID="ID_1337413283" 
+	TEXT="代码中看看哪些字符不允许？ "/>
+</node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_148688254" 
 	TEXT="Step 13: Git 进阶（远程分支）">
@@ -4339,10 +4364,15 @@
 <font NAME="Serif" SIZE="14"/>
 </node>
 </node>
-<node COLOR="#00b439" ID="ID_1455669451" 
+<node COLOR="#00b439" FOLDED="true" ID="ID_1455669451" 
 	TEXT="属性">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_1834344876" 
+	TEXT="1.7.4开始，系统范围的属性放在 /etc/gitattributes 下，可以用 core.attributesfile 来定制。">
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+</node>
 </node>
 <node COLOR="#00b439" ID="ID_1778813255" 
 	TEXT="钩子">
