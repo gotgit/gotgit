@@ -44,8 +44,8 @@
 .. include:: ./01-meet-git/030-git-install.rst
 .. include:: ./01-meet-git/040-git-config.rst
 
-第二部分: Git基础
-##################
+第二部分: Git基础：循序渐进
+###########################
 
 .. include:: ./02-use-git/010-git-init.rst
 .. include:: ./02-use-git/020-git-basic.rst

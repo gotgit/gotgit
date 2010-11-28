@@ -67,6 +67,35 @@
 <icon BUILTIN="info"/>
 <icon BUILTIN="info"/>
 </node>
+<node COLOR="#990000" ID="ID_426664552" 
+	TEXT="1.7.4开始，分支名称不能以减号（-）开始了。">
+<arrowlink DESTINATION="ID_1353977648" ENDARROW="Default" ENDINCLINATION="567;0;" ID="Arrow_ID_1149913574" STARTARROW="None" STARTINCLINATION="567;0;"/>
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" ID="ID_1362930547" 
+	TEXT="1.7.4 开始，系统范围的属性放在 /etc/gitattributes 下，可以用 core.attributesfile 来定制。">
+<arrowlink DESTINATION="ID_1313454464" ENDARROW="Default" ENDINCLINATION="509;0;" ID="Arrow_ID_209018035" STARTARROW="None" STARTINCLINATION="509;0;"/>
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" ID="ID_558897917" 
+	TEXT="1.7.4开始，git read-tree  需要使用 --empty 清空 index。原来版本可以不加 --empty 未来将被取消。">
+<arrowlink DESTINATION="ID_641667772" ENDARROW="Default" ENDINCLINATION="509;0;" ID="Arrow_ID_1247411754" STARTARROW="None" STARTINCLINATION="509;0;"/>
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" ID="ID_549537488" 
+	TEXT="1.7.4开始，可以扩展 git-shell">
+<arrowlink DESTINATION="ID_1478661715" ENDARROW="Default" ENDINCLINATION="501;0;" ID="Arrow_ID_626498615" STARTARROW="None" STARTINCLINATION="501;0;"/>
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#990000" ID="ID_1342349696" 
+	TEXT="1.7.3 开始，git rebase 命令也支持 -X 参数。">
+<arrowlink DESTINATION="ID_571745435" ENDARROW="Default" ENDINCLINATION="598;0;" ID="Arrow_ID_1769794447" STARTARROW="None" STARTINCLINATION="598;0;"/>
+<font NAME="Serif" SIZE="14"/>
+</node>
 <node COLOR="#990000" ID="ID_672690286" 
 	TEXT="init 时的模板">
 <arrowlink DESTINATION="ID_1873318436" ENDARROW="Default" ENDINCLINATION="385;0;" ID="Arrow_ID_1295226355" STARTARROW="None" STARTINCLINATION="385;0;"/>
@@ -98,15 +127,10 @@
 <font NAME="Serif" SIZE="14"/>
 </node>
 <node COLOR="#990000" ID="ID_22869168" 
-	TEXT="git merge -Xsubtree=path/to/dir">
+	TEXT="1.7.0 开始，git merge -Xsubtree=path/to/dir">
 <arrowlink DESTINATION="ID_750449377" ENDARROW="Default" ENDINCLINATION="453;0;" ID="Arrow_ID_881115965" STARTARROW="None" STARTINCLINATION="453;0;"/>
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
-</node>
-<node COLOR="#990000" ID="ID_1342349696" 
-	TEXT="git rebase 命令也支持 -X 参数。">
-<arrowlink DESTINATION="ID_571745435" ENDARROW="Default" ENDINCLINATION="598;0;" ID="Arrow_ID_1769794447" STARTARROW="None" STARTINCLINATION="598;0;"/>
-<font NAME="Serif" SIZE="14"/>
 </node>
 <node COLOR="#990000" ID="ID_394112014" 
 	TEXT="git branch origin --delete branch： 删除远程分支的新语法">
@@ -195,24 +219,24 @@
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" FOLDED="true" ID="ID_1353977648" 
-	TEXT="分支名称不能以减号（-）开始了。">
+	TEXT="1.7.4开始，分支名称不能以减号（-）开始了。">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <node COLOR="#111111" ID="ID_514551657" 
 	TEXT=" * The option parsers of various commands that create new branch (or    rename existing ones to a new name) were too loose and users were    allowed to call a branch with a name that begins with a dash by    creative abuse of their command line options, which only lead to    burn themselves.  The name of a branch cannot begin with a dash    now. "/>
 </node>
 <node COLOR="#990000" ID="ID_1313454464" 
-	TEXT="系统范围的属性放在 /etc/gitattributes 下，可以用 core.attributesfile 来定制。">
+	TEXT="1.7.4 开始，系统范围的属性放在 /etc/gitattributes 下，可以用 core.attributesfile 来定制。">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 </node>
 <node COLOR="#990000" ID="ID_641667772" 
-	TEXT="git read-tree  需要使用 --empty 清空 index。原来版本可以不加 --empty 未来将被取消。">
+	TEXT="1.7.4开始，git read-tree  需要使用 --empty 清空 index。原来版本可以不加 --empty 未来将被取消。">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_1478661715" 
-	TEXT="可以扩展 git-shell">
+	TEXT="1.7.4开始，可以扩展 git-shell">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <node COLOR="#111111" ID="ID_361144147" 
@@ -248,7 +272,7 @@
 </node>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_527467018" 
-	TEXT="Git web 的配置直接生效。之前版本只在启动时生效。">
+	TEXT="1.7.3 开始，Git web 的配置直接生效。之前版本只在启动时生效。">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <node COLOR="#111111" ID="ID_1362700867" 
@@ -257,7 +281,7 @@
 </node>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_1679600004" 
-	TEXT="当 git 发现一个损坏的对象，报告包含它的文件。">
+	TEXT="1.7.3 开始，当 git 发现一个损坏的对象，报告包含它的文件。">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <node COLOR="#111111" ID="ID_1167826262" 
@@ -266,7 +290,7 @@
 </node>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_947196584" 
-	TEXT="git checkout 支持 -B 参数，相当于可以强制创建新分支。">
+	TEXT="1.7.3 开始，git checkout 支持 -B 参数，相当于可以强制创建新分支。">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <node COLOR="#111111" ID="ID_383096967" 
@@ -275,7 +299,7 @@
 </node>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_1017955800" 
-	TEXT="git clean 命令支持 -e 参数，排除一些文件不必清理">
+	TEXT="1.7.3 开始，git clean 命令支持 -e 参数，排除一些文件不必清理">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <node COLOR="#111111" ID="ID_1267651196" 
@@ -284,22 +308,22 @@
 </node>
 </node>
 <node COLOR="#990000" ID="ID_1915520198" 
-	TEXT="当执行 git merge 可以对目录变成文件或相反，支持的更好。">
+	TEXT="1.7.3 开始，当执行 git merge 可以对目录变成文件或相反，支持的更好。">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 </node>
 <node COLOR="#990000" ID="ID_1980042025" 
-	TEXT="git fetch $url 命令在不使用 refspec 时出错的问题已经解决。可能影响很长时间了。">
+	TEXT="1.7.3 开始，git fetch $url 命令在不使用 refspec 时出错的问题已经解决。可能影响很长时间了。">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="messagebox_warning"/>
 </node>
 <node COLOR="#990000" ID="ID_672909703" 
-	TEXT="解决了：当配置了 diff.noprefix ，git rebase 工作不好。">
+	TEXT="1.7.3 开始，解决了：当配置了 diff.noprefix ，git rebase 工作不好。">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="messagebox_warning"/>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_1534725170" 
-	TEXT="当执行  diff， status 命令时，可以通过 diff.ignoresubmodules 忽略子模组的改变">
+	TEXT="1.7.3 开始，当执行  diff， status 命令时，可以通过 diff.ignoresubmodules 忽略子模组的改变">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <node COLOR="#111111" ID="ID_1997284823" 
@@ -308,7 +332,7 @@
 </node>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_1656226009" 
-	TEXT="http.useragent 选项可以伪装为某种浏览器，以欺骗防火墙">
+	TEXT="1.7.3 开始，http.useragent 选项可以伪装为某种浏览器，以欺骗防火墙">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <node COLOR="#111111" ID="ID_1819565233" 
@@ -317,7 +341,7 @@
 </node>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_571745435" 
-	TEXT="git rebase --strategy 支持 -X 参数以传递所选 strategy 可用的附加参数">
+	TEXT="1.7.3 开始，git rebase --strategy 支持 -X 参数以传递所选 strategy 可用的附加参数">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <node COLOR="#111111" ID="ID_39282596" 
@@ -326,7 +350,7 @@
 </node>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_1089792426" 
-	TEXT="git rebase -i 支持 exec 选项，可以在两个步骤之间运行一个命令。">
+	TEXT="1.7.3 开始，git rebase -i 支持 exec 选项，可以在两个步骤之间运行一个命令。">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <node COLOR="#111111" ID="ID_151217568" 
@@ -335,7 +359,7 @@
 </node>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_1559961518" 
-	TEXT="git rebase 在变基时遇到很多二进制变更（不冲突）会更快。">
+	TEXT="1.7.3 开始，git rebase 在变基时遇到很多二进制变更（不冲突）会更快。">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <node COLOR="#111111" ID="ID_1167378875" 
@@ -344,7 +368,7 @@
 </node>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_795091466" 
-	TEXT="git rebase 读取 rebase.autosquash 设置，就像使用了 --autosquash 参数">
+	TEXT="1.7.3 开始，git rebase 读取 rebase.autosquash 设置，就像使用了 --autosquash 参数">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <node COLOR="#111111" ID="ID_57453508" 
@@ -353,7 +377,7 @@
 </node>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_1143217323" 
-	TEXT="当 git checkout 和 git merge 因为本地存在修改而不工作时，以前只显示一个可能会丢失的文件，现在显示多个文件。">
+	TEXT="1.7.3 开始，当 git checkout 和 git merge 因为本地存在修改而不工作时，以前只显示一个可能会丢失的文件，现在显示多个文件。">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <node COLOR="#111111" ID="ID_1715058906" 
@@ -376,7 +400,7 @@
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" FOLDED="true" ID="ID_802982994" 
-	TEXT="git cherry-pick 和 git revert 参数支持版本范围了！">
+	TEXT="1.7.2 开始，git cherry-pick 和 git revert 参数支持版本范围了！">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <icon BUILTIN="info"/>
@@ -384,7 +408,7 @@
 	TEXT=" * &quot;git cherry-pick&quot; learned to pick a range of commits&#xa;   (e.g. &quot;cherry-pick A..B&quot; and &quot;cherry-pick --stdin&quot;), so did &quot;git&#xa;   revert&quot;; these do not support the nicer sequencing control &quot;rebase&#xa;   [-i]&quot; has, though.&#xa;"/>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_635893099" 
-	TEXT="git cherry-pick 和 git-revert 支持 --strategy 参数了">
+	TEXT="1.7.2 开始，git cherry-pick 和 git-revert 支持 --strategy 参数了">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <icon BUILTIN="info"/>
@@ -394,7 +418,7 @@
 </node>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_1826224759" 
-	TEXT="增加了 core.eol 配置和 text/eol 属性，设置文件的换行符">
+	TEXT="1.7.2 开始，增加了 core.eol 配置和 text/eol 属性，设置文件的换行符">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <icon BUILTIN="info"/>
@@ -404,7 +428,7 @@
 </node>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_912417015" 
-	TEXT="配置 core.autocrlf 更加安全了。只对新文件，以及以LF-only格式的版本库文件起作用。&#xa;为了对版本库中使用了 CRLF 换行符的文件进行标准化，请使用新的 eol/text 属性。">
+	TEXT="1.7.2 开始，配置 core.autocrlf 更加安全了。只对新文件，以及以LF-only格式的版本库文件起作用。&#xa;为了对版本库中使用了 CRLF 换行符的文件进行标准化，请使用新的 eol/text 属性。">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <icon BUILTIN="info"/>
@@ -412,18 +436,18 @@
 	TEXT=" * core.autocrlf has been made safer - it will now only handle line&#xa;   endings for new files and files that are LF-only in the&#xa;   repository. To normalize content that has been checked in with&#xa;   CRLF, use the new eol/text attributes."/>
 </node>
 <node COLOR="#990000" ID="ID_1190862969" 
-	TEXT=" * &quot;git status [-s] --ignored&quot; can be used to list ignored paths.&#xa;">
+	TEXT="1.7.2 开始， * &quot;git status [-s] --ignored&quot; can be used to list ignored paths. ">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <icon BUILTIN="info"/>
 </node>
 <node COLOR="#990000" ID="ID_627208393" 
-	TEXT=" * The whitespace rules used in &quot;git apply --whitespace&quot; and &quot;git diff&quot;&#xa;   gained a new member in the family (tab-in-indent) to help projects with&#xa;   policy to indent only with spaces.&#xa;">
+	TEXT="1.7.2 开始， * The whitespace rules used in &quot;git apply --whitespace&quot; and &quot;git diff&quot;&#xa;   gained a new member in the family (tab-in-indent) to help projects with&#xa;   policy to indent only with spaces.&#xa;">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_52986892" 
-	TEXT=":/&lt;string&gt; 现在支持正则表达式，而不再是从头匹配日志了。">
+	TEXT="1.7.2 开始，:/&lt;string&gt; 现在支持正则表达式，而不再是从头匹配日志了。">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <node COLOR="#111111" ID="ID_281404178" 
@@ -432,7 +456,7 @@
 </node>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_378477505" 
-	TEXT="支持 git checkout --orphan 参数创建一个空的分支。">
+	TEXT="1.7.2 开始，支持 git checkout --orphan 参数创建一个空的分支。">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <node COLOR="#111111" ID="ID_1976543874" 
@@ -443,17 +467,17 @@
 <font NAME="Serif" SIZE="14"/>
 </node>
 <node COLOR="#990000" ID="ID_472554416" 
-	TEXT=" * &quot;git status -s -b&quot; shows the current branch in the output.&#xa;">
+	TEXT="1.7.2 开始， * &quot;git status -s -b&quot; shows the current branch in the output. ">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 </node>
 <node COLOR="#990000" ID="ID_688470198" 
-	TEXT=" * &quot;git status&quot; learned &quot;--ignore-submodules&quot; option.&#xa;">
+	TEXT="1.7.2 开始， * &quot;git status&quot; learned &quot;--ignore-submodules&quot; option. ">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 </node>
 <node COLOR="#990000" ID="ID_1679241762" 
-	TEXT=" * &quot;git help -w&quot; learned &quot;chrome&quot; and &quot;chromium&quot; browsers.&#xa;">
+	TEXT="1.7.2 开始， * &quot;git help -w&quot; learned &quot;chrome&quot; and &quot;chromium&quot; browsers. ">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 </node>
@@ -558,7 +582,7 @@
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" FOLDED="true" ID="ID_1873318436" 
-	TEXT="git init 可以检查 init.templatedir 配置的模板目录">
+	TEXT="1.7.1 开始，git init 可以检查 init.templatedir 配置的模板目录">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <icon BUILTIN="info"/>
@@ -570,12 +594,12 @@
 	TEXT="TEMPLATE DIRECTORY&#xa;       The template directory contains files and directories that will be copied to the $GIT_DIR after it is created.&#xa;&#xa;       The template directory used will (in order):&#xa;&#xa;       ·   The argument given with the --template option.&#xa;&#xa;       ·   The contents of the $GIT_TEMPLATE_DIR environment variable.&#xa;&#xa;       ·   The init.templatedir configuration variable.&#xa;&#xa;       ·   The default template directory: /usr/share/git-core/templates.&#xa;&#xa;       The default template directory includes some directory structure, some suggested &quot;exclude patterns&quot;, and copies of sample &quot;hook&quot; files. The&#xa;       suggested patterns and hook files are all modifiable and extensible.&#xa;&#xa;"/>
 </node>
 <node COLOR="#990000" ID="ID_624451505" 
-	TEXT=" * &quot;git notes&quot; command has been rewritten in C and learned many commands&#xa;   and features to help you carry notes forward across rebases and amends.&#xa;">
+	TEXT="1.7.1 开始， * &quot;git notes&quot; command has been rewritten in C and learned many commands&#xa;   and features to help you carry notes forward across rebases and amends.&#xa;">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 </node>
 <node COLOR="#990000" ID="ID_1446785559" 
-	TEXT=" * &quot;git reset&quot; learned &quot;--keep&quot; option that lets you discard commits&#xa;   near the tip while preserving your local changes in a way similar&#xa;   to how &quot;git checkout branch&quot; does.">
+	TEXT="1.7.1 开始， * &quot;git reset&quot; learned &quot;--keep&quot; option that lets you discard commits&#xa;   near the tip while preserving your local changes in a way similar&#xa;   to how &quot;git checkout branch&quot; does.">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 </node>
@@ -663,7 +687,7 @@
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" FOLDED="true" ID="ID_1775879331" 
-	TEXT="当向远程带工作区版本库的当前分支 push 时，禁止！（1.6.2以后就已经开始警告了）">
+	TEXT="1.7.0 开始，当向远程带工作区版本库的当前分支 push 时，禁止！（1.6.2以后就已经开始警告了）">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <icon BUILTIN="info"/>
@@ -671,13 +695,13 @@
 	TEXT=" * &quot;git push&quot; into a branch that is currently checked out (i.e. pointed at by&#xa;   HEAD in a repository that is not bare) is refused by default.&#xa;&#xa;   Similarly, &quot;git push $there :$killed&quot; to delete the branch $killed&#xa;   in a remote repository $there, when $killed branch is the current&#xa;   branch pointed at by its HEAD, will be refused by default.&#xa;&#xa;   Setting the configuration variables receive.denyCurrentBranch and&#xa;   receive.denyDeleteCurrent to &apos;ignore&apos; in the receiving repository&#xa;   can be used to override these safety features.&#xa;"/>
 </node>
 <node COLOR="#990000" ID="ID_739710898" 
-	TEXT="git-svn 支持 Subversion 的 merge tracks。">
+	TEXT="1.7.0 开始，git-svn 支持 Subversion 的 merge tracks。">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <icon BUILTIN="info"/>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_1175431394" 
-	TEXT="稀疏检出支持只检出部分工作区文件">
+	TEXT="1.7.0 开始，稀疏检出支持只检出部分工作区文件">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <icon BUILTIN="info"/>
@@ -695,7 +719,7 @@
 	TEXT="Checkout sub directories in git (sparse checkouts)&#xa;&#xa;SVN externals is a really nice feature I used a lot. Switching to git I was really missing it. Of course there is git-submodule but it’s not the same. Now, with version 1.7 git supports so called sparse checkouts which allow you to only include specific sub directories of a repository in your project. You still need to clone the whole repository, but afterwards you can tell git to only show the specified sub directories.&#xa;&#xa;Here is how it works:&#xa;&#xa;   1. clone the other repository (in my case, for a Rails app, I did it in vendor/plugins/)&#xa;&#xa;      git clone &lt;repository_url&gt; &lt;directory&gt;&#xa;&#xa;   2. cd to &lt;directory&gt;&#xa;&#xa;      cd &lt;directory&gt;&#xa;&#xa;   3. enable sparsecheckout&#xa;&#xa;      git config core.sparsecheckout true&#xa;&#xa;   4. add directories you want to have in your checkout to .git/info/sparse-checkout, e.g.&#xa;&#xa;      echo app/models/ &gt; .git/info/sparse-checkout&#xa;      echo lib/ &gt;&gt; .git/info/sparse-checkout&#xa;&#xa;   5. run read-tree&#xa;&#xa;      git read-tree -m -u HEAD&#xa;&#xa;ls now shows&#xa;&#xa;app lib&#xa;&#xa;Forgot a directory you wanted to include? Just repeat step 4 and 5."/>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_515274876" 
-	TEXT="git fetch 增加了 --all 参数，获取所有跟踪上游。（1.6.6 即支持）">
+	TEXT="1.7.0 开始，git fetch 增加了 --all 参数，获取所有跟踪上游。（1.6.6 即支持）">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <icon BUILTIN="info"/>
@@ -705,7 +729,7 @@
 </node>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_750449377" 
-	TEXT="git merge 可以传递参数">
+	TEXT="1.7.0 开始， git merge 可以传递参数">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <icon BUILTIN="info"/>
@@ -713,7 +737,7 @@
 	TEXT=" * &quot;git merge&quot; learned to pass options specific to strategy-backends.  E.g.&#xa;&#xa;    - &quot;git merge -Xsubtree=path/to/directory&quot; can be used to tell the subtree&#xa;      strategy how much to shift the trees explicitly.&#xa;                                                                                                                                                            &#xa;    - &quot;git merge -Xtheirs&quot; can be used to auto-merge as much as possible,&#xa;      while discarding your own changes and taking merged version in&#xa;      conflicted regions.&#xa;"/>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_410954959" 
-	TEXT="删除分支可以使用新语法">
+	TEXT="1.7.0 开始，删除分支可以使用新语法">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <icon BUILTIN="info"/>
@@ -721,13 +745,13 @@
 	TEXT=" * &quot;git push&quot; learned &quot;git push origin --delete branch&quot;, a syntactic sugar&#xa;   for &quot;git push origin :branch&quot;.&#xa;"/>
 </node>
 <node COLOR="#990000" ID="ID_1647068944" 
-	TEXT="git status 在 1.7 版本支持 -s 参数">
+	TEXT="1.7.0 开始，git status 在 1.7 版本支持 -s 参数">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <icon BUILTIN="info"/>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_649723620" 
-	TEXT="git push --upstream">
+	TEXT="1.7.0 开始，git push --upstream">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <node COLOR="#111111" ID="ID_1616575731" 
@@ -736,7 +760,7 @@
 </node>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_1885089706" 
-	TEXT="git rebase -i 支持 fixup 命令">
+	TEXT="1.7.0 开始，git rebase -i 支持 fixup 命令">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <node COLOR="#111111" ID="ID_1048397282" 
@@ -745,7 +769,7 @@
 	TEXT=" * &quot;git rebase -i&quot; also learned --autosquash option that is useful&#xa;   together with the new &quot;fixup&quot; action.&#xa;"/>
 </node>
 <node COLOR="#990000" ID="ID_1856626110" 
-	TEXT=" * &quot;git remote&quot; learned set-url subcommand that updates (surprise!) url&#xa;   for an existing remote nickname.&#xa;">
+	TEXT="1.7.0 开始， * &quot;git remote&quot; learned set-url subcommand that updates (surprise!) url&#xa;   for an existing remote nickname.&#xa;">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 </node>
@@ -809,7 +833,7 @@
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" FOLDED="true" ID="ID_1971651865" 
-	TEXT="git fsck 缺省使用 --full 参数，如果希望使用原来快速模式 ，可以用 --no-full 参数（在1.5.4之后就支持者 --no-full 参数了）。">
+	TEXT="1.6.6 开始，git fsck 缺省使用 --full 参数，如果希望使用原来快速模式 ，可以用 --no-full 参数（在1.5.4之后就支持者 --no-full 参数了）。">
 <font NAME="Serif" SIZE="14"/>
 <node COLOR="#111111" ID="ID_941336105" 
 	TEXT=" * &quot;git fsck&quot; by default checks the packfiles (i.e. &quot;--full&quot; is the&#xa;   default); you can turn it off with &quot;git fsck --no-full&quot;.&#xa;">
@@ -817,23 +841,23 @@
 </node>
 </node>
 <node COLOR="#990000" ID="ID_376577638" 
-	TEXT="git fetch 支持智能  HTTP">
+	TEXT="1.6.6 开始，git fetch 支持智能  HTTP">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <icon BUILTIN="info"/>
 </node>
 <node COLOR="#990000" ID="ID_1573102995" 
-	TEXT="git 1.6.6 起，当检出一个不存在分支，但是在 remotes 中存在，自动创建本地跟踪分支。">
+	TEXT="1.6.6 开始，当检出一个不存在分支，但是在 remotes 中存在，自动创建本地跟踪分支。">
 <font NAME="Serif" SIZE="14"/>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_289042464" 
-	TEXT="git commit -c/-C/--amend 参数，使用新的 committer ID，而不用原 log 中的。">
+	TEXT="1.6.6 开始，git commit -c/-C/--amend 参数，使用新的 committer ID，而不用原 log 中的。">
 <font NAME="Serif" SIZE="14"/>
 <node COLOR="#111111" ID="ID_1105463259" 
 	TEXT=" * &quot;git commit -c/-C/--amend&quot; can be told with a new &quot;--reset-author&quot; option&#xa;   to ignore authorship information in the commit it is taking the message&#xa;   from.&#xa;"/>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_1176376225" 
-	TEXT="git fetch 增加了 --all 参数，获取所有跟踪上游。（1.6.6 即支持）">
+	TEXT="1.6.6 开始，git fetch 增加了 --all 参数，获取所有跟踪上游。（1.6.6 即支持）">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <icon BUILTIN="info"/>
@@ -847,12 +871,12 @@
 </node>
 </node>
 <node COLOR="#990000" ID="ID_764335338" 
-	TEXT=" * &quot;git instaweb&quot; knows how to talk with mod_cgid to apache2.&#xa;">
+	TEXT="1.6.6 开始， * &quot;git instaweb&quot; knows how to talk with mod_cgid to apache2. ">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_699936559" 
-	TEXT="git rebase -i 支持 reword 参数，修改历史提交的说明">
+	TEXT="1.6.6 开始，git rebase -i 支持 reword 参数，修改历史提交的说明">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <icon BUILTIN="info"/>
@@ -862,7 +886,7 @@
 </node>
 </node>
 <node COLOR="#990000" ID="ID_562935013" 
-	TEXT=" * &quot;git svn&quot; learned to read SVN 1.5+ and SVK merge tickets.&#xa;">
+	TEXT="1.6.6 开始， * &quot;git svn&quot; learned to read SVN 1.5+ and SVK merge tickets. ">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <icon BUILTIN="info"/>
@@ -937,13 +961,13 @@
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" FOLDED="true" ID="ID_614711157" 
-	TEXT="git clone 不在复制 refs 下除了 heads, tags 外的引用">
+	TEXT="1.6.5 开始，git clone 不在复制 refs 下除了 heads, tags 外的引用">
 <font NAME="Serif" SIZE="14"/>
 <node COLOR="#111111" ID="ID_790125804" 
 	TEXT=" * &quot;git clone&quot; does not grab objects that it does not need (i.e.&#xa;   referenced only from refs outside refs/heads and refs/tags&#xa;   hierarchy) anymore.&#xa;"/>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_915333998" 
-	TEXT="gc 和 .git 下文件的 mtime 相关？">
+	TEXT="1.6.5 开始，gc 和 .git 下文件的 mtime 相关？">
 <font NAME="Serif" SIZE="14"/>
 <node COLOR="#111111" ID="ID_698460521" 
 	TEXT=" * &quot;git clone&quot; run locally hardlinks or copies the files in .git/ to&#xa;   newly created repository.  It used to give new mtime to copied files,&#xa;   but this delayed garbage collection to trigger unnecessarily in the&#xa;   cloned repository.  We now preserve mtime for these files to avoid&#xa;   this issue.&#xa;">
@@ -951,7 +975,7 @@
 </node>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_1089962016" 
-	TEXT="git replace 命令和 refs/replace/">
+	TEXT="1.6.5 开始，git replace 命令和 refs/replace/">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 <node COLOR="#111111" ID="ID_57588445" 
@@ -960,12 +984,12 @@
 </node>
 </node>
 <node COLOR="#990000" ID="ID_773427270" 
-	TEXT="git clone --recursive 参数，直接初始化 子模组。">
+	TEXT="1.6.5 开始，git clone --recursive 参数，直接初始化 子模组。">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 </node>
 <node COLOR="#990000" ID="ID_297426783" 
-	TEXT="支持 git init this 。直接创建子目录，并克隆">
+	TEXT="1.6.5 开始，支持 git init this 。直接创建子目录，并克隆">
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 </node>

@@ -1,16 +1,287 @@
 
-Git 版本
-========
+前面的章节我们了解了版本控制系统的历史、来龙去脉，我们也学习了 Git 的安装。从这一页开始，我们就真正的进入到 Git 的学习中。Git 的学习有着陡峭的学习曲线，尤其是对有着其它版本控制使用经验的老手。有经验的老手们按照在其它版本控制系统使用中遗留的习惯去想当然的操作 Git，努力的在 Git 中寻找对应物，最终会因为 Git 的“别扭”而放弃使用。我也曾经这样。
 
-repo 要求 git 版本是 1.5.4 以上（含）
+在本书的这一部分，我尝试采用实践，思考，再实践的方式，循序渐进的学习 Git。到本部分的结尾，读者会发现原来 Git 的设计是如此的简洁和美。
 
-gitolite 对 git 版本的要求
 
-gitosis 对 git 版本的要求
+实践一：创建版本库及第一次提交
+==============================
 
-topgit 对 git 版本的要求
+您使用的是 1.5.6 或更新版本的 Git 么？
 
-gistore 对 git 版本的要求
+::
 
-初始化版本库
-============
+  $ git --version
+  git version 1.7.3.2
+
+Git 是一个活跃的项目，仍在不断的进化之中，不同的 Git 版本功能不尽相同。本书对 Git 的介绍涵盖了 1.5.6 到 1.7.3 版本，这也是目前 Git 的主要版本。如果您使用的 Git 版本低于 1.5.6，那么您应该升级到 1.5.6 或更高的版本。本书示例使用的是 1.7.3.2 版本的 Git，对于那些低版本不兼容的命令及参数，我们会及时指出。 
+
+在开始我们的 Git 之旅之前，我们需要对 Git 的环境变量进行一下设置，这个设置是一次性的工作。就是说这些设置会在全局文件（用户主目录下的 .gitconfig）或者系统文件（/etc/gitconfig）中做永久的记录。
+
+* 告诉 Git 当前用户的姓名和邮件地址，配置的用户名和邮件地址将在版本库提交时显示为提交者的用户名和地址。
+
+  注意下面的两条命令不要照抄照搬，而是用您的用户名和邮件地址代替我写的用户名和邮件地址，否则您的劳动成果（提交）可要算到我的头上了。
+
+  ::
+
+    $ git config --global user.name "Jiang Xin"
+    $ git config --global user.email jiangxin@ossxp.com
+
+* 设置一些 Git 别名，以便可以使用更为简洁的子命令。例如: 输入 `git ci` 即相当于 `git commit` ，输入 `git st` 即相当于 `git status` 。
+
+  - 如果您有系统管理员权限（可以执行 sudo 命令），希望注册的命令别名能够被所有用户使用，可以执行：
+
+    ::
+
+      $ sudo git config --system alias.st status
+      $ sudo git config --system alias.ci commit
+      $ sudo git config --system alias.co checkout
+      $ sudo git config --system alias.br branch
+
+  - 也可以运行下面的命令，只在本用户的全局配置中添加 Git 命令别名：
+
+    ::
+
+      $ git config --global alias.st status
+      $ git config --global alias.ci commit
+      $ git config --global alias.co checkout
+      $ git config --global alias.br branch
+
+Git 的所有操作，包括版本库创建等管理性工作都用 `git` 一个命令完成，不像其它有的版本控制系统（如 Subversion），一些涉及管理的操作要使用另外的命令（如 `svnadmin` ）。创建 Git 版本库，可以直接进入到包含数据（文件和子目录）的目录下，通过执行 `git init` 完成版本库的初始化。为了说明的方便，我们从一个空目录开始初始化版本库。首先建立一个新的工作目录，进入该目录后，执行 `git init` 完成版本库创建。
+
+::
+
+  $ cd /my/workspace
+  $ mkdir demo
+  $ cd demo
+  $ git init
+  Initialized empty Git repository in /my/workspace/demo/.git/
+
+实际上，如果你 Git 的版本是 1.6.5 或更新的版本，可以在 `git init` 命令的后面直接输入目录名称，自动完成目录的创建。
+
+:: 
+
+  $ cd /my/workspace
+  $ git init demo 
+  Initialized empty Git repository in /my/workspace/demo/.git/
+  $ cd demo
+
+从上面版本库初始化后的输出中，我们可以看到执行 `git init` 命令在工作区创建了隐藏目录 `.git` 。
+
+::
+
+  $ ls -aF
+  ./  ../  .git/
+
+这个隐藏的 `.git` 目录就是 Git 版本库（即仓库, repository ）。
+
+`.git` 版本库目录所在的目录，即 `/my/workspace/demo` 目录称为 **工作区** ，目前工作区除了包含一个隐藏的 `.git` 版本库目录外，空无一物。
+
+下面我们为工作区中加点料：在工作区中创建一个文件 `welcome.txt` ，内容就是一行 "Hello."。
+
+::
+
+  $ echo "Hello." > welcome.txt
+
+为了将这个新建立的文件添加到版本库，需要执行下面的命令：
+
+::
+
+  $ git add welcome.txt
+
+切记，到这里还没有完。Git 和大部分其它版本控制系统都需要你再执行一次 `git commit` 命令才完成提交。在提交过程中需要输入提交说明。可以在命令行通过 `-m` 参数直接给出提交说明。
+
+::
+
+  $ git ci -m "initialized."
+  [master (root-commit) 78cde45] initialized.
+   1 files changed, 1 insertions(+), 0 deletions(-)
+   create mode 100644 welcome.txt
+
+从上面的命令及输出中，我们可以看出：
+
+* 命令 `git ci` 实际上相当于使用了 `git commit` ，这是因为我们之前为 Git 设置的命令别名。
+* 通过 "-m" 参数设置提交说明为："initialized." 。
+* 命令输出的第一行，可以看出此次提交是提交在名为 `master` 的分支上，是该分支的第一个提交（root-commit），提交 ID 为 78cde45（缩写）。
+* 命令输出的第二行，可以看出此次提交中，修改了一个文件，包含一行的插入。
+* 命令输出的第三行，可以看出此次提交创建了新文件 `welcome.txt` 。
+
+思考：为什么工作区下有一个 .git 目录？
+--------------------------------------
+
+Git 以及其它分布式版本控制系统（如 Mercurial/Hg, Bazaar）的一个显著特点是，版本库位于工作区的根目录下。对于 Git 来说，版本库位于工作区根目录下的 `.git` 目录中，且仅此一处，在工作区的子目录下则没有任何其它跟踪文件。Git 的这个设计要比 CVS, Subversion 这些传统的集中式版本控制工具来说方便多了。
+
+我们来看看其它版本控制系统是如何实现对工作区文件的追踪，以及各自实现的弊端。
+
+对于 CVS，工作区的根目录以及每一个子目录下都有一个 CVS 目录，CVS 目录中包含几个配置文件，建立了对版本库的追踪。如 CVS 目录下的 `Entries` 文件记录了从版本库检出到工作区的文件的名称、版本和时间绰等，这样就可以通过对工作区文件时间绰的改变判断文件是否更改。这样设计的好处是，可以将工作区移动到任何其它目录，依然正常工作。甚至还将工作区的某个子目录移动到其它位置，形成新的工作区，在新的工作区下仍然可以完成版本控制相关操作。缺点也很多，例如工作区文件修改了，因为没有原始文件做比对，因此向服务器提交修改的时候只能对整个文件进行传输而不能仅针对文件的改动部分传输，导致从客户端到服务器的网络传输效率低。还有一个风险是造成信息泄漏，例如 Web 服务器的目录下如果包含了 CVS 目录，黑客就可以通过扫描 `CVS/Entries` 文件得到目录下的文件列表，由此造成信息泄漏。
+
+对于 Subversion 来说，工作区的根目录和每一个子目录下都有一个 ".svn" 目录。".svn" 目录中不但包含了类似 CVS 的跟踪目录下的配置文件，还包含了当前工作区下每一个文件的拷贝。多出的文件原始拷贝让某些 svn 命令可以脱离版本库执行，还可以在由客户端向服务器提交时，仅仅对文件改动的内容进行提交，因为改动的文件可以和原始拷贝进行差异比较。但是这么做的缺点除了 CVS 具有的缺点外，还导致工作区空间占用的加倍。还有一个不方便的地方，就是当在工作区目录下针对文件内容进行搜索的时候，会因为 ".svn" 目录下文件的原始拷贝，导致搜索的结果加倍，出新混乱的搜索结果。
+
+有的版本控制系统，在工作区根本就没有任何跟踪文件，例如一款叫做 Starteam 的商业版本控制软件，工作区就非常干净没有任何的配置文件和配置目录。但是这样的设计也很糟糕，因为它实际上是由服务器端建立的文件跟踪，在服务器端的数据库中保存了一个表格：哪台客户端，在哪个本地目录检出了哪个版本的版本库文件。这样做的后果是，如果客户端将工作区移动或者改名会导致文件的跟踪状态丢失，出现文件状态未知的问题。客户端操作系统重装，也会导致文件跟踪状态丢失。
+
+Git 的这种设计，将版本库放在工作区根目录下，所有的版本控制操作（除了和克隆版本库之间的互操作）都在本地即可完成，不像 Subversion 只有寥寥无几的几个命令才能脱离网络执行。而且 Git 也没有 CVS 和 Subversion 的安全泄漏问题（只要保护好 .git 目录），也没有 Subversion 在本地文件搜索时搜索结果混乱的问题，甚至 Git 提供了一条 `git grep` 命令来实现更好的工作区文件内容搜索。
+
+**那么当工作区中包含了子目录，在子目录中执行 Git 命令时，如何定位版本库位置呢？**
+
+实际上当在 Git 工作区目录下执行操作的时候，会对目录依次向上递归查找 ".git" 目录，找到的 ".git" 目录就是工作区对应的版本库， ".git" 所在的目录就是工作区的根目录，".git/index" 文件记录了工作区文件的状态（实际上是暂存区的状态）。
+
+例如我们在非 Git 工作区执行 git 命令，会因为找不到 ".git" 目录而报错。
+
+::
+
+  $ cd /my/workspace/
+  $ git status
+  fatal: Not a git repository (or any of the parent directories): .git
+
+如果我们跟踪一下执行 git status 命令时的磁盘访问，我们会看到沿目录依次向上递归的过程。
+
+::
+
+  $ strace -e 'trace=file' git status
+  ...
+  getcwd("/my/workspace", 4096)           = 14
+  stat(".", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+  stat(".git", 0x7fffdf1288d0)            = -1 ENOENT (No such file or directory)
+  access(".git/objects", X_OK)            = -1 ENOENT (No such file or directory)
+  access("./objects", X_OK)               = -1 ENOENT (No such file or directory)
+  stat("..", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+  chdir("..")                             = 0
+  stat(".git", 0x7fffdf1288d0)            = -1 ENOENT (No such file or directory)
+  access(".git/objects", X_OK)            = -1 ENOENT (No such file or directory)
+  access("./objects", X_OK)               = -1 ENOENT (No such file or directory)
+  stat("..", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+  chdir("..")                             = 0
+  stat(".git", 0x7fffdf1288d0)            = -1 ENOENT (No such file or directory)
+  access(".git/objects", X_OK)            = -1 ENOENT (No such file or directory)
+  access("./objects", X_OK)               = -1 ENOENT (No such file or directory)
+  fatal: Not a git repository (or any of the parent directories): .git
+
+**那么有什么办法显示 Git 版本库的位置，以及显示工作区的根目录么？**
+
+当我们在工作区执行 git 命令时，上面的查找版本库的操作总是默默的执行就好像没有发生的一样。如果忘记了工作区的根，Git 有一个低端命令可以显示找到的版本库和工作区的根。
+
+::
+
+  $ cd /my/workspace/demo/
+  $ mkdir -p a/b/c
+  $ cd /my/workspace/demo/a/b/c
+  $ git rev-parse --git-dir
+  /my/workspace/demo/.git
+  $ git rev-parse --show-toplevel
+  /my/workspace/demo
+  $ git rev-parse --show-prefix
+  a/b/c/
+  $ git rev-parse --show-cdup
+  ../../../
+
+其中用参数 "--show-cdup" 调用的输出结果比较特别，显示的如果从当前目录（cd）后退（up）到工作区的根的深度。
+
+**把版本库 ".git" 目录放在工作区，是不是太不安全了？**
+
+从存储安全的角度上来讲，将版本库放在工作区目录下，有点“把鸡蛋装在一个篮子里”的味道。如果忘记了工作区中还有版本库，直接从工作区的根执行目录删除就会连版本库一并删除，这个风险的确是蛮高的。将版本库和工作区拆开似乎更加安全，但是不要忘了我们之前的讨论，将版本库和工作区拆开，就要引入其它机制以便实现版本库对工作区的追踪。
+
+Git 克隆就是解决这个问题的办法。可以通过版本库克隆，在本机另外的磁盘/目录建立 Git 克隆，并在工作区有改动提交时手动或自动的执行到克隆的推送（git push）操作。如果使用网络协议，还可以实现在其它机器上建立克隆，这样就更安全了（双机备份）。对于团队开发使用 Git 做版本控制，每个人都是一个备份，因此团队开发中的 Git 版本库更安全，管理员甚至根本无须顾虑版本库存储安全问题。
+
+思考：git config 命令的 --global 和 --system 有何区别？
+--------------------------------------------------------
+
+在之前出现的 "git config" 命令，有的我们使用了 "--global" 参数，有的使用了 "--system" 参数，这是为什么呢？
+
+执行下面的命令，你就明白 "git config" 命令实际操作的文件了。
+
+* 执行下面的命令，将打开 `/my/workspace/demo/.git/config` 文件进行编辑。
+
+  ::
+
+    $ cd /my/workspace/demo/
+    $ git config -e 
+
+* 执行下面的命令，将打开 `/home/jiangxin/.gitconfig` （用户主目录下的 .gitconfig 文件）全局配置文件进行编辑。
+
+  ::
+
+    $ git config -e --global
+
+* 执行下面的命令，将打开 `/etc/gitconfig` 系统级配置文件进行编辑。
+
+  如果 Git 安装在 /usr/local/bin 下，这个系统级的配置文件也可能是在 "/usr/local/etc/gitconfig" 。
+
+  ::
+
+    $ git config -e --system
+
+Git 的三个配置文件分别是版本库级别的配置文件，全局配置文件（用户主目录下），和系统级配置文件（/etc 目录下）。其中版本库级别配置文件的优先级最高，全局配置文件其次，系统级配置文件优先级最低。这样的优先级设置就可以让版本库 .git 目录下的 config 文件中的配置可以覆盖用户主目录下的 Git 环境配置。而用户主目录下的配置也可以覆盖系统的 Git 配置文件。
+
+通过前面三个命令，我们也能看到这三个级别配置文件的内容和格式，原来 Git 配置文件采用的是 INI 文件格式。
+
+::
+
+  $ cat /my/workspace/demo/.git/config 
+  [core]
+          repositoryformatversion = 0
+          filemode = true
+          bare = false
+          logallrefupdates = true
+
+"git config" 命令可以用于显示 INI 文件中某个配置的键值，其命令格式是 "git config section.key" 。例如读取 [core] 小节的 bare 属性的值，可以用如下命令：
+
+::
+
+  $ git config core.bare
+  false
+
+如果我们想设置 INI 文件中某个属性值也非常简单，命令格式是：“git config section.key value” 。我们可以如下操作：
+
+::
+
+  $ git config a.b something
+  $ git config x.y.z others
+
+如果我们打开 .git/config 文件，我们会看到如下内容：
+
+::
+
+  [a]
+          b = something
+
+  [x "y"]
+          z = others
+
+对于类似 `[x "y"]` 一样的配置小节，我们在后面介绍远程版本库时会经常遇到。
+
+Git config: 通过环境变量设定，修改任意 INI 文件。参考 git-svn 
+
+思考：谁完成的提交？
+---------------------
+
+CVS/Subversion 在提交时需要认证，那么很自然，认证帐号就是提交者。而 Git 不是这样。
+在之前我们提交的时候，警告用户没有设置
+
+git config: who are you
+
+我是谁
+
+::
+
+  $ git config --global user.name "Your Name"
+  $ git config --global user.email yourname@example.com
+
+最终会显示在提交者姓名中
+
+    然后我们看到提交日志中提交者 ID
+    可以随便修改COMMITOR 的 ID，这样操作是不是太随意了？ 
+    实际上有两个 ID，一个是 Auhor ID，一个是 Commit ID
+    Redmine 或者其它软件，要依靠 AuthorID 还是 Commit ID 建立用户映射，所以不要太随意了。
+    Gerrit 软件，要要求提交的 CommitID 和认证用户的 email 进行比对，不允许随便使用邮件地址。
+    有时我们要把补丁交给上游提交，会不会把作者信息丢失？ commit -s 。以及 Author ID 是否保持？
+    每次操作都要输入 -s 参数？ 别忘了别名。实际上 ci 也是 commit 的别名
+
+思考：命令别名是干什么的？
+--------------------------
+
+为什么没有 ci 命令？以及如何建立别名？
+
+为了不让提交日志变得太过臃肿，以免浪费更多的纸张和读者金钱，我在后面的演示中，都没有用到 -s ，以便让日志变得短小些。
+
+
+
