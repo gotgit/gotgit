@@ -48,13 +48,13 @@
 ###########################
 
 .. include:: ./02-use-git/010-git-init.rst
-.. include:: ./02-use-git/020-git-basic.rst
-.. include:: ./02-use-git/030-git-stage.rst
-.. include:: ./02-use-git/040-git-rm-del.rst
+.. include:: ./02-use-git/020-git-stage.rst
+.. include:: ./02-use-git/030-git-basic.rst
+.. include:: ./02-use-git/040-git-storage.rst
 .. include:: ./02-use-git/050-git-ignore.rst
-.. include:: ./02-use-git/060-git-log.rst
+.. include:: ./02-use-git/060-git-history-travel.rst
 .. include:: ./02-use-git/070-revert-rollback.rst
-.. include:: ./02-use-git/080-git-rebase.rst
+.. include:: ./02-use-git/080-change-history.rst
 .. include:: ./02-use-git/090-git-pull-push.rst
 
 第三部分: Git进阶
