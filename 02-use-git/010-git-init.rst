@@ -249,39 +249,162 @@ Git 的三个配置文件分别是版本库级别的配置文件，全局配置�
 
 对于类似 `[x "y"]` 一样的配置小节，我们在后面介绍远程版本库时会经常遇到。
 
-Git config: 通过环境变量设定，修改任意 INI 文件。参考 git-svn 
+从上面的介绍中，我们可以看到使用 "git config" 命令可以非常方便的操作 INI 文件，实际上可以用 "git config" 命令操作任何其它的 INI 文件。
+
+::
+
+  $ GIT_CONFIG=test.ini git config a.b.c.d "hello, world"
+  $ GIT_CONFIG=test.ini git config a.b.c.d
+  hello, world
+
+后面介绍的 git-svn 软件，就使用这个技术读写 git-svn 专有的配置文件。
+
 
 思考：谁完成的提交？
 ---------------------
 
-CVS/Subversion 在提交时需要认证，那么很自然，认证帐号就是提交者。而 Git 不是这样。
-在之前我们提交的时候，警告用户没有设置
+在本章的一开始，我们先为 Git 设置了 user.name 和 user.email 全局环境变量，如果不设置会有什么结果呢？
 
-git config: who are you
-
-我是谁
+我们执行下面的命令，删除 Git 全局配置文件中关于 user.name 和 user.email 的设置：
 
 ::
 
-  $ git config --global user.name "Your Name"
-  $ git config --global user.email yourname@example.com
+  $ git config --unset --global user.name
+  $ git config --unset --global user.email
 
-最终会显示在提交者姓名中
 
-    然后我们看到提交日志中提交者 ID
-    可以随便修改COMMITOR 的 ID，这样操作是不是太随意了？ 
-    实际上有两个 ID，一个是 Auhor ID，一个是 Commit ID
-    Redmine 或者其它软件，要依靠 AuthorID 还是 Commit ID 建立用户映射，所以不要太随意了。
-    Gerrit 软件，要要求提交的 CommitID 和认证用户的 email 进行比对，不允许随便使用邮件地址。
-    有时我们要把补丁交给上游提交，会不会把作者信息丢失？ commit -s 。以及 Author ID 是否保持？
-    每次操作都要输入 -s 参数？ 别忘了别名。实际上 ci 也是 commit 的别名
+这下关于用户姓名和邮件的设置都被清空了，执行下面的命令将看不到输出。
+
+::
+
+  $ git config user.name
+  $ git config user.email
+
+下面我们再尝试进行一次提交，看看提交的过程会有什么不同，以及提交之后显示的提交者是谁？
+
+在下面的命令中使用了 "--allow-empty" 参数，这是因为我们没有对工作区的文件进行任何修改，Git 缺省不会提交，使用了 "--allow-empty" 参数后，允许执行空白提交。
+
+::
+
+  $ cd /my/workspace/demo
+  $ git commit --allow-empty -m "who does commit?"
+  [master 252dc53] who does commit?
+   Committer: JiangXin <jiangxin@hp.moon.ossxp.com>
+  Your name and email address were configured automatically based
+  on your username and hostname. Please check that they are accurate.
+  You can suppress this message by setting them explicitly:
+
+      git config --global user.name "Your Name"
+      git config --global user.email you@example.com
+
+  If the identity used for this commit is wrong, you can fix it with:
+
+      git commit --amend --author='Your Name <you@example.com>'
+
+喔，因为没有设置 user.name 和 user.email 环境变量，提交的输出乱的一塌糊涂。仔细看看上面执行 "git commit" 命令的输出，原来 Git 向我们提供了详细的帮助指引，还告诉我们如何修改之前提交中出现的错误的提交者信息。
+
+我们看看此时版本库的提交日志，我们会看到有两次提交，最早的提交的提交者信息是我们之前设置的环境变量 user.name 和 user.email 给出的，而最新的提交因为我们删除了 user.name 和 user.email ，提交时 Git 对我们的用户名和邮件地址做了大胆的猜测，这个猜测可能是错的。
+
+::
+
+  $ git log --pretty=fuller
+  commit 252dc539b5b5f9683edd54849c8e0a246e88979c
+  Author:     JiangXin <jiangxin@hp.moon.ossxp.com>
+  AuthorDate: Mon Nov 29 10:39:35 2010 +0800
+  Commit:     JiangXin <jiangxin@hp.moon.ossxp.com>
+  CommitDate: Mon Nov 29 10:39:35 2010 +0800
+
+      who does commit?
+
+  commit 9e8a761ff9dd343a1380032884f488a2422c495a
+  Author:     Jiang Xin <jiangxin@ossxp.com>
+  AuthorDate: Sun Nov 28 12:48:26 2010 +0800
+  Commit:     Jiang Xin <jiangxin@ossxp.com>
+  CommitDate: Sun Nov 28 12:48:26 2010 +0800
+
+      initialized.
+
+为了保证提交时的提交者和作者信息的正确性，我们重新恢复 user.name 和 user.email 的设置。记住不要照抄照搬下面的命令，使用你自己的用户名和邮件地址。
+
+::
+
+  $ git config --global user.name "Jiang Xin"
+  $ git config --global user.email jiangxin@ossxp.com
+
+
+然后执行下面的命令，可以对最新的提交重新修改，改正错误的作者和提交者信息。
+
+::
+
+  $ git commit --allow-empty --amend --reset-author
+
+说明：
+
+* 上面的命令之所以使用 "--allow-empty" 是因为我们修改的提交实际上是一个空白提交，Git 缺省不允许空白提交。
+* 参数 "--amend" 含义是对刚刚的提交进行修补，这样就可以改正前面错误的提交（用户信息错误）。
+* 参数 "--reset-author" 的含义是将 Author（提交者）的 ID 重置，使用最新的 Commit（提交者）的 ID。这条命令也会重置 AuthorDate 信息。
+
+我们通过日志，可以看到最新的提交的作者和提交者的信息已经改正了。
+
+::
+
+  $ git log --pretty=fuller
+  commit a0c641e92b10d8bcca1ed1bf84ca80340fdefee6
+  Author:     Jiang Xin <jiangxin@ossxp.com>
+  AuthorDate: Mon Nov 29 11:00:06 2010 +0800
+  Commit:     Jiang Xin <jiangxin@ossxp.com>
+  CommitDate: Mon Nov 29 11:00:06 2010 +0800
+
+      who does commit?
+
+  commit 9e8a761ff9dd343a1380032884f488a2422c495a
+  Author:     Jiang Xin <jiangxin@ossxp.com>
+  AuthorDate: Sun Nov 28 12:48:26 2010 +0800
+  Commit:     Jiang Xin <jiangxin@ossxp.com>
+  CommitDate: Sun Nov 28 12:48:26 2010 +0800
+
+      initialized.
+
+思考：可以随意的设置提交者姓名，是不是太不安全了？
+----------------------------------------------------
+
+使用 CVS, Subversion 等集中式版本控制系统的用户会知道，每次提交的时候需要认证，认证成功后，登录ID就作为提交者ID出现在版本库的提交日志中。很显然，对于 CVS 或 Subversion 这样的版本控制系统，你很难冒充他人提交。那么像 Git 这样的分布版本控制系统，可以随心所欲的设定提交者，这似乎太不安全了。
+
+Git 可以随意设置提交的用户名和邮件地址信息，这是因为分布式版本控制系统的特性使然，每个人都是自己版本库的主人，很难也没有必要进行身份认证从而使用经过认证的用户名。
+
+不过 Android 项目为了更好的实现对 Git 版本库的集中管理，引入了一套叫做 Gerrit 的审核服务器来管理 Git 提交，对提交者的邮件地址进行审核。例如下面的示例中在向 Gerrit 服务器推送的时候，提交中的提交者邮件地址为 `jiangxin@ossxp.com` ，但是在 Gerrit 中注册用户时使用的邮件地址为 `jiangxin@moon.ossxp.com` 。因为两者不匹配，导致推送失败。
+
+::
+
+  $ git push origin master
+  Counting objects: 3, done.
+  Writing objects: 100% (3/3), 222 bytes, done.
+  Total 3 (delta 0), reused 0 (delta 0)
+  To ssh://localhost:29418/new/project.git
+   ! [remote rejected] master -> master (you are not committer jiangxin@ossxp.com)
+  error: failed to push some refs to 'ssh://localhost:29418/new/project.git'
+
+即使没有使用类似 Gerrit 的服务，作为提交者也不应该随意改变 user.name 和 user.email 环境变量设置，因为当多人协同时会给他人造成迷惑，也会为一些项目管理软件的管理带来麻烦。
+
+例如 Redmine 是一款实现需求管理和缺陷跟踪的项目管理软件，可以和 Git 版本库实现整合：Git 的提交可以直接关闭 Redmine 上的 Bug，而且 Git 的提交可以反映出项目成员的工作进度。在 Redmine 中有一个管理界面用于设置 Git 的提交者和 Redmine 中用户的对应关系。
+
+  .. figure:: images/redmine/redmine-user-config.png
+     :scale: 70
+ 
+
+显然如果在 Git 提交时随意变更提交者姓名和邮件地址，会破坏 Redmine 软件中设置的用户对应关系。
 
 思考：命令别名是干什么的？
 --------------------------
 
-为什么没有 ci 命令？以及如何建立别名？
+在本章的一开始，我们通过对 alias.ci 等Git环境变量的设置，为 Git 设置了命令别名。命令别名可以帮助用户解决从其它版本控制系统迁移到 Git 后的使用习惯问题。像 CVS 和 Subversion 在提交的时候，一般习惯使用 ci 子命令（check in），在检出的时候则习惯使用 co 子命令（check out）。如果 Git 不能提供对 ci 和 co 这类简洁命令的支持，对于拥有其它版本控制系统使用经验的用户来说，用户体检就会打折扣。
 
-为了不让提交日志变得太过臃肿，以免浪费更多的纸张和读者金钱，我在后面的演示中，都没有用到 -s ，以便让日志变得短小些。
+本章前面列出的四条别名设置，是最常用的几个 Git 别名。实际上设置别名还可以包含命令的参数。
 
+::
 
+  $ sudo git config --system alias.ci "commit -s"
 
+经过上面的别名设置后，当使用 "git ci" 命令提交的时候，会自动带上 "-s" 参数，这样会在提交的说明中自动添加上类似 “Signed-off-by: User Name <email@address>” 的内容，这对于一些项目（Git, Linux kernel, Android 等）来说是必要甚至是必须的。
+
+不过在本书中我会尽量避免使用别名命令，以免由于用户尚未设置别名而造成困惑。
