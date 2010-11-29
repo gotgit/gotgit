@@ -349,12 +349,52 @@
 
 文件 `.git/index` 就像是一个虚拟的工作区，记录了文件名、文件的状态信息（时间戳、文件长度等），而且还记录了在 Git 对象库（.git/objects）中对应的对象ID。当对修改（或新增）的文件执行 "git add" 命令，修改（或新增）的文件内容被写入到对象库（.git/objects）下的一个新的对象中，而该对象的ID被记录在 `.git/index` 文件中。当执行提交操作（git commit）时，这个虚拟的工作区作为一个新的目录树（tree）写入 Git 库中。这个机制就好像是存在一个提交的暂存区（stage），这就是暂存区的奥秘。
 
+区分 HEAD 和暂存区
+--------------------
 
-思考：如何将文件添加至暂存区？
--------------------------------
+HEAD 文件中的内容
 
+git ls-tree HEAD 可以查看 HEAD 指向的目录树。
+
+git write-tree 然后看这棵树的内容。
+
+有了这些基础之后，我们再来体会命令  git diff, git diff HEAD, git diff --cached
+
+
+checkout 命令
+--------------------
+在前面我们清除工作区 `welcome.txt` 使用了 git checkout -- filemane.
+
+checkout 检出。如 checkout HEAD, checkout <tree-id>
+
+
+思考：将文件添加至暂存区的不同方式？
+-------------------------------------
+
+git add filename
+
+git add dir
+
+git add .
+
+git add -u
+
+git add -A
+
+git rm file / git add -u
+
+git mv old new / git rm old / git add new / git add -A
+
+git add -i
 
 思考：如何撤销暂存区中的文件？
 --------------------------------
+
+git reset HEAD
+
+git rm --cached file
+
+git rm --cached file; git co HEAD .; git add .
+
 
 
