@@ -310,7 +310,7 @@
 
 在“实践二”的过程中，我有意无意的透漏了“暂存区”的概念，为了避免用户被新概念吓坏，在暂存区出现的地方用同时使用了“提交任务”这一更易理解的概念，但是暂存区（stage, 或称为 index）才是其真正的名称。我认为 Git 暂存区（stage, 或称为 index）的设计是 Git 最成功的设计之一，也是最难理解的一个设计。
 
-在版本库（.git）目录下，有一个 index 文件，我们针对这个文件做一个有趣的试验。
+在版本库（.git）目录下，有一个 index 文件，我们针对这个文件做一个有趣的试验。要说明的是：这个试验是用 1.7.3 版本的 git 进行的，低版本的 Git 因为没有相应的优化设计，结果可能不同。
 
 首先我们执行 "git checkout" 命令撤销工作区中 `welcome.txt` 文件尚未提交的修改。
 
@@ -367,12 +367,14 @@
 * 当执行 "git checkout HEAD ." 或者 "git checkout HEAD <file>" 命令时，会用 HEAD 指向的 master 分支中的全部或者部分文件替换暂存区和以及工作区中的文件。这个命令也是极具危险性的，因为不但会清除工作区中未提交的改动，也会清除暂存区中未提交的改动。
 
 
-思考：工作区、暂存区、HEAD 是三棵树，如何查看以及比较呢？
----------------------------------------------------------
+Git diff 魔法
+--------------
 
-我们已经理解了暂存区和 HEAD 都指向一个目录树，类似工作区的目录树。那么我们有什么办法像查看本地目录树一样的查看么？
+在“实践二“中最具有魔法效果的命令就是 "git diff"，不同参数的作用下，"git diff" 的输出并不相同。在我们理解了 Git 中的工作区、暂存区、和版本库（当前分支）最新版本分别是三个不同的目录树后，就非常好理解 "git diff" 魔法般的行为了。
 
-查看工作区，在 Linux 下直接运行 `ls` 命令就可以了。至于 HEAD 指向的目录树，可以使用 Git 底层命令 `ls-tree` ：
+我们有什么办法能够像查看工作区一样的，直观的查看暂存区以及 HEAD 所指向的目录树么？
+
+对于 HEAD（版本库中当前提交）指向的目录树，可以使用 Git 底层命令 `ls-tree` 来查看。
 
 ::
 
@@ -385,13 +387,18 @@
 * 使用 "-r" 参数，用于实现对子目录的递归查找，因为没有子目录，所以对于此例有无 "-r" 参数都一样。
 * 输出的 `welcome.txt` 文件条目从左至右，第一个字段是文件的属性(rw-r--r--)，第二个字段说明是 Git 对象库中的一个 blob 对象（文件），第三个字段则是该文件在对象库中对应的 Id —— 一个40位的 SHA1 格式的 Id（这个我们会在后面介绍），第四个字段是文件大小，第五个字段是文件名。
 
-下面我们清空工作区改动，然后做出一些改动（修改 welcome.txt，在增加一个子目录和文件），然后添加到暂存区。
+在开始我们的试验之前，首先我们通过 "git clean -fd" 命令清除当前工作区中没有加入版本库的文件和目录（非跟踪文件和目录），然后执行 "git checkout ." 命令，用暂存区内容刷新工作区。
 
 ::
 
   $ cd /my/workspace/demo 
-  $ git clean -f
+  $ git clean -fd
   $ git checkout .
+
+然后我们开始在工作区中做出一些修改（修改 welcome.txt，在增加一个子目录和文件），然后添加到暂存区。最后再对工作区做出修改。
+
+::
+
   $ echo "Bye-Bye." >> welcome.txt 
   $ mkdir -p a/b/c
   $ echo "Hello." > a/b/c/hello.txt
@@ -401,14 +408,13 @@
   AM a/b/c/hello.txt
   M  welcome.txt
 
-首先看看工作区中文件的大小：
+上面的命令运行完毕后，通过精简的状态输出，我们可以看出工作区、暂存区、和版本库当前分支的最新版本（HEAD）各不相同。我们先来看看工作区中文件的大小：
 
 ::
 
-  $ find * -type f -printf "%p\t%s\n"
-  a/b/c/hello.txt 16
-  welcome.txt     34
-
+  $ find . -path ./.git -prune -o -type f -printf "%-20p\t%s\n"
+  ./welcome.txt           34
+  ./a/b/c/hello.txt       16
 
 要显示暂存区的目录树，可以使用 `git ls-files` 命令。
 
@@ -521,20 +527,27 @@
     +Bye-Bye.
 
 
-区分 HEAD 和暂存区
---------------------
+Git checkout 命令魔法
+-----------------------
 
-HEAD 文件中的内容
+::
 
-git ls-tree HEAD 可以查看 HEAD 指向的目录树。
+  $ git status
+  # On branch master
+  # Changes to be committed:
+  #   (use "git reset HEAD <file>..." to unstage)
+  #
+  #       new file:   a/b/c/hello.txt
+  #       modified:   welcome.txt
+  #
+  # Changes not staged for commit:
+  #   (use "git add <file>..." to update what will be committed)
+  #   (use "git checkout -- <file>..." to discard changes in working directory)
+  #
+  #       modified:   a/b/c/hello.txt
+  #
 
-git write-tree 然后看这棵树的内容。
 
-有了这些基础之后，我们再来体会命令  git diff, git diff HEAD, git diff --cached
-
-
-checkout 命令
---------------------
 在前面我们清除工作区 `welcome.txt` 使用了 git checkout -- filemane.
 
 checkout 检出。如 checkout HEAD, checkout <tree-id>
