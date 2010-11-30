@@ -345,16 +345,180 @@
 
 看到了么，时间戳改变了！
 
-这个试验说明当执行 "git status" 命令扫描工作区改动的时候，先依据 `.git/index` 文件中记录的（工作区跟踪文件的）时间戳、长度等信息判断工作区文件是否改变。如果工作区的文件时间戳改变，说明文件的内容 **可能** 被改变了，需要要打开文件，读取文件内容，和更改前的原始文件向比较，判断文件内容是否被更改。如果文件内容没有改变，则将该文件新的时间戳记录到 `.git/index` 文件中。因为判断文件是否更改，使用时间戳、文件长度等信息进行比较要比通过文件内容比较要快的多，所以 Git 这样的实现方式可以让工作区状态扫描更快速的执行，这也是 Git 高效的因素之一。
+这个试验说明当执行 "git status" 命令扫描工作区改动的时候，先依据 `.git/index` 文件中记录的（工作区跟踪文件的）时间戳、长度等信息判断工作区文件是否改变。如果工作区的文件时间戳改变，说明文件的内容 **可能** 被改变了，需要要打开文件，读取文件内容，和更改前的原始文件相比较，判断文件内容是否被更改。如果文件内容没有改变，则将该文件新的时间戳记录到 `.git/index` 文件中。因为判断文件是否更改，使用时间戳、文件长度等信息进行比较要比通过文件内容比较要快的多，所以 Git 这样的实现方式可以让工作区状态扫描更快速的执行，这也是 Git 高效的因素之一。
 
-文件 `.git/index` 就像是一个虚拟的工作区，记录了文件名、文件的状态信息（时间戳、文件长度等），而且还记录了在 Git 对象库（.git/objects）中对应的对象ID。当对修改（或新增）的文件执行 "git add" 命令，修改（或新增）的文件内容被写入到对象库（.git/objects）下的一个新的对象中，而该对象的ID被记录在 `.git/index` 文件中。当执行提交操作（git commit）时，这个虚拟的工作区作为一个新的目录树（tree）写入 Git 库中。这个机制就好像是存在一个提交的暂存区（stage），这就是暂存区的奥秘。
+文件 `.git/index` 实际上就是一个包含文件索引的目录树，像是一个虚拟的工作区。在这个虚拟工作区的目录树中，记录了文件名、文件的状态信息（时间戳、文件长度等），文件的内容并不存储其中，而是保存在 Git 对象库（.git/objects）中，文件索引建立了文件和对象库中对象实体之间的对应。下面这个图展示了工作区、版本库中的暂存区和版本库之间的关系。
+
+  .. figure:: images/gitbook/git-stage.png
+     :scale: 80
+
+     工作区、版本库、暂存区原理图
+
+在这个图中，我们可以看到部分 Git 命令是如何影响工作区和暂存区（stage, index）的。
+
+* 图中左侧为工作区，右侧为版本库。在版本库中标记为 "index" 的区域是暂存区（stage, index），标记为 "master" 的是 master 分支所代表的目录树。
+* 图中我们可以看出此时 "HEAD" 实际是指向 master 分支的一个“游标”。所以图示的命令中出现 HEAD 的地方可以用 master 来替换。
+* 图中的 objects 标识的区域为 Git 的对象库，实际位于 ".git/objects" 目录下，我们会在后面的章节重点介绍。
+* 当对工作区修改（或新增）的文件执行 "git add" 命令时，暂存区的目录树被更新，同时工作区修改（或新增）的文件内容被写入到对象库中的一个新的对象中，而该对象的ID 被记录在暂存区的文件索引中。
+* 当执行提交操作（git commit）时，暂存区的目录树写到版本库（对象库）中，master 分支会做相应的更新。即 master 指向的目录树就是提交时暂存区的目录树。
+* 当执行 "git reset HEAD" 命令时，暂存区的目录树会被重写，被 master 分支指向的目录树所替换，但是工作区不受影响。
+* 当执行 "git rm --cached <file>" 命令时，会直接从暂存区删除文件，工作区则不做出改变。
+* 当执行 "git checkout ." 或者 "git checkout -- <file>" 命令时，会用暂存区全部或指定的文件替换工作区的文件。这个操作很危险，会清除工作区中未添加到暂存区的改动。
+* 当执行 "git checkout HEAD ." 或者 "git checkout HEAD <file>" 命令时，会用 HEAD 指向的 master 分支中的全部或者部分文件替换暂存区和以及工作区中的文件。这个命令也是极具危险性的，因为不但会清除工作区中未提交的改动，也会清除暂存区中未提交的改动。
 
 
-   .. figure:: images/gitbook/git-stage.png
-      :scale: 80
+思考：工作区、暂存区、HEAD 是三棵树，如何查看以及比较呢？
+---------------------------------------------------------
 
-      工作区、版本库、暂存区原理图
+我们已经理解了暂存区和 HEAD 都指向一个目录树，类似工作区的目录树。那么我们有什么办法像查看本地目录树一样的查看么？
 
+查看工作区，在 Linux 下直接运行 `ls` 命令就可以了。至于 HEAD 指向的目录树，可以使用 Git 底层命令 `ls-tree` ：
+
+::
+
+  $ git ls-tree -l -r HEAD
+  100644 blob fd3c069c1de4f4bc9b15940f490aeb48852f3c42      25    welcome.txt
+
+其中:
+
+* 使用 "-l" 参数，可以显示文件的大小。上面 `welcome.txt` 大小为 25 字节。
+* 使用 "-r" 参数，用于实现对子目录的递归查找，因为没有子目录，所以对于此例有无 "-r" 参数都一样。
+* 输出的 `welcome.txt` 文件条目从左至右，第一个字段是文件的属性(rw-r--r--)，第二个字段说明是 Git 对象库中的一个 blob 对象（文件），第三个字段则是该文件在对象库中对应的 Id —— 一个40位的 SHA1 格式的 Id（这个我们会在后面介绍），第四个字段是文件大小，第五个字段是文件名。
+
+下面我们清空工作区改动，然后做出一些改动（修改 welcome.txt，在增加一个子目录和文件），然后添加到暂存区。
+
+::
+
+  $ cd /my/workspace/demo 
+  $ git clean -f
+  $ git checkout .
+  $ echo "Bye-Bye." >> welcome.txt 
+  $ mkdir -p a/b/c
+  $ echo "Hello." > a/b/c/hello.txt
+  $ git add .
+  $ echo "Bye-Bye." >> a/b/c/hello.txt
+  $ git status -s
+  AM a/b/c/hello.txt
+  M  welcome.txt
+
+首先看看工作区中文件的大小：
+
+::
+
+  $ find * -type f -printf "%p\t%s\n"
+  a/b/c/hello.txt 16
+  welcome.txt     34
+
+
+要显示暂存区的目录树，可以使用 `git ls-files` 命令。
+
+::
+
+  $ git ls-files -s
+  100644 18832d35117ef2f013c4009f5b2128dfaeff354f 0       a/b/c/hello.txt
+  100644 51dbfd25a804c30e9d8dc441740452534de8264b 0       welcome.txt
+
+注意这个输出和之前使用 `git ls-tree` 命令输出不一样，如果想要使用 `git ls-tree` 命令，需要先将暂存区的目录树写入 Git 对象库（用 `git write-tree` 命令），然后在针对 `git write-tree` 命令写入的 tree 执行 `git ls-tree` 命令。
+
+::
+
+  $ git write-tree
+  9431f4a3f3e1504e03659406faa9529f83cd56f8
+  $ git ls-tree -l 9431f4a
+  040000 tree 53583ee687fbb2e913d18d508aefd512465b2092       -    a
+  100644 blob 51dbfd25a804c30e9d8dc441740452534de8264b      34    welcome.txt
+
+我们从上面的命令可以看出：
+
+* 到处都是 40 位的 SHA1 Id，可以指代文件内容（blob），指代目录树（tree）。实际上在之前细心的读者已经发现提交中的 Id 也是一个 SHA1 Id。关于什么是 SHA1 Id，我们先不用管，在后面我们会介绍。
+* 命令 `git write-tree` 的输出就是写入 Git 对象库中的 Tree Id，这个 Id 将作为下一条命令的输入。
+* 在 `git ls-tree` 命令中，我们没有把 40 位的 Id 写全，而是使用了前几位，实际上只要不和其它的对象 Id 冲突即可。
+* 我们看到 `git ls-tree` 的输出显示的第一条是一个 tree 对象，即我们刚才创建的一级目录 `a` 。
+
+如果想要递归显示目录内容，我们使用如下命令：
+
+::
+
+  $ git write-tree | xargs git ls-tree -l -r -t
+  040000 tree 53583ee687fbb2e913d18d508aefd512465b2092       -    a
+  040000 tree 514d729095b7bc203cf336723af710d41b84867b       -    a/b
+  040000 tree deaec688e84302d4a0b98a1b78a434be1b22ca02       -    a/b/c
+  100644 blob 18832d35117ef2f013c4009f5b2128dfaeff354f       7    a/b/c/hello.txt
+  100644 blob 51dbfd25a804c30e9d8dc441740452534de8264b      34    welcome.txt
+
+好了现在工作区，暂存区和 HEAD 三个目录树的内容各不相同。
+
+
+  +-----------------+----------+----------+----------+
+  | 文件名          | 工作区   | 暂存区   | HEAD     |
+  +=================+==========+==========+==========+
+  | welcome.txt     | 34 字节  | 34 字节  | 25 字节  |
+  +-----------------+----------+----------+----------+
+  | a/b/c/hello.txt | 16 字节  |  7 字节  |  0 字节  |
+  +-----------------+----------+----------+----------+
+
+我们通过使用不同的参数调用 "git diff" 命令，可以对工作区、暂存区、HEAD 中的内容两两比较。下面的这个图，展示了之间的关系。
+
+  .. figure:: images/gitbook/git-diff.png
+     :scale: 80
+
+通过上面的图，就不难理解下面 "git diff" 命令不同的输出结果了。
+
+* 工作区和暂存区比较。
+
+  ::
+
+    $ git diff
+    diff --git a/a/b/c/hello.txt b/a/b/c/hello.txt
+    index 18832d3..e8577ea 100644
+    --- a/a/b/c/hello.txt
+    +++ b/a/b/c/hello.txt
+    @@ -1 +1,2 @@
+     Hello.
+    +Bye-Bye.
+
+* 暂存区和 HEAD 比较。
+
+  ::
+
+    $ git diff --cached
+    diff --git a/a/b/c/hello.txt b/a/b/c/hello.txt
+    new file mode 100644
+    index 0000000..18832d3
+    --- /dev/null
+    +++ b/a/b/c/hello.txt
+    @@ -0,0 +1 @@
+    +Hello.
+    diff --git a/welcome.txt b/welcome.txt
+    index fd3c069..51dbfd2 100644
+    --- a/welcome.txt
+    +++ b/welcome.txt
+    @@ -1,2 +1,3 @@
+     Hello.
+     Nice to meet you.
+    +Bye-Bye.
+
+* 工作区和 HEAD 比较。
+
+  ::
+
+    $ git diff HEAD    
+    diff --git a/a/b/c/hello.txt b/a/b/c/hello.txt
+    new file mode 100644
+    index 0000000..e8577ea
+    --- /dev/null
+    +++ b/a/b/c/hello.txt
+    @@ -0,0 +1,2 @@
+    +Hello.
+    +Bye-Bye.
+    diff --git a/welcome.txt b/welcome.txt
+    index fd3c069..51dbfd2 100644
+    --- a/welcome.txt
+    +++ b/welcome.txt
+    @@ -1,2 +1,3 @@
+     Hello.
+     Nice to meet you.
+    +Bye-Bye.
 
 
 区分 HEAD 和暂存区
