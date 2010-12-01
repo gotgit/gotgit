@@ -2626,7 +2626,7 @@
 	TEXT="其它，如： {yesterday}, {1 month 2 weeks 3 days 1 hour 1 second            ago} or {1979-02-26 18:30:00}"/>
 </node>
 <node COLOR="#111111" FOLDED="true" ID="ID_671940362" 
-	TEXT="ordinal spec ： master@{5} ">
+	TEXT="ordinal spec ： master@{5}  ： 实际上是对 reflog 的操作">
 <font NAME="Serif" SIZE="12"/>
 <node COLOR="#111111" ID="ID_255719041" 
 	TEXT="@ 符号前必须是一个 ref引用，而不能是一个 HASH-ID"/>

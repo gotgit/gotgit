@@ -63,114 +63,89 @@
   #
   no changes added to commit (use "git add" and/or "git commit -a")
 
-提交成功了么？好像？我们再来看看日志，是否有新的提交了？
+提交成功了么？好像没有！
 
-::
+提交没有成功的证据：
 
-  $ git log --pretty=oneline
-  a0c641e92b10d8bcca1ed1bf84ca80340fdefee6 who does commit?
-  9e8a761ff9dd343a1380032884f488a2422c495a initialized.
+* 我们看看提交日志，如果提交成功，应该有新的提交记录出现。
 
-我使用了精简输出来显示日志，但是大家仍然能够看出来版本库中只有两个提交，都是在“实践一”中完成的。也就是说刚才针对修改文件的提交没有成功！
+  我使用了精简输出来显示日志，但是大家仍然能够看出来版本库中只有两个提交，都是在“实践一”中完成的。也就是说刚才针对修改文件的提交没有成功！
 
-这是为什么呢？我们回过头来再仔细看看刚才 "git commit" 命令的输出：
+  ::
 
-::
+    $ git log --pretty=oneline
+    a0c641e92b10d8bcca1ed1bf84ca80340fdefee6 who does commit?
+    9e8a761ff9dd343a1380032884f488a2422c495a initialized.
 
-  # On branch master
-  # Changes not staged for commit:
-  #   (use "git add <file>..." to update what will be committed)
-  #   (use "git checkout -- <file>..." to discard changes in working directory)
-  #
-  #       modified:   welcome.txt
-  #
-  no changes added to commit (use "git add" and/or "git commit -a")
+* 执行 "git diff" 可以看到和之前相同的差异输出，这也说明了我们之前的提交没有成功。
+
+* 执行 "git status" 查看文件状态，也可以看到文件处于未提交的状态。
+
+  "git status" 命令的输出怎么和 "git commit" 提交失败的输出信息一模一样！
+
+  ::
+
+    $ git status
+    # On branch master
+    # Changes not staged for commit:
+    #   (use "git add <file>..." to update what will be committed)
+    #   (use "git checkout -- <file>..." to discard changes in working directory)
+    #
+    #       modified:   welcome.txt
+    #
+    no changes added to commit (use "git add" and/or "git commit -a")
+
+* 对于习惯了像 CVS 和 Subversion 那样简练的状态输出的用户，可以在执行 "git status" 时附加上 "-s" 参数，显示精简格式的状态输出。
+
+  ::
+
+    $ git status -s
+     M welcome.txt
+
+
+提交为什么会失败呢？我们回过头来仔细看看刚才 "git commit" 命令提交失败后的输出：
+
+  ::
+
+    # On branch master
+    # Changes not staged for commit:
+    #   (use "git add <file>..." to update what will be committed)
+    #   (use "git checkout -- <file>..." to discard changes in working directory)
+    #
+    #       modified:   welcome.txt
+    #
+    no changes added to commit (use "git add" and/or "git commit -a")
 
 我把它翻译成中文普通话：
 
-::
+  ::
 
-  # 位于您当前工作的分支 master 上
-  # 下列的修改还没有加入到提交任务（提交暂存区，stage）中，不会被提交：
-  #   (使用 "git add <file>..." 命令后，改动就会加入到提交任务中，在下次的提交操作中被提交)
-  #   (使用 "git checkout -- <file>..." 命令，工作区当前您不打算提交的修改会被彻底清除！！！)
-  #
-  #       已修改:   welcome.txt
-  #
-  警告：提交任务是空的噻，您不要再搔扰我啦 (除非使用 "git add" 和/或 "git commit -a" 命令)
+    # 位于您当前工作的分支 master 上
+    # 下列的修改还没有加入到提交任务（提交暂存区，stage）中，不会被提交：
+    #   (使用 "git add <file>..." 命令后，改动就会加入到提交任务中，在下次的提交操作中被提交)
+    #   (使用 "git checkout -- <file>..." 命令，工作区当前您不打算提交的修改会被彻底清除！！！)
+    #
+    #       已修改:   welcome.txt
+    #
+    警告：提交任务是空的噻，您不要再搔扰我啦 (除非使用 "git add" 和/或 "git commit -a" 命令)
 
-此时如果您执行 "git diff" 可以看到和之前相同的差异输出，也说明了我们的提交没有成功。
+也就是说要对修改的 `welcome.txt` 文件执行 "git add" 命令，将修改的文件添加到“提交任务”中，然后才能提交。这个行为真的很奇怪，因为 "add" 操作对于其它版本控制系统来说是向版本库添加新文件用的，修改的文件（已被版本控制跟踪的文件）在下次提交时会直接被提交。Git 的这个古怪的行为我们会在下面的介绍中找到答案，读者会逐渐习惯并喜欢 Git 的这个设计。
 
-现在我们执行 "git status" 查看文件状态，也可以看到文件处于未提交的状态。
-
-::
-
-  $ git status
-  # On branch master
-  # Changes not staged for commit:
-  #   (use "git add <file>..." to update what will be committed)
-  #   (use "git checkout -- <file>..." to discard changes in working directory)
-  #
-  #       modified:   welcome.txt
-  #
-  no changes added to commit (use "git add" and/or "git commit -a")
-
-这个输出怎么和 "git commit" 提交失败的输出信息一模一样！对于习惯了像 CVS 和 Subversion 那样简练的状态输出的用户，可以在执行 "git status" 时附加上 "-s" 参数，如下：
-
-::
-
-  $ git status -s
-   M welcome.txt
-
-好了，现在我们按照前面 "git commit" 输出信息或者 "git status" 输出信息中的指示去操作，执行 "git add"，将修改了的 `welcome.txt` 文件增加到提交任务中。
+好了，现在我们就将修改的文件“添加”到提交任务中吧：
 
 ::
 
   $ git add welcome.txt
 
-然后我们再执行 "git status" 命令，看看输出：
+现在我们再执行一些 Git 命令，看看当执行文“添加”动作后，Git 库发生了什么变化：
 
-::
-
-  $ git status
-  # On branch master
-  # Changes to be committed:
-  #   (use "git reset HEAD <file>..." to unstage)
-  #
-  #       modified:   welcome.txt
-  #
-
-我再做一回翻译：
-
-::
-
-  $ git status
-  # 位于分支 master 上
-  # 下列的修改将被提交：
-  #   (如果你后悔了，可以使用 "git reset HEAD <file>..." 命令
-  #    将下列改动撤出提交任务（提交暂存区, stage），否则执行提交命令可真的要提交喽)
-  #
-  #       已修改:   welcome.txt
-  #
-
-我真的要说，Git 太人性化了，它把各种情况你可以使用到的命令都告诉你了，虽然这显得有点罗嗦。如果不要这么罗嗦，可以用简洁方式显示状态：
-
-::
-
-  $ git status -s
-  M  welcome.txt
-
-上面的输出与执行 "git add" 之前的精简状态输出相比，有细微的差别。虽然都是 M（Modified）标识，但是位置不一样。在执行 "git add" 命令之前，这个 "M" 位于第二列（第一列是一个空格），在执行完 "git add" 之后，字符 "M" 位于第一列（第二列是空白）。
-
-位于第一列的字符 "M" 的含义是：版本库中的文件和处于中间状态 —— 提交任务（提交暂存区, stage）中的文件相比有改动，位于第二列的字符 "M" 的含义是：工作区当前的文件和处于中间状态 —— 提交任务（提交暂存区, stage）中的文件相比也有改动。如果能够理解这句话的含义，下面的现象就好解释了。
-
-* 执行 "git diff" 没有输出：
+* 执行 "git diff" 没有输出，难道是被提交了？可是我们只是执行了 “添加” 到提交任务的操作，相当于一个“登记”的命令，并没有执行提交哇？
 
   ::
 
     $ git diff
 
-* 执行 "git diff master" 或者执行 "git diff HEAD"，拿工作区和当前工作分支 master 进行比较，会发现包含差异输出：
+* 这是如果和 HEAD（当前版本库的头节点，相当于 master）或者 master 分支（当前工作分支）进行比较，我们发现有差异。这才是正常的，因为尚未提交么。
 
   ::
 
@@ -183,40 +158,84 @@
      Hello.
     +Nice to meet you.
 
-我们不忙着执行提交，我们继续修改一下 `welcome.txt` 文件（在文件后面再追加一行）。
+* 执行 "git status" 命令，状态输出和之前的不一样了。
 
-::
+  ::
 
-  $ echo "Bye-Bye." >> welcome.txt 
+    $ git status
+    # On branch master
+    # Changes to be committed:
+    #   (use "git reset HEAD <file>..." to unstage)
+    #
+    #       modified:   welcome.txt
+    #
 
-然后执行 "git status"，查看一下状态：
+我再对新的 Git 状态输出做一回翻译：
 
-::
+  ::
 
-  $ git status
-  # On branch master
-  # Changes to be committed:
-  #   (use "git reset HEAD <file>..." to unstage)
-  #
-  #       modified:   welcome.txt
-  #
-  # Changes not staged for commit:
-  #   (use "git add <file>..." to update what will be committed)
-  #   (use "git checkout -- <file>..." to discard changes in working directory)
-  #
-  #       modified:   welcome.txt
-  #
+    $ git status
+    # 位于分支 master 上
+    # 下列的修改将被提交：
+    #   (如果你后悔了，可以使用 "git reset HEAD <file>..." 命令
+    #    将下列改动撤出提交任务（提交暂存区, stage），否则执行提交命令可真的要提交喽)
+    #
+    #       已修改:   welcome.txt
+    #
 
-状态输出中居然是之前出现的两种不同状态输出的附体。如果显示精简的状态输出，也会看到前面两种精简输出的混合体：
+不得不说，Git 太人性化了，它把各种情况你可以使用到的命令都告诉你了，虽然这显得有点罗嗦。如果不要这么罗嗦，可以用简洁方式显示状态：
 
 ::
 
   $ git status -s
-  MM welcome.txt
+  M  welcome.txt
 
+上面精简的状态输出与执行 "git add" 之前的精简状态输出相比，有细微的差别，你发现了么？
 
+* 虽然都是 M（Modified）标识，但是位置不一样。在执行 "git add" 命令之前，这个 "M" 位于第二列（第一列是一个空格），在执行完 "git add" 之后，字符 "M" 位于第一列（第二列是空白）。
+* 位于第一列的字符 "M" 的含义是：版本库中的文件和处于中间状态 —— 提交任务（提交暂存区, stage）中的文件相比有改动。
+* 位于第二列的字符 "M" 的含义是：工作区当前的文件和处于中间状态 —— 提交任务（提交暂存区, stage）中的文件相比也有改动。
 
-这就说明：版本库中的文件和处于中间状态 —— 提交任务（提交暂存区, stage）中的文件相比有改动，而且工作区当前的文件和处于中间状态 —— 提交任务（提交暂存区, stage）中的文件相比也有改动。我们通过不同格式的 "git diff" 命令可以看到这些不同。
+是不是还有一些不明白？为什么 Git 的状态输出中列出了那么多让人不解的命令？为什么存在一个提交任务的概念而且我又总是把它叫做暂存区（stage）？不要紧，我们马上就会专题讲述“暂存区”的概念。当您了解了 Git 版本库的设计原理，理解相关命令就易如反掌了。
+
+这时如果直接提交（git commit），加入提交任务的 `welcome.txt` 文件的更改就被提交入库了。但是我们先不忙着执行提交，我再进行一些操作，看看是否彻底的被搞糊涂了。
+
+* 继续修改一下 `welcome.txt` 文件（在文件后面再追加一行）。
+
+  ::
+
+    $ echo "Bye-Bye." >> welcome.txt 
+
+* 然后执行 "git status"，查看一下状态：
+
+  ::
+
+    $ git status
+    # On branch master
+    # Changes to be committed:
+    #   (use "git reset HEAD <file>..." to unstage)
+    #
+    #       modified:   welcome.txt
+    #
+    # Changes not staged for commit:
+    #   (use "git add <file>..." to update what will be committed)
+    #   (use "git checkout -- <file>..." to discard changes in working directory)
+    #
+    #       modified:   welcome.txt
+    #
+
+  状态输出中居然是之前出现的两种不同状态输出的附体。
+
+* 如果显示精简的状态输出，也会看到前面两种精简输出的混合体：
+
+  ::
+
+    $ git status -s
+    MM welcome.txt
+
+更为复杂的 Git 状态输出可以这么理解：版本库中的文件和处于中间状态 —— 提交任务（提交暂存区, stage）中的文件相比有改动，而且工作区当前的文件和处于中间状态 —— 提交任务（提交暂存区, stage）中的文件相比也有改动。
+
+即现在 `welcome.txt` 有三个不同的版本，一个在工作区，一个在等待提交的暂存区，还有一个是版本库中最新版本的 `welcome.txt` 。我们通过不同格式的 "git diff" 命令可以看到这些不同。
 
 * 不带任何选项和参数调用 "git diff" 显示工作区最新改动，即工作区和 提交任务/提交暂存区/stage 中相比。
 
@@ -259,7 +278,8 @@
      Hello.
     +Nice to meet you.
 
-现在我们执行 "git commit" 命令进行提交，文件 `welcome.txt` 的哪个版本会被提交呢？
+好了现在是时候 **提交** 了。现在我们执行 "git commit" 命令进行提交。
+
 
 ::
 
@@ -267,25 +287,28 @@
   [master e695606] which version checked in?
    1 files changed, 1 insertions(+), 0 deletions(-)
 
-通过查看提交日志，我们看到了新的提交。
+这次提交终于成功了。如何证明提交成功了呢？
 
-::
+* 通过查看提交日志，我们看到了新的提交。
 
-  $ git log --pretty=oneline
-  e695606fc5e31b2ff9038a48a3d363f4c21a3d86 which version checked in?
-  a0c641e92b10d8bcca1ed1bf84ca80340fdefee6 who does commit?
-  9e8a761ff9dd343a1380032884f488a2422c495a initialized.
+  ::
 
-精简的状态输出，我们看到了一个 "M"，即只位于第二列的 "M"。
+    $ git log --pretty=oneline
+    e695606fc5e31b2ff9038a48a3d363f4c21a3d86 which version checked in?
+    a0c641e92b10d8bcca1ed1bf84ca80340fdefee6 who does commit?
+    9e8a761ff9dd343a1380032884f488a2422c495a initialized.
 
-::
+* 查看精简的状态输出。
 
-  $ git status -s
-   M welcome.txt
+  我们看到了一个 "M"，即只位于第二列的 "M"。那么第一列的 "M" 哪里去了？被提交了呗。即提交任务（提交暂存区, stage）中的内容被提交到版本库中，所以第一列因为提交暂存区（提交任务, stage）和版本库中的状态一致，所以显示一个空白。
 
-那么第一列的 "M" 哪里去了？被提交了呗。即提交任务（提交暂存区, stage）中的内容被提交到版本库中，所以第一列因为提交暂存区（提交任务, stage）和版本库中的状态一致，所以显示一个空白。
+  ::
 
-执行 "git diff" 或者 "git diff HEAD" 命令，虽然比较的过程并不不同（可以通过 strace 命令跟踪命令执行过程中的文件访问），但是我们都会看到下面相同的差异输出结果。
+    $ git status -s
+     M welcome.txt
+
+
+提交的 `welcome.txt` 是哪个版本呢？我们可以通过执行 "git diff" 或者 "git diff HEAD" 命令查看差异。虽然命令 "git diff" 和 "git diff HEAD" 的比较过程并不不同（可以通过 strace 命令跟踪命令执行过程中的文件访问），但是我们都会看到下面相同的差异输出结果。
 
 ::
 
