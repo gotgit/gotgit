@@ -408,3 +408,16 @@ Git 可以随意设置提交的用户名和邮件地址信息，这是因为分�
 经过上面的别名设置后，当使用 "git ci" 命令提交的时候，会自动带上 "-s" 参数，这样会在提交的说明中自动添加上类似 "`Signed-off-by: User Name <email@address>`" 的内容，这对于一些项目（Git, Linux kernel, Android 等）来说是必要甚至是必须的。
 
 不过在本书中我会尽量避免使用别名命令，以免由于用户尚未设置别名而造成困惑。
+
+备份本章的工作成果
+-------------------
+
+执行下面的命令，算是备份一下我们这一章的工作成果。
+
+::
+
+  $ cd /my/workspace
+  $ git clone demo demo-step-1
+  Cloning into demo-step-1...
+  done.
+

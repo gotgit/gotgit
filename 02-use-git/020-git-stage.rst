@@ -554,6 +554,8 @@ Git diff 魔法
      Nice to meet you.
     +Bye-Bye.
 
+搁置问题，暂存状态
+-------------------
 
 Git checkout 命令魔法
 -----------------------
@@ -612,4 +614,53 @@ git rm --cached file
 git rm --cached file; git co HEAD .; git add .
 
 
+备份本章的工作成果
+-------------------
+
+::
+
+  $ cd /my/workspace/demo
+  $ git st
+  # On branch master
+  # Changes to be committed:
+  #   (use "git reset HEAD <file>..." to unstage)
+  #
+  #       new file:   a/b/c/hello.txt
+  #       modified:   welcome.txt
+  #
+  # Changes not staged for commit:
+  #   (use "git add <file>..." to update what will be committed)
+  #   (use "git checkout -- <file>..." to discard changes in working directory)
+  #
+  #       modified:   a/b/c/hello.txt
+  #
+
+  $ git stash
+  Saved working directory and index state WIP on master: e695606 which version checked in?
+  HEAD is now at e695606 which version checked in?
+
+  $ git status
+  # On branch master
+  nothing to commit (working directory clean)
+
+执行下面的命令，算是备份一下我们这一章的工作成果。
+
+::
+
+  $ cd /my/workspace
+  $ git clone demo demo-step-2
+  Cloning into demo-step-2...
+  done.
+
+
+$ git pull ../demo refs/*:refs/*
+From ../demo
+ * [new branch]      refs/stash -> refs/stash
+Already up-to-date with e695606fc5e31b2ff9038a48a3d363f4c21a3d86
+Fast-forwarding to: c1bd56e2565abd64a0d63450fe42aba23b673cf3
+Merge made by octopus.
+ a/b/c/hello.txt |    2 ++
+ welcome.txt     |    1 +
+ 2 files changed, 3 insertions(+), 0 deletions(-)
+ create mode 100644 a/b/c/hello.txt
 
