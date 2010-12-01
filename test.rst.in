@@ -35,4 +35,17 @@
 
 
 
-.. include:: current
+..  ignore .. include:: current
+
+.. include:: ./02-use-git/010-git-init.rst
+.. include:: ./02-use-git/020-git-stage.rst
+.. include:: ./02-use-git/030-head-master-commit-refs.rst
+.. include:: ./02-use-git/040-git-reset.rst
+.. include:: ./02-use-git/050-git-checkout.rst
+.. include:: ./02-use-git/060-git-stage-n-stash.rst
+.. include:: ./02-use-git/070-git-storage.rst
+.. include:: ./02-use-git/080-git-basic.rst
+.. include:: ./02-use-git/090-git-history-travel.rst
+.. include:: ./02-use-git/100-revert-rollback.rst
+.. include:: ./02-use-git/110-change-history.rst
+.. include:: ./02-use-git/120-git-pull-push.rst
