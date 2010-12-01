@@ -1703,14 +1703,13 @@
 <node COLOR="#111111" ID="ID_662216801" 
 	TEXT="运行 git log 可以看到提交历史"/>
 </node>
-</node>
-<node COLOR="#00b439" FOLDED="true" ID="ID_157775000" 
-	TEXT="Git 探秘 1-4">
+<node COLOR="#990000" FOLDED="true" ID="ID_157775000" 
+	TEXT="思考">
 <edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
-<node COLOR="#990000" FOLDED="true" ID="ID_1792321693" 
-	TEXT="Git 探秘1：工作区布局: what is .git">
 <font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1792321693" 
+	TEXT="Git 探秘1：工作区布局: what is .git">
+<font NAME="Serif" SIZE="12"/>
 <node COLOR="#111111" ID="ID_985533107" 
 	TEXT="版本库和工作区在一起">
 <font NAME="Serif" SIZE="12"/>
@@ -1731,9 +1730,9 @@
 <node COLOR="#111111" ID="ID_1444487070" 
 	TEXT="安全么？"/>
 </node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1778125311" 
+<node COLOR="#111111" FOLDED="true" ID="ID_1778125311" 
 	TEXT="Git 探秘2: 是谁在提交？ ">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 <node COLOR="#111111" ID="ID_1070271305" 
 	TEXT="CVS/Subversion 在提交时需要认证，那么很自然，认证帐号就是提交者。而 Git 不是这样。"/>
 <node COLOR="#111111" ID="ID_973970602" 
@@ -1779,9 +1778,9 @@
 <node COLOR="#111111" ID="ID_368253909" 
 	TEXT="每次操作都要输入 -s 参数？ 别忘了别名。实际上 ci 也是 commit 的别名"/>
 </node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1644431487" 
+<node COLOR="#111111" FOLDED="true" ID="ID_1644431487" 
 	TEXT="Git 探秘3: 命令别名. can I use ci?">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 <node COLOR="#111111" ID="ID_361541343" 
 	TEXT="为什么没有 ci 命令？以及如何建立别名？">
 <edge STYLE="bezier" WIDTH="thin"/>
@@ -1792,10 +1791,10 @@
 <font NAME="Serif" SIZE="12"/>
 </node>
 </node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1457813025" 
+<node COLOR="#111111" FOLDED="true" ID="ID_1457813025" 
 	TEXT="Git 探秘4: git config 命令揭密">
 <edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 <node COLOR="#111111" ID="ID_807991474" 
 	TEXT="为什么前面出现 --global, --system ？">
 <font NAME="Serif" SIZE="12"/>
@@ -1812,103 +1811,99 @@
 </node>
 </node>
 </node>
+</node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1334375027" 
 	TEXT="Step 2: 修改文件 hello.txt，为什么提交不了？">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
-<node COLOR="#990000" FOLDED="true" ID="ID_1003282484" 
-	TEXT="修改文件">
+<node COLOR="#990000" FOLDED="true" ID="ID_1708429688" 
+	TEXT="操作">
 <font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1003282484" 
+	TEXT="修改文件">
+<font NAME="Serif" SIZE="12"/>
 <node COLOR="#111111" ID="ID_1116960661" 
 	TEXT="welcome.txt&#xa; hello.&#xa;+Nice to meet you."/>
 </node>
-<node COLOR="#990000" ID="ID_330856083" 
+<node COLOR="#111111" ID="ID_330856083" 
 	TEXT="比较差异 git diff">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#990000" ID="ID_785163115" 
+<node COLOR="#111111" ID="ID_785163115" 
 	TEXT="提交不了？">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#990000" ID="ID_773398172" 
+<node COLOR="#111111" ID="ID_773398172" 
 	TEXT="log 还是只有一条？">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#990000" ID="ID_720055561" 
+<node COLOR="#111111" ID="ID_720055561" 
 	TEXT="git status 显示文件状态？">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#990000" ID="ID_1499591302" 
+<node COLOR="#111111" ID="ID_1499591302" 
 	TEXT="git add">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#990000" ID="ID_386290260" 
+<node COLOR="#111111" ID="ID_386290260" 
 	TEXT="git diff 无差异">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#990000" ID="ID_735839345" 
+<node COLOR="#111111" ID="ID_735839345" 
 	TEXT="git status 内容">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1839912350" 
+<node COLOR="#111111" FOLDED="true" ID="ID_1839912350" 
 	TEXT="再修改 welcome.txt">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 <node COLOR="#111111" ID="ID_1675972299" 
 	TEXT="welcome.txt&#xa; hello.&#xa; Nice to meet you.&#xa;+Welcome to git world."/>
 </node>
-<node COLOR="#990000" ID="ID_460226484" 
+<node COLOR="#111111" ID="ID_460226484" 
 	TEXT="git diff?">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#990000" ID="ID_860733879" 
+<node COLOR="#111111" ID="ID_860733879" 
 	TEXT="git status?">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#990000" ID="ID_580340490" 
+<node COLOR="#111111" ID="ID_580340490" 
 	TEXT="提交的是哪一个版本？">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#990000" ID="ID_182909438" 
+<node COLOR="#111111" ID="ID_182909438" 
 	TEXT="Log？">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#990000" ID="ID_1315816478" 
+<node COLOR="#111111" ID="ID_1315816478" 
 	TEXT="比较两个版本？">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#990000" ID="ID_1544263614" 
+<node COLOR="#111111" ID="ID_1544263614" 
 	TEXT="根据 git status 的提交，我们执行 git add , git commit">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#990000" ID="ID_456073905" 
+<node COLOR="#111111" ID="ID_456073905" 
 	TEXT="文件提交了。 git status -s -b , git log">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#990000" ID="ID_612611347" 
+<node COLOR="#111111" ID="ID_612611347" 
 	TEXT="总结： git add , git commit">
-<font NAME="Serif" SIZE="14"/>
-</node>
-<node COLOR="#990000" ID="ID_1965877702" 
-	TEXT="tip: git add -u, git add -A">
-<font NAME="Serif" SIZE="14"/>
-</node>
-<node COLOR="#990000" ID="ID_1615828487" 
-	TEXT="not-tip: git commit -a">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 </node>
 </node>
-<node COLOR="#00b439" FOLDED="true" ID="ID_1335016709" 
-	TEXT="Git 探秘5: stage">
+<node COLOR="#990000" FOLDED="true" ID="ID_1335016709" 
+	TEXT="思考: stage">
 <edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
-<node COLOR="#990000" ID="ID_373068541" 
-	TEXT="关于 Stage 的故事">
 <font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_373068541" 
+	TEXT="关于 Stage 的故事">
+<font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1984210510" 
+<node COLOR="#111111" FOLDED="true" ID="ID_1984210510" 
 	TEXT="Stage: Git 的与众不同">
 <edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 <node COLOR="#111111" FOLDED="true" ID="ID_190543215" 
 	TEXT="Git 的第一个与众不同">
 <font NAME="Serif" SIZE="12"/>
@@ -2146,12 +2141,12 @@
 <icon BUILTIN="forward"/>
 <node COLOR="#111111" ID="ID_1714375162" 
 	TEXT="从 stage 中撤出文件： git reset HEAD filenanme&#xa;  命令输出：文件包含本地修改（含义是可以通过进一步操作做本地恢复，或者继续提交）">
-<arrowlink DESTINATION="ID_1321032263" ENDARROW="Default" ENDINCLINATION="411;0;" ID="Arrow_ID_109749399" STARTARROW="None" STARTINCLINATION="411;0;"/>
+<arrowlink DESTINATION="ID_1321032263" ENDARROW="Default" ENDINCLINATION="411;0;" ID="Arrow_ID_1651360928" STARTARROW="None" STARTINCLINATION="411;0;"/>
 <icon BUILTIN="full-1"/>
 </node>
 <node COLOR="#111111" ID="ID_445461686" 
 	TEXT="恢复文件修改： git checkout filename">
-<arrowlink DESTINATION="ID_1575517712" ENDARROW="Default" ENDINCLINATION="248;0;" ID="Arrow_ID_1984981230" STARTARROW="None" STARTINCLINATION="248;0;"/>
+<arrowlink DESTINATION="ID_1575517712" ENDARROW="Default" ENDINCLINATION="248;0;" ID="Arrow_ID_1682050286" STARTARROW="None" STARTINCLINATION="248;0;"/>
 <font NAME="Serif" SIZE="12"/>
 <icon BUILTIN="full-2"/>
 </node>
@@ -2203,7 +2198,7 @@
 	TEXT="如果执行 git add 加入了 stage 后，又对文件进行了修改，则 git diff 可以查看区别。"/>
 <node COLOR="#111111" ID="ID_1301248700" 
 	TEXT="参见 git add">
-<arrowlink DESTINATION="ID_106023203" ENDARROW="Default" ENDINCLINATION="200;0;" ID="Arrow_ID_362936618" STARTARROW="None" STARTINCLINATION="165;6;"/>
+<arrowlink DESTINATION="ID_106023203" ENDARROW="Default" ENDINCLINATION="200;0;" ID="Arrow_ID_638802253" STARTARROW="None" STARTINCLINATION="165;6;"/>
 </node>
 </node>
 <node COLOR="#111111" FOLDED="true" ID="ID_1784009420" 
@@ -2236,18 +2231,10 @@
 </node>
 </node>
 </node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1702470554" 
-	TEXT="如何将文件撤出 stage">
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_350532826" 
-	TEXT="git rm --cached"/>
-<node COLOR="#111111" ID="ID_1143620351" 
-	TEXT="git reset HEAD"/>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_959144194" 
+<node COLOR="#111111" FOLDED="true" ID="ID_959144194" 
 	TEXT="stage 使用小巧门： change list">
 <edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 <node COLOR="#111111" ID="ID_1584715185" 
 	TEXT="git add -u: 将所有修改文件加入 stage">
 <font NAME="Serif" SIZE="12"/>
@@ -2258,8 +2245,288 @@
 </node>
 </node>
 </node>
+<node COLOR="#990000" ID="ID_807221835" 
+	TEXT="操作： git stash 保存进度，经过后两章的知识准备后，再来清理工作区和暂存区。">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1069382257" 
+	TEXT="Step 3: HEAD、master、提交和引用">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_858619768" 
+	TEXT="提及 HEAD 和 master 分支，可以看到么？">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1377303061" 
+	TEXT="git branch"/>
+<node COLOR="#111111" ID="ID_484430083" 
+	TEXT="git status"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1465029468" 
+	TEXT="HEAD, master 可以交叉引用">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1021402064" 
+	TEXT="git log --pretty=oneline"/>
+<node COLOR="#111111" ID="ID_1705317115" 
+	TEXT="git log --pretty=oneline HEAD"/>
+<node COLOR="#111111" ID="ID_470824104" 
+	TEXT="git log --pretty=oneline master"/>
+<node COLOR="#111111" ID="ID_1930862875" 
+	TEXT="git log --pretty=oneline ref/heads/master"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1264489955" 
+	TEXT="HEAD 和 master 到底是什么呢？">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_132280906" 
+	TEXT="find .git -name HEAD -o -name master">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1429444637" 
+	TEXT="$ find .git -name HEAD -o -name master  -type f&#xa;.git/HEAD&#xa;.git/logs/HEAD&#xa;.git/logs/refs/heads/master&#xa;.git/refs/heads/master&#xa;"/>
+</node>
+</node>
+<node COLOR="#990000" ID="ID_1605817423" 
+	TEXT="COMMIT 是多么的古怪？全局 ID 和全球 ID？">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1106444909" 
+	TEXT="对于顺序的 ID，很容易确定提交顺序，但是 SHA1 ID 呢？">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_937928208" 
+	TEXT="看看 master 中记录了什么？是一个提交列表么？ NO！">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1776586154" 
+	TEXT="其内容是固定的么？">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_135426452" 
+	TEXT="git commit"/>
+<node COLOR="#111111" ID="ID_878948567" 
+	TEXT="看到 refs/heads/master 内容改变"/>
+<node COLOR="#111111" ID="ID_87770180" 
+	TEXT="我们能够在 .git/objects 下找到它"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_403999594" 
+	TEXT="那么我们就研究这个 ID">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1328723577" 
+	TEXT="在对象库中寻找"/>
+<node COLOR="#111111" ID="ID_1885290546" 
+	TEXT="研究它的工具叫做 cat-file"/>
+<node COLOR="#111111" ID="ID_1548593441" 
+	TEXT="cat-file -t"/>
+<node COLOR="#111111" ID="ID_964882040" 
+	TEXT="cat-file -p"/>
+<node COLOR="#111111" ID="ID_202205205" 
+	TEXT="log -1 --pretty=raw COMMITID"/>
+</node>
+<node COLOR="#990000" ID="ID_272461282" 
+	TEXT="Tree 也是 SHA1, 也在 objects 中。">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1382024946" 
+	TEXT="Tree 包含文件，文件内容也是 blob">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1855128475" 
+	TEXT="rev-list 命令又确实可以列出提交顺序列表。">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1710132349" 
+	TEXT="用 git log --graph 可以看到图！">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1808167996" 
+	TEXT="DAG">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1748473082" 
+	TEXT="画一个更细致的 版本库结构图">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_292847528" 
+	TEXT="Step 4: 分支是一个游标，reset 重置游标。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_899251053" 
+	TEXT="用图片展示 reset 命令">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1080317102" 
+	TEXT="master 指向谁？">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1974623513" 
+	TEXT="reset 会怎样？">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1227062383" 
+	TEXT="如何找回？">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_781709742" 
+	TEXT="reflog？">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_295962692" 
+	TEXT="reset HEAD 是什么含义？">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_31944918" 
+	TEXT="reset 之后 commit 是什么概念？ 什么叫做 detached HEAD">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_801394658" 
+	TEXT="Step 5: checkout 命令">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_1842203629" 
+	TEXT="svn 的 checkout, update, ...">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1182515328" 
+	TEXT="checkout 改变 HEAD">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_87851831" 
+	TEXT="Step 6: 暂存区和工作区恢复">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_1267714615" 
+	TEXT="stash list, pop">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_730582168" 
+	TEXT="status">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1446619074" 
+	TEXT="reset HEAD">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1287031700" 
+	TEXT="checkout  用户清空改变">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1072649532" 
+	TEXT="stash 探索">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_805509452" 
+	TEXT="stash 的 reflog">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_469074680" 
+	TEXT="暂存区/工作区的清理">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1702470554" 
+	TEXT="如何将文件撤出 stage">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_350532826" 
+	TEXT="git rm --cached">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1143620351" 
+	TEXT="git reset HEAD">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" ID="ID_915848120" 
+	TEXT="工作区用 checkout 清理">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1912771033" 
+	TEXT="Step 7: 两个相同的大文件，以及版本库的整理">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_376643602" 
+	TEXT="Git 库一定会比工作区大么？">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_641031184" 
+	TEXT="这个章节的题目可能有问题。你可能会说前几次提交由于版本库的文件压缩存储肯定要小，但长久来看是要大。">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1465126220" 
+	TEXT="我做一个颠覆你相像的操作。">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_910190138" 
+	TEXT="一个大文件加入版本库">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1702602234" 
+	TEXT="多个大文件加入版本库">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1424592507" 
+	TEXT="Git 库的文件大小">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" ID="ID_994560929" 
+	TEXT="文件删除再添加，版本库如何变化呢？">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_181884990" 
+	TEXT="这是为什么呢？">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1185169170" 
+	TEXT="Git 是对内容进行跟踪，而非文件"/>
+<node COLOR="#111111" ID="ID_773514279" 
+	TEXT="不同文件只要内容相同，Git 库中的存储就是一个样"/>
+</node>
+<node COLOR="#990000" ID="ID_676573676" 
+	TEXT="如何彻底清除版本库/版本库瘦身？">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1148228648" 
+	TEXT="版本库管理">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_328071214" 
+	TEXT="git gc">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_182713492" 
+	TEXT="多长时间整理一次?">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_358793755" 
+	TEXT="是否需要设置 gc.auto?">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_660180163" 
+	TEXT="$ git config --global gc.auto 1"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1731754977" 
+	TEXT="git fsck 可以查看哪些 blob 没有被引用">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_640289668" 
+	TEXT="$ git fsck&#xa;dangling tree 8276318347b8e971733ca5fab77c8f5018c75261&#xa;dangling blob 2302a5a4baec369fb631bb89cfe287cc002dc049&#xa;dangling blob cb54512d0a989dcfb2d78a7f3c8909f76ad2326a&#xa;dangling tree 8e1088e1cc1bc67e0ef01e018707dcb07a2a562b&#xa;dangling blob 5e069ed35afae29015b6622fe715c0aee10112ad&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_957665703" 
+	TEXT="git prune 可以删除没有用的文件">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_316957658" 
+	TEXT="$ git prune -n&#xa;2302a5a4baec369fb631bb89cfe287cc002dc049&#xa;5e069ed35afae29015b6622fe715c0aee10112ad&#xa;8276318347b8e971733ca5fab77c8f5018c75261&#xa;8e1088e1cc1bc67e0ef01e018707dcb07a2a562b&#xa;cb54512d0a989dcfb2d78a7f3c8909f76ad2326a&#xa;$ git prune&#xa;$ git fsck&#xa;$&#xa;blob&#xa;blob&#xa;tree&#xa;tree&#xa;blob&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+</node>
+</node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1784330953" 
-	TEXT="Step 3: 修改/添加/删除">
+	TEXT="Step 8: 工作区的更多操作：修改/添加/删除/文件忽略">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" ID="ID_1312613104" 
@@ -2315,83 +2582,46 @@
 	TEXT="mv = add + rm 。改名操作的自动判别">
 <font NAME="Serif" SIZE="14"/>
 </node>
-</node>
-<node COLOR="#00b439" FOLDED="true" ID="ID_1912771033" 
-	TEXT="Step 4: 添加同一个文件多个拷贝，对版本库的影响">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
-<node COLOR="#990000" FOLDED="true" ID="ID_376643602" 
-	TEXT="Git 库一定会比工作区大么？">
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_641031184" 
-	TEXT="这个章节的题目可能有问题。你可能会说前几次提交由于版本库的文件压缩存储肯定要小，但长久来看是要大。">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1465126220" 
-	TEXT="我做一个颠覆你相像的操作。">
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_910190138" 
-	TEXT="一个大文件加入版本库">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1702602234" 
-	TEXT="多个大文件加入版本库">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1424592507" 
-	TEXT="Git 库的文件大小">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#990000" ID="ID_994560929" 
-	TEXT="文件删除再添加，版本库如何变化呢？">
-<font NAME="Serif" SIZE="14"/>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_181884990" 
-	TEXT="这是为什么呢？">
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_1185169170" 
-	TEXT="Git 是对内容进行跟踪，而非文件"/>
-<node COLOR="#111111" ID="ID_773514279" 
-	TEXT="不同文件只要内容相同，Git 库中的存储就是一个样"/>
-</node>
-</node>
-<node COLOR="#00b439" FOLDED="true" ID="ID_205050549" 
-	TEXT="Git 探秘">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
-<node COLOR="#990000" FOLDED="true" ID="ID_1912474813" 
-	TEXT="Git 探秘5: 看看 Git 中的对象存储">
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_764237996" 
-	TEXT="blob"/>
-<node COLOR="#111111" ID="ID_1507216590" 
-	TEXT="tree"/>
-<node COLOR="#111111" ID="ID_1984752119" 
-	TEXT="commit"/>
-</node>
-<node COLOR="#990000" ID="ID_1788515739" 
-	TEXT="Git 探秘6: Git 的 SHA1 算法">
-<font NAME="Serif" SIZE="14"/>
-</node>
-</node>
-<node COLOR="#00b439" FOLDED="true" ID="ID_1936865227" 
+<node COLOR="#990000" FOLDED="true" ID="ID_1936865227" 
 	TEXT="Step 5: 文件忽略排除影响">
 <edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
-<node COLOR="#990000" ID="ID_1513579147" 
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_980721363" 
+	TEXT="git add -A">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1318926783" 
+	TEXT="git clean -fd">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_836265266" 
+	TEXT="显示忽略的文件">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1339970863" 
+	TEXT="git status --ignore">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1865813549" 
+	TEXT="git ls-files">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" ID="ID_200660530" 
+	TEXT="git clean -fdx 也删除忽略的文件">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1513579147" 
 	TEXT="git clean 命令，小心误删文件">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#990000" ID="ID_740129745" 
+<node COLOR="#111111" ID="ID_740129745" 
 	TEXT="两种文件忽略方式">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#990000" FOLDED="true" ID="ID_235129425" 
+<node COLOR="#111111" FOLDED="true" ID="ID_235129425" 
 	TEXT="文件忽略 .gitignore">
 <edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 <node COLOR="#111111" ID="ID_1354178741" 
 	TEXT="本地忽略，修改 .git/info/exclude">
 <font NAME="Serif" SIZE="12"/>
@@ -2421,21 +2651,32 @@
 <font NAME="Serif" SIZE="12"/>
 </node>
 </node>
-<node COLOR="#990000" ID="ID_1691925220" 
+<node COLOR="#111111" ID="ID_1691925220" 
 	TEXT="到底哪些文件需要忽略？">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#990000" ID="ID_1082968153" 
+<node COLOR="#111111" ID="ID_1082968153" 
 	TEXT="Git 版本库创建的模板？定制模板就可以实现 info/exclude 文件的自动定义">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_428815862" 
+	TEXT="git status --ignore 查看忽略文件">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" ID="ID_1615828487" 
+	TEXT="not-tip: git commit -a">
+<edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="14"/>
 </node>
-<node COLOR="#990000" ID="ID_428815862" 
-	TEXT="git status --ignore 查看忽略文件">
+<node COLOR="#990000" ID="ID_1965877702" 
+	TEXT="tip: git add -u, git add -A">
+<edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="14"/>
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_840803921" 
-	TEXT="Step 5: 历史穿梭">
+	TEXT="Step 9: 历史穿梭">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" FOLDED="true" ID="ID_1859556690" 
@@ -2705,7 +2946,7 @@
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1070000573" 
-	TEXT="Step 6: 反删除和恢复">
+	TEXT="Step 10: 反删除和恢复">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" ID="ID_821734512" 
@@ -2722,7 +2963,7 @@
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1579959370" 
-	TEXT="Step 7: 改变历史">
+	TEXT="Step 11: 改变历史">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" ID="ID_59318503" 
@@ -3030,21 +3271,66 @@
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1780915744" 
-	TEXT="Step 8: 不要将鸡蛋放在一个篮子里（git push）">
+	TEXT="Step 12: 不要将鸡蛋放在一个篮子里（git push）">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
-<node COLOR="#990000" FOLDED="true" ID="ID_1081340660" 
-	TEXT="本地克隆">
+<node COLOR="#990000" ID="ID_1937427093" 
+	TEXT="本地克隆。每章一个克隆，有些太恐怖！">
 <font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_704217379" 
+	TEXT="实际上只有一个克隆就可以了。">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1081340660" 
+	TEXT="本地克隆">
+<font NAME="Serif" SIZE="12"/>
 <node COLOR="#111111" ID="ID_450920240" 
 	TEXT="clone --mirror"/>
 <node COLOR="#111111" ID="ID_1454885577" 
 	TEXT="git push"/>
 </node>
-<node COLOR="#990000" ID="ID_532743507" 
-	TEXT="本地 init 一个空库，然后 push">
+</node>
+<node COLOR="#990000" ID="ID_1567626628" 
+	TEXT="直接向本地克隆为什么会失败？">
 <font NAME="Serif" SIZE="14"/>
 </node>
+<node COLOR="#990000" FOLDED="true" ID="ID_557313563" 
+	TEXT="裸版本库">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_532743507" 
+	TEXT="本地 init 一个空库，然后 push">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_833622297" 
+	TEXT="或者 git clone --mirror"/>
+</node>
+<node COLOR="#990000" ID="ID_1997618543" 
+	TEXT="直接 push 太麻烦">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1547693638" 
+	TEXT="注册远程版本库，push">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_326035925" 
+	TEXT="多台机器数据的同步（git pull）">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1887461557" 
+	TEXT="git pull">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" ID="ID_1387396129" 
+	TEXT="U盘的 Push">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1348857825" 
+	TEXT="others">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" FOLDED="true" ID="ID_517515732" 
 	TEXT="远程版本库(1)">
 <font NAME="Serif" SIZE="14"/>
@@ -3070,20 +3356,6 @@
 	TEXT="Github 上创建版本库"/>
 <node COLOR="#111111" ID="ID_162949319" 
 	TEXT="git push"/>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_326035925" 
-	TEXT="多台机器数据的同步（git pull）">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_1887461557" 
-	TEXT="git pull">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#990000" ID="ID_1387396129" 
-	TEXT="U盘的 Push">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="14"/>
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1549301818" 
@@ -4423,59 +4695,12 @@
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 </node>
-<node COLOR="#00b439" FOLDED="true" ID="ID_1148228648" 
-	TEXT="版本库管理">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
-<node COLOR="#990000" FOLDED="true" ID="ID_328071214" 
-	TEXT="git gc">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_182713492" 
-	TEXT="多长时间整理一次?">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_358793755" 
-	TEXT="是否需要设置 gc.auto?">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_660180163" 
-	TEXT="$ git config --global gc.auto 1"/>
-</node>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1731754977" 
-	TEXT="git fsck 可以查看哪些 blob 没有被引用">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_640289668" 
-	TEXT="$ git fsck&#xa;dangling tree 8276318347b8e971733ca5fab77c8f5018c75261&#xa;dangling blob 2302a5a4baec369fb631bb89cfe287cc002dc049&#xa;dangling blob cb54512d0a989dcfb2d78a7f3c8909f76ad2326a&#xa;dangling tree 8e1088e1cc1bc67e0ef01e018707dcb07a2a562b&#xa;dangling blob 5e069ed35afae29015b6622fe715c0aee10112ad&#xa;">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_957665703" 
-	TEXT="git prune 可以删除没有用的文件">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_316957658" 
-	TEXT="$ git prune -n&#xa;2302a5a4baec369fb631bb89cfe287cc002dc049&#xa;5e069ed35afae29015b6622fe715c0aee10112ad&#xa;8276318347b8e971733ca5fab77c8f5018c75261&#xa;8e1088e1cc1bc67e0ef01e018707dcb07a2a562b&#xa;cb54512d0a989dcfb2d78a7f3c8909f76ad2326a&#xa;$ git prune&#xa;$ git fsck&#xa;$&#xa;blob&#xa;blob&#xa;tree&#xa;tree&#xa;blob&#xa;">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-</node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_640899539" 
 	TEXT="git notes">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" ID="ID_861826055" 
 	TEXT="可以为提交说明添加评注。">
-<font NAME="Serif" SIZE="14"/>
-</node>
-</node>
-<node COLOR="#00b439" FOLDED="true" ID="ID_497159056" 
-	TEXT="git ls-tree">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
-<node COLOR="#990000" ID="ID_158650374" 
-	TEXT="git ls-tree -r 命令可以递归查看">
 <font NAME="Serif" SIZE="14"/>
 </node>
 </node>
