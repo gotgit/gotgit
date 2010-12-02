@@ -63,7 +63,7 @@ Gitweb 配置
 
     $home_text = "indextext.html";
 
-  在 CGI 脚本所在的目录下，创建 `indextext.html` 文件。下面是我们公司内部 gitweb 自定义首页的内容。
+  在 CGI 脚本所在的目录下，创建 `indextext.html` 文件。下面是我们公司（群英汇）内部 gitweb 自定义首页的内容。
 
   ::
 

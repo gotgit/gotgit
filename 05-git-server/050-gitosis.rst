@@ -15,13 +15,13 @@ Gitosis 的出现远远早于 Gitolite，作者 Tommi Virtanen 从 2007 年5月�
 
   版本库重定向一方面在版本库路径变更后保持旧的URL仍可工作，另一方面用在客户端用简洁的地址屏蔽服务器端复杂的地址。
 
-  例如我开发的一款备份工具，版本库位于 `/etc/gistore/tasks/system/repo.git` （符号链接），客户端使用 `system.git` 即映射到复杂的服务器端地址。
+  例如我开发的一款备份工具（Gistore），版本库位于 `/etc/gistore/tasks/system/repo.git` （符号链接），客户端使用 `system.git` 即映射到复杂的服务器端地址。
 
   这个功能我已经在定制的 Gitolite 中实现。
 
 * Python 语言开发，对于喜欢 Python，不喜欢 Perl 的用户，可以选择 Gitosis。
 
-* 在 Github 上有很多 Gitosis 的克隆，我也将我对 gitosis 的改动放在了 github 上：
+* 在 Github 上有很多 Gitosis 的克隆，我对 gitosis 的改动放在了 github 上：
 
   http://github.com/ossxp-com/gitosis
 
@@ -57,7 +57,7 @@ Gitosis 因为是 Gitolite 的鼻祖，因此下面的 Gitosis 实现机理，�
 安装 Gitosis
 --------------
 
-Gitosis 的部署和使用可以直接参考源代码中的 README.rst 。你可以直接访问 Github 上我的 gitosis 克隆，因为 Github 能够直接将 rst 文件显示为网页。
+Gitosis 的部署和使用可以直接参考源代码中的 README.rst 。可以直接访问 Github 上我的 gitosis 克隆，因为 Github 能够直接将 rst 文件显示为网页。
 
 参考::
 
@@ -160,7 +160,7 @@ Gitosis 服务初始化，就是初始化一个 gitosis-admin 库，并为管理
   $ ls keydir/
   jiangxin.pub
 
-我们可以看出 gitosis-admin 目录下有一个陪孩子文件和一个目录 keydir。
+可以看出 gitosis-admin 目录下有一个陪孩子文件和一个目录 keydir。
 
 * keydir/jiangxin.pub 文件
 
@@ -178,7 +178,7 @@ Gitosis 服务初始化，就是初始化一个 gitosis-admin 库，并为管理
     4  writable = gitosis-admin
     5  members = jiangxin
 
-  我们可以看到授权文件的语法完全不同于之前介绍的 Gitolite 的授权文件。整个授权文件是以用户组为核心，而非版本库为核心。
+  可以看到授权文件的语法完全不同于之前介绍的 Gitolite 的授权文件。整个授权文件是以用户组为核心，而非版本库为核心。
   
   * 定义了一个用户组 gitosis-admin 。
   
@@ -249,7 +249,7 @@ Gitosis 服务初始化，就是初始化一个 gitosis-admin 库，并为管理
     To git@server:gitosis-admin.git
        2482e1b..d7952a5  master -> master
 
-如果我们这时查看服务器端 ~git/.ssh/authorized_keys 文件，会发现新增的用户公钥也附加其中：
+如果这时查看服务器端 ~git/.ssh/authorized_keys 文件，会发现新增的用户公钥也附加其中：
 
 ::
 
@@ -270,7 +270,7 @@ Gitosis 服务初始化，就是初始化一个 gitosis-admin 库，并为管理
 
     $ vi gitosis.conf
 
-* 授权指令比较复杂，我们先通过建立一个新用户组并授权新版本库 testing 尝试一下更改授权文件。
+* 授权指令比较复杂，先通过建立一个新用户组并授权新版本库 testing 尝试一下更改授权文件。
 
   在 gitosis.conf 中添加如下授权内容：
 
@@ -399,7 +399,7 @@ Gitosis 缺省设置
   17  map read ossxp/docbones* = ossxp/(docbones.*):ossxp/docutils/\1
   18  repositories = /gitroot
 
-在上面的示例中，我们演示了授权指令以及 Gitosis 特色的 map 指令。
+在上面的示例中，演示了授权指令以及 Gitosis 特色的 map 指令。
 
 * 第1行，定义了用户组 @ossxp-admin 。
 

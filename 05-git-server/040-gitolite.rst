@@ -1,6 +1,6 @@
 Gitolite 服务架设
 ==================
-Gitolite 是一款 Perl 语言开发的 Git 服务管理工具，通过公钥对用户进行认证，并能够通过配置文件对写操作进行基于分支和路径的的精细授权。Gitolite 采用的是 SSH 协议并且使用 SSH 公钥认证，因此需要您对 SSH 非常熟悉，无论是管理员还是普通用户。因此在开始之前，请确认已经通读过之前的“SSH 协议”一章。
+Gitolite 是一款 Perl 语言开发的 Git 服务管理工具，通过公钥对用户进行认证，并能够通过配置文件对写操作进行基于分支和路径的的精细授权。Gitolite 采用的是 SSH 协议并且使用 SSH 公钥认证，因此需要用户对 SSH 非常熟悉，无论是管理员还是普通用户。因此在开始之前，请确认已经通读过之前的“SSH 协议”一章。
 
 Gitolite 的官方网址是: http://github.com/sitaramc/gitolite 。从提交日志里可以看出作者是 Sitaram Chamarty，最早的提交开始于 2009年8月。作者是受到了 Gitosis 的启发，开发了这款功能更为强大和易于安装的软件。Gitolite 的命名，作者的原意是 Gitosis 和 lite 的组合，不过因为 Gitolite 的功能越来越强大，已经超越了 Gitosis，因此作者笑称 Gitolite 可以看作是 Github-lite —— 轻量级的 Github。
 
@@ -83,7 +83,7 @@ Gitolite 要求 git 的版本必须是 1.6.2 或以上的版本，并且服务�
 
   $ ssh-copy-id git@server
 
-至此，我们已经完成了安装 git 服务的准备工作，可以开始安装 Gitolite 服务软件了。
+至此，已经完成了安装 git 服务的准备工作，可以开始安装 Gitolite 服务软件了。
 
 Gitolite 的安装/升级
 +++++++++++++++++++++
@@ -241,7 +241,7 @@ Gitolite 安装可以在客户端执行，而不需要在服务器端操作，�
 
 那么如何能够根据需要选择不同的公钥来连接 git 服务器呢？
 
-别忘了我们在前面介绍过的 SSH 主机别名。实际上刚刚在安装 gitolite 的时候，就已经自动为我们创建了一个主机别名。
+别忘了在前面介绍过的 SSH 主机别名。实际上刚刚在安装 gitolite 的时候，就已经自动的创建了一个主机别名。
 打开 ~/.ssh/config 文件，可以看到类似内容，如果对主机别名不满意，可以修改。
 
 ::
@@ -287,7 +287,7 @@ Gitolite 安装可以在客户端执行，而不需要在服务器端操作，�
 
 3. 服务器端安装 Gitolite。
 
-  推荐采用源码方式安装，因为如果以平台自带软件包模式安装 Gitolite，其中不包含我们对 Gitolite 的改进。
+  推荐采用源码方式安装，因为如果以平台自带软件包模式安装 Gitolite，其中不包含我对 Gitolite 的改进。
 
   - 从源码安装。
 
@@ -375,7 +375,7 @@ Gitolite 安装可以在客户端执行，而不需要在服务器端操作，�
   $ ls keydir/
   admin.pub
 
-我们可以看出 `gitolite-admin` 目录下有两个目录 `conf/` 和 `keydir/` 。
+可以看出 `gitolite-admin` 目录下有两个目录 `conf/` 和 `keydir/` 。
 
 * `keydir/admin.pub` 文件
 
@@ -469,7 +469,7 @@ Gitolite 安装可以在客户端执行，而不需要在服务器端操作，�
     remote:         the following users (pubkey files in parens) do not appear in the config file:
     remote: dev1(dev1.pub),dev2(dev2.pub),jiangxin(jiangxin.pub)
 
-如果我们这时查看服务器端 `~git/.ssh/authorized_keys` 文件，会发现新增的用户公钥也附加其中：
+如果这时查看服务器端 `~git/.ssh/authorized_keys` 文件，会发现新增的用户公钥也附加其中：
 
 ::
 
@@ -480,7 +480,7 @@ Gitolite 安装可以在客户端执行，而不需要在服务器端操作，�
   command="/home/git/.gitolite/src/gl-auth-command jiangxin",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty <用户jiangxin的公钥...>
   # gitolite end
 
-在之前执行 git push 后的输出中，以 remote 标识的输出是服务器端执行 `post-update` 钩子脚本的输出。其中的警告是说新添加的三个用户在授权文件中没有被引用。接下来我们便看看如何修改授权文件，以及如何为用户添加授权。
+在之前执行 git push 后的输出中，以 remote 标识的输出是服务器端执行 `post-update` 钩子脚本的输出。其中的警告是说新添加的三个用户在授权文件中没有被引用。接下来便看看如何修改授权文件，以及如何为用户添加授权。
 
 更改授权
 +++++++++
@@ -493,21 +493,21 @@ Gitolite 安装可以在客户端执行，而不需要在服务器端操作，�
 
     $ vi conf/gitolite.conf
 
-* 授权指令比较复杂，我们先通过建立新用户组尝试一下更改授权文件。
+* 授权指令比较复杂，先通过建立新用户组尝试一下更改授权文件。
 
-  考虑到之前我们增加了三个用户公钥之后，服务器端发出了用户尚未在授权文件中出现的警告。我们就在这个示例中解决这个问题。
+  考虑到之前增加了三个用户公钥之后，服务器端发出了用户尚未在授权文件中出现的警告。现在就在这个示例中解决这个问题。
   
-  * 例如我们在其中加入用户组 @team1，将新添加的用户 jiangxin, dev1, dev2 都归属到这个组中。
+  * 可以在其中加入用户组 @team1，将新添加的用户 jiangxin, dev1, dev2 都归属到这个组中。
 
-    我们只需要在 conf/gitolite.conf 文件的文件头加入如下指令。用户之间用空格分隔。
+    只需要在 conf/gitolite.conf 文件的文件头加入如下指令。用户之间用空格分隔。
 
     ::
 
       @team1 = dev1 dev2 jiangxin
 
-  * 编辑完毕退出。我们可以用 `git diff` 命令查看改动：
+  * 编辑完毕退出。可以用 `git diff` 命令查看改动：
 
-    我们还修改了版本库 `testing` 的授权，将 `@all` 用户组改为我们新建立的 `@team1` 用户组。
+    还修改了版本库 `testing` 的授权，将 `@all` 用户组改为新建立的 `@team1` 用户组。
 
     ::
 
@@ -540,7 +540,7 @@ Gitolite 安装可以在客户端执行，而不需要在服务器端操作，�
 
 * 执行 `git push` ，同步到服务器，才真正完成授权文件的编辑。
 
-  我们可以注意到，PUSH 后的输出中没有了警告。
+  可以注意到，PUSH 后的输出中没有了警告。
 
   ::
 
@@ -561,7 +561,7 @@ Gitolite 授权详解
 授权文件的基本语法
 ++++++++++++++++++
 
-下面我们看一个不那么简单的授权文件:
+下面看一个不那么简单的授权文件:
 
 ::
 
@@ -584,7 +584,7 @@ Gitolite 授权详解
   17      RW      tmp/                =   @all
   18      RW      refs/tags/v[0-9]    =   junio
 
-在上面的示例中，我们演示了很多授权指令。
+在上面的示例中，演示了很多授权指令。
 
 * 第1行，定义了用户组 @admin，包含两个用户 jiangxin 和 wangsheng。
 
@@ -821,7 +821,7 @@ Gitolite 原来对通配符版本库的实现是克隆即创建，但是这样�
 
   $ git push git-admin-server:sandbox/repos1.git master
 
-创建完毕后，我们对各个用户的权限进行测试，会发现：
+创建完毕后，对各个用户的权限进行测试，会发现：
 
 * 用户 `admin` 对版本库具有写的权限。
 
@@ -1050,14 +1050,14 @@ Gitolite 维护的版本库位于安装用户主目录下的 repositories 目录
 在配置文件中出现的版本库，即时生成
 ++++++++++++++++++++++++++++++++++
 
-我们尝试在授权文件 `conf/gitolite.conf` 中加入一段新的版本库授权指令，而这个版本库尚不存在。新添加到授权文件中的内容：
+尝试在授权文件 `conf/gitolite.conf` 中加入一段新的版本库授权指令，而这个版本库尚不存在。新添加到授权文件中的内容：
 
 ::
 
   repo testing2
       RW+                 = @all
 
-然后将授权文件的修改提交并 PUSH 到服务器，我们会看到授权文件中添加新授权的版本库 testing2 被自动创建。
+然后将授权文件的修改提交并 PUSH 到服务器，会看到授权文件中添加新授权的版本库 testing2 被自动创建。
 
 ::
 
@@ -1073,7 +1073,7 @@ Gitolite 维护的版本库位于安装用户主目录下的 repositories 目录
   To gitadmin.bj:gitolite-admin.git
      278e54b..b6f05c1  master -> master
 
-注意其中带 remote 标识的输出，我们看到版本库 testing2.git 被自动初始化了。
+注意其中带 remote 标识的输出，看到版本库 testing2.git 被自动初始化了。
 
 此外使用版本库组的语法（即用 @ 创建的组，用作版本库），也会被自动创建。例如下面的授权文件片段设定了一个包含两个版本库的组 `@testing` ，当将新配置文件 PUSH 到服务器上的时候，会自动创建 `testing3.git` 和 `testing4.git` 。
 
@@ -1183,7 +1183,7 @@ Gitolite 的原始实现是通配符版本库的管理员在对不存在的版�
 
 * 版本库重定向。
 
-  Gitosis 的一个很重要的功能：版本库名称重定向，没有在 Gitolite 中实现。我们为 Gitolite 增加了这个功能。
+  Gitosis 的一个很重要的功能：版本库名称重定向，没有在 Gitolite 中实现。我为 Gitolite 增加了这个功能。
 
   在Git服务器架设的开始，版本库的命名可能非常随意，例如 redmine 的版本库直接放在根下，例如： `redmine-0.9.x.git`, `redmine-1.0.x.git`, ...  当 `redmine` 项目越来越复杂，可能就需要将其放在子目录下进行管理，例如放到 `ossxp/redmine/` 目录下。
 
@@ -1324,7 +1324,7 @@ Gitolite 和 Gitweb 的整合，则提供了两个方面的内容。一个是可
 
 Gitolite 源码的 doc 目录包含用 `markdown` 标记语言编写的手册，可以直接在 `Github` 上查看。也可以使用 `markdown` 的文档编辑工具将 `.mkd` 文档转换为 html 文档。转换工具很多，有：rdiscount, Bluefeather, Maruku, BlueCloth2 等等。
 
-在这些参考文档中，你可以发现 Gitolite 包含的更多的小功能或者秘籍，包括：
+在这些参考文档中，用户可以发现 Gitolite 包含的更多的小功能或者秘籍，包括：
 
 * 版本库设置。
 

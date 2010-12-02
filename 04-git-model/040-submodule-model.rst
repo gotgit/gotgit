@@ -22,9 +22,7 @@
 创建子模组
 ----------
 
-在演示子模组的创建和使用之前，我们先作些准备工作。
-
-我们先尝试建立两个公共函数库（libA.git 和 libB.git）以及一个引用函数库的主版本库（super.git）。
+在演示子模组的创建和使用之前，先作些准备工作。先尝试建立两个公共函数库（libA.git 和 libB.git）以及一个引用函数库的主版本库（super.git）。
 
 ::
 
@@ -52,7 +50,7 @@ $ git --git-dir=/path/to/super.git init --bare
   $ git push origin master
   $ cd ..
 
-版本库 super 是我们准备在其中创建子模组的。super 版本库刚刚初始化还未包含提交，master 分支尚未有正确的引用。我们需要在 super 版本中至少创建一个提交。
+版本库 super 是准备在其中创建子模组的。super 版本库刚刚初始化还未包含提交，master 分支尚未有正确的引用。需要在 super 版本中至少创建一个提交。
 
 ::
 
@@ -63,7 +61,7 @@ $ git --git-dir=/path/to/super.git init --bare
   [master (root-commit) c990091] initialized.
   $ git push origin master
 
-现在我们就可以在 super 版本库中使用 `git submodule add` 添加子模组了。
+现在就可以在 super 版本库中使用 `git submodule add` 添加子模组了。
 
 ::
 
@@ -78,7 +76,7 @@ $ git --git-dir=/path/to/super.git init --bare
   $ ls -aF
   ./  ../  .git/  .gitmodules  lib/
 
-我们看看 .gitmodules 的内容：
+看看 .gitmodules 的内容：
 
 ::
 
@@ -111,9 +109,9 @@ $ git --git-dir=/path/to/super.git init --bare
   $ git commit -m "add modules in lib/lib_a and lib/lib_b."
   $ git push
 
-在提交过程中，我们发现作为子模组方式添加的版本库实际上并没有添加版本库的内容。实际上只是以 gitlink 方式添加了一个链接。至于子模组的实际地址，是由文件 .gitmodules 中指定的。
+在提交过程中，发现作为子模组方式添加的版本库实际上并没有添加版本库的内容。实际上只是以 gitlink 方式添加了一个链接。至于子模组的实际地址，是由文件 .gitmodules 中指定的。
 
-我们可以通过查看补丁的方式，看到 lib/lib_a 和 lib/lib_b 子模组的存在模式。
+可以通过查看补丁的方式，看到 lib/lib_a 和 lib/lib_b 子模组的存在模式。
 
 ::
 
@@ -155,9 +153,9 @@ $ git --git-dir=/path/to/super.git init --bare
 克隆带子模组的版本库
 ---------------------
 
-之前我们在对比 Subversion 的 svn:externals 子模组实现差异时，提到过克隆带子模组的 Git 库，并不能自动将子模组的版本库克隆出来。对于只关心项目本身数据，对项目引用的外部项目数据并不关心的用户，这个功能非常好，数据也没有冗余而且克隆的速度也更块。
+之前在对比 Subversion 的 svn:externals 子模组实现差异时，提到过克隆带子模组的 Git 库，并不能自动将子模组的版本库克隆出来。对于只关心项目本身数据，对项目引用的外部项目数据并不关心的用户，这个功能非常好，数据也没有冗余而且克隆的速度也更块。
 
-下面我们在另外的位置克隆 super 版本库，会发现 lib/lib_a 和 lib/lib_b 并未克隆。
+下面在另外的位置克隆 super 版本库，会发现 lib/lib_a 和 lib/lib_b 并未克隆。
 
 ::
 
@@ -174,7 +172,7 @@ $ git --git-dir=/path/to/super.git init --bare
   lib/lib_b
 
 
-这时如果我们运行 `git submodule status` 可以查看到子模组状态。
+这时如果运行 `git submodule status` 可以查看到子模组状态。
 
 ::
 
@@ -182,7 +180,7 @@ $ git --git-dir=/path/to/super.git init --bare
   -126b18153583d9bee4562f9af6b9706d2e104016 lib/lib_a
   -3b52a710068edc070e3a386a6efcbdf28bf1bed5 lib/lib_b
 
-我们看到每个子模组的目录前面是40位的提交ID，在最前面是一个减号。减号的含义是该子模组尚为检出。
+看到每个子模组的目录前面是40位的提交ID，在最前面是一个减号。减号的含义是该子模组尚为检出。
 
 如果需要克隆出子模组型式引用的外部库，首先需要先执行 `git submodule init` 。
 
@@ -226,7 +224,7 @@ $ git --git-dir=/path/to/super.git init --bare
 在子模组中修改和子模组的更新
 ----------------------------
 
-执行 `git submodule update` 更新出来的子模组，都以某个具体的提交版本进行检出。我们进入某个子模组目录，会发现其处于非跟踪状态。
+执行 `git submodule update` 更新出来的子模组，都以某个具体的提交版本进行检出。进入某个子模组目录，会发现其处于非跟踪状态。
 
 ::
 
@@ -238,7 +236,7 @@ $ git --git-dir=/path/to/super.git init --bare
 
   $ cd ../..
 
-显然这种情况下，如果修改 lib/lib_a 下的文件，提交会丢失。下面我们介绍一下如何在检出的子模组中修改，以及更新子模组。
+显然这种情况下，如果修改 lib/lib_a 下的文件，提交会丢失。下面介绍一下如何在检出的子模组中修改，以及更新子模组。
 
 在子模组中切换到 master 分支（或者其它想要修改的分支）后，再进行修改。
 
@@ -258,7 +256,7 @@ $ git --git-dir=/path/to/super.git init --bare
   #
   nothing to commit (working directory clean)
 
-在 git status 的状态输出，我们可以看出我们的新提交尚未推送到远程版本库。我们暂时不推送，看看在 super 版本库中执行 `git submodule update` 对子模组的影响。
+在 git status 的状态输出，可以看出新提交尚未推送到远程版本库。现在暂时不推送，看看在 super 版本库中执行 `git submodule update` 对子模组的影响。
 
 ::
 
@@ -278,9 +276,9 @@ $ git --git-dir=/path/to/super.git init --bare
   +5dea2693e5574a6e3b3a59c6b0c68cb08b2c07e9 lib/lib_a (heads/master)
    3b52a710068edc070e3a386a6efcbdf28bf1bed5 lib/lib_b (heads/master)
 
-在 super 版本库执行 `git status` 我们可以看到子模组已修改，包含更新的提交。通过 `git submodule stauts` 我们可以看出 lib/lib_a 子模组指向了新的提交ID（前面有一个加号），而 lib/lib_b 模组状态正常（提交ID前是一个空格，不是加号也不是减号）。
+在 super 版本库执行 `git status` 可以看到子模组已修改，包含更新的提交。通过 `git submodule stauts` 可以看出 lib/lib_a 子模组指向了新的提交ID（前面有一个加号），而 lib/lib_b 模组状态正常（提交ID前是一个空格，不是加号也不是减号）。
 
-这时如果我们不小心执行了一次 `git submodule update` 命令，会将 lib/lib_a 重新切换到旧的指向。
+这时如果不小心执行了一次 `git submodule update` 命令，会将 lib/lib_a 重新切换到旧的指向。
 
 ::
 
@@ -291,9 +289,9 @@ $ git --git-dir=/path/to/super.git init --bare
    126b18153583d9bee4562f9af6b9706d2e104016 lib/lib_a (remotes/origin/HEAD)
    3b52a710068edc070e3a386a6efcbdf28bf1bed5 lib/lib_b (heads/master)
 
-那么我们刚才在 lib/lib_a 中的提交丢失了么？实际上因为我们提交到了 master 主线，因此没有丢失，但是如果有未提交数据就会造成数据丢失。
+那么刚才在 lib/lib_a 中的提交丢失了么？实际上因为已经提交到了 master 主线，因此没有丢失，但是如果有未提交数据就会造成数据丢失。
 
-我们进到 lib/lib_a 目录，重新检出 master 分支找回之前的提交。
+进到 lib/lib_a 目录，重新检出 master 分支找回之前的提交。
 
 ::
 
@@ -328,7 +326,7 @@ $ git --git-dir=/path/to/super.git init --bare
 
   $ git commit -m "submodule lib/lib_a upgrade to new version."
 
-此时如果我们执行 `git push` 将 super 版本库推送到远程版本库，存在一个问题。即 super 的子模组 lib/lib_a 指向了一个新的提交，而该提交还在我们本地的 lib/lib_a 版本库中没有向上游推送，这会导致其他人克隆 super 版本库并更新模组时因为找不到该版本而导致出错。
+此时如果执行 `git push` 将 super 版本库推送到远程版本库，存在一个问题。即 super 的子模组 lib/lib_a 指向了一个新的提交，而该提交还在本地的 lib/lib_a 版本库中没有向上游推送，这会导致其他人克隆 super 版本库并更新模组时因为找不到该版本而导致出错。
 
 ::
 
@@ -357,7 +355,7 @@ $ git --git-dir=/path/to/super.git init --bare
    126b18153583d9bee4562f9af6b9706d2e104016 lib/lib_a (remotes/origin/HEAD)
    3b52a710068edc070e3a386a6efcbdf28bf1bed5 lib/lib_b (heads/master)
 
-然后我们创建一个新目录 others，并把该目录用 git 初始化并做一次空的提交。
+然后创建一个新目录 others，并把该目录用 git 初始化并做一次空的提交。
 
 ::
 
@@ -367,13 +365,13 @@ $ git --git-dir=/path/to/super.git init --bare
   $ git commit --allow-empty -m initial
   [master (root-commit) 90364e1] initial
 
-我们还在 others 目录下创建一个文件 `newfile` 。
+还在 others 目录下创建一个文件 `newfile` 。
 
 ::
 
   $ date > newfile
 
-我们回到上一级目录，执行 `git status` ，看到有一个 others 目录没有加入版本库控制，这很自然。
+回到上一级目录，执行 `git status` ，看到有一个 others 目录没有加入版本库控制，这很自然。
 
 ::
 
@@ -421,7 +419,7 @@ $ git --git-dir=/path/to/super.git init --bare
 
 可以看出 others 被当做子模组添加到 super 版本库中。之所以 `git status` 的显示中 others 出现两次，是因为 others 版本库本身“不干净”，存在尚未加入版本控制的文件。
 
-我们执行 `git submoudle status` 命令，会报错。因为 others 作为子模组，没有在 .gitmodules 文件中注册。
+执行 `git submoudle status` 命令，会报错。因为 others 作为子模组，没有在 .gitmodules 文件中注册。
 
 ::
 
@@ -466,7 +464,7 @@ $ git --git-dir=/path/to/super.git init --bare
    delete mode 160000 others
    create mode 100644 others/newfile
 
-上面的操作中，首先我们删除了在库中的 others 子模组（使用 --cached 参数执行删除）；然后为了添加 others 目录下的文件，我们用 "others/" （注意 others 后面的路径分割符 '/'）。我们查看一下子模组的状态，我们会看到只有之前的两个子模组显示出来。
+上面的操作中，首先先删除了在库中的 others 子模组（使用 --cached 参数执行删除）；然后为了添加 others 目录下的文件，使用了 "others/" （注意 others 后面的路径分割符 '/'）。现在查看一下子模组的状态，会看到只有之前的两个子模组显示出来。
 
 ::
 
@@ -479,4 +477,4 @@ $ git --git-dir=/path/to/super.git init --bare
 
 子模组最主要的一个问题是子模组并不能基于外部版本库的某一个分支进行创建，使得更新后，子模组处于非跟踪状态，不便于在子模组中进行对外部版本库进行改动。尤其对于授权或者其它原因将一个版本库拆分为子模组后，管理非常不方便。在后面介绍 Android repo 工作模式为多版本库的有效管理指出了另一可行方案。
 
-如果在局域网内维护的版本库所引用的子模组版本库在另外的服务器，甚至在互联网上，克隆子版本库就要浪费很多时间。而且如果子模组指向的版本库不在我们掌控之内，一旦需要对其进行定制会因为提交无法向远程服务器推送而无法实现。在下面一节的子树合并中，我们会给出针对这个问题的解决方案。
+如果在局域网内维护的版本库所引用的子模组版本库在另外的服务器，甚至在互联网上，克隆子版本库就要浪费很多时间。而且如果子模组指向的版本库不在我们的掌控之内，一旦需要对其进行定制会因为提交无法向远程服务器推送而无法实现。在下面一节的子树合并中，会给出针对这个问题的解决方案。

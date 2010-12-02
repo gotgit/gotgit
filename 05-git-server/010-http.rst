@@ -201,7 +201,7 @@ Git 1.6.6 之后的版本，提供了针对 HTTP 协议的 CGI 程序 `git-http-
   ScriptAlias /git/ /usr/libexec/git-core/git-http-backend/
 
 
-Git 的智能的HTTP服务彻底打破了以前哑传输对 HTTP 协议造成的恶劣印象，让 HTTP 协议成为 Git 服务的一个重要选项。但是在授权的管理上，相比后面我们要介绍的 Gitosis 和 Gitolite，智能 HTTP 服务仅仅依赖 Apache 自身的授权模型，可管理性要弱的多。
+Git 的智能的HTTP服务彻底打破了以前哑传输对 HTTP 协议造成的恶劣印象，让 HTTP 协议成为 Git 服务的一个重要选项。但是在授权的管理上，相比后面要介绍的 Gitosis 和 Gitolite，智能 HTTP 服务仅仅依赖 Apache 自身的授权模型，可管理性要弱的多。
 
 * 创建版本库只能在服务器端进行，不能通过远程客户端进行。
 * 配置认证和授权，也只能在服务器端进行，不能进行远程配置。

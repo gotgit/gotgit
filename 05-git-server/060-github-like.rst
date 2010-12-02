@@ -1,20 +1,20 @@
 Git 版本库托管
 ===============
 
-想不想在互联网上为你的 Git 版本库建立一个克隆？这样再也不必为数据的安全担忧（异地备份），还可以和他人数据共享、协同工作？但是这样做会不会很贵呢？比如要购买域名、虚拟主机、搭建 Git 服务器什么的？
+想不想在互联网上为自己的 Git 版本库建立一个克隆？这样再也不必为数据的安全担忧（异地备份），还可以和他人数据共享、协同工作？但是这样做会不会很贵呢？比如要购买域名、虚拟主机、搭建 Git 服务器什么的？
 
-实际上这种服务（Git 版本库托管服务）你可以免费获得！GitHub, Gitorious 等都可以免费提供这些服务。
+实际上这种服务（Git 版本库托管服务）可以免费获得！GitHub, Gitorious 等都可以免费提供这些服务。
 
-如果您是按部就班式的阅读本书，那么您早就注意到本书的很多示例版本库都是放在 GitHub 上的。GitHub 提供了 Git 版本库托管服务，即包括收费商业支持，也提供免费的服务，很多开源项目把版本库直接放在了 GitHub 上，如：jQuery, curl, Ruby on Rails 等。
+如果读者是按部就班式的阅读本书，那么可能早就注意到本书的很多示例版本库都是放在 GitHub 上的。GitHub 提供了 Git 版本库托管服务，即包括收费商业支持，也提供免费的服务，很多开源项目把版本库直接放在了 GitHub 上，如：jQuery, curl, Ruby on Rails 等。
 
-注册一个 GitHub 帐号非常简单，访问 GitHub 网站： `https://github.com/` ，点击菜单中的 “Pricing and Signup” 就可以看到 GitHub 的服务列表。我们会看到其中有一个免费的服务：“Free for open source” ，并且版本库托管的数量不受限制。当然免费的午餐是不管饱的，托管的空间只有300MB，而且不能创建私有版本库。
+注册一个 GitHub 帐号非常简单，访问 GitHub 网站： `https://github.com/` ，点击菜单中的 “Pricing and Signup” 就可以看到 GitHub 的服务列表。会看到其中有一个免费的服务：“Free for open source” ，并且版本库托管的数量不受限制。当然免费的午餐是不管饱的，托管的空间只有300MB，而且不能创建私有版本库。
 
 .. figure:: images/github/github-plans.png
    :scale: 70
 
    GitHub 服务价目表
 
-点击按钮“Create a free account”，就可以创建一个免费的帐号。GitHub 的用法和前面介绍的 Gerrit Web 界面的用法很类似，一旦帐号创建，应该马上为你的帐号设置公钥，以便能够用 SSH 协议读写自己帐号下创建的版本库。
+点击按钮“Create a free account”，就可以创建一个免费的帐号。GitHub 的用法和前面介绍的 Gerrit Web 界面的用法很类似，一旦帐号创建，应该马上为新建立的帐号设置公钥，以便能够用 SSH 协议读写自己帐号下创建的版本库。
 
 .. figure:: images/github/github-whoru.png
    :scale: 70
@@ -45,7 +45,7 @@ Git 版本库托管
    版本库访问URL
 
 
-Gitorious 是另外一个 Git 版本库托管提供商，网址为 `http://gitorious.org/` 。最酷的是 Gitorious 本身的架站软件也是开源的，可以通过 Gitorious 上的 Gitorious 项目访问。如果你熟悉 Ruby on Rails，可以架设一个本地的 Gitorious 服务。
+Gitorious 是另外一个 Git 版本库托管提供商，网址为 `http://gitorious.org/` 。最酷的是 Gitorious 本身的架站软件也是开源的，可以通过 Gitorious 上的 Gitorious 项目访问。如果读者熟悉 Ruby on Rails，可以架设一个本地的 Gitorious 服务。
 
 .. figure:: images/github/gitorious_full.png
    :scale: 70

@@ -1,9 +1,9 @@
 SVN版本库到Git的迁移
 ====================
 
-Subversion 版本库到 Git 版本库的转换，最好的方法就是 git-svn。而 git-svn 的使用方法在前面 “Git 和 SVN 协同模型” 一章我们已经详细介绍过。本章的内容我们不再对 git-svn 的用法做过多的重复，只在这里强调一下版本库迁移时的注意事项，相关 git-svn 内容还请参照前面的内容。
+Subversion 版本库到 Git 版本库的转换，最好的方法就是 git-svn。而 git-svn 的使用方法在前面 “Git 和 SVN 协同模型” 一章已经详细介绍过。本章的内容将不再对 git-svn 的用法做过多的重复，只在这里强调一下版本库迁移时的注意事项，相关 git-svn 内容还请参照前面的内容。
 
-在迁移之前要确认一个问题，Subversion 转换到 Git 库之后，Subversion 还继续使用么？我的意思是说还允许向 Subversion 提交么？
+在迁移之前要确认一个问题，Subversion 转换到 Git 库之后，Subversion 还继续使用么？意思是说还允许向 Subversion 提交么？
 
 如果回答是，那么直接查看 “Git 和 SVN 协同模型” 一章，用 Git 作为前端工具来操作 Subversion 版本库，而不要理会下面的内容。因为下面描述的迁移步骤针对的是一次性的 Subversion 到 Git 版本库的迁移。
 

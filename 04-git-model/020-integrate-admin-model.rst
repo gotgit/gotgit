@@ -25,7 +25,7 @@ git commit -s 为提交增加 SignOff by: 标识。
 为了防止因忘记 git add 导致提交不完整，应该在提交完成后，执行 git status 查看是否有未提交的变更，再执行  git show HEAD 检查提交：改动和日志说明。
 
 
-提交贡献的方式：共享版本库。git-daemon, http smart server 可以帮助你。或者直接用 github。
+提交贡献的方式：共享版本库。可以使用 git-daemon, http 智能服务器。或者直接用 github。
 
 通过 patch 文件。
 

@@ -1,13 +1,13 @@
 Topgit 协同模型
 ===============
 
-如果没有 Topgit ，就不会有此书。因为发现了 Topgit，才让我下定决心在公司大范围推广 Git；因为 Topgit，激发了我对 Git 的好奇之心。
+如果没有 Topgit ，就不会有此书。因为发现了 Topgit，才让作者下定决心在公司大范围推广 Git；因为 Topgit，激发了作者对 Git 的好奇之心。
 
 
-我的版本控制系统三个里程碑
+作者版本控制系统三个里程碑
 ---------------------------
 
-从2005年开始我专心于开源软件的研究、定制开发和整合，在这之后的几年，一直使用 Subversion 做版本控制。对于我们这种定制开发的工作，Subversion 有一种称为卖主分支（Vendor Branch）的模式。
+从2005年开始作者专心于开源软件的研究、定制开发和整合，在这之后的几年，一直使用 Subversion 做版本控制。对于定制开发工作，Subversion 有一种称为卖主分支（Vendor Branch）的模式。
 
 
 ::
@@ -48,9 +48,9 @@ Hg 和 Git 一样也是一种分布式版本控制系统，MQ 是 Hg 的一个�
 
 * 向上游新版本迁移过程的工作量降低了，是因为提交都按照定制的需求分类了（不同的补丁），每个补丁都可以视为一个功能分支。
 
-但是当我们需要在定制开发上进行多人协作的时候，“Hg + MQ” 弊病就显现了。因为“Hg + MQ”工作模式下，定制开发的成果是一个补丁库，在补丁库上进行协作难度非常大，当发生冲突的时候，补丁的冲突解决不可想象。这就引发了我们第三次版本控制系统大迁移。
+但是当需要在定制开发上进行多人协作的时候，“Hg + MQ” 弊病就显现了。因为“Hg + MQ”工作模式下，定制开发的成果是一个补丁库，在补丁库上进行协作难度非常大，当发生冲突的时候，补丁的冲突解决不可想象。这就引发了我们第三次版本控制系统大迁移。
 
-2009 年，我们的目光锁定在 Topgit 上。TopGit 的项目名称是来自于 Topic Git 的简写，是基于 Git 的用脚本语言开发的辅助工具，是用于管理多个 Git 的特性分支的工具。Topgit 可以非常简单的实现“变基”——迁移至上游新版本。
+2009 年，目光锁定在 Topgit 上。TopGit 的项目名称是来自于 Topic Git 的简写，是基于 Git 的用脚本语言开发的辅助工具，是用于管理多个 Git 的特性分支的工具。Topgit 可以非常简单的实现“变基”——迁移至上游新版本。
 
 Topgit 的主要特点有：
 
@@ -126,7 +126,7 @@ Topgit 的可执行命令只有一个 `tg` 。其官方参考手册见: http://r
 
   $ sudo prefix=/usr make install
 
-我对 Topgit 做了一些增强和改进，在后面的章节予以介绍。如果想安装我改进的版本，需要预先安装 quilt 补丁管理工具。然后进行如下操作。
+作者对 Topgit 做了一些增强和改进，在后面的章节予以介绍。如果想安装改进的版本，需要预先安装 quilt 补丁管理工具。然后进行如下操作。
 
 ::
 
@@ -136,7 +136,7 @@ Topgit 的可执行命令只有一个 `tg` 。其官方参考手册见: http://r
   $ make
   $ sudo prefix=/usr make install
 
-如果您用的是 Ubuntu 或者 Debian Linux 操作系统，还可以这么安装。
+如果用的是 Ubuntu 或者 Debian Linux 操作系统，还可以这么安装。
 
 * 先安装 Debian/Ubuntu 打包依赖的相关工具软件。
 
@@ -163,7 +163,7 @@ Topgit 的可执行命令只有一个 `tg` 。其官方参考手册见: http://r
 Topgit 的使用
 --------------
 
-通过前面的原理部分，我们可以发现 Topgit 为管理特性分支，所引入的都是和 Git 兼容的。
+通过前面的原理部分，可以发现 Topgit 为管理特性分支，所引入的都是和 Git 兼容的。
 
 * 在 refs/top-bases/ 命名空间下的引用，用于记录分支的变基历史。
 * 在特性分支的工作区根目录引入两个文件 .topdeps 和 .topmsg ，用于记录分支依赖和说明。
@@ -255,14 +255,14 @@ tg create 命令会创建新的特性分支 refs/heads/NAME，跟踪变基分支
 
 **创建时指定依赖分支**
 
-如果这时我们想创建一个新的特性分支 t/feature2 ，也是依赖 master，注意我们需要提供 master 作为依赖分支。因为我们当前所处的分支为 t/feature1 。
+如果这时想创建一个新的特性分支 t/feature2 ，并且也是要依赖 master，注意需要在命令行中提供 master 作为第二个参数，以设定依赖分支。因为当前所处的分支为 `t/feature1` ，如果不提供指定的依赖分支会自动依赖当前分子。
 
 ::
 
   $ tg create t/feature2 master
   $ git commit -m "create tg branch t/feature2"
 
-下面的命令将创建 t/feature3 分支，该分支依赖 t/feature1 和 t/feature2 。
+下面的命令将创建 `t/feature3` 分支，该分支依赖 `t/feature1` 和 `t/feature2` 。
 
 ::
 
@@ -279,7 +279,7 @@ tg info 命令用于显示当前分支或指定的 Topgit 分支的信息。用�
   tg [...] info [NAME]
 
 
-其中 NAME 是可选的 Topgit 分支名。例如我们执行下面的命令会显示分支 t/feature3 的信息：
+其中 NAME 是可选的 Topgit 分支名。例如执行下面的命令会显示分支 t/feature3 的信息：
 
 ::
 
@@ -291,7 +291,7 @@ tg info 命令用于显示当前分支或指定的 Topgit 分支的信息。用�
            t/feature2
   Up-to-date.
 
-我们切换到 t/feature1 分支，做一些修改，并提交。
+切换到 t/feature1 分支，做一些修改，并提交。
 
 ::
 
@@ -299,7 +299,7 @@ tg info 命令用于显示当前分支或指定的 Topgit 分支的信息。用�
   hack...
   $ git commit -m "hacks in t/feature1."
 
-然后我们再来看 t/feature3 的状态：
+然后再来看 t/feature3 的状态：
 
 ::
 
@@ -323,7 +323,7 @@ tg update 命令用于更新分支，即从依赖的分支或上游跟踪的分�
 
   tg [...] update [NAME]
 
-其中 NAME 是可选的 Topgit 分支名。例如我们就对需要更新的 t/feature3 分支执行 tg update 命令。
+其中 NAME 是可选的 Topgit 分支名。下面就对需要更新的 `t/feature3` 分支执行 "tg update" 命令。
 
 ::
 
@@ -340,9 +340,9 @@ tg update 命令用于更新分支，即从依赖的分支或上游跟踪的分�
    1 files changed, 1 insertions(+), 0 deletions(-)
    create mode 100644 feature1
 
-从上面的输出信息可以看出执行了两次分支合并操作，一次是针对 refs/top-bases/t/feature3 引用指向的跟踪变基分支，另外一次针对的是 refs/heads/t/feature3 特性分支。
+从上面的输出信息可以看出执行了两次分支合并操作，一次是针对 `refs/top-bases/t/feature3` 引用指向的跟踪变基分支，另外一次针对的是 `refs/heads/t/feature3` 特性分支。
 
-执行 tg update 命令因为要设计到分支的合并，因此并非每次都会成功。例如我们在 t/feature3 和 t/feature1 同时对同一个文件（如 feature1）进行修改。然后在 t/feature3 中再执行 tg update 可能就会报错，进入冲突解决状态。
+执行 "tg update" 命令因为要涉及到分支的合并，因此并非每次都会成功。例如在 t/feature3 和 t/feature1 同时对同一个文件（如 feature1）进行修改。然后在 t/feature3 中再执行 tg update 可能就会报错，进入冲突解决状态。
 
 ::
 
@@ -359,7 +359,7 @@ tg update 命令用于更新分支，即从依赖的分支或上游跟踪的分�
   tg: You can abort this operation using `git reset --hard` now
   tg: and retry this merge later using `tg update`.
 
-我们可以看出第一次对 refs/top-bases/t/feature3 引用指向的跟踪变基分支成功合并，但在对 t/feature3 特性分支进行合并是出错。
+可以看出第一次对 refs/top-bases/t/feature3 引用指向的跟踪变基分支成功合并，但在对 t/feature3 特性分支进行合并是出错。
 
 ::
 
@@ -387,9 +387,9 @@ tg update 命令用于更新分支，即从依赖的分支或上游跟踪的分�
   no changes added to commit (use "git add" and/or "git commit -a")
 
 
-通过 tg info 命令可以看出当前分支状态是 Up-to-date，但是之前有提示：分支的基（Base）要比头（Head）新，请执行 tg update 命令。这时如果我们执行 tg summary 命令的话，我们可以看到 t/feature3 处于 B (Break) 状态。用 git status 命令，我们可以看出因为两个分支同时修改了文件 `feature1`  导致冲突。
+通过 "tg info" 命令可以看出当前分支状态是 Up-to-date，但是之前有提示：分支的基（Base）要比头（Head）新，请执行 tg update 命令。这时如果执行 "tg summary" 命令的话，可以看到 t/feature3 处于 B (Break) 状态。用 git status 命令，可以看出因为两个分支同时修改了文件 `feature1`  导致冲突。
 
-我们可以编辑 feature1 文件，或者调用冲突解决工具解决冲突，之后再提交，才真正完成此次 `tg update` 。
+可以编辑 feature1 文件，或者调用冲突解决工具解决冲突，之后再提交，才真正完成此次 `tg update` 。
 
 ::
 
@@ -413,7 +413,7 @@ tg summary 命令用于显示 Topgit 管理的特性分支的列表及各个分�
 
   tg [...] summary [-t | --sort | --deps | --graphviz]
 
-不带任何参数执行 tg summary 是最常用的 topgit 命令。在介绍无参数的 tg summary 命令之前，我们先看看其它简单的用法。
+不带任何参数执行 tg summary 是最常用的 topgit 命令。在介绍无参数的 tg summary 命令之前，先看看其它简单的用法。
 
 使用 -t 参数只显示特性分支列表。
 
@@ -469,7 +469,7 @@ tg summary 命令用于显示 Topgit 管理的特性分支的列表及各个分�
 * 标识 '>' ：（t/feature3 分支之前的大于号) 用于标记当前所处的特性分支。
 * 标记 '0' ：（t/feature2 分支前的数字 0） 含义是该分支中没有提交，这一个建立后尚未使用或废弃的分支。
 * 标记 'D' ： 表明该分支处于过时（out-of-date）状态。可能是一个或多个依赖的分支包含了新的提交，尚未合并到此特性分支。可以用 `tg info` 命令看出到底是由于哪个依赖分支的改动导致该特性分支处于过时状态。
-* 标记 'B' ： 之前我们的演示中出现过，表明该分支处于 Break 状态，即可能由于冲突未解决或者其它原因导致该特性分支的基（base）相对该分支的头（head）不匹配。refs/top-bases 下的跟踪变基分支迁移了，但是特性分支未完成迁移。
+* 标记 'B' ： 之前演示中出现过，表明该分支处于 Break 状态，即可能由于冲突未解决或者其它原因导致该特性分支的基（base）相对该分支的头（head）不匹配。refs/top-bases 下的跟踪变基分支迁移了，但是特性分支未完成迁移。
 * 标记 '!' ： 表明该特性分支所依赖的分支不存在。
 * 标记 'l' ： 表明该特性分支只存在于本地，不存在于远程跟踪服务器。
 * 标记 'r' ： 表明该特性分支既存在于本地，又存在于远程跟踪服务器，并且两者匹配。
@@ -478,7 +478,7 @@ tg summary 命令用于显示 Topgit 管理的特性分支的列表及各个分�
 * 如果没有出现 'l/r/L/R' ： 表明该版本库尚未设置远程跟踪版本库（没有remote）。
 * 一般带有标记 'r' 的是最常见的，也是最正常的。
 
-下面我们通过 tg remote 为我们的测试版本库建立一个对应的远程跟踪版本库，然后我们就能在 tg summary 的输出中看到标识符 'l/r' 等。
+下面通过 tg remote 为测试版本库建立一个对应的远程跟踪版本库，然后就能在 tg summary 的输出中看到标识符 'l/r' 等。
 
 tg remote 命令
 ++++++++++++++
@@ -502,7 +502,7 @@ tg remote 命令用于为远程跟踪版本库设置 Topgit 的特性分支的�
 
 当执行 tg 命令时，如果不用 '-r remote' 全局参数，默认使用设置的缺省 Topgit 远程版本库。
 
-下面我们为前面测试的版本库设置一个远程的跟踪版本库。
+下面为前面测试的版本库设置一个远程的跟踪版本库。
 
 先创建一个裸版本库 test1.git 。
 
@@ -531,7 +531,7 @@ tg remote 命令用于为远程跟踪版本库设置 Topgit 的特性分支的�
   To /path/to/test1.git
    * [new branch]      master -> master
 
-之后我们通过 tg remote 命令告诉 Git 这个远程版本库需要跟踪 Topgit 分支。
+之后通过 tg remote 命令告诉 Git 这个远程版本库需要跟踪 Topgit 分支。
 
 ::
 
@@ -548,7 +548,7 @@ tg remote 命令用于为远程跟踪版本库设置 Topgit 的特性分支的�
   +[topgit]
   +       remote = origin
 
-这时我们再执行 tg summary 会看到分支前面都有标记 'l'，即本地提交比远程版本库要新。
+这时再执行 tg summary 会看到分支前面都有标记 'l'，即本地提交比远程版本库要新。
 
 ::
 
@@ -557,7 +557,7 @@ tg remote 命令用于为远程跟踪版本库设置 Topgit 的特性分支的�
    0l     t/feature2                      [PATCH] t/feature2
   > l     t/feature3                      [PATCH] t/feature3
 
-我们将 t/feature2 的特性分支推送到远程版本库。
+将 t/feature2 的特性分支推送到远程版本库。
 
 ::
 
@@ -595,7 +595,7 @@ tg remote 命令用于为远程跟踪版本库设置 Topgit 的特性分支的�
 tg push 命令
 ++++++++++++++
 
-在前面 tg remote 的介绍中，我们已经看到了 tg push 命令。tg push 命令用于将 Topgit 特性分支及对应的变基跟踪分支推送到远程版本库。用法：
+在前面 tg remote 的介绍中，已经看到了 tg push 命令。tg push 命令用于将 Topgit 特性分支及对应的变基跟踪分支推送到远程版本库。用法：
 
 ::
 
@@ -645,7 +645,7 @@ tg patch 命令通过比较特性分支及其变基跟踪分支的差异，显�
 
 其中 -i 参数显示暂存区和变基跟踪分支的差异。-w 参数显示工作区和变基跟踪分支的差异。
 
-tg patch 命令存在的一个问题是只有在工作区的根执行才能够正确显示。这个缺陷已经在我的版本中改进。
+tg patch 命令存在的一个问题是只有在工作区的根执行才能够正确显示。这个缺陷已经在我改进的 Topgit 中被改正。
 
 tg export 命令
 ++++++++++++++
@@ -676,7 +676,7 @@ tg export 命令用于导出特性分支及其依赖，便于向上游贡献。�
 
     tg [...] export -b BRANCH1,BRANCH2... --quilt DIRECTORY
 
-在导出为 Quilt 格式补丁的时候，如果想将所有的分支导出，必须用 -b 参数将分支全部罗列（或者分支的依赖关系将所有分支囊括），这对于需要导出所有分支非常不方便。我改进的 topgit 通过 --all 参数，实现导出所有分支。
+在导出为 Quilt 格式补丁的时候，如果想将所有的分支导出，必须用 -b 参数将分支全部罗列（或者分支的依赖关系将所有分支囊括），这对于需要导出所有分支非常不方便。我改进的 Topgit 通过 --all 参数，实现导出所有分支。
 
 tg import 命令
 ++++++++++++++
@@ -726,9 +726,9 @@ tg graph 命令并非官方提供的命令，而是源自一个补丁，实现�
 Topgit hacks
 --------------
 
-在 Topgit 的使用中陆续发现一些不合用的地方，于是便使用 Topgit 特性分支的方式来改进 Topgit 自身的代码。在我的博客上，介绍了这几个改进，参见： http://blog.ossxp.com/tag/topgit/ 。
+在 Topgit 的使用中陆续发现一些不合用的地方，于是便使用 Topgit 特性分支的方式来改进 Topgit 自身的代码。在群英汇博客上，介绍了这几个改进，参见： http://blog.ossxp.com/tag/topgit/ 。
 
-我就以此为例，介绍如何参与一个 Topgit 管理下的项目的开发。改进的 Topgit 版本库地址为:  git://github.com/ossxp-com/topgit.git 。
+下面就以此为例，介绍如何参与一个 Topgit 管理下的项目的开发。改进的 Topgit 版本库地址为:  git://github.com/ossxp-com/topgit.git 。
 
 首先克隆该版本库。
 
@@ -754,7 +754,7 @@ Topgit hacks
   origin/t/tg_push_all
   origin/tgmaster
 
-我们看到远程分支中出现了熟悉的以 t/ 为前缀的 Topgit 分支，说明这个版本库是一个 Topgit 管理的定制开发版本库。那么为了能够获取 Topgit 的变基跟踪分支，我们需要用 `tg remote` 命令对缺省的 origin 远程版本库注册一下。
+看到远程分支中出现了熟悉的以 t/ 为前缀的 Topgit 分支，说明这个版本库是一个 Topgit 管理的定制开发版本库。那么为了能够获取 Topgit 的变基跟踪分支，需要用 `tg remote` 命令对缺省的 origin 远程版本库注册一下。
 
 ::
 
@@ -780,7 +780,7 @@ Topgit hacks
   tg: Adding branch t/tg_push_all...
   tg: The remote 'origin' is now the default source of topic branches.
 
-我们执行 `tg summary` 看一下本地 Topgit 特性分支状态。
+执行 `tg summary` 看一下本地 Topgit 特性分支状态。
 
 ::
 
@@ -794,7 +794,7 @@ Topgit hacks
     r  !  t/tg_patch_cdup                 [PATCH] t/tg_patch_cdup
     r  !  t/tg_push_all                   [PATCH] t/tg_push_all
 
-怎么？出现了感叹号？记得前面我们在 tg summary 命令介绍的章节介绍感叹号的出现说明该特性分支依赖的分支丢失。我们用 `tg info` 查看一下某个特性分支。
+怎么？出现了感叹号？记得前面在 tg summary 命令介绍的章节介绍感叹号的出现说明该特性分支依赖的分支丢失。用 `tg info` 查看一下某个特性分支。
 
 ::
 
@@ -807,7 +807,7 @@ Topgit hacks
   MISSING: tgmaster
   Up-to-date.
 
-原来该特性分支依赖 tgmaster 分支，而不是 master 分支。远程存在 tgmaster 分支而本地尚不存在。于是我们在本地建立 tgmaster 跟踪分支。
+原来该特性分支依赖 tgmaster 分支，而不是 master 分支。远程存在 tgmaster 分支而本地尚不存在。于是在本地建立 tgmaster 跟踪分支。
 
 ::
 
@@ -829,7 +829,7 @@ Topgit hacks
     r     t/tg_patch_cdup                 [PATCH] t/tg_patch_cdup
     r     t/tg_push_all                   [PATCH] t/tg_push_all
 
-我们通过下面命令创建图形化的分支图。
+通过下面命令创建图形化的分支图。
 
 ::
 
@@ -851,15 +851,15 @@ Topgit hacks
 * 特性分支 `t/tg_patch_cdup` ，解决了在项目的子目录下无法执行 tg patch 的问题。
 * 特性分支 `t/tg_push_all` ，通过为 `tg push` 增加 `--all` 选项，解决了当 tg 从 0.7 升级到 0.8 后，无法批量向上游推送特性分支的问题。
 
-下面我们展示一下如何跟踪上游的最新改动，并迁移到新的上游版本。分支 tgmaster 用于跟踪上游的 Topgit 分支，以 t/ 开头的分支是我们对 Topgit 改进的特性分支，而 master 分支实际上是我们导出 Topgit 补丁文件并负责编译特定 Linux 平台发行包的分支。
+下面展示一下如何跟踪上游的最新改动，并迁移到新的上游版本。分支 tgmaster 用于跟踪上游的 Topgit 分支，以 t/ 开头的分支是对 Topgit 改进的特性分支，而 master 分支实际上是导出 Topgit 补丁文件并负责编译特定 Linux 平台发行包的分支。
 
-我们把官方的 Topgit 分支以 upstream 的名称加入为新的远程版本库。
+把官方的 Topgit 分支以 upstream 的名称加入为新的远程版本库。
 
 ::
 
   $ git remote add upstream git://repo.or.cz/topgit.git
 
-然后我们将 upstream 远程版本的 master 分支合并到本地的 tgmaster 分支。
+然后将 upstream 远程版本的 master 分支合并到本地的 tgmaster 分支。
 
 ::
 
@@ -867,7 +867,7 @@ Topgit hacks
   From git://repo.or.cz/topgit
      29ab4cf..8b0f1f9  master     -> tgmaster
 
-此时我们再执行 `tg summary` 会发现所有的 Topgit 分支都多了一个标记 `D` ，表明因为依赖分支的更新导致Topgit特性分支过时了。
+此时再执行 `tg summary` 会发现所有的 Topgit 分支都多了一个标记 `D` ，表明因为依赖分支的更新导致Topgit特性分支过时了。
 
 ::
 
@@ -881,7 +881,7 @@ Topgit hacks
     r D   t/tg_patch_cdup                 [PATCH] t/tg_patch_cdup
     r D   t/tg_push_all                   [PATCH] t/tg_push_all
 
-我们依次对各个分支执行 `tg update` ，完成对更新的依赖分支的合并。
+依次对各个分支执行 `tg update` ，完成对更新的依赖分支的合并。
 
 ::
 
@@ -902,7 +902,7 @@ Topgit hacks
     rL    t/tg_patch_cdup                 [PATCH] t/tg_patch_cdup
     rL    t/tg_push_all                   [PATCH] t/tg_push_all
 
-我们执行 `tg push --all` 就可以实现将所有 Topgit 特性分支推送到远程服务器上。当然需要具有提交权限才可以。
+执行 `tg push --all` 就可以实现将所有 Topgit 特性分支推送到远程服务器上。当然需要具有提交权限才可以。
 
 Topgit 使用中的注意事项
 ------------------------
@@ -947,7 +947,7 @@ Topgit 使用中的注意事项
     t/feature1
     t/feature2
 
-问题出在 `t/feature3` 依赖的其它分支已经依赖了 `master` 分支。虽然不会造成致命的影响，但是在特定情况下这种重复会造成不便。例如在 `master` 分支更新后，可能由于代码重构的比较厉害，在特性分支迁移时会造成冲突，如在 `t/feature1` 分支执行 `tg update` 会遇到冲突，当我们辛苦完成冲突解决并提交后，在 `t/feature3` 执行 `tg update` 时因为先依赖的是 `master` 分支，会先在 `master` 分支上对 `t/feature3` 分支进行变基，肯定会遇到和 `t/feature1` 相同的冲突，还要再重复的解决一次。
+问题出在 `t/feature3` 依赖的其它分支已经依赖了 `master` 分支。虽然不会造成致命的影响，但是在特定情况下这种重复会造成不便。例如在 `master` 分支更新后，可能由于代码重构的比较厉害，在特性分支迁移时会造成冲突，如在 `t/feature1` 分支执行 `tg update` 会遇到冲突，当辛苦完成冲突解决并提交后，在 `t/feature3` 执行 `tg update` 时因为先依赖的是 `master` 分支，会先在 `master` 分支上对 `t/feature3` 分支进行变基，肯定会遇到和 `t/feature1` 相同的冲突，还要再重复的解决一次。
 
 如果在 `.topdeps` 文件中将对 `master` 分支的重复的依赖删除，就不会出现上面的重复进行冲突解决的问题了。
 
@@ -962,7 +962,7 @@ Topgit 使用中的注意事项
 
 **Topgit 特性分支的里程碑和分支管理**
 
-我们知道 Topgit 本身就是对特性分支进行管理，即 Topgit 的某个时刻的开发状态是所有 Topgit 管理下的分支（包括跟踪分支）整体的状态。我们需要对 Topgit 所有相关的分支进行跟踪管理该如何实现呢？
+Topgit 本身就是对特性分支进行管理，即 Topgit 的某个时刻的开发状态是所有 Topgit 管理下的分支（包括跟踪分支）整体的状态。如果需要对 Topgit 所有相关的分支进行跟踪管理该如何实现呢？
 
 例如 master 主线由于提交了上游的新版本而改动，在对各个 Topgit 特性分支执行 `tg update` 时，搞的一团糟，而又不小心执行了 `tg push --all` ，这下无论本地和远程都处于混乱的状态。
 
