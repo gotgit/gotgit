@@ -557,8 +557,7 @@ Git diff 魔法
 搁置问题，暂存状态
 -------------------
 
-Git checkout 命令魔法
------------------------
+现在我们在工作区中查看一下状态。
 
 ::
 
@@ -577,90 +576,21 @@ Git checkout 命令魔法
   #       modified:   a/b/c/hello.txt
   #
 
-
-在前面我们清除工作区 `welcome.txt` 使用了 git checkout -- filemane.
-
-checkout 检出。如 checkout HEAD, checkout <tree-id>
-
-理解 HEAD 和 master
----------------------
-
-思考：将文件添加至暂存区的不同方式？
--------------------------------------
-
-git add filename
-
-git add dir
-
-git add .
-
-git add -u
-
-git add -A
-
-git rm file / git add -u
-
-git mv old new / git rm old / git add new / git add -A
-
-git add -i
-
-思考：如何撤销暂存区中的文件？
---------------------------------
-
-git reset HEAD
-
-git rm --cached file
-
-git rm --cached file; git co HEAD .; git add .
-
-
-备份本章的工作成果
--------------------
+在状态输出中 Git 体贴的告诉了我们如何将加入暂存区的文件从暂存区撤出以便让暂存区和 HEAD 一致（这样提交就不会发生），还告诉我们对于暂存区更新后工作区再次做出的修改有两个选择：或者再次添加到暂存区，或者取消工作区新做出的改动。但是涉及到的命令我们现在理解还有些难度，一个是 "git reset" 一个是 "git checkout"。我们需要先了解什么是 HEAD 以及 master 分支的实现机制，才可以更好的操作暂存区。为此，我作出一个不那么非常艰难的决定：就是保存当前的工作状态，在我们研究了 HEAD 和 master 分支的机制之后，在恢复当前的工作。
 
 ::
-
-  $ cd /my/workspace/demo
-  $ git st
-  # On branch master
-  # Changes to be committed:
-  #   (use "git reset HEAD <file>..." to unstage)
-  #
-  #       new file:   a/b/c/hello.txt
-  #       modified:   welcome.txt
-  #
-  # Changes not staged for commit:
-  #   (use "git add <file>..." to update what will be committed)
-  #   (use "git checkout -- <file>..." to discard changes in working directory)
-  #
-  #       modified:   a/b/c/hello.txt
-  #
 
   $ git stash
   Saved working directory and index state WIP on master: e695606 which version checked in?
   HEAD is now at e695606 which version checked in?
 
+运行完 "git stash" 之后，我们再查看工作区状态，我们会看见工作区尚未提交的改动（包括暂存区的改动）全都不见了。
+
+::
+
   $ git status
   # On branch master
   nothing to commit (working directory clean)
 
-执行下面的命令，算是备份一下我们这一章的工作成果。
-
-::
-
-  $ cd /my/workspace
-  $ git clone demo demo-step-2
-  Cloning into demo-step-2...
-  done.
-
-
-$ git pull ../demo refs/*:refs/*
-From ../demo
- * [new branch]      refs/stash -> refs/stash
-Already up-to-date with e695606fc5e31b2ff9038a48a3d363f4c21a3d86
-Fast-forwarding to: c1bd56e2565abd64a0d63450fe42aba23b673cf3
-Merge made by octopus.
- a/b/c/hello.txt |    2 ++
- welcome.txt     |    1 +
- 2 files changed, 3 insertions(+), 0 deletions(-)
- create mode 100644 a/b/c/hello.txt
+"I'll be back" ——  施瓦辛格, 《终结者》, 1984.
 
