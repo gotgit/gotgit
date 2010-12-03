@@ -262,7 +262,7 @@
 
   ::
 
-    $ git cat-file -p HEAD
+    $ git cat-file commit HEAD
     tree f58da9a820e3fd9d84ab2ca2f1b467ac265038f9
     parent a0c641e92b10d8bcca1ed1bf84ca80340fdefee6
     author Jiang Xin <jiangxin@ossxp.com> 1291022581 +0800
@@ -274,14 +274,14 @@
 
   ::
 
-    $ git cat-file -p HEAD | wc -c
+    $ git cat-file commit HEAD | wc -c
     234
 
 * 在提交信息的前面加上 "commit 234<null>" 的内容，然后执行 SHA1 哈希算法。
 
   ::
 
-    $ ( printf "commit 234\000"; git cat-file -p HEAD ) | sha1sum
+    $ ( printf "commit 234\000"; git cat-file commit HEAD ) | sha1sum
     e695606fc5e31b2ff9038a48a3d363f4c21a3d86  -
 
 * 上面命令得到的哈希值和用 "git rev-parse" 看到的是一样的。
@@ -297,7 +297,7 @@
 
   ::
 
-    $ git cat-file -p HEAD:welcome.txt 
+    $ git cat-file blob HEAD:welcome.txt 
     Hello.
     Nice to meet you.
 
@@ -305,14 +305,14 @@
 
   ::
 
-    $ git cat-file -p HEAD:welcome.txt | wc -c
+    $ git cat-file blob HEAD:welcome.txt | wc -c
     25
 
 * 在文件内容的前面加上 "blob 25<null>" 的内容，然后执行 SHA1 哈希算法。
 
   ::
 
-    $ ( printf "blob 25\000"; git cat-file -p HEAD:welcome.txt ) | sha1sum
+    $ ( printf "blob 25\000"; git cat-file blob HEAD:welcome.txt ) | sha1sum
     fd3c069c1de4f4bc9b15940f490aeb48852f3c42  -
 
 * 上面命令得到的哈希值和用 "git rev-parse" 看到的是一样的。
