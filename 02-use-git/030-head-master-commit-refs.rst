@@ -1,5 +1,5 @@
-实践三：什么是 HEAD 和 master ？
-********************************
+实践三：版本库对象探秘
+**********************
 
 在“实践二”中，学习了 Git 的一个最重要的概念：暂存区（stage, index）。暂存区是一个介于工作区和版本库的中间状态，当执行提交时实际上是将暂存区的内容提交到版本库中，而且 Git 很多命令都会涉及到暂存区的概念，例如: "git diff" 命令。但是“实践二”还是留下了很多疑惑，例如什么是 HEAD？什么是 master？为什么在“实践二”中它们二者可以相互替换使用？为什么 Git 中的很多对象像提交、树、文件内容等都用 40位的 SHA1 哈希值来表示？这一章的内容将会揭开这些奥秘，并且还会画出一个更为精确的版本库结构图。
 
@@ -224,32 +224,135 @@
 
 原来分支 master 指向的是一个提交ID（最新提交）。这样的分支实现是多么的巧妙啊，既然可以从任何提交开始建立一条历史跟踪链，那么用一个文件指向这个链条的最新提交，那么这个文件就可以用于追踪提交历史了。这个文件就是 ".git/refs/heads/master" 文件。
 
-对于一个分支可以用文件在 .git 目录下的相对路径，即 "refs/heads/master" 表示，也可以去掉前面的两级目录，用 "master" 来表示。所以下面的命令是等效的。
+下面看一个更接近于真实的版本库结构图：
+
+  .. figure:: images/gitbook/git-repos-detail.png
+     :scale: 100
+
+目录 ".git/refs" 是保存引用的命名空间，其中 ".git/refs/heads" 目录下的引用又称为分支。对于分支既可以使用正规的长格式的表示法，如 "refs/heads/master"，也可以去掉前面的两级目录用 "master" 来表示。Git 有一个底层命令 "git rev-parse" 可以用于显示引用对应的提交 ID。
 
 ::
 
-  $ git log --graph --pretty=oneline master
-  * e695606fc5e31b2ff9038a48a3d363f4c21a3d86 which version checked in?
-  * a0c641e92b10d8bcca1ed1bf84ca80340fdefee6 who does commit?
-  * 9e8a761ff9dd343a1380032884f488a2422c495a initialized.
-  $ git log --graph --pretty=oneline refs/heads/master
-  * e695606fc5e31b2ff9038a48a3d363f4c21a3d86 which version checked in?
-  * a0c641e92b10d8bcca1ed1bf84ca80340fdefee6 who does commit?
-  * 9e8a761ff9dd343a1380032884f488a2422c495a initialized.
+  $ git rev-parse master
+  e695606fc5e31b2ff9038a48a3d363f4c21a3d86
+  $ git rev-parse refs/heads/master
+  e695606fc5e31b2ff9038a48a3d363f4c21a3d86
+  $ git rev-parse HEAD
+  e695606fc5e31b2ff9038a48a3d363f4c21a3d86
 
-问题：提交ID为什么不用顺序的数字？
-=====================================
+问题：SHA1 哈希值到底是什么，如何生成的？
+==========================================
+
+哈希(hash)是一种散列算法，是信息安全领域当中重要的理论基石，该算法将任意长度的输入（从零到一千多万个TB）经过散列运算转换为固定长度的输出。固定长度的输出可以称为对应的输入的数字摘要或哈希值。例如两个不同内容的输入即使数据量非常大、差异非常小，两者的哈希值也会显著不同。比较著名的摘要算法有：MD5 和 SHA1。Linux 下 `sha1sum` 命令可以用于生成摘要。
+
+::
+
+  $ echo -n Git | sha1sum
+  5819778898df55e3a762f0c5728b457970d72cae  -
+
+可以看出字符串 "Git" 的 SHA1 哈希值为 40 个十六进制的数字组成。那么能不能找出另外一个字符串使其 SHA1 哈希值和上面的哈希值一样呢？下面看看难度有多大。
+
+每个十六进制的数字用于表示一个4位的二进制数字，因此此 SHA1 哈希值的输出为实为 160 bit。可以打一个比喻，要想制造相同的 SHA1 哈希值就相当于要选出32个“红色球”，每个红球有1到32个选择，而且红球之间可以重复。相比“双色球博彩”总共只需选出7颗球，要中奖的难度有多大！
+
+那么 Git 的提交、文件内容、目录树等对象（还有 Tag 对象）对应的 SHA1 哈希值是如何生成的呢？下面就来展示一下。
+
+提交的 SHA1 哈希值生成方法。
+
+* 看看 HEAD 对应的提交的内容。使用 "git cat-file" 命令。
+
+  ::
+
+    $ git cat-file -p HEAD
+    tree f58da9a820e3fd9d84ab2ca2f1b467ac265038f9
+    parent a0c641e92b10d8bcca1ed1bf84ca80340fdefee6
+    author Jiang Xin <jiangxin@ossxp.com> 1291022581 +0800
+    committer Jiang Xin <jiangxin@ossxp.com> 1291022581 +0800
+
+    which version checked in?
+
+* 提交信息中总共包含 234 个字符。
+
+  ::
+
+    $ git cat-file -p HEAD | wc -c
+    234
+
+* 在提交信息的前面加上 "commit 234<null>" 的内容，然后执行 SHA1 哈希算法。
+
+  ::
+
+    $ ( printf "commit 234\000"; git cat-file -p HEAD ) | sha1sum
+    e695606fc5e31b2ff9038a48a3d363f4c21a3d86  -
+
+* 上面命令得到的哈希值和用 "git rev-parse" 看到的是一样的。
+
+  ::
+
+    $ git rev-parse HEAD
+    e695606fc5e31b2ff9038a48a3d363f4c21a3d86
+
+文件内容的哈希值生成方法。
+
+* 看看版本库中 welcome.txt 的内容。使用 "git cat-file" 命令。
+
+  ::
+
+    $ git cat-file -p HEAD:welcome.txt 
+    Hello.
+    Nice to meet you.
+
+* 文件总共包含 25 字节的内容。
+
+  ::
+
+    $ git cat-file -p HEAD:welcome.txt | wc -c
+    25
+
+* 在文件内容的前面加上 "blob 25<null>" 的内容，然后执行 SHA1 哈希算法。
+
+  ::
+
+    $ ( printf "blob 25\000"; git cat-file -p HEAD:welcome.txt ) | sha1sum
+    fd3c069c1de4f4bc9b15940f490aeb48852f3c42  -
+
+* 上面命令得到的哈希值和用 "git rev-parse" 看到的是一样的。
+
+  ::
+
+    $ git rev-parse HEAD:welcome.txt
+    fd3c069c1de4f4bc9b15940f490aeb48852f3c42
+
+对于树的 SHA1 哈希值的形成方法也非常类似。
+
+* HEAD 对应的树的内容共包含 39 个字节。
+
+  ::
+
+    $ git cat-file tree HEAD^{tree} | wc -c
+    39
+
+* 在树的内容的前面加上 "tree 39<null>" 的内容，然后执行 SHA1 哈希算法。
+
+  ::
+
+    $ ( printf "tree 39\000"; git cat-file tree HEAD^{tree} ) | sha1sum
+    f58da9a820e3fd9d84ab2ca2f1b467ac265038f9  -
+
+* 上面命令得到的哈希值和用 "git rev-parse" 看到的是一样的。
+
+  ::
+
+    $ git rev-parse HEAD^{tree}
+    f58da9a820e3fd9d84ab2ca2f1b467ac265038f9
+
+在后面学习 Tag 的时候，会看到注释Tag也是采用类似方法在对象库中存储的。
+
+问题：为什么不用顺序的数字来表示提交？
+========================================
+
+Subversion, Hg, Git
 
 
-问题：SHA1 哈希值是如何生成的？
-=====================================
 
-
-一个更细致的版本库结构图
-=============================
-
-
-
-
-HEAD 指向是可变的么？ master 分支的指向是可变的么？这两个问题我们分别在下两个章节介绍。
+HEAD 指向是可变的么？ master 分支的指向是可变的么？这两个问题分别在下两个章节介绍。
 
