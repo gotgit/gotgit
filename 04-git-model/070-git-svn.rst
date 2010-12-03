@@ -1,5 +1,5 @@
 Git 和 SVN 协同模型
-===================
+*******************
 
 在Git 协同模型部分的最后，将会在另外的一个角度上看 Git 版本库的协同。不是不同的用户在使用 Git 版本库时如何协同，也不是一个项目包含多个 Git 版本库时如何协同，而是当版本控制系统不是 Git （如 Subversion）时，如何能够继续使用 Git 的方式进行操作。
 
@@ -90,7 +90,7 @@ Git-svn 作为 Git 软件包的一部分，当 Git 从源码包进行安装时�
 
 
 使用 git-svn 的一般流程
-------------------------
+========================
 
 使用 git-svn 的一般流程为:
 
@@ -410,14 +410,14 @@ Git-svn 作为 Git 软件包的一部分，当 Git 从源码包进行安装时�
       git-svn-id: file:///path/to/svn/repos/trunk@6 f79726c4-f016-41bd-acd5-6c9acb7664b2
 
 git-svn 的奥秘
---------------
+==============
 
 通过上面对 git-svn 的工作流程的介绍，相信读者已经能够体会到 git-svn 的强大。那么 git-svn 是怎么做到的呢？
 
 Git-svn 只是在本地 Git 库中增加了一些附加的设置，特殊的引用，和引入附加的可重建的数据库实现对 Subversion 版本库的跟踪。
 
 Git 库配置文件的扩展及分支映射
-++++++++++++++++++++++++++++++
+------------------------------
 
 当执行 `git svn init` 或者 `git svn clone` 时，git-svn 会通过在 Git 库的配置文件中增加一个小节，记录 Subversion 版本库的URL，以及 Subversion 分支/里程碑和本地 Git 库的引用之间的对应关系。
 
@@ -460,7 +460,7 @@ Git 库配置文件的扩展及分支映射
 可以看到 Subversion 的主线和分支缺省都直接被映射到 `refs/remotes/` 下。如 trunk 主线对应于 `refs/remotes/trunk` ，分支 demo-1.0 对应于 `refs/remotes/demo-1.0` 。Subversion 的里程碑因为有可能和分支同名，因此被映射到 `refs/remotes/tags/` 之下，这样就里程碑和分支的映射放到不同目录下，不会互相影响。
 
 Git 工作分支和 Subversion 如何对应？
-++++++++++++++++++++++++++++++++++++
+------------------------------------
 
 Git 缺省工作的分支是 master，而看到上例中的 Subversion 主线在 Git 中对应的远程分支为 `refs/remotes/trunk` 。那么在执行 `git svn rebase` 时，git-svn 是如何知道当前的 HEAD 对应的分支基于哪个 Subversion 跟踪分支进行变基？还有就是执行 `git svn dcommit` 时，当前的工作分支应该将改动推送到哪个 Subversion 分支中去呢？
 
@@ -557,7 +557,7 @@ Git 缺省工作的分支是 master，而看到上例中的 Subversion 主线在
   Resetting to the latest refs/remotes/demo-1.0
 
 其它辅助文件
-+++++++++++++
+-------------
 
 在 Git 版本库中，git-svn 在 `.git/svn` 目录下保存了一些索引文件，便于 git-svn 更加快速的执行。
 
@@ -578,7 +578,7 @@ Git 缺省工作的分支是 master，而看到上例中的 Subversion 主线在
 目录 `.git/svn` 的辅助文件由 git-svn 维护，不要手工修改否则会造成 git-svn 不能正常工作。
  
 多样的 git-svn 克隆模式
-------------------------
+========================
 
 在前面的 git-svn 示例中，使用 `git svn clone` 命令完成对远程版本库的克隆，实际上 `git svn clone` 相当于两条命令，即：
 
@@ -701,7 +701,7 @@ Git 缺省工作的分支是 master，而看到上例中的 Subversion 主线在
   
 
 共享 git-svn 的克隆库
----------------------
+=====================
 
 当一个 Subversion 版本库非常庞大而且和不在同一个局域网内，执行 `git svn clone` 可能需要花费很多时间。为了避免因重复执行 `git svn clone` 导致时间上的浪费，可以将一个已经使用 git-svn 克隆出来的 Git 库共享，其他人基于此 Git 进行克隆，然后再用特殊的方法重建和 Subversion 的关联。还记得之前提到过，`.git/svn` 目录下的辅助文件可以重建么？
 
@@ -778,7 +778,7 @@ Git 缺省工作的分支是 master，而看到上例中的 Subversion 主线在
 至此，从 git-svn 克隆库二次克隆的 Git 库，已经和原生的 git-svn 库一样使用 git-svn 命令了。
 
 git-svn 的局限
---------------
+==============
 
 Subversion 和 Git 的分支实现有着巨大的不同。Subversion 的分支和里程碑，是用轻量级拷贝实现的，虽然创建分支和里程碑的速度也很快，但是很难维护。即使 Subversion 在 1.5 之后引入了 `svn:mergeinfo` 属性对合并过程进行标记，但是也不可能让 Subversion 的分支逻辑更清晰。git-svn 无须利用 svn:mergeinfo 属性也可实现对 Subversion 合并的追踪，在合并的时候也不会对 svn:mergeinfo 属性进行更改，因此在使用 git-svn 操作时，如果在不同分支间进行合并，会导致 Subversion 的 svn:mergeinfo 属性没有相应的更新，导致 Subversion 用户进行合并时因为重复合并导致冲突。
 

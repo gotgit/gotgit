@@ -1,5 +1,5 @@
 Gitosis 服务架设
-==================
+******************
 
 Gitosis 是 Gitolite 的鼻祖，同样也是一款基于SSH公钥认证的 Git 服务管理工具，但是功能要比之前介绍的 Gitolite 要弱的多。Gitosis 由 Python 语言开发，对于偏爱 Python 不喜欢 Perl 的开发者（我就是其中之一），可以对 Gitosis 加以关注。
 
@@ -55,7 +55,7 @@ Gitosis 因为是 Gitolite 的鼻祖，因此下面的 Gitosis 实现机理，�
 
 
 安装 Gitosis
---------------
+==============
 
 Gitosis 的部署和使用可以直接参考源代码中的 README.rst 。可以直接访问 Github 上我的 gitosis 克隆，因为 Github 能够直接将 rst 文件显示为网页。
 
@@ -64,7 +64,7 @@ Gitosis 的部署和使用可以直接参考源代码中的 README.rst 。可以
   http://github.com/ossxp-com/gitosis/blob/master/README.rst
 
 Gitosis 的安装
-++++++++++++++
+--------------
 
 Gitosis 安装需要在服务器端执行。下面介绍直接从源代码进行安装，以便获得最新的改进。
 
@@ -93,7 +93,7 @@ Gitosis 的官方 Git 库位于 git://eagain.net/gitosis.git。我在 Github 上
     /usr/local/bin/gitosis-init  /usr/local/bin/gitosis-run-hook  /usr/local/bin/gitosis-serve
 
 服务器端创建专用帐号
-++++++++++++++++++++
+--------------------
 
 安装 Gitosis，还需要在服务器端创建专用帐号，所有用户都通过此帐号访问 Git 库。一般为方便易记，选择 git 作为专用帐号名称。
 
@@ -110,7 +110,7 @@ Gitosis 的官方 Git 库位于 git://eagain.net/gitosis.git。我在 Github 上
   $ sudo adduser git ssh
 
 Gitosis 服务初始化
-++++++++++++++++++
+------------------
 
 Gitosis 服务初始化，就是初始化一个 gitosis-admin 库，并为管理员分配权限，还要将 Gitosis 管理员的公钥添加到专用帐号的 `~/.ssh/authorized_keys` 文件中。
 
@@ -140,10 +140,10 @@ Gitosis 服务初始化，就是初始化一个 gitosis-admin 库，并为管理
     $ sudo chmod a+x ~git/repositories/gitosis-admin.git/hooks/post-update
 
 管理 Gitosis
---------------
+==============
 
 管理员克隆 gitolit-admin 管理库
-++++++++++++++++++++++++++++++++
+--------------------------------
 
 当 gitosis 安装完成后，在服务器端自动创建了一个用于 gitosis 自身管理的 git 库: gitosis-admin.git 。
 
@@ -193,7 +193,7 @@ Gitosis 服务初始化，就是初始化一个 gitosis-admin 库，并为管理
     这里配置对 gitosis-admin 版本库具有写操作。写操作自动包含了读操作。
 
 增加新用户
-++++++++++
+----------
 增加新用户，就是允许新用户能够通过其公钥访问 Git 服务。只要将新用户的公钥添加到 gitosis-admin 版本库的 keydir 目录下，即完成新用户的添加。
 
 * 管理员从用户获取公钥，并将公钥按照 username.pub 格式进行重命名。
@@ -260,7 +260,7 @@ Gitosis 服务初始化，就是初始化一个 gitosis-admin 库，并为管理
 
 
 更改授权
-+++++++++
+---------
 
 新用户添加完毕，可能需要重新进行授权。更改授权的方法也非常简单，即修改 gitosis.conf 配置文件，提交并 PUSH 。 
 
@@ -321,10 +321,10 @@ Gitosis 服务初始化，就是初始化一个 gitosis-admin 库，并为管理
     $ git push
   
 Gitosis 授权详解
------------------
+=================
 
 Gitosis 缺省设置
-+++++++++++++++++
+-----------------
 
 在 [gitosis] 小节中定义 Gitosis 的缺省设置。如下：
 
@@ -359,7 +359,7 @@ Gitosis 缺省设置
 
 
 管理版本库 gitosis-admin
-+++++++++++++++++++++++++
+-------------------------
 
 ::
 
@@ -374,7 +374,7 @@ Gitosis 缺省设置
 
 
 定义用户组和授权
-+++++++++++++++++
+-----------------
 
 下面的两个示例小节定义了两个用户组，并且用到了路径变换的指令。
 
@@ -432,7 +432,7 @@ Gitosis 缺省设置
 * 第18行，设置版本库的根路径为 /gitroot，而非缺省的版本库根路径。
 
 Gitweb 整合
-+++++++++++
+-----------
 
 Gitosis 和 Gitweb 的整合，提供了两个方面的内容。一个是可以设置版本库的描述信息，用于在 gitweb 的项目列表页面显示。另外一个是自动生成项目的列表文件供 Gitweb 参卡，避免 Gitweb 使用效率低的目录递归搜索查找 Git 版本库列表。
 
@@ -460,7 +460,7 @@ Gitosis 和 Gitweb 的整合，提供了两个方面的内容。一个是可以�
 
 
 创建新版本库
--------------
+=============
 
 Gitosis 维护的版本库位于安装用户主目录下的 repositories 目录中，即如果安装用户为 `git` ，则版本库都创建在 /home/git/repositories 目录之下。可以通过配置文件 gitosis.conf 修改缺省的版本库的根路径。
 
@@ -499,7 +499,7 @@ Gitosis 维护的版本库位于安装用户主目录下的 repositories 目录�
 
 
 轻量级管理的 Git 服务
----------------------
+=====================
 
 轻量级管理的含义是不采用缺省的稍显复杂的管理模式（远程克隆 gitosis-admin 库，修改并 PUSH 的管理模式），而是直接在服务器端通过预先定制的配置文件提供 Git 服务。这种轻量级管理模式，对于为某些应用建立快速的 Git 库服务提供了便利。
 

@@ -1,5 +1,5 @@
 Gitweb
-=======
+*******
 
 Gitweb 本身不能提供 Git 版本库的读写服务。Gitweb 是用 Perl 语言开发的 CGI 脚本，只是一个提供 Git 版本库的 Web 浏览工具。
 
@@ -11,7 +11,7 @@ Gitweb 支持多个版本库，可以对版本库进行目录浏览（包括历�
    Gitweb 界面(kernel.org)
 
 Gitweb 安装
------------
+===========
 各个 Linux 平台都会提供 gitweb 软件包。如在 Debian/Ubuntu 上安装 Gitweb：
 
 ::
@@ -33,7 +33,7 @@ Gitweb 安装
   图片和 css 等。
 
 Gitweb 配置
------------
+===========
 
 编辑 `/etc/gitweb.conf` ，更改 gitweb 的缺省设置。
 
@@ -130,7 +130,7 @@ Gitweb 配置
 
 
 版本库的 gitweb 相关设置
--------------------------
+=========================
 
 可以通过 Git 版本库下的配置文件，定制版本库在 gitweb 下的显示。
 
