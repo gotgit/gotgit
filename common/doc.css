@@ -144,3 +144,29 @@ td img{border:0;margin:0;}
 p img{border:0;margin:0;margin-bottom:-5px;}
 hr{color:#b4aca1;background-color:#b4aca1;border-bottom:1px solid #f6f4eb;}
 small{font-size:80%;}
+
+/* section */
+
+/*
+body{counter-reset: section}
+h2{counter-reset: sub-section}
+h3{counter-reset: composite}
+h4{counter-reset: detail}
+
+h2:before{
+  counter-increment: section;
+  content: "第 " counter(section) " 章";
+}
+h3:before{
+  counter-increment: sub-section;
+  content: counter(section) "." counter(sub-section) " ";
+}
+h4:before{
+  counter-increment: composite;
+  content: counter(section) "." counter(sub-section) "." counter(composite) " ";
+}
+h5:before{
+  counter-increment: detail;
+  content: counter(section) "." counter(sub-section) "." counter(composite) "." counter(detail) " ";
+}
+*/
