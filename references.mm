@@ -2373,15 +2373,15 @@
 	TEXT="reset HEAD 是什么含义？">
 <font NAME="Serif" SIZE="14"/>
 </node>
-<node COLOR="#990000" ID="ID_31944918" 
-	TEXT="reset 之后 commit 是什么概念？ 什么叫做 detached HEAD">
-<font NAME="Serif" SIZE="14"/>
-</node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_801394658" 
 	TEXT="Step 5: checkout 命令">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_31944918" 
+	TEXT="reset 之后 commit 是什么概念？ 什么叫做 detached HEAD">
+<font NAME="Serif" SIZE="14"/>
+</node>
 <node COLOR="#990000" ID="ID_1842203629" 
 	TEXT="svn 的 checkout, update, ...">
 <font NAME="Serif" SIZE="14"/>
