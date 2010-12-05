@@ -2442,91 +2442,8 @@
 </node>
 </node>
 </node>
-<node COLOR="#00b439" FOLDED="true" ID="ID_1912771033" 
-	TEXT="Step 7: 两个相同的大文件，以及版本库的整理">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
-<node COLOR="#990000" FOLDED="true" ID="ID_376643602" 
-	TEXT="Git 库一定会比工作区大么？">
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_641031184" 
-	TEXT="这个章节的题目可能有问题。你可能会说前几次提交由于版本库的文件压缩存储肯定要小，但长久来看是要大。">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1465126220" 
-	TEXT="我做一个颠覆你相像的操作。">
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_910190138" 
-	TEXT="一个大文件加入版本库">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1702602234" 
-	TEXT="多个大文件加入版本库">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1424592507" 
-	TEXT="Git 库的文件大小">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#990000" ID="ID_994560929" 
-	TEXT="文件删除再添加，版本库如何变化呢？">
-<font NAME="Serif" SIZE="14"/>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_181884990" 
-	TEXT="这是为什么呢？">
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_1185169170" 
-	TEXT="Git 是对内容进行跟踪，而非文件"/>
-<node COLOR="#111111" ID="ID_773514279" 
-	TEXT="不同文件只要内容相同，Git 库中的存储就是一个样"/>
-</node>
-<node COLOR="#990000" ID="ID_676573676" 
-	TEXT="如何彻底清除版本库/版本库瘦身？">
-<font NAME="Serif" SIZE="14"/>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1148228648" 
-	TEXT="版本库管理">
-<edge STYLE="sharp_bezier" WIDTH="8"/>
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_328071214" 
-	TEXT="git gc">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_182713492" 
-	TEXT="多长时间整理一次?">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_358793755" 
-	TEXT="是否需要设置 gc.auto?">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_660180163" 
-	TEXT="$ git config --global gc.auto 1"/>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1731754977" 
-	TEXT="git fsck 可以查看哪些 blob 没有被引用">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_640289668" 
-	TEXT="$ git fsck&#xa;dangling tree 8276318347b8e971733ca5fab77c8f5018c75261&#xa;dangling blob 2302a5a4baec369fb631bb89cfe287cc002dc049&#xa;dangling blob cb54512d0a989dcfb2d78a7f3c8909f76ad2326a&#xa;dangling tree 8e1088e1cc1bc67e0ef01e018707dcb07a2a562b&#xa;dangling blob 5e069ed35afae29015b6622fe715c0aee10112ad&#xa;">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_957665703" 
-	TEXT="git prune 可以删除没有用的文件">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_316957658" 
-	TEXT="$ git prune -n&#xa;2302a5a4baec369fb631bb89cfe287cc002dc049&#xa;5e069ed35afae29015b6622fe715c0aee10112ad&#xa;8276318347b8e971733ca5fab77c8f5018c75261&#xa;8e1088e1cc1bc67e0ef01e018707dcb07a2a562b&#xa;cb54512d0a989dcfb2d78a7f3c8909f76ad2326a&#xa;$ git prune&#xa;$ git fsck&#xa;$&#xa;blob&#xa;blob&#xa;tree&#xa;tree&#xa;blob&#xa;">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-</node>
-</node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1784330953" 
-	TEXT="Step 8: 工作区的更多操作：修改/添加/删除/文件忽略">
+	TEXT="Step 7: 工作区的更多操作：修改/添加/删除/文件忽略">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" ID="ID_1312613104" 
@@ -2676,7 +2593,7 @@
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_840803921" 
-	TEXT="Step 9: 历史穿梭">
+	TEXT="Step 8: 历史穿梭">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" FOLDED="true" ID="ID_1859556690" 
@@ -2946,7 +2863,7 @@
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1070000573" 
-	TEXT="Step 10: 反删除和恢复">
+	TEXT="Step 9: 反删除和恢复">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" ID="ID_821734512" 
@@ -2963,7 +2880,7 @@
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1579959370" 
-	TEXT="Step 11: 改变历史">
+	TEXT="Step 10: 改变历史">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" ID="ID_59318503" 
@@ -3271,7 +3188,7 @@
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1780915744" 
-	TEXT="Step 12: 不要将鸡蛋放在一个篮子里（git push）">
+	TEXT="Step 11: 不要将鸡蛋放在一个篮子里（git push）">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" ID="ID_1937427093" 
@@ -3325,6 +3242,89 @@
 	TEXT="U盘的 Push">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1912771033" 
+	TEXT="Step 12: 两个相同的大文件，以及版本库的整理">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_376643602" 
+	TEXT="Git 库一定会比工作区大么？">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_641031184" 
+	TEXT="这个章节的题目可能有问题。你可能会说前几次提交由于版本库的文件压缩存储肯定要小，但长久来看是要大。">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1465126220" 
+	TEXT="我做一个颠覆你相像的操作。">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_910190138" 
+	TEXT="一个大文件加入版本库">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1702602234" 
+	TEXT="多个大文件加入版本库">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1424592507" 
+	TEXT="Git 库的文件大小">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" ID="ID_994560929" 
+	TEXT="文件删除再添加，版本库如何变化呢？">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_181884990" 
+	TEXT="这是为什么呢？">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1185169170" 
+	TEXT="Git 是对内容进行跟踪，而非文件"/>
+<node COLOR="#111111" ID="ID_773514279" 
+	TEXT="不同文件只要内容相同，Git 库中的存储就是一个样"/>
+</node>
+<node COLOR="#990000" ID="ID_676573676" 
+	TEXT="如何彻底清除版本库/版本库瘦身？">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1148228648" 
+	TEXT="版本库管理">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_328071214" 
+	TEXT="git gc">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_182713492" 
+	TEXT="多长时间整理一次?">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_358793755" 
+	TEXT="是否需要设置 gc.auto?">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_660180163" 
+	TEXT="$ git config --global gc.auto 1"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1731754977" 
+	TEXT="git fsck 可以查看哪些 blob 没有被引用">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_640289668" 
+	TEXT="$ git fsck&#xa;dangling tree 8276318347b8e971733ca5fab77c8f5018c75261&#xa;dangling blob 2302a5a4baec369fb631bb89cfe287cc002dc049&#xa;dangling blob cb54512d0a989dcfb2d78a7f3c8909f76ad2326a&#xa;dangling tree 8e1088e1cc1bc67e0ef01e018707dcb07a2a562b&#xa;dangling blob 5e069ed35afae29015b6622fe715c0aee10112ad&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_957665703" 
+	TEXT="git prune 可以删除没有用的文件">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_316957658" 
+	TEXT="$ git prune -n&#xa;2302a5a4baec369fb631bb89cfe287cc002dc049&#xa;5e069ed35afae29015b6622fe715c0aee10112ad&#xa;8276318347b8e971733ca5fab77c8f5018c75261&#xa;8e1088e1cc1bc67e0ef01e018707dcb07a2a562b&#xa;cb54512d0a989dcfb2d78a7f3c8909f76ad2326a&#xa;$ git prune&#xa;$ git fsck&#xa;$&#xa;blob&#xa;blob&#xa;tree&#xa;tree&#xa;blob&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1348857825" 

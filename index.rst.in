@@ -53,12 +53,12 @@
 .. include:: ./02-use-git/040-git-reset.rst
 .. include:: ./02-use-git/050-git-checkout.rst
 .. include:: ./02-use-git/060-git-stage-n-stash.rst
-.. include:: ./02-use-git/070-git-storage.rst
-.. include:: ./02-use-git/080-git-basic.rst
-.. include:: ./02-use-git/090-git-history-travel.rst
-.. include:: ./02-use-git/100-revert-rollback.rst
-.. include:: ./02-use-git/110-change-history.rst
-.. include:: ./02-use-git/120-git-pull-push.rst
+.. include:: ./02-use-git/070-git-basic.rst
+.. include:: ./02-use-git/080-git-history-travel.rst
+.. include:: ./02-use-git/090-revert-rollback.rst
+.. include:: ./02-use-git/100-change-history.rst
+.. include:: ./02-use-git/110-git-clone.rst
+.. include:: ./02-use-git/120-git-admin.rst
 
 第 3 篇: Git进阶
 ##################
