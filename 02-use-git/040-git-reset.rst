@@ -185,19 +185,21 @@ Git 提供了一个 "git reflog" 命令，对这个文件进行操作。使用 s
 
 ::
 
-  git reset [-q] [<commit>] [--] <paths>...
-  git reset [--soft | --mixed | --hard | --merge | --keep] [-q] [<commit>]
+  用法一： git reset [-q] [<commit>] [--] <paths>...
+  用法二： git reset [--soft | --mixed | --hard | --merge | --keep] [-q] [<commit>]
 
 上面列出了两个用法，其中 <commit> 都是可选项，可以使用引用或者提交ID，如果省略 <commit> 则相当于使用了 HEAD 的指向作为提交ID。
 
-上面列出的两种用法的区别在于，第一种用法在命令中包含路径 <paths>，为了避免路径和引用（或者提交ID）同名而冲突，可以在 <paths> 前用两个连续的短线（减号）作为分隔。
+上面列出的两种用法的区别在于，第一种用法在命令中包含路径 `<paths>` 。为了避免路径和引用（或者提交ID）同名而冲突，可以在 `<paths>` 前用两个连续的短线（减号）作为分隔。
 
-第一种 git reset 用法不会重置引用，更不会改变工作区，而是将指定提交状态下的文件替换掉暂存区中的文件。例如命令 "git reset HEAD <paths>" 相当于取消之前执行的 "git add <paths>" 命令。
+第一种用法不会重置引用，更不会改变工作区，而是用指定提交状态（<commit>）下的文件（<paths>）替换掉暂存区中的文件。例如命令 "`git reset HEAD <paths>`" 相当于取消之前执行的 `git add <paths>` 命令时改变的暂存区。
 
-第二种 git reset 用法则会重置引用，根据选项的不同可能会对暂存区和工作区进行重置。参照下面的版本库模型图，介绍一下不同参数对第二种 git reset 用法的影响。
+第二种 git reset 用法则会 **重置引用** 。根据不同的选项，可以对暂存区或者工作区进行重置。参照下面的版本库模型图，来看一看不同的参数对第二种重置语法的影响。
 
   .. figure:: images/gitbook/git-reset.png
      :scale: 80
+
+命令格式: git reset [--soft | --mixed | --hard ] [<commit>]
 
 * 使用参数 "--hard"，如: `git reset --hard <commit>` 。
 
@@ -215,19 +217,44 @@ Git 提供了一个 "git reflog" 命令，对这个文件进行操作。使用 s
 
   会执行上图中的操作1和操作2。即更改引用的指向以及重置暂存区，但是不改变工作区。
 
+下面通过一些示例，看一下重置命令的不同用法。
 
+* 命令: git reset
 
+  仅将暂存区重置，相当于将之前用 "git add" 命令更新到暂存区的内容撤出暂存区。工作区不会受到影响，引用也未改变，因为引用重置到 HEAD 相当于没有重置。
 
-思考：重置命令除了 `--hard` 还有其他参数么？
-=============================================
+* 命令: git reset HEAD
 
+  同上。
 
-如果历史提交没有其他的分支引用或者用标签标记（分支和标签留在后面单独介绍），
+* 命令: git reset -- filename
 
-7天。版本库没有整理。
+  仅将文件 `filename` 撤出暂存区，暂存区中其他文件不改变。相当于对命令 "git add filename" 的反向操作。
 
-历史提交看不到 id，也没有其他分支和标签标记。
+* 命令: git reset HEAD filename
 
-reflog
+  同上。
 
+* 命令: git reset --soft HEAD^
+
+  工作区和暂存区不改变，但是引用向前回退一次。当对最新提交的提交说明或者提交的更改不满意时，撤销最新的提交以便重新提交。
+
+  在之前曾经出现过一个命令 "git commit --amend" 用于对最新的提交重新提交一次以便对提交说明或者提交内容进行修改。其实相当于执行了下面的命令。（.git/COMMIT_EDITMSG 保存了上次的提交日志）
+
+  ::
+  
+    $ git reset --soft HEAD^
+    $ git commit -e -F .git/COMMIT_EDITMSG 
+
+* 命令: git reset HEAD^
+
+  工作区不改变，但是暂存区会回退到上一次提交之前，引用也会回退一次。
+
+* 命令: git reset --mixed HEAD^
+
+  同上。
+
+* 命令: git reset --hard HEAD^
+
+  彻底撤销最近的提交。引用回退到前一次，而且工作区和暂存区都会回退到上一次提交的状态。自上一次以来的提交全部丢失。
 
