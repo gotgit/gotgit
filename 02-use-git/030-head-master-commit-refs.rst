@@ -214,6 +214,7 @@ Git 对象
   :: 
 
     $ git cat-file -t e695606
+    commit
 
 * 显示 SHA1-ID 的内容。
 
