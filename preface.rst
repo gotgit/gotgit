@@ -25,7 +25,7 @@
 
 * MoinMoin 是我们关注的一个开源的维基软件，2006 年，它由 Subversion 迁移到 Mercurial/Hg 做版本控制系统。 [#]_
 * Mailman 同样是我们关注的一个开源邮件列表软件。2007 年，它的代码从 Subversion 迁移到 Bazaar。 [#]_
-* Linux 采用的 Git 做版本控制系统（一点都不奇怪，因为Git就是 Linus Tolvals 开发的）。
+* Linux 采用 Git 做版本控制系统（一点都不奇怪，因为Git就是 Linus Tolvals 开发的）。
 
   最酷的是，使用 Git 克隆整个 Linux 的源码库，只要花上几十分钟（1M带宽），就可以获得全部（2.2 之后）的 Linux 版本，可以随心所欲的通过本地检出、编译切换到任何版本的内核，而新版本内核出来后，也不必下载内核压缩包，只要更新 Git 库(git pull)，新内核的源码包括之间修改历史全部呈现眼前。
 
