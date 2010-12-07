@@ -76,7 +76,7 @@ Git 基本操作（实践七）
 
 ::
 
-  $ git ls-files
+  $ ls
   detached-commit.txt
   hack-1.txt
   new-commit.txt
