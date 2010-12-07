@@ -1,15 +1,12 @@
-Git 基本操作
-************
+Git 基本操作（实践七）
+**********************
 
 之前的实践选取的示例都非常简单，基本上都是增加和修改文本文件，而现实情况要复杂的多，需要应对各种情况：文件删除，文件复制，文件移动，目录的组织，二进制文件，误删文件的恢复等等。本章会将工作区常用的操作一网打尽。
-
-实践七：基本Git操作和文件忽略
-==============================
 
 本次实践要用一个更为真实的例子：用版本库来维护代码。首先会删除之前历次实践在版本库中留下的“垃圾”数据，然后再在其中创建一些真实的代码，并对其进行版本控制。
 
 先来合个影
-----------
+==========
 
 马上就要和之前实践遗留的数据告别了，告别之前是不是要留个影呢？在 Git 里，“留影”用的命令叫做 `tag` ，更加专业的术语叫做“里程碑”（打tag，或打标签）。
 
@@ -36,7 +33,7 @@ Git 基本操作
   old_practice
 
 删除文件
---------
+========
 
 看看版本库当前的状态，暂存区和工作区都包含修改。
 
@@ -68,7 +65,7 @@ Git 基本操作
   #
 
 本地删除不是真的删除
-^^^^^^^^^^^^^^^^^^^^
+--------------------
 
 当前工作区的文件有：
 
@@ -120,7 +117,7 @@ Git 基本操作
 从Git状态输出可以看出，本地删除如果要反映在暂存区中应该用 `git rm` 命令，对于不想删除的文件执行 `git checkout -- <file>` 可以让文件在工作区重现。
 
 执行 git rm 命令删除文件
-^^^^^^^^^^^^^^^^^^^^^^^^
+------------------------
 
 好吧，按照上面状态输出的内容，将所有的文本文件删除。执行下面的命令。
 
@@ -175,7 +172,7 @@ Git 基本操作
   Nice to meet you.
 
 命令 git add -u 快速标记删除
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+----------------------------
 
 在前面执行 `git rm` 命令时，一一写下了所有要删除的文件名，好长的命令啊！能不能简化些？实际上 `git add` 可以，即使用 "-u" 参数调用 "git add" 命令，含义是将本地有改动（包括添加和删除）的文件标记为删除。为了重现刚才的场景，先使用重置命令抛弃最新的提交，再使用进度恢复到之前的状态。
 
@@ -235,7 +232,7 @@ Git 基本操作
    delete mode 100644 welcome.txt
 
 移动文件
---------
+========
 
 经过了上面的文件删除，工作区已经没有文件了。为了说明文件移动，现在恢复一个删除的文件。前面已经说过执行了文件删除并提交，只是在最新的提交中删除了文件，历史提交中文件仍然保留，可以从历史提交中提取文件。执行下面的命令可以从历史（前一次提交）中恢复 `welcome.txt` 文件。
 
@@ -287,7 +284,7 @@ $ git mv welcome.txt README
    1 files changed, 0 insertions(+), 0 deletions(-)
    rename welcome.txt => README (100%)
 
-**可以不同 git mv 命令实现改名**
+**可以不用 git mv 命令实现改名**
 
 从提交日志中的文件相似度百分比可以看出 Git 的改名实际上源自于 Git 对文件追踪的强大支持（文件内容作为 blob 对象保存在对象库中）。改名操作实际上相当于对旧文件执行删除，对新文件执行添加，即完全可以不使用 `git mv` 操作，而是代之以 `git rm` 和一个 `git add` 操作。
 
@@ -363,9 +360,9 @@ $ git mv welcome.txt README
   7161977 delete trash files. (using: git add -u)
   2b31c19 (tag: old_practice) Merge commit 'acc2f69'
 
-Git 的这个功能非常有用，将 `git describe` 输出的版本号作为软件的版本号，就可以将发布的软件包版本和版本库中的代码对应在一起，当发现软件包包含 Bug 时，可以最快、最准确的对应到代码上。下面就做个示范，放在代码库中。
+Git 的这个功能非常有用，将 `git describe` 输出的版本号作为软件的版本号，就可以将发布的软件包版本和版本库中的代码对应在一起，当发现软件包包含 Bug 时，可以最快、最准确的对应到代码上。
 
-创建目录 src，并在 src 目录下创建下面的三个文件：
+下面的 Hello World 程序就实现了这个功能。创建目录 src，并在 src 目录下创建下面的三个文件：
 
 * 文件: src/main.c
 
@@ -441,18 +438,345 @@ Git 的这个功能非常有用，将 `git describe` 输出的版本号作为软
   Hello, world.
   version: old_practice-3-gc024f34.
 
-执行 git add -i 选择性添加
+使用 git add -i 选择性添加
 =============================
 
+刚刚创建的 Hello World 程序还没有添加到版本库中，在 src 目录下有下列文件：
+
+::
+
+  $ cd /my/workspace/demo
+  $ ls src
+  hello  main.c  main.o  Makefile  version.h  version.h.in
+
+这些文件中 hello, main.o 和 version.h 都是在编译时生成的程序，不应该加入到版本库中。那么选择性添加文件除了针对文件逐一使用 "git add" 命令外，还有什么办法么？通过使用 "-i" 参数调用 `git add` 就是一个办法，提供了一个交互式的界面。
+
+执行 `git add -i` 命令，进入一个交互式界面，首先显示的是工作区状态。显然因为版本库进行了清理，所以显得很“干净”。
+
+::
+
+  $ git add -i
+             staged     unstaged path
 
 
-提交后运行 make && ./hello 
+  *** Commands ***
+    1: status       2: update       3: revert       4: add untracked
+    5: patch        6: diff         7: quit         8: help
+  What now> 
 
 
-哪些文件需要添加到代码库中？
+在交互式界面显示了命令列表，可以使用数字或者加亮显示的命令首字母，选择相应的功能。对于此例需要将新文件加入到版本库，所以选择"4"。
 
+::
+
+  What now> 4
+    1: src/Makefile
+    2: src/hello
+    3: src/main.c
+    4: src/main.o
+    5: src/version.h
+    6: src/version.h.in
+  Add untracked>>
+
+当选择了"4"之后，就进入了“Add untracked”界面，显示了本地新增（尚不再版本库中）的文件列表，而且提示符也变了，由“What now>”变为“Add untracked>>”。依次输入 1, 3, 6 将源代码添加到版本库中。
+  
+::
+
+  Add untracked>> 1
+  * 1: src/Makefile
+    2: src/hello
+    3: src/main.c
+    4: src/main.o
+    5: src/version.h
+    6: src/version.h.in
+  Add untracked>> 3
+  * 1: src/Makefile
+    2: src/hello
+  * 3: src/main.c
+    4: src/main.o
+    5: src/version.h
+    6: src/version.h.in
+  Add untracked>> 6
+  * 1: src/Makefile
+    2: src/hello
+  * 3: src/main.c
+    4: src/main.o
+    5: src/version.h
+  * 6: src/version.h.in
+  Add untracked>> 
+
+每次输入文件需要，对应的文件前面都添加一个星号，代表此文件添加到暂存区。在提示符“Add untracked>>”处按下一个回车，完成文件添加，返回主界面。
+
+::
+
+  Add untracked>> 
+  added 3 paths
+
+  *** Commands ***
+    1: status       2: update       3: revert       4: add untracked
+    5: patch        6: diff         7: quit         8: help
+  What now> 
+
+此时输入"1"查看状态，可以看到三个文件添加到暂存区中。
+
+::
+
+  What now> 1
+             staged     unstaged path
+    1:       +20/-0      nothing src/Makefile
+    2:       +10/-0      nothing src/main.c
+    3:        +6/-0      nothing src/version.h.in
+
+  *** Commands ***
+    1: status       2: update       3: revert       4: add untracked
+    5: patch        6: diff         7: quit         8: help
+
+输入"7"退出交互界面。
+
+查看文件状态，可以发现三个文件被添加到暂存区中。
+
+::
+
+  $ git status -s
+  A  src/Makefile
+  A  src/main.c
+  A  src/version.h.in
+  ?? src/hello
+  ?? src/main.o
+  ?? src/version.h
+
+完成提交。
+
+::
+
+  $ git commit -m "Hello world initialized."
+  [master 7e9127d] Hello world initialized.
+   3 files changed, 36 insertions(+), 0 deletions(-)
+   create mode 100644 src/Makefile
+   create mode 100644 src/main.c
+   create mode 100644 src/version.h.in
+
+Hello world 引发的新问题
+========================
+
+到 src 目录中，对 Hello world 执行编译。
+
+::
+
+  $ cd /my/workspace/demo/src
+  $ make clean && make
+  rm -f hello main.o version.h
+  version.h.in => version.h
+  cc    -c -o main.o main.c
+  cc -o hello main.o
+
+运行编译后的程序，是不是对版本输出不满意呢？
+
+::
+
+  $ ./hello
+  Hello, world.
+  version: old_practice-4-g7e9127d.
+
+之所以显示长长的版本号，是因为使用了在本章最开始留的“影”。现在为 Hello world 定义一个新版本（Tag）吧。
+
+::
+
+  git tag -m "Set tag hello_1.0." hello_1.0
+
+然后清除上次编译结果后，重新编译和运行，可以看到新的输出。
+
+::
+
+  $ make clean && make
+  rm -f hello main.o version.h
+  version.h.in => version.h
+  cc    -c -o main.o main.c
+  cc -o hello main.o
+  $ ./hello 
+  Hello, world.
+  version: hello_1.0.
+
+还不错，显示了新的版本号。此时在工作区查看状态，会发现工作区“不干净”。
+
+::
+
+  $ git status
+  # On branch master
+  # Untracked files:
+  #   (use "git add <file>..." to include in what will be committed)
+  #
+  #       hello
+  #       main.o
+  #       version.h
+
+编译的目标文件和以及从模板生成的头文件出现在了 Git 的状态输出中，这些文件会对以后的工作造成干扰。当写了新的源代码文件需要添加到版本库中时，因为这些干扰文件的存在，不得不一一将这些干扰文件排除在外。更为严重的是，如果不小心执行 "git add ." 或者 "git add -A" 命令将所有新文件入库，浪费存储空间甚至还会造成冲突。
+
+Git 提供了文件忽略功能，可以解决这个问题。
 
 文件忽略
-=============================
+========
 
+Git 提供了文件忽略功能，当对工作区某个目录或者某些文件设置了忽略后，再执行 `git status` 查看状态时，被忽略的文件即使存在也不会显示为未跟踪状态，甚至根本感觉不到这些文件的存在。现在就针对 Hello world 程序目录试验一下。
+
+::
+
+  $ cd /my/workspace/demo/src
+  $ git status -s
+  ?? hello
+  ?? main.o
+  ?? version.h
+
+可以看到 src 目录下编译的目标文件等显示为未跟踪，每一行开头的两个问号好像在向我们请求：“快把我们添加到版本库里吧”。
+
+执行下面的命令可以在这个目下创建一个名为 `.gitignore` 的文件（注意文件的前面有个点），把这些要忽略的文件写在其中，文件名可以使用通配符。
+
+::
+
+  $ cat > .gitignore << EOF
+  > hello
+  > *.o
+  > *.h
+  > EOF
+
+看看写好的 `.gitignore` 文件。每个要忽略的文件显示在一行。
+
+::
+
+  $ cat .gitignore 
+  hello
+  *.o
+  *.h
+
+再来看看当前工作区的状态。
+
+::
+
+  $ git status -s
+  ?? .gitignore
+
+把 `.gitignore` 文件添加到版本库中吧。（如果不希望添加到库里，也不希望 .gitignore 文件带来干扰，可以在忽略文件中忽略自己。）
+
+::
+
+  $ git add .gitignore
+  $ git commit -m "ignore object files."
+  [master d62e845] ignore object files.
+   1 files changed, 3 insertions(+), 0 deletions(-)
+   create mode 100644 src/.gitignore
+
+**.gitignore 文件可以放在任何目录**
+
+文件 `.gitignore` 的作用范围是其所处的目录及其子目录，因此如果把刚刚创建的 `.gitignore` 移动到上一层目录也应该有效。
+
+::
+
+  $ git mv .gitignore ..
+  $ git status
+  # On branch master
+  # Changes to be committed:
+  #   (use "git reset HEAD <file>..." to unstage)
+  #
+  #       renamed:    .gitignore -> ../.gitignore
+  #
+
+果然移动 `.gitignore` 文件到上层目录，Hello world 程序目录下的目标文件依然被忽略着。
+
+提交。
+
+::
+
+  $ git commit -m "move .gitignore outside also works."
+  [master cb0fd04] move .gitignore outside also works.
+   1 files changed, 0 insertions(+), 0 deletions(-)
+   rename src/.gitignore => .gitignore (100%)
+
+**忽略文件有错误，后果很严重**
+
+实际上面写的忽略文件不是非常好，为了忽略 `version.h` ，结果使用了通配符 `*.h` 会把源码目录下的有用的头文件也给忽略掉，导致应该添加到版本库的文件忘记添加。
+
+在当前目录下创建一个新的头文件 "hello.h" 。
+
+::
+
+  $ echo "/* test */" > hello.h
+
+在工作区状态显示中看不到 `hello.h` 文件。
+
+::
+
+  $ git status
+  # On branch master
+  nothing to commit (working directory clean)
+
+使用 `git add -A` 和 `git add .` 都失效，无法将 `hello.h` 添加到暂存区中。
+
+::
+
+  $ git add -A
+  $ git add .
+  $ git st -s
+
+只有在添加操作的命令行中明确的写入文件名，并且提供 "-f" 参数才能真正添加。
+
+::
+
+  $ git add -f hello.h
+  $ git commit -m "add hello.h"
+  [master 87b34ff] add hello.h
+   1 files changed, 1 insertions(+), 0 deletions(-)
+   create mode 100644 src/hello.h
+
+**忽略只对未跟踪文件有效，对于已加入版本库的文件无效**
+
+文件 `hello.h` 添加到版本库后，就不再受到 `.gitignore` 设置的文件忽略影响了，对 `hello.h` 的修改都会立刻被跟踪到。这是因为Git的文件忽略只是对未入库的文件起作用。
+
+::
+
+  $ echo "/* end */" >> hello.h
+  $ git status
+  # On branch master
+  # Changed but not updated:
+  #   (use "git add <file>..." to update what will be committed)
+  #   (use "git checkout -- <file>..." to discard changes in working directory)
+  #
+  #       modified:   hello.h
+  #
+  no changes added to commit (use "git add" and/or "git commit -a")
+
+偷懒式提交。（使用了 -a 参数提交，不用预先执行 git add 命令。）
+
+::
+
+  $ git commit -a -m "偷懒了，直接用 -a 参数直接提交。"
+  [master c7b4332] 偷懒了，直接用 -a 参数直接提交。
+   1 files changed, 1 insertions(+), 0 deletions(-)
+
+**本地忽略文件**
+
+文件 `.gitignore` 设置的文件忽略是全局式的。之所以称其为“全局式”，是因为 `.gitignore` 被添加到版本库后成为了版本库的一部分，当版本库共享给他人（克隆）或者把版本库推送（PUSH）到集中式的服务器（或他人的版本库），这个忽略文件就会出现在他人的版本库中，文件忽略在他人的版本库中同样生效。
+
+与全局式忽略对应的是“本地忽略”。本地忽略就是不会因为版本库共享或者版本库之间的推送传递给他人的文件忽略。本地忽略实际上就是版本库 `.git` 目录下的一个文件：".git/info/exclude"。
+
+至于哪些情况需要通过向版本库中提交 ".gitignore" 文件设置全局式的文件忽略，哪些情况通过 ".git/info/exclude" 设置只对本地有效的文件忽略，这取决于要设置的文件忽略是否具有普遍意义。如果文件忽略对于所有使用此版本库工作的人都有益，就通过在版本库相应的目录下创建一个 ".gitignore" 文件建立忽略，否则如果是需要忽略工作区中创建的一个试验目录或者试验性的文件，则使用本地忽略。
+
+**Git 忽略语法**
+
+Git 的忽略文件的语法规则在多说几句。
+
+* 忽略文件中的空行或者以井号（#）开始的行被忽略。
+* 可以使用通配符，如：星号（*）代表任意多字符，问号（?）代表一个字符，反括号（[abc]）代表可选字符范围等。
+* 在名称的最后添加一个路径分割符（/），表明要忽略的是整个目录，同名文件不忽略，否则同名的文件和目录都忽略。
+* 通过在名称的最前面添加一个感叹号（!），代表不忽略。
+
+下面的文件忽略示例，包含了上述要点：
+
+::
+
+  # 这是注释行 —— 被忽略
+  *.a       # 忽略所有以 .a 为扩展名的文件。
+  !lib.a    # 但是 lib.a 文件或者目录不要忽略，即使前面设置了对 *.a 的忽略。
+  /TODO     # 只忽略根目录下的 TODO 文件，子目录的 TODO 文件不忽略。
+  build/    # 忽略所有 build/ 目录下的文件。
+  doc/*.txt # 忽略文件如 doc/notes.txt，但是文件如 doc/server/arch.txt 不被忽略。
 
