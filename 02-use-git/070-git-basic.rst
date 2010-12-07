@@ -16,24 +16,24 @@ Git 基本操作
 ::
 
   $ cd /my/workspace/demo
-  $ git tag -m "Say bye-bye to all previous practice." practice-step-6
+  $ git tag -m "Say bye-bye to all previous practice." old_practice
 
 在本章还不打算详细介绍里程碑的奥秘，只要知道里程碑无非也是一个引用，通过记录提交ID（或者Tag对象）来为当前版本库状态进行“留影”。
 
 ::
 
-  $ ls .git/refs/tags/practice-step-6
-  .git/refs/tags/practice-step-6
+  $ ls .git/refs/tags/old_practice
+  .git/refs/tags/old_practice
 
-  $ git rev-parse refs/tags/practice-step-6
-  add85a442b531303629134de322e58c13ab1d288
+  $ git rev-parse refs/tags/old_practice
+  41bd4e2cce0f8baa9bb4cdda62927b408c846cd6
 
 留过影之后，可以执行 `git describe` 命令得到当前版本库的版本号。这个技术即将在示例代码中使用。
 
 ::
 
   $ git describe
-  practice-step-6
+  old_practice
 
 删除文件
 --------
@@ -342,5 +342,117 @@ $ git mv welcome.txt README
    rename welcome.txt => README (73%)
 
 这次提交中也看到了重命名操作，但是重命名相似度不是 100%，而是 73%。
+
+一个显示版本号的 Hello World
+=============================
+
+在本章的一开始为纪念前面的实践留了一个影，叫做 "old_practice"。现在再次执行 `git describe` 看一下现在的版本号。
+
+::
+
+  $ git describe
+  old_practice-3-gc024f34
+
+就是说：当前工作区的版本是“留影”后的第三个版本，提交ID是 "c024f34"。下面的命令可以在提交日志中显示提交对应的里程碑（Tag）。
+
+::
+
+  $ git log --oneline --decorate -4
+  c024f34 (HEAD, master) README is from welcome.txt.
+  63992f0 restore file: welcome.txt
+  7161977 delete trash files. (using: git add -u)
+  2b31c19 (tag: old_practice) Merge commit 'acc2f69'
+
+Git 的这个功能非常有用，将 `git describe` 输出的版本号作为软件的版本号，就可以将发布的软件包版本和版本库中的代码对应在一起，当发现软件包包含 Bug 时，可以最快、最准确的对应到代码上。下面就做个示范，放在代码库中。
+
+创建目录 src，并在 src 目录下创建下面的三个文件：
+
+* 文件: src/main.c
+
+  没错，下面的几行就是这个程序的主代码，和输出相关代码的就两行，一行是显示 “Hello, world.”，另外一样是显示软件版本。在显示软件版本时用到了宏 `_VERSION` ，这个宏的来源参考下一个文件。
+
+  源代码：
+
+    ::
+
+      #include "version.h"
+      #include <stdio.h>
+
+      int
+      main()
+      {
+          printf( "Hello, world.\n" );
+          printf( "version: %s.\n", _VERSION );
+          return 0;
+      }
+
+* 文件: src/version.h.in
+
+  没错，这个文件名的后缀是 ".h.in" 。这个文件其实是用于生成文件 `version.h` 的模板文件，生成的 `version.h` 的过程中，宏 `_VERSION` 的值会动态替换。
+
+  源代码：
+
+    ::
+
+      #ifndef HELLO_WORLD_VERSION_H
+      #define HELLO_WORLD_VERSION_H
+
+      #define _VERSION "<version>"
+
+      #endif
+
+* 文件: src/Makefile
+
+  这个文件看起来最复杂，而且要注意所有缩进都使用一个 <Tab> 完成的缩进，千万不要写成空格，因为这是 `Makefile` 。这个文件除了定义如何由代码生成可执行文件 `hello` 之外，还定义了如何将模板文件 `version.h.in` 转换为 `version.h` 。在转换过程中用 `git describe` 命令的输出替换模板文件中的 `<version>` 字符串。
+
+  源代码：
+
+    ::
+
+      OBJECTS = main.o
+      TARGET = hello
+
+      all: $(TARGET)
+
+      $(TARGET): $(OBJECTS)
+              $(CC) -o $@ $^
+
+      main.c: version.h
+
+      version.h: version.h.in
+              @echo "version.h.in => version.h"
+              @sed -e "s/<version>/$$(git describe)/g" < $< > $@
+
+      clean:
+              rm -f $(TARGET) $(OBJECTS) version.h
+
+      .PHONY: all clean
+
+上述三个文件创建完毕之后，进入到 src 目录，试着运行一下。先执行 `make` 编译，再运行编译后的程序 `hello` 。
+
+::
+
+  $ cd src
+  $ make
+  version.h.in => version.h
+  cc    -c -o main.o main.c
+  cc -o hello main.o
+  $ ./hello 
+  Hello, world.
+  version: old_practice-3-gc024f34.
+
+执行 git add -i 选择性添加
+=============================
+
+
+
+提交后运行 make && ./hello 
+
+
+哪些文件需要添加到代码库中？
+
+
+文件忽略
+=============================
 
 
