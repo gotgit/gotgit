@@ -2878,6 +2878,10 @@
 <node COLOR="#111111" ID="ID_1455988397" 
 	TEXT="如果再想还原回原来提交？ cherry-pick"/>
 </node>
+<node COLOR="#990000" ID="ID_683126608" 
+	TEXT="反删除存储会加倍么？">
+<font NAME="Serif" SIZE="14"/>
+</node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1579959370" 
 	TEXT="Step 10: 改变历史">
