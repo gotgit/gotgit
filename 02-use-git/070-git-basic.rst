@@ -1,9 +1,7 @@
 Git 基本操作（实践七）
 **********************
 
-之前的实践选取的示例都非常简单，基本上都是增加和修改文本文件，而现实情况要复杂的多，需要应对各种情况：文件删除，文件复制，文件移动，目录的组织，二进制文件，误删文件的恢复等等。本章会将工作区常用的操作一网打尽。
-
-本次实践要用一个更为真实的例子：用版本库来维护代码。首先会删除之前历次实践在版本库中留下的“垃圾”数据，然后再在其中创建一些真实的代码，并对其进行版本控制。
+之前的实践选取的示例都非常简单，基本上都是增加和修改文本文件，而现实情况要复杂的多，需要应对各种情况：文件删除，文件复制，文件移动，目录的组织，二进制文件，误删文件的恢复等等。本章即实践七，要用一个更为真实的例子：用版本库来维护代码，介绍工作区中常用的一些操作。首先会删除之前历次实践在版本库中留下的“垃圾”数据，然后再在其中创建一些真实的代码，并对其进行版本控制。
 
 先来合个影
 ==========
@@ -25,7 +23,7 @@ Git 基本操作（实践七）
   $ git rev-parse refs/tags/old_practice
   41bd4e2cce0f8baa9bb4cdda62927b408c846cd6
 
-留过影之后，可以执行 `git describe` 命令得到当前版本库的版本号。这个技术即将在示例代码中使用。
+留过影之后，可以执行 `git describe` 命令得到当前版本库的版本号，因为最新的提交上恰好打了一个“里程碑”，所以用“里程碑”的名字显示为版本号。这个技术在后面的示例代码中被使用。
 
 ::
 
@@ -45,24 +43,31 @@ Git 基本操作（实践七）
 
 在这个暂存区和工作区都包含文件修改的情况下，使用删除命令更具有挑战性。删除命令有多种使用方法，有的方法很巧妙，而有的方法需要更多的输入。为了分别介绍不同的删除方法，还要使用上一章介绍的进度保存（git-stash）命令。
 
-::
+* 保存进度。
 
-  $ git stash
-  Saved working directory and index state WIP on master: 2b31c19 Merge commit 'acc2f69'
-  HEAD is now at 2b31c19 Merge commit 'acc2f69'
-  $ git stash apply
-  # On branch master
-  # Changes to be committed:
-  #   (use "git reset HEAD <file>..." to unstage)
-  #
-  #       new file:   hack-1.txt
-  #
-  # Changed but not updated:
-  #   (use "git add <file>..." to update what will be committed)
-  #   (use "git checkout -- <file>..." to discard changes in working directory)
-  #
-  #       modified:   welcome.txt
-  #
+  ::
+
+    $ git stash
+    Saved working directory and index state WIP on master: 2b31c19 Merge commit 'acc2f69'
+    HEAD is now at 2b31c19 Merge commit 'acc2f69'
+
+* 再恢复进度。
+
+  ::
+
+    $ git stash apply
+    # On branch master
+    # Changes to be committed:
+    #   (use "git reset HEAD <file>..." to unstage)
+    #
+    #       new file:   hack-1.txt
+    #
+    # Changed but not updated:
+    #   (use "git add <file>..." to update what will be committed)
+    #   (use "git checkout -- <file>..." to discard changes in working directory)
+    #
+    #       modified:   welcome.txt
+    #
 
 本地删除不是真的删除
 --------------------
@@ -93,7 +98,7 @@ Git 基本操作（实践七）
   new-commit.txt
   welcome.txt
 
-通过文件的状态来看，文件只是在本地进行了删除，尚未加到暂存区（提交任务）中。也就是说： **直接在工作区删除，和在版本库中删除不是一个概念** 。
+通过文件的状态来看，文件只是在本地进行了删除，尚未加到暂存区（提交任务）中。也就是说： **直接在工作区删除，对暂存区和版本库没有任何影响** 。
 
 ::
 
@@ -176,23 +181,18 @@ Git 基本操作（实践七）
 
 在前面执行 `git rm` 命令时，一一写下了所有要删除的文件名，好长的命令啊！能不能简化些？实际上 `git add` 可以，即使用 "-u" 参数调用 "git add" 命令，含义是将本地有改动（包括添加和删除）的文件标记为删除。为了重现刚才的场景，先使用重置命令抛弃最新的提交，再使用进度恢复到之前的状态。
 
-::
+* 丢弃之前测试删除的试验性提交。
 
-  $ git reset --hard HEAD^
-  HEAD is now at 2b31c19 Merge commit 'acc2f69'
-  $ git stash apply
-  # On branch master
-  # Changes to be committed:
-  #   (use "git reset HEAD <file>..." to unstage)
-  #
-  #       new file:   hack-1.txt
-  #
-  # Changed but not updated:
-  #   (use "git add <file>..." to update what will be committed)
-  #   (use "git checkout -- <file>..." to discard changes in working directory)
-  #
-  #       modified:   welcome.txt
-  #
+  ::
+
+    $ git reset --hard HEAD^
+    HEAD is now at 2b31c19 Merge commit 'acc2f69'
+
+* 恢复保存的进度。（"-q" 参数使得命令进入安静模式）
+
+  ::
+
+    $ git stash apply -q
 
 然后删除本地文件，状态依然显示只在本地删除了文件，暂存区文件仍在。
 
@@ -261,9 +261,9 @@ Git 基本操作（实践七）
 
 ::
 
-$ git mv welcome.txt README
+  $ git mv welcome.txt README
 
-可以从暂存区的状态中看到改名的操作。
+可以从当前的状态中看到改名的操作。
 
 ::
 
@@ -275,7 +275,7 @@ $ git mv welcome.txt README
   #       renamed:    welcome.txt -> README
   #
 
-提交改名操作，在提交输出可以看到改名前后文件变化的百分比。
+提交改名操作，在提交输出可以看到改名前后两个文件的相似度（百分比）。
 
 ::
 
@@ -286,19 +286,24 @@ $ git mv welcome.txt README
 
 **可以不用 git mv 命令实现改名**
 
-从提交日志中的文件相似度百分比可以看出 Git 的改名实际上源自于 Git 对文件追踪的强大支持（文件内容作为 blob 对象保存在对象库中）。改名操作实际上相当于对旧文件执行删除，对新文件执行添加，即完全可以不使用 `git mv` 操作，而是代之以 `git rm` 和一个 `git add` 操作。
+从提交日志中出现的文件相似度可以看出 Git 的改名实际上源自于 Git 对文件追踪的强大支持（文件内容作为 blob 对象保存在对象库中）。改名操作实际上相当于对旧文件执行删除，对新文件执行添加，即完全可以不使用 `git mv` 操作，而是代之以 `git rm` 和一个 `git add` 操作。为了试验不使用 `git mv` 命令是否可行，先撤销之前进行的提交。
 
-重置上一次提交：
+* 撤销之前测试文件移动的提交。
 
-::
+  ::
 
-  $ git reset --hard HEAD^
-  HEAD is now at 63992f0 restore file: welcome.txt
-  $ git status -s
-  $ git ls-files
-  welcome.txt
+    $ git reset --hard HEAD^
+    HEAD is now at 63992f0 restore file: welcome.txt
 
-本地移动文件，将 welcome.txt 移动到 README。
+* 撤销之后 `welcome.txt` 文件又回来了。
+
+  ::
+
+    $ git status -s
+    $ git ls-files
+    welcome.txt
+
+新的改名操作不使用 `git mv` 命令，而是直接在本地改名（文件移动），将 welcome.txt 改名为 README。
 
 ::
 
@@ -307,13 +312,13 @@ $ git mv welcome.txt README
    D welcome.txt
   ?? README
 
-为了考验一下 Git 的内容追踪，再修改一下改名后的 README 文件，在文件末尾追加一行。
+为了考验一下 Git 的内容追踪能力，再修改一下改名后的 README 文件，即在文件末尾追加一行。
 
 ::
 
   $ echo "Bye-Bye." >> README 
 
-可以使用前面介绍的 `git add -A` 相当于对修改文件执行 `git add` ，对删除文件执行 `git rm` ，而且对本地新增文件也执行 `git add` 。
+可以使用前面介绍的 `git add -A` 命令。相当于对修改文件执行 `git add` ，对删除文件执行 `git rm` ，而且对本地新增文件也执行 `git add` 。
 
 ::
 
@@ -330,6 +335,8 @@ $ git mv welcome.txt README
   #
   #       renamed:    welcome.txt -> README
   #
+
+执行提交。
 
 ::
 
@@ -360,13 +367,13 @@ $ git mv welcome.txt README
   7161977 delete trash files. (using: git add -u)
   2b31c19 (tag: old_practice) Merge commit 'acc2f69'
 
-Git 的这个功能非常有用，将 `git describe` 输出的版本号作为软件的版本号，就可以将发布的软件包版本和版本库中的代码对应在一起，当发现软件包包含 Bug 时，可以最快、最准确的对应到代码上。
+Git 的这个功能非常有用，将 `git describe` 命令的输出作为软件的版本号，就可以将发布的软件包版本和版本库中的代码对应在一起，当发现软件包包含 Bug 时，可以最快、最准确的对应到代码上。
 
 下面的 Hello World 程序就实现了这个功能。创建目录 src，并在 src 目录下创建下面的三个文件：
 
 * 文件: src/main.c
 
-  没错，下面的几行就是这个程序的主代码，和输出相关代码的就两行，一行是显示 “Hello, world.”，另外一样是显示软件版本。在显示软件版本时用到了宏 `_VERSION` ，这个宏的来源参考下一个文件。
+  没错，下面的几行就是这个程序的主代码，和输出相关代码的就两行，一行显示 “Hello, world.”，另外一行显示软件版本。在显示软件版本时用到了宏 `_VERSION` ，这个宏的来源参考下一个文件。
 
   源代码：
 
@@ -385,7 +392,7 @@ Git 的这个功能非常有用，将 `git describe` 输出的版本号作为软
 
 * 文件: src/version.h.in
 
-  没错，这个文件名的后缀是 ".h.in" 。这个文件其实是用于生成文件 `version.h` 的模板文件，生成的 `version.h` 的过程中，宏 `_VERSION` 的值会动态替换。
+  没错，这个文件名的后缀是 ".h.in" 。这个文件其实是用于生成文件 `version.h` 的模板文件。在由此模板文件生成的 `version.h` 的过程中，宏 `_VERSION` 的值 “<version>” 会动态替换。
 
   源代码：
 
@@ -400,7 +407,7 @@ Git 的这个功能非常有用，将 `git describe` 输出的版本号作为软
 
 * 文件: src/Makefile
 
-  这个文件看起来最复杂，而且要注意所有缩进都使用一个 <Tab> 完成的缩进，千万不要写成空格，因为这是 `Makefile` 。这个文件除了定义如何由代码生成可执行文件 `hello` 之外，还定义了如何将模板文件 `version.h.in` 转换为 `version.h` 。在转换过程中用 `git describe` 命令的输出替换模板文件中的 `<version>` 字符串。
+  这个文件看起来很复杂，而且要注意所有缩进都是使用一个 <Tab> 键完成的缩进，千万不要错误的写成空格，因为这是 Makefile。这个文件除了定义如何由代码生成可执行文件 `hello` 之外，还定义了如何将模板文件 `version.h.in` 转换为 `version.h` 。在转换过程中用 `git describe` 命令的输出替换模板文件中的 `<version>` 字符串。
 
   源代码：
 
@@ -414,16 +421,24 @@ Git 的这个功能非常有用，将 `git describe` 输出的版本号作为软
       $(TARGET): $(OBJECTS)
               $(CC) -o $@ $^
 
-      main.c: version.h
+      main.o: version.h
 
-      version.h: version.h.in
-              @echo "version.h.in => version.h"
-              @sed -e "s/<version>/$$(git describe)/g" < $< > $@
+      version.h: new_header
+
+      new_header:
+              @sed -e "s/<version>/$$(git describe)/g" < version.h.in > version.h.tmp
+              @if diff -q version.h.tmp version.h >/dev/null 2>&1; then \
+                      rm version.h.tmp; \
+              else \
+                      echo "version.h.in => version.h" ; \
+                      mv version.h.tmp version.h; \
+              fi
 
       clean:
               rm -f $(TARGET) $(OBJECTS) version.h
 
       .PHONY: all clean
+
 
 上述三个文件创建完毕之后，进入到 src 目录，试着运行一下。先执行 `make` 编译，再运行编译后的程序 `hello` 。
 
@@ -550,7 +565,7 @@ Git 的这个功能非常有用，将 `git describe` 输出的版本号作为软
 ::
 
   $ git commit -m "Hello world initialized."
-  [master 7e9127d] Hello world initialized.
+  [master d71ce92] Hello world initialized.
    3 files changed, 36 insertions(+), 0 deletions(-)
    create mode 100644 src/Makefile
    create mode 100644 src/main.c
@@ -576,7 +591,7 @@ Hello world 引发的新问题
 
   $ ./hello
   Hello, world.
-  version: old_practice-4-g7e9127d.
+  version: old_practice-4-gd71ce92.
 
 之所以显示长长的版本号，是因为使用了在本章最开始留的“影”。现在为 Hello world 定义一个新版本（Tag）吧。
 
@@ -610,7 +625,7 @@ Hello world 引发的新问题
   #       main.o
   #       version.h
 
-编译的目标文件和以及从模板生成的头文件出现在了 Git 的状态输出中，这些文件会对以后的工作造成干扰。当写了新的源代码文件需要添加到版本库中时，因为这些干扰文件的存在，不得不一一将这些干扰文件排除在外。更为严重的是，如果不小心执行 "git add ." 或者 "git add -A" 命令将所有新文件入库，浪费存储空间甚至还会造成冲突。
+编译的目标文件和以及从模板生成的头文件出现在了 Git 的状态输出中，这些文件会对以后的工作造成干扰。当写了新的源代码文件需要添加到版本库中时，因为这些干扰文件的存在，不得不一一将这些干扰文件排除在外。更为严重的是，如果不小心执行 "git add ." 或者 "git add -A" 命令会将编译的目标文件及其他临时文件加入版本库中，浪费存储空间不说甚至还会造成冲突。
 
 Git 提供了文件忽略功能，可以解决这个问题。
 
@@ -661,13 +676,13 @@ Git 提供了文件忽略功能，当对工作区某个目录或者某些文件�
 
   $ git add .gitignore
   $ git commit -m "ignore object files."
-  [master d62e845] ignore object files.
+  [master b3af728] ignore object files.
    1 files changed, 3 insertions(+), 0 deletions(-)
    create mode 100644 src/.gitignore
 
 **.gitignore 文件可以放在任何目录**
 
-文件 `.gitignore` 的作用范围是其所处的目录及其子目录，因此如果把刚刚创建的 `.gitignore` 移动到上一层目录也应该有效。
+文件 `.gitignore` 的作用范围是其所处的目录及其子目录，因此如果把刚刚创建的 `.gitignore` 移动到上一层目录（仍位于工作区内）也应该有效。
 
 ::
 
@@ -687,7 +702,7 @@ Git 提供了文件忽略功能，当对工作区某个目录或者某些文件�
 ::
 
   $ git commit -m "move .gitignore outside also works."
-  [master cb0fd04] move .gitignore outside also works.
+  [master 3488f2c] move .gitignore outside also works.
    1 files changed, 0 insertions(+), 0 deletions(-)
    rename src/.gitignore => .gitignore (100%)
 
@@ -709,7 +724,17 @@ Git 提供了文件忽略功能，当对工作区某个目录或者某些文件�
   # On branch master
   nothing to commit (working directory clean)
 
-使用 `git add -A` 和 `git add .` 都失效，无法将 `hello.h` 添加到暂存区中。
+只有使用了 `--ignored` 参数，才会在状态显示中看到被忽略的文件。
+
+::
+
+  $ git status --ignored -s
+  !! hello
+  !! hello.h
+  !! main.o
+  !! version.h
+
+要添加 `hello.h` 文件，使用 `git add -A` 和 `git add .` 都失效。无法用这两个命令将 `hello.h` 添加到暂存区中。
 
 ::
 
@@ -723,7 +748,7 @@ Git 提供了文件忽略功能，当对工作区某个目录或者某些文件�
 
   $ git add -f hello.h
   $ git commit -m "add hello.h"
-  [master 87b34ff] add hello.h
+  [master 48456ab] add hello.h
    1 files changed, 1 insertions(+), 0 deletions(-)
    create mode 100644 src/hello.h
 
@@ -749,21 +774,21 @@ Git 提供了文件忽略功能，当对工作区某个目录或者某些文件�
 ::
 
   $ git commit -a -m "偷懒了，直接用 -a 参数直接提交。"
-  [master c7b4332] 偷懒了，直接用 -a 参数直接提交。
+  [master 613486c] 偷懒了，直接用 -a 参数直接提交。
    1 files changed, 1 insertions(+), 0 deletions(-)
 
 **本地独享式忽略文件**
 
-文件 `.gitignore` 设置的文件忽略是共享式的。之所以称其为“共享式”，是因为 `.gitignore` 被添加到版本库后成为了版本库的一部分，当版本库共享给他人（克隆）或者把版本库推送（PUSH）到集中式的服务器（或他人的版本库），这个忽略文件就会出现在他人的版本库中，文件忽略在他人的版本库中同样生效。
+文件 `.gitignore` 设置的文件忽略是共享式的。之所以称其为“共享式”，是因为 `.gitignore` 被添加到版本库后成为了版本库的一部分，当版本库共享给他人（克隆）或者把版本库推送（PUSH）到集中式的服务器（或他人的版本库），这个忽略文件就会出现在他人的工作区中，文件忽略在他人的工作区中同样生效。
 
 与“共享式”忽略对应的是“独享式”忽略。独享式忽略就是不会因为版本库共享或者版本库之间的推送传递给他人的文件忽略。独享式忽略有两种方式：
 
-* 一种是针对具体版本库的，即在版本库 `.git` 目录下的一个文件 ".git/info/exclude" 来设置文件忽略。
-* 另外一种全局的“独享式”忽略。即通过 Git 的配置变量 `core.excludesfile` 指定的一个忽略文件，其设置的忽略对所有文件均有效。
+* 一种是针对具体版本库的“独享式”忽略。即在版本库 `.git` 目录下的一个文件 ".git/info/exclude" 来设置文件忽略。
+* 另外一种是全局的“独享式”忽略。即通过 Git 的配置变量 `core.excludesfile` 指定的一个忽略文件，其设置的忽略对所有文件均有效。
 
-至于哪些情况需要通过向版本库中提交 ".gitignore" 文件设置全局式的文件忽略，哪些情况通过 ".git/info/exclude" 设置只对本地有效的文件忽略，这取决于要设置的文件忽略是否具有普遍意义。如果文件忽略对于所有使用此版本库工作的人都有益，就通过在版本库相应的目录下创建一个 ".gitignore" 文件建立忽略，否则如果是需要忽略工作区中创建的一个试验目录或者试验性的文件，则使用本地忽略。
+至于哪些情况需要通过向版本库中提交 ".gitignore" 文件设置共享式的文件忽略，哪些情况通过 ".git/info/exclude" 设置只对本地有效的独享式文件忽略，这取决于要设置的文件忽略是否具有普遍意义。如果文件忽略对于所有使用此版本库工作的人都有益，就通过在版本库相应的目录下创建一个 ".gitignore" 文件建立忽略，否则如果是需要忽略工作区中创建的一个试验目录或者试验性的文件，则使用本地忽略。
 
-例如我的本地就设置着一个文件忽略列表（这个文件名可以随意选取）：
+例如我的本地就设置着一个全局的独享的文件忽略列表（这个文件名可以随意设置）：
 
 ::
 
@@ -781,8 +806,8 @@ Git 的忽略文件的语法规则再多说几句。
 
 * 忽略文件中的空行或者以井号（#）开始的行被忽略。
 * 可以使用通配符，参见 Linux 手册：glob(7)。例如：星号（*）代表任意多字符，问号（?）代表一个字符，反括号（[abc]）代表可选字符范围等。
-* 名称的最前面如果一个路径分割符（/），表明要忽略的文件在此目录下，而非子目录的文件。
-* 名称的最后面如果一个路径分割符（/），表明要忽略的是整个目录，同名文件不忽略，否则同名的文件和目录都忽略。
+* 如果名称的最前面是一个路径分隔符（/），表明要忽略的文件在此目录下，而非子目录的文件。
+* 如果名称的最后面是一个路径分隔符（/），表明要忽略的是整个目录，同名文件不忽略，否则同名的文件和目录都忽略。
 * 通过在名称的最前面添加一个感叹号（!），代表不忽略。
 
 下面的文件忽略示例，包含了上述要点：
