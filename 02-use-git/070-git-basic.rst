@@ -792,10 +792,11 @@ Git 提供了文件忽略功能，当对工作区某个目录或者某些文件�
 
 ::
 
+  $ git config --global core.excludesfile /etc/_gitignore
   $ git config core.excludesfile
-  /etc/_gitignore
+  /home/jiangxin/_gitignore
 
-  $ cat /etc/_gitignore
+  $ cat /home/jiangxin/_gitignore
   *~        # vim 临时文件
   *.pyc     # python 的编译文件
   .*.mmx    # 不是正则表达式哦，因为 FreeMind-MMX 的辅助文件以点开头    
