@@ -283,8 +283,8 @@ qgit 也可以执行提交。选中 qgit 顶部窗口最上一行“Working dir 
 .. figure:: images/gitbook/commit-tree.png 
    :scale: 100
 
-git rev-parse 和 git rev-list
-------------------------------
+版本表示法：git rev-parse
+-------------------------
 
 命令 "git rev-parse" 是Git的一个低端命令，其功能非常丰富（或者说杂乱），很多Git脚本或工具都会用到这条命令。
 
@@ -447,11 +447,161 @@ git rev-parse 和 git rev-list
     $ git rev-parse :/"Commit A"
     81993234fc12a325d303eccea20f6fd629412712
 
+版本范围表示法：git rev-list
+----------------------------
+
+有的Git命令可以使用一个版本范围作为参数，命令 `git rev-list` 可以帮助研究Git的各种版本范围语法。
+
+.. figure:: images/gitbook/commit-tree-with-id.png
+   :scale: 100
+
+* 用一个版本指代列表的含义是：该版本开始的所有历史提交。
+
+  ::
+
+    $ git rev-list --oneline  A 
+    8199323 Commit A: merge B with C.
+    0cd7f2e commit C.
+    776c5c9 Commit B: merge D with E and F
+    beb30ca Commit F: merge I with J
+    212efce Commit D: merge G with H
+    634836c commit I.
+    3252fcc commit J.
+    83be369 commit E.
+    2ab52ad commit H.
+    e80aa74 commit G.
+
+* 两个或多个版本，相当于每个版本单独使用时指代的列表的并集。
+
+  ::
+
+    $ git rev-list --oneline  D  F
+    beb30ca Commit F: merge I with J
+    212efce Commit D: merge G with H
+    634836c commit I.
+    3252fcc commit J.
+    2ab52ad commit H.
+    e80aa74 commit G.
+
+* 在一个版本前面加上符号（^）含义是取反，即排除这个版本及其历史版本。
+
+  ::
+
+    $ git rev-list --oneline  ^G D
+    212efce Commit D: merge G with H
+    2ab52ad commit H.
+
+* 等价的“点点”表示法。使用两个点连接两个版本，相当于前一个版本取反。
+
+  ::
+
+    $ git rev-list --oneline  G..D
+    212efce Commit D: merge G with H
+    2ab52ad commit H.
+
+* 版本取反，参数的顺序不重要，但是“点点”表示法前后的版本顺序很重要。
+
+  * 语法：^B C
+
+    ::
+
+      $ git rev-list --oneline  ^B C
+      0cd7f2e commit C.
+
+  * 语法：C ^B
+
+    ::
+
+      $ git rev-list --oneline  C ^B
+      0cd7f2e commit C.
+
+  * 语法：B..C 相当于 ^B C
+
+    ::
+
+      $ git rev-list --oneline  B..C
+      0cd7f2e commit C.
+
+  * 语法：C..B 相当于 ^C B
+
+    ::
+
+      $ git rev-list --oneline  C..B
+      776c5c9 Commit B: merge D with E and F
+      212efce Commit D: merge G with H
+      83be369 commit E.
+      2ab52ad commit H.
+      e80aa74 commit G.
+
+* 三点表示法的含义是两个版本共同能够访问到的除外。
+
+  B 和 C 共同能够访问到的 F,I,J 排除在外。
+
+  ::
+
+    $ git rev-list --oneline  B...C
+    0cd7f2e commit C.
+    776c5c9 Commit B: merge D with E and F
+    212efce Commit D: merge G with H
+    83be369 commit E.
+    2ab52ad commit H.
+    e80aa74 commit G.
+
+* 三点表示法，两个版本的前后顺序没有关系。
+
+  实际上 `r1...r2` 相当于 `r1 r2 --not $(git merge-base --all r1 r2)` ，和顺序无关。
+
+  ::
+
+    $ git rev-list --oneline  C...B
+    0cd7f2e commit C.
+    776c5c9 Commit B: merge D with E and F
+    212efce Commit D: merge G with H
+    83be369 commit E.
+    2ab52ad commit H.
+    e80aa74 commit G.
+
+* 某提交的历史提交，自身除外，用语法 `r1^@` 表示。
+
+  ::
+
+    $ git rev-list --oneline  B^@
+    beb30ca Commit F: merge I with J
+    212efce Commit D: merge G with H
+    634836c commit I.
+    3252fcc commit J.
+    83be369 commit E.
+    2ab52ad commit H.
+    e80aa74 commit G.
+
+* 提交本身不包括其历史提交，用语法 `r1^!` 表示。
+
+  ::
+
+    $ git rev-list --oneline  B^!
+    776c5c9 Commit B: merge D with E and F
+
+    $ git rev-list --oneline  F^! D
+    beb30ca Commit F: merge I with J
+    212efce Commit D: merge G with H
+    2ab52ad commit H.
+
 git log
 --------
 
 命令 "git log" 是老朋友了，在前面的章节中曾经大量的出现，用于显示提交历史。
 
+**参数代表版本范围**
+
+当不使用任何参数调用，相当于使用了缺省的参数 HEAD，即显示当前HEAD能够访问到的所有历史提交。还可以使用上面介绍的版本范围表示法，例如：
+
+::
+
+  $ git log --oneline F^! D
+  beb30ca Commit F: merge I with J
+  212efce Commit D: merge G with H
+  2ab52ad commit H.
+  e80aa74 commit G.
 
 **分支图显示**
 
@@ -479,27 +629,5 @@ git log
   48456abfaeab706a44880eabcd63ea14317c0be9 add hello.h
   3488f2cc78c8fb68f8b24efa683176c53523618e move .gitignore outside also works.
   b3af7282919d46204fc9d58f9a939e0d5112a7df ignore object files.
-
-
-**使用一个版本作为参数**
-
-.. figure:: images/gitbook/commit-tree.png
-   :scale: 100
-
-
-
-**使用多个版本作为参数**
-
-**使用版本范围作为参数**
-
-如果使用多个版本作为参数，
-
-
-关于版本和显示日志的版本范围**
-
-可以显示某两个版本之间的日志，就要用到用两个连续的点（点点）来表示版本范围： `<commit-id>..<commit-id>` 。
-
-
-
 
 
