@@ -283,6 +283,8 @@ qgit 也可以执行提交。选中 qgit 顶部窗口最上一行“Working dir 
 .. figure:: images/gitbook/commit-tree.png 
    :scale: 100
 
+Git的大部分命令可以使用提交版本作为参数（如：git diff），有的命令则使用一个版本范围作为参数（如：git log）。Git的提交有着各式各样的表示法，提交范围也是一样，下面就通过两个命令 `git rev-parse` 和 `git rev-list` 分别研究一下Git 的版本表示法和版本范围表示法。
+
 版本表示法：git rev-parse
 -------------------------
 
@@ -586,8 +588,8 @@ qgit 也可以执行提交。选中 qgit 顶部窗口最上一行“Working dir 
     212efce Commit D: merge G with H
     2ab52ad commit H.
 
-git log
---------
+浏览日志：git log
+------------------
 
 命令 "git log" 是老朋友了，在前面的章节中曾经大量的出现，用于显示提交历史。
 
@@ -615,19 +617,275 @@ git log
 
 ::
 
-  $ git glog
+  $ git glog --oneline
+  * 6652a0d Add Images for git treeview.
+  *   8199323 Commit A: merge B with C.
+  |\  
+  | * 0cd7f2e commit C.
+  | |     
+  |  \    
+  *-. \   776c5c9 Commit B: merge D with E and F
+  |\ \ \  
+  | | |/  
+  | | *   beb30ca Commit F: merge I with J
+  | | |\  
+  | | | * 3252fcc commit J.
+  | | * 634836c commit I.
+  | * 83be369 commit E.
+  *   212efce Commit D: merge G with H
+  |\  
+  | * 2ab52ad commit H.
+  * e80aa74 commit G.
+
 
 **显示最近的几条日志**
 
-可以使用参数 "-<n>" （<n>为数字），显示最近的 <n> 条日志。例如下面的命令显示最近的5条日志。
+可以使用参数 "-<n>" （<n>为数字），显示最近的 <n> 条日志。例如下面的命令显示最近的3条日志。
 
 ::
 
-  $ git log -5 --pretty=oneline
-  822b4aeed5de74f949c9faa5b281001eb5439444 测试使用 qgit 提交。
-  613486c17842d139871e0f1b0e9191d2b6177c9f 偷懒了，直接用 -a 参数直接提交。
-  48456abfaeab706a44880eabcd63ea14317c0be9 add hello.h
-  3488f2cc78c8fb68f8b24efa683176c53523618e move .gitignore outside also works.
-  b3af7282919d46204fc9d58f9a939e0d5112a7df ignore object files.
+  $ git log -3 --pretty=oneline
+  6652a0dce6a5067732c00ef0a220810a7230655e Add Images for git treeview.
+  81993234fc12a325d303eccea20f6fd629412712 Commit A: merge B with C.
+  0cd7f2ea245d90d414e502467ac749f36aa32cc4 commit C.
+
+**显示每次提交的具体改动**
+
+使用参数 "-p" 可以在显示日志的时候同时显示改动。
+
+::
+
+  $ git log -p -1
+  commit 6652a0dce6a5067732c00ef0a220810a7230655e
+  Author: Jiang Xin <jiangxin@ossxp.com>
+  Date:   Thu Dec 9 16:07:11 2010 +0800
+
+      Add Images for git treeview.
+      
+      Signed-off-by: Jiang Xin <jiangxin@ossxp.com>
+
+  diff --git a/gitg.png b/gitg.png
+  new file mode 100644
+  index 0000000..fc58966
+  Binary files /dev/null and b/gitg.png differ
+  diff --git a/treeview.png b/treeview.png
+  new file mode 100644
+  index 0000000..a756d12
+  Binary files /dev/null and b/treeview.png differ
+
+因为是二进制文件改动，缺省不显示改动的内容。实际上Git的差异文件提供对二进制文件的支持，在后面“Git应用”章节予以专题介绍。
+
+**显示每次提交的变更概要**
+
+使用 "-p" 参数会让日志输出显得非常冗余，当不需要知道具体的改动而只想知道改动在哪些文件上，可以使用 "--stat" 参数。输出的变更概要像极了Linux 的 `diffstat` 命令的输出。
+
+::
+
+  $ git log --stat --oneline  I..C
+  0cd7f2e commit C.
+   README    |    1 +
+   doc/C.txt |    1 +
+   2 files changed, 2 insertions(+), 0 deletions(-)
+  beb30ca Commit F: merge I with J
+  3252fcc commit J.
+   README           |    7 +++++++
+   doc/J.txt        |    1 +
+   src/.gitignore   |    3 +++
+   src/Makefile     |   27 +++++++++++++++++++++++++++
+   src/main.c       |   10 ++++++++++
+   src/version.h.in |    6 ++++++
+   6 files changed, 54 insertions(+), 0 deletions(-)
+
+**定制输出**
+
+Git的差异输出命令提供了很多输出模板提供选择，可以根据需要选择冗余显示或者精简显示。
+
+* 参数 `--pretty=raw` 显示 commit 的原始数据。可以显示提交对应的树ID。
+
+  ::
+
+    $ git log --pretty=raw -1
+    commit 6652a0dce6a5067732c00ef0a220810a7230655e
+    tree e33be9e8e7ca5f887c7d5601054f2f510e6744b8
+    parent 81993234fc12a325d303eccea20f6fd629412712
+    author Jiang Xin <jiangxin@ossxp.com> 1291882031 +0800
+    committer Jiang Xin <jiangxin@ossxp.com> 1291882892 +0800
+
+        Add Images for git treeview.
+        
+        Signed-off-by: Jiang Xin <jiangxin@ossxp.com>
+
+* 参数 `--pretty=fuller` 会同时显示作者和提交者，两者可以不同。
+
+  ::
+
+    $ git log --pretty=fuller -1
+    commit 6652a0dce6a5067732c00ef0a220810a7230655e
+    Author:     Jiang Xin <jiangxin@ossxp.com>
+    AuthorDate: Thu Dec 9 16:07:11 2010 +0800
+    Commit:     Jiang Xin <jiangxin@ossxp.com>
+    CommitDate: Thu Dec 9 16:21:32 2010 +0800
+
+        Add Images for git treeview.
+        
+        Signed-off-by: Jiang Xin <jiangxin@ossxp.com>
+
+* 参数 `--pretty=oneline` 显然会提供最精简的日志输出。也可以使用 `--oneline` 参数，效果近似。
+
+  ::
+
+    $ git log --pretty=oneline -1
+    6652a0dce6a5067732c00ef0a220810a7230655e Add Images for git treeview.
+
+如果只想查看、分析某一个提交，也可以使用 `git show` 或者 `git cat-file` 命令。
+
+* 使用 `git show` 显示里程碑D及其提交：
+
+  ::
+
+    $ git show D --stat
+    tag D
+    Tagger: Jiang Xin <jiangxin@ossxp.com>
+    Date:   Thu Dec 9 14:24:52 2010 +0800
+
+    create node D
+
+    commit 212efce1548795a1edb08e3708a50989fcd73cce
+    Merge: e80aa74 2ab52ad
+    Author: Jiang Xin <jiangxin@ossxp.com>
+    Date:   Thu Dec 9 14:06:34 2010 +0800
+
+        Commit D: merge G with H
+        
+        Signed-off-by: Jiang Xin <jiangxin@ossxp.com>
+
+     README    |    2 ++
+     doc/D.txt |    1 +
+     doc/H.txt |    1 +
+     3 files changed, 4 insertions(+), 0 deletions(-)
+
+* 使用 `git cat-file` 显示里程碑D及其提交。
+
+  参数 `-p` 的含义是美观的输出（pretty）。
+
+  ::
+
+    $ git cat-file -p D^0
+    tree 1c22e90c6bf150ee1cde6cefb476abbb921f491f
+    parent e80aa7481beda65ae00e35afc4bc4b171f9b0ebf
+    parent 2ab52ad2a30570109e71b56fa1780f0442059b3c
+    author Jiang Xin <jiangxin@ossxp.com> 1291874794 +0800
+    committer Jiang Xin <jiangxin@ossxp.com> 1291875877 +0800
+
+    Commit D: merge G with H
+
+    Signed-off-by: Jiang Xin <jiangxin@ossxp.com>
+
+差异比较：git diff
+------------------
+
+Git 差异比较功能在前面的实践中也反复的接触过了，尤其是在介绍暂存区的相关章节重点介绍了 git diff 命令如何对工作区、暂存区、版本库进行比较。
+
+* 比较里程碑B和里程碑A，用命令： git diff B A
+* 比较工作区和里程碑A，用命令： git diff A
+* 比较暂存区和里程碑A，用命令： git diff --cached A
+* 比较工作区和暂存区，用命令： git diff
+* 比较暂存区和HEAD，用命令： git diff --cached
+* 比较工作区和HEAD，用命令： git diff HEAD
+
+**Git中文件在版本间的差异比较**
+
+差异比较还可以使用路径参数，只显示不同版本间该路径下文件的差异。语法格式：
+
+::
+
+  $ git diff <commit1> <commit2> -- <paths>
 
 
+**非Git目录/文件的差异比较**
+
+命令 "git diff" 还可以在Git版本库之外执行，对非Git目录进行比较，就像 GNU 的 `diff` 命令一样。之所以提供这个功能是因为 Git 差异比较命令更为强大，提供了对 GNU 差异差异比较的扩展支持。
+
+::
+
+  $ git diff <path1> <path2>
+
+
+**扩展的差异语法**
+
+Git扩展了GNU的差异比较语法，提供了对重命名、二进制文件、文件权限变更的支持。在后面的“Git应用”辟专题介绍二进制文件的差异比较和合并。
+
+**逐词比较，而非缺省的逐行比较**
+
+Git的差异比较缺省是逐行比较，分别显示改动前的行和改动后的行，到底改动哪里还需要仔细辨别。Git还提供一种逐词比较的输出，有的人会更喜欢。使用 "--word-diff" 参数可以显示逐词比较。
+
+:: 
+
+  $ git diff --word-diff
+  diff --git a/src/book/02-use-git/080-git-history-travel.rst b/src/book/02-use-git/080-git-history-travel.rst
+  index f740203..2dd3e6f 100644
+  --- a/src/book/02-use-git/080-git-history-travel.rst
+  +++ b/src/book/02-use-git/080-git-history-travel.rst
+  @@ -681,7 +681,7 @@ Git的大部分命令可以使用提交版本作为参数（如：git diff），
+
+  ::
+
+    [-18:23:48 jiangxin@hp:~/gitwork/gitbook/src/book$-]{+$+} git log --stat --oneline  I..C
+    0cd7f2e commit C.
+     README    |    1 +
+     doc/C.txt |    1 +
+
+上面的逐词差异显示是有颜色显示的：删除内容 `[-...-]` 用红色表示，添加的内容 `{+...+}` 用绿色表示。
+
+文件追溯：git blame
+-------------------
+
+在软件开发过程中当发现Bug并定位到具体的代码时，Git的文件追溯命令可以指出是谁在什么时候，什么版本引入的此Bug。
+
+当针对文件执行 git blame 命令，就会逐行显示文件，在每一行的行首显示此行最早是在什么版本引入的，由谁引入。
+
+::
+
+  $ cd /my/workspace/gitdemo-commit-tree
+  $ git blame README
+  ^e80aa74 (Jiang Xin 2010-12-09 14:00:33 +0800  1) DEMO program for git-scm-book.
+  ^e80aa74 (Jiang Xin 2010-12-09 14:00:33 +0800  2) 
+  ^e80aa74 (Jiang Xin 2010-12-09 14:00:33 +0800  3) Changes
+  ^e80aa74 (Jiang Xin 2010-12-09 14:00:33 +0800  4) =======
+  ^e80aa74 (Jiang Xin 2010-12-09 14:00:33 +0800  5) 
+  81993234 (Jiang Xin 2010-12-09 14:30:15 +0800  6) * create node A.
+  0cd7f2ea (Jiang Xin 2010-12-09 14:29:09 +0800  7) * create node C.
+  776c5c9d (Jiang Xin 2010-12-09 14:27:31 +0800  8) * create node B.
+  beb30ca7 (Jiang Xin 2010-12-09 14:11:01 +0800  9) * create node F.
+  ^3252fcc (Jiang Xin 2010-12-09 14:00:33 +0800 10) * create node J.
+  ^634836c (Jiang Xin 2010-12-09 14:00:33 +0800 11) * create node I.
+  ^83be369 (Jiang Xin 2010-12-09 14:00:33 +0800 12) * create node E.
+  212efce1 (Jiang Xin 2010-12-09 14:06:34 +0800 13) * create node D.
+  ^2ab52ad (Jiang Xin 2010-12-09 14:00:33 +0800 14) * create node H.
+  ^e80aa74 (Jiang Xin 2010-12-09 14:00:33 +0800 15) * create node G.
+  ^e80aa74 (Jiang Xin 2010-12-09 14:00:33 +0800 16) * initialized.
+
+只想查看某几行，使用 "-L n,m" 参数，如下：
+
+::
+
+  $ git blame -L 6,+5 README
+  81993234 (Jiang Xin 2010-12-09 14:30:15 +0800  6) * create node A.
+  0cd7f2ea (Jiang Xin 2010-12-09 14:29:09 +0800  7) * create node C.
+  776c5c9d (Jiang Xin 2010-12-09 14:27:31 +0800  8) * create node B.
+  beb30ca7 (Jiang Xin 2010-12-09 14:11:01 +0800  9) * create node F.
+  ^3252fcc (Jiang Xin 2010-12-09 14:00:33 +0800 10) * create node J.
+
+二分查找：git bisect
+--------------------
+
+前面的文件追溯是建立在定位问题（Bug）的基础上，然后才能通过错误的行（代码）找到人（提交者），打板子（教育或惩罚）。那么如何定位问题呢？Git的二分查找命令可以提供帮助。
+
+执行二分查找，首先项目应该建立起一套自动化测试机制，或者对所发现的问题有一个自动化测试解决方案。将有问题的版本标记为“坏”，然后以二分法向前找到一个版本，切换过去进行相应的测试，根据测试结果将此版本标记为“好”或者“坏”，... ，最终定位到引入问题的版本。
+
+可见二分查找并不神秘，实际上每个进行过软件测试的人都经历过，只不过Git提供了基于代码提交版本的精细的查找，而非很多软件测试中粗放式的、无法定位到代码的、针对软件发布版本的测试。Git提供的 `git bisect` 命令实现自动对版本进行好坏区分和折半查找。
+
+
+获取历史版本
+------------------
+checkout rev -- <file>
