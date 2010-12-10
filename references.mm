@@ -2866,27 +2866,55 @@
 	TEXT="Step 9: 反删除和恢复">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
-<node COLOR="#990000" ID="ID_821734512" 
-	TEXT="反删除？直接添加就是了。">
+<node COLOR="#990000" FOLDED="true" ID="ID_1166478222" 
+	TEXT="不求完美 但求卓越">
 <font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1022887465" 
+	TEXT="Git 允许人们犯错，是因为Git提供给人纠错的机会。"/>
+<node COLOR="#111111" ID="ID_1592976775" 
+	TEXT="Git 忠实的记录每一步操作，无论正确的操作和错误的操作。"/>
+<node COLOR="#111111" ID="ID_722774645" 
+	TEXT="常常犯下的错误在版本控制来看，有哪些呢？"/>
+<node COLOR="#111111" ID="ID_1922424387" 
+	TEXT="添加了不该添加的数据。例如 .o 文件。曾经看过一个客户把 2G 的虚拟机文件检入版本库，最好用下章的方式删除"/>
+<node COLOR="#111111" ID="ID_1448040532" 
+	TEXT="删除了不该删除的文件。很简单，删除只是在最新版本中不出现，历史版本中尚在，恢复即是了。"/>
+<node COLOR="#111111" ID="ID_375031024" 
+	TEXT="文件修改引入错误。还原就是了。"/>
 </node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1389963411" 
-	TEXT="恢复历史提交？">
+<node COLOR="#990000" FOLDED="true" ID="ID_351986247" 
+	TEXT="恢复错误的删除">
 <font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_940929520" 
-	TEXT="直接 reverse"/>
-<node COLOR="#111111" ID="ID_1455988397" 
-	TEXT="如果再想还原回原来提交？ cherry-pick"/>
+<node COLOR="#111111" ID="ID_486794918" 
+	TEXT="直接添加就可以了。"/>
+<node COLOR="#111111" ID="ID_1668127992" 
+	TEXT="会导致版本中文件加倍么？"/>
 </node>
-<node COLOR="#990000" ID="ID_683126608" 
-	TEXT="反删除存储会加倍么？">
+<node COLOR="#990000" FOLDED="true" ID="ID_1995807233" 
+	TEXT="恢复错误的添加">
 <font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_348235013" 
+	TEXT="为了避免错误的添加，使用文件忽略功能。"/>
+<node COLOR="#111111" ID="ID_1382912724" 
+	TEXT="需要彻底删除的文件 —— 核弹起爆密码，见下一章。"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_755954555" 
+	TEXT="恢复错误的修改">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1445600070" 
+	TEXT="revert 命令"/>
+<node COLOR="#111111" ID="ID_1745415799" 
+	TEXT="指向 revert 部分？不提交的 revert，然后 git add -p 。"/>
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1579959370" 
 	TEXT="Step 10: 改变历史">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_1779174595" 
+	TEXT="我是《回到未来》的粉丝，总幻想有未来的我回来现在送给我一本2000-2050体育年鉴。&#xa;Git让我体验到了回到未来的感觉，像极了一个时光机器，不但允许你在历史中穿梭，而且能够改变历史。">
+<font NAME="Serif" SIZE="14"/>
+</node>
 <node COLOR="#990000" ID="ID_59318503" 
 	TEXT="我们可以看到前面的反删除和恢复都是不改变历史的操作，但是要改变历史呢？">
 <font NAME="Serif" SIZE="14"/>
