@@ -4468,6 +4468,29 @@
 </node>
 </node>
 </node>
+<node COLOR="#0033ff" FOLDED="true" ID="ID_380728796" POSITION="right" 
+	TEXT="附录">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="Serif" SIZE="18"/>
+<node COLOR="#00b439" FOLDED="true" ID="ID_393878955" 
+	TEXT="SVN/GIT 面对面">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_1161210646" 
+	TEXT="Subversion 企业版本控制系统。">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1916342526" 
+	TEXT="SVN 提交可以不写提交说明，而 Git 必须写。">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" ID="ID_524793917" 
+	TEXT="HG/GIT 面对面">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+</node>
+</node>
 <node COLOR="#0033ff" FOLDED="true" ID="ID_1872967347" POSITION="left" 
 	TEXT="Git 工具">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
