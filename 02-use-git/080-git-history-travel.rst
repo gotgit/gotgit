@@ -1019,7 +1019,7 @@ Git提供的 `git bisect` 命令是基于版本库的，自动化的问题查找
 
 在执行二分查找的过程中，一不小心就有可能犯错，将“好提交”标记为“坏提交”，或者相反。这将导致前面的查找过程也前功尽弃。Git的二分查找提供一个恢复查找进度的办法。
 
-* 例如对E提交，一个好版本标记为坏版本。
+* 例如对E提交，本来是一个“好版本”却被错误的标记为“坏版本”。
 
   ::
 
@@ -1104,9 +1104,9 @@ Git的二分查找命令支持 run 子命令，可以运行一个自动化测试
 
   ::
 
-    $ git checkout master
-    Previous HEAD position was 83be369... commit E.
-    Switched to branch 'master'
+    $ git bisect start master G
+    Bisecting: 5 revisions left to test after this (roughly 2 steps)
+    [0cd7f2ea245d90d414e502467ac749f36aa32cc4] commit C.
 
 * 自动化测试，使用脚本 `good-or-bad.sh` 。
 
