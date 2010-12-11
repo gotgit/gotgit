@@ -2906,17 +2906,17 @@
 <node COLOR="#111111" ID="ID_1745415799" 
 	TEXT="指向 revert 部分？不提交的 revert，然后 git add -p 。"/>
 </node>
+<node COLOR="#990000" ID="ID_59318503" 
+	TEXT="我们可以看到前面的反删除和恢复都是不改变历史的操作，但是要改变历史呢？">
+<font NAME="Serif" SIZE="14"/>
+</node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1579959370" 
 	TEXT="Step 10: 改变历史">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" ID="ID_1779174595" 
-	TEXT="我是《回到未来》的粉丝，总幻想有未来的我回来现在送给我一本2000-2050体育年鉴。&#xa;Git让我体验到了回到未来的感觉，像极了一个时光机器，不但允许你在历史中穿梭，而且能够改变历史。">
-<font NAME="Serif" SIZE="14"/>
-</node>
-<node COLOR="#990000" ID="ID_59318503" 
-	TEXT="我们可以看到前面的反删除和恢复都是不改变历史的操作，但是要改变历史呢？">
+	TEXT="我是《回到未来》的粉丝，总幻想有未来的我回来现在送给我一本2000-2050体育年鉴。&#xa;操作Git会体验到回到未来的觉，Git像极了一个时光机器，不但允许你在历史中穿梭，而且能够改变历史。">
 <font NAME="Serif" SIZE="14"/>
 </node>
 <node COLOR="#990000" ID="ID_740859438" 
@@ -2924,7 +2924,7 @@
 <font NAME="Serif" SIZE="14"/>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_1670045255" 
-	TEXT="git commit --amend, 改变最近的历史">
+	TEXT="悔棋：倒退一步的历史：git commit --amend, 改变最近的历史">
 <font NAME="Serif" SIZE="14"/>
 <node COLOR="#111111" ID="ID_1472028670" 
 	TEXT="忘记添加文件： git add . ; git ci --amend"/>
@@ -2935,10 +2935,54 @@
 <node COLOR="#111111" ID="ID_86984415" 
 	TEXT="提交日志有问题： git ci --amend"/>
 </node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1940338708" 
-	TEXT="Git 变基">
-<edge STYLE="bezier" WIDTH="thin"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_376075727" 
+	TEXT="多步悔棋：倒退多步的历史：">
 <font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_283236627" 
+	TEXT="多步悔棋"/>
+<node COLOR="#111111" ID="ID_1080018904" 
+	TEXT="前面的操作好理解，都是抛弃最近的提交步骤，如果最近的提交没有问题，而是历史某个提交有问题（提交说明的文字错误，提交了敏感文件等等）">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1255770560" 
+	TEXT="回到未来">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_599582570" 
+	TEXT="《回到未来》中的布朗博士在解释为何改变历史造成两个平行的未来——对历史的扰动改变未来。Git何尝不是这样，历史提交被更改（SHA1哈希值更改），则所有从此提交派生的提交ID也同样会变更，这可以称为更改历史的副作用。在后面团队协作部分，。。。">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1669550972" 
+	TEXT="第一版的时光旅行车：布朗博士的第一版本时光旅行车（跑车，核燃料：钚）">
+<node COLOR="#111111" ID="ID_714539649" 
+	TEXT="checkout 历史版本"/>
+<node COLOR="#111111" ID="ID_113764551" 
+	TEXT="commit --amend"/>
+<node COLOR="#111111" ID="ID_192846439" 
+	TEXT="cherry-pick 错误提交"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_39724911" 
+	TEXT="第二版的时光旅行车：布朗博士的第二版本时光旅行车（飞车，燃料：有机肥料）">
+<node COLOR="#111111" ID="ID_1934657982" 
+	TEXT="rebase"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1143247945" 
+	TEXT="git rebase 变基">
+<node COLOR="#111111" ID="ID_1378052180" 
+	TEXT="编辑的命令行"/>
+<node COLOR="#111111" ID="ID_874700103" 
+	TEXT="不同命令行的变基示意图"/>
+<node COLOR="#111111" ID="ID_1926486879" 
+	TEXT="用变基改变笨的“回到未来”"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1706730124" 
+	TEXT="第三版的时光旅行车：布朗博士的第三版本时光旅行车（飞行火车，燃料：有机肥料）">
+<node COLOR="#111111" ID="ID_607430629" 
+	TEXT="rebase -i"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1940338708" 
+	TEXT="git rebase -i 实现对提交的整理">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
 <node COLOR="#111111" ID="ID_1329578132" 
 	TEXT="实现历史提交的整理">
 <font NAME="Serif" SIZE="12"/>
@@ -3043,209 +3087,32 @@
 </node>
 </node>
 </node>
-<node COLOR="#990000" FOLDED="true" ID="ID_742058904" 
-	TEXT="如何修改历史提交？">
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_1669550972" 
-	TEXT="一个笨方法">
-<node COLOR="#111111" ID="ID_714539649" 
-	TEXT="checkout 历史版本"/>
-<node COLOR="#111111" ID="ID_192846439" 
-	TEXT="cherry-pick 错误提交"/>
-<node COLOR="#111111" ID="ID_113764551" 
-	TEXT="commit --amend"/>
-<node COLOR="#111111" ID="ID_1143247945" 
-	TEXT="git rebase 变基"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_432858843" 
-	TEXT="好的办法">
-<node COLOR="#111111" ID="ID_1436248394" 
-	TEXT="git rebase -i 。。。"/>
-</node>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_570563852" 
-	TEXT="撤销操作（删除核弹起爆码）/和谐/墙">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_1275319654" 
-	TEXT="用 git checkout 取消本地文件修改，相当于 svn revert">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<icon BUILTIN="idea"/>
-<node COLOR="#111111" ID="ID_1169991971" 
-	TEXT="git checkout -- filename ： 回退本地修改">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_3868544" 
-	TEXT="git checkout 和 hg revert 的概念相同">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_634582136" 
-	TEXT="例如本地误删了文件，运行 git checkout 目录/文件名 就可以回复文件">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_331099602" 
-	TEXT="修改的文件，运行 git checkout 会被原始文件覆盖！！">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1906651008" 
-	TEXT="但是注意区分： git revert 和 hg revert 概念不同">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_263324807" 
-	TEXT="git revert &lt;COMMIT-ISH&gt; 是 cherry-pick 合并操作，即将某个 commit 反向提交。">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1092307074" 
-	TEXT="hg revert 是取消本地修改，相当于用库中文件覆盖本地文件">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#111111" ID="ID_1360337445" 
-	TEXT="checkout 命令，在文件丢失或者要还原会用到。分支创建和检出是后话"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1510390008" 
-	TEXT="如何不变更历史的撤销某个提交">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_78948129" 
-	TEXT="git revert &lt;commit&gt;"/>
-</node>
-<node COLOR="#111111" ID="ID_1296515440" 
-	TEXT="如果 git add 和 git rm 操作尚未提交，如何撤销？">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_774476671" 
-	TEXT="但是第一次建库，不是这么操作的，而要 git rm --cached ">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_339684205" 
-	TEXT="撤销已经提交的操作。git reset ， --soft, --hard, ...">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_893753929" 
-	TEXT="git reset 多说几句">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1406689311" 
-	TEXT="所谓重置(reset)，就是切换当前分支的最新节点。根据是否清空 index（stage）和工作区内容，分为下面三种类型。">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_903649289" 
-	TEXT="参数一： --mixed 是默认参数。重置 HEAD 和 INDEX。即当前分支最新节点切换到 某个节点处，并用改节的内容覆盖 index。可以用于从 stage（即 index） 中撤销文件。&#xa;（安全：既不改变 index/stage 文件，又不改变本地工作区文件）">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_512826760" 
-	TEXT="参数二： --soft 参数。仅仅重置 HEAD。而 index 即 stage 不变。可用于撤销之前的提交，而对应的改动并不取消，仍保存在 stage 中。 &#xa;（安全：不改变本地工作区文件）">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1289130702" 
-	TEXT="参数三： --hard 参数。重置 HEAD, index and working tree。 即 HEAD 会切换到指定版本，index 和工作区也会和指定版本一致。（当然，工作区新的未入库文件保留）&#xa;（危险操作：本地工作区也被重置）">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1256997393" 
-	TEXT="1. 从 stage 中撤出文件： git reset HEAD -- filename。 &#xa;    相当于 git reset --mixed HEAD -- filename">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_682445051" 
-	TEXT="如果 git reset &lt;commit-ish&gt; 的 &lt;commit-ish&gt; 为历史 commit 且最新的 commit 没有 tag 对应，可能造成因为找不到最新的 commit-ish 导致丢失 &lt;commit-ish&gt; 之后的提交？！">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_890532234" 
-	TEXT="Tip ： 如果不小心因执行 git reset &lt;old-commit-ish&gt;，可以通过 .git/logs/HEAD 文件找到丢失的 &lt;commit-ish&gt;">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1604059460" 
-	TEXT="可以通过  .git/logs/HEAD 查看日志，找到切换分支的新分支点前的 commit id。">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1739339320" 
-	TEXT="再执行 git reset  &lt;40-DIGIT-COMMIT-ID&gt;">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_111701884" 
-	TEXT="2. 远程 PUSH 后，用 git reset HEAD，切换到最新的 HEAD 版本">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1545262381" 
-	TEXT="远程 push 到本地，用 reset 更新，因为现在的 HEAD 处于旧版本">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1678666166" 
-	TEXT="执行 git status 发现本地版本不是 HEAD 版本">
-<node COLOR="#111111" ID="ID_88055624" 
-	TEXT=" git status&#xa;# On branch master&#xa;# Changes to be committed:&#xa;#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)&#xa;#&#xa;#       modified:   .gitignore&#xa;#       deleted:    demo/conf/trac.ini&#xa;#       deleted:    demo/db/trac.db&#xa;#       deleted:    demo/log/trac.log&#xa;#       copied:     demo/README -&gt; freemind/README&#xa;#       copied:     demo/VERSION -&gt; freemind/VERSION&#xa;#       new file:   freemind/conf/trac.ini&#xa;#       copied:     demo/conf/trac.ini.sample -&gt; freemind/conf/trac.ini.sample&#xa;#       new file:   freemind/db/trac.db&#xa;#       new file:   freemind/log/trac.log&#xa;#       copied:     demo/templates/site.html -&gt; freemind/templates/site.html&#xa;#       modified:   infrastructure/conf/trac.ini&#xa;#       modified:   infrastructure/db/trac.db&#xa;#       deleted:    infrastructure/log/trac.log&#xa;#       modified:   ossxp/db/trac.db&#xa;#       renamed:    demo/README -&gt; pysvnmanager/README&#xa;#       renamed:    demo/VERSION -&gt; pysvnmanager/VERSION&#xa;#       new file:   pysvnmanager/conf/trac.ini&#xa;#       renamed:    demo/conf/trac.ini.sample -&gt; pysvnmanager/conf/trac.ini.sample&#xa;#       new file:   pysvnmanager/db/trac.db&#xa;#       new file:   pysvnmanager/log/trac.log&#xa;#       renamed:    demo/templates/site.html -&gt; pysvnmanager/templates/site.html&#xa;#       modified:   subversion/db/trac.db&#xa;#       modified:   trac/db/trac.db&#xa;#       modified:   trac/log/trac.log&#xa;#&#xa;"/>
-</node>
-<node COLOR="#111111" ID="ID_77053629" 
-	TEXT="运行 git reset HEAD ，迁移到 HEAD 版本"/>
-<node COLOR="#111111" ID="ID_1089500250" 
-	TEXT="运行 git checkout .  以便检出/回退最新版本"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_204354559" 
-	TEXT="3. 提交有误，收回以便重新提交">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1137902355" 
-	TEXT="$ git commit ...&#xa;&#xa;# 收回 前一次提交&#xa;$ git reset --soft HEAD^&#xa;$ edit                     &#xa;$ git commit -a -c ORIG_HEAD  # -c 含义是从 ORIG_HEAD 获取提交说明&#xa;"/>
-<node COLOR="#111111" ID="ID_1820970943" 
-	TEXT="不过，使用命令 &quot;git commit --amend&quot; 最为简单。">
-<icon BUILTIN="idea"/>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1530384981" 
-	TEXT="4. 收回前几次提交">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1439168298" 
-	TEXT="$ git commit ...&#xa;&#xa;# 收回 前三次提交&#xa;$ git reset --soft HEAD~3&#xa;$ edit                     &#xa;$ git commit -a&#xa;"/>
-</node>
-</node>
-<node COLOR="#111111" ID="ID_771150047" 
-	TEXT="最新提交的撤销： git ci --amend">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1128240825" 
-	TEXT="提交撤销的原理：分支游标">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1629350594" 
-	TEXT="分支是 refs/heads 下的文件（引用）"/>
-<node COLOR="#111111" ID="ID_1239615245" 
-	TEXT="引用指向一个提交"/>
-<node COLOR="#111111" ID="ID_879042389" 
-	TEXT="分支的历史是和相关的。"/>
-</node>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_354216441" 
-	TEXT="找回重置的版本库 reflog">
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_1311492716" 
-	TEXT="RefLog Shortnames&#xa;&#xa;One of the things Git does in the background while you’re working away is keep a reflog — a log of where your HEAD and branch references have been for the last few months.&#xa;&#xa;You can see your reflog by using git reflog:&#xa;&#xa;$ git reflog&#xa;734713b... HEAD@{0}: commit: fixed refs handling, added gc auto, updated&#xa;d921970... HEAD@{1}: merge phedders/rdocs: Merge made by recursive.&#xa;1c002dd... HEAD@{2}: commit: added some blame and merge stuff&#xa;1c36188... HEAD@{3}: rebase -i (squash): updating HEAD&#xa;95df984... HEAD@{4}: commit: # This is a combination of two commits.&#xa;1c36188... HEAD@{5}: rebase -i (squash): updating HEAD&#xa;7e05da5... HEAD@{6}: rebase -i (pick): updating HEAD&#xa;&#xa;Every time your branch tip is updated for any reason, Git stores that information for you in this temporary history. And you can specify older commits with this data, as well. If you want to see the fifth prior value of the HEAD of your repository, you can use the @{n} reference that you see in the reflog output:&#xa;&#xa;$ git show HEAD@{5}&#xa;&#xa;You can also use this syntax to see where a branch was some specific amount of time ago. For instance, to see where your master branch was yesterday, you can type&#xa;&#xa;">
-<font NAME="Serif" SIZE="12"/>
 </node>
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1780915744" 
-	TEXT="Step 11: 不要将鸡蛋放在一个篮子里（git push）">
+	TEXT="Step 11: 镜像和同步">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
-<node COLOR="#990000" ID="ID_1937427093" 
-	TEXT="本地克隆。每章一个克隆，有些太恐怖！">
+<node COLOR="#990000" ID="ID_373281554" 
+	TEXT="通过前面的学习，看到Git的灵活以及Git本身的健壮性，可以通过重置随意撤销提交，可以通过变基更改历史，还可以通过reflog纠正错误的重置操作。但是再健壮的版本库设计，也抵挡不了存储介质的崩溃（版本库删除、硬盘损坏）。不要把鸡蛋装在一个篮子里。">
 <font NAME="Serif" SIZE="14"/>
 </node>
-<node COLOR="#990000" FOLDED="true" ID="ID_704217379" 
-	TEXT="实际上只有一个克隆就可以了。">
+<node COLOR="#990000" FOLDED="true" ID="ID_1580534327" 
+	TEXT="PUSH 建立版本库镜像。">
 <font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_1081340660" 
-	TEXT="本地克隆">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_450920240" 
-	TEXT="clone --mirror"/>
-<node COLOR="#111111" ID="ID_1454885577" 
-	TEXT="git push"/>
-</node>
-</node>
-<node COLOR="#990000" ID="ID_1567626628" 
+<node COLOR="#111111" ID="ID_1693396283" 
+	TEXT="画图：工作区+版本库 ---(push)---&gt; 裸版本库"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_141417281" 
+	TEXT="为什么使用裸版本库？">
+<node COLOR="#111111" ID="ID_1567626628" 
 	TEXT="直接向本地克隆为什么会失败？">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#990000" FOLDED="true" ID="ID_557313563" 
+<node COLOR="#111111" ID="ID_557313563" 
 	TEXT="裸版本库">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
 <node COLOR="#111111" ID="ID_532743507" 
 	TEXT="本地 init 一个空库，然后 push">
 <font NAME="Serif" SIZE="12"/>
@@ -3253,31 +3120,29 @@
 <node COLOR="#111111" ID="ID_833622297" 
 	TEXT="或者 git clone --mirror"/>
 </node>
-<node COLOR="#990000" ID="ID_1997618543" 
-	TEXT="直接 push 太麻烦">
-<font NAME="Serif" SIZE="14"/>
-</node>
-<node COLOR="#990000" ID="ID_1547693638" 
-	TEXT="注册远程版本库，push">
-<font NAME="Serif" SIZE="14"/>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_326035925" 
-	TEXT="多台机器数据的同步（git pull）">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_1887461557" 
-	TEXT="git pull">
+<node COLOR="#111111" ID="ID_1454885577" 
+	TEXT="git push 命令的格式"/>
+<node COLOR="#111111" ID="ID_1547693638" 
+	TEXT="注册远程版本库，在下一个部分予以介绍">
 <font NAME="Serif" SIZE="12"/>
 </node>
 </node>
-<node COLOR="#990000" ID="ID_1387396129" 
-	TEXT="U盘的 Push">
-<edge STYLE="bezier" WIDTH="thin"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_345423626" 
+	TEXT="PULL+PUSH 实现工作同步。">
 <font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1850466941" 
+	TEXT="画图： 工作区+版本库 &lt;---(push/pull)---&gt; 裸版本库  &lt;---(push/pull)---&gt; 工作区+版本库"/>
+<node COLOR="#111111" ID="ID_1524616119" 
+	TEXT="pull 相当于 fetch + merge"/>
+<node COLOR="#111111" ID="ID_1387396129" 
+	TEXT="使用 U盘 作为中介">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1912771033" 
-	TEXT="Step 12: 两个相同的大文件，以及版本库的整理">
+	TEXT="Step 12: 版本库的整理">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" FOLDED="true" ID="ID_376643602" 
@@ -3287,10 +3152,9 @@
 	TEXT="这个章节的题目可能有问题。你可能会说前几次提交由于版本库的文件压缩存储肯定要小，但长久来看是要大。">
 <font NAME="Serif" SIZE="12"/>
 </node>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1465126220" 
+<node COLOR="#111111" FOLDED="true" ID="ID_1465126220" 
 	TEXT="我做一个颠覆你相像的操作。">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 <node COLOR="#111111" ID="ID_910190138" 
 	TEXT="一个大文件加入版本库">
 <font NAME="Serif" SIZE="12"/>
@@ -3304,21 +3168,30 @@
 <font NAME="Serif" SIZE="12"/>
 </node>
 </node>
-<node COLOR="#990000" ID="ID_994560929" 
-	TEXT="文件删除再添加，版本库如何变化呢？">
-<font NAME="Serif" SIZE="14"/>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_181884990" 
+<node COLOR="#111111" ID="ID_211384135" 
+	TEXT="但是大文件修改后呢？"/>
+<node COLOR="#111111" ID="ID_567881137" 
+	TEXT="执行工作区重整（git gc）"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_181884990" 
 	TEXT="这是为什么呢？">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 <node COLOR="#111111" ID="ID_1185169170" 
 	TEXT="Git 是对内容进行跟踪，而非文件"/>
 <node COLOR="#111111" ID="ID_773514279" 
 	TEXT="不同文件只要内容相同，Git 库中的存储就是一个样"/>
 </node>
-<node COLOR="#990000" ID="ID_676573676" 
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_676573676" 
 	TEXT="如何彻底清除版本库/版本库瘦身？">
 <font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_781078314" 
+	TEXT="从版本库中彻底移除文件？">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_994560929" 
+	TEXT="文件删除再添加，版本库如何变化呢？">
+<font NAME="Serif" SIZE="12"/>
+</node>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_1148228648" 
 	TEXT="版本库管理">
@@ -3357,6 +3230,10 @@
 <font NAME="Serif" SIZE="12"/>
 </node>
 </node>
+</node>
+<node COLOR="#990000" ID="ID_1155937126" 
+	TEXT="回顾一下本部分的内容：这一部分的内容对于一个人使用 Git，内容已经非常丰富了。">
+<font NAME="Serif" SIZE="14"/>
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1348857825" 
@@ -3520,7 +3397,7 @@
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="Serif" SIZE="18"/>
 <node COLOR="#00b439" FOLDED="true" ID="ID_473330881" 
-	TEXT="Step 9: pull/push， 多人协作">
+	TEXT="Step 13: pull/push， 多人协作">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" FOLDED="true" ID="ID_1897687140" 
@@ -3560,7 +3437,7 @@
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1418738352" 
-	TEXT="Step 10: format-patch/apply/am, 多人协作">
+	TEXT="Step 14: format-patch/apply/am, 多人协作">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" ID="ID_249271017" 
@@ -3569,7 +3446,7 @@
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1192962447" 
-	TEXT="Step 11: Git 基础（冲突解决）">
+	TEXT="Step 15: Git 基础（冲突解决）">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" ID="ID_646053453" 
@@ -3653,7 +3530,7 @@
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_135506718" 
-	TEXT="Step 12: 里程碑/分支">
+	TEXT="Step 16: 里程碑/分支">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" FOLDED="true" ID="ID_747613262" 
@@ -4402,7 +4279,7 @@
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_148688254" 
-	TEXT="Step 13: Git 进阶（远程分支）">
+	TEXT="Step 17: Git 进阶（远程分支）">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" FOLDED="true" ID="ID_433746938" 
