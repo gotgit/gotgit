@@ -2877,20 +2877,22 @@
 <node COLOR="#990000" FOLDED="true" ID="ID_1670045255" 
 	TEXT="悔棋：倒退一步的历史：git commit --amend, 改变最近的历史">
 <font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_1472028670" 
-	TEXT="忘记添加文件： git add . ; git ci --amend"/>
-<node COLOR="#111111" ID="ID_774617574" 
-	TEXT="忘记删除文件: git add -A; git ci --amend"/>
-<node COLOR="#111111" ID="ID_1078181959" 
-	TEXT="文件改动有问题：  modify; git add -u; git ci --amend"/>
-<node COLOR="#111111" ID="ID_86984415" 
-	TEXT="提交日志有问题： git ci --amend"/>
+<node COLOR="#111111" ID="ID_1767547568" 
+	TEXT="修改提交日志： “测试使用 qgit 提交。” ==&gt; “删除 hello.h”"/>
+<node COLOR="#111111" ID="ID_464076598" 
+	TEXT="不要删除文件：git add hello.h， git ci --amend"/>
+<node COLOR="#111111" ID="ID_225790600" 
+	TEXT="重新改动 README.txt 。 git reset --soft; git checkout README.txt; git ci -F .git/..."/>
+<node COLOR="#111111" ID="ID_645157140" 
+	TEXT="因为悔棋一步是最常用模式，因此。。。"/>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_376075727" 
 	TEXT="多步悔棋：倒退多步的历史：">
 <font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_814296785" 
+	TEXT="--o--o--o  =&gt; --o--o"/>
 <node COLOR="#111111" ID="ID_283236627" 
-	TEXT="多步悔棋"/>
+	TEXT="多步悔棋，最后两步提交合并为一次 ：修改 hello.h"/>
 <node COLOR="#111111" ID="ID_1080018904" 
 	TEXT="前面的操作好理解，都是抛弃最近的提交步骤，如果最近的提交没有问题，而是历史某个提交有问题（提交说明的文字错误，提交了敏感文件等等）">
 <font NAME="Serif" SIZE="12"/>
@@ -2905,6 +2907,8 @@
 </node>
 <node COLOR="#111111" FOLDED="true" ID="ID_1669550972" 
 	TEXT="第一版的时光旅行车：布朗博士的第一版本时光旅行车（跑车，核燃料：钚）">
+<node COLOR="#111111" ID="ID_277884236" 
+	TEXT="将 .gitignore 移动目录的操作抛弃。"/>
 <node COLOR="#111111" ID="ID_714539649" 
 	TEXT="checkout 历史版本"/>
 <node COLOR="#111111" ID="ID_113764551" 
@@ -2914,6 +2918,8 @@
 </node>
 <node COLOR="#111111" FOLDED="true" ID="ID_39724911" 
 	TEXT="第二版的时光旅行车：布朗博士的第二版本时光旅行车（飞车，燃料：有机肥料）">
+<node COLOR="#111111" ID="ID_259951414" 
+	TEXT="将 .gitignore 的操作抛弃"/>
 <node COLOR="#111111" ID="ID_1934657982" 
 	TEXT="rebase"/>
 <node COLOR="#111111" FOLDED="true" ID="ID_1143247945" 
@@ -2928,6 +2934,10 @@
 </node>
 <node COLOR="#111111" FOLDED="true" ID="ID_1706730124" 
 	TEXT="第三版的时光旅行车：布朗博士的第三版本时光旅行车（飞行火车，燃料：有机肥料）">
+<node COLOR="#111111" ID="ID_1598383725" 
+	TEXT="将 .gitignore 的操作抛弃"/>
+<node COLOR="#111111" ID="ID_75834275" 
+	TEXT="修改提交说明：ignore object files. =&gt; ignore object files and version.h."/>
 <node COLOR="#111111" ID="ID_607430629" 
 	TEXT="rebase -i"/>
 <node COLOR="#111111" FOLDED="true" ID="ID_1940338708" 
@@ -3040,14 +3050,23 @@
 </node>
 </node>
 </node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1732654076" 
+	TEXT="丢弃历史">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_370504073" 
+	TEXT="将“README is from welcome.txt. ”作为初始提交。"/>
+<node COLOR="#111111" ID="ID_1693227810" 
+	TEXT="write-tree , commit-tree"/>
+<node COLOR="#111111" ID="ID_1452811668" 
+	TEXT="rebase"/>
 </node>
-<node COLOR="#00b439" FOLDED="true" ID="ID_1070000573" 
+<node COLOR="#990000" FOLDED="true" ID="ID_1070000573" 
 	TEXT="Step 10: 反删除和恢复">
 <edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
-<node COLOR="#990000" FOLDED="true" ID="ID_1324620789" 
-	TEXT="有的时候改变历史并不合适。">
 <font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1324620789" 
+	TEXT="有的时候改变历史并不合适。">
+<font NAME="Serif" SIZE="12"/>
 <node COLOR="#111111" ID="ID_167080363" 
 	TEXT="用户1的提交（图）"/>
 <node COLOR="#111111" ID="ID_263990367" 
@@ -3059,9 +3078,9 @@
 <node COLOR="#111111" ID="ID_983944012" 
 	TEXT="用户1从用户2 pull，就导致历史重现。"/>
 </node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1166478222" 
+<node COLOR="#111111" FOLDED="true" ID="ID_1166478222" 
 	TEXT="不求完美 但求卓越">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 <node COLOR="#111111" ID="ID_1022887465" 
 	TEXT="Git 允许人们犯错，是因为Git提供给人纠错的机会。"/>
 <node COLOR="#111111" ID="ID_1592976775" 
@@ -3075,37 +3094,38 @@
 <node COLOR="#111111" ID="ID_375031024" 
 	TEXT="文件修改引入错误。还原就是了。"/>
 </node>
-<node COLOR="#990000" FOLDED="true" ID="ID_351986247" 
+<node COLOR="#111111" FOLDED="true" ID="ID_351986247" 
 	TEXT="恢复错误的删除">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 <node COLOR="#111111" ID="ID_486794918" 
 	TEXT="直接添加就可以了。"/>
 <node COLOR="#111111" ID="ID_1668127992" 
 	TEXT="会导致版本中文件加倍么？"/>
 </node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1995807233" 
+<node COLOR="#111111" FOLDED="true" ID="ID_1995807233" 
 	TEXT="恢复错误的添加">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 <node COLOR="#111111" ID="ID_348235013" 
 	TEXT="为了避免错误的添加，使用文件忽略功能。"/>
 <node COLOR="#111111" ID="ID_1382912724" 
 	TEXT="需要彻底删除的文件 —— 核弹起爆密码，见下一章。"/>
 </node>
-<node COLOR="#990000" FOLDED="true" ID="ID_755954555" 
+<node COLOR="#111111" FOLDED="true" ID="ID_755954555" 
 	TEXT="恢复错误的修改">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 <node COLOR="#111111" ID="ID_1445600070" 
 	TEXT="revert 命令"/>
 <node COLOR="#111111" ID="ID_1745415799" 
 	TEXT="指向 revert 部分？不提交的 revert，然后 git add -p 。"/>
 </node>
-<node COLOR="#990000" ID="ID_59318503" 
+<node COLOR="#111111" ID="ID_59318503" 
 	TEXT="我们可以看到前面的反删除和恢复都是不改变历史的操作，但是要改变历史呢？">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1780915744" 
-	TEXT="Step 11: 镜像和同步">
+	TEXT="Step 10: 镜像和同步">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" ID="ID_373281554" 
@@ -3156,7 +3176,7 @@
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1912771033" 
-	TEXT="Step 12: 版本库的整理">
+	TEXT="Step 11: 版本库的整理">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" FOLDED="true" ID="ID_376643602" 
@@ -3410,6 +3430,11 @@
 	TEXT="Git 进阶篇: 协作">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="Serif" SIZE="18"/>
+<node COLOR="#00b439" ID="ID_441486497" 
+	TEXT="示例：hello, world. 汉化，本地化，。。。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+</node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1146526869" 
 	TEXT="协议">
 <edge STYLE="bezier" WIDTH="thin"/>
