@@ -242,12 +242,12 @@ Git也有这样的能力，或者说也会具有这样的行为。当更改历�
 
 * 道具：分别使用三辆不同的时光车来完成“回到未来”。
 
-  分别是：核能跑车，生物能飞车，飞行的火车。
+  分别是：核能跑车，清洁能源飞车，未知能源的飞行火车。
 
-第一版的时光旅行车
+时间旅行一
 -------------------
 
-布朗博士的第一版本时光旅行车是一款跑车，使用核燃料：钚。而此次实践使用的工具也没有太出乎想像，使用一条新的指令 "git cherry-pick" 实现提交在新的分支上“重放”。 
+《回到未来-第一集》布朗博士设计的第一款时间旅行车是一辆跑车，使用核燃料：钚。而此次实践使用的工具也没有太出乎想像，使用一条新的指令 "git cherry-pick" 实现提交在新的分支上“重放”。 
 
 命令 git cherry-pick 需要提供一个提交作为参数，会将该提交导出为补丁文件，然后在当前HEAD上重放形成无论内容还是提交说明都一致的提交。
 
@@ -473,7 +473,7 @@ Git也有这样的能力，或者说也会具有这样的行为。当更改历�
 
 **别忘了后台的重新布景**
 
-为了使用第二版的时光旅行车，需要重新布景，将 master 分支重新置回到提交 F 上。
+为了接下来的时间旅行二能够顺利开始，需要重新布景，将 master 分支重新置回到提交 F 上。
 
 ::
 
@@ -482,10 +482,10 @@ Git也有这样的能力，或者说也会具有这样的行为。当更改历�
   $ git reset --hard F
   HEAD is now at b6f0b0a modify hello.h
 
-第二版的时光旅行车
+时间旅行二
 ------------------
 
-布朗博士的第二版本时光旅行车采用了未来科技，可以飞天，而且燃料不再依赖核物质，而是使用无所不在的生活垃圾。而此次实践使用的工具也进行了升级，采用强大的 "git rebase" 命令。
+《回到未来-第二集》布朗博士改进的时间旅行车使用了未来科技，是陆天两用的飞车，而且燃料不再依赖核物质，而是使用无所不在的生活垃圾。而此次实践使用的工具也进行了升级，采用强大的 "git rebase" 命令。
 
 命令 "git rebase" 是对提交执行变基操作，即可以实现将指定范围的提交“嫁接”到另外一个提交之上。其常用的命令行格式有：
 
@@ -524,7 +524,11 @@ Git也有这样的能力，或者说也会具有这样的行为。当更改历�
 
 变基操作的过程：
 
-* 首先会将 <since>..<till> 所标识的提交范围写到一个临时文件中。
+* 首先会执行 git checkout 切换到 <till>。
+
+  因为会切换到 <till>，因此如果 <till> 指向的不是一个分支（如 master）则还需要执行“时间旅行一”中对 master 分支执行的重置到变基后提交的操作。
+
+* 将 <since>..<till> 所标识的提交范围写到一个临时文件中。
 
   还记得前面介绍的版本范围语法，<since>..<till> 是指包括 <till> 的所有历史提交排除 <since> 以及 <since> 的历史提交后形成的版本范围。
 
@@ -569,6 +573,8 @@ Git也有这样的能力，或者说也会具有这样的行为。当更改历�
 **现在演出第一幕：干掉坏蛋D**
 
 * 执行变基操作。
+
+  因为下面的变基操命令行使用了参数 F。F 是一个里程碑指向一个提交，而非 master，会导致后面变基完成还需要对 master 分支执行重置。下列使用了 master，会发现省事不少。
 
   ::
 
@@ -647,11 +653,11 @@ Git也有这样的能力，或者说也会具有这样的行为。当更改历�
   ::
 
     $ git commit -C C
-    [detached HEAD 5444832] ignore object files.
+    [detached HEAD 2d020b6] ignore object files.
      1 files changed, 3 insertions(+), 0 deletions(-)
      create mode 100644 .gitignore
 
-* 记住这个提交ID: 5444832。
+* 记住这个提交ID: 2d020b6。
 
   用里程碑是最好的记忆提交ID的方法：
 
@@ -659,38 +665,39 @@ Git也有这样的能力，或者说也会具有这样的行为。当更改历�
 
     $ git tag newbase
     $ git rev-parse newbase
-    5444832753841f9dc1a7a92a9338a0862a198dd5
+    2d020b62034b7a433f80396118bc3f66a60f296f
 
 * 执行变基操作，将 E 和 F 提交“嫁接”到 newbase 上。
 
+  下面的变基操命令行没有像之前的操作使用使用了参数 F，而是使用分支 master。所以接下来的变基操作会直接修改 master 分支，而无须再进行对 master 的重置操作。
+
   ::
 
-    $  git rebase --onto newbase E^ F
+    $  git rebase --onto newbase E^ master
     First, rewinding head to replay your work on top of it...
     Applying: add hello.h
     Applying: modify hello.h
 
 * 看看提交日志，看到提交 C 和提交 D 都不见了，代之以融合后的提交 newbase。
 
+  还可以看到最新的提交除了和 HEAD 的指向一致，也和 master 分支的指向一致。
+
   ::
 
     $ git log --oneline --decorate -6
-    cb7f310 (HEAD) modify hello.h
-    c6b193d add hello.h
-    5444832 (tag: newbase) ignore object files.
+    2495dc1 (HEAD, master) modify hello.h
+    6349328 add hello.h
+    2d020b6 (tag: newbase) ignore object files.
     d71ce92 (tag: hello_1.0, tag: B) Hello world initialized.
     c024f34 (tag: A) README is from welcome.txt.
     63992f0 restore file: welcome.txt
 
-* 很显然还需要将 master 重置到当前的 HEAD 上。
+* 当前的确已经在 master 分支上了，操作全部完成。
 
   ::
 
-    $ git checkout master
-    Previous HEAD position was cb7f310... modify hello.h
-    Switched to branch 'master'
-    $ git reset --hard HEAD@{1}
-    HEAD is now at cb7f310 modify hello.h
+    $ git branch
+    * master
 
 * 清理一下，然后收工。
 
@@ -699,11 +706,11 @@ Git也有这样的能力，或者说也会具有这样的行为。当更改历�
   ::
 
     $ git tag -d newbase
-    Deleted tag 'newbase' (was 5444832)
+    Deleted tag 'newbase' (was 2d020b6)
 
 **别忘了后台的重新布景**
 
-为了使用第三版的时光旅行车，需要重新布景，将 master 分支重新置回到提交 F 上。
+为了接下来的时间旅行三能够顺利开始，需要重新布景，将 master 分支重新置回到提交 F 上。
 
 ::
 
@@ -712,36 +719,253 @@ Git也有这样的能力，或者说也会具有这样的行为。当更改历�
   $ git reset --hard F
   HEAD is now at b6f0b0a modify hello.h
 
-第三版的时光旅行车
+时间旅行三
 ------------------
 
-布朗博士的第三版本时光旅行车（飞行火车，燃料：有机肥料）
+《回到未来-第三集》布朗博士手工打造了可以时光旅行的飞行火车，使用的能源未知，但是可以知道的是这款时间旅行火车更大，更安全，更舒适（适合一家四口时空旅行）。那么本次实践也将采用“手工打造”：交互式变基。
+
+交互式变基就是在上一节介绍的变基命令的基础上，添加了 "-i" 参数，在变基的时候进入一个交互界面。使用了交互界面的变基操作，不仅仅是自动化变基转换为手动确认那么没有技术含量，而是充满了魔法。
+
+执行交互式变基操作，会将 <since>..<till> 的提交悉数罗列在一个文件中，然后自动打开一个编辑器来编辑这个文件。可以通过修改文件的内容（删除提交，修改提交的动作关键字）实现合并提交，删除提交，更改提交的顺序，更改历史提交的提交说明。
+
+例如下面的界面就是针对当前实践版本库执行的交互式变基时编辑器打开的文件：
+
+::
+
+  pick b3af728 ignore object files.
+  pick 3488f2c move .gitignore outside also works.
+  pick 48456ab add hello.h
+  pick b6f0b0a modify hello.h
+
+  # Rebase d71ce92..b6f0b0a onto d71ce92
+  #
+  # Commands:
+  #  p, pick = use commit
+  #  r, reword = use commit, but edit the commit message
+  #  e, edit = use commit, but stop for amending
+  #  s, squash = use commit, but meld into previous commit
+  #  f, fixup = like "squash", but discard this commit's log message
+  #  x <cmd>, exec <cmd> = Run a shell command <cmd>, and stop if it fails
+  #
+  # If you remove a line here THAT COMMIT WILL BE LOST.
+  # However, if you remove everything, the rebase will be aborted.
+
+从该文件可以看出：
+
+* 开头的四行由上到下依次对应于提交 C, D, E, F。
+* 前四行缺省的动作都是 pick ，即应用此提交。
+* 参考配置文件中的注释，可以通过修改动作名称，在变基的时候执行特定操作。
+* 动作 `reword` 或者简写为 `r` ，含义是变基时应用此提交，但是在提交的时候允许用户修改提交说明。
+
+  这个功能在 Git 1.6.6 之后开始提供，对于修改历史提交的提交说明异常方便。
+
+* 动作 `edit` 或者简写为 `e` ，也会应用此提交，但是会在应用时停止，提示用户使用 "git commit --amend" 执行提交，以便对提交进行修补。
+
+  当用户执行 "git commit --amend" 完成提交后，还需要执行 "git rebase --continue" 继续变基操作。Git 会对用户进行相应的提示。
+
+  实际上用户在变基暂停状态执行修补提交可以执行多次，相当于把一个提交分解为多个提交。而且 `edit` 动作也可以实现 `reword` 的动作，因此对于老版本的Git没有 `reword` 可用，则可以使用此动作。
+
+* 动作 `squash` 或者简写为 `s` ，该提交会与前面的提交进行合并。
+* 动作 `fixup` 或者简写为 `f` ，类似 squash 动作，但是此提交的提交说明被丢弃。
+* 可以通过修改配置文件中这四个提交的先后顺序，进而改变最终变基后提交的先后顺序。
+* 可以对相应提交对应的行执行删除操作，这样该提交就不会被应用，进而在变基后的提交中被删除。
+
+有了对交互式变基命令的理解，就可以开始新的“回到未来”之旅了。
+
+确认舞台已经布置完毕。
+
+::
+
+  $ git status -s -b
+  ## master
+  $ git log --oneline --decorate -6
+  b6f0b0a (HEAD, tag: F, master) modify hello.h
+  48456ab (tag: E) add hello.h
+  3488f2c (tag: D) move .gitignore outside also works.
+  b3af728 (tag: C) ignore object files.
+  d71ce92 (tag: hello_1.0, tag: B) Hello world initialized.
+  c024f34 (tag: A) README is from welcome.txt.
+
+**现在演出第一幕：干掉坏蛋D**
+
+* 执行交互式变基操作。
+
+  ::
+
+    $ git rebase -i D^
+
+* 自动用编辑器修改文件。文件内容如下：
+
+  ::
+
+    pick 3488f2c move .gitignore outside also works.
+    pick 48456ab add hello.h
+    pick b6f0b0a modify hello.h
+
+    # Rebase b3af728..b6f0b0a onto b3af728
+    #
+    # Commands:
+    #  p, pick = use commit
+    #  r, reword = use commit, but edit the commit message
+    #  e, edit = use commit, but stop for amending
+    #  s, squash = use commit, but meld into previous commit
+    #  f, fixup = like "squash", but discard this commit's log message
+    #  x <cmd>, exec <cmd> = Run a shell command <cmd>, and stop if it fails
+    #
+    # If you remove a line here THAT COMMIT WILL BE LOST.
+    # However, if you remove everything, the rebase will be aborted.
+    #
+
+* 将第一行删除，使得上面的配置文件看起来像是这样（省略井号开始的注释）：
+
+  ::
+
+    pick 48456ab add hello.h
+    pick b6f0b0a modify hello.h
+
+* 保存退出。
+* 变基自动开始，即刻完成。
+
+  显示下面的内容。
+
+  ::
+
+    Successfully rebased and updated refs/heads/master.
+
+* 看看日志。当前分支 master 已经完成变基，消灭了“坏蛋D”。
+
+  ::
+
+    $ git log --oneline --decorate -6
+    78e5133 (HEAD, master) modify hello.h
+    11eea7e add hello.h
+    b3af728 (tag: C) ignore object files.
+    d71ce92 (tag: hello_1.0, tag: B) Hello world initialized.
+    c024f34 (tag: A) README is from welcome.txt.
+    63992f0 restore file: welcome.txt
+
+**幕布拉上，后台重新布景**
+
+为了第二幕能够顺利演出，需要将 master 分支重新置回到提交 F 上。执行下面的操作完成“重新布景”。
+
+::
+
+  $ git checkout master
+  Already on 'master'
+  git reset --hard F
+  HEAD is now at b6f0b0a modify hello.h
+
+布景完毕，大幕即将再次拉开。
+
+**现在演出第二幕：坏蛋D被感化，融入社会**
+
+* 同样执行交互式变基操作，不过因为要将 C 和 D 合并，因此变基从 C 的父提交开始。
+
+  ::
+
+    $ git rebase -i C^
+
+* 自动用编辑器修改文件。文件内容如下（忽略井号开始的注释）：
+
+  ::
+
+    pick b3af728 ignore object files.
+    pick 3488f2c move .gitignore outside also works.
+    pick 48456ab add hello.h
+    pick b6f0b0a modify hello.h
+
+* 修改第二行（提交D），将动作由 "pick" 修改为 "squash"。
+
+  修改后的内容如下：
+
+  ::
+
+    pick b3af728 ignore object files.
+    squash 3488f2c move .gitignore outside also works.
+    pick 48456ab add hello.h
+    pick b6f0b0a modify hello.h
+
+* 保存退出。
+* 自动开始变基操作，在执行到 squash 命令设定的提交时，进入提交前的日志编辑状态。
+
+  显示的待编辑日志如下。很明显 C 和 D 的提交说明显示在了一起。
+
+  ::
+
+    # This is a combination of 2 commits.
+    # The first commit's message is:
+
+    ignore object files.
+
+    # This is the 2nd commit message:
+
+    move .gitignore outside also works.
+                                    
+* 保存退出，即完成 squash 动作标识的提交以及后续变基操作。
+* 看看提交日志，看到提交 C 和提交 D 都不见了，代之以一个融合后的提交。
+
+  ::
+
+    $ git log --oneline --decorate -6
+    c0c2a1a (HEAD, master) modify hello.h
+    c1e8b66 add hello.h
+    db512c0 ignore object files.
+    d71ce92 (tag: hello_1.0, tag: B) Hello world initialized.
+    c024f34 (tag: A) README is from welcome.txt.
+    63992f0 restore file: welcome.txt
+
+* 可以看到融合C和D的提交日志实际上是两者日志的融合。在前面单行显示的日志中看不出来。
+
+  ::
+
+    $ git cat-file -p HEAD^^
+    tree 00239a5d0daf9824a23cbf104d30af66af984e27
+    parent d71ce9255b3b08c718810e4e31760198dd6da243
+    author Jiang Xin <jiangxin@ossxp.com> 1291720899 +0800
+    committer Jiang Xin <jiangxin@ossxp.com> 1292153393 +0800
+
+    ignore object files.
+
+    move .gitignore outside also works.
+
+时光旅行结束了，多么神奇的 Git 啊。
+
+丢弃历史
+========
+
 
 
 Step 10: 反删除和恢复
 ========================
 
     有的时候改变历史并不合适。
+
         用户1的提交（图）
         被用户2获取
         用户2更改后的图
         用户1更改历史。
         用户1从用户2 pull，就导致历史重现。
+
     不求完美 但求卓越
+
         Git 允许人们犯错，是因为Git提供给人纠错的机会。
         Git 忠实的记录每一步操作，无论正确的操作和错误的操作。
         常常犯下的错误在版本控制来看，有哪些呢？
         添加了不该添加的数据。例如 .o 文件。曾经看过一个客户把 2G 的虚拟机文件检入版本库，最好用下章的方式删除
         删除了不该删除的文件。很简单，删除只是在最新版本中不出现，历史版本中尚在，恢复即是了。
         文件修改引入错误。还原就是了。
+
     恢复错误的删除
         直接添加就可以了。
         会导致版本中文件加倍么？
+
     恢复错误的添加
         为了避免错误的添加，使用文件忽略功能。
         需要彻底删除的文件 —— 核弹起爆密码，见下一章。
+
     恢复错误的修改
         revert 命令
         指向 revert 部分？不提交的 revert，然后 git add -p 。
+
     我们可以看到前面的反删除和恢复都是不改变历史的操作，但是要改变历史呢？
 
