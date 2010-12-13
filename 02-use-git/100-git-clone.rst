@@ -37,6 +37,15 @@ Git使用 git clone 命令实现版本库克隆，主要有如下三种用法：
 * 用法2和用法3创建的克隆版本库都不含工作区，直接就是版本库的内容，这样的版本库称为裸版本库。一般约定俗成版本库的目录名以 ".git" 为后缀，所以上面示例中将克隆出来的裸版本库目录名协作 <directory.git>。
 * 用法3区别于用法2之处在于用法3克隆出来的裸版本对上游版本库进行了注册，这样可以在裸版本库中使用 `git fetch` 命令和上游版本库进行持续同步。
 
+Git的 PUSH 和 PULL 命令的用法相似，使用下面的语法：
+
+::
+
+  git push [<remote-repos> [<refspec>]]
+  git pull [<remote-repos> [<refspec>]]
+
+其中方括号的含义是参数可以省略，<remote-repos> 是远程版本库的地址，<refspec> 是引用表达式，暂时理解为引用即可。
+
 下面就通过不同的Git命令组合，掌握版本库克隆和镜像的技巧。
 
 对等工作区
@@ -102,7 +111,7 @@ Git使用 git clone 命令实现版本库克隆，主要有如下三种用法：
 
   $ git push /my/workspace/demo-backup
   ...
-  对方说: 错了: 
+  对方说: 错了:
                 拒绝更新已检出分支 refs/heads/master 。
                 缺省更新非裸版本库当前分支是不被允许的，因为这将会导致暂存区和工作区
                 与您推送至版本库的新提交不一致。这太古怪了。
@@ -166,15 +175,194 @@ Git使用 git clone 命令实现版本库克隆，主要有如下三种用法：
 克隆生成裸版本库
 ================
 
+上一节在对等工作区模式下，工作区之间执行推送，可能会引发大段的错误输出，如果采用裸版本库则没有相应的问题。这是因为裸版本库没有工作区。没有工作区还有一个好处就是空间占用会更小。
 
 .. figure:: images/gitbook/git-clone-2.png
    :scale: 80
 
+使用 `--bare` 参数克隆 demo 版本库到 `/path/to/demo.git` ，然后就可以从 demo 版本库向克隆的裸版本库执行推送操作了。（为了说明方便，使用了 /path/to 这样的路径，可以在磁盘中以 root 账户创建该路径并设置正确的权限。）
+
+::
+
+  $ git clone --bare /my/workspace/demo /path/to/demo.git
+  Cloning into bare repository /path/to/demo.git...
+  done.
+
+克隆出来的 `/path/to/demo.git` 目录就是版本库目录，不含工作区。
+
+* 看看 `/path/to/demo.git` 目录的内容。
+
+  ::
+
+    $ ls -F /path/to/demo.git
+    branches/  config  description  HEAD  hooks/  info/  objects/  packed-refs  refs/
+
+* 还可以看到 `demo.git` 版本库的配置 `core.bare` 的值为 `true` 。
+
+  ::
+
+    $ git --git-dir=/path/to/demo.git config core.bare
+    true
+
+进入 demo 版本库，生成一些测试提交（使用 --allow-empty 参数可以生成空提交）。
+
+::
+
+  $ cd /my/workspace/demo/
+  $ git commit --allow-empty -m "sync test 3"
+  [master d4b42b7] sync test 3
+  $ git commit --allow-empty -m "sync test 4"
+  [master 0285742] sync test 4
+
+在 demo 版本库向 demo-backup 版本库执行 PUSH 操作，还会有错误么？
+
+* 不带参数执行 git push，因为未设定上游远程版本库，因此会报错：
+
+  ::
+
+    $ git push
+    fatal: No destination configured to push to.
+
+* 在执行 git push 时使用 /path/to/demo.git 作为参数。
+
+  推送成功。
+
+  ::
+
+    $ git push /path/to/demo.git
+    Counting objects: 2, done.
+    Delta compression using up to 2 threads.
+    Compressing objects: 100% (2/2), done.
+    Writing objects: 100% (2/2), 275 bytes, done.
+    Total 2 (delta 1), reused 0 (delta 0)
+    Unpacking objects: 100% (2/2), done.
+    To /path/to/demo.git
+       f86b7bf..0285742  master -> master
+
+看看 `demo.git` 版本库，是否已经完成了同步？
+
+::
+
+  $ git log --oneline -2
+  0285742 sync test 4
+  d4b42b7 sync test 3
+
+这个方式实现版本库本地镜像显然是更好的方法，因为可以直接在工作区修改、提交，然后执行 "git push" 命令实现推送。稍有一点遗憾的是推送命令还需要加上裸版本库的路径。这个遗憾在后面介绍远程版本库的章节会给出解决方案。
+
 创建生成裸版本库
 ================
+
+裸版本库不但可以通过克隆的方式创建，还可以通过 git init 命令以初始化的方式创建。之后的同步方式和上一节大同小异。
 
 .. figure:: images/gitbook/git-clone-3.png
    :scale: 80
 
+命令 git init 在实践一中就已经用到了，是用于初始化一个版本库的，初始化的版本库是带工作区的，如何初始化一个裸版本库呢？奥秘就在于 `--bare` 参数。
 
+下面的命令会创建一个空的裸版本库于目录 `/path/to/demo-init.git` 中。
 
+::
+
+  $ git init --bare /path/to/demo-init.git
+  Initialized empty Git repository in /path/to/demo-init.git/
+
+创建的果真是裸版本库么？
+
+* 看看 `/path/to/demo-init.git` 下的内容：
+
+  ::
+
+    $ ls -F /path/to/demo-init.git
+    branches/  config  description  HEAD  hooks/  info/  objects/  refs/
+
+* 看看这个版本库的配置 `core.bare` 的值：
+
+  ::
+
+    $ git --git-dir=/path/to/demo-init.git config core.bare
+    true
+
+可是空版本库没有内容啊，那就执行 PUSH 操作为其创建内容呗。
+
+::
+
+  $ cd /my/workspace/demo
+  $ git push /path/to/demo-init.git
+  No refs in common and none specified; doing nothing.
+  Perhaps you should specify a branch such as 'master'.
+  fatal: The remote end hung up unexpectedly
+  error: failed to push some refs to '/path/to/demo-init.git'
+
+为什么出错了？翻译一下错误输出。
+
+::
+
+  $ cd /my/workspace/demo
+  $ git push /path/to/demo-init.git
+  没有指定要推送的引用，而且两个版本库也没有共同的引用。
+  所以什么也没有做。
+  可能您需要提供要推送的分支名，如 'master'。
+  严重错误：远程操作意外终止
+  错误：部分引用推送失败，至 '/path/to/demo-init.git'
+
+这个问题出现原因的完整版将在后面的章节介绍，这里先说一个省略版：因为 `/path/to/demo-init.git` 版本库刚刚初始化完成，还没有任何提交更不要说分支了。当执行 git push 命令时，如果没有设定推送的分支，而且当前分支也没有注册到远程某个分支，将检查远程分支是否有和本地相同的分支名（如master），如果有，则推送，否则报错。
+
+所以需要把 git push 命令写的再完整一些。像下面这样操作，就可以完成向空的裸版本库的推送。
+
+::
+
+  $ git push /path/to/demo-init.git master:master
+  Counting objects: 26, done.
+  Delta compression using up to 2 threads.
+  Compressing objects: 100% (20/20), done.
+  Writing objects: 100% (26/26), 2.49 KiB, done.
+  Total 26 (delta 8), reused 0 (delta 0)
+  Unpacking objects: 100% (26/26), done.
+  To /path/to/demo-init.git
+   * [new branch]      master -> master
+
+上面的 `git push` 命令也可以简写为： `git push /path/to/demo-init.git master` 。
+
+推送成功了么？看看 `demo-init.git` 版本库中的提交。
+
+::
+
+  $ git --git-dir=/path/to/demo-init.git log --oneline -2
+  0285742 sync test 4
+  d4b42b7 sync test 3
+
+好了继续在 demo 中执行几次提交。（使用 --allow-empty 参数可以生成空提交）。
+
+::
+
+  $ cd /my/workspace/demo/
+  $ git commit --allow-empty -m "sync test 5"
+  [master 424aa67] sync test 5
+  $ git commit --allow-empty -m "sync test 6"
+  [master 70a5aa7] sync test 6
+
+然后再向 `demo-init.git` 推送。注意这次使用的命令。
+
+::
+
+  $ git push /path/to/demo-init.git
+  Counting objects: 2, done.
+  Delta compression using up to 2 threads.
+  Compressing objects: 100% (2/2), done.
+  Writing objects: 100% (2/2), 273 bytes, done.
+  Total 2 (delta 1), reused 0 (delta 0)
+  Unpacking objects: 100% (2/2), done.
+  To /path/to/demo-init.git
+     0285742..70a5aa7  master -> master
+
+为什么这次使用 `git push` 命令后面没有跟上分支名呢？这是因为远程版本库（demo-init.git）中已经不再是空版本库了，而且有名为 master 的分支。
+
+通过下面的命令可以查看远程版本库的分支。
+
+::
+
+  $ git ls-remote /path/to/demo-init.git
+  70a5aa7a7469076fd435a9e4f89c4657ba603ced        HEAD
+  70a5aa7a7469076fd435a9e4f89c4657ba603ced        refs/heads/master
+
+至此相信读者已经能够把鸡蛋放在不同的篮子中了，也对Git更加的喜爱了吧。
