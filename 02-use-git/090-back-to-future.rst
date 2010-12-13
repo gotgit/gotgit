@@ -1016,37 +1016,79 @@ Git这一台“时光机”也有这样的能力，或者说也会具有这样�
 .. figure:: images/gitbook/git-rebase-purge-history-graph.png
    :scale: 90
 
-反删除和恢复
-============
+反转提交
+========
 
-    有的时候改变历史并不合适。
+前面介绍的操作都涉及到对历史的修改，这对于一个人使用Git没有问题，但是如果多人协同就会有问题了。多人协同使用Git，在本地版本库做的提交会通过多人之间的交互成为他人版本库的一部分，更改历史操作只能是针对自己的版本库，而无法去修改他人的版本库，正所谓“覆水难收”。在这种情况下要想修正一个错误的历史提交的正确做法是反转提交，即重新做一次新的提交，相当于错误的历史提交的反向提交，修正错误的历史提交。
 
-        用户1的提交（图）
-        被用户2获取
-        用户2更改后的图
-        用户1更改历史。
-        用户1从用户2 pull，就导致历史重现。
+Git 反向提交命令是: git revert 。下面在 demo 版本库中实践一下。
 
-    不求完美 但求卓越
+当前 demo 版本库最新的提交包含如下改动：
 
-        Git 允许人们犯错，是因为Git提供给人纠错的机会。
-        Git 忠实的记录每一步操作，无论正确的操作和错误的操作。
-        常常犯下的错误在版本控制来看，有哪些呢？
-        添加了不该添加的数据。例如 .o 文件。曾经看过一个客户把 2G 的虚拟机文件检入版本库，最好用下章的方式删除
-        删除了不该删除的文件。很简单，删除只是在最新版本中不出现，历史版本中尚在，恢复即是了。
-        文件修改引入错误。还原就是了。
+::
 
-    恢复错误的删除
-        直接添加就可以了。
-        会导致版本中文件加倍么？
+  $ git show HEAD
+  commit 25846394defe16eab103b92efdaab5e46cc3dc22
+  Author: Jiang Xin <jiangxin@ossxp.com>
+  Date:   Sun Dec 12 12:11:00 2010 +0800
 
-    恢复错误的添加
-        为了避免错误的添加，使用文件忽略功能。
-        需要彻底删除的文件 —— 核弹起爆密码，见下一章。
+      modify hello.h
 
-    恢复错误的修改
-        revert 命令
-        指向 revert 部分？不提交的 revert，然后 git add -p 。
+  diff --git a/README b/README
+  index 51dbfd2..ceaf01b 100644
+  --- a/README
+  +++ b/README
+  @@ -1,3 +1,4 @@
+   Hello.
+   Nice to meet you.
+   Bye-Bye.
+  +Wait...
+  diff --git a/src/hello.h b/src/hello.h
+  index 0043c3b..6e482c6 100644
+  --- a/src/hello.h
+  +++ b/src/hello.h
+  @@ -1 +1,2 @@
+   /* test */
+  +/* end */
 
-    我们可以看到前面的反删除和恢复都是不改变历史的操作，但是要改变历史呢？
+在不改变这个提交的前提下对其修改进行撤销，就需要用到 git revert 反转提交。
+
+::
+
+  $ git revert HEAD
+
+运行该命令相当于将 HEAD 提交反向再提交一次，在提交说明编辑状态下暂停，显示如下（注释行被忽略）：
+
+::
+
+  Revert "modify hello.h"
+
+  This reverts commit 25846394defe16eab103b92efdaab5e46cc3dc22.
+
+可以在编辑器中修改提交说明，提交说明编辑完毕保存退出则完成反转提交。查看提交日志可以看到新的提交相当于所撤销提交的反向提交。
+
+::
+
+  $ git log --stat -2
+  commit 6e6753add1601c4efa7857ab4c5b245e0e161314
+  Author: Jiang Xin <jiangxin@ossxp.com>
+  Date:   Mon Dec 13 15:19:12 2010 +0800
+
+      Revert "modify hello.h"
+      
+      This reverts commit 25846394defe16eab103b92efdaab5e46cc3dc22.
+
+   README      |    1 -
+   src/hello.h |    1 -
+   2 files changed, 0 insertions(+), 2 deletions(-)
+
+  commit 25846394defe16eab103b92efdaab5e46cc3dc22
+  Author: Jiang Xin <jiangxin@ossxp.com>
+  Date:   Sun Dec 12 12:11:00 2010 +0800
+
+      modify hello.h
+
+   README      |    1 +
+   src/hello.h |    1 +
+   2 files changed, 2 insertions(+), 0 deletions(-)
 
