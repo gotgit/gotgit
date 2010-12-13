@@ -456,9 +456,9 @@ Git这一台“时光机”也有这样的能力，或者说也会具有这样�
     c024f34 (tag: A) README is from welcome.txt.
     63992f0 restore file: welcome.txt
 
-* 最重要的一步操作，就是要将 master 分支指向新的提交 ID（f677821）上。
+* 最重要的一步操作，就是要将 master 分支指向新的提交 ID（2f13d3a）上。
 
-  下面的切换操作使用了reflog的语法，即 HEAD@{1} 相当于切换回 master 分支前的HEAD指向，即 f677821。
+  下面的切换操作使用了reflog的语法，即 HEAD@{1} 相当于切换回 master 分支前的HEAD指向，即 2f13d3a。
 
   ::
 
