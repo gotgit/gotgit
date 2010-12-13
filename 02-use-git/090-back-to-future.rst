@@ -1,9 +1,11 @@
 改变历史
 ********
 
-我是《回到未来》的粉丝，偶尔会做梦，梦见穿梭到未来拿回一本2000-2050体育年鉴。操作Git可以体验到穿梭时空的感觉，Git像极了一个时光机器，不但允许你在历史中穿梭，而且能够改变历史。
+我是《回到未来》的粉丝，偶尔会做梦，梦见穿梭到未来拿回一本2000-2050体育年鉴。操作Git可以体验到穿梭时空的感觉，因为Git像极了一个时光机器，不但允许你在历史中穿梭，而且能够改变历史。
 
-在本章的最开始，TODO
+在本章的最开始，介绍两种最简单和最常用的历史变更操作 —— “悔棋”操作，就是对刚刚进行的一次或几次提交进行修补。对于跳跃式的历史记录的变更，即仅对过去某一个或某几个提交作出改变，会在“回到未来”小节详细介绍。在“丢弃历史”小节会介绍一种版本库瘦身的方法，这可能会在某些特定的场合用到。
+
+作为分布式版本控制系统，一旦版本库被多人共享，改变历史就可能是无法完成的任务。在本章的最后，介绍还原操作实现在不改变历史提交的情况下还原错误的改动。
 
 悔棋
 ====
@@ -198,14 +200,14 @@ Git的重置命令是提供悔棋能力的奥秘，实际上上面介绍的单�
 回到未来
 ========
 
-电影《回到未来》（Back to future）第二集，老Biff偷走时光车，到过去（1955年）给了小Biff一本书，导致未来大变。
+电影《回到未来》（Back to future）第二集，老毕福偷走时光车，到过去（1955年）给了小毕福一本书，导致未来大变。
 
 .. figure:: images/back-to-future/back-to-future.png
    :scale: 70
 
    布朗博士正在解释为何产生两个平行的未来
 
-Git也有这样的能力，或者说也会具有这样的行为。当更改历史提交（SHA1哈希值变更），即使后续提交的内容和属性都一致，但是因为后续提交中有一个属性要包含其父提交的SHA1哈希值，所以会导致所有后续提交必然的发生变化，就会形成两条平行的时间线：一个是变更前的提交时间线，另外一条是更改历史后新的提交时间线。
+Git这一台“时光机”也有这样的能力，或者说也会具有这样的行为。当更改历史提交（SHA1哈希值变更），即使后续提交的内容和属性都一致，但是因为后续提交中有一个属性要包含其父提交的SHA1哈希值，所以会导致所有后续提交必然的发生变化，就会形成两条平行的时间线：一个是变更前的提交时间线，另外一条是更改历史后新的提交时间线。
 
 把此次实践比喻做一次电影（回到未来）拍摄的话，舞台依然是之前的实践版本库，而剧本是这样的。
 
@@ -722,7 +724,7 @@ Git也有这样的能力，或者说也会具有这样的行为。当更改历�
 时间旅行三
 ------------------
 
-《回到未来-第三集》布朗博士手工打造了可以时光旅行的飞行火车，使用的能源未知，但是可以知道的是这款时间旅行火车更大，更安全，更舒适（适合一家四口时空旅行）。那么本次实践也将采用“手工打造”：交互式变基。
+《回到未来-第三集》布朗博士手工打造了可以时光旅行的飞行火车，使用蒸汽作为动力。这款时间旅行火车更大，更安全，更舒适（适合一家四口时空旅行）。那么本次实践也将采用“手工打造”：交互式变基。
 
 交互式变基就是在上一节介绍的变基命令的基础上，添加了 "-i" 参数，在变基的时候进入一个交互界面。使用了交互界面的变基操作，不仅仅是自动化变基转换为手动确认那么没有技术含量，而是充满了魔法。
 
@@ -933,10 +935,89 @@ Git也有这样的能力，或者说也会具有这样的行为。当更改历�
 丢弃历史
 ========
 
+历史有的时候会成为负担。例如一个人使用的版本库有一天需要作为公共版本库多人共享，最早的历史可能不希望或者没有必要继续保持存在，需要一个抛弃部分早期历史提交的精简的版本库用于和他人共享。再比如用Git做文件备份，不希望备份的版本过多导致不必要的磁盘空间占用，同样会有精简版本的需要：只保留最近的100次提交，抛弃之前的历史提交。那么应该如何操作呢？
 
+使用交互式变基当然可以完成这样的任务，但是如果历史版本库有成百上千个，把成百上千个版本的变基动作有 pick 修改为 fixup 可真的很费事，实际上Git有更简便的方法。
 
-Step 10: 反删除和恢复
-========================
+现在实践版本库有如下的提交记录：
+
+::
+
+  $ git log --oneline --decorate 
+  c0c2a1a (HEAD, master) modify hello.h
+  c1e8b66 add hello.h
+  db512c0 ignore object files.
+  d71ce92 (tag: hello_1.0, tag: B) Hello world initialized.
+  c024f34 (tag: A) README is from welcome.txt.
+  63992f0 restore file: welcome.txt
+  7161977 delete trash files. (using: git add -u)
+  2b31c19 (tag: old_practice) Merge commit 'acc2f69'
+  acc2f69 commit in detached HEAD mode.
+  4902dc3 does master follow this new commit?
+  e695606 which version checked in?
+  a0c641e who does commit?
+  9e8a761 initialized.
+
+如果希望把里程碑A（c024f34）之前的历史提交历史全部清除可以如下进行操作。
+
+* 查看里程碑A指向的目录树。
+
+  用 A^{tree} 语法访问里程碑A对应的目录树。
+
+  ::
+
+    $ git cat-file -p A^{tree}
+    100644 blob 51dbfd25a804c30e9d8dc441740452534de8264b    README
+
+* 使用 git commit-tree 命令直接从该目录树创建提交。
+
+  ::
+
+    $ echo "Commit from tree of tag A." | git commit-tree A^{tree}
+    8f7f94ba6a9d94ecc1c223aa4b311670599e1f86
+
+* 命令 git commit-tree 的输出是一个提交的SHA1哈希值。查看这个提交。
+
+  会发现这个提交没有历史提交，可以称之为孤儿提交。
+
+  ::
+
+    $ git log 8f7f94ba6a9d94ecc1c223aa4b311670599e1f86
+    commit 8f7f94ba6a9d94ecc1c223aa4b311670599e1f86
+    Author: Jiang Xin <jiangxin@ossxp.com>
+    Date:   Mon Dec 13 14:17:17 2010 +0800
+
+        Commit from tree of tag A.
+
+* 执行变基，将 master 分支从里程碑到最新的提交全部迁移到刚刚生成的孤儿提交上。
+
+  ::
+
+    $ git rebase --onto 8f7f94ba6a9d94ecc1c223aa4b311670599e1f86 A master
+    First, rewinding head to replay your work on top of it...
+    Applying: Hello world initialized.
+    Applying: ignore object files.
+    Applying: add hello.h
+    Applying: modify hello.h
+
+* 查看日志看到当前 master 分支的历史已经精简了。
+
+  ::
+
+    $ git log --oneline --decorate
+    2584639 (HEAD, master) modify hello.h
+    30fe8b3 add hello.h
+    4dd8a65 ignore object files.
+    5f2cae1 Hello world initialized.
+    8f7f94b Commit from tree of tag A.
+
+使用图形工具查看提交历史，会看到两棵树：最上面的一棵树是刚刚通过变基抛弃了大部分历史提交的新的 master 分支，下面的一棵树则是变基前的提交形成的。下面的一棵树之所以还能够看到，或者说还没有从版本库中重彻底清除，是因为有部分提交上仍旧被里程碑标签标识。
+
+.. figure:: images/gitbook/git-rebase-purge-history-graph.png
+   :scale: 90
+
+反删除和恢复
+============
 
     有的时候改变历史并不合适。
 
