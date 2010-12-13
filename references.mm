@@ -3467,12 +3467,8 @@
 <node COLOR="#990000" FOLDED="true" ID="ID_1897687140" 
 	TEXT="Git 支持的协议">
 <font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_1093768980" 
-	TEXT="ssh"/>
-<node COLOR="#111111" ID="ID_380141024" 
-	TEXT="http"/>
-<node COLOR="#111111" ID="ID_1944877979" 
-	TEXT="git"/>
+<node COLOR="#111111" ID="ID_1493655867" 
+	TEXT="       Git natively supports ssh, git, http, https, ftp, ftps, and rsync protocols. The following syntaxes may be used with them:&#xa;&#xa;       ·   ssh://[user@]host.xz[:port]/path/to/repo.git/&#xa;&#xa;       ·   git://host.xz[:port]/path/to/repo.git/&#xa;&#xa;       ·   http[s]://host.xz[:port]/path/to/repo.git/&#xa;&#xa;       ·   ftp[s]://host.xz[:port]/path/to/repo.git/&#xa;&#xa;       ·   rsync://host.xz/path/to/repo.git/&#xa;&#xa;       An alternative scp-like syntax may also be used with the ssh protocol:&#xa;&#xa;       ·   [user@]host.xz:path/to/repo.git/&#xa;&#xa;       The ssh and git protocols additionally support ~username expansion:&#xa;&#xa;       ·   ssh://[user@]host.xz[:port]/~[user]/path/to/repo.git/&#xa;&#xa;       ·   git://host.xz[:port]/~[user]/path/to/repo.git/&#xa;&#xa;       ·   [user@]host.xz:/~[user]/path/to/repo.git/&#xa;&#xa;       For local repositories, also supported by git natively, the following syntaxes may be used:&#xa;&#xa;       ·   /path/to/repo.git/&#xa;&#xa;       ·    file:///path/to/repo.git/&#xa;&#xa;"/>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_1367210486" 
 	TEXT="git clone">
