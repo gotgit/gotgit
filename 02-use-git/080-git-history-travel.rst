@@ -971,7 +971,7 @@ Git提供的 `git bisect` 命令是基于版本库的，自动化的问题查找
 
     $ git describe
     D
-    11:20:13 jiangxin@hp:/my/workspace/gitdemo-commit-tree$ ls doc/B.txt
+    $ ls doc/B.txt
     ls: 无法访问doc/B.txt: 没有那个文件或目录
 
 * 标记当前版本（D提交）为“好提交”。
