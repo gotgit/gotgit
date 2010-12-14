@@ -4551,6 +4551,988 @@
 <font NAME="Serif" SIZE="16"/>
 </node>
 </node>
+<node COLOR="#0033ff" FOLDED="true" ID="ID_297855551" POSITION="right" 
+	TEXT="Git 命令">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="Serif" SIZE="18"/>
+<node COLOR="#00b439" FOLDED="true" ID="ID_60126118" 
+	TEXT="常用操作">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_433186322" 
+	TEXT="精通">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_276384149" 
+	TEXT="git-help 和 git help -w：通过控制台或者Web网页显示帮助。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1975795749" 
+	TEXT="git-clone">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1084464768" 
+	TEXT="git-init">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_330376734" 
+	TEXT="git-init-db 即 git init">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_255395347" 
+	TEXT="git-config">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1794372160" 
+	TEXT="git-repo-config">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1525360275" 
+	TEXT="git-add">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_789150213" 
+	TEXT="git-stage （等价于 git-add）">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" ID="ID_1235521820" 
+	TEXT="git-add--interactive">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_324068844" 
+	TEXT="git-mv">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_192477234" 
+	TEXT="git-rm">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1805601585" 
+	TEXT="git-checkout">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_231826084" 
+	TEXT="git-checkout-index">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<icon BUILTIN="info"/>
+</node>
+</node>
+<node COLOR="#111111" ID="ID_486214582" 
+	TEXT="git-commit">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_253311216" 
+	TEXT="git-status">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1655810527" 
+	TEXT="git-reset">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1559915400" 
+	TEXT="git-revert">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1444427550" 
+	TEXT="git-merge">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_376908400" 
+	TEXT="调用 git-fmt-merge-msg 生成合并的日志">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" ID="ID_859062357" 
+	TEXT="git-mergetool">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1726117247" 
+	TEXT="git-pull">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_637964122" 
+	TEXT="git-fetch">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_973213508" 
+	TEXT="git-push">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1034467191" 
+	TEXT="git-branch">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_959839194" 
+	TEXT="git-tag">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_145913288" 
+	TEXT="git-clean">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_639683490" 
+	TEXT="git-show">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_770844165" 
+	TEXT="git-log">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_739718436" 
+	TEXT="git-diff">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1561750688" 
+	TEXT="git-diff-files">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_729221310" 
+	TEXT="git-diff-index">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_829439019" 
+	TEXT="git-diff-tree">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_51213576" 
+	TEXT="熟练">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_40939969" 
+	TEXT="git-rebase">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_418693369" 
+	TEXT="git-rebase--interactive">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_540222981" 
+	TEXT="git-stash">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_243273011" 
+	TEXT="git-cherry-pick">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_282104706" 
+	TEXT="git-remote">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_735687918" 
+	TEXT="git-describe">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1745096235" 
+	TEXT="git-grep">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1853412401" 
+	TEXT="git-reflog">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_206655449" 
+	TEXT="git-annotate">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_469885402" 
+	TEXT="git-blame">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1666388366" 
+	TEXT="git-archive：文件归档打包。一般用于将 .git 目录外的工作区文件打包。可以使用 --remote 参数，读取远程版本库然后进行打包。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_248626176" 
+	TEXT="了解">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_220200248" 
+	TEXT="git-citool：调用图形工具执行提交操作，如 git-gui, git-cola">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<icon BUILTIN="info"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1284579064" 
+	TEXT="git-gui： 提交工具">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_419901626" 
+	TEXT="git-gui--askpass">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_638386100" 
+	TEXT="git-difftool：差异比较前端工具，调用图形客户端显示差异比较">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_727269899" 
+	TEXT="git-difftool--helper">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" ID="ID_103324966" 
+	TEXT="git-whatchanged">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1307195188" 
+	TEXT="git-bisect：二分查找">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_57475626" 
+	TEXT="git-bisect--helper">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_371166687" 
+	TEXT="git-format-patch">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_953396893" 
+	TEXT="git-apply">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_302622987" 
+	TEXT="底层操作">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_1585043908" 
+	TEXT="对象库相关操作">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1028213645" 
+	TEXT="git-cat-file">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_352340360" 
+	TEXT="git-ls-files">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_190747311" 
+	TEXT="git-unpack-file：将 blob 的内容存入临时文件，临时文件名：.merge_file_XXXXX">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1987962360" 
+	TEXT="git-read-tree">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_788669001" 
+	TEXT="git-write-tree">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_981344143" 
+	TEXT="git-commit-tree">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_451119601" 
+	TEXT="git-ls-tree">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1212371017" 
+	TEXT="git-hash-object：通过文件内容计算ID，并可写入对象库（-W参数）">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_502446326" 
+	TEXT="git-update-index：工作区内容注册到暂存区。一般使用 git add 命令。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_295080079" 
+	TEXT="git-mktag：从标准输入创建一个tag 对象">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_344362400" 
+	TEXT="git cat-file tag taga | git mktag"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_756639492" 
+	TEXT="git-mktree：从ls-tree 的输出创建树对象">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_741473269" 
+	TEXT="git ls-tree HEAD | git mktree"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1611516644" 
+	TEXT="引用相关操作">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_591176999" 
+	TEXT="git-name-rev：将提交id显示为符号名称">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1747329772" 
+	TEXT="git-rev-parse：将引用或符号转换为提交ID">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1957744735" 
+	TEXT="git-rev-list：将版本范围显示为提交ID列表">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_118676171" 
+	TEXT="git-symbolic-ref：显示或者设置符号引用。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_510958245" 
+	TEXT="git symbolic-ref  -q HEAD">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1933515052" 
+	TEXT="git symbolic-ref  -m &quot;reason&quot; HEAD refs/heads/master">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_257603789" 
+	TEXT="git-update-ref：安全的更新引用的指向。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1277614467" 
+	TEXT="git update-ref [-m &lt;reason&gt;] (-d &lt;ref&gt; [&lt;oldvalue&gt;] | [--no-deref] &lt;ref&gt; &lt;newvalue&gt; [&lt;oldvalue&gt;])">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" ID="ID_1657705982" 
+	TEXT="git-peek-remote：显示远程版本库引用">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_645320140" 
+	TEXT="git-ls-remote">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_806803276" 
+	TEXT="git-check-ref-format： 检查引用名称是否符合规范">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_273620308" 
+	TEXT="1. They can include slash / for hierarchical (directory) grouping, but no slash-separated component can begin with a dot ..">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_476028009" 
+	TEXT="2. They must contain at least one /. This enforces the presence of a category like heads/, tags/ etc. but the actual names are not restricted.">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_201161337" 
+	TEXT="3. They cannot have two consecutive dots ..  anywhere. 因为 .. 可以作为版本范围。">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_917882795" 
+	TEXT="4. They cannot have ASCII control characters (i.e. bytes whose values are lower than \040, or \177 DEL), space, tilde ~, caret ^, colon :, question-mark ?, asterisk *, or open bracket [ anywhere.&#xa;例如 ^ 和 ~ 可以用于指定父提交，而 : 用于分隔refsepc或者ref和路径。">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_757017810" 
+	TEXT="5. They cannot end with a slash / nor a dot ..">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_905212066" 
+	TEXT="6. They cannot end with the sequence .lock. 因为以 .lock 结尾是锁文件。">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_101630610" 
+	TEXT="7. They cannot contain a sequence @{. 因为 @{ 用做 reflog 的条目指向。">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_536568471" 
+	TEXT="8. They cannot contain a \. 反斜线不允许。">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" ID="ID_1248051441" 
+	TEXT="git-show-ref：显示本地引用。相当于使用命令：git rev-parse --symbolic --glob=refs/* 或者 git rev-parse --symbolic --all">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_751895406" 
+	TEXT="git-show-branch：以特定的格式显示分支列表以及分支的拓扑关系。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_877528764" 
+	TEXT="git-verify-tag：校验 GPG 签名的Tag。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_266002251" 
+	TEXT="git-for-each-ref： 针对引用的迭代器">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_318766044" 
+	TEXT="           git for-each-ref --shell --format=&quot;ref=%(refname)&quot; refs/heads | \&#xa;           while read entry&#xa;           do&#xa;                   eval &quot;$entry&quot;&#xa;                   echo `dirname $ref`&#xa;           done&#xa;&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1715114219" 
+	TEXT="数据传输操作">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1692348595" 
+	TEXT="git-send-pack：此命令向远程版本库推送对象，一般使用更高层的 git push 命令。git-send-pack 命令会调用远程的 git-receive-pack，以便远程版本库能够应用传递过去的pack。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_277400658" 
+	TEXT="git-receive-pack：由git send-pack调用，用远程提供的数据更新版本库">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1174667459" 
+	TEXT="git-fetch-pack：从其他版本库获取缺失的对象，一般使用高层命令 git fetch。git-fetch-pack 会调用远程版本库执行 git-upload-pack，以便将本版本库缺失的对象打包传递。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_478030703" 
+	TEXT="git-upload-pack：此命令由 git-fetch-pack 调用，将执行 git-fetch 的版本库缺失的对象打包并上传。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_374144908" 
+	TEXT="git-upload-archive：当执行  git archive --remote 从远程版本库读取打包是，调用远段此命令，执行打包">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1644254501" 
+	TEXT="合并相关的辅助程序">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_329513240" 
+	TEXT="git-merge-base： 找到两个或多个提交最近的共同祖先。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1449083496" 
+	TEXT="git-merge-file：三向文件合并，遇到冲突产生用 &lt;&lt;&lt;&lt;&lt;&lt;&lt; 和 &gt;&gt;&gt;&gt;&gt;&gt;&gt; 标识的冲突文件。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1370115665" 
+	TEXT="git merge-file README.my README README.upstream">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1919624683" 
+	TEXT="git-merge-index：当合并发生冲突，对 index 中的冲突文件调用指定的冲突解决工具">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1653759636" 
+	TEXT="$ git merge-index echo newfile&#xa;a7a8be9157fe4147328ea905ea7f5980f7eaaa7f 629641404bf40b1094ecad5f6fd1c6d0e28e77d6 e10ffeea05bf2ec125fc3ae6f26c5c06fd4524e9 newfile 100644 100644 100644&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" ID="ID_916011087" 
+	TEXT="git-merge-octopus">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1532858894" 
+	TEXT="git-merge-one-file">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_744659582" 
+	TEXT="git-merge-ours">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_416942867" 
+	TEXT="git-merge-recursive">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_662570772" 
+	TEXT="git-merge-resolve">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_699834027" 
+	TEXT="git-merge-subtree">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1705634719" 
+	TEXT="git-mergetool--lib">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1575586935" 
+	TEXT="git-merge-tree">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_678557195" 
+	TEXT="git-cherry：寻找没有提交到上游的提交">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_388796298" 
+	TEXT="git cherry [-v] [&lt;upstream&gt; [&lt;head&gt; [&lt;limit&gt;]]]">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_20512648" 
+	TEXT="                      __*__*__*__*__&gt; &lt;upstream&gt;&#xa;                     /&#xa;           fork-point&#xa;                     \__+__+__-__+__+__-__+__&gt; &lt;head&gt;&#xa;&#xa;       If a &lt;limit&gt; has been given then the commits along the &lt;head&gt; branch up to and including &lt;limit&gt; are not reported:&#xa;&#xa;                      __*__*__*__*__&gt; &lt;upstream&gt;&#xa;                     /&#xa;           fork-point&#xa;                     \__*__*__&lt;limit&gt;__-__+__&gt; &lt;head&gt;&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1198126331" 
+	TEXT="非常用操作">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_1122645171" 
+	TEXT="补丁和归档">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_178315458" 
+	TEXT="git-am">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1800842031" 
+	TEXT="git-quiltimport：通过quilt补丁对列向版本库提交。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1242890653" 
+	TEXT="git-tar-tree：过时，请使用 git archive">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1857536795" 
+	TEXT="git-get-tar-commit-id ： 从 git-archive 创建的 tar 包提交提交 ID">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_573036575" 
+	TEXT="git-bundle：版本打包和解包（用于无连接两个版本库的文件传递）。版本库可以从打包文件 fetch 和 pull。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_123783456" 
+	TEXT="版本库管理">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_744184754" 
+	TEXT="git-fsck">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1872695398" 
+	TEXT="git-fsck-objects">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1183245366" 
+	TEXT="git-lost-found：过时，可以使用 git-fsck --lost-found 来恢复尚未清除的提交或者tag">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1092929318" 
+	TEXT="           $ git lost-found&#xa;           [1ef2b196d909eed523d4f3c9bf54b78cdd6843c6] GIT 0.99.9c&#xa;           ...&#xa;&#xa;       Also you can use gitk to browse how any tags found relate to each other.&#xa;&#xa;           $ gitk $(cd .git/lost-found/commit &amp;&amp; echo ??*)&#xa;&#xa;       After making sure you know which the object is the tag you are looking for, you can reconnect it to your regular .git/refs hierarchy.&#xa;&#xa;           $ git cat-file -t 1ef2b196&#xa;           tag&#xa;           $ git cat-file tag 1ef2b196&#xa;           object fa41bbce8e38c67a218415de6cfa510c7e50032a&#xa;           type commit&#xa;           tag v0.99.9c&#xa;           tagger Junio C Hamano &lt;junkio@cox.net&gt; 1131059594 -0800&#xa;&#xa;           GIT 0.99.9c&#xa;&#xa;           This contains the following changes from the &quot;master&quot; branch, since&#xa;           ...&#xa;           $ git update-ref refs/tags/not-lost-anymore 1ef2b196&#xa;           $ git rev-parse not-lost-anymore&#xa;           1ef2b196d909eed523d4f3c9bf54b78cdd6843c6&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" ID="ID_110408961" 
+	TEXT="git-gc">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1345201542" 
+	TEXT="git-prune">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_589921947" 
+	TEXT="git-pack-refs：对引用进行打包，放在 .git/packed-refs 文件中。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1910957254" 
+	TEXT="git-repack：将版本库未打包的松散对象打包">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1816604124" 
+	TEXT="git-pack-objects： 从标准输入读入对象ID，打包到文件（生成一个 .pack 和一个 .idx 文件）">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1187103990" 
+	TEXT="A pack is a collection of objects, individually compressed, with delta compression applied, stored in a single file, with an associated index">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1449168058" 
+	TEXT="file."/>
+</node>
+</node>
+<node COLOR="#111111" ID="ID_1515862611" 
+	TEXT="git-unpack-objects：从打包文件释放文件到版本库对象库中的松散对象。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_8322235" 
+	TEXT="git-count-objects：显示松散对象的数量和磁盘占用。使用 -v 参数还显示打包对象">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1081681602" 
+	TEXT="git-pack-redundant： 查找多余的 pack 文件">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_411549289" 
+	TEXT=" git fsck --full --unreachable | cut -d &apos; &apos; -f3 | \ git pack-redundant --all | xargs rm ">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" ID="ID_1075266330" 
+	TEXT="git-prune-packed：将已经打包的松散对象删除">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1329489426" 
+	TEXT="git-relink：使用硬链接将本地相同的文件自其他版本库建立引用。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_879084487" 
+	TEXT="git-index-pack：从 pack 文件生成 index 文件。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1790083858" 
+	TEXT="git-show-index：读取 .idx 文件，显示封包中的内容。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1858487958" 
+	TEXT="git-verify-pack：对封包的 .idx 文件校验。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_369849866" 
+	TEXT="git-filter-branch： 版本库重构">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1165186859" 
+	TEXT="在当前分支所有提交中删除某个文件">
+<node COLOR="#111111" ID="ID_1643080987" 
+	TEXT="git filter-branch --tree-filter &apos;rm filename&apos; HEAD"/>
+<node COLOR="#111111" ID="ID_953641944" 
+	TEXT="更快的版本： git filter-branch --index-filter &apos;git rm --cached --ignore-unmatch filename&apos; HEAD"/>
+</node>
+<node COLOR="#111111" ID="ID_1045629374" 
+	TEXT="所有文件都放在一个子目录下：git filter-branch --subdirectory-filter foodir -- --all "/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1052423259" 
+	TEXT="将当前分支的初始提交的父提交（空）设置为某个提交ID">
+<node COLOR="#111111" ID="ID_625546264" 
+	TEXT="git filter-branch --parent-filter &apos;sed &quot;s/^\$/-p &lt;graft-id&gt;/&quot;&apos; HEAD"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_456365507" 
+	TEXT="将某个提交的父提交指向指定的提交">
+<node COLOR="#111111" ID="ID_808620626" 
+	TEXT="git filter-branch --parent-filter \&#xa;                   &apos;test $GIT_COMMIT = &lt;commit-id&gt; &amp;&amp; echo &quot;-p &lt;graft-id&gt;&quot; || cat&apos; HEAD&#xa;"/>
+<node COLOR="#111111" ID="ID_1608212717" 
+	TEXT="或者更简单的如下操作：&#xa;&#xa;           echo &quot;$commit-id $graft-id&quot; &gt;&gt; .git/info/grafts&#xa;           git filter-branch $graft-id..HEAD&#xa;"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_483651744" 
+	TEXT="删除某人的提交">
+<node COLOR="#111111" ID="ID_1921559690" 
+	TEXT="           git filter-branch --commit-filter &apos;&#xa;                   if [ &quot;$GIT_AUTHOR_NAME&quot; = &quot;Darl McBribe&quot; ];&#xa;                   then&#xa;                           skip_commit &quot;$@&quot;;&#xa;                   else&#xa;                           git commit-tree &quot;$@&quot;;&#xa;                   fi&apos; HEAD&#xa;"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_872525777" 
+	TEXT="删除提交说明中的某些文字">
+<node COLOR="#111111" ID="ID_423477635" 
+	TEXT="           git filter-branch --msg-filter &apos;&#xa;                   sed -e &quot;/^git-svn-id:/d&quot;&#xa;"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_793292704" 
+	TEXT="为提交说明添加一些特定内容">
+<node COLOR="#111111" ID="ID_7902815" 
+	TEXT="           git filter-branch --msg-filter &apos;&#xa;                   cat &amp;&amp;&#xa;                   echo &quot;Acked-by: Bugs Bunny &lt;bunny@bugzilla.org&gt;&quot;&#xa;           &apos; HEAD~10..HEAD&#xa;"/>
+</node>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_670299320" 
+	TEXT="邮件相关">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1911307322" 
+	TEXT="git-mailsplit：将mbox 或者 Maildir 的邮件导出为顺序补丁">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1533559566" 
+	TEXT="git-imap-send：将 git-format-patch 创建在 mailbox 中的邮件放到 IMAP 的草稿箱里，以方便不能识别 mailbox 的软件。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_599762816" 
+	TEXT="git-send-email：邮件发送程序，用 Perl 实现。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_85681060" 
+	TEXT="git-mailinfo：从一封邮件导出提交说明和补丁。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_240081027" 
+	TEXT="其他版本控制系统转换和交互">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_526393101" 
+	TEXT="git-archimport">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1216693980" 
+	TEXT="git-cvsexportcommit">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1466663196" 
+	TEXT="git-cvsimport">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1133380841" 
+	TEXT="git-fast-export">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1664882062" 
+	TEXT="git-fast-import">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1556978662" 
+	TEXT="git-cvsserver">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_320173644" 
+	TEXT="git-svn">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1379744010" 
+	TEXT="服务相关">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_492081894" 
+	TEXT="git-daemon： git-daemon 协议">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1777702008" 
+	TEXT="git-instaweb：启动 lighthttpd 获取其他 http服务器，显示 gitweb">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_525410134" 
+	TEXT="git instaweb --httpd=/usr/sbin/apache2">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_94200272" 
+	TEXT="git instaweb --stop"/>
+</node>
+<node COLOR="#111111" ID="ID_1571313808" 
+	TEXT="git-http-backend：一个CGI，支持智能HTTP协议，并兼容原来的哑协议。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1278467172" 
+	TEXT="git-update-server-info：更新哑协议使用的辅助文件：info/refs 和 objects/info/packs 文件。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_4113950" 
+	TEXT="git-shell：当使用SSH协议时，可以设置为SSH用户的Shell，能够对用户执行命令进行限制。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1429488844" 
+	TEXT="SYNOPSIS&#xa;       $(git --exec-path)/git-shell -c &lt;command&gt; &lt;argument&gt;&#xa;&#xa;DESCRIPTION&#xa;       This is meant to be used as a login shell for SSH accounts you want to restrict to GIT pull/push access only. It permits execution only of&#xa;       server-side GIT commands implementing the pull/push functionality. The commands can be executed only by the -c option; the shell is not&#xa;       interactive.&#xa;&#xa;       Currently, only four commands are permitted to be called, git-receive-pack git-upload-pack and git-upload-archive with a single required&#xa;       argument, or cvs server (to invoke git-cvsserver).&#xa;&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1549217683" 
+	TEXT="访问协议扩展">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_435668470" 
+	TEXT="以下 helper 程序，当Git访问的远程版本库使用的是Git自身不支持的协议，则调用相应的Helper程序协助完成访问。"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1033434040" 
+	TEXT="git-remote-ftp">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_204873555" 
+	TEXT="$ echo capabilities | git remote-ftp ftp://a.b.c/&#xa;fetch&#xa;option&#xa;push&#xa;&#xa;"/>
+</node>
+<node COLOR="#111111" ID="ID_1595737156" 
+	TEXT="git-remote-ftps">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1878578561" 
+	TEXT="git-remote-http">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_955142779" 
+	TEXT="git-remote-https">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_869139620" 
+	TEXT="git-remote-testgit">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_331704515" 
+	TEXT="git-http-fetch：通过http哑协议获取版本库">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1610424090" 
+	TEXT="git-http-push：通过 http/DAV 协议推送">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1030636757" 
+	TEXT="脚本扩展及辅助">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_273487450" 
+	TEXT="git-parse-remote：包含操作远程版本库的函数">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_954665548" 
+	TEXT="git-sh-setup：用于 Shell 编程的函数库">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_498779273" 
+	TEXT="git-patch-id： 生成补丁唯一的SHA1哈希值，忽略了补丁中的空格和行号等。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_220704643" 
+	TEXT="git-stripspace：删除空行">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_312210101" 
+	TEXT="git-rerere">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1517294779" 
+	TEXT="git-var：显示 Git 中的变量">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_873778921" 
+	TEXT="gui.geometry=1035x457+144+51 207 214&#xa;GIT_COMMITTER_IDENT=Jiang Xin &lt;jiangxin@ossxp.com&gt; 1292314267 +0800&#xa;GIT_AUTHOR_IDENT=Jiang Xin &lt;jiangxin@ossxp.com&gt; 1292314267 +0800&#xa;GIT_EDITOR=vi&#xa;GIT_PAGER=less&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" ID="ID_277346092" 
+	TEXT="git-web--browse：打开浏览器查看目录或者文件。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_587416680" 
+	TEXT="其他">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1767696998" 
+	TEXT="git-submodule">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1244119894" 
+	TEXT="git-notes：管理提交的评论">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_374451127" 
+	TEXT="git-replace：创建显示替换对象">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1927688069" 
+	TEXT="git-check-attr： 显示某个文件是否设置了属性">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_414274564" 
+	TEXT="git-shortlog：对 git log 的输出进行汇总后再输出。适合于在 Release Notes 中出现。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_319799093" 
+	TEXT="git-request-pull：生成一个版本比较，用于向他人提供PULL操作的指示：即我这里（URL）包括一些提交，差异是什么，有几次提交，访问URL地址是什么等等。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+</node>
+</node>
 <node COLOR="#0033ff" FOLDED="true" ID="ID_1872967347" POSITION="left" 
 	TEXT="Git 工具">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
