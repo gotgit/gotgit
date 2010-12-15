@@ -35,7 +35,7 @@ gitk 是最早实现的一个图形化的Git版本库浏览器软件，基于 tc
 
     $ gitk v2.6.12.. include/scsi drivers/scsi
 
-下面的图示就是在我们的试验版本库中运行 "gitk --all" 的显示。
+下面的图示就是在DEMO版本库中运行 "gitk --all" 的显示。
 
 .. figure:: images/git-gui/gitk.png
    :scale: 80
