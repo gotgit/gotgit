@@ -2,9 +2,9 @@
 |ArticleTitle|
 ==================
 
-------------
-版本控制宝典
-------------
+--------------------------------
+版本控制之美 —— 第 2 篇: Git独奏
+--------------------------------
 
 :作者: |AuthorOSSXP|_
 :网址: http://www.ossxp.com/
@@ -33,19 +33,18 @@
    Transition Dissolve 1
    PageBreak contentsPage
 
-第 2 篇: Git独奏
-###########################
 
 .. .. include:: current
 
-.. include:: ./02-use-git/010-git-init.rst
-.. include:: ./02-use-git/020-git-stage.rst
-.. include:: ./02-use-git/030-head-master-commit-refs.rst
-.. include:: ./02-use-git/040-git-reset.rst
-.. include:: ./02-use-git/050-git-checkout.rst
-.. include:: ./02-use-git/060-git-stage-n-stash.rst
-.. include:: ./02-use-git/070-git-basic.rst
-.. include:: ./02-use-git/080-git-history-travel.rst
-.. include:: ./02-use-git/090-back-to-future.rst
-.. include:: ./02-use-git/100-git-clone.rst
-.. include:: ./02-use-git/110-git-admin.rst
+.. include:: ./02-git-solo/010-git-init.rst
+.. include:: ./02-git-solo/020-git-stage.rst
+.. include:: ./02-git-solo/030-head-master-commit-refs.rst
+.. include:: ./02-git-solo/040-git-reset.rst
+.. include:: ./02-git-solo/050-git-checkout.rst
+.. include:: ./02-git-solo/060-git-stage-n-stash.rst
+.. include:: ./02-git-solo/070-git-basic.rst
+.. include:: ./02-git-solo/080-git-history-travel.rst
+.. include:: ./02-git-solo/090-back-to-future.rst
+.. include:: ./02-git-solo/100-git-clone.rst
+.. include:: ./02-git-solo/110-git-admin.rst
+

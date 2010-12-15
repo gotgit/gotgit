@@ -47,27 +47,27 @@
 第 2 篇: Git独奏
 ###########################
 
-.. include:: ./02-use-git/010-git-init.rst
-.. include:: ./02-use-git/020-git-stage.rst
-.. include:: ./02-use-git/030-head-master-commit-refs.rst
-.. include:: ./02-use-git/040-git-reset.rst
-.. include:: ./02-use-git/050-git-checkout.rst
-.. include:: ./02-use-git/060-git-stage-n-stash.rst
-.. include:: ./02-use-git/070-git-basic.rst
-.. include:: ./02-use-git/080-git-history-travel.rst
-.. include:: ./02-use-git/090-back-to-future.rst
-.. include:: ./02-use-git/100-git-clone.rst
-.. include:: ./02-use-git/110-git-admin.rst
+.. include:: ./02-git-solo/010-git-init.rst
+.. include:: ./02-git-solo/020-git-stage.rst
+.. include:: ./02-git-solo/030-head-master-commit-refs.rst
+.. include:: ./02-git-solo/040-git-reset.rst
+.. include:: ./02-git-solo/050-git-checkout.rst
+.. include:: ./02-git-solo/060-git-stage-n-stash.rst
+.. include:: ./02-git-solo/070-git-basic.rst
+.. include:: ./02-git-solo/080-git-history-travel.rst
+.. include:: ./02-git-solo/090-back-to-future.rst
+.. include:: ./02-git-solo/100-git-clone.rst
+.. include:: ./02-git-solo/110-git-admin.rst
 
 第 3 篇: Git和声
 ##################
 
-.. include:: ./03-adv-git/010-git-tag.rst
-.. include:: ./03-adv-git/020-git-branch.rst
-.. include:: ./03-adv-git/030-conflict.rst
-.. include:: ./03-adv-git/040-git-remote.rst
-.. include:: ./03-adv-git/045-git-hooks.rst
-.. include:: ./03-adv-git/050-git-secret.rst
+.. include:: ./03-git-harmony/010-git-tag.rst
+.. include:: ./03-git-harmony/020-git-branch.rst
+.. include:: ./03-git-harmony/030-conflict.rst
+.. include:: ./03-git-harmony/040-git-remote.rst
+.. include:: ./03-git-harmony/045-git-hooks.rst
+.. include:: ./03-git-harmony/050-git-secret.rst
 
 第 4 篇: Git协同模型
 #####################
@@ -125,14 +125,3 @@
 .. include:: ./90-app/050-freemind.rst
 .. include:: ./90-app/060-cygwin.rst
 .. include:: ./90-app/040-quilt.rst
-02-use-git/010-git-init.rst
-02-use-git/020-git-stage.rst
-02-use-git/030-head-master-commit-refs.rst
-02-use-git/040-git-reset.rst
-02-use-git/050-git-checkout.rst
-02-use-git/060-git-stage-n-stash.rst
-02-use-git/070-git-basic.rst
-02-use-git/080-git-history-travel.rst
-02-use-git/090-back-to-future.rst
-02-use-git/100-git-clone.rst
-02-use-git/110-git-admin.rst
