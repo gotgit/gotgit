@@ -8,7 +8,7 @@ Git 重置
   $ cat .git/refs/heads/master 
   e695606fc5e31b2ff9038a48a3d363f4c21a3d86
 
-上一章还通过对提交本身数据结构的分析，看到提交可以通过到父提交的关联实现对提交历史的追溯。
+上一章还通过对提交本身数据结构的分析，看到提交可以通过到父提交的关联实现对提交历史的追溯。注意：下面的命令中使用了 `--oneline` 参数，类似于 `--pretty=oneline` ，除了可以显示更短小的提交ID之外。参数 `--oneline` 在 Git 1.6.3 及以后版本提供，老版本的 Git 可以使用参数 `--pretty=oneline --abbrev-commit` 替代。
 
 ::
 
