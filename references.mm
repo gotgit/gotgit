@@ -7,6 +7,20 @@
 	TEXT="gitbook&#xa;Git —— Door to the source&#xa;Git —— 通往源码之门&#xa;Git——版本控制之美">
 <font NAME="Serif" SIZE="20"/>
 <hook NAME="accessories/plugins/AutomaticLayout.properties"/>
+<node COLOR="#0033ff" FOLDED="true" ID="ID_650351088" POSITION="right" 
+	TEXT="memo">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="Serif" SIZE="18"/>
+<node COLOR="#00b439" FOLDED="true" ID="ID_731645805" 
+	TEXT=" 濱野 純(Junio C Hamano) ">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_395631647" LINK="http://gitster.livejournal.com/" 
+	TEXT="gitster.livejournal.com">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+</node>
 <node COLOR="#0033ff" FOLDED="true" ID="ID_143424013" POSITION="right" 
 	TEXT="回到未来：back to future">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
@@ -39,7 +53,7 @@
 <node COLOR="#00b439" ID="ID_1092174402" 
 	TEXT="gitbook&#xa;">
 <edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
+<font BOLD="true" NAME="Serif" SIZE="16"/>
 </node>
 <node COLOR="#00b439" ID="ID_1193189333" 
 	TEXT="Git —— Door to the source&#xa;">
@@ -5196,7 +5210,19 @@
 <node COLOR="#111111" FOLDED="true" ID="ID_175214077" 
 	TEXT="输出">
 <node COLOR="#111111" ID="ID_662775903" 
-	TEXT="       expect dangling commits - potential heads - due to lack of head information&#xa;           You haven’t specified any nodes as heads so it won’t be possible to differentiate between un-parented commits and root nodes.&#xa;&#xa;       missing sha1 directory &lt;dir&gt;&#xa;           包含 sha1 对象的树丢失。&#xa;&#xa;       unreachable &lt;type&gt; &lt;object&gt;&#xa;           The &lt;type&gt; object &lt;object&gt;, isn’t actually referred to directly or indirectly in any of the trees or commits seen. This can mean that there’s&#xa;           another root node that you’re not specifying or that the tree is corrupt. If you haven’t missed a root node then you might as well delete&#xa;           unreachable nodes since they can’t be used.&#xa;&#xa;       missing &lt;type&gt; &lt;object&gt;&#xa;           The &lt;type&gt; object &lt;object&gt;, is referred to but isn’t present in the database.&#xa;&#xa;       dangling &lt;type&gt; &lt;object&gt;&#xa;           The &lt;type&gt; object &lt;object&gt;, is present in the database but never directly used. A dangling commit could be a root node.&#xa;&#xa;       warning: git-fsck: tree &lt;tree&gt; has full pathnames in it&#xa;           And it shouldn’t...&#xa;&#xa;       sha1 mismatch &lt;object&gt;&#xa;           The database has an object who’s sha1 doesn’t match the database value. This indicates a serious data integrity problem.&#xa;&#xa;"/>
+	TEXT="expect dangling commits - potential heads - due to lack of head information&#xa;           You haven’t specified any nodes as heads so it won’t be possible &#xa;           to differentiate between un-parented commits and root nodes."/>
+<node COLOR="#111111" ID="ID_822081934" 
+	TEXT="missing sha1 directory &lt;dir&gt; ： 目录丢失&#xa;           包含 sha1 对象的树丢失。&#xa;"/>
+<node COLOR="#111111" ID="ID_716848615" 
+	TEXT="unreachable &lt;type&gt; &lt;object&gt;&#xa;          对象 &lt;type&gt; object &lt;object&gt;, 没有被直接或者间接引用（任何树或者提交）。&#xa;          可能是某棵树没有进行搜索，或者树损坏了。如果不是这样，可以直接删除这些未引用的节点。"/>
+<node COLOR="#111111" ID="ID_407502017" 
+	TEXT="missing &lt;type&gt; &lt;object&gt;：缺失&#xa;           对象 &lt;type&gt; object &lt;object&gt;, 被引用到，但是不在数据库中。"/>
+<node COLOR="#111111" ID="ID_564809574" 
+	TEXT="dangling &lt;type&gt; &lt;object&gt;&#xa;           对象 &lt;type&gt; object &lt;object&gt;, 在数据库中，但是没有被直接引用。&#xa;           一个 dangling 提交可能是一个根节点"/>
+<node COLOR="#111111" ID="ID_266822272" 
+	TEXT="warning: git-fsck: tree &lt;tree&gt; has full pathnames in it&#xa;           不应该有全路径名称&#xa;"/>
+<node COLOR="#111111" ID="ID_1188685926" 
+	TEXT="sha1 mismatch &lt;object&gt;：遇到完整性冲突。&#xa;           数据库有一个对象的 SHA1 哈希和数据库中不一致。严重的完整性冲突错误。"/>
 </node>
 </node>
 <node COLOR="#111111" FOLDED="true" ID="ID_1183245366" 
@@ -5212,9 +5238,17 @@
 	TEXT="git-gc">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_627161698" 
+<node COLOR="#111111" FOLDED="true" ID="ID_627161698" 
 	TEXT="哪些命令自动执行 git gc --auto ？">
-<icon BUILTIN="help"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_345723362" 
+	TEXT="merge 操作"/>
+<node COLOR="#111111" ID="ID_2522121" 
+	TEXT="receive-pack 操作"/>
+<node COLOR="#111111" ID="ID_1433766583" 
+	TEXT="rebase --interactive 操作"/>
+<node COLOR="#111111" ID="ID_1962974999" 
+	TEXT="am 操作"/>
 </node>
 <node COLOR="#111111" FOLDED="true" ID="ID_857681666" 
 	TEXT="--aggressive">
@@ -5229,6 +5263,8 @@
 	TEXT="如果松散对象数量超过 gc.auto （大于0）的数量，则进行整理（git repack -d -l）。如果 gc.auto 设置为0 ，则不对松散对象打包。"/>
 <node COLOR="#111111" ID="ID_960311980" 
 	TEXT="如果pack包的数量超过 gc.autopacklimit，则执行 git repack -A 合并为一个包。如果 gc.autopacklimit 为0,则不进行多个包的合并工作。"/>
+<node COLOR="#111111" ID="ID_1717160615" 
+	TEXT="Git 是通过检查 objects/17 目录下的松散文件数量，估算出总共有多少松散文件，如果恰好 17 目录没有，则不会进行。"/>
 </node>
 <node COLOR="#111111" FOLDED="true" ID="ID_392921547" 
 	TEXT="--prune=&lt;date&gt;">
@@ -5254,14 +5290,32 @@
 <node COLOR="#111111" FOLDED="true" ID="ID_656503342" 
 	TEXT="gc.packrefs 设置是否对引用打包">
 <node COLOR="#111111" ID="ID_262421233" 
-	TEXT="可以是 true，false，no-bare"/>
+	TEXT="可以是 true，false，notbare"/>
 <node COLOR="#111111" ID="ID_1793828762" 
-	TEXT="no-bare 含义是非裸版本库，执行对引用的打包。"/>
+	TEXT="notbare 含义是非裸版本库，执行对引用的打包。"/>
 </node>
 <node COLOR="#111111" ID="ID_1239640449" 
 	TEXT="gc.aggressiveWindow 缺省 250"/>
 <node COLOR="#111111" ID="ID_1147588809" 
 	TEXT="gc.pruneExpire 可以设置缺省的清理松散对象时间，缺省2周。"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_298938510" 
+	TEXT="运行步骤">
+<node COLOR="#111111" FOLDED="true" ID="ID_1445588892" 
+	TEXT="如果没有关闭 gc.packrefs">
+<node COLOR="#111111" ID="ID_1305848708" 
+	TEXT="git pack-refs --all --prune"/>
+</node>
+<node COLOR="#111111" ID="ID_362541608" 
+	TEXT="运行 reflog 过期命令 git reflog expire --all # 缺省过期90天的内容。"/>
+<node COLOR="#111111" ID="ID_440541923" 
+	TEXT="运行 repack。如果设置 --prune=now，则 执行 repack -d -l -a，否则执行 repack -d -l -A"/>
+<node COLOR="#111111" ID="ID_1383510734" 
+	TEXT="运行 prune： git prune --expire xxx # 缺省两周，如果传递 --prune 参数则使用该参数的值。"/>
+<node COLOR="#111111" ID="ID_387882848" 
+	TEXT="运行 rerere gc"/>
+<node COLOR="#111111" ID="ID_541318667" 
+	TEXT="如果是运行 --auto，并且未追踪松散对象太多，警告运行 git prune 删除。这些对象是应该是两周内的，因为之前已经运行 prune 了。"/>
 </node>
 <node COLOR="#111111" ID="ID_1234406105" 
 	TEXT="gc 参考的引用： 分支，里程碑，暂存区，远程分支，运行 git-filter-branch 在 refs/orignal/ 下保存的引用，以及 reflogs. "/>
@@ -5273,15 +5327,21 @@
 <node COLOR="#111111" ID="ID_224988429" 
 	TEXT="缺省递增式的打包。"/>
 <node COLOR="#111111" ID="ID_1212919054" 
-	TEXT="-a：将松散文件打在一个包中。使用 -d 参数，会将 git prune 留下的但是 git fsck --full 显示为 dangling 的对象删除。"/>
+	TEXT="-a：将所有对象打在一个包中。若使用 -d 参数，会将 git prune 留下的但是 git fsck --full 显示为 dangling 的对象删除。&#xa;&#xa;    all_into_one=t&#xa;&#xa;当调用 git-gc，设置 --prune=now 时，调用 -a ，否则调用 -A"/>
 <node COLOR="#111111" ID="ID_1667773418" 
-	TEXT="-A：除了使用 -d 和 -a 参数一样。不能访问到的包中的对象从包中移出成为松散对象。防止不能访问到的对象在旧的包中直接被删除。"/>
+	TEXT="-A：将所有对象打在一个包中，未被追踪的对象从包移除称为松散对象。&#xa;&#xa;    all_into_one=t&#xa;    unpack_unreachable=--unpack-unreachable&#xa;&#xa;除非使用 -d，否则和 -a 参数一样。如果使用 -d 参数，而且已经存在 pack/*.pack 文件，则传递 --unpack-unreachable 参数将原来包中不能追踪的对象清除。&#xa;"/>
 <node COLOR="#111111" ID="ID_1863202418" 
-	TEXT="-d：当执行打包后，如果新创建的包使得现存的有些包变得多余，删除多余的包。"/>
+	TEXT="-d：当执行打包后，如果新创建的包使得现存的有些包变得多余，删除多余的包。&#xa;&#xa;    remove_redundant=t"/>
 <node COLOR="#111111" ID="ID_1525613729" 
 	TEXT="-l : 向 git pack-objects 传递 --local 参数"/>
 <node COLOR="#111111" ID="ID_102082051" 
-	TEXT="-f : 向 git pack-objects 传递 --no-reuse-object 参数"/>
+	TEXT="-f : 向 git pack-objects 传递 --no-reuse-delta 参数&#xa;&#xa;    no_reuse=--no-reuse-delta">
+<icon BUILTIN="idea"/>
+</node>
+<node COLOR="#111111" ID="ID_481656044" 
+	TEXT="-F : 向 git pack-objects 传递 --no-reuse-object 参数&#xa;&#xa;    no_reuse=--no-reuse-object">
+<icon BUILTIN="idea"/>
+</node>
 <node COLOR="#111111" ID="ID_1511009233" 
 	TEXT="-q : 向 git pack-objects 传递 -q 参数"/>
 <node COLOR="#111111" ID="ID_1147830646" 
@@ -5292,6 +5352,21 @@
 	TEXT="配置">
 <node COLOR="#111111" ID="ID_1511893021" 
 	TEXT="pack.packSizeLimit"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_651721638" 
+	TEXT="动作：">
+<node COLOR="#111111" ID="ID_1049123204" 
+	TEXT="基础打包命令： git pack-objects --keep-true-parents --honor-pack-keep --non-empty --all --reflog "/>
+<node COLOR="#111111" ID="ID_1359296065" 
+	TEXT="不使用 -a 或者 -A 参数时： --unpacked --incremental"/>
+<node COLOR="#111111" ID="ID_1188468517" 
+	TEXT="如果使用 -A 和 -d 参数：--unpack-unreachable"/>
+<node COLOR="#111111" ID="ID_477496642" 
+	TEXT="打包的 base-name： .git/objects/pack/.tmp-$$-pack"/>
+<node COLOR="#111111" ID="ID_674427519" 
+	TEXT="改名，将 .git/objects/pack/.tmp-$$-pack-$name.pack 命名为 .../pack-$name.pack"/>
+<node COLOR="#111111" ID="ID_926870313" 
+	TEXT="改名，将 .git/objects/pack/.tmp-$$-pack-$name.idx  命名为 .../pack-$name.idx"/>
 </node>
 </node>
 <node COLOR="#111111" FOLDED="true" ID="ID_1345201542" 
@@ -5305,7 +5380,7 @@
 <node COLOR="#111111" ID="ID_1752067987" 
 	TEXT="-v：显示移除的对象"/>
 <node COLOR="#111111" ID="ID_720956955" 
-	TEXT="--expire &lt;time&gt; ：老于 &lt;time&gt; 的松散对象视为过期。"/>
+	TEXT="--expire &lt;time&gt; ：老于 &lt;time&gt; 的松散对象视为过期。缺省 &lt;time&gt; 设置为 ULONG_MAX，即所有过期的均删除。"/>
 <node COLOR="#111111" ID="ID_733742019" 
 	TEXT="&lt;head&gt;...  除了引用之外，提供的 head 参数也被视为追踪的对象。"/>
 <node COLOR="#111111" FOLDED="true" ID="ID_1413558072" 
@@ -5320,6 +5395,18 @@
 <font NAME="Serif" SIZE="12"/>
 <node COLOR="#111111" ID="ID_1319700224" 
 	TEXT="       git pack-objects [-q | --progress | --all-progress] [--all-progress-implied]&#xa;               [--no-reuse-delta] [--delta-base-offset] [--non-empty]&#xa;               [--local] [--incremental] [--window=N] [--depth=N]&#xa;               [--revs [--unpacked | --all]*] [--stdout | base-name]&#xa;               [--keep-true-parents] &lt; object-list&#xa;"/>
+<node COLOR="#111111" ID="ID_318772084" 
+	TEXT="--all ： 将 ref/* 加入到打包对象中"/>
+<node COLOR="#111111" ID="ID_1627535835" 
+	TEXT="--reflog ：将 reflog 加入打包对象中。"/>
+<node COLOR="#111111" ID="ID_722620060" 
+	TEXT="--keep-true-parents ： 使用 grafts 嫁接而隐藏掉的真实的 parents 也要打包"/>
+<node COLOR="#111111" ID="ID_1655184999" 
+	TEXT="--honor-pack-keep： 当对象已经在包含 .pack.keep 的包中，被忽略"/>
+<node COLOR="#111111" ID="ID_1698912297" 
+	TEXT="--no-empty：只在至少有一个对象时打包"/>
+<node COLOR="#111111" ID="ID_1445737651" 
+	TEXT="--incremental: 已经被打包的对象被忽略"/>
 <node COLOR="#111111" ID="ID_1475657418" 
 	TEXT="--local ： 从其它版本库借用的对象不予打包"/>
 <node COLOR="#111111" FOLDED="true" ID="ID_831373639" 
@@ -5334,8 +5421,10 @@
 </node>
 <node COLOR="#111111" ID="ID_1312915567" 
 	TEXT="--compression=[N]： 设置压缩率"/>
-<node COLOR="#111111" ID="ID_1698912297" 
-	TEXT="--no-empty：只在至少有一个对象时打包"/>
+<node COLOR="#111111" ID="ID_189134368" 
+	TEXT="--unpacked"/>
+<node COLOR="#111111" ID="ID_571199063" 
+	TEXT="--unpack-unreachable"/>
 </node>
 <node COLOR="#111111" FOLDED="true" ID="ID_1515862611" 
 	TEXT="git-unpack-objects：从打包文件释放文件到版本库对象库中的松散对象。">
