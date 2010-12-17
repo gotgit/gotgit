@@ -3475,7 +3475,7 @@
 <font NAME="Serif" SIZE="16"/>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1146526869" 
-	TEXT="协议">
+	TEXT="1 协议">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" FOLDED="true" ID="ID_1897687140" 
@@ -3522,7 +3522,7 @@
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1198328993" 
-	TEXT="冲突解决">
+	TEXT="2 冲突解决">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" ID="ID_646053453" 
@@ -3578,7 +3578,7 @@
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1165107634" 
-	TEXT="分支">
+	TEXT="3 分支">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" ID="ID_1670975286" 
@@ -3996,7 +3996,7 @@
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_303951238" 
-	TEXT="里程碑">
+	TEXT="4 里程碑">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" FOLDED="true" ID="ID_611541349" 
@@ -4180,7 +4180,7 @@
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_352618381" 
-	TEXT="远程版本库">
+	TEXT="5 远程版本库">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" FOLDED="true" ID="ID_433746938" 
@@ -4450,7 +4450,7 @@
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1567230660" 
-	TEXT="通过补丁方式进行交互。">
+	TEXT="6 通过补丁方式进行交互。">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" FOLDED="true" ID="ID_1418738352" 
