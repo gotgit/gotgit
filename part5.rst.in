@@ -1,0 +1,45 @@
+==================
+|ArticleTitle|
+==================
+
+---------------------------------------
+版本控制之美 —— 第 5 篇: 搭建Git服务器
+---------------------------------------
+
+:作者: |AuthorOSSXP|_
+:网址: http://www.ossxp.com/
+:版本: |doc_rev|
+:日期: |doc_date|
+
+.. |date| date::        %Y-%m-%d %H:%M
+.. |doc_rev| replace::  @ENV(DOC_REV)@
+.. |doc_date| replace:: @ENV(DOC_DATE)@
+.. |Creative Commons|   image:: images/cc-icon.png
+.. _Creative Commons:   http://creativecommons.org/licenses/by-sa/3.0/
+.. |AuthorOSSXP|        replace:: 蒋鑫
+.. _AuthorOSSXP:        http://blog.ossxp.com/
+.. |ArticleTitle|       replace:: 拥抱Git
+.. _ArticleTitle:       http://www.ossxp.com/
+
+.. contents:: 目录
+.. sectnum::
+
+.. include:: DEFINES.txt
+   :start-after: START_@ENV(DOC_BACKEND)@_HEADER_FOOTER
+   :end-before: END_@ENV(DOC_BACKEND)@_HEADER_FOOTER
+
+.. raw:: pdf
+
+   Transition Dissolve 1
+   PageBreak contentsPage
+
+.. include:: ./05-git-server/010-http.rst
+.. include:: ./05-git-server/015-gitweb.rst
+.. include:: ./05-git-server/020-git.rst
+.. include:: ./05-git-server/030-ssh.rst
+.. include:: ./05-git-server/040-gitolite.rst
+.. include:: ./05-git-server/050-gitosis.rst
+.. include:: ./05-git-server/055-gerrit.rst
+.. include:: ./05-git-server/060-github-like.rst
+
+

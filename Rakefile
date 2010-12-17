@@ -31,7 +31,49 @@ task:default do
   sh 'rake -T'
 end
 
-task:test do
-  ENV["DOC_INDEX"] = "test"
+task:part1 do
+  ENV["DOC_INDEX"] = "part1"
   sh 'rake html'
 end
+
+task:part2 do
+  ENV["DOC_INDEX"] = "part2"
+  sh 'rake html'
+end
+
+task:part3 do
+  ENV["DOC_INDEX"] = "part3"
+  sh 'rake html'
+end
+
+task:part4 do
+  ENV["DOC_INDEX"] = "part4"
+  sh 'rake html'
+end
+
+task:part5 do
+  ENV["DOC_INDEX"] = "part5"
+  sh 'rake html'
+end
+
+task:part6 do
+  ENV["DOC_INDEX"] = "part6"
+  sh 'rake html'
+end
+
+task:part7 do
+  ENV["DOC_INDEX"] = "part7"
+  sh 'rake html'
+end
+
+task:part8 do
+  ENV["DOC_INDEX"] = "part8"
+  sh 'rake html'
+end
+
+task:part9 do
+  ENV["DOC_INDEX"] = "part9"
+  sh 'rake html'
+end
+
+
