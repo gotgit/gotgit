@@ -1658,7 +1658,7 @@
 </node>
 </node>
 <node COLOR="#0033ff" FOLDED="true" ID="ID_1873664526" POSITION="right" 
-	TEXT="Git 基础篇： 循序渐进">
+	TEXT="Git 独奏">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="Serif" SIZE="18"/>
 <node COLOR="#00b439" ID="ID_937140096" 
@@ -3466,7 +3466,7 @@
 </node>
 </node>
 <node COLOR="#0033ff" FOLDED="true" ID="ID_1683992194" POSITION="right" 
-	TEXT="Git 进阶篇: 协作">
+	TEXT="Git 和声">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="Serif" SIZE="18"/>
 <node COLOR="#00b439" ID="ID_441486497" 

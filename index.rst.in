@@ -62,12 +62,12 @@
 第 3 篇: Git和声
 ##################
 
-.. include:: ./03-git-harmony/010-git-tag.rst
-.. include:: ./03-git-harmony/020-git-branch.rst
-.. include:: ./03-git-harmony/030-conflict.rst
-.. include:: ./03-git-harmony/040-git-remote.rst
-.. include:: ./03-git-harmony/045-git-hooks.rst
-.. include:: ./03-git-harmony/050-git-secret.rst
+.. include:: ./03-git-harmony/010-protocol.rst
+.. include:: ./03-git-harmony/020-conflict.rst
+.. include:: ./03-git-harmony/030-git-branch.rst
+.. include:: ./03-git-harmony/040-git-tag.rst
+.. include:: ./03-git-harmony/050-git-remote.rst
+.. include:: ./03-git-harmony/060-git-offline.rst
 
 第 4 篇: Git协同模型
 #####################
