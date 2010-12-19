@@ -494,7 +494,7 @@ tg remote 命令用于为远程跟踪版本库设置 Topgit 的特性分支的�
 ::
 
    [remote "origin"]
-          url = /path/to/test1.git
+          url = /path/to/repos/tgtest.git
           fetch = +refs/heads/*:refs/remotes/origin/*
   +       fetch = +refs/top-bases/*:refs/remotes/origin/top-bases/*
 
@@ -504,18 +504,18 @@ tg remote 命令用于为远程跟踪版本库设置 Topgit 的特性分支的�
 
 下面为前面测试的版本库设置一个远程的跟踪版本库。
 
-先创建一个裸版本库 test1.git 。
+先创建一个裸版本库 tgtest.git 。
 
 ::
 
-  $ git init --bare /path/to/test1.git
-  Initialized empty Git repository in /path/to/test1.git/
+  $ git init --bare /path/to/repos/tgtest.git
+  Initialized empty Git repository in /path/to/repos/tgtest.git/
 
 然后在测试版本库中注册名为 origin 的远程版本库为刚刚创建的版本库。
 
 ::
  
-  $ git remote add origin /path/to/test1.git
+  $ git remote add origin /path/to/repos/tgtest.git
 
 执行 git push，将主线同步到远程的版本库。
 
@@ -528,7 +528,7 @@ tg remote 命令用于为远程跟踪版本库设置 Topgit 的特性分支的�
   Writing objects: 100% (7/7), 585 bytes, done.
   Total 7 (delta 0), reused 0 (delta 0)
   Unpacking objects: 100% (7/7), done.
-  To /path/to/test1.git
+  To /path/to/repos/tgtest.git
    * [new branch]      master -> master
 
 之后通过 tg remote 命令告诉 Git 这个远程版本库需要跟踪 Topgit 分支。
@@ -542,7 +542,7 @@ tg remote 命令用于为远程跟踪版本库设置 Topgit 的特性分支的�
 ::
 
    [remote "origin"]
-          url = /path/to/test1.git
+          url = /path/to/repos/tgtest.git
           fetch = +refs/heads/*:refs/remotes/origin/*
   +       fetch = +refs/top-bases/*:refs/remotes/origin/top-bases/*
   +[topgit]
@@ -568,7 +568,7 @@ tg remote 命令用于为远程跟踪版本库设置 Topgit 的特性分支的�
   Writing objects: 100% (4/4), 457 bytes, done.
   Total 4 (delta 0), reused 0 (delta 0)
   Unpacking objects: 100% (4/4), done.
-  To /path/to/test1.git
+  To /path/to/repos/tgtest.git
    * [new branch]      t/feature2 -> t/feature2
    * [new branch]      refs/top-bases/t/feature2 -> refs/top-bases/t/feature2
 

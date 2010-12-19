@@ -10,15 +10,15 @@
 
 ::
 
-  $ git --git-dir=/path/to/util.git init --bare
-  $ git --git-dir=/path/to/main.git init --bare
+  $ git --git-dir=/path/to/repos/util.git init --bare
+  $ git --git-dir=/path/to/repos/main.git init --bare
 
 在本地检出这两个版本库：
 
 ::
 
-  $ git clone /path/to/util.git
-  $ git clone /path/to/main.git
+  $ git clone /path/to/repos/util.git
+  $ git clone /path/to/repos/main.git
 
 需要为这两个空版本库添加些数据。非常简单，每个版本库下只创建两个文件： Makefile 和 version。当执行 make 命令时显示 version 文件的内容。对 version 文件多次提交以建立多个提交历史。别忘记在最后使用 `git push origin master` 将版本库推送到远程版本库中。
 
@@ -35,13 +35,13 @@ Makefile 文件示例如下：
 
 ::
 
-  $ git remote add util /path/to/util.git
+  $ git remote add util /path/to/repos/util.git
 
   $ git remote -v
-  origin  /path/to/main.git/ (fetch)
-  origin  /path/to/main.git/ (push)
-  util    /path/to/util.git (fetch)
-  util    /path/to/util.git (push)
+  origin  /path/to/repos/main.git/ (fetch)
+  origin  /path/to/repos/main.git/ (push)
+  util    /path/to/repos/util.git (fetch)
+  util    /path/to/repos/util.git (push)
 
   $ git fetch util
 
@@ -226,7 +226,7 @@ Makefile 文件示例如下：
   remote: Compressing objects: 100% (4/4), done.
   remote: Total 6 (delta 0), reused 0 (delta 0)
   Unpacking objects: 100% (6/6), done.
-  From /path/to/util
+  From /path/to/repos/util
      12408a1..5aba14f  master     -> util/master
   Updating 12408a1..5aba14f
   Fast-forward
@@ -314,13 +314,13 @@ git subtree add
 
 ::
 
-  $ git subtree add -P lib /path/to/util.git master
+  $ git subtree add -P lib /path/to/repos/util.git master
 
 不过推荐的方法还是先在本地建立 util.git 版本库的追踪分支。
 
 ::
 
-  $ git remote add util /path/to/util.git
+  $ git remote add util /path/to/repos/util.git
   $ git fetch util
   $ git checkout -b util-branch util/master
   $ git subtree add -P lib util-branch
@@ -355,7 +355,7 @@ git subtree pull
 
 ::
 
-  $ git subtree pull -P lib /path/to/util.git master
+  $ git subtree pull -P lib /path/to/repos/util.git master
 
 更喜欢用前面介绍的 `git subtree merge` 命令，因为 `git subtree pull` 存在版本库地址写错的风险。
 

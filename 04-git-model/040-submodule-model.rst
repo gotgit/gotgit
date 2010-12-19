@@ -26,15 +26,15 @@
 
 ::
 
-$ git --git-dir=/path/to/libA.git init --bare
-$ git --git-dir=/path/to/libB.git init --bare
-$ git --git-dir=/path/to/super.git init --bare
+$ git --git-dir=/path/to/repos/libA.git init --bare
+$ git --git-dir=/path/to/repos/libB.git init --bare
+$ git --git-dir=/path/to/repos/super.git init --bare
 
 向两个公共的函数库中填充些数据。这就需要在工作区克隆两个函数库，提交数据，并推送。
 
 ::
 
-  $ git clone /path/to/libA.git 
+  $ git clone /path/to/repos/libA.git 
   $ cd libA
   hack ...
   $ git add .
@@ -42,7 +42,7 @@ $ git --git-dir=/path/to/super.git init --bare
   $ git push origin master
   $ cd ..
   
-  $ git clone /path/to/libB.git
+  $ git clone /path/to/repos/libB.git
   $ cd libB
   hack ...
   $ git add .
@@ -54,7 +54,7 @@ $ git --git-dir=/path/to/super.git init --bare
 
 ::
 
-  $ git clone /path/to/super.git
+  $ git clone /path/to/repos/super.git
   warning: You appear to have cloned an empty repository.
   $ cd super
   $ git commit --allow-empty -m "initialized."
@@ -65,9 +65,9 @@ $ git --git-dir=/path/to/super.git init --bare
 
 ::
 
-  $ git submodule add /path/to/libA.git lib/lib_a
+  $ git submodule add /path/to/repos/libA.git lib/lib_a
 
-  $ git submodule add /path/to/libB.git lib/lib_b
+  $ git submodule add /path/to/repos/libB.git lib/lib_b
 
 至此看一下 super 版本库工作区的目录结构。在根目录下多了一个 .gitmodules 文件，并且两个函数库分别克隆到 lib/lib_a 目录和 lib/lib_b 目录下。
 
@@ -83,10 +83,10 @@ $ git --git-dir=/path/to/super.git init --bare
   $ cat .gitmodules 
   [submodule "lib/lib_a"]
           path = lib/lib_a
-          url = /path/to/libA.git
+          url = /path/to/repos/libA.git
   [submodule "lib/lib_b"]
           path = lib/lib_b
-          url = /path/to/libB.git
+          url = /path/to/repos/libB.git
 
 此时 super 的工作区尚未提交。
 
@@ -131,10 +131,10 @@ $ git --git-dir=/path/to/super.git init --bare
   @@ -0,0 +1,6 @@
   +[submodule "lib/lib_a"]
   +       path = lib/lib_a
-  +       url = /path/to/libA.git
+  +       url = /path/to/repos/libA.git
   +[submodule "lib/lib_b"]
   +       path = lib/lib_b
-  +       url = /path/to/libB.git
+  +       url = /path/to/repos/libB.git
   diff --git a/lib/lib_a b/lib/lib_a
   new file mode 160000
   index 0000000..126b181
@@ -159,7 +159,7 @@ $ git --git-dir=/path/to/super.git init --bare
 
 ::
 
-  $ git clone /path/to/super.git super-clone
+  $ git clone /path/to/repos/super.git super-clone
 
   $ cd super-clone
 
@@ -187,8 +187,8 @@ $ git --git-dir=/path/to/super.git init --bare
 ::
 
   $ git submodule init
-  Submodule 'lib/lib_a' (/path/to/libA.git) registered for path 'lib/lib_a'
-  Submodule 'lib/lib_b' (/path/to/libB.git) registered for path 'lib/lib_b'
+  Submodule 'lib/lib_a' (/path/to/repos/libA.git) registered for path 'lib/lib_a'
+  Submodule 'lib/lib_b' (/path/to/repos/libB.git) registered for path 'lib/lib_b'
 
 执行 `git submodule init` 实际上修改了 `.git/config` 文件，对子模组进行了注册。文件 `.git/config` 的修改示例如下（以加号开始的行代表新增的行）。
 
@@ -201,14 +201,14 @@ $ git --git-dir=/path/to/super.git init --bare
            logallrefupdates = true
    [remote "origin"]
            fetch = +refs/heads/*:refs/remotes/origin/*
-           url = /path/to/super.git
+           url = /path/to/repos/super.git
    [branch "master"]
            remote = origin
            merge = refs/heads/master
   +[submodule "lib/lib_a"]
-  +       url = /path/to/libA.git
+  +       url = /path/to/repos/libA.git
   +[submodule "lib/lib_b"]
-  +       url = /path/to/libB.git
+  +       url = /path/to/repos/libB.git
 
 然后执行 `git submodule update` 才完成子模组版本库的克隆。
 

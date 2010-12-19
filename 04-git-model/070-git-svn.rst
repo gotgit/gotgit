@@ -36,9 +36,9 @@ Git-svn 作为 Git 软件包的一部分，当 Git 从源码包进行安装时�
 
 ::
 
-  $ svnadmin create /path/to/svn/repos
+  $ svnadmin create /path/to/svn/repos/demo
 
-  $ svn co file:///path/to/svn/repos svndemo
+  $ svn co file:///path/to/svn/repos/demo svndemo
   取出版本 0
   
   $ cd svndemo
@@ -84,7 +84,7 @@ Git-svn 作为 Git 软件包的一部分，当 Git 从源码包进行安装时�
 
 ::
 
-  $ svn cp -m "new tag: v1.0" trunk file:///path/to/svn/repos/tags/v1.0 
+  $ svn cp -m "new tag: v1.0" trunk file:///path/to/svn/repos/demo/tags/v1.0 
 
   提交后的版本为 4。
 
@@ -122,23 +122,23 @@ Git-svn 作为 Git 软件包的一部分，当 Git 从源码包进行安装时�
 
 ::
 
-  $ git svn clone -s file:///path/to/svn/repos git-svn-demo
+  $ git svn clone -s file:///path/to/svn/repos/demo git-svn-demo
   Initialized empty Git repository in /path/to/my/workspace/git-svn-demo/.git/
   r1 = 2c73d657dfc3a1ceca9d465b0b98f9e123b92bb4 (refs/remotes/trunk)
           A       README
   r2 = 1863f91b45def159a3ed2c4c4c9428c25213f956 (refs/remotes/trunk)
-  Found possible branch point: file:///path/to/svn/repos/trunk => file:///path/to/svn/repos/branches/demo-1.0, 2
+  Found possible branch point: file:///path/to/svn/repos/demo/trunk => file:///path/to/svn/repos/demo/branches/demo-1.0, 2
   Found branch parent: (refs/remotes/demo-1.0) 1863f91b45def159a3ed2c4c4c9428c25213f956
   Following parent with do_switch
   Successfully followed parent
   r3 = 1adcd5526976fe2a796d932ff92d6c41b7eedcc4 (refs/remotes/demo-1.0)
-  Found possible branch point: file:///path/to/svn/repos/trunk => file:///path/to/svn/repos/tags/v1.0, 2
+  Found possible branch point: file:///path/to/svn/repos/demo/trunk => file:///path/to/svn/repos/demo/tags/v1.0, 2
   Found branch parent: (refs/remotes/tags/v1.0) 1863f91b45def159a3ed2c4c4c9428c25213f956
   Following parent with do_switch
   Successfully followed parent
   r4 = c12aa40c494b495a846e73ab5a3c787ca1ad81e9 (refs/remotes/tags/v1.0)
   Checked out HEAD:
-    file:///path/to/svn/repos/trunk r2
+    file:///path/to/svn/repos/demo/trunk r2
 
 从上面的输出可以看出，当执行了 git svn clone 之后，在本地工作目录创建了一个 Git 库 (git-svn-demo)，并将 Subversion 的每一个提交都转换为 Git 库中的提交。进入 git-svn-demo 目录，看看用 git-svn 克隆出来的版本库。
 
@@ -157,7 +157,7 @@ Git-svn 作为 Git 软件包的一部分，当 Git 从源码包进行安装时�
   
       hello
       
-      git-svn-id: file:///path/to/svn/repos/trunk@2 f79726c4-f016-41bd-acd5-6c9acb7664b2
+      git-svn-id: file:///path/to/svn/repos/demo/trunk@2 f79726c4-f016-41bd-acd5-6c9acb7664b2
   
   commit 2c73d657dfc3a1ceca9d465b0b98f9e123b92bb4
   Author: jiangxin <jiangxin@f79726c4-f016-41bd-acd5-6c9acb7664b2>
@@ -165,7 +165,7 @@ Git-svn 作为 Git 软件包的一部分，当 Git 从源码包进行安装时�
   
       initialized.
       
-      git-svn-id: file:///path/to/svn/repos/trunk@1 f79726c4-f016-41bd-acd5-6c9acb7664b2
+      git-svn-id: file:///path/to/svn/repos/demo/trunk@1 f79726c4-f016-41bd-acd5-6c9acb7664b2
 
 看到 Subversion 版本库的分支和里程碑都被克隆出来，并保存在 refs/remotes 下的引用中。在 `git log` 的输出中，可以看到 Subversion 的提交的确被转换为 Git 的提交。
 
@@ -209,7 +209,7 @@ Git-svn 作为 Git 软件包的一部分，当 Git 从源码包进行安装时�
   
       hello
   
-      git-svn-id: file:///path/to/svn/repos/trunk@2 f79726c4-f016-41bd-acd5-6c9acb7664b2
+      git-svn-id: file:///path/to/svn/repos/demo/trunk@2 f79726c4-f016-41bd-acd5-6c9acb7664b2
   
   commit 2c73d657dfc3a1ceca9d465b0b98f9e123b92bb4
   Author: jiangxin <jiangxin@f79726c4-f016-41bd-acd5-6c9acb7664b2>
@@ -217,13 +217,13 @@ Git-svn 作为 Git 软件包的一部分，当 Git 从源码包进行安装时�
   
       initialized.
   
-      git-svn-id: file:///path/to/svn/repos/trunk@1 f79726c4-f016-41bd-acd5-6c9acb7664b2
+      git-svn-id: file:///path/to/svn/repos/demo/trunk@1 f79726c4-f016-41bd-acd5-6c9acb7664b2
 
 现在就可以向 Subversion 服务器推送改动了。但真实的环境中，往往在向服务器推送时，已经有其它用户已经在服务器上进行了提交，而且往往更糟的是，先于我们的提交会造成我们的提交冲突！现在就人为的制造一个冲突：使用 svn 命令在 Subversion 版本库中执行一次提交。
 
 ::
 
-  $ svn checkout file:///path/to/svn/repos/trunk demo
+  $ svn checkout file:///path/to/svn/repos/demo/trunk demo
   A    demo/README
   取出版本 4。
   $ cd demo/
@@ -240,7 +240,7 @@ Git-svn 作为 Git 软件包的一部分，当 Git 从源码包进行安装时�
 ::
 
   $ git svn dcommit
-  Committing to file:///path/to/svn/repos/trunk ...
+  Committing to file:///path/to/svn/repos/demo/trunk ...
   事务过时: 文件 “/trunk/README” 已经过时 at /usr/lib/git-core/git-svn line 572
 
 显然，由于 Subversion 版本库中包含了新的提交，导致执行 `git svn dcommit` 出错。这时需执行 `git svn fetch` 命令，以从 Subversion 版本库获取更新。
@@ -349,7 +349,7 @@ Git-svn 作为 Git 软件包的一部分，当 Git 从源码包进行安装时�
   
       hello -> HELLO.
       
-      git-svn-id: file:///path/to/svn/repos/trunk@5 f79726c4-f016-41bd-acd5-6c9acb7664b2
+      git-svn-id: file:///path/to/svn/repos/demo/trunk@5 f79726c4-f016-41bd-acd5-6c9acb7664b2
   
   commit 1863f91b45def159a3ed2c4c4c9428c25213f956
   Author: jiangxin <jiangxin@f79726c4-f016-41bd-acd5-6c9acb7664b2>
@@ -357,7 +357,7 @@ Git-svn 作为 Git 软件包的一部分，当 Git 从源码包进行安装时�
   
       hello
       
-      git-svn-id: file:///path/to/svn/repos/trunk@2 f79726c4-f016-41bd-acd5-6c9acb7664b2
+      git-svn-id: file:///path/to/svn/repos/demo/trunk@2 f79726c4-f016-41bd-acd5-6c9acb7664b2
   
   commit 2c73d657dfc3a1ceca9d465b0b98f9e123b92bb4
   Author: jiangxin <jiangxin@f79726c4-f016-41bd-acd5-6c9acb7664b2>
@@ -365,14 +365,14 @@ Git-svn 作为 Git 软件包的一部分，当 Git 从源码包进行安装时�
   
       initialized.
       
-      git-svn-id: file:///path/to/svn/repos/trunk@1 f79726c4-f016-41bd-acd5-6c9acb7664b2
+      git-svn-id: file:///path/to/svn/repos/demo/trunk@1 f79726c4-f016-41bd-acd5-6c9acb7664b2
 
 当变基操作成功完成后，再执行 `git svn dcommit` 向 Subversion 推送 Git 库中的两个新提交。
 
 ::
 
   $ git svn dcommit
-  Committing to file:///path/to/svn/repos/trunk ...
+  Committing to file:///path/to/svn/repos/demo/trunk ...
           M       README
   Committed r6
           M       README
@@ -399,7 +399,7 @@ Git-svn 作为 Git 软件包的一部分，当 Git 从源码包进行安装时�
   
       my hack 2.
       
-      git-svn-id: file:///path/to/svn/repos/trunk@7 f79726c4-f016-41bd-acd5-6c9acb7664b2
+      git-svn-id: file:///path/to/svn/repos/demo/trunk@7 f79726c4-f016-41bd-acd5-6c9acb7664b2
   
   commit d0eb86bdfad4720e0a24edc49ec2b52e50473e83
   Author: jiangxin <jiangxin@f79726c4-f016-41bd-acd5-6c9acb7664b2>
@@ -407,7 +407,7 @@ Git-svn 作为 Git 软件包的一部分，当 Git 从源码包进行安装时�
   
       my hack 1.
       
-      git-svn-id: file:///path/to/svn/repos/trunk@6 f79726c4-f016-41bd-acd5-6c9acb7664b2
+      git-svn-id: file:///path/to/svn/repos/demo/trunk@6 f79726c4-f016-41bd-acd5-6c9acb7664b2
 
 git-svn 的奥秘
 ==============
@@ -421,12 +421,12 @@ Git 库配置文件的扩展及分支映射
 
 当执行 `git svn init` 或者 `git svn clone` 时，git-svn 会通过在 Git 库的配置文件中增加一个小节，记录 Subversion 版本库的URL，以及 Subversion 分支/里程碑和本地 Git 库的引用之间的对应关系。
 
-例如：当执行 `git svn clone -s file:///path/to/svn/repos` 指令时，会在创建的本地 Git 库的配置文件 `.git/config` 中引入下面新的配置：
+例如：当执行 `git svn clone -s file:///path/to/svn/repos/demo` 指令时，会在创建的本地 Git 库的配置文件 `.git/config` 中引入下面新的配置：
 
 ::
 
   [svn-remote "svn"]
-          url = file:///path/to/svn/repos
+          url = file:///path/to/svn/repos/demo
           fetch = trunk:refs/remotes/trunk
           branches = branches/*:refs/remotes/*
           tags = tags/*:refs/remotes/tags/*
@@ -516,7 +516,7 @@ Git 缺省工作的分支是 master，而看到上例中的 Subversion 主线在
 
       new branch: demo-1.0
       
-      git-svn-id: file:///path/to/svn/repos/branches/demo-1.0@3 f79726c4-f016-41bd-acd5-6c9acb7664b2
+      git-svn-id: file:///path/to/svn/repos/demo/branches/demo-1.0@3 f79726c4-f016-41bd-acd5-6c9acb7664b2
 
   commit 1863f91b45def159a3ed2c4c4c9428c25213f956
   Author: jiangxin <jiangxin@f79726c4-f016-41bd-acd5-6c9acb7664b2>
@@ -524,7 +524,7 @@ Git 缺省工作的分支是 master，而看到上例中的 Subversion 主线在
 
       hello
       
-      git-svn-id: file:///path/to/svn/repos/trunk@2 f79726c4-f016-41bd-acd5-6c9acb7664b2
+      git-svn-id: file:///path/to/svn/repos/demo/trunk@2 f79726c4-f016-41bd-acd5-6c9acb7664b2
 
   commit 2c73d657dfc3a1ceca9d465b0b98f9e123b92bb4
   Author: jiangxin <jiangxin@f79726c4-f016-41bd-acd5-6c9acb7664b2>
@@ -532,23 +532,23 @@ Git 缺省工作的分支是 master，而看到上例中的 Subversion 主线在
 
       initialized.
       
-      git-svn-id: file:///path/to/svn/repos/trunk@1 f79726c4-f016-41bd-acd5-6c9acb7664b2
+      git-svn-id: file:///path/to/svn/repos/demo/trunk@1 f79726c4-f016-41bd-acd5-6c9acb7664b2
 
 
 看到了上述 Git 日志中出现的第一个 `git-svn-id:` 标识的内容为：
 
 ::
 
-  git-svn-id: file:///path/to/svn/repos/branches/demo-1.0@3 f79726c4-f016-41bd-acd5-6c9acb7664b2
+  git-svn-id: file:///path/to/svn/repos/demo/branches/demo-1.0@3 f79726c4-f016-41bd-acd5-6c9acb7664b2
 
-这就是说，当需要将 Git 提交推送给 Subversion 服务器时，需要推送到地址： `file:///path/to/svn/repos/branches/demo-1.0` 。
+这就是说，当需要将 Git 提交推送给 Subversion 服务器时，需要推送到地址： `file:///path/to/svn/repos/demo/branches/demo-1.0` 。
 
 执行 `git svn dcommit` ，果然是推送到 Subversion 的 demo-1.0 分支。
 
 ::
 
   $ git svn dcommit
-  Committing to file:///path/to/svn/repos/branches/demo-1.0 ...
+  Committing to file:///path/to/svn/repos/demo/branches/demo-1.0 ...
           M       README
   Committed r8
           M       README
@@ -568,7 +568,7 @@ Git 缺省工作的分支是 master，而看到上例中的 Subversion 主线在
   ; This file is used internally by git-svn
   ; You should not have to edit it
   [svn-remote "svn"]
-          reposRoot = file:///path/to/svn/repos
+          reposRoot = file:///path/to/svn/repos/demo
           uuid = f79726c4-f016-41bd-acd5-6c9acb7664b2
           branches-maxRev = 8
           tags-maxRev = 8
@@ -611,33 +611,33 @@ Git 缺省工作的分支是 master，而看到上例中的 Subversion 主线在
 
 ::
 
-  $ git svn init -s file:///path/to/svn/repos
+  $ git svn init -s file:///path/to/svn/repos/demo
 
 和下面的命令等效：
 
 ::
 
-  $ git svn init -T trunk -b branches -t tags file:///path/to/svn/repos
+  $ git svn init -T trunk -b branches -t tags file:///path/to/svn/repos/demo
 
 有的 Subversion 版本库的分支可能分散于不同的目录下，例如有的位于 branches 目录，有的位于 sandbox 目录，则可以用下面命令：
 
 ::
 
-  $ git svn init -T trunk -b branches -b sandbox -t tags file:///path/to/svn/repos test
-  Initialized empty Git repository in /path/to/my/workspace/test/.git/
+  $ git svn init -T trunk -b branches -b sandbox -t tags file:///path/to/svn/repos/demo git-svn-test
+  Initialized empty Git repository in /path/to/my/workspace/git-svn-test/.git/
 
 查看本地克隆版本库的配置文件：
 
 ::
 
-  $ cat test/.git/config 
+  $ cat git-svn-test/.git/config 
   [core]
           repositoryformatversion = 0
           filemode = true
           bare = false
           logallrefupdates = true
   [svn-remote "svn"]
-          url = file:///path/to/svn/repos
+          url = file:///path/to/svn/repos/demo
           fetch = trunk:refs/remotes/trunk
           branches = branches/*:refs/remotes/*
           branches = sandbox/*:refs/remotes/*
@@ -648,7 +648,7 @@ Git 缺省工作的分支是 master，而看到上例中的 Subversion 主线在
 ::
 
   [svn-remote "svn"]
-          url = file:///path/to/svn/repos
+          url = file:///path/to/svn/repos/demo
           fetch = trunk:refs/remotes/trunk
           branches = branches/*:refs/remotes/branches/*
           branches = sandbox/*:refs/remotes/sandbox/*
@@ -669,35 +669,35 @@ Git 缺省工作的分支是 master，而看到上例中的 Subversion 主线在
 
 ::
 
-  $ git svn init file:///path/to/svn/repos/trunk
+  $ git svn init file:///path/to/svn/repos/demo/trunk
 
 有的情况下，版本库太大，而且对历史不感兴趣，可以只克隆最近的部分提交。这时可以通过 `git svn fetch` 命令的 `-r` 参数实现部分提交的克隆。
 
 ::
 
-  $ git svn init file:///path/to/svn/repos/trunk test 
-  Initialized empty Git repository in /path/to/my/workspace/test/.git/
-  $ cd test
+  $ git svn init file:///path/to/svn/repos/demo/trunk git-svn-test 
+  Initialized empty Git repository in /path/to/my/workspace/git-svn-test/.git/
+  $ cd git-svn-test
   $ git svn fetch -r 6:HEAD
           A       README
   r6 = 053b641b7edd2f1a59a007f27862d98fe5bcda57 (refs/remotes/git-svn)
           M       README
   r7 = 75c17ea61d8527334855a51e65ac98c981f545d7 (refs/remotes/git-svn)
   Checked out HEAD:
-    file:///path/to/svn/repos/trunk r7
+    file:///path/to/svn/repos/demo/trunk r7
 
 当然也可以使用 `git svn clone` 命令实现部分克隆：
 
 ::
 
-  $ git svn clone -r 6:HEAD file:///path/to/svn/repos/trunk test 
-  Initialized empty Git repository in /path/to/my/workspace/test/.git/
+  $ git svn clone -r 6:HEAD file:///path/to/svn/repos/demo/trunk git-svn-test 
+  Initialized empty Git repository in /path/to/my/workspace/git-svn-test/.git/
           A       README
   r6 = 053b641b7edd2f1a59a007f27862d98fe5bcda57 (refs/remotes/git-svn)
           M       README
   r7 = 75c17ea61d8527334855a51e65ac98c981f545d7 (refs/remotes/git-svn)
   Checked out HEAD:
-    file:///path/to/svn/repos/trunk r7
+    file:///path/to/svn/repos/demo/trunk r7
   
 
 共享 git-svn 的克隆库
@@ -740,10 +740,10 @@ Git 缺省工作的分支是 master，而看到上例中的 Subversion 主线在
   $ pwd
   /path/to/my/workspace/myclone
 
-  $ git svn init -s file:///path/to/svn/repos
+  $ git svn init -s file:///path/to/svn/repos/demo
 
   $ git config --get-regexp 'svn-remote.*'
-  svn-remote.svn.url file:///path/to/svn/repos
+  svn-remote.svn.url file:///path/to/svn/repos/demo
   svn-remote.svn.fetch trunk:refs/remotes/trunk
   svn-remote.svn.branches branches/*:refs/remotes/*
   svn-remote.svn.tags tags/*:refs/remotes/tags/*

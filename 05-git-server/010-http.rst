@@ -38,7 +38,7 @@ HTTP 协议是版本控制系统实现非常重要的协议，具有安全（HTT
 
 ::
 
-  Alias /git /opt/dvcs/gitroot
+  Alias /git /path/to/repos
 
   <Directory /opt/dvcs/gitroot>
       Options FollowSymLinks
@@ -47,7 +47,7 @@ HTTP 协议是版本控制系统实现非常重要的协议，具有安全（HTT
       allow from all
   </Directory>
 
-当用户执行 `git clone http://server/git/myrepo.git` ，实际访问的是服务器端 `/opt/dvcs/gitroot/myrepo.git` 路径中的版本库。
+当用户执行 `git clone http://server/git/myrepo.git` ，实际访问的是服务器端 `/path/to/repos/myrepo.git` 路径中的版本库。
 
 要求版本库目录下必须存在文件 `info/refs` ，并且该文件涵盖了版本库所有的分支，且分支指向正确的 SHA 摘要。
 
@@ -118,7 +118,7 @@ HTTP 协议是版本控制系统实现非常重要的协议，具有安全（HTT
 
   ::
 
-    git clone https://username:password@server/path/to/repo.git
+    git clone https://username:password@server/path/to/repos/myrepo.git
 
 
 智能 HTTP 协议
@@ -151,7 +151,7 @@ Git 1.6.6 之后的版本，提供了针对 HTTP 协议的 CGI 程序 `git-http-
 
 * 第三行，就是使用 `git-http-backend` CGI 脚本来相应客户端的请求。
 
-  当用地址 `http://server/git/path/to/repo.git` 访问时，即由此 CGI 提供服务。
+  当用地址 `http://server/git/path/to/repos/myrepo.git` 访问时，即由此 CGI 提供服务。
 
 **写操作授权**
 

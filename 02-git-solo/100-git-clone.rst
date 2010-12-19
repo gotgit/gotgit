@@ -180,28 +180,28 @@ Git的 PUSH 和 PULL 命令的用法相似，使用下面的语法：
 .. figure:: images/gitbook/git-clone-2.png
    :scale: 80
 
-使用 `--bare` 参数克隆 demo 版本库到 `/path/to/demo.git` ，然后就可以从 demo 版本库向克隆的裸版本库执行推送操作了。（为了说明方便，使用了 `/path/to` 这样的路径，可以在磁盘中以 root 账户创建该路径并设置正确的权限。）
+使用 `--bare` 参数克隆 demo 版本库到 `/path/to/repos/demo.git` ，然后就可以从 demo 版本库向克隆的裸版本库执行推送操作了。（为了说明方便，使用了 `/path/to/repos/` 作为 Git 裸版本的根路径，在后面的章节中这个目录也作为 Git 服务器端版本库的根路径。可以在磁盘中以 root 账户创建该路径并设置正确的权限。）
 
 ::
 
-  $ git clone --bare /path/to/my/workspace/demo /path/to/demo.git
-  Cloning into bare repository /path/to/demo.git...
+  $ git clone --bare /path/to/my/workspace/demo /path/to/repos/demo.git
+  Cloning into bare repository /path/to/repos/demo.git...
   done.
 
-克隆出来的 `/path/to/demo.git` 目录就是版本库目录，不含工作区。
+克隆出来的 `/path/to/repos/demo.git` 目录就是版本库目录，不含工作区。
 
-* 看看 `/path/to/demo.git` 目录的内容。
+* 看看 `/path/to/repos/demo.git` 目录的内容。
 
   ::
 
-    $ ls -F /path/to/demo.git
+    $ ls -F /path/to/repos/demo.git
     branches/  config  description  HEAD  hooks/  info/  objects/  packed-refs  refs/
 
 * 还可以看到 `demo.git` 版本库的配置 `core.bare` 的值为 `true` 。
 
   ::
 
-    $ git --git-dir=/path/to/demo.git config core.bare
+    $ git --git-dir=/path/to/repos/demo.git config core.bare
     true
 
 进入 demo 版本库，生成一些测试提交。
@@ -223,20 +223,20 @@ Git的 PUSH 和 PULL 命令的用法相似，使用下面的语法：
     $ git push
     fatal: No destination configured to push to.
 
-* 在执行 `git push` 时使用 `/path/to/demo.git` 作为参数。
+* 在执行 `git push` 时使用 `/path/to/repos/demo.git` 作为参数。
 
   推送成功。
 
   ::
 
-    $ git push /path/to/demo.git
+    $ git push /path/to/repos/demo.git
     Counting objects: 2, done.
     Delta compression using up to 2 threads.
     Compressing objects: 100% (2/2), done.
     Writing objects: 100% (2/2), 275 bytes, done.
     Total 2 (delta 1), reused 0 (delta 0)
     Unpacking objects: 100% (2/2), done.
-    To /path/to/demo.git
+    To /path/to/repos/demo.git
        f86b7bf..0285742  master -> master
 
 看看 `demo.git` 版本库，是否已经完成了同步？
@@ -259,27 +259,27 @@ Git的 PUSH 和 PULL 命令的用法相似，使用下面的语法：
 
 命令 git init 在实践一中就已经用到了，是用于初始化一个版本库的，初始化的版本库是带工作区的，如何初始化一个裸版本库呢？奥秘就在于 `--bare` 参数。
 
-下面的命令会创建一个空的裸版本库于目录 `/path/to/demo-init.git` 中。
+下面的命令会创建一个空的裸版本库于目录 `/path/to/repos/demo-init.git` 中。
 
 ::
 
-  $ git init --bare /path/to/demo-init.git
-  Initialized empty Git repository in /path/to/demo-init.git/
+  $ git init --bare /path/to/repos/demo-init.git
+  Initialized empty Git repository in /path/to/repos/demo-init.git/
 
 创建的果真是裸版本库么？
 
-* 看看 `/path/to/demo-init.git` 下的内容：
+* 看看 `/path/to/repos/demo-init.git` 下的内容：
 
   ::
 
-    $ ls -F /path/to/demo-init.git
+    $ ls -F /path/to/repos/demo-init.git
     branches/  config  description  HEAD  hooks/  info/  objects/  refs/
 
 * 看看这个版本库的配置 `core.bare` 的值：
 
   ::
 
-    $ git --git-dir=/path/to/demo-init.git config core.bare
+    $ git --git-dir=/path/to/repos/demo-init.git config core.bare
     true
 
 可是空版本库没有内容啊，那就执行 PUSH 操作为其创建内容呗。
@@ -287,47 +287,47 @@ Git的 PUSH 和 PULL 命令的用法相似，使用下面的语法：
 ::
 
   $ cd /path/to/my/workspace/demo
-  $ git push /path/to/demo-init.git
+  $ git push /path/to/repos/demo-init.git
   No refs in common and none specified; doing nothing.
   Perhaps you should specify a branch such as 'master'.
   fatal: The remote end hung up unexpectedly
-  error: failed to push some refs to '/path/to/demo-init.git'
+  error: failed to push some refs to '/path/to/repos/demo-init.git'
 
 为什么出错了？翻译一下错误输出。
 
 ::
 
   $ cd /path/to/my/workspace/demo
-  $ git push /path/to/demo-init.git
+  $ git push /path/to/repos/demo-init.git
   没有指定要推送的引用，而且两个版本库也没有共同的引用。
   所以什么也没有做。
   可能您需要提供要推送的分支名，如 'master'。
   严重错误：远程操作意外终止
-  错误：部分引用推送失败，至 '/path/to/demo-init.git'
+  错误：部分引用推送失败，至 '/path/to/repos/demo-init.git'
 
-这个问题出现原因的完整版将在后面的章节介绍，这里先说一个省略版：因为 `/path/to/demo-init.git` 版本库刚刚初始化完成，还没有任何提交更不要说分支了。当执行 `git push` 命令时，如果没有设定推送的分支，而且当前分支也没有注册到远程某个分支，将检查远程分支是否有和本地相同的分支名（如master），如果有，则推送，否则报错。
+这个问题出现原因的完整版将在后面的章节介绍，这里先说一个省略版：因为 `/path/to/repos/demo-init.git` 版本库刚刚初始化完成，还没有任何提交更不要说分支了。当执行 `git push` 命令时，如果没有设定推送的分支，而且当前分支也没有注册到远程某个分支，将检查远程分支是否有和本地相同的分支名（如master），如果有，则推送，否则报错。
 
 所以需要把 `git push` 命令写的再完整一些。像下面这样操作，就可以完成向空的裸版本库的推送。
 
 ::
 
-  $ git push /path/to/demo-init.git master:master
+  $ git push /path/to/repos/demo-init.git master:master
   Counting objects: 26, done.
   Delta compression using up to 2 threads.
   Compressing objects: 100% (20/20), done.
   Writing objects: 100% (26/26), 2.49 KiB, done.
   Total 26 (delta 8), reused 0 (delta 0)
   Unpacking objects: 100% (26/26), done.
-  To /path/to/demo-init.git
+  To /path/to/repos/demo-init.git
    * [new branch]      master -> master
 
-上面的 `git push` 命令也可以简写为： `git push /path/to/demo-init.git master` 。
+上面的 `git push` 命令也可以简写为： `git push /path/to/repos/demo-init.git master` 。
 
 推送成功了么？看看 `demo-init.git` 版本库中的提交。
 
 ::
 
-  $ git --git-dir=/path/to/demo-init.git log --oneline -2
+  $ git --git-dir=/path/to/repos/demo-init.git log --oneline -2
   0285742 sync test 4
   d4b42b7 sync test 3
 
@@ -345,14 +345,14 @@ Git的 PUSH 和 PULL 命令的用法相似，使用下面的语法：
 
 ::
 
-  $ git push /path/to/demo-init.git
+  $ git push /path/to/repos/demo-init.git
   Counting objects: 2, done.
   Delta compression using up to 2 threads.
   Compressing objects: 100% (2/2), done.
   Writing objects: 100% (2/2), 273 bytes, done.
   Total 2 (delta 1), reused 0 (delta 0)
   Unpacking objects: 100% (2/2), done.
-  To /path/to/demo-init.git
+  To /path/to/repos/demo-init.git
      0285742..70a5aa7  master -> master
 
 为什么这次使用 `git push` 命令后面没有跟上分支名呢？这是因为远程版本库（demo-init.git）中已经不再是空版本库了，而且有名为 master 的分支。
@@ -361,7 +361,7 @@ Git的 PUSH 和 PULL 命令的用法相似，使用下面的语法：
 
 ::
 
-  $ git ls-remote /path/to/demo-init.git
+  $ git ls-remote /path/to/repos/demo-init.git
   70a5aa7a7469076fd435a9e4f89c4657ba603ced        HEAD
   70a5aa7a7469076fd435a9e4f89c4657ba603ced        refs/heads/master
 

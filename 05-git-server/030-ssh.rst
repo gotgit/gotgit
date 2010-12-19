@@ -7,8 +7,8 @@ SSH 协议用于为 Git 提供远程读写操作，是远程写操作的标准�
 
 ::
 
-  $ git clone ssh://<username>@<server>:<port>/path/to/repo.git
-  $ git clone <username>@<server>:/path/to/repo.git
+  $ git clone ssh://<username>@<server>:<port>/path/to/repos/myrepo.git
+  $ git clone <username>@<server>:/path/to/repos/myrepo.git
 
 说明：
 
@@ -24,7 +24,7 @@ SSH 协议用于为 Git 提供远程读写操作，是远程写操作的标准�
 
   端口只有在 SSH 协议标准 URL 写法可以给出，如果省略则使用缺省值 22 （配置和使用了服务器别名除外）。
 
-* /path/to/repo.git 是服务器中版本库的绝对路径。若用相对路径则相对于 username 用户的主目录而言。
+* /path/to/repos/myrepo.git 是服务器中版本库的绝对路径。若用相对路径则相对于 username 用户的主目录而言。
 
 * 如果采用口令认证，不能像 HTTPS 协议那样可以在 URL 中同时给出登录名和口令，必须每次连接时输入。
 
@@ -180,7 +180,7 @@ SSH 的客户端配置文件 ~/.ssh/config 可以通过创建主机别名，在�
 
 ::
 
-  $ git clone bj:path/to/repo.git
+  $ git clone bj:path/to/repos/myrepo.git
 
 
 含义为：

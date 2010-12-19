@@ -23,13 +23,13 @@
 
     ::
 
-      $ svnadmin create /path/to/repos
+      $ svnadmin create /path/to/repos/project1
 
   * 检出
 
     ::
     
-      $ svn checkout file:///path/to/repos .
+      $ svn checkout file:///path/to/repos/project1 .
 
   * 添加文件并提交
 
