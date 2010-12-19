@@ -3994,6 +3994,310 @@
 </node>
 </node>
 </node>
+<node COLOR="#990000" FOLDED="true" ID="ID_726198213" 
+	TEXT="Git 分支简单操作">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_399921837" 
+	TEXT="关于 master 分支">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1712775428" 
+	TEXT="master 分支建立在 clone 之时，是基于当时远程库的 HEAD 版本创建">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1105822707" 
+	TEXT="$ cat .git/refs/remotes/origin/HEAD&#xa;ref: refs/remotes/origin/master">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1605155867" 
+	TEXT="$ cat .git/refs/remotes/origin/HEAD&#xa;ref: refs/remotes/origin/feature&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1192855741" 
+	TEXT="关于 HEAD">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1468414563" 
+	TEXT="HEAD 即顶节点，是当前开发分支的最顶端节点">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1474701420" 
+	TEXT="一般 HEAD 指向 master 分支">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1437959351" 
+	TEXT="$ cat .git/HEAD&#xa;ref: refs/heads/master&#xa;"/>
+<node COLOR="#111111" ID="ID_1541702219" 
+	TEXT="$ cat .git/HEAD&#xa;ref: refs/heads/feature&#xa;"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_849061571" 
+	TEXT="查看分支： git branch">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_248655269" 
+	TEXT="$ git branch&#xa;* master">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1156279952" 
+	TEXT="显示和查看远程分支： git branch -r">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_950711220" 
+	TEXT="git 以 origin/master 名称在本地版本库保留了远程版本库的分支。">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_117041120" 
+	TEXT=".git/packed-refs 文件： 保存了 tags 和 commit id 对应关系。还保存了 远程版本库分支名： refs/remotes/origin/*">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1977386074" 
+	TEXT="远程分支不能直接检出/查看，需要通过创建本地分支方式检出">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1260602084" 
+	TEXT="$ git checkout -b my-todo-copy origin/todo">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_850663663" 
+	TEXT="或者使用 --track 参数，直接创建同名的本地分支，以便更好的和该远程分支同步"/>
+<node COLOR="#111111" ID="ID_268932189" 
+	TEXT="$ git checkout --track origin/&lt;branch_name&gt;">
+<icon BUILTIN="idea"/>
+</node>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_78473186" 
+	TEXT="创建新分支 ： git branch &lt;branch_name&gt; [base_tag]">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1902989864" 
+	TEXT="最当前版本创建">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_494024032" 
+	TEXT="$ git branch new&#xa;$ git branch&#xa;* master&#xa;  new&#xa;$ git checkout new&#xa;Switched to branch &apos;new&apos;&#xa;$ git branch&#xa;  master&#xa;* new">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1903718141" 
+	TEXT="基于旧版本/里程碑创建分支">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1559893999" 
+	TEXT="$ git branch new v1.6.3&#xa;$ git branch&#xa;* master&#xa;  new&#xa;$ git checkout new&#xa;Switched to branch &apos;new&apos;&#xa;$ git branch&#xa;  master&#xa;* new">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_243002548" 
+	TEXT="gitk 可以看到 branch 建立在 tag v1.6.3 上"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_552692599" 
+	TEXT="切换分支： git checkout &lt;branch_name&gt;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_80286110" 
+	TEXT="$ git branch&#xa;* master&#xa;  new&#xa;$ git checkout new&#xa;Switched to branch &apos;new&apos;&#xa;$ git branch&#xa;  master&#xa;* new">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_348510139" 
+	TEXT="创建并切换到新分支： git checkout -b &lt;new_branch&gt; [base_tag]">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_23978948" 
+	TEXT="$ git checkout -b new&#xa;Switched to a new branch &apos;new&apos;&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" ID="ID_1635222743" 
+	TEXT="合并分支： git merge &lt;branch_name&gt;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1305006926" 
+	TEXT="删除分支： git branch -d &lt;branch_name&gt; （限制条件： 该分支已经合并到当前分支）">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_327619591" 
+	TEXT="$ git branch -d new&#xa;error: Cannot delete the branch &apos;new&apos; which you are currently on.&#xa;$ git checkout master&#xa;Switched to branch &apos;master&apos;&#xa;$ git branch -d new&#xa;Deleted branch new (was f01f109).&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" ID="ID_624958296" 
+	TEXT="无条件删除分支： git branch -D &lt;branch_name&gt; ">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<icon BUILTIN="yes"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1253332433" 
+	TEXT="重新确定分支点： git reset --hard tagname">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_915515851" 
+	TEXT="和 git checkout &lt;branch_name&gt; 的区别在哪里？">
+<font NAME="Serif" SIZE="12"/>
+<icon BUILTIN="help"/>
+</node>
+<node COLOR="#111111" ID="ID_532700123" 
+	TEXT="注意：该命令非常危险，如果原分支点没有其它标记，找回原分支点很麻烦">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_729864830" 
+	TEXT="可以通过  .git/logs/HEAD 查看日志，找到切换分支的新分支点前的 commit id。">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_283842332" 
+	TEXT="再执行 git reset --hard &lt;40-DIGIT-COMMIT-ID&gt;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" ID="ID_88459081" 
+	TEXT="删除远程分支？">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_934495436" 
+	TEXT="gitk 可以显示分支图">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<icon BUILTIN="idea"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_182306276" 
+	TEXT="关于 .git 下分支的管理">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<icon BUILTIN="idea"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1175872114" 
+	TEXT=".git/refs/heads/ 下是分支名称">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_638172344" 
+	TEXT="$ ls .git/refs/heads/&#xa;master  new&#xa;"/>
+</node>
+<node COLOR="#111111" ID="ID_914055683" 
+	TEXT="例如 .git/refs/heads/master 中记录的是 master 分支对应的 40 位 commit id">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1640438759" 
+	TEXT=".git/refs/tags/ 下是里程碑名称。如果目录为空，可能已经打包整理到文件 .git/packed-refs 文件中了。">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_225972405" 
+	TEXT=".git/packed-refs 是 git 版本库经过 gc 整理后的分支和commit 对应索引文件（纯文本文件）">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_691858829" 
+	TEXT=".git/HEAD 文件内容指向具体的分支。例如 ref: refs/heads/newbranch">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_811947476" 
+	TEXT="$ cat .git/HEAD&#xa;ref: refs/heads/new&#xa;"/>
+</node>
+<node COLOR="#111111" ID="ID_1149443935" 
+	TEXT=".git/logs/refs/heads/ 下以分支名称命名的文件，包含对应分支的 commit 历史">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_138160490" 
+	TEXT="一般我们使用简写的名称，实际的对应关系如下。&#xa;    * The branch &quot;test&quot; is short for &quot;refs/heads/test&quot;.&#xa;    * The tag &quot;v2.6.18&quot; is short for &quot;refs/tags/v2.6.18&quot;.&#xa;    * &quot;origin/master&quot; is short for &quot;refs/remotes/origin/master&quot;. &#xa;&#xa;如果存在同名的里程碑和分支，就需要用长的名称（全名）了。">
+<font NAME="Serif" SIZE="12"/>
+<icon BUILTIN="idea"/>
+</node>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_160506121" 
+	TEXT="Git 分支复杂操作">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1007278259" 
+	TEXT="删除远程分支:  git push origin :&lt;remote-branch-name&gt;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1927011540" 
+	TEXT="相当于命令 git push [remotename] [localbranch]:[remotebranch]  的 [localbranch] 为空">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" ID="ID_520397985" 
+	TEXT="建立远程分支的本地分支： git checkout -b branchname origin/branchname">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1440280560" 
+	TEXT="建立远程分支的本地分支的另外一个等价方法：&#xa;$ git checkout --track origin/branchname">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1561981326" 
+	TEXT="理解 Git 远程分支">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1935563591" 
+	TEXT="显示远程分支： git branch -r">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_362292950" 
+	TEXT="git 以 origin/* 名称在本地版本库保留了远程版本库的分支。">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1895844762" 
+	TEXT="未 packed 的库，在 .git/refs/remotes/origin 目录下的文件代表远程分支">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1833846675" 
+	TEXT="packed 之后的库，在 .git/packed-refs 文件： &#xa; * 保存了 tags 和 commit id 对应关系。&#xa; * 还保存了 远程版本库分支名： refs/remotes/origin/*">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" ID="ID_715264921" 
+	TEXT="远程分支不能直接 checkout！">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1255059184" 
+	TEXT="可以通过创建本地分支，查看远程分支">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1872998198" 
+	TEXT="$ git checkout -b my-todo-copy origin/todo">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1893033037" 
+	TEXT="获取远程版本库的分支">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1861871152" 
+	TEXT="缺省同步/克隆一个版本库，是将 .git/refs/heads/ 下的本地分支克隆到新的版本库的 .git/refs/remote/ 下面"/>
+<node COLOR="#111111" ID="ID_1461931644" 
+	TEXT="如果要将一个源库的 remotes 分支也同步到镜像版本库，需要增加一个 fetch 设置。具体的应用范例，参见"/>
+<node COLOR="#111111" ID="ID_362605664" 
+	TEXT="        mkdir project&#xa;        cd project&#xa;        git init&#xa;        git remote add origin server:/pub/project&#xa;        git config --add remote.origin.fetch &apos;+refs/remotes/*:refs/remotes/*&apos;&#xa;        git fetch&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1269085311" 
+	TEXT="git remote add ： 跟踪其他源（除了缺省克隆时指定的源外）">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1258405244" 
+	TEXT="$ git remote add linux-nfs git://linux-nfs.org/pub/nfs-2.6.git&#xa;$ git fetch linux-nfs&#xa;* refs/remotes/linux-nfs/master: storing branch &apos;master&apos; ...&#xa;  commit: bf81b46">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1417723557" 
+	TEXT="相当于对 .git/config 进行了修改">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_530998183" 
+	TEXT="git remote add name url 设定另外的同步源，用于 pull 和 fetch。相当于在 .git/config 文件尾部增加一个 remote 小节">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_416801643" 
+	TEXT="$ tail .git/config&#xa;&#xa;[remote &quot;linux-nfs&quot;]&#xa;        url = git://linux-nfs.org/pub/nfs-2.6.git&#xa;        fetch = +refs/heads/*:refs/remotes/linux-nfs/*&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+</node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_303951238" 
 	TEXT="4 里程碑">
@@ -4176,6 +4480,156 @@
 	TEXT="不要修改里程碑"/>
 <node COLOR="#111111" ID="ID_613309185" 
 	TEXT="修改的里程碑，运行 git push, git pull 不会自动同步"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1773150130" 
+	TEXT="Git 提交命名和 里程碑">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_112558607" 
+	TEXT="COMMIT-ISH 即提交ID，是由 40 个十六进制数字组成，可以由开头的任意长度的数字串指代，只要不冲突。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1748551465" 
+	TEXT="HEAD 的含义： 是当前开发分支（git branch 来查看)的顶节点。 .git/HEAD 文件即是 HEAD 的确切指向。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1581575171" 
+	TEXT="里程碑和分支实际上都是 commitid 的对应物">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_959651216" 
+	TEXT="分支：实际是一个分支名，指向该分支的顶节点。">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_647121603" 
+	TEXT="* The branch &quot;test&quot; is short for &quot;refs/heads/test&quot;.">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_934862871" 
+	TEXT="* The tag &quot;v2.6.18&quot; is short for &quot;refs/tags/v2.6.18&quot;.">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_719781072" 
+	TEXT="* &quot;origin/master&quot; is short for &quot;refs/remotes/origin/master&quot;.">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_218743450" 
+	TEXT="特使格式的版本别名： HEAD^^ ...">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1234450048" 
+	TEXT="$ git show HEAD^    # the parent of the HEAD commit">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1131266819" 
+	TEXT="$ git show HEAD^^   # the grandparent">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_146963246" 
+	TEXT="$ git show HEAD~4   # the great-great-grandparent">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1772798803" 
+	TEXT="$ git show HEAD^1   # show the first parent of HEAD">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_711402803" 
+	TEXT="$ git show HEAD^2   # show the second parent of HEAD">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" ID="ID_1430754219" 
+	TEXT="git tag -l ： 查看里程碑列表">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1401370600" 
+	TEXT="git tag v2.5 1b2e1d63ff ： 创建轻量级里程碑">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_77081722" 
+	TEXT="$ git diff v2.5 HEAD     # compare the current HEAD to v2.5&#xa;$ git branch stable v2.5 # start a new branch named &quot;stable&quot; based&#xa;                         # at v2.5&#xa;$ git reset --hard HEAD^ # reset your current branch and working&#xa;                         # directory to its state at HEAD^">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_164431122" 
+	TEXT="$ git log v2.5..v2.6            # commits between v2.5 and v2.6&#xa;$ git log v2.5..                # commits since v2.5&#xa;$ git log --since=&quot;2 weeks ago&quot; # commits from the last 2 weeks&#xa;$ git log v2.5.. Makefile       # commits since v2.5 which modify&#xa;                                # Makefile">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1080601147" 
+	TEXT="git name-rev 用于查看某个 commit 是否有对应 tag。&#xa;&#xa;$ git name-rev 41008ee&#xa;41008ee tags/v1.0~1&#xa;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1674727649" 
+	TEXT="轻量级里程碑 和 带注解的里程碑">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<icon BUILTIN="idea"/>
+<node COLOR="#111111" ID="ID_1496367509" 
+	TEXT="带有注解的里程碑是使用 -a 或者 -s 方式创建，并且用 -m 参数添加说明">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1074473132" 
+	TEXT="用 -a 参数创建带有注解的里程碑">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1285089645" 
+	TEXT="$ git tag -a v1.4 -m &apos;my version 1.4&apos;&#xa;$ git tag&#xa;v0.1&#xa;v1.3&#xa;v1.4"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_559835978" 
+	TEXT="-s 参数用 gpg 签名里程碑。用 -v 参数可以校验之">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_520731049" 
+	TEXT="$ git tag -s v1.5 -m &apos;my signed 1.5 tag&apos;&#xa;You need a passphrase to unlock the secret key for&#xa;user: &quot;Scott Chacon &lt;schacon@gee-mail.com&gt;&quot;&#xa;1024-bit DSA key, ID F721C45A, created 2009-02-09"/>
+<node COLOR="#111111" ID="ID_529214851" 
+	TEXT="$ git tag -v v1.4.2.1&#xa;object 883653babd8ee7ea23e6a5c392bb739348b1eb61&#xa;type commit&#xa;tag v1.4.2.1&#xa;tagger Junio C Hamano &lt;junkio@cox.net&gt; 1158138501 -0700&#xa;&#xa;GIT 1.4.2.1&#xa;&#xa;Minor fixes since 1.4.2, including git-mv and git-http with alternates.&#xa;gpg: Signature made Wed Sep 13 02:08:25 2006 PDT using DSA key ID F3119B9A&#xa;gpg: Good signature from &quot;Junio C Hamano &lt;junkio@cox.net&gt;&quot;&#xa;gpg:                 aka &quot;[jpeg image of size 1513]&quot;&#xa;Primary key fingerprint: 3565 2A26 2040 E066 C9A7  4A7D C0C6 D9A4 F311 9B9A"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_916113621" 
+	TEXT="用 git show 命令，查看里程碑的注解">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_682062052" 
+	TEXT="$ git show v1.4&#xa;tag v1.4&#xa;Tagger: Scott Chacon &lt;schacon@gee-mail.com&gt;&#xa;Date:   Mon Feb 9 14:45:11 2009 -0800&#xa;&#xa;my version 1.4&#xa;commit 15027957951b64cf874c3557a0f3547bd83b3ff6&#xa;Merge: 4a447f7... a6b4c97...&#xa;Author: Scott Chacon &lt;schacon@gee-mail.com&gt;&#xa;Date:   Sun Feb 8 19:02:46 2009 -0800&#xa;&#xa;    Merge branch &apos;experiment&apos;"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_593208744" 
+	TEXT="轻量级里程碑，用 git-show 只能看到tag应用到的 commit 本身">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_25205744" 
+	TEXT="$ git tag v1.4-lw&#xa;$ git tag&#xa;v0.1&#xa;v1.3&#xa;v1.4&#xa;v1.4-lw&#xa;v1.5"/>
+<node COLOR="#111111" ID="ID_1403819583" 
+	TEXT="$ git show v1.4-lw&#xa;commit 15027957951b64cf874c3557a0f3547bd83b3ff6&#xa;Merge: 4a447f7... a6b4c97...&#xa;Author: Scott Chacon &lt;schacon@gee-mail.com&gt;&#xa;Date:   Sun Feb 8 19:02:46 2009 -0800&#xa;&#xa;    Merge branch &apos;experiment&apos;"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1298510517" 
+	TEXT="共享里程碑">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<icon BUILTIN="idea"/>
+<node COLOR="#111111" ID="ID_734059950" 
+	TEXT="By default, the git push command doesn’t transfer tags to remote servers. You will have to explicitly push tags to a shared server after you have created them. This process is just like sharing remote branches – you can run git push origin [tagname].">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1016860527" 
+	TEXT="git push origin &lt;tagname&gt;">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1954318833" 
+	TEXT="$ git push origin v1.5&#xa;Counting objects: 50, done.&#xa;Compressing objects: 100% (38/38), done.&#xa;Writing objects: 100% (44/44), 4.56 KiB, done.&#xa;Total 44 (delta 18), reused 8 (delta 1)&#xa;To git@github.com:schacon/simplegit.git&#xa;* [new tag]         v1.5 -&gt; v1.5"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1543377954" 
+	TEXT="git push --tags">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_342954295" 
+	TEXT="If you have a lot of tags that you want to push up at once, you can also use the --tags option to the git push command. This will transfer all of your tags to the remote server that are not already there.">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_523174070" 
+	TEXT="$ git push origin --tags&#xa;Counting objects: 50, done.&#xa;Compressing objects: 100% (38/38), done.&#xa;Writing objects: 100% (44/44), 4.56 KiB, done.&#xa;Total 44 (delta 18), reused 8 (delta 1)&#xa;To git@github.com:schacon/simplegit.git&#xa; * [new tag]         v0.1 -&gt; v0.1&#xa; * [new tag]         v1.2 -&gt; v1.2&#xa; * [new tag]         v1.4 -&gt; v1.4&#xa; * [new tag]         v1.4-lw -&gt; v1.4-lw&#xa; * [new tag]         v1.5 -&gt; v1.5"/>
+</node>
 </node>
 </node>
 </node>
@@ -4487,11 +4941,174 @@
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="info"/>
 </node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1742461944" 
+	TEXT="关于文件换行符转换">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_264945687" 
+	TEXT="配置文件的 core.autocrlf">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_985086995" 
+	TEXT="如果设置为 true。则检入到库中是 LF，检出是 CRLF。一般此设置用于 Windows 平台，或者的确需要用 CRLF。"/>
+<node COLOR="#111111" ID="ID_1454895698" 
+	TEXT="如果设置为 input。则检入到库中是 LF，检出则根据"/>
 </node>
-<node COLOR="#00b439" ID="ID_1778813255" 
+<node COLOR="#111111" ID="ID_1413210552" 
+	TEXT="core.safecrlf  用于检查是否在文件中出现和混杂的换行符">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_381555226" 
+	TEXT="git 属性">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_495484788" LINK="http://www.kernel.org/pub/software/scm/git/docs/gitattributes.html" 
+	TEXT="kernel.org &gt; Pub &gt; Software &gt; Scm &gt; Git &gt; Docs &gt; Gitattributes">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_702938851" 
+	TEXT="如何设定属性？">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1256227751" 
+	TEXT="文件： $GIT_DIR/info/attributes, .gitattributes">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_589154897" 
+	TEXT=".gitattributes 可以在每个目录出现，最接近的目录中的 .gitattributes 最优先"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1032804786" 
+	TEXT="在文件中用如下指令进行设置&#xa;pattern attr1 -attr2 attr3=xxx">
+<node COLOR="#111111" ID="ID_746142979" 
+	TEXT="pattern 和路径进行匹配，命中则设置相关属性"/>
+<node COLOR="#111111" ID="ID_880952137" 
+	TEXT="attr1 ，即直接写属性，相当于设定属性 attr1 为 &quot;true&quot;"/>
+<node COLOR="#111111" ID="ID_1720888961" 
+	TEXT="-attr2 ，即属性前面加上一个减号，相当于设定属性 attr1 为 &quot;false&quot;"/>
+<node COLOR="#111111" ID="ID_171993880" 
+	TEXT="attr3=value, 即设置属性值"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1813757710" 
+	TEXT="crlf">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_801661335" 
+	TEXT="如果设置，则文件当作文本处理。 core.autocrlf 被设置的化，自动换行符转换，而不必在根据文件内容进行猜测。"/>
+<node COLOR="#111111" ID="ID_172080943" 
+	TEXT="如果前面加上减号，即不设置，则对相应的文件（和pattern匹配）禁止换行符转换。"/>
+<node COLOR="#111111" ID="ID_529826545" 
+	TEXT="如果没有定义，且 core.autocrlf 被设置，则根据文件内容自动判断"/>
+<node COLOR="#111111" ID="ID_87216254" 
+	TEXT="crlf 设置为 input，含义是文件检入要转换为 LF，但是文件检出则不进行转换，按照提交的状态检出"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_646629979" 
+	TEXT="ident">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_525730167" 
+	TEXT="设置该属性的文件对 $Id$ 进行关键字扩展"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_302597899" 
+	TEXT="filter">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_208569836" 
+	TEXT="设置为自定义的过滤器对文件进行过滤"/>
+<node COLOR="#111111" ID="ID_1988148668" 
+	TEXT="checkout 的顺序： crlf -&gt; ident -&gt; filter"/>
+<node COLOR="#111111" ID="ID_366230542" 
+	TEXT="checkin 顺序： filter -&gt; ident -&gt; crlf"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_737006468" 
+	TEXT="diff">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1480068717" 
+	TEXT="可以为不同类型文件设定不同 diff 工具"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_895739342" 
+	TEXT="在配置文件中设定 diff 工具">
+<node COLOR="#111111" ID="ID_1505740309" 
+	TEXT="[diff &quot;jcdiff&quot;]&#xa;        command = j-c-diff"/>
+</node>
+<node COLOR="#111111" ID="ID_364775657" 
+	TEXT="然后在 .gitattributes 中设置 pattern 的属性为自定义的 diff driver"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_823795365" 
+	TEXT="encoding">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1808221038" 
+	TEXT="设置字符集"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1470168869" 
+	TEXT="属性设置可以使用宏">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_63266579" 
+	TEXT="缺省定义的 binary 相当于包含了如下定义:&#xa;&#xa;[attr]binary -diff -crlf"/>
+<node COLOR="#111111" ID="ID_744708636" 
+	TEXT="*.jpg -crlf -diff&#xa;可以写为&#xa;*.jpg binary"/>
+</node>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1778813255" 
 	TEXT="钩子">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_1226110405" 
+	TEXT="版本配置和Git 钩子扩展 hooks">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_796068935" 
+	TEXT=".git/config 配置">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_876456543" 
+	TEXT="[receive]">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1604623377" 
+	TEXT="[receive]&#xa;    denyDeletes = true&#xa;    denyNonFastForwards = true"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1954045181" 
+	TEXT="服务器端钩子">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1189801060" 
+	TEXT="pre-receive">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1709747262" 
+	TEXT="对客户端向服务器push 进行检查。&#xa;You can use this hook to do things like make sure none of the updated references are non-fast-forwards; or to check that the user doing the pushing has create, delete, or push access or access to push updates to all the files they’re modifying with the push."/>
+</node>
+<node COLOR="#111111" ID="ID_1732958776" 
+	TEXT="post-receive">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_188100690" 
+	TEXT="update">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1290637007" 
+	TEXT="类似 pre-receive。不同点在于 pre-receive 只运行一次，而 update 针对每个分支运行一次。&#xa;即提交者如果同时提交多个分支改动，pre-receive 只运行一次。update 运行多次。&#xa;如果以非零退出，则拒绝提交，update只针对该分支。"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_228072560" 
+	TEXT="示例">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1165311425" 
+	TEXT="脚本示例">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1032042229" 
+	TEXT="#!/usr/bin/env ruby&#xa;&#xa;$refname = ARGV[0]&#xa;$oldrev  = ARGV[1]&#xa;$newrev  = ARGV[2]&#xa;$user    = ENV[&apos;USER&apos;]&#xa;&#xa;puts &quot;Enforcing Policies... \n(#{$refname}) (#{$oldrev[0,6]}) (#{$newrev[0,6]})&quot;"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1272283821" 
+	TEXT="禁止 non-fast-forward 提交">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_741193138" 
+	TEXT="git 1.6 之后的版本，可以通过配置文件进行设置">
+<node COLOR="#111111" ID="ID_615596209" 
+	TEXT="receive.denyDeletes&#xa;receive.denyNonFastForwards "/>
+</node>
+<node COLOR="#111111" ID="ID_304708195" 
+	TEXT="# enforces fast-forward only pushes &#xa;def check_fast_forward&#xa;  missed_refs = `git rev-list #{$newrev}..#{$oldrev}`&#xa;  missed_ref_count = missed_refs.split(&quot;\n&quot;).size&#xa;  if missed_ref_count &gt; 0&#xa;    puts &quot;[POLICY] Cannot push a non fast-forward reference&quot;&#xa;    exit 1&#xa;  end&#xa;end&#xa;&#xa;check_fast_forward"/>
+<node COLOR="#111111" ID="ID_978121075" LINK="http://progit.org/book/ch7-4.html" 
+	TEXT="progit.org &gt; Book &gt; Ch7-4"/>
+</node>
+</node>
+</node>
 </node>
 <node COLOR="#00b439" ID="ID_426928459" 
 	TEXT="模板">
@@ -4503,10 +5120,14 @@
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 </node>
-<node COLOR="#00b439" ID="ID_868780133" 
+<node COLOR="#00b439" FOLDED="true" ID="ID_868780133" 
 	TEXT="git shallow clone">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_1396851347" 
+	TEXT="本地协议使用 file://，而不能使用 /">
+<font NAME="Serif" SIZE="14"/>
+</node>
 </node>
 <node COLOR="#00b439" ID="ID_1408876651" 
 	TEXT="git replace">
@@ -4539,6 +5160,109 @@
 	TEXT="&#xa;If you don’t want to fire up Tk, you can also browse your repository&#xa;quickly via the git instaweb command. This will basically fire up a&#xa;web server running the gitweb (http://git.or.cz/gitwiki/Gitweb) CGI script&#xa;using lighttpd, apache or webrick. It then tries to automatically fire up&#xa;your default web browser and points it at the new server.&#xa;$ git instaweb --httpd=webrick&#xa;[2008-04-08 20:32:29] INFO WEBrick 1.3.1&#xa;[2008-04-08 20:32:29] INFO ruby 1.8.4 (2005-12-24) [i686-&#xa;darwin8.8.2]&#xa;">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1998115740" 
+	TEXT="Git filter-branch&#xa;(git 的删除核弹起爆码的工具)">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_1939665661" 
+	TEXT="彻底删除某个文件&#xa;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1797069334" 
+	TEXT="This occurs fairly commonly. Someone accidentally commits a huge binary file with a thoughtless git add ., and you want to remove it everywhere. Perhaps you accidentally committed a file that contained a password, and you want to make your project open source. filter-branch is the tool you probably want to use to scrub your entire history. To remove a file named passwords.txt from your entire history, you can use the --tree-filter option to filter-branch:&#xa;&#xa;$ git filter-branch --tree-filter &apos;rm -f passwords.txt&apos; HEAD&#xa;Rewrite 6b9b3cf04e7c5686a9cb838c3f36a8cb6a0fc2bd (21/21)&#xa;Ref &apos;refs/heads/master&apos; was rewritten&#xa;&#xa;The --tree-filter option runs the specified command after each checkout of the project and then recommits the results. In this case, you remove a file called passwords.txt from every snapshot, whether it exists or not. If you want to remove all accidentally committed editor backup files, you can run something like git filter-branch --tree-filter &apos;rm -f *~&apos; HEAD.&#xa;&#xa;You’ll be able to watch Git rewriting trees and commits and then move the branch pointer at the end. It’s generally a good idea to do this in a testing branch and then hard-reset your master branch after you’ve determined the outcome is what you really want. To run filter-branch on all your branches, you can pass --all to the command.&#xa;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_155217472" 
+	TEXT="将某个子目录作为新的根目录">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_849721028" 
+	TEXT="&#xa;&#xa;Suppose you’ve done an import from another source control system and have subdirectories that make no sense (trunk, tags, and so on). If you want to make the trunk subdirectory be the new project root for every commit, filter-branch can help you do that, too:&#xa;&#xa;$ git filter-branch --subdirectory-filter trunk HEAD&#xa;Rewrite 856f0bf61e41a27326cdae8f09fe708d679f596f (12/12)&#xa;Ref &apos;refs/heads/master&apos; was rewritten&#xa;&#xa;Now your new project root is what was in the trunk subdirectory each time. Git will also automatically remove commits that did not affect the subdirectory.&#xa;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1785288986" 
+	TEXT="批量修改提交的作者邮件地址信息">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1724380425" 
+	TEXT="&#xa;&#xa;Another common case is that you forgot to run git config to set your name and e-mail address before you started working, or perhaps you want to open-source a project at work and change all your work e-mail addresses to your personal address. In any case, you can change e-mail addresses in multiple commits in a batch with filter-branch as well. You need to be careful to change only the e-mail addresses that are yours, so you use --commit-filter:&#xa;&#xa;$ git filter-branch --commit-filter &apos;&#xa;        if [ &quot;$GIT_AUTHOR_EMAIL&quot; = &quot;schacon@localhost&quot; ];&#xa;        then&#xa;                GIT_AUTHOR_NAME=&quot;Scott Chacon&quot;;&#xa;                GIT_AUTHOR_EMAIL=&quot;schacon@example.com&quot;;&#xa;                git commit-tree &quot;$@&quot;;&#xa;        else&#xa;                git commit-tree &quot;$@&quot;;&#xa;        fi&apos; HEAD&#xa;&#xa;This goes through and rewrites every commit to have your new address. Because commits contain the SHA-1 values of their parents, this command changes every commit SHA in your history, not just those that have the matching e-mail address.">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+</node>
+</node>
+<node COLOR="#0033ff" FOLDED="true" ID="ID_729560922" POSITION="right" 
+	TEXT="版本库迁移">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="Serif" SIZE="18"/>
+<node COLOR="#00b439" FOLDED="true" ID="ID_817211914" 
+	TEXT="subversion -&gt; git">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_1012857098" 
+	TEXT="使用 git-svn">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1551573758" 
+	TEXT="使用 git-svnimport">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_748600261" 
+	TEXT="cvs-&gt;git">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_211996291" 
+	TEXT="使用 git-cvsimport">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1719466356" 
+	TEXT="从 cvs 库创建 git 库">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1232557468" 
+	TEXT="git cvsimport -v -d &lt;cvsroot&gt; -C &lt;destination&gt; &lt;module&gt;"/>
+<node COLOR="#111111" ID="ID_1055991420" 
+	TEXT="说明： git 库创建在 &lt;destination&gt; 下"/>
+<node COLOR="#111111" ID="ID_1144790678" 
+	TEXT="说明： cvs 在一个cvsroot下有若干 module，一次将一个 module 转换为一个 git 库"/>
+</node>
+<node COLOR="#990000" ID="ID_540762047" 
+	TEXT="git 库和 cvs 库同步">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1361210779" 
+	TEXT="hg -&gt; git">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_1955808505" 
+	TEXT="下载工具 hg-fast-export.sh">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_990812560" 
+	TEXT="git clone git://repo.or.cz/fast-export.git">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1112499831" 
+	TEXT="将其中的脚本文件拷贝到 /usr/local/bin/"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1256971631" 
+	TEXT="创建一个 git 版本库">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_854653216" 
+	TEXT="git init projectname.git"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1551713709" 
+	TEXT="运行 hg-fast-export.sh 转换">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1582617228" 
+	TEXT="cd projectname.git&#xa;/path/to/fast-export.git/hg-fast-export.sh -r /path/to/project.hg&#xa;git checkout master"/>
 </node>
 </node>
 </node>
