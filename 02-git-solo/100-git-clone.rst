@@ -58,19 +58,19 @@ Git的 PUSH 和 PULL 命令的用法相似，使用下面的语法：
 
 这两个工作区本质上没有区别，但是往往提交是在一个版本（A）中进行的，另外一个（B）作为备份。对于这种对等工作区模式，版本库的同步只有一种可行的操作模式，就是在备份库（B）执行 git pull 命令从源版本库（A）拉回新的提交实现版本库同步。为什么不能从版本库A向版本库B执行 git push 的推送操作呢？看看下面的操作。
 
-执行克隆命令，将版本库 `/my/workspace/demo` 克隆到 `/my/workspace/demo-backup` 。
+执行克隆命令，将版本库 `/path/to/my/workspace/demo` 克隆到 `/path/to/my/workspace/demo-backup` 。
 
 ::
 
-  $ git clone /my/workspace/demo /my/workspace/demo-backup
-  Cloning into /my/workspace/demo-backup...
+  $ git clone /path/to/my/workspace/demo /path/to/my/workspace/demo-backup
+  Cloning into /path/to/my/workspace/demo-backup...
   done.
 
 进入 demo 版本库，生成一些测试提交（使用 `--allow-empty` 参数可以生成空提交）。
 
 ::
 
-  $ cd /my/workspace/demo/
+  $ cd /path/to/my/workspace/demo/
   $ git commit --allow-empty -m "sync test 1"
   [master 790e72a] sync test 1
   $ git commit --allow-empty -m "sync test 2"
@@ -80,7 +80,7 @@ Git的 PUSH 和 PULL 命令的用法相似，使用下面的语法：
 
 ::
 
-  $ git push /my/workspace/demo-backup
+  $ git push /path/to/my/workspace/demo-backup
   Counting objects: 2, done.
   Delta compression using up to 2 threads.
   Compressing objects: 100% (2/2), done.
@@ -101,15 +101,15 @@ Git的 PUSH 和 PULL 命令的用法相似，使用下面的语法：
   remote: error: 
   remote: error: To squelch this message and still keep the default behaviour, set
   remote: error: 'receive.denyCurrentBranch' configuration variable to 'refuse'.
-  To /my/workspace/demo-backup
+  To /path/to/my/workspace/demo-backup
    ! [remote rejected] master -> master (branch is currently checked out)
-  error: failed to push some refs to '/my/workspace/demo-backup'
+  error: failed to push some refs to '/path/to/my/workspace/demo-backup'
 
 翻译成中文：
 
 ::
 
-  $ git push /my/workspace/demo-backup
+  $ git push /path/to/my/workspace/demo-backup
   ...
   对方说: 错了:
                 拒绝更新已检出分支 refs/heads/master 。
@@ -120,9 +120,9 @@ Git的 PUSH 和 PULL 命令的用法相似，使用下面的语法：
 
                     receive.denyCurrentBranch = ignore|warn
 
-  到 /my/workspace/demo-backup
+  到 /path/to/my/workspace/demo-backup
    ! [对方拒绝] master -> master (分支当前已检出)
-  错误: 部分引用的推送失败了, 至 '/my/workspace/demo-backup'
+  错误: 部分引用的推送失败了, 至 '/path/to/my/workspace/demo-backup'
 
 从错误输出可以看出，虽然可以改变 Git 的缺省行为，允许向工作区推送已经检出的分支，但是这么做实在不高明。
 
@@ -131,7 +131,7 @@ Git的 PUSH 和 PULL 命令的用法相似，使用下面的语法：
 ::
 
   $ git pull
-  From /my/workspace/demo
+  From /path/to/my/workspace/demo
      6e6753a..f86b7bf  master     -> origin/master
   Updating 6e6753a..f86b7bf
   Fast-forward
@@ -152,20 +152,20 @@ Git的 PUSH 和 PULL 命令的用法相似，使用下面的语法：
 
 ::
 
-  $ cd /my/workspace/demo-backup
+  $ cd /path/to/my/workspace/demo-backup
   $ git remote -v
-  origin  /my/workspace/demo (fetch)
-  origin  /my/workspace/demo (push)
+  origin  /path/to/my/workspace/demo (fetch)
+  origin  /path/to/my/workspace/demo (push)
 
 实际注册上游远程版本库的奥秘都在 Git 的配置文件中（略去无关的行）：
 
 ::
 
-  $ cat /my/workspace/demo-backup/.git/config 
+  $ cat /path/to/my/workspace/demo-backup/.git/config 
   ...
   [remote "origin"]
           fetch = +refs/heads/*:refs/remotes/origin/*
-          url = /my/workspace/demo
+          url = /path/to/my/workspace/demo
   [branch "master"]
           remote = origin
           merge = refs/heads/master
@@ -184,7 +184,7 @@ Git的 PUSH 和 PULL 命令的用法相似，使用下面的语法：
 
 ::
 
-  $ git clone --bare /my/workspace/demo /path/to/demo.git
+  $ git clone --bare /path/to/my/workspace/demo /path/to/demo.git
   Cloning into bare repository /path/to/demo.git...
   done.
 
@@ -208,7 +208,7 @@ Git的 PUSH 和 PULL 命令的用法相似，使用下面的语法：
 
 ::
 
-  $ cd /my/workspace/demo/
+  $ cd /path/to/my/workspace/demo/
   $ git commit --allow-empty -m "sync test 3"
   [master d4b42b7] sync test 3
   $ git commit --allow-empty -m "sync test 4"
@@ -286,7 +286,7 @@ Git的 PUSH 和 PULL 命令的用法相似，使用下面的语法：
 
 ::
 
-  $ cd /my/workspace/demo
+  $ cd /path/to/my/workspace/demo
   $ git push /path/to/demo-init.git
   No refs in common and none specified; doing nothing.
   Perhaps you should specify a branch such as 'master'.
@@ -297,7 +297,7 @@ Git的 PUSH 和 PULL 命令的用法相似，使用下面的语法：
 
 ::
 
-  $ cd /my/workspace/demo
+  $ cd /path/to/my/workspace/demo
   $ git push /path/to/demo-init.git
   没有指定要推送的引用，而且两个版本库也没有共同的引用。
   所以什么也没有做。
@@ -335,7 +335,7 @@ Git的 PUSH 和 PULL 命令的用法相似，使用下面的语法：
 
 ::
 
-  $ cd /my/workspace/demo/
+  $ cd /path/to/my/workspace/demo/
   $ git commit --allow-empty -m "sync test 5"
   [master 424aa67] sync test 5
   $ git commit --allow-empty -m "sync test 6"

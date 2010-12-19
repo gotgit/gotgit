@@ -20,7 +20,7 @@ Git 提供了“悔棋”的操作，甚至因为“单步悔棋”是如此经�
 
 ::
 
-  cd /my/workspace/demo
+  cd /path/to/my/workspace/demo
   $ git log --stat -2
   commit 822b4aeed5de74f949c9faa5b281001eb5439444
   Author: Jiang Xin <jiangxin@ossxp.com>

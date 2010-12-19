@@ -72,7 +72,7 @@ gitg 是使用 GTK+ 图形库实现的一个 Git 版本库浏览器软件。Linu
 
   ::
   
-    $ cd /my/workspace/demo
+    $ cd /path/to/my/workspace/demo
     $ rm src/hello.h
 
 * 在 README 文件后面追加一行。
@@ -263,7 +263,7 @@ qgit 也可以执行提交。选中 qgit 顶部窗口最上一行“Working dir 
 
 ::
 
-  $ cd /my/workspace/
+  $ cd /path/to/my/workspace/
   $ git clone git://github.com/ossxp-com/gitdemo-commit-tree.git
   Cloning into gitdemo-commit-tree...
   remote: Counting objects: 63, done.
@@ -861,7 +861,7 @@ Git 的差异比较缺省是逐行比较，分别显示改动前的行和改动�
 
 ::
 
-  $ cd /my/workspace/gitdemo-commit-tree
+  $ cd /path/to/my/workspace/gitdemo-commit-tree
   $ git blame README
   ^e80aa74 (Jiang Xin 2010-12-09 14:00:33 +0800  1) DEMO program for git-scm-book.
   ^e80aa74 (Jiang Xin 2010-12-09 14:00:33 +0800  2) 
@@ -920,7 +920,7 @@ Git 提供的 `git bisect` 命令是基于版本库的，自动化的问题查�
 
   ::
 
-    $ cd /my/workspace/gitdemo-commit-tree/
+    $ cd /path/to/my/workspace/gitdemo-commit-tree/
     $ git checkout master
     Already on 'master'
 

@@ -12,7 +12,7 @@
 
 ::
 
-  $ cd /my/workspace/demo
+  $ cd /path/to/my/workspace/demo
   $ git status -sb       # Git 1.7.2 及以上版本才支持 -b 参数哦
   ## master
   $ git log --graph --pretty=oneline --stat

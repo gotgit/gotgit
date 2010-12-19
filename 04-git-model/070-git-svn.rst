@@ -123,7 +123,7 @@ Git-svn 作为 Git 软件包的一部分，当 Git 从源码包进行安装时�
 ::
 
   $ git svn clone -s file:///path/to/svn/repos git-svn-demo
-  Initialized empty Git repository in /my/workspace/git-svn-demo/.git/
+  Initialized empty Git repository in /path/to/my/workspace/git-svn-demo/.git/
   r1 = 2c73d657dfc3a1ceca9d465b0b98f9e123b92bb4 (refs/remotes/trunk)
           A       README
   r2 = 1863f91b45def159a3ed2c4c4c9428c25213f956 (refs/remotes/trunk)
@@ -250,7 +250,7 @@ Git-svn 作为 Git 软件包的一部分，当 Git 从源码包进行安装时�
   $ git svn fetch
           M       README
   r5 = fae6dab863ed2152f71bcb2348d476d47194fdd4 (refs/remotes/trunk)
-  15:37:08 jiangxin@hp:/my/workspace/git-svn-demo$ git st
+  15:37:08 jiangxin@hp:/path/to/my/workspace/git-svn-demo$ git st
   # On branch master
   nothing to commit (working directory clean)
 
@@ -289,7 +289,7 @@ Git-svn 作为 Git 软件包的一部分，当 Git 从源码包进行安装时�
   #       both modified:      README
   #
   no changes added to commit (use "git add" and/or "git commit -a")
-  15:49:30 jiangxin@hp:/my/workspace/git-svn-demo$ vi README 
+  15:49:30 jiangxin@hp:/path/to/my/workspace/git-svn-demo$ vi README 
 
 处于冲突状态的 REAEME 文件内容。
 
@@ -624,7 +624,7 @@ Git 缺省工作的分支是 master，而看到上例中的 Subversion 主线在
 ::
 
   $ git svn init -T trunk -b branches -b sandbox -t tags file:///path/to/svn/repos test
-  Initialized empty Git repository in /my/workspace/test/.git/
+  Initialized empty Git repository in /path/to/my/workspace/test/.git/
 
 查看本地克隆版本库的配置文件：
 
@@ -676,7 +676,7 @@ Git 缺省工作的分支是 master，而看到上例中的 Subversion 主线在
 ::
 
   $ git svn init file:///path/to/svn/repos/trunk test 
-  Initialized empty Git repository in /my/workspace/test/.git/
+  Initialized empty Git repository in /path/to/my/workspace/test/.git/
   $ cd test
   $ git svn fetch -r 6:HEAD
           A       README
@@ -691,7 +691,7 @@ Git 缺省工作的分支是 master，而看到上例中的 Subversion 主线在
 ::
 
   $ git svn clone -r 6:HEAD file:///path/to/svn/repos/trunk test 
-  Initialized empty Git repository in /my/workspace/test/.git/
+  Initialized empty Git repository in /path/to/my/workspace/test/.git/
           A       README
   r6 = 053b641b7edd2f1a59a007f27862d98fe5bcda57 (refs/remotes/git-svn)
           M       README
@@ -710,7 +710,7 @@ Git 缺省工作的分支是 master，而看到上例中的 Subversion 主线在
 ::
 
   $ git clone git-svn-demo myclone
-  Initialized empty Git repository in /my/workspace/myclone/.git/
+  Initialized empty Git repository in /path/to/my/workspace/myclone/.git/
 
 进入新的克隆中，会发现新的克隆缺乏跟踪 Subversion 分支的引用，即 `refs/remotes/trunk` 等。
 
@@ -728,7 +728,7 @@ Git 缺省工作的分支是 master，而看到上例中的 Subversion 主线在
 ::
 
   $ git fetch origin refs/remotes/*:refs/remotes/*
-  From /my/workspace/git-svn-demo
+  From /path/to/my/workspace/git-svn-demo
    * [new branch]      demo-1.0   -> demo-1.0
    * [new branch]      tags/v1.0  -> tags/v1.0
    * [new branch]      trunk      -> trunk
@@ -738,7 +738,7 @@ Git 缺省工作的分支是 master，而看到上例中的 Subversion 主线在
 ::
 
   $ pwd
-  /my/workspace/myclone
+  /path/to/my/workspace/myclone
 
   $ git svn init -s file:///path/to/svn/repos
 

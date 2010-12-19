@@ -16,7 +16,7 @@ Git库管理
 
 ::
 
-  $ cd /my/workspace/
+  $ cd /path/to/my/workspace/
   $ git clone git://github.com/ossxp-com/gitdemo-commit-tree.git i-am-admin
   Cloning into i-am-admin...
   remote: Counting objects: 65, done.
@@ -29,7 +29,7 @@ Git库管理
 
 ::
 
-  $ cd /my/workspace/i-am-admin
+  $ cd /path/to/my/workspace/i-am-admin
   $ git show-ref
   6652a0dce6a5067732c00ef0a220810a7230655e refs/heads/master
   6652a0dce6a5067732c00ef0a220810a7230655e refs/remotes/origin/HEAD
@@ -114,7 +114,7 @@ Git库管理
 
 ::
 
-  $ cd /my/workspace/i-am-admin
+  $ cd /path/to/my/workspace/i-am-admin
   $ cp /tmp/bigfile bigfile
   $ cp /tmp/bigfile bigfile.dup
 
@@ -217,7 +217,7 @@ Git 提供了 git fsck 命令，可以查看到版本库中包含的没有被任
 
 ::
 
-  $ cd /my/workspace/i-am-admin
+  $ cd /path/to/my/workspace/i-am-admin
   $ cp /tmp/bigfile bigfile
   $ cp /tmp/bigfile bigfile.dup
 

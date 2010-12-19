@@ -7,7 +7,7 @@ Git 暂存区
 
 ::
 
-  $ cd /my/workspace/demo 
+  $ cd /path/to/my/workspace/demo 
   $ git log --stat
   commit a0c641e92b10d8bcca1ed1bf84ca80340fdefee6
   Author: Jiang Xin <jiangxin@ossxp.com>
@@ -420,7 +420,7 @@ Git Diff 魔法
 
 ::
 
-  $ cd /my/workspace/demo 
+  $ cd /path/to/my/workspace/demo 
   $ git clean -fd
   $ git checkout .
 

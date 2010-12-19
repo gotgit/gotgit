@@ -12,7 +12,7 @@ Git 基本操作（实践七）
 
 ::
 
-  $ cd /my/workspace/demo
+  $ cd /path/to/my/workspace/demo
   $ git tag -m "Say bye-bye to all previous practice." old_practice
 
 在本章还不打算详细介绍里程碑的奥秘，只要知道里程碑无非也是一个引用，通过记录提交ID（或者Tag对象）来为当前版本库状态进行“留影”。
@@ -467,7 +467,7 @@ Git 的这个功能非常有用，将 `git describe` 命令的输出作为软件
 
 ::
 
-  $ cd /my/workspace/demo
+  $ cd /path/to/my/workspace/demo
   $ ls src
   hello  main.c  main.o  Makefile  version.h  version.h.in
 
@@ -597,7 +597,7 @@ Hello world 引发的新问题
 
 ::
 
-  $ cd /my/workspace/demo/src
+  $ cd /path/to/my/workspace/demo/src
   $ make clean && make
   rm -f hello main.o version.h
   version.h.in => version.h
@@ -655,7 +655,7 @@ Git 提供了文件忽略功能。当对工作区某个目录或者某些文件�
 
 ::
 
-  $ cd /my/workspace/demo/src
+  $ cd /path/to/my/workspace/demo/src
   $ git status -s
   ?? hello
   ?? main.o

@@ -60,19 +60,19 @@ Git 的所有操作，包括版本库创建等管理性工作都用 `git` 一个
 
 ::
 
-  $ cd /my/workspace
+  $ cd /path/to/my/workspace
   $ mkdir demo
   $ cd demo
   $ git init
-  Initialized empty Git repository in /my/workspace/demo/.git/
+  Initialized empty Git repository in /path/to/my/workspace/demo/.git/
 
 实际上，如果 Git 的版本是 1.6.5 或更新的版本，可以在 `git init` 命令的后面直接输入目录名称，自动完成目录的创建。
 
 :: 
 
-  $ cd /my/workspace
+  $ cd /path/to/my/workspace
   $ git init demo 
-  Initialized empty Git repository in /my/workspace/demo/.git/
+  Initialized empty Git repository in /path/to/my/workspace/demo/.git/
   $ cd demo
 
 从上面版本库初始化后的输出中，可以看到执行 `git init` 命令在工作区创建了隐藏目录 `.git` 。
@@ -84,7 +84,7 @@ Git 的所有操作，包括版本库创建等管理性工作都用 `git` 一个
 
 这个隐藏的 `.git` 目录就是 Git 版本库（即仓库, repository ）。
 
-`.git` 版本库目录所在的目录，即 `/my/workspace/demo` 目录称为 **工作区** ，目前工作区除了包含一个隐藏的 `.git` 版本库目录外，空无一物。
+`.git` 版本库目录所在的目录，即 `/path/to/my/workspace/demo` 目录称为 **工作区** ，目前工作区除了包含一个隐藏的 `.git` 版本库目录外，空无一物。
 
 下面为工作区中加点料：在工作区中创建一个文件 `welcome.txt` ，内容就是一行 "Hello."。
 
@@ -151,7 +151,7 @@ Git 提供了一条 `git grep` 命令来实现更好的工作区文件内容搜�
 
 ::
 
-  $ cd /my/workspace/
+  $ cd /path/to/my/workspace/
   $ git status
   fatal: Not a git repository (or any of the parent directories): .git
 
@@ -161,7 +161,7 @@ Git 提供了一条 `git grep` 命令来实现更好的工作区文件内容搜�
 
   $ strace -e 'trace=file' git status
   ...
-  getcwd("/my/workspace", 4096)           = 14
+  getcwd("/path/to/my/workspace", 4096)           = 14
   stat(".", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
   stat(".git", 0x7fffdf1288d0)            = -1 ENOENT (No such file or directory)
   access(".git/objects", X_OK)            = -1 ENOENT (No such file or directory)
@@ -184,13 +184,13 @@ Git 提供了一条 `git grep` 命令来实现更好的工作区文件内容搜�
 
 ::
 
-  $ cd /my/workspace/demo/
+  $ cd /path/to/my/workspace/demo/
   $ mkdir -p a/b/c
-  $ cd /my/workspace/demo/a/b/c
+  $ cd /path/to/my/workspace/demo/a/b/c
   $ git rev-parse --git-dir
-  /my/workspace/demo/.git
+  /path/to/my/workspace/demo/.git
   $ git rev-parse --show-toplevel
-  /my/workspace/demo
+  /path/to/my/workspace/demo
   $ git rev-parse --show-prefix
   a/b/c/
   $ git rev-parse --show-cdup
@@ -211,11 +211,11 @@ Git 克隆就是解决这个问题的办法。可以通过版本库克隆，在�
 
 执行下面的命令，就明白 `git config` 命令实际操作的文件了。
 
-* 执行下面的命令，将打开 `/my/workspace/demo/.git/config` 文件进行编辑。
+* 执行下面的命令，将打开 `/path/to/my/workspace/demo/.git/config` 文件进行编辑。
 
   ::
 
-    $ cd /my/workspace/demo/
+    $ cd /path/to/my/workspace/demo/
     $ git config -e 
 
 * 执行下面的命令，将打开 `/home/jiangxin/.gitconfig` （用户主目录下的 .gitconfig 文件）全局配置文件进行编辑。
@@ -238,7 +238,7 @@ Git 的三个配置文件分别是版本库级别的配置文件，全局配置�
 
 ::
 
-  $ cat /my/workspace/demo/.git/config 
+  $ cat /path/to/my/workspace/demo/.git/config 
   [core]
           repositoryformatversion = 0
           filemode = true
@@ -315,7 +315,7 @@ Git 的三个配置文件分别是版本库级别的配置文件，全局配置�
 
 ::
 
-  $ cd /my/workspace/demo
+  $ cd /path/to/my/workspace/demo
   $ git commit --allow-empty -m "who does commit?"
   [master 252dc53] who does commit?
    Committer: JiangXin <jiangxin@hp.moon.ossxp.com>
@@ -450,7 +450,7 @@ Android 项目为了更好的实现对 Git 版本库的集中管理，引入了�
 
 ::
 
-  $ cd /my/workspace
+  $ cd /path/to/my/workspace
   $ git clone demo demo-step-1
   Cloning into demo-step-1...
   done.
