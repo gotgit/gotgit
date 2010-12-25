@@ -3525,44 +3525,54 @@
 	TEXT="2 冲突解决">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
-<node COLOR="#990000" ID="ID_646053453" 
-	TEXT="引发冲突的条件：不是基于服务器最新提交进行更改。">
-<edge STYLE="bezier" WIDTH="thin"/>
+<node COLOR="#990000" ID="ID_856998319" 
+	TEXT="git pull = git fetch + git merge">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1744435895" 
+	TEXT="merge 操作的两个情况：隐式，显示。git merge 命令的一般格式">
 <font NAME="Serif" SIZE="14"/>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_1662892386" 
-	TEXT="冲突的类型">
+	TEXT="合并的类型">
 <font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_1119183962" 
-	TEXT="未引发冲突">
+<node COLOR="#111111" FOLDED="true" ID="ID_631261458" 
+	TEXT="自动合并（成功）">
 <font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_631261458" 
-	TEXT="冲突的自动解决（成功）">
-<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_548734540" 
+	TEXT="编辑不同文件"/>
+<node COLOR="#111111" ID="ID_1953568709" 
+	TEXT="编辑相同文件，但是位于不同区域。"/>
 </node>
 <node COLOR="#111111" ID="ID_1298374889" 
-	TEXT="冲突的自动解决（逻辑冲突）">
+	TEXT="自动合并（逻辑冲突）">
 <font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#111111" ID="ID_1890445539" 
-	TEXT="真正的冲突（手动解决）">
+<node COLOR="#111111" FOLDED="true" ID="ID_1890445539" 
+	TEXT="冲突的合并（手动解决）">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1439860379" 
+	TEXT="冲突解决（手动）">
 <font NAME="Serif" SIZE="12"/>
 </node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1709088220" 
+	TEXT="冲突解决（mergetool）">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1709477179" 
+	TEXT="kdiff3"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_674585525" 
+	TEXT="树冲突？">
 <node COLOR="#111111" ID="ID_462055545" 
 	TEXT="因为文件重命名引发的冲突。到底改名不改名？（SVN 中叫做树冲突）">
 <font NAME="Serif" SIZE="12"/>
 </node>
 </node>
-<node COLOR="#990000" ID="ID_1439860379" 
-	TEXT="冲突解决（手动）">
-<font NAME="Serif" SIZE="14"/>
 </node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1709088220" 
-	TEXT="冲突解决（mergetool）">
+<node COLOR="#990000" ID="ID_1751677743" 
+	TEXT="git merge 命令行">
 <font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_1709477179" 
-	TEXT="kdiff3"/>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_768562437" 
 	TEXT="merge 操作的策略">

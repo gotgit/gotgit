@@ -38,19 +38,332 @@
 
 获取（FETCH）操作从上面的示意图中看似很简单，实际上要到后面介绍远程版本库的章节才能够讲明白，现在只需要根据图示将获取操作理解为将远程的共享版本库的对象（提交、里程碑、分支等）复制到本地即可。
 
-合并（MERGE）操作是本章要介绍的重点。
+合并（MERGE）操作是本章要介绍的重点。合并操作可以由上面介绍的拉回操作（git pull）隐式的执行，将其它版本库的提交和本地版本库的提交进行合并，还可以针对本版本库中的其它分支（下一章介绍）进行显示的合并操作，将其它分支的提交和当前分支的提交进行合并。
 
-远程版本库他人的提交拉过来
-合并并非总会
+合并操作的命令行格式如下：
+
+::
+
+  git merge [选项...] <commit>...
+
+合并操作的大多数情况，只需提供一个 `<commit>` （提交ID或者对应的引用：分支、里程碑等）作为参数，合并操作将 `<commit>` 对应的目录树和当前工作分支的目录树的内容进行合并，合并后的提交以当前分支的提交作为第一个父提交，以 `<commit>` 为第二个父提交。合并操作还支持将多个 `<commit>` 代表的分支和当前分支进行合并，过程类似。合并操作的选项很多，会在本章以及后面子树合并的章节予以介绍。
+
+如果不提供 `--no-commit` 选项，合并后的结果会自动提交，否则合并后的结果放入暂存区，用户可以对合并结果进行检查、更改，然后手动提交。
+
+合并操作并非总会成功，因为合并的不同提交可能同时修改同一文件的相同区域的内容，导致冲突。冲突会造成合并操作的中断，冲突的文件被标识，用户可以在对标识为冲突的文件进行冲突解决操作，然后更新暂存区，再提交最终完成合并操作。
+
+根据合并操作是否遇到冲突，以及不同的冲突类型，可以分为不同的类型：成功的自动合并，带有逻辑冲突的自动合并，遭遇冲突的合并，树冲突。下面分别予以介绍。
+
+合并一：自动合并
+================
+
+Git 的合并操作非常智能，大多数情况下会自动完成合并。不管是修改不同的文件，还是修改相同的文件（文件的不同位置），或者文件名变更。
+
+**修改不同的文件**
+
+当用户 user1 和 user2 的本地提交中修改了不同的文件，当一个用户将改动推送到服务器后，另外一个用户推送就需要先合并再推送。因两个用户修改了不同的文件，合并不会遇到麻烦。
+
+* 为确保两个用户的本地版本库和共享版本库状态一致，对两个用户的本地版本库执行下面的重置操作。
+
+  ::
+
+    $ git pull
+    $ git reset --hard origin/master
+
+* 用户 user1 修改 `team/user1.txt` 文件，提交并推送到共享服务器。
+
+  ::
+
+    $ cd /path/to/user1/workspace/project/
+    $ echo "hack by user1 at `date -R`" >> team/user1.txt 
+    $ git add -u
+    $ git commit -m "update team/user1.txt"
+    $ git push
+
+* 用户 user2 修改 `team/user2.txt` 文件，提交。
+
+  ::
+
+    $ cd /path/to/user2/workspace/project/
+    $ echo "hack by user2 at `date -R`" >> team/user2.txt 
+    $ git add -u
+    $ git commit -m "update team/user2.txt"
+
+* 用户 user2 在推送的时候，会遇到非快进式推进的错误而被终止。
+
+  ::
+
+    $ git push
+    To file:///path/to/repos/shared.git
+     ! [rejected]        master -> master (non-fast-forward)
+    error: failed to push some refs to 'file:///path/to/repos/shared.git'
+    To prevent you from losing history, non-fast-forward updates were rejected
+    Merge the remote changes (e.g. 'git pull') before pushing again.  See the
+    'Note about fast-forwards' section of 'git push --help' for details.
+
+* 用户 user2 执行获取（git fetch）操作。获取到的提交更新到本地跟踪共享版本库 master 分支的本地引用 `origin/master` 中。
+
+  ::
+
+    $ git fetch
+    remote: Counting objects: 7, done.
+    remote: Compressing objects: 100% (4/4), done.
+    remote: Total 4 (delta 0), reused 0 (delta 0)
+    Unpacking objects: 100% (4/4), done.
+    From file:///path/to/repos/shared
+       bccc620..25fce74  master     -> origin/master
+
+* 用户 user2 执行合并操作，完成自动合并。
+
+  ::
+
+    $ git merge origin/master
+    Merge made by recursive.
+     team/user1.txt |    1 +
+     1 files changed, 1 insertions(+), 0 deletions(-)
+
+* 用户 user2 推送合并后的本地版本库到共享版本库。
+
+  ::
+
+    $ git push
+    Counting objects: 12, done.
+    Delta compression using up to 2 threads.
+    Compressing objects: 100% (7/7), done.
+    Writing objects: 100% (7/7), 747 bytes, done.
+    Total 7 (delta 0), reused 0 (delta 0)
+    Unpacking objects: 100% (7/7), done.
+    To file:///path/to/repos/shared.git
+       25fce74..0855b86  master -> master
+     
+* 通过提交日志，可以看到成功合并的提交和其两个父提交的关系图。
+
+  ::
+
+    $ git log -3 --graph --stat
+    *   commit 0855b86678d1cf86ccdd13adaaa6e735715d6a7e
+    |\  Merge: f53acdf 25fce74
+    | | Author: user2 <user2@moon.ossxp.com>
+    | | Date:   Sat Dec 25 23:00:55 2010 +0800
+    | | 
+    | |     Merge remote branch 'origin/master'
+    | |   
+    | * commit 25fce74b5e73b960c42e4a463d03d462919b674d
+    | | Author: user1 <user1@sun.ossxp.com>
+    | | Date:   Sat Dec 25 22:54:53 2010 +0800
+    | | 
+    | |     update team/user1.txt
+    | | 
+    | |  team/user1.txt |    1 +
+    | |  1 files changed, 1 insertions(+), 0 deletions(-)
+    | |   
+    * | commit f53acdf6a76e0552b562f5aaa4d40ff19e8e2f77
+    |/  Author: user2 <user2@moon.ossxp.com>
+    |   Date:   Sat Dec 25 22:56:49 2010 +0800
+    |   
+    |       update team/user2.txt
+    |   
+    |    team/user2.txt |    1 +
+    |    1 files changed, 1 insertions(+), 0 deletions(-)
 
 
-冲突的类型
+**修改相同文件的不同区域**
 
-    未引发冲突
-    冲突的自动解决（成功）
-    冲突的自动解决（逻辑冲突）
-    真正的冲突（手动解决）
-    因为文件重命名引发的冲突。到底改名不改名？（SVN 中叫做树冲突）
+当用户 user1 和 user2 的本地提交中修改相同的文件，但是修改的是文件的不同的位置，则两个用户的提交仍可成功合并。
+
+* 为确保两个用户的本地版本库和共享版本库状态一致，对两个用户的本地版本库执行拉回操作。
+
+  ::
+
+    $ git pull
+
+* 用户 user1 在自己的工作区，修改 `README` 文件，在文件的第一行插入内容，使得该文件的内容如下。
+
+  ::
+
+    User1 hacked.
+    Hello.
+
+* 用户 user1 对修改进行本地提交并推送到共享版本库。
+
+  ::
+
+    $ git add -u
+    $ git commit -m "User1 hack at the beginning."
+    $ git push
+
+* 用户 user2 在自己的工作区，修改 `README` 文件，在文件的最后插入内容，使得该文件的内容如下。
+
+  ::
+
+    Hello.
+    User2 hacked.
+
+
+* 用户 user2 对修改进行本地提交。
+
+  ::
+
+    $ git add -u
+    $ git commit -m "User2 hack at the end."
+
+* 用户 user2 执行获取（git fetch）操作。获取到的提交更新到本地跟踪共享版本库 master 分支的本地引用 `origin/master` 中。
+
+  ::
+
+    $ git fetch
+    remote: Counting objects: 5, done.
+    remote: Compressing objects: 100% (2/2), done.
+    remote: Total 3 (delta 0), reused 0 (delta 0)
+    Unpacking objects: 100% (3/3), done.
+    From file:///path/to/repos/shared
+       0855b86..07e9d08  master     -> origin/master
+
+* 用户 user2 执行合并操作，完成自动合并。
+
+  ::
+
+    $ git merge refs/remotes/origin/master
+    Auto-merging README
+    Merge made by recursive.
+     README |    1 +
+     1 files changed, 1 insertions(+), 0 deletions(-)
+
+* 用户 user2 推送合并后的本地版本库到共享版本库。
+
+  ::
+
+    $ git push
+    Counting objects: 10, done.
+    Delta compression using up to 2 threads.
+    Compressing objects: 100% (4/4), done.
+    Writing objects: 100% (6/6), 607 bytes, done.
+    Total 6 (delta 0), reused 3 (delta 0)
+    Unpacking objects: 100% (6/6), done.
+    To file:///path/to/repos/shared.git
+       07e9d08..2a67e6f  master -> master
+
+* 如果和历史版本进行比较，会看到合并后的提交同时包含了 user1 和 user2 对 `README` 文件的更改。
+
+  ::
+
+    $ git diff HEAD^^
+    diff --git a/README b/README
+    index 18832d3..a4e44c0 100644
+    --- a/README
+    +++ b/README
+    @@ -1 +1,3 @@
+    +User1 hacked.
+     Hello.
+    +User2 hacked.
+
+**同时更改文件名和文件内容**
+
+如果一个用户将文件移动到其它目录（修改文件名），另外一个用户针对重命名前的文件进行了修改，还能够实现自动合并么？这对于其它版本控制系统可能是一个难题，例如 Subversion 就不能很好的处理，还为此引入了一个“树冲突”的新名词。Git 对于此类冲突能够很好的处理，可以自动解决冲突实现合并的自动执行。
+
+* 为确保两个用户的本地版本库和共享版本库状态一致，对两个用户的本地版本库执行拉回操作。
+
+  ::
+
+    $ git pull
+
+* 用户 user1 在自己的工作区，将文件 `README` 文件进行重命名，本地提交并推送到共享版本库。
+
+  ::
+
+    $ mkdir doc
+    $ git mv README doc/README.txt
+    $ git commit -m "move document to doc/."
+    $ git push
+
+* 用户 user1 对修改进行本地提交并推送到共享版本库。
+
+  ::
+
+    $ git add -u
+    $ git commit -m "User1 hack at the beginning."
+    $ git push
+
+* 用户 user2 在自己的工作区，修改 `README` 文件，在文件的最后插入内容，并本地提交。
+
+  ::
+
+    $ echo "User2 hacked again." >> README
+    $ git add -u
+    $ git commit -m "User2 hack README again."
+
+* 用户 user2 执行获取（git fetch）操作。获取到的提交更新到本地跟踪共享版本库 master 分支的本地引用 `origin/master` 中。
+
+  ::
+
+    $ git fetch
+    remote: Counting objects: 5, done.
+    remote: Compressing objects: 100% (2/2), done.
+    remote: Total 3 (delta 0), reused 0 (delta 0)
+    Unpacking objects: 100% (3/3), done.
+    From file:///path/to/repos/shared
+       0855b86..07e9d08  master     -> origin/master
+
+* 用户 user2 执行合并操作，完成自动合并。
+
+  ::
+
+    $ git merge refs/remotes/origin/master
+    Merge made by recursive.
+     README => doc/README.txt |    0
+     1 files changed, 0 insertions(+), 0 deletions(-)
+     rename README => doc/README.txt (100%)
+
+* 用户 user2 推送合并后的本地版本库到共享版本库。
+
+  ::
+
+    $ git push
+    Counting objects: 10, done.
+    Delta compression using up to 2 threads.
+    Compressing objects: 100% (5/5), done.
+    Writing objects: 100% (6/6), 636 bytes, done.
+    Total 6 (delta 0), reused 0 (delta 0)
+    Unpacking objects: 100% (6/6), done.
+    To file:///path/to/repos/shared.git
+       9c51cb9..f73db10  master -> master
+     
+* 使用 `-m` 参数可以查看合并操作所作出的修改。
+
+  ::
+
+    $ git log -1 -m --stat
+    commit f73db106c820f0c6d510f18ae8c67629af9c13b7 (from 887488eee19300c566c272ec84b236026b0303c6)
+    Merge: 887488e 9c51cb9
+    Author: user2 <user2@moon.ossxp.com>
+    Date:   Sat Dec 25 23:36:57 2010 +0800
+
+        Merge remote branch 'refs/remotes/origin/master'
+
+     README         |    4 ----
+     doc/README.txt |    4 ++++
+     2 files changed, 4 insertions(+), 4 deletions(-)
+
+    commit f73db106c820f0c6d510f18ae8c67629af9c13b7 (from 9c51cb91bfe12654e2de1d61d722161db0539644)
+    Merge: 887488e 9c51cb9
+    Author: user2 <user2@moon.ossxp.com>
+    Date:   Sat Dec 25 23:36:57 2010 +0800
+
+        Merge remote branch 'refs/remotes/origin/master'
+
+     doc/README.txt |    1 +
+     1 files changed, 1 insertions(+), 0 deletions(-)
+
+
+合并二：逻辑冲突
+================
+
+一个人修改了头文件名称，另外一个在某个代码中包含旧名称的头文件。
+
+
+
+合并三：冲突解决
+================
 
 冲突解决（手动）
 
@@ -58,6 +371,9 @@
 
     kdiff3
 
+
+合并策略
+========
 merge 操作的策略
 
     ours
