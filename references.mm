@@ -4,7 +4,7 @@
 <!-- Orignal FreeMind, can download from http://freemind.sourceforge.net -->
 <!-- This .mm file is CVS/SVN friendly, some atts are saved in .mmx file. (from ossxp.com) -->
 <node COLOR="#000000" ID="ID_1688594004" 
-	TEXT="gitbook&#xa;Git —— Door to the source&#xa;Git —— 通往源码之门&#xa;Git——版本控制之美">
+	TEXT="Got Git&#xa;Git —— Door to the source&#xa;Git —— 通往源码之门&#xa;Git——版本控制之美">
 <font NAME="Serif" SIZE="20"/>
 <hook NAME="accessories/plugins/AutomaticLayout.properties"/>
 <node COLOR="#0033ff" FOLDED="true" ID="ID_650351088" POSITION="right" 
