@@ -510,7 +510,7 @@ Git 的合并操作非常智能，大多数情况下会自动完成合并。不�
     User2 hacked.
     User2 hacked again.
 
-暂存区中冲突文件的上述三个副本用户无须过的的了解，这三个副本实际上是提供冲突解决工具用于实现三向文件合并时用到的。
+暂存区中冲突文件的上述三个副本用户无须了解太多，这三个副本实际上是提供冲突解决工具用于实现三向文件合并时用到的。
 
 工作区的版本则可能同时包含了成功的合并以及冲突的合并，其中冲突的合并会用特殊的标记（<<<<<<< ======= >>>>>>>）进行标识。查看当前工作区中冲突的文件：
 
@@ -530,7 +530,8 @@ Git 的合并操作非常智能，大多数情况下会自动完成合并。不�
 
 冲突解决的实质就是要将冲突标识符（<<<<<<< ======= >>>>>>>）所标识的冲突内容进行编辑，替换为合适的内容。替换完毕后执行 `git add` 命令将文件添加到暂存区（标号0），然后在提交就完成了冲突解决。
 
-**手工编辑完成冲突解决**
+手工编辑完成冲突解决
+--------------------
 
 先来看看不使用工具，直接手动编辑完成冲突解决。打开文件 `doc/README.txt` ，将冲突标识符标识所标识的文字替换为 `Hello, user1 and user2.` 。修改后的文件内容如下：
 
@@ -570,7 +571,8 @@ Git 的合并操作非常智能，大多数情况下会自动完成合并。不�
   100644 430bd4314705257a53241bc1d2cb2cc30f06f5ea 0       team/user1.txt
   100644 a72ca0b4f2b9661d12d2a0c1456649fc074a38e3 0       team/user2.txt
 
-**图形工具完成冲突解决**
+图形工具完成冲突解决
+--------------------
 
 上面介绍的手工编辑完成冲突解决实际上还是非常简单的，对于简单的冲突解决是最快捷的方法。但是如果冲突的区域过多和过大，缺乏足够的上下文以及缺乏原始版本作为参照非常不方便，使用图形工具进行冲突解决非常简单。
 
@@ -800,6 +802,9 @@ Git 的合并操作非常智能，大多数情况下会自动完成合并。不�
   -rw-r--r-- 1 jiangxin jiangxin 72 12月 27 12:25 README
   -rw-r--r-- 1 jiangxin jiangxin 72 12月 27 16:53 readme.txt
 
+手工操作解决树冲突
+------------------
+
 这时 user2 应该和 user1 用户商量一下到底应该将该文件改成什么名字。如果双方最终确认应该采用 user2 重命名的名称，则 user2 应该进行下面的操作完成冲突解决。
 
 * 删除文件 `readme.txt` 。
@@ -868,7 +873,8 @@ Git 的合并操作非常智能，大多数情况下会自动完成合并。不�
     |    doc/README.txt |    4 ----
     |    2 files changed, 4 insertions(+), 4 deletions(-)
 
-**使用 git mergetool 完成树冲突的解决**
+交互式解决树冲突
+----------------
 
 树冲突虽然不能像文件冲突那样使用图形工具进行冲突解决，但还是可以使用 `git mergetool` 命令，通过问答式交互快速解决此类冲突。
 
@@ -968,95 +974,112 @@ Git 的合并操作非常智能，大多数情况下会自动完成合并。不�
     To file:///path/to/repos/shared.git
        615c1ff..e070bc9  master -> master
 
-
-
 合并策略
 ========
-merge 操作的策略
 
-    ours
-    theirs
-    recursive
-    ocutpus
+Git 合并操作支持很多合并策略，缺省会选择最适合的合并策略。例如和一个分支进行合并时会选择 `recursive` 合并策略，当和两个或者以上的其他分支进行合并时采用 `octopus` 合并策略。可以通过传递参数使用指定的合并策略，命令行如下：
+
+::
+
+  git merge [-s <strategy>] [-X <strategy-option>] <commit>...
+
+其中参数 `-s` 用于设定合并策略，参数 `-X` 用于为所选的合并策略提供附加的参数。
+
+下面分别介绍不同的合并策略：
+
+* resolve
+
+  该合并策略只能用于合并两个头（即当前分支和另外的一个分支），使用三向合并策略，被认为是最安全和最快的合并策略。
+
+* recursive
+
+  该合并策略只能用于合并两个头（即当前分支和另外的一个分支），使用三向合并策略。这个合并策略是合并两个头指针时的缺省合并策略。
+
+  当合并的头指针拥有一个以上祖先的时候，会针对多个公共祖先创建一个合并的树，并以此作为三向合并的参照。这个合并策略被认为可以实现冲突的最小化，而且可以发现和处理由于重命名导致的合并冲突。
+
+  这个合并策略可以使用下列选项。
+
+  - ours
+
+    在遇到冲突的时候，选择当前分支的版本。其他分支不冲突的改动才会合并进来。
+
+    不要将此模式和后面介绍的单纯的 `ours` 合并策略相混淆。后面介绍的 `ours` 合并策略直接丢弃其他分支的变更，无论冲突与否。
+
+  - theirs
+    
+    和 `ours` 选项相反。
+
+  - subtree[=path]
+
+    这个选项使用子树合并策略，比后面介绍的 `subtree` （子树合并）策略更高级。后面介绍的 `subtree` 合并策略要对两个树的目录偏移进行猜测，而此参数可以直接提供子树的目录。
+
+* octopus
+
+  可以合并两个以上的头指针，但是拒绝执行需要手动解决的复杂合并。主要的用途是用于将多个主题分支合并到一起。这个合并策略是超过三个头指针进行合并时的默认合并策略。
+
+* ours
+
+  可以合并任意数量的头指针，但是合并的结果总是使用当前分支的内容，丢弃其他分支的内容。
+
+* subtree
+
+  这是一个经过调整的 recursive 策略。当合并树 A 和 B，如果 B 和 A 的一个子树相同，B 首先进行调整以匹配 A 的树的结构，以免两棵树在同一级别进行合并。同时也针对两棵树的共同祖先进行调整。
+
+  子树合并会在“第4篇：Git协同模型”中的“子树合并”章节中详细介绍。
 
 
-TRUE MERGE
-       Except in a fast-forward merge (see above), the branches to be merged must be tied together by a merge commit that has both of them as its
-       parents.
+合并相关的设置
+==============
 
-       A merged version reconciling the changes from all branches to be merged is committed, and your HEAD, index, and working tree are updated to it.
-       It is possible to have modifications in the working tree as long as they do not overlap; the update will preserve them.
+可以通过 `git config` 命令设置和合并相关的环境变量，对合并进行配置。下面是常用的一些设置。
 
-       When it is not obvious how to reconcile the changes, the following happens:
+* merge.conflictstyle
 
-        1. The HEAD pointer stays the same.
+  该变量定义冲突文件的显示风格，有两个可用的风格，缺省的 "merge" 或者 "diff3"。
 
-        2. The MERGE_HEAD ref is set to point to the other branch head.
+  缺省的 "merge" 风格会让冲突文件使用前面看到的冲突分界符（<<<<<<< ======= >>>>>>>）对冲突内容进行标识。
 
-        3. Paths that merged cleanly are updated both in the index file and in your working tree.
+  如果使用 "diff3" 风格，则会在冲突中出现三个文字块，分别是用 <<<<<<< 和 ||||||| 之间的本地更改版本，在 ||||||| 和 ======= 之间的原始（共同祖先）版本，和在 ======= 和 >>>>>>> 之间的他人更改的版本。例如：
 
-        4. For conflicting paths, the index file records up to three versions: stage 1 stores the version from the common ancestor, stage 2 from HEAD,
-           and stage 3 from MERGE_HEAD (you can inspect the stages with git ls-files -u). The working tree files contain the result of the "merge"
-           program; i.e. 3-way merge results with familiar conflict markers <<< === >>>.
+  ::
 
-        5. No other changes are made. In particular, the local modifications you had before you started merge will stay the same and the index entries
-           for them stay as they were, i.e. matching HEAD.
+    User1 hacked.
+    <<<<<<< HEAD
+    Hello, user2.
+    ||||||| merged common ancestors
+    Hello.
+    =======
+    Hello, user1.
+    >>>>>>> a123390b8936882bd53033a582ab540850b6b5fb
+    User2 hacked.
+    User2 hacked again. 
 
-       If you tried a merge which resulted in complex conflicts and want to start over, you can recover with git reset --merge.
+* merge.tool
 
+  执行 `git mergetool` 进行冲突解决时调用的图形化工具。变量 `merge.tool` 可以设置为如下内置支持的工具："kdiff3", "tkdiff", "meld", "xxdiff", "emerge", "vimdiff", "gvimdiff", "diffuse", "ecmerge", "tortoisemerge", "p4merge", "araxis" 和 "opendiff"。
 
-setting the "merge.conflictstyle" configuration variable to "diff3".
+  如果将 `merge.tool` 设置为其他值，则使用自定义工具进行冲突解决。自定义工具需要使用 `mergetool.<tool>.cmd` 对自定义工具的命令行进行设置。
 
+* mergetool.<tool>.path
 
-           Here are lines that are either unchanged from the common
-           ancestor, or cleanly resolved because only one side changed.
-           <<<<<<< yours:sample.txt
-           Conflict resolution is hard;
-           let's go shopping.
-           |||||||
-           Conflict resolution is hard.
-           =======
-           Git makes conflict resolution easy.
-           >>>>>>> theirs:sample.txt
-           And here is another line that is cleanly resolved or unmodified.
+  如果 `git mergetool` 支持的冲突解决工具安装在特殊位置，可以使用 `mergetool.<tool>.path` 对工具 `<tool>` 的安装位置进行设置。例如
 
+  ::
 
+    $ git config --global mergetool.kdiff3.path /path/to/kdiff3
 
-CONFIGURATION
-       merge.conflictstyle
-           Specify the style in which conflicted hunks are written out to working tree files upon merge. The default is "merge", which shows a <<<<<<<
-           conflict marker, changes made by one side, a ======= marker, changes made by the other side, and then a >>>>>>> marker. An alternate style,
-           "diff3", adds a ||||||| marker and the original text before the ======= marker.
+* mergetool.<tool>.cmd
 
-       merge.log
-           Whether to include summaries of merged commits in newly created merge commit messages. False by default.
+  如果所用的冲突解决工具不在内置的工具列表中，还可以使用 `mergetool.<tool>.cmd` 对自定义工具的命令行进行设置，同时要将 `merge.tool` 设置为 `<tool>` 。
 
-       merge.renameLimit
-           The number of files to consider when performing rename detection during a merge; if not specified, defaults to the value of diff.renameLimit.
+  自定义工具的命令行可以使用Shell 变量。例如：
 
-       merge.stat
-           Whether to print the diffstat between ORIG_HEAD and the merge result at the end of the merge. True by default.
+  ::
 
-       merge.tool
-           Controls which merge resolution program is used by git-mergetool(1). Valid built-in values are: "kdiff3", "tkdiff", "meld", "xxdiff",
-           "emerge", "vimdiff", "gvimdiff", "diffuse", "ecmerge", "tortoisemerge", "p4merge", "araxis" and "opendiff". Any other value is treated is
-           custom merge tool and there must be a corresponding mergetool.<tool>.cmd option.
+    /path/to/merge_tool -L1 "$MERGED (Base)" -L2 "$MERGED (Local)" -L3 "$MERGED (Remote)"
+                        --auto -o "$MERGED" "$BASE" "$LOCAL" "$REMOTE" 
 
-       merge.verbosity
-           Controls the amount of output shown by the recursive merge strategy. Level 0 outputs nothing except a final error message if conflicts were
-           detected. Level 1 outputs only conflicts, 2 outputs conflicts and file changes. Level 5 and above outputs debugging information. The default
-           is level 2. Can be overridden by the GIT_MERGE_VERBOSITY environment variable.
+* merge.log
 
-       merge.<driver>.name
-           Defines a human-readable name for a custom low-level merge driver. See gitattributes(5) for details.
-
-       merge.<driver>.driver
-           Defines the command that implements a custom low-level merge driver. See gitattributes(5) for details.
-
-       merge.<driver>.recursive
-           Names a low-level merge driver to be used when performing an internal merge between common ancestors. See gitattributes(5) for details.
-
-       branch.<name>.mergeoptions
-           Sets default options for merging into branch <name>. The syntax and supported options are the same as those of git merge, but option values
-           containing whitespace characters are currently not supported.
+  是否在合并提交的提交说明中包含合并提交的概要信息。缺省 false。
 
