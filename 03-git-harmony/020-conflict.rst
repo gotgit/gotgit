@@ -625,31 +625,31 @@ Git 的合并操作非常智能，大多数情况下会自动完成合并。不�
   -  C：暂存区3中的版本（他人更改的版本）。
 
   .. figure:: images/gitbook/kdiff3-1.png
-     :scale: 75
+     :scale: 70
 
 * kdiff3 下方的窗口是合并后文件编辑窗口。
 
   点击标记为“合并冲突”的一行，在弹出菜单中出现 A, B, C 三个选项，分别代表从 A, B, C 三个窗口拷贝相关内容到当前位置。
 
   .. figure:: images/gitbook/kdiff3-2.png
-     :scale: 75
+     :scale: 70
 
 * 当通过“合并冲突”位置弹出菜单选择了 B 和 C 后，可以看到在合并窗口出现了标识 B 和 C 的行，分别代表 user2 和 user1 对该行的修改。
 
   .. figure:: images/gitbook/kdiff3-3.png
-     :scale: 75
+     :scale: 70
 
 * 在合并窗口进行编辑，将 "`Hello, user1.`" 修改为 "`Hello, user1 and user2.`" 。
 
   修改后，可以看到该行的标识由 `C` 改变为 `m` ，含义是该行是经过手工修改的行。
 
   .. figure:: images/gitbook/kdiff3-4.png
-     :scale: 75
+     :scale: 70
 
 * 在合并窗口删除标识为从 B 窗口引入的行 "`Hello, user2.`" 。保存退出即完成图形化冲突解决。
 
   .. figure:: images/gitbook/kdiff3-5.png
-     :scale: 75
+     :scale: 70
 
 图形工具保存退出后，显示工作区状态，会看到冲突已经解决。在工作区还会遗留一个以 `.orig` 结尾的合并前文件副本。
 
@@ -678,7 +678,7 @@ Git 的合并操作非常智能，大多数情况下会自动完成合并。不�
   100644 430bd4314705257a53241bc1d2cb2cc30f06f5ea 0       team/user1.txt
   100644 a72ca0b4f2b9661d12d2a0c1456649fc074a38e3 0       team/user2.txt
 
-别忘了提交和推送。
+执行提交和推送。
 
 ::
 
@@ -705,7 +705,279 @@ Git 的合并操作非常智能，大多数情况下会自动完成合并。不�
   * | 60b10f3 Say hello to user2.
   |/  
 
+合并四：树冲突
+==============
 
+和 Subversion 类似，Git 也存在因为文件名修改造成的冲突，称为树冲突。如果一个用户将某个文件改名，另外一个用户将同样的文件改为另外的名字，当这两个用户的提交合并时，Git 是无法作出决定的，于是就产生冲突。这种树冲突的解决方式比较特别，因此专题介绍。
+
+仍旧使用前面的版本库进行此次实践。为确保两个用户的本地版本库和共享版本库状态一致，先分别对两个用户的本地版本库执行拉回操作。
+
+::
+
+  $ git pull
+
+* 用户 user1 将文件 `doc/README.txt` 改名为 `readme.txt` 。提交并推送到共享版本库。
+
+  ::
+
+    $ cd /path/to/user1/workspace/project
+    $ git mv doc/README.txt readme.txt
+    $ git commit -m "rename doc/README.txt to readme.txt"
+    [master 615c1ff] rename doc/README.txt to readme.txt
+     1 files changed, 0 insertions(+), 0 deletions(-)
+     rename doc/README.txt => readme.txt (100%)
+    $ git push
+    Counting objects: 3, done.
+    Delta compression using up to 2 threads.
+    Compressing objects: 100% (2/2), done.
+    Writing objects: 100% (2/2), 282 bytes, done.
+    Total 2 (delta 0), reused 0 (delta 0)
+    Unpacking objects: 100% (2/2), done.
+    To file:///path/to/repos/shared.git
+       7f7bb5e..615c1ff  master -> master
+
+* 用户 user2 将文件 `doc/README.txt` 改名为 `README` ，并做本地提交。
+
+  ::
+
+    $ cd /path/to/user2/workspace/project
+    $ git mv doc/README.txt README
+    $ git commit -m "rename doc/README.txt to README"
+    [master 20180eb] rename doc/README.txt to README
+     1 files changed, 0 insertions(+), 0 deletions(-)
+     rename doc/README.txt => README (100%)
+
+* 用户 user2 执行 `git pull` 操作，遇到合并冲突。
+
+  ::
+
+    $ git pull
+    remote: Counting objects: 3, done.
+    remote: Compressing objects: 100% (2/2), done.
+    remote: Total 2 (delta 0), reused 0 (delta 0)
+    Unpacking objects: 100% (2/2), done.
+    From file:///path/to/repos/shared
+       7f7bb5e..615c1ff  master     -> origin/master
+    CONFLICT (rename/rename): Rename "doc/README.txt"->"README" in branch "HEAD" rename "doc/README.txt"->"readme.txt" in "615c1ffaa41b2798a56854259caeeb1020c51721"
+    Automatic merge failed; fix conflicts and then commit the result.
+
+因为两个用户同时更改了同一文件的文件名并且改成了不同的名字，于是引发冲突。此时查看状态，会看到：
+
+::
+
+  $ git status
+  # On branch master
+  # Your branch and 'refs/remotes/origin/master' have diverged,
+  # and have 1 and 1 different commit(s) each, respectively.
+  #
+  # Unmerged paths:
+  #   (use "git add/rm <file>..." as appropriate to mark resolution)
+  #
+  #       added by us:        README
+  #       both deleted:       doc/README.txt
+  #       added by them:      readme.txt
+  #
+  no changes added to commit (use "git add" and/or "git commit -a")
+
+此时查看一下用户 user2 本地版本库的暂存区，可以看到因为冲突在编号为 1,2,3 的暂存区出现了相同 SHA1 哈希值的对象，但是文件名各不相同。
+
+::
+
+  $ git ls-files -s
+  100644 463dd451d94832f196096bbc0c9cf9f2d0f82527 2       README
+  100644 463dd451d94832f196096bbc0c9cf9f2d0f82527 1       doc/README.txt
+  100644 463dd451d94832f196096bbc0c9cf9f2d0f82527 3       readme.txt
+  100644 430bd4314705257a53241bc1d2cb2cc30f06f5ea 0       team/user1.txt
+  100644 a72ca0b4f2b9661d12d2a0c1456649fc074a38e3 0       team/user2.txt
+
+其中在暂存区1中是改名之前的 `doc/README.txt` ，在暂存区2中是用户 user2 改名后的文件名 `README` ，而暂存区3是其他用户（user1）改名后的文件 `readme.txt` 。
+
+此时的工作区中存在两个相同的文件 `README` 和 `readme.txt` 分别是用户 user2 和 user1 对 `doc/README.txt` 重命名之后的文件。
+
+::
+
+  $ ls -l readme.txt README
+  -rw-r--r-- 1 jiangxin jiangxin 72 12月 27 12:25 README
+  -rw-r--r-- 1 jiangxin jiangxin 72 12月 27 16:53 readme.txt
+
+这时 user2 应该和 user1 用户商量一下到底应该将该文件改成什么名字。如果双方最终确认应该采用 user2 重命名的名称，则 user2 应该进行下面的操作完成冲突解决。
+
+* 删除文件 `readme.txt` 。
+
+  在执行 `git rm` 操作过程会弹出三条警告，说共有三个文件待合并。
+
+  ::
+
+    $ git rm readme.txt
+    README: needs merge
+    doc/README.txt: needs merge
+    readme.txt: needs merge
+    rm 'readme.txt'
+
+* 删除文件 `doc/README.txt` 。
+
+  执行删除过程，弹出的警告少了一条，因为前面的删除操作已经将一个冲突文件撤出暂存区了。
+
+  ::
+
+    $ git rm doc/README.txt
+    README: needs merge
+    doc/README.txt: needs merge
+    rm 'doc/README.txt'
+
+
+* 添加文件 `README` 文件。
+
+  ::
+
+    $ git add README
+
+* 这时查看一下暂存区，会发现所有文件都在暂存区0中。
+
+  ::
+
+    $ git ls-files -s
+    100644 463dd451d94832f196096bbc0c9cf9f2d0f82527 0       README
+    100644 430bd4314705257a53241bc1d2cb2cc30f06f5ea 0       team/user1.txt
+    100644 a72ca0b4f2b9661d12d2a0c1456649fc074a38e3 0       team/user2.txt
+
+* 提交完成冲突解决。
+
+  ::
+
+    $ git commit -m "fixed tree conflict."
+    [master e82187e] fixed tree conflict.
+
+* 查看一下最近三次提交日志，看到最新的提交是一个合并提交。
+  
+  ::
+
+    $ git log --oneline --graph -3 -m --stat
+    *   e82187e (from 615c1ff) fixed tree conflict.
+    |\  
+    | |  README     |    4 ++++
+    | |  readme.txt |    4 ----
+    | |  2 files changed, 4 insertions(+), 4 deletions(-)
+    | * 615c1ff rename doc/README.txt to readme.txt
+    | |  doc/README.txt |    4 ----
+    | |  readme.txt     |    4 ++++
+    | |  2 files changed, 4 insertions(+), 4 deletions(-)
+    * | 20180eb rename doc/README.txt to README
+    |/  
+    |    README         |    4 ++++
+    |    doc/README.txt |    4 ----
+    |    2 files changed, 4 insertions(+), 4 deletions(-)
+
+**使用 git mergetool 完成树冲突的解决**
+
+树冲突虽然不能像文件冲突那样使用图形工具进行冲突解决，但还是可以使用 `git mergetool` 命令，通过问答式交互快速解决此类冲突。
+
+首先在 user2 的工作区重置到前一次提交，再执行 `git merge` 引发树冲突。
+
+* 重置到前一次提交。
+
+  ::
+
+    $ cd /path/to/user2/workspace/project
+    $ git reset --hard HEAD^
+    HEAD is now at 20180eb rename doc/README.txt to README
+    $ git clean -fd
+
+* 执行 `git merge` 引发树冲突。
+
+  ::
+
+    $ git merge refs/remotes/origin/master
+    CONFLICT (rename/rename): Rename "doc/README.txt"->"README" in branch "HEAD" rename "doc/README.txt"->"readme.txt" in "refs/remotes/origin/master"
+    Automatic merge failed; fix conflicts and then commit the result.
+    $ git status -s
+    AU README
+    DD doc/README.txt
+    UA readme.txt
+
+执行 `git mergetool` 进行交互式冲突解决状态，会逐一提示用户进行选择。
+
+* 执行 `git mergetool` 命令。忽略开始显示的提示和警告。
+
+  ::
+
+    $ git mergetool
+    merge tool candidates: opendiff kdiff3 tkdiff xxdiff meld tortoisemerge gvimdiff diffuse ecmerge p4merge araxis emerge vimdiff
+    Merging:
+    doc/README.txt
+    README
+    readme.txt
+
+    mv: 无法获取"doc/README.txt" 的文件状态(stat): 没有那个文件或目录
+    cp: 无法获取"./doc/README.txt.BACKUP.13869.txt" 的文件状态(stat): 没有那个文件或目录
+    mv: 无法将".merge_file_I3gfzy" 移动至"./doc/README.txt.BASE.13869.txt": 没有那个文件或目录
+
+* 询问对文件 `doc/README.txt` 的处理方式。输入 `d` 选择将该文件删除。
+
+  ::
+
+    Deleted merge conflict for 'doc/README.txt':
+      {local}: deleted
+      {remote}: deleted
+    Use (m)odified or (d)eleted file, or (a)bort? d
+
+* 询问对文件 `README` 的处理方式。输入 `c` 选择将该文件保留（创建）。
+
+  ::
+
+    Deleted merge conflict for 'README':
+      {local}: created
+      {remote}: deleted
+    Use (c)reated or (d)eleted file, or (a)bort? c
+
+* 询问对文件 `readme.txt` 的处理方式。输入 `d` 选择将该文件删除。
+
+  ::
+
+    Deleted merge conflict for 'readme.txt':
+      {local}: deleted
+      {remote}: created
+    Use (c)reated or (d)eleted file, or (a)bort? d
+
+* 查看当前状态，只有一些尚未清理的临时文件，而冲突已经解决。
+
+  ::
+
+    $ git status -s
+    ?? .merge_file_I3gfzy
+    ?? README.orig
+
+* 提交完成冲突解决。
+
+  ::
+
+    $ git commit -m "fixed tree conflict."
+    [master e070bc9] fixed tree conflict.
+
+* 向共享服务器推送。
+
+  ::
+
+    $ git push
+    Counting objects: 5, done.
+    Delta compression using up to 2 threads.
+    Compressing objects: 100% (3/3), done.
+    Writing objects: 100% (3/3), 457 bytes, done.
+    Total 3 (delta 0), reused 0 (delta 0)
+    Unpacking objects: 100% (3/3), done.
+    To file:///path/to/repos/shared.git
+       615c1ff..e070bc9  master -> master
+
+
+
+合并策略
+========
+merge 操作的策略
+
+    ours
+    theirs
+    recursive
+    ocutpus
 
 
 TRUE MERGE
@@ -787,24 +1059,4 @@ CONFIGURATION
        branch.<name>.mergeoptions
            Sets default options for merging into branch <name>. The syntax and supported options are the same as those of git merge, but option values
            containing whitespace characters are currently not supported.
-
-冲突解决（手动）
-
-冲突解决（mergetool）
-
-    kdiff3
-
-合并四：树冲突
-==============
-
-两个用户都对同一文件执行改名操作，该如何呢？
-
-合并策略
-========
-merge 操作的策略
-
-    ours
-    theirs
-    recursive
-    ocutpus
 

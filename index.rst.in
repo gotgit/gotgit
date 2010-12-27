@@ -114,7 +114,7 @@
 .. include:: ./07-git-app/030-binary-diff.rst
 .. include:: ./07-git-app/040-cloud-storage.rst
 
-第 8 篇: Windows 和 Git
+第 8 篇: Git 杂项
 ########################
 
 .. include:: ./08-windows/010-windows.rst
