@@ -175,7 +175,7 @@ Git 的合并操作非常智能，大多数情况下会自动完成合并。不�
 
 当用户 user1 和 user2 的本地提交中修改相同的文件，但是修改的是文件的不同的位置，则两个用户的提交仍可成功合并。
 
-* 为确保两个用户的本地版本库和共享版本库状态一致，对两个用户的本地版本库执行拉回操作。
+* 为确保两个用户的本地版本库和共享版本库状态一致，先分别对两个用户的本地版本库执行拉回操作。
 
   ::
 
@@ -261,7 +261,7 @@ Git 的合并操作非常智能，大多数情况下会自动完成合并。不�
 
 如果一个用户将文件移动到其它目录（修改文件名），另外一个用户针对重命名前的文件进行了修改，还能够实现自动合并么？这对于其它版本控制系统可能是一个难题，例如 Subversion 就不能很好的处理，还为此引入了一个“树冲突”的新名词。Git 对于此类冲突能够很好的处理，可以自动解决冲突实现合并的自动执行。
 
-* 为确保两个用户的本地版本库和共享版本库状态一致，对两个用户的本地版本库执行拉回操作。
+* 为确保两个用户的本地版本库和共享版本库状态一致，先分别对两个用户的本地版本库执行拉回操作。
 
   ::
 
@@ -384,7 +384,13 @@ Git 的合并操作非常智能，大多数情况下会自动完成合并。不�
 
 下面的实践非常简单，两个用户都修改 `doc/README.txt` 文件，将第二行 "Hello." 的后面加上自己的名字。
 
-* 用户 user1 在自己的工作区修改 `doc/README.txt` 文件。修改后内容如下：
+* 为确保两个用户的本地版本库和共享版本库状态一致，先分别对两个用户的本地版本库执行拉回操作。
+
+  ::
+
+    $ git pull
+
+* 用户 user1 在自己的工作区修改 `doc/README.txt` 文件（仅改动了第二行）。修改后内容如下：
 
   ::
 
@@ -403,7 +409,7 @@ Git 的合并操作非常智能，大多数情况下会自动完成合并。不�
     $ git push
     ...
 
-* 用户 user2 在自己的工作区修改 `doc/README.txt` 文件。修改后内容如下：
+* 用户 user2 在自己的工作区修改 `doc/README.txt` 文件（仅改动了第二行）。修改后内容如下：
 
   ::
 
@@ -437,19 +443,350 @@ Git 的合并操作非常智能，大多数情况下会自动完成合并。不�
     CONFLICT (content): Merge conflict in doc/README.txt
     Automatic merge failed; fix conflicts and then commit the result.
 
+执行 `git pull` 时所做的合并操作由于遇到冲突导致中断。来看看处于合并冲突状态时工作区和暂存区的状态。
+
+执行 `git status` 命令，可以从状态输出中看到文件 `doc/README.txt` 处于未合并的状态，这个文件在两个不同的提交中都做了修改。
+
+::
+
+  $ git status
+  # On branch master
+  # Your branch and 'refs/remotes/origin/master' have diverged,
+  # and have 1 and 1 different commit(s) each, respectively.
+  #
+  # Unmerged paths:
+  #   (use "git add/rm <file>..." as appropriate to mark resolution)
+  #
+  #       both modified:      doc/README.txt
+  #
+  no changes added to commit (use "git add" and/or "git commit -a")
+
+那么 Git 是如何记录合并过程以及冲突的呢？实际上合并过程是通过 `.git` 目录下的几个文件进行记录的。
+
+* 文件 `.git/MERGE_HEAD` 记录所合并的提交ID。
+* 文件 `.git/MERGE_MSG` 记录合并失败的信息。
+* 文件 `.git/MERGE_MODE` 标识合并状态。
+
+冲突状态则记录在暂存区中。冲突的文件会在暂存区存在多个不同的版本。可以使用 `git ls-files` 命令查看。
+
+::
+
+  $ git ls-files -s
+  100644 ea501534d70a13b47b3b4b85c39ab487fa6471c2 1       doc/README.txt
+  100644 5611db505157d312e4f6fb1db2e2c5bac2a55432 2       doc/README.txt
+  100644 036dbc5c11b0a0cefc8247cf0e9a3e678f8de060 3       doc/README.txt
+  100644 430bd4314705257a53241bc1d2cb2cc30f06f5ea 0       team/user1.txt
+  100644 a72ca0b4f2b9661d12d2a0c1456649fc074a38e3 0       team/user2.txt
+
+在上面的输出中，每一行分为四个字段，前两个分别是文件的属性和 SHA1 哈希值。第三个字段是暂存区编号。当合并冲突发生后，会用到 0 以上的暂存区编号。
+
+* 编号为 1 的暂存区用于保存冲突文件修改之前的副本，即冲突双方共同的祖先的版本。可以用 `:1:<filename>` 访问。
+
+  ::
+
+    $ git show :1:doc/README.txt
+    User1 hacked.
+    Hello.
+    User2 hacked.
+    User2 hacked again.
+
+* 编号为 2 的暂存区用于保存当前冲突文件在当前分支中修改的副本。可以用 `:2:<filename>` 访问。
+
+  ::
+
+    $ git show :2:doc/README.txt
+    User1 hacked.
+    Hello, user2.
+    User2 hacked.
+    User2 hacked again.
+
+* 编号为 3 的暂存区用于保存当前冲突文件在合并版本（分支）中修改的副本。可以用 `:3:<filename>` 访问。
+
+  ::
+
+    $ git show :3:doc/README.txt
+    User1 hacked.
+    Hello, user1.
+    User2 hacked.
+    User2 hacked again.
+
+暂存区中冲突文件的上述三个副本用户无须过的的了解，这三个副本实际上是提供冲突解决工具用于实现三向文件合并时用到的。
+
+工作区的版本则可能同时包含了成功的合并以及冲突的合并，其中冲突的合并会用特殊的标记（<<<<<<< ======= >>>>>>>）进行标识。查看当前工作区中冲突的文件：
+
+::
+
+  $ cat doc/README.txt 
+  User1 hacked.
+  <<<<<<< HEAD
+  Hello, user2.
+  =======
+  Hello, user1.
+  >>>>>>> a123390b8936882bd53033a582ab540850b6b5fb
+  User2 hacked.
+  User2 hacked again.
+
+特殊标识 `<<<<<<<` （七个小于号）和 `=======` （七个等号）之间的内容是当前分支所更改的内容。在特殊标识 `=======` （七个等号）和 `>>>>>>>` （七个大于号）之间的内容是所合并的版本更改的内容。
+
+冲突解决的实质就是要将冲突标识符（<<<<<<< ======= >>>>>>>）所标识的冲突内容进行编辑，替换为合适的内容。替换完毕后执行 `git add` 命令将文件添加到暂存区（标号0），然后在提交就完成了冲突解决。
+
+**手工编辑完成冲突解决**
+
+先来看看不使用工具，直接手动编辑完成冲突解决。打开文件 `doc/README.txt` ，将冲突标识符标识所标识的文字替换为 `Hello, user1 and user2.` 。修改后的文件内容如下：
+
+::
+
+  User1 hacked.
+  Hello, user1 and user2.
+  User2 hacked.
+  User2 hacked again.
+
+然后添加到暂存区，并提交。
+
+::
+
+  $ git add -u
+  $ git commit -m "Merge completed: say hello to all users."
+
+查看最近三次提交的日志，会看到最新的提交就是一个合并提交。
+
+::
+
+  $ git log --oneline --graph -3
+  *   bd3ad1a Merge completed: say hello to all users.
+  |\  
+  | * a123390 Say hello to user1.
+  * | 60b10f3 Say hello to user2.
+  |/  
+
+提交完成后，会看到 `.git` 目录下和合并相关的文件 `.git/MERGE_HEAD`, `.git/MERGE_MSG`, `.git/MERGE_MODE` 文件都自动删除了。
+
+如果查看暂存区，会发现冲突文件在暂存区中的三个副本也都清除了（实际在对编辑完成的冲突文件执行 `git add` 后就已经清除了）。
+
+::
+
+  $ git ls-files -s
+  100644 463dd451d94832f196096bbc0c9cf9f2d0f82527 0       doc/README.txt
+  100644 430bd4314705257a53241bc1d2cb2cc30f06f5ea 0       team/user1.txt
+  100644 a72ca0b4f2b9661d12d2a0c1456649fc074a38e3 0       team/user2.txt
+
+**图形工具完成冲突解决**
+
+上面介绍的手工编辑完成冲突解决实际上还是非常简单的，对于简单的冲突解决是最快捷的方法。但是如果冲突的区域过多和过大，缺乏足够的上下文以及缺乏原始版本作为参照非常不方便，使用图形工具进行冲突解决非常简单。
+
+还以上面的冲突解决为例，介绍图形工具冲突解决的方法。首先把 user2 辛辛苦苦完成的冲突解决的提交回滚，再执行合并进入冲突状态。
+
+将冲突解决的提交回滚，强制重置到前一个版本。
+
+::
+
+  $ git reset --hard HEAD^
+
+这时查看状态，会显示当前工作分支的最新提交和共享版本库的 master 分支的最新提交出现了偏离（分叉）。
+
+::
+
+  $ git status
+  # On branch master
+  # Your branch and 'refs/remotes/origin/master' have diverged,
+  # and have 1 and 1 different commit(s) each, respectively.
+  #
+  nothing to commit (working directory clean)
+
+那么执行合并操作吧。冲突发生了。
+
+::
+
+  $ git merge refs/remotes/origin/master
+  Auto-merging doc/README.txt
+  CONFLICT (content): Merge conflict in doc/README.txt
+  Automatic merge failed; fix conflicts and then commit the result.
+
+下面就演示使用图形工具进行冲突解决。使用图形工具进行冲突解决需要事先在操作系统中安装相关的工具，如：kdiff3, meld, tortoisemerge, araxis 等。而启动图形工具进行冲突解决也非常简单，只需执行命令 `git mergetool` 即可。
+
+::
+
+  $ git mergetool
+  merge tool candidates: opendiff kdiff3 tkdiff xxdiff meld tortoisemerge gvimdiff diffuse ecmerge p4merge araxis emerge vimdiff
+  Merging:
+  doc/README.txt
+
+  Normal merge conflict for 'doc/README.txt':
+    {local}: modified
+    {remote}: modified
+  Hit return to start merge resolution tool (kdiff3): 
+
+运行 `git mergetool` 命令后，会显示支持的图形工具列表，并提示用户选择可用的冲突解决工具。缺省使用 `kdiff3` 。直接按下回车键，自动打开 `kdiff3` 进入冲突解决界面。
+
+* 启动 kdiff3 后，上方三个窗口由左至右显示冲突文件的三个版本，分别是：
+
+  -  A：暂存区1中的版本（共同祖先版本）。
+  -  B：暂存区2中的版本（当前分支更改的版本）。
+  -  C：暂存区3中的版本（他人更改的版本）。
+
+  .. figure:: images/gitbook/kdiff3-1.png
+     :scale: 75
+
+* kdiff3 下方的窗口是合并后文件编辑窗口。
+
+  点击标记为“合并冲突”的一行，在弹出菜单中出现 A, B, C 三个选项，分别代表从 A, B, C 三个窗口拷贝相关内容到当前位置。
+
+  .. figure:: images/gitbook/kdiff3-2.png
+     :scale: 75
+
+* 当通过“合并冲突”位置弹出菜单选择了 B 和 C 后，可以看到在合并窗口出现了标识 B 和 C 的行，分别代表 user2 和 user1 对该行的修改。
+
+  .. figure:: images/gitbook/kdiff3-3.png
+     :scale: 75
+
+* 在合并窗口进行编辑，将 "`Hello, user1.`" 修改为 "`Hello, user1 and user2.`" 。
+
+  修改后，可以看到该行的标识由 `C` 改变为 `m` ，含义是该行是经过手工修改的行。
+
+  .. figure:: images/gitbook/kdiff3-4.png
+     :scale: 75
+
+* 在合并窗口删除标识为从 B 窗口引入的行 "`Hello, user2.`" 。保存退出即完成图形化冲突解决。
+
+  .. figure:: images/gitbook/kdiff3-5.png
+     :scale: 75
+
+图形工具保存退出后，显示工作区状态，会看到冲突已经解决。在工作区还会遗留一个以 `.orig` 结尾的合并前文件副本。
+
+::
+
+  $ git status
+  # On branch master
+  # Your branch and 'refs/remotes/origin/master' have diverged,
+  # and have 1 and 1 different commit(s) each, respectively.
+  #
+  # Changes to be committed:
+  #
+  #       modified:   doc/README.txt
+  #
+  # Untracked files:
+  #   (use "git add <file>..." to include in what will be committed)
+  #
+  #       doc/README.txt.orig
+
+查看暂存区会发现暂存区中的冲突文件三个副本都已经清除。
+
+::
+
+  $ git ls-files -s
+  100644 463dd451d94832f196096bbc0c9cf9f2d0f82527 0       doc/README.txt
+  100644 430bd4314705257a53241bc1d2cb2cc30f06f5ea 0       team/user1.txt
+  100644 a72ca0b4f2b9661d12d2a0c1456649fc074a38e3 0       team/user2.txt
+
+别忘了提交和推送。
+
+::
+
+  $ git commit -m "Say hello to all users."
+  [master 7f7bb5e] Say hello to all users.
+  $ git push
+  Counting objects: 14, done.
+  Delta compression using up to 2 threads.
+  Compressing objects: 100% (6/6), done.
+  Writing objects: 100% (8/8), 712 bytes, done.
+  Total 8 (delta 0), reused 0 (delta 0)
+  Unpacking objects: 100% (8/8), done.
+  To file:///path/to/repos/shared.git
+     a123390..7f7bb5e  master -> master
+
+查看最近三次提交日志，会看到最新的提交是一个合并提交。
+
+::
+
+  $ git log --oneline --graph -3
+  *   7f7bb5e Say hello to all users.
+  |\  
+  | * a123390 Say hello to user1.
+  * | 60b10f3 Say hello to user2.
+  |/  
 
 
-$ git status
-# On branch master
-# Your branch and 'refs/remotes/origin/master' have diverged,
-# and have 1 and 1 different commit(s) each, respectively.
-#
-# Unmerged paths:
-#   (use "git add/rm <file>..." as appropriate to mark resolution)
-#
-#       both modified:      doc/README.txt
-#
-no changes added to commit (use "git add" and/or "git commit -a")
+
+
+TRUE MERGE
+       Except in a fast-forward merge (see above), the branches to be merged must be tied together by a merge commit that has both of them as its
+       parents.
+
+       A merged version reconciling the changes from all branches to be merged is committed, and your HEAD, index, and working tree are updated to it.
+       It is possible to have modifications in the working tree as long as they do not overlap; the update will preserve them.
+
+       When it is not obvious how to reconcile the changes, the following happens:
+
+        1. The HEAD pointer stays the same.
+
+        2. The MERGE_HEAD ref is set to point to the other branch head.
+
+        3. Paths that merged cleanly are updated both in the index file and in your working tree.
+
+        4. For conflicting paths, the index file records up to three versions: stage 1 stores the version from the common ancestor, stage 2 from HEAD,
+           and stage 3 from MERGE_HEAD (you can inspect the stages with git ls-files -u). The working tree files contain the result of the "merge"
+           program; i.e. 3-way merge results with familiar conflict markers <<< === >>>.
+
+        5. No other changes are made. In particular, the local modifications you had before you started merge will stay the same and the index entries
+           for them stay as they were, i.e. matching HEAD.
+
+       If you tried a merge which resulted in complex conflicts and want to start over, you can recover with git reset --merge.
+
+
+setting the "merge.conflictstyle" configuration variable to "diff3".
+
+
+           Here are lines that are either unchanged from the common
+           ancestor, or cleanly resolved because only one side changed.
+           <<<<<<< yours:sample.txt
+           Conflict resolution is hard;
+           let's go shopping.
+           |||||||
+           Conflict resolution is hard.
+           =======
+           Git makes conflict resolution easy.
+           >>>>>>> theirs:sample.txt
+           And here is another line that is cleanly resolved or unmodified.
+
+
+
+CONFIGURATION
+       merge.conflictstyle
+           Specify the style in which conflicted hunks are written out to working tree files upon merge. The default is "merge", which shows a <<<<<<<
+           conflict marker, changes made by one side, a ======= marker, changes made by the other side, and then a >>>>>>> marker. An alternate style,
+           "diff3", adds a ||||||| marker and the original text before the ======= marker.
+
+       merge.log
+           Whether to include summaries of merged commits in newly created merge commit messages. False by default.
+
+       merge.renameLimit
+           The number of files to consider when performing rename detection during a merge; if not specified, defaults to the value of diff.renameLimit.
+
+       merge.stat
+           Whether to print the diffstat between ORIG_HEAD and the merge result at the end of the merge. True by default.
+
+       merge.tool
+           Controls which merge resolution program is used by git-mergetool(1). Valid built-in values are: "kdiff3", "tkdiff", "meld", "xxdiff",
+           "emerge", "vimdiff", "gvimdiff", "diffuse", "ecmerge", "tortoisemerge", "p4merge", "araxis" and "opendiff". Any other value is treated is
+           custom merge tool and there must be a corresponding mergetool.<tool>.cmd option.
+
+       merge.verbosity
+           Controls the amount of output shown by the recursive merge strategy. Level 0 outputs nothing except a final error message if conflicts were
+           detected. Level 1 outputs only conflicts, 2 outputs conflicts and file changes. Level 5 and above outputs debugging information. The default
+           is level 2. Can be overridden by the GIT_MERGE_VERBOSITY environment variable.
+
+       merge.<driver>.name
+           Defines a human-readable name for a custom low-level merge driver. See gitattributes(5) for details.
+
+       merge.<driver>.driver
+           Defines the command that implements a custom low-level merge driver. See gitattributes(5) for details.
+
+       merge.<driver>.recursive
+           Names a low-level merge driver to be used when performing an internal merge between common ancestors. See gitattributes(5) for details.
+
+       branch.<name>.mergeoptions
+           Sets default options for merging into branch <name>. The syntax and supported options are the same as those of git merge, but option values
+           containing whitespace characters are currently not supported.
 
 冲突解决（手动）
 
