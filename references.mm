@@ -3602,6 +3602,7 @@
 <node COLOR="#990000" FOLDED="true" ID="ID_1063746508" 
 	TEXT="项目管理为何如此混乱？">
 <font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="full-1"/>
 <node COLOR="#111111" ID="ID_1525021395" 
 	TEXT="为何 bug 没完没了？">
 <font NAME="Serif" SIZE="12"/>
@@ -3624,6 +3625,7 @@
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="idea"/>
+<icon BUILTIN="full-2"/>
 <node COLOR="#111111" ID="ID_1319495890" 
 	TEXT="CVS 的分支管理是灾难：不可见，而且速度慢"/>
 <node COLOR="#111111" ID="ID_161218333" 
@@ -3718,6 +3720,7 @@
 	TEXT="操作 Git 分支">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="full-3"/>
 <node COLOR="#111111" FOLDED="true" ID="ID_399921837" 
 	TEXT="关于 master 分支">
 <edge STYLE="bezier" WIDTH="thin"/>
@@ -3982,13 +3985,15 @@
 </node>
 </node>
 <node COLOR="#990000" ID="ID_1568326075" 
-	TEXT="和他人共享分支">
+	TEXT="分支共享">
 <font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="full-4"/>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_1973915817" 
-	TEXT="分支操作的安全性设置">
+	TEXT="分支安全性">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="full-5"/>
 <node COLOR="#111111" FOLDED="true" ID="ID_1569772311" 
 	TEXT="是否允许 reset，版本库的安全设置">
 <font NAME="Serif" SIZE="12"/>
@@ -4013,7 +4018,7 @@
 	TEXT="谁能删除分支"/>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_1402402678" 
-	TEXT="合并分支">
+	TEXT="分支合并">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="14"/>
 <node COLOR="#111111" ID="ID_1734632324" 
@@ -4133,7 +4138,7 @@
 </node>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_897846578" 
-	TEXT="分支管理 SOP">
+	TEXT="分支管理规范">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="14"/>
 <node COLOR="#111111" FOLDED="true" ID="ID_1841236174" 
@@ -4157,30 +4162,80 @@
 	TEXT="4 里程碑">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
-<node COLOR="#990000" FOLDED="true" ID="ID_611541349" 
-	TEXT="跟踪软件的版本">
+<node COLOR="#990000" FOLDED="true" ID="ID_1579884608" 
+	TEXT="为什么需要里程碑？">
 <font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1792141538" 
+	TEXT="40位 SHA1 哈希值不好记"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_611541349" 
+	TEXT="跟踪软件的版本">
+<font NAME="Serif" SIZE="12"/>
 <node COLOR="#111111" ID="ID_1919728658" 
 	TEXT="git describe"/>
 </node>
-<node COLOR="#990000" ID="ID_446695308" 
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_677538909" 
+	TEXT="Git 里程碑奥秘">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_222373567" 
+	TEXT="特殊的引用空间"/>
+<node COLOR="#111111" ID="ID_446695308" 
 	TEXT="轻量级里程碑">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#990000" ID="ID_816785129" 
-	TEXT="带注释的里程碑">
-<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_816785129" 
+	TEXT="带注解的里程碑">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1674727649" 
+	TEXT="轻量级里程碑 和 带注解的里程碑">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<icon BUILTIN="idea"/>
+<node COLOR="#111111" ID="ID_1496367509" 
+	TEXT="带有注解的里程碑是使用 -a 或者 -s 方式创建，并且用 -m 参数添加说明">
+<font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1870396988" 
-	TEXT="签名里程碑">
-<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1074473132" 
+	TEXT="用 -a 参数创建带有注解的里程碑">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1285089645" 
+	TEXT="$ git tag -a v1.4 -m &apos;my version 1.4&apos;&#xa;$ git tag&#xa;v0.1&#xa;v1.3&#xa;v1.4"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_559835978" 
+	TEXT="-s 参数用 gpg 签名里程碑。用 -v 参数可以校验之">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_520731049" 
+	TEXT="$ git tag -s v1.5 -m &apos;my signed 1.5 tag&apos;&#xa;You need a passphrase to unlock the secret key for&#xa;user: &quot;Scott Chacon &lt;schacon@gee-mail.com&gt;&quot;&#xa;1024-bit DSA key, ID F721C45A, created 2009-02-09"/>
+<node COLOR="#111111" ID="ID_529214851" 
+	TEXT="$ git tag -v v1.4.2.1&#xa;object 883653babd8ee7ea23e6a5c392bb739348b1eb61&#xa;type commit&#xa;tag v1.4.2.1&#xa;tagger Junio C Hamano &lt;junkio@cox.net&gt; 1158138501 -0700&#xa;&#xa;GIT 1.4.2.1&#xa;&#xa;Minor fixes since 1.4.2, including git-mv and git-http with alternates.&#xa;gpg: Signature made Wed Sep 13 02:08:25 2006 PDT using DSA key ID F3119B9A&#xa;gpg: Good signature from &quot;Junio C Hamano &lt;junkio@cox.net&gt;&quot;&#xa;gpg:                 aka &quot;[jpeg image of size 1513]&quot;&#xa;Primary key fingerprint: 3565 2A26 2040 E066 C9A7  4A7D C0C6 D9A4 F311 9B9A"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_916113621" 
+	TEXT="用 git show 命令，查看里程碑的注解">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_682062052" 
+	TEXT="$ git show v1.4&#xa;tag v1.4&#xa;Tagger: Scott Chacon &lt;schacon@gee-mail.com&gt;&#xa;Date:   Mon Feb 9 14:45:11 2009 -0800&#xa;&#xa;my version 1.4&#xa;commit 15027957951b64cf874c3557a0f3547bd83b3ff6&#xa;Merge: 4a447f7... a6b4c97...&#xa;Author: Scott Chacon &lt;schacon@gee-mail.com&gt;&#xa;Date:   Sun Feb 8 19:02:46 2009 -0800&#xa;&#xa;    Merge branch &apos;experiment&apos;"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_593208744" 
+	TEXT="轻量级里程碑，用 git-show 只能看到tag应用到的 commit 本身">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_25205744" 
+	TEXT="$ git tag v1.4-lw&#xa;$ git tag&#xa;v0.1&#xa;v1.3&#xa;v1.4&#xa;v1.4-lw&#xa;v1.5"/>
+<node COLOR="#111111" ID="ID_1403819583" 
+	TEXT="$ git show v1.4-lw&#xa;commit 15027957951b64cf874c3557a0f3547bd83b3ff6&#xa;Merge: 4a447f7... a6b4c97...&#xa;Author: Scott Chacon &lt;schacon@gee-mail.com&gt;&#xa;Date:   Sun Feb 8 19:02:46 2009 -0800&#xa;&#xa;    Merge branch &apos;experiment&apos;"/>
+</node>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1870396988" 
+	TEXT="带签名的里程碑">
+<font NAME="Serif" SIZE="12"/>
 <node COLOR="#111111" ID="ID_1125169278" 
 	TEXT="repo 如何管理签名？">
 <font NAME="Serif" SIZE="12"/>
 </node>
 </node>
+</node>
 <node COLOR="#990000" FOLDED="true" ID="ID_356033177" 
-	TEXT="Git 里程碑">
+	TEXT="操作 Git 里程碑">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="14"/>
 <node COLOR="#111111" FOLDED="true" ID="ID_1950537415" 
@@ -4261,6 +4316,11 @@
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="12"/>
 </node>
+<node COLOR="#111111" ID="ID_1080601147" 
+	TEXT="git name-rev 用于查看某个 commit 是否有对应 tag。&#xa;&#xa;$ git name-rev 41008ee&#xa;41008ee tags/v1.0~1&#xa;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
 </node>
 <node COLOR="#111111" FOLDED="true" ID="ID_484431346" 
 	TEXT="能否在 Tag 上提交？">
@@ -4297,14 +4357,27 @@
 <font NAME="Serif" SIZE="12"/>
 </node>
 </node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1459232538" 
+<node COLOR="#111111" FOLDED="true" ID="ID_204980636" 
+	TEXT="里程碑的误用">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1511354576" 
+	TEXT="不要修改里程碑"/>
+<node COLOR="#111111" ID="ID_613309185" 
+	TEXT="修改的里程碑，运行 git push, git pull 不会自动同步"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1459232538" 
 	TEXT="共享里程碑">
 <edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
+<font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="idea"/>
-<node COLOR="#111111" ID="ID_1491796945" 
+<node COLOR="#111111" FOLDED="true" ID="ID_1491796945" 
 	TEXT="缺省 git push 命令不上传 tag 名称到服务器。">
 <font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_734059950" 
+	TEXT="By default, the git push command doesn’t transfer tags to remote servers. You will have to explicitly push tags to a shared server after you have created them. This process is just like sharing remote branches – you can run git push origin [tagname].">
+<font NAME="Serif" SIZE="12"/>
+</node>
 </node>
 <node COLOR="#111111" FOLDED="true" ID="ID_739219089" 
 	TEXT="您必须显示的上传 tag 名">
@@ -4327,171 +4400,8 @@
 	TEXT="$ git push origin --tags&#xa;Counting objects: 50, done.&#xa;Compressing objects: 100% (38/38), done.&#xa;Writing objects: 100% (44/44), 4.56 KiB, done.&#xa;Total 44 (delta 18), reused 8 (delta 1)&#xa;To git@github.com:schacon/simplegit.git&#xa; * [new tag]         v0.1 -&gt; v0.1&#xa; * [new tag]         v1.2 -&gt; v1.2&#xa; * [new tag]         v1.4 -&gt; v1.4&#xa; * [new tag]         v1.4-lw -&gt; v1.4-lw&#xa; * [new tag]         v1.5 -&gt; v1.5"/>
 </node>
 </node>
-<node COLOR="#111111" FOLDED="true" ID="ID_204980636" 
-	TEXT="里程碑的误用">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1511354576" 
-	TEXT="不要修改里程碑"/>
-<node COLOR="#111111" ID="ID_613309185" 
-	TEXT="修改的里程碑，运行 git push, git pull 不会自动同步"/>
-</node>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1773150130" 
-	TEXT="Git 提交命名和 里程碑">
-<edge STYLE="sharp_bezier" WIDTH="8"/>
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_112558607" 
-	TEXT="COMMIT-ISH 即提交ID，是由 40 个十六进制数字组成，可以由开头的任意长度的数字串指代，只要不冲突。">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1748551465" 
-	TEXT="HEAD 的含义： 是当前开发分支（git branch 来查看)的顶节点。 .git/HEAD 文件即是 HEAD 的确切指向。">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1581575171" 
-	TEXT="里程碑和分支实际上都是 commitid 的对应物">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_959651216" 
-	TEXT="分支：实际是一个分支名，指向该分支的顶节点。">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_647121603" 
-	TEXT="* The branch &quot;test&quot; is short for &quot;refs/heads/test&quot;.">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_934862871" 
-	TEXT="* The tag &quot;v2.6.18&quot; is short for &quot;refs/tags/v2.6.18&quot;.">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_719781072" 
-	TEXT="* &quot;origin/master&quot; is short for &quot;refs/remotes/origin/master&quot;.">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_218743450" 
-	TEXT="特使格式的版本别名： HEAD^^ ...">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1234450048" 
-	TEXT="$ git show HEAD^    # the parent of the HEAD commit">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1131266819" 
-	TEXT="$ git show HEAD^^   # the grandparent">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_146963246" 
-	TEXT="$ git show HEAD~4   # the great-great-grandparent">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1772798803" 
-	TEXT="$ git show HEAD^1   # show the first parent of HEAD">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_711402803" 
-	TEXT="$ git show HEAD^2   # show the second parent of HEAD">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#111111" ID="ID_1430754219" 
-	TEXT="git tag -l ： 查看里程碑列表">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1401370600" 
-	TEXT="git tag v2.5 1b2e1d63ff ： 创建轻量级里程碑">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_77081722" 
-	TEXT="$ git diff v2.5 HEAD     # compare the current HEAD to v2.5&#xa;$ git branch stable v2.5 # start a new branch named &quot;stable&quot; based&#xa;                         # at v2.5&#xa;$ git reset --hard HEAD^ # reset your current branch and working&#xa;                         # directory to its state at HEAD^">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_164431122" 
-	TEXT="$ git log v2.5..v2.6            # commits between v2.5 and v2.6&#xa;$ git log v2.5..                # commits since v2.5&#xa;$ git log --since=&quot;2 weeks ago&quot; # commits from the last 2 weeks&#xa;$ git log v2.5.. Makefile       # commits since v2.5 which modify&#xa;                                # Makefile">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1080601147" 
-	TEXT="git name-rev 用于查看某个 commit 是否有对应 tag。&#xa;&#xa;$ git name-rev 41008ee&#xa;41008ee tags/v1.0~1&#xa;">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1674727649" 
-	TEXT="轻量级里程碑 和 带注解的里程碑">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<icon BUILTIN="idea"/>
-<node COLOR="#111111" ID="ID_1496367509" 
-	TEXT="带有注解的里程碑是使用 -a 或者 -s 方式创建，并且用 -m 参数添加说明">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1074473132" 
-	TEXT="用 -a 参数创建带有注解的里程碑">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1285089645" 
-	TEXT="$ git tag -a v1.4 -m &apos;my version 1.4&apos;&#xa;$ git tag&#xa;v0.1&#xa;v1.3&#xa;v1.4"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_559835978" 
-	TEXT="-s 参数用 gpg 签名里程碑。用 -v 参数可以校验之">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_520731049" 
-	TEXT="$ git tag -s v1.5 -m &apos;my signed 1.5 tag&apos;&#xa;You need a passphrase to unlock the secret key for&#xa;user: &quot;Scott Chacon &lt;schacon@gee-mail.com&gt;&quot;&#xa;1024-bit DSA key, ID F721C45A, created 2009-02-09"/>
-<node COLOR="#111111" ID="ID_529214851" 
-	TEXT="$ git tag -v v1.4.2.1&#xa;object 883653babd8ee7ea23e6a5c392bb739348b1eb61&#xa;type commit&#xa;tag v1.4.2.1&#xa;tagger Junio C Hamano &lt;junkio@cox.net&gt; 1158138501 -0700&#xa;&#xa;GIT 1.4.2.1&#xa;&#xa;Minor fixes since 1.4.2, including git-mv and git-http with alternates.&#xa;gpg: Signature made Wed Sep 13 02:08:25 2006 PDT using DSA key ID F3119B9A&#xa;gpg: Good signature from &quot;Junio C Hamano &lt;junkio@cox.net&gt;&quot;&#xa;gpg:                 aka &quot;[jpeg image of size 1513]&quot;&#xa;Primary key fingerprint: 3565 2A26 2040 E066 C9A7  4A7D C0C6 D9A4 F311 9B9A"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_916113621" 
-	TEXT="用 git show 命令，查看里程碑的注解">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_682062052" 
-	TEXT="$ git show v1.4&#xa;tag v1.4&#xa;Tagger: Scott Chacon &lt;schacon@gee-mail.com&gt;&#xa;Date:   Mon Feb 9 14:45:11 2009 -0800&#xa;&#xa;my version 1.4&#xa;commit 15027957951b64cf874c3557a0f3547bd83b3ff6&#xa;Merge: 4a447f7... a6b4c97...&#xa;Author: Scott Chacon &lt;schacon@gee-mail.com&gt;&#xa;Date:   Sun Feb 8 19:02:46 2009 -0800&#xa;&#xa;    Merge branch &apos;experiment&apos;"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_593208744" 
-	TEXT="轻量级里程碑，用 git-show 只能看到tag应用到的 commit 本身">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_25205744" 
-	TEXT="$ git tag v1.4-lw&#xa;$ git tag&#xa;v0.1&#xa;v1.3&#xa;v1.4&#xa;v1.4-lw&#xa;v1.5"/>
-<node COLOR="#111111" ID="ID_1403819583" 
-	TEXT="$ git show v1.4-lw&#xa;commit 15027957951b64cf874c3557a0f3547bd83b3ff6&#xa;Merge: 4a447f7... a6b4c97...&#xa;Author: Scott Chacon &lt;schacon@gee-mail.com&gt;&#xa;Date:   Sun Feb 8 19:02:46 2009 -0800&#xa;&#xa;    Merge branch &apos;experiment&apos;"/>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1298510517" 
-	TEXT="共享里程碑">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<icon BUILTIN="idea"/>
-<node COLOR="#111111" ID="ID_734059950" 
-	TEXT="By default, the git push command doesn’t transfer tags to remote servers. You will have to explicitly push tags to a shared server after you have created them. This process is just like sharing remote branches – you can run git push origin [tagname].">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1016860527" 
-	TEXT="git push origin &lt;tagname&gt;">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1954318833" 
-	TEXT="$ git push origin v1.5&#xa;Counting objects: 50, done.&#xa;Compressing objects: 100% (38/38), done.&#xa;Writing objects: 100% (44/44), 4.56 KiB, done.&#xa;Total 44 (delta 18), reused 8 (delta 1)&#xa;To git@github.com:schacon/simplegit.git&#xa;* [new tag]         v1.5 -&gt; v1.5"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1543377954" 
-	TEXT="git push --tags">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_342954295" 
-	TEXT="If you have a lot of tags that you want to push up at once, you can also use the --tags option to the git push command. This will transfer all of your tags to the remote server that are not already there.">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_523174070" 
-	TEXT="$ git push origin --tags&#xa;Counting objects: 50, done.&#xa;Compressing objects: 100% (38/38), done.&#xa;Writing objects: 100% (44/44), 4.56 KiB, done.&#xa;Total 44 (delta 18), reused 8 (delta 1)&#xa;To git@github.com:schacon/simplegit.git&#xa; * [new tag]         v0.1 -&gt; v0.1&#xa; * [new tag]         v1.2 -&gt; v1.2&#xa; * [new tag]         v1.4 -&gt; v1.4&#xa; * [new tag]         v1.4-lw -&gt; v1.4-lw&#xa; * [new tag]         v1.5 -&gt; v1.5"/>
-</node>
-</node>
-</node>
-<node COLOR="#990000" ID="ID_1078926357" 
-	TEXT="和他人共享里程碑">
-<font NAME="Serif" SIZE="14"/>
-</node>
 <node COLOR="#990000" FOLDED="true" ID="ID_1050685782" 
-	TEXT="里程碑管理 SOP">
+	TEXT="里程碑管理规范">
 <font NAME="Serif" SIZE="14"/>
 <node COLOR="#111111" ID="ID_1610498937" 
 	TEXT="Linux 的里程碑命名"/>
@@ -4506,119 +4416,16 @@
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 <node COLOR="#990000" FOLDED="true" ID="ID_1907763309" 
-	TEXT="问题：">
+	TEXT="版本库互操作的困惑">
 <font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1666076233" 
+	TEXT="不注册远程版本库，操作不便。"/>
 <node COLOR="#111111" ID="ID_1434155051" 
 	TEXT="如何避免本地分支不会意外的复制到远程？"/>
 <node COLOR="#111111" ID="ID_165356920" 
 	TEXT="我本地创建的一个分支和远程的分支重名了？"/>
 <node COLOR="#111111" ID="ID_1567440842" 
 	TEXT="如何避免个人在本地创建的 tag 被传递到远程服务器互相覆盖。"/>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_661392679" 
-	TEXT="克隆操作的奥秘">
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_1365225576" 
-	TEXT="为什么不能把所有的 tag 复制下来？例如 master 分支重置之前的 tag"/>
-<node COLOR="#111111" ID="ID_312512795" 
-	TEXT="远程分支都到哪里去了？"/>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_433746938" 
-	TEXT="直接操作远程版本库的分支">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_606995194" 
-	TEXT="如何查看远程服务器的分支？">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1986091941" 
-	TEXT="如何删除远程服务器的分支？">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_927844154" 
-	TEXT="如何在远程服务器上创建分支？">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1142406819" 
-	TEXT="克隆远程版本库的操作">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_953801272" 
-	TEXT="远程版本库是否有 HEAD，及影响？">
-<font NAME="Serif" SIZE="12"/>
-<icon BUILTIN="messagebox_warning"/>
-</node>
-<node COLOR="#111111" ID="ID_148671887" 
-	TEXT="本地 master 如何创建？">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_751970680" 
-	TEXT="fetch / pull 命令的区分">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1744088608" 
-	TEXT="push 命令？">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1197025428" 
-	TEXT="本地分支和远程分支的关系">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_15981385" 
-	TEXT="本地分支用于临时性的提交和试验（experiment)，如果和上游某个分支同名，会有什么问题么？">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1413435672" 
-	TEXT="具体说1: 如果我执行了 git pull ，会把上游的同名分支拉过来么？这可能是我不需要的。">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1845345488" 
-	TEXT="具体说2：如果我不小心执行了 git push，会把我本地的测试提交推送上游么？">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1532593470" 
-	TEXT="git config 配置中的 .merge 和 .rebase">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_319938031" 
-	TEXT="See `branch.&lt;name&gt;.rebase` in linkgit:git-config[1] if you want to make `git pull` always use `{litdd}rebase` instead of merging. ">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#990000" ID="ID_1207155389" 
-	TEXT="push 的语法">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="14"/>
-</node>
-<node COLOR="#990000" ID="ID_1750579662" 
-	TEXT="克隆版本库后 config 文件中的内容？">
-<font NAME="Serif" SIZE="14"/>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_41502979" 
-	TEXT="[remote name] 小节详解">
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_1838521611" 
-	TEXT="设置 pushurl，推送到自己克隆的版本库">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#990000" ID="ID_1798967427" 
-	TEXT="如果不设置 remote，直接从 url fetch，如何？ FETCH_HEAD">
-<font NAME="Serif" SIZE="14"/>
-</node>
-<node COLOR="#990000" ID="ID_1178640902" 
-	TEXT="如果设置了remote，fetch，会创建远程分支。">
-<font NAME="Serif" SIZE="14"/>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_895174108" 
-	TEXT="对分支和里程碑的 pull 和 push">
-<font NAME="Serif" SIZE="14"/>
 <node COLOR="#111111" FOLDED="true" ID="ID_1550421566" 
 	TEXT="如果向其它版本库 PUSH 的时候，会将本地所有分支推送到版本库中么？">
 <edge STYLE="bezier" WIDTH="thin"/>
@@ -4637,96 +4444,44 @@
 </node>
 </node>
 </node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1424004637" 
-	TEXT="远程分支">
-<edge STYLE="bezier" WIDTH="thin"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_448198687" 
+	TEXT="注册远程版本库">
 <font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_539245296" 
-	TEXT="显示和查看远程分支： git branch -r">
+<node COLOR="#111111" FOLDED="true" ID="ID_877293501" 
+	TEXT="克隆操作自动注册">
+<node COLOR="#111111" FOLDED="true" ID="ID_1142406819" 
+	TEXT="克隆远程版本库的操作">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1743903876" 
-	TEXT="git 以 origin/master 名称在本地版本库保留了远程版本库的分支。">
+<node COLOR="#111111" ID="ID_953801272" 
+	TEXT="远程版本库是否有 HEAD，及影响？">
+<font NAME="Serif" SIZE="12"/>
+<icon BUILTIN="messagebox_warning"/>
+</node>
+<node COLOR="#111111" ID="ID_148671887" 
+	TEXT="本地 master 如何创建？">
 <font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#111111" ID="ID_829197712" 
-	TEXT="未 packed 的库，在 .git/refs/remotes/origin 目录下的文件代表远程分支">
+<node COLOR="#111111" ID="ID_751970680" 
+	TEXT="fetch / pull 命令的区分">
 <font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#111111" ID="ID_702292586" 
-	TEXT="packed 之后的库，在 .git/packed-refs 文件： &#xa; * 保存了 tags 和 commit id 对应关系。&#xa; * 还保存了 远程版本库分支名： refs/remotes/origin/*">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1096514672" 
-	TEXT="远程分支不能直接 checkout！">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1582544476" 
-	TEXT="远程分支不能直接检出/查看，需要通过创建本地分支方式检出">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1758050633" 
-	TEXT="$ git checkout -b my-todo-copy origin/todo">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1840200523" 
-	TEXT="或者使用 --track 参数，直接创建同名的本地分支，以便更好的和该远程分支同步"/>
-<node COLOR="#111111" ID="ID_1587629032" 
-	TEXT="建立远程分支的本地分支： git checkout -b branchname origin/branchname">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_890592170" 
-	TEXT="建立远程分支的本地分支的另外一个等价方法：&#xa;$ git checkout --track origin/branchname">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<icon BUILTIN="idea"/>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1167537737" 
-	TEXT="理解 Git 远程分支">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_257612643" 
-	TEXT="获取远程版本库的分支">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_357415041" 
-	TEXT="缺省同步/克隆一个版本库，是将 .git/refs/heads/ 下的本地分支克隆到新的版本库的 .git/refs/remote/ 下面"/>
-<node COLOR="#111111" ID="ID_972022301" 
-	TEXT="如果要将一个源库的 remotes 分支也同步到镜像版本库，需要增加一个 fetch 设置。具体的应用范例，参见"/>
-<node COLOR="#111111" ID="ID_1308206492" 
-	TEXT="        mkdir project&#xa;        cd project&#xa;        git init&#xa;        git remote add origin server:/pub/project&#xa;        git config --add remote.origin.fetch &apos;+refs/remotes/*:refs/remotes/*&apos;&#xa;        git fetch&#xa;">
+<node COLOR="#111111" ID="ID_1744088608" 
+	TEXT="push 命令？">
 <font NAME="Serif" SIZE="12"/>
 </node>
 </node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1045868165" 
-	TEXT="远程分支引发的冲突">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_781319123" 
-	TEXT="别人先我提交"/>
-<node COLOR="#111111" ID="ID_924044629" 
-	TEXT="我收回先前提交"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_415476154" 
-	TEXT="删除远程分支:  git push origin :&lt;remote-branch-name&gt;">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_50163334" 
-	TEXT="相当于命令 git push [remotename] [localbranch]:[remotebranch]  的 [localbranch] 为空">
+<node COLOR="#111111" ID="ID_1750579662" 
+	TEXT="克隆版本库后 config 文件中的内容？">
 <font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#111111" ID="ID_235525133" 
-	TEXT="git push origin :branch_name"/>
 </node>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1491314093" 
+<node COLOR="#111111" FOLDED="true" ID="ID_1088104366" 
+	TEXT="使用 git remote 命令">
+<node COLOR="#111111" FOLDED="true" ID="ID_1491314093" 
 	TEXT="git remote">
 <edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 <node COLOR="#111111" FOLDED="true" ID="ID_1605394372" 
 	TEXT="克隆即分支">
 <font NAME="Serif" SIZE="12"/>
@@ -4788,6 +4543,182 @@
 <font NAME="Serif" SIZE="12"/>
 </node>
 </node>
+</node>
+<node COLOR="#111111" ID="ID_380440575" 
+	TEXT="更改版本库注册"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1532593470" 
+	TEXT="git config 配置中的 .merge 和 .rebase">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_319938031" 
+	TEXT="See `branch.&lt;name&gt;.rebase` in linkgit:git-config[1] if you want to make `git pull` always use `{litdd}rebase` instead of merging. ">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1426254518" 
+	TEXT="git fetch">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1794750196" 
+	TEXT="直接使用地址">
+<node COLOR="#111111" ID="ID_1798967427" 
+	TEXT="如果不设置 remote，直接从 url fetch，如何？ FETCH_HEAD">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1669092226" 
+	TEXT="使用注册版本库">
+<node COLOR="#111111" ID="ID_1178640902" 
+	TEXT="如果设置了remote，fetch，会创建远程分支。">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_312512795" 
+	TEXT="远程分支都到哪里去了？">
+<node COLOR="#111111" FOLDED="true" ID="ID_1167537737" 
+	TEXT="理解 Git 远程分支">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_257612643" 
+	TEXT="获取远程版本库的分支">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_357415041" 
+	TEXT="缺省同步/克隆一个版本库，是将 .git/refs/heads/ 下的本地分支克隆到新的版本库的 .git/refs/remote/ 下面"/>
+<node COLOR="#111111" ID="ID_972022301" 
+	TEXT="如果要将一个源库的 remotes 分支也同步到镜像版本库，需要增加一个 fetch 设置。具体的应用范例，参见"/>
+<node COLOR="#111111" ID="ID_1308206492" 
+	TEXT="        mkdir project&#xa;        cd project&#xa;        git init&#xa;        git remote add origin server:/pub/project&#xa;        git config --add remote.origin.fetch &apos;+refs/remotes/*:refs/remotes/*&apos;&#xa;        git fetch&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_606995194" 
+	TEXT="如何查看远程服务器的分支？">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_539245296" 
+	TEXT="显示和查看远程分支： git branch -r">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1743903876" 
+	TEXT="git 以 origin/master 名称在本地版本库保留了远程版本库的分支。">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_829197712" 
+	TEXT="未 packed 的库，在 .git/refs/remotes/origin 目录下的文件代表远程分支">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_702292586" 
+	TEXT="packed 之后的库，在 .git/packed-refs 文件： &#xa; * 保存了 tags 和 commit id 对应关系。&#xa; * 还保存了 远程版本库分支名： refs/remotes/origin/*">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1986091941" 
+	TEXT="如何删除远程服务器的分支？">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_415476154" 
+	TEXT="删除远程分支:  git push origin :&lt;remote-branch-name&gt;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_50163334" 
+	TEXT="相当于命令 git push [remotename] [localbranch]:[remotebranch]  的 [localbranch] 为空">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_235525133" 
+	TEXT="git push origin :branch_name"/>
+</node>
+</node>
+<node COLOR="#111111" ID="ID_927844154" 
+	TEXT="如何在远程服务器上创建分支？">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_381678008" 
+	TEXT="如何使用远程分支">
+<node COLOR="#111111" FOLDED="true" ID="ID_1096514672" 
+	TEXT="远程分支不能直接 checkout！">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1582544476" 
+	TEXT="远程分支不能直接检出/查看，需要通过创建本地分支方式检出">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1758050633" 
+	TEXT="$ git checkout -b my-todo-copy origin/todo">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1840200523" 
+	TEXT="或者使用 --track 参数，直接创建同名的本地分支，以便更好的和该远程分支同步"/>
+<node COLOR="#111111" ID="ID_1587629032" 
+	TEXT="建立远程分支的本地分支： git checkout -b branchname origin/branchname">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_890592170" 
+	TEXT="建立远程分支的本地分支的另外一个等价方法：&#xa;$ git checkout --track origin/branchname">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<icon BUILTIN="idea"/>
+</node>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1045868165" 
+	TEXT="远程分支引发的冲突">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_781319123" 
+	TEXT="别人先我提交"/>
+<node COLOR="#111111" ID="ID_924044629" 
+	TEXT="我收回先前提交"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_256432091" 
+	TEXT="里程碑的获取">
+<node COLOR="#111111" ID="ID_1365225576" 
+	TEXT="为什么不能把所有的 tag 复制下来？例如 master 分支重置之前的 tag"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1364321883" 
+	TEXT="git push">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1386279949" 
+	TEXT="直接使用地址"/>
+<node COLOR="#111111" ID="ID_193189896" 
+	TEXT="使用注册版本库"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_967713537" 
+	TEXT="分支的推送">
+<node COLOR="#111111" FOLDED="true" ID="ID_1197025428" 
+	TEXT="本地分支和远程分支的关系">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<icon BUILTIN="forward"/>
+<node COLOR="#111111" ID="ID_15981385" 
+	TEXT="本地分支用于临时性的提交和试验（experiment)，如果和上游某个分支同名，会有什么问题么？">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1413435672" 
+	TEXT="具体说1: 如果我执行了 git pull ，会把上游的同名分支拉过来么？这可能是我不需要的。">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1845345488" 
+	TEXT="具体说2：如果我不小心执行了 git push，会把我本地的测试提交推送上游么？">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+</node>
+<node COLOR="#111111" ID="ID_551252459" 
+	TEXT="里程碑的推送"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1662714646" 
+	TEXT="获取和推送使用不同的地址">
+<node COLOR="#111111" ID="ID_1838521611" 
+	TEXT="设置 remote.name.pushurl，推送到自己克隆的版本库">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+</node>
 <node COLOR="#990000" FOLDED="true" ID="ID_160506121" 
 	TEXT="Git 分支复杂操作">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
@@ -4820,14 +4751,17 @@
 	TEXT="6 通过补丁方式进行交互。">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
-<node COLOR="#990000" FOLDED="true" ID="ID_1418738352" 
-	TEXT="Step 14: format-patch/apply/am, 多人协作">
-<edge STYLE="bezier" WIDTH="thin"/>
+<node COLOR="#990000" ID="ID_646066763" 
+	TEXT="创建补丁：git format-patch">
 <font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_249271017" 
-	TEXT="commit -s">
-<font NAME="Serif" SIZE="12"/>
 </node>
+<node COLOR="#990000" ID="ID_1096061644" 
+	TEXT="应用补丁：git apply/am">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_412381529" 
+	TEXT="stgit 创建补丁列表">
+<font NAME="Serif" SIZE="14"/>
 </node>
 </node>
 </node>
