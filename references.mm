@@ -3591,60 +3591,43 @@
 	TEXT="3 分支">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
-<node COLOR="#990000" ID="ID_1670975286" 
+<node COLOR="#990000" FOLDED="true" ID="ID_1670975286" 
+	TEXT="从使用 Git 的第一天起，就接触到了分支，只不过 master 分支的创建不是我们有意为之，而是 Git 自动创建的缺省分支。&#xa;">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_266116260" 
 	TEXT="分支是一个隔离的提交空间，有效减少冲突的发生。">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#990000" ID="ID_1525021395" 
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1063746508" 
+	TEXT="项目管理为何如此混乱？">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1525021395" 
 	TEXT="为何 bug 没完没了？">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#990000" ID="ID_1020930901" 
+<node COLOR="#111111" ID="ID_1020930901" 
 	TEXT="为何软件迟迟不能发布？">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1880632485" 
-	TEXT="如何跟踪上游改动？">
-<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1880632485" 
+	TEXT="为何 vendor branch 对定制的管理越来越混乱？">
+<font NAME="Serif" SIZE="12"/>
 <node COLOR="#111111" ID="ID_1328742862" 
 	TEXT="topgit">
 <font NAME="Serif" SIZE="12"/>
 </node>
 </node>
-<node COLOR="#990000" ID="ID_416748962" 
-	TEXT="创建/删除/分支的方法">
-<font NAME="Serif" SIZE="14"/>
-</node>
-<node COLOR="#990000" ID="ID_715961255" 
-	TEXT="如何删除远程版本库的分支">
-<font NAME="Serif" SIZE="14"/>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1973915817" 
-	TEXT="分支操作的安全性设置">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_1569772311" 
-	TEXT="是否允许 reset，版本库的安全设置">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1985647956" 
-	TEXT="receive.denyNonFastForwards 如果设置为 true，禁止 non-fast forword"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1807048641" 
-	TEXT="是否允许删除分支？">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_329380009" 
-	TEXT="receive.denyDeletes"/>
-</node>
-<node COLOR="#111111" ID="ID_607752764" 
-	TEXT="receive.denyCurrentBranch 缺省是 refuse，导致不能向含工作目录的库 push">
-<font NAME="Serif" SIZE="12"/>
-</node>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_1008288155" 
-	TEXT="分支的奥秘">
+	TEXT="Git 分支的奥秘">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="idea"/>
+<node COLOR="#111111" ID="ID_1319495890" 
+	TEXT="CVS 的分支管理是灾难：不可见，而且速度慢"/>
+<node COLOR="#111111" ID="ID_161218333" 
+	TEXT="SVN 解决了 CVS 分支创建慢的问题，但是用目录复制实现，平添困扰。授权问题。"/>
 <node COLOR="#111111" FOLDED="true" ID="ID_1618650480" 
 	TEXT=".git/refs/heads/ 下是分支名称">
 <font NAME="Serif" SIZE="12"/>
@@ -3678,11 +3661,11 @@
 <font NAME="Serif" SIZE="12"/>
 <icon BUILTIN="idea"/>
 </node>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1746903634" 
+<node COLOR="#111111" FOLDED="true" ID="ID_1746903634" 
 	TEXT="不同路径下的引用">
 <edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
+<icon BUILTIN="forward"/>
 <node COLOR="#111111" ID="ID_623285892" 
 	TEXT="refs/heads">
 <font NAME="Serif" SIZE="12"/>
@@ -3708,36 +3691,18 @@
 <font NAME="Serif" SIZE="12"/>
 </node>
 <node COLOR="#111111" ID="ID_189921635" 
-	TEXT="refs/stash"/>
+	TEXT="refs/stash">
+<font NAME="Serif" SIZE="12"/>
+</node>
 <node COLOR="#111111" ID="ID_937608131" 
-	TEXT="refs/bisect/bad"/>
-</node>
-<node COLOR="#990000" ID="ID_1832578454" 
-	TEXT="只有 refs/heads/ 下引用可以检出并直接操作？其它都是 detached HEAD？">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="14"/>
-</node>
-<node COLOR="#990000" ID="ID_869964709" 
-	TEXT="分支合并">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="14"/>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_897846578" 
-	TEXT="分支管理 SOP">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_6816277" 
-	TEXT="参考 Git 的管理： maintain-git.txt">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1945503704" 
-	TEXT="The policy.&#xa;&#xa; - Feature releases are numbered as vX.Y.Z and are meant to&#xa;   contain bugfixes and enhancements in any area, including&#xa;   functionality, performance and usability, without regression.&#xa;&#xa; - Maintenance releases are numbered as vX.Y.Z.W and are meant&#xa;   to contain only bugfixes for the corresponding vX.Y.Z feature&#xa;   release and earlier maintenance releases vX.Y.Z.V (V &lt; W).&#xa;&#xa; - &apos;master&apos; branch is used to prepare for the next feature&#xa;   release. In other words, at some point, the tip of &apos;master&apos;&#xa;   branch is tagged with vX.Y.Z.&#xa;&#xa; - &apos;maint&apos; branch is used to prepare for the next maintenance&#xa;   release.  After the feature release vX.Y.Z is made, the tip&#xa;   of &apos;maint&apos; branch is set to that release, and bugfixes will&#xa;   accumulate on the branch, and at some point, the tip of the&#xa;   branch is tagged with vX.Y.Z.1, vX.Y.Z.2, and so on.&#xa;&#xa; - &apos;next&apos; branch is used to publish changes (both enhancements&#xa;   and fixes) that (1) have worthwhile goal, (2) are in a fairly&#xa;   good shape suitable for everyday use, (3) but have not yet&#xa;   demonstrated to be regression free.  New changes are tested&#xa;   in &apos;next&apos; before merged to &apos;master&apos;.&#xa;&#xa; - &apos;pu&apos; branch is used to publish other proposed changes that do&#xa;   not yet pass the criteria set for &apos;next&apos;.&#xa;&#xa; - The tips of &apos;master&apos;, &apos;maint&apos; and &apos;next&apos; branches will always&#xa;   fast-forward, to allow people to build their own&#xa;   customization on top of them.&#xa;&#xa; - Usually &apos;master&apos; contains all of &apos;maint&apos;, &apos;next&apos; contains all&#xa;   of &apos;master&apos; and &apos;pu&apos; contains all of &apos;next&apos;.&#xa;&#xa; - The tip of &apos;master&apos; is meant to be more stable than any&#xa;   tagged releases, and the users are encouraged to follow it.&#xa;&#xa; - The &apos;next&apos; branch is where new action takes place, and the&#xa;   users are encouraged to test it so that regressions and bugs&#xa;   are found before new topics are merged to &apos;master&apos;.&#xa;&#xa; - &apos;pu&apos; branch is used to publish other proposed changes that do&#xa;   not yet pass the criteria set for &apos;next&apos;.&#xa;&#xa; - The tips of &apos;master&apos;, &apos;maint&apos; and &apos;next&apos; branches will always&#xa;   fast-forward, to allow people to build their own&#xa;   customization on top of them.&#xa;&#xa; - Usually &apos;master&apos; contains all of &apos;maint&apos;, &apos;next&apos; contains all&#xa;   of &apos;master&apos; and &apos;pu&apos; contains all of &apos;next&apos;.&#xa;&#xa; - The tip of &apos;master&apos; is meant to be more stable than any&#xa;   tagged releases, and the users are encouraged to follow it.&#xa;&#xa; - The &apos;next&apos; branch is where new action takes place, and the&#xa;   users are encouraged to test it so that regressions and bugs&#xa;   are found before new topics are merged to &apos;master&apos;.&#xa;&#xa;">
+	TEXT="refs/bisect/bad">
 <font NAME="Serif" SIZE="12"/>
 </node>
 </node>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1692345880" 
+<node COLOR="#111111" FOLDED="true" ID="ID_1692345880" 
 	TEXT="里程碑/分支名称的合法性问题">
-<font NAME="Serif" SIZE="14"/>
+<font NAME="Serif" SIZE="12"/>
+<icon BUILTIN="forward"/>
 <node COLOR="#111111" FOLDED="true" ID="ID_1282356050" 
 	TEXT="1.7.4开始，分支名称不能以减号（-）开始了。">
 <font NAME="Serif" SIZE="12"/>
@@ -3748,17 +3713,166 @@
 <node COLOR="#111111" ID="ID_1337413283" 
 	TEXT="代码中看看哪些字符不允许？ "/>
 </node>
-<node COLOR="#990000" FOLDED="true" ID="ID_942411666" 
-	TEXT="本地分支">
-<edge STYLE="bezier" WIDTH="thin"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_726198213" 
+	TEXT="操作 Git 分支">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_808002371" 
-	TEXT="master 就是分支">
+<node COLOR="#111111" FOLDED="true" ID="ID_399921837" 
+	TEXT="关于 master 分支">
+<edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_915189552" 
-	TEXT="git co master"/>
-<node COLOR="#111111" ID="ID_1766366410" 
-	TEXT="cat .git/HEAD"/>
+<node COLOR="#111111" ID="ID_1712775428" 
+	TEXT="master 分支建立在 clone 之时，是基于当时远程库的 HEAD 版本创建">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1105822707" 
+	TEXT="$ cat .git/refs/remotes/origin/HEAD&#xa;ref: refs/remotes/origin/master">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1605155867" 
+	TEXT="$ cat .git/refs/remotes/origin/HEAD&#xa;ref: refs/remotes/origin/feature&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1192855741" 
+	TEXT="关于 HEAD">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1468414563" 
+	TEXT="HEAD 即顶节点，是当前开发分支的最顶端节点">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1474701420" 
+	TEXT="一般 HEAD 指向 master 分支">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1437959351" 
+	TEXT="$ cat .git/HEAD&#xa;ref: refs/heads/master&#xa;"/>
+<node COLOR="#111111" ID="ID_1541702219" 
+	TEXT="$ cat .git/HEAD&#xa;ref: refs/heads/feature&#xa;"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_849061571" 
+	TEXT="查看分支： git branch">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_248655269" 
+	TEXT="$ git branch&#xa;* master">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1156279952" 
+	TEXT="显示和查看远程分支： git branch -r">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_950711220" 
+	TEXT="git 以 origin/master 名称在本地版本库保留了远程版本库的分支。">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_117041120" 
+	TEXT=".git/packed-refs 文件： 保存了 tags 和 commit id 对应关系。还保存了 远程版本库分支名： refs/remotes/origin/*">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1977386074" 
+	TEXT="远程分支不能直接检出/查看，需要通过创建本地分支方式检出">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1260602084" 
+	TEXT="$ git checkout -b my-todo-copy origin/todo">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_850663663" 
+	TEXT="或者使用 --track 参数，直接创建同名的本地分支，以便更好的和该远程分支同步"/>
+<node COLOR="#111111" ID="ID_268932189" 
+	TEXT="$ git checkout --track origin/&lt;branch_name&gt;">
+<icon BUILTIN="idea"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1561981326" 
+	TEXT="理解 Git 远程分支">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1935563591" 
+	TEXT="显示远程分支： git branch -r">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_362292950" 
+	TEXT="git 以 origin/* 名称在本地版本库保留了远程版本库的分支。">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1895844762" 
+	TEXT="未 packed 的库，在 .git/refs/remotes/origin 目录下的文件代表远程分支">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1833846675" 
+	TEXT="packed 之后的库，在 .git/packed-refs 文件： &#xa; * 保存了 tags 和 commit id 对应关系。&#xa; * 还保存了 远程版本库分支名： refs/remotes/origin/*">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" ID="ID_715264921" 
+	TEXT="远程分支不能直接 checkout！">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1255059184" 
+	TEXT="可以通过创建本地分支，查看远程分支">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1872998198" 
+	TEXT="$ git checkout -b my-todo-copy origin/todo">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1893033037" 
+	TEXT="获取远程版本库的分支">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1861871152" 
+	TEXT="缺省同步/克隆一个版本库，是将 .git/refs/heads/ 下的本地分支克隆到新的版本库的 .git/refs/remote/ 下面"/>
+<node COLOR="#111111" ID="ID_1461931644" 
+	TEXT="如果要将一个源库的 remotes 分支也同步到镜像版本库，需要增加一个 fetch 设置。具体的应用范例，参见"/>
+<node COLOR="#111111" ID="ID_362605664" 
+	TEXT="        mkdir project&#xa;        cd project&#xa;        git init&#xa;        git remote add origin server:/pub/project&#xa;        git config --add remote.origin.fetch &apos;+refs/remotes/*:refs/remotes/*&apos;&#xa;        git fetch&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" ID="ID_1440280560" 
+	TEXT="建立远程分支的本地分支的另外一个等价方法：&#xa;$ git checkout --track origin/branchname">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_78473186" 
+	TEXT="创建新分支 ： git branch &lt;branch_name&gt; [base_tag]">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1902989864" 
+	TEXT="最当前版本创建">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_494024032" 
+	TEXT="$ git branch new&#xa;$ git branch&#xa;* master&#xa;  new&#xa;$ git checkout new&#xa;Switched to branch &apos;new&apos;&#xa;$ git branch&#xa;  master&#xa;* new">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1903718141" 
+	TEXT="基于旧版本/里程碑创建分支">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1559893999" 
+	TEXT="$ git branch new v1.6.3&#xa;$ git branch&#xa;* master&#xa;  new&#xa;$ git checkout new&#xa;Switched to branch &apos;new&apos;&#xa;$ git branch&#xa;  master&#xa;* new">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_243002548" 
+	TEXT="gitk 可以看到 branch 建立在 tag v1.6.3 上"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_552692599" 
+	TEXT="切换分支： git checkout &lt;branch_name&gt;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_80286110" 
+	TEXT="$ git branch&#xa;* master&#xa;  new&#xa;$ git checkout new&#xa;Switched to branch &apos;new&apos;&#xa;$ git branch&#xa;  master&#xa;* new">
+<font NAME="Serif" SIZE="12"/>
 </node>
 <node COLOR="#111111" FOLDED="true" ID="ID_1411472705" 
 	TEXT="git checkout &lt;tag_name&gt;: 检出旧版本/切换分支">
@@ -3794,103 +3908,114 @@
 <icon BUILTIN="help"/>
 </node>
 </node>
-<node COLOR="#111111" FOLDED="true" ID="ID_356300620" 
-	TEXT="切换分支： git checkout &lt;branch_name&gt;">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_798748093" 
-	TEXT="$ git branch&#xa;* master&#xa;  new&#xa;$ git checkout new&#xa;Switched to branch &apos;new&apos;&#xa;$ git branch&#xa;  master&#xa;* new">
-<font NAME="Serif" SIZE="12"/>
 </node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_945738539" 
-	TEXT="查看分支： git branch">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_160958947" 
-	TEXT="$ git branch&#xa;* master">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_855093224" 
-	TEXT="创建新分支 ： git branch &lt;branch_name&gt; [base_tag]">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_422338654" 
-	TEXT="最当前版本创建">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_225688362" 
-	TEXT="$ git branch new&#xa;$ git branch&#xa;* master&#xa;  new&#xa;$ git checkout new&#xa;Switched to branch &apos;new&apos;&#xa;$ git branch&#xa;  master&#xa;* new">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_962990354" 
-	TEXT="基于旧版本/里程碑创建分支">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1273081362" 
-	TEXT="$ git branch new v1.6.3&#xa;$ git branch&#xa;* master&#xa;  new&#xa;$ git checkout new&#xa;Switched to branch &apos;new&apos;&#xa;$ git branch&#xa;  master&#xa;* new">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_308624239" 
-	TEXT="gitk 可以看到 branch 建立在 tag v1.6.3 上"/>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_340611059" 
+<node COLOR="#111111" FOLDED="true" ID="ID_348510139" 
 	TEXT="创建并切换到新分支： git checkout -b &lt;new_branch&gt; [base_tag]">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1926222995" 
+<node COLOR="#111111" ID="ID_23978948" 
 	TEXT="$ git checkout -b new&#xa;Switched to a new branch &apos;new&apos;&#xa;">
 <font NAME="Serif" SIZE="12"/>
 </node>
 </node>
-<node COLOR="#111111" FOLDED="true" ID="ID_490875564" 
+<node COLOR="#111111" FOLDED="true" ID="ID_1305006926" 
 	TEXT="删除分支： git branch -d &lt;branch_name&gt; （限制条件： 该分支已经合并到当前分支）">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_723094752" 
+<node COLOR="#111111" ID="ID_327619591" 
 	TEXT="$ git branch -d new&#xa;error: Cannot delete the branch &apos;new&apos; which you are currently on.&#xa;$ git checkout master&#xa;Switched to branch &apos;master&apos;&#xa;$ git branch -d new&#xa;Deleted branch new (was f01f109).&#xa;">
 <font NAME="Serif" SIZE="12"/>
 </node>
 </node>
-<node COLOR="#111111" ID="ID_1056472844" 
+<node COLOR="#111111" ID="ID_624958296" 
 	TEXT="无条件删除分支： git branch -D &lt;branch_name&gt; ">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="12"/>
 <icon BUILTIN="yes"/>
 </node>
-<node COLOR="#111111" FOLDED="true" ID="ID_75201423" 
+<node COLOR="#111111" FOLDED="true" ID="ID_1253332433" 
 	TEXT="重新确定分支点： git reset --hard tagname">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_6243239" 
+<node COLOR="#111111" ID="ID_915515851" 
 	TEXT="和 git checkout &lt;branch_name&gt; 的区别在哪里？">
 <font NAME="Serif" SIZE="12"/>
 <icon BUILTIN="help"/>
 </node>
-<node COLOR="#111111" ID="ID_77988161" 
+<node COLOR="#111111" ID="ID_532700123" 
 	TEXT="注意：该命令非常危险，如果原分支点没有其它标记，找回原分支点很麻烦">
 <font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#111111" ID="ID_1036807919" 
+<node COLOR="#111111" ID="ID_729864830" 
 	TEXT="可以通过  .git/logs/HEAD 查看日志，找到切换分支的新分支点前的 commit id。">
 <font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#111111" ID="ID_984347032" 
+<node COLOR="#111111" ID="ID_283842332" 
 	TEXT="再执行 git reset --hard &lt;40-DIGIT-COMMIT-ID&gt;">
 <font NAME="Serif" SIZE="12"/>
 </node>
 </node>
-<node COLOR="#111111" ID="ID_873938692" 
+<node COLOR="#111111" FOLDED="true" ID="ID_88459081" 
+	TEXT="删除远程分支？">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1007278259" 
+	TEXT="删除远程分支:  git push origin :&lt;remote-branch-name&gt;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1927011540" 
+	TEXT="相当于命令 git push [remotename] [localbranch]:[remotebranch]  的 [localbranch] 为空">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" ID="ID_520397985" 
+	TEXT="建立远程分支的本地分支： git checkout -b branchname origin/branchname">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" ID="ID_934495436" 
 	TEXT="gitk 可以显示分支图">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="12"/>
 <icon BUILTIN="idea"/>
 </node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1402402678" 
+</node>
+<node COLOR="#990000" ID="ID_1568326075" 
+	TEXT="和他人共享分支">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1973915817" 
+	TEXT="分支操作的安全性设置">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1569772311" 
+	TEXT="是否允许 reset，版本库的安全设置">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1985647956" 
+	TEXT="receive.denyNonFastForwards 如果设置为 true，禁止 non-fast forword"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1807048641" 
+	TEXT="是否允许删除分支？">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_329380009" 
+	TEXT="receive.denyDeletes"/>
+</node>
+<node COLOR="#111111" ID="ID_607752764" 
+	TEXT="receive.denyCurrentBranch 缺省是 refuse，导致不能向含工作目录的库 push">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1772014319" 
+	TEXT="谁能创建分支"/>
+<node COLOR="#111111" ID="ID_1348935904" 
+	TEXT="谁能对分支强制推送"/>
+<node COLOR="#111111" ID="ID_1798723907" 
+	TEXT="谁能删除分支"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1402402678" 
 	TEXT="合并分支">
 <edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
+<font NAME="Serif" SIZE="14"/>
 <node COLOR="#111111" ID="ID_1734632324" 
 	TEXT="git merge &lt;branch_name&gt;"/>
 <node COLOR="#111111" ID="ID_580430573" 
@@ -3903,6 +4028,10 @@
 	TEXT="cherry-pick">
 <font NAME="Serif" SIZE="12"/>
 </node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_311389567" 
+	TEXT="分支变基">
+<font NAME="Serif" SIZE="14"/>
 <node COLOR="#111111" FOLDED="true" ID="ID_59919153" 
 	TEXT="Git rebase">
 <edge STYLE="bezier" WIDTH="thin"/>
@@ -4003,307 +4132,22 @@
 </node>
 </node>
 </node>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_726198213" 
-	TEXT="Git 分支简单操作">
-<edge STYLE="sharp_bezier" WIDTH="8"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_897846578" 
+	TEXT="分支管理 SOP">
+<edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_399921837" 
-	TEXT="关于 master 分支">
-<edge STYLE="bezier" WIDTH="thin"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1841236174" 
+	TEXT="各个项目的分支命名">
+<node COLOR="#111111" ID="ID_1031078182" 
+	TEXT="Git"/>
+<node COLOR="#111111" ID="ID_554540887" 
+	TEXT="Linux"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_6816277" 
+	TEXT="参考 Git 的管理： maintain-git.txt">
 <font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1712775428" 
-	TEXT="master 分支建立在 clone 之时，是基于当时远程库的 HEAD 版本创建">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1105822707" 
-	TEXT="$ cat .git/refs/remotes/origin/HEAD&#xa;ref: refs/remotes/origin/master">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1605155867" 
-	TEXT="$ cat .git/refs/remotes/origin/HEAD&#xa;ref: refs/remotes/origin/feature&#xa;">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1192855741" 
-	TEXT="关于 HEAD">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1468414563" 
-	TEXT="HEAD 即顶节点，是当前开发分支的最顶端节点">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1474701420" 
-	TEXT="一般 HEAD 指向 master 分支">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1437959351" 
-	TEXT="$ cat .git/HEAD&#xa;ref: refs/heads/master&#xa;"/>
-<node COLOR="#111111" ID="ID_1541702219" 
-	TEXT="$ cat .git/HEAD&#xa;ref: refs/heads/feature&#xa;"/>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_849061571" 
-	TEXT="查看分支： git branch">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_248655269" 
-	TEXT="$ git branch&#xa;* master">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1156279952" 
-	TEXT="显示和查看远程分支： git branch -r">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_950711220" 
-	TEXT="git 以 origin/master 名称在本地版本库保留了远程版本库的分支。">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_117041120" 
-	TEXT=".git/packed-refs 文件： 保存了 tags 和 commit id 对应关系。还保存了 远程版本库分支名： refs/remotes/origin/*">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1977386074" 
-	TEXT="远程分支不能直接检出/查看，需要通过创建本地分支方式检出">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1260602084" 
-	TEXT="$ git checkout -b my-todo-copy origin/todo">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_850663663" 
-	TEXT="或者使用 --track 参数，直接创建同名的本地分支，以便更好的和该远程分支同步"/>
-<node COLOR="#111111" ID="ID_268932189" 
-	TEXT="$ git checkout --track origin/&lt;branch_name&gt;">
-<icon BUILTIN="idea"/>
-</node>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_78473186" 
-	TEXT="创建新分支 ： git branch &lt;branch_name&gt; [base_tag]">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_1902989864" 
-	TEXT="最当前版本创建">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_494024032" 
-	TEXT="$ git branch new&#xa;$ git branch&#xa;* master&#xa;  new&#xa;$ git checkout new&#xa;Switched to branch &apos;new&apos;&#xa;$ git branch&#xa;  master&#xa;* new">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1903718141" 
-	TEXT="基于旧版本/里程碑创建分支">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1559893999" 
-	TEXT="$ git branch new v1.6.3&#xa;$ git branch&#xa;* master&#xa;  new&#xa;$ git checkout new&#xa;Switched to branch &apos;new&apos;&#xa;$ git branch&#xa;  master&#xa;* new">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_243002548" 
-	TEXT="gitk 可以看到 branch 建立在 tag v1.6.3 上"/>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_552692599" 
-	TEXT="切换分支： git checkout &lt;branch_name&gt;">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_80286110" 
-	TEXT="$ git branch&#xa;* master&#xa;  new&#xa;$ git checkout new&#xa;Switched to branch &apos;new&apos;&#xa;$ git branch&#xa;  master&#xa;* new">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_348510139" 
-	TEXT="创建并切换到新分支： git checkout -b &lt;new_branch&gt; [base_tag]">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_23978948" 
-	TEXT="$ git checkout -b new&#xa;Switched to a new branch &apos;new&apos;&#xa;">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#111111" ID="ID_1635222743" 
-	TEXT="合并分支： git merge &lt;branch_name&gt;">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1305006926" 
-	TEXT="删除分支： git branch -d &lt;branch_name&gt; （限制条件： 该分支已经合并到当前分支）">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_327619591" 
-	TEXT="$ git branch -d new&#xa;error: Cannot delete the branch &apos;new&apos; which you are currently on.&#xa;$ git checkout master&#xa;Switched to branch &apos;master&apos;&#xa;$ git branch -d new&#xa;Deleted branch new (was f01f109).&#xa;">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#111111" ID="ID_624958296" 
-	TEXT="无条件删除分支： git branch -D &lt;branch_name&gt; ">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<icon BUILTIN="yes"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1253332433" 
-	TEXT="重新确定分支点： git reset --hard tagname">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_915515851" 
-	TEXT="和 git checkout &lt;branch_name&gt; 的区别在哪里？">
-<font NAME="Serif" SIZE="12"/>
-<icon BUILTIN="help"/>
-</node>
-<node COLOR="#111111" ID="ID_532700123" 
-	TEXT="注意：该命令非常危险，如果原分支点没有其它标记，找回原分支点很麻烦">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_729864830" 
-	TEXT="可以通过  .git/logs/HEAD 查看日志，找到切换分支的新分支点前的 commit id。">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_283842332" 
-	TEXT="再执行 git reset --hard &lt;40-DIGIT-COMMIT-ID&gt;">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#111111" ID="ID_88459081" 
-	TEXT="删除远程分支？">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_934495436" 
-	TEXT="gitk 可以显示分支图">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<icon BUILTIN="idea"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_182306276" 
-	TEXT="关于 .git 下分支的管理">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<icon BUILTIN="idea"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_1175872114" 
-	TEXT=".git/refs/heads/ 下是分支名称">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_638172344" 
-	TEXT="$ ls .git/refs/heads/&#xa;master  new&#xa;"/>
-</node>
-<node COLOR="#111111" ID="ID_914055683" 
-	TEXT="例如 .git/refs/heads/master 中记录的是 master 分支对应的 40 位 commit id">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1640438759" 
-	TEXT=".git/refs/tags/ 下是里程碑名称。如果目录为空，可能已经打包整理到文件 .git/packed-refs 文件中了。">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_225972405" 
-	TEXT=".git/packed-refs 是 git 版本库经过 gc 整理后的分支和commit 对应索引文件（纯文本文件）">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_691858829" 
-	TEXT=".git/HEAD 文件内容指向具体的分支。例如 ref: refs/heads/newbranch">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_811947476" 
-	TEXT="$ cat .git/HEAD&#xa;ref: refs/heads/new&#xa;"/>
-</node>
-<node COLOR="#111111" ID="ID_1149443935" 
-	TEXT=".git/logs/refs/heads/ 下以分支名称命名的文件，包含对应分支的 commit 历史">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_138160490" 
-	TEXT="一般我们使用简写的名称，实际的对应关系如下。&#xa;    * The branch &quot;test&quot; is short for &quot;refs/heads/test&quot;.&#xa;    * The tag &quot;v2.6.18&quot; is short for &quot;refs/tags/v2.6.18&quot;.&#xa;    * &quot;origin/master&quot; is short for &quot;refs/remotes/origin/master&quot;. &#xa;&#xa;如果存在同名的里程碑和分支，就需要用长的名称（全名）了。">
-<font NAME="Serif" SIZE="12"/>
-<icon BUILTIN="idea"/>
-</node>
-</node>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_160506121" 
-	TEXT="Git 分支复杂操作">
-<edge STYLE="sharp_bezier" WIDTH="8"/>
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_1007278259" 
-	TEXT="删除远程分支:  git push origin :&lt;remote-branch-name&gt;">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1927011540" 
-	TEXT="相当于命令 git push [remotename] [localbranch]:[remotebranch]  的 [localbranch] 为空">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#111111" ID="ID_520397985" 
-	TEXT="建立远程分支的本地分支： git checkout -b branchname origin/branchname">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1440280560" 
-	TEXT="建立远程分支的本地分支的另外一个等价方法：&#xa;$ git checkout --track origin/branchname">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1561981326" 
-	TEXT="理解 Git 远程分支">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_1935563591" 
-	TEXT="显示远程分支： git branch -r">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_362292950" 
-	TEXT="git 以 origin/* 名称在本地版本库保留了远程版本库的分支。">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1895844762" 
-	TEXT="未 packed 的库，在 .git/refs/remotes/origin 目录下的文件代表远程分支">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1833846675" 
-	TEXT="packed 之后的库，在 .git/packed-refs 文件： &#xa; * 保存了 tags 和 commit id 对应关系。&#xa; * 还保存了 远程版本库分支名： refs/remotes/origin/*">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#111111" ID="ID_715264921" 
-	TEXT="远程分支不能直接 checkout！">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1255059184" 
-	TEXT="可以通过创建本地分支，查看远程分支">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1872998198" 
-	TEXT="$ git checkout -b my-todo-copy origin/todo">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1893033037" 
-	TEXT="获取远程版本库的分支">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1861871152" 
-	TEXT="缺省同步/克隆一个版本库，是将 .git/refs/heads/ 下的本地分支克隆到新的版本库的 .git/refs/remote/ 下面"/>
-<node COLOR="#111111" ID="ID_1461931644" 
-	TEXT="如果要将一个源库的 remotes 分支也同步到镜像版本库，需要增加一个 fetch 设置。具体的应用范例，参见"/>
-<node COLOR="#111111" ID="ID_362605664" 
-	TEXT="        mkdir project&#xa;        cd project&#xa;        git init&#xa;        git remote add origin server:/pub/project&#xa;        git config --add remote.origin.fetch &apos;+refs/remotes/*:refs/remotes/*&apos;&#xa;        git fetch&#xa;">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1269085311" 
-	TEXT="git remote add ： 跟踪其他源（除了缺省克隆时指定的源外）">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1258405244" 
-	TEXT="$ git remote add linux-nfs git://linux-nfs.org/pub/nfs-2.6.git&#xa;$ git fetch linux-nfs&#xa;* refs/remotes/linux-nfs/master: storing branch &apos;master&apos; ...&#xa;  commit: bf81b46">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1417723557" 
-	TEXT="相当于对 .git/config 进行了修改">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_530998183" 
-	TEXT="git remote add name url 设定另外的同步源，用于 pull 和 fetch。相当于在 .git/config 文件尾部增加一个 remote 小节">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_416801643" 
-	TEXT="$ tail .git/config&#xa;&#xa;[remote &quot;linux-nfs&quot;]&#xa;        url = git://linux-nfs.org/pub/nfs-2.6.git&#xa;        fetch = +refs/heads/*:refs/remotes/linux-nfs/*&#xa;">
+<node COLOR="#111111" ID="ID_1945503704" 
+	TEXT="The policy.&#xa;&#xa; - Feature releases are numbered as vX.Y.Z and are meant to&#xa;   contain bugfixes and enhancements in any area, including&#xa;   functionality, performance and usability, without regression.&#xa;&#xa; - Maintenance releases are numbered as vX.Y.Z.W and are meant&#xa;   to contain only bugfixes for the corresponding vX.Y.Z feature&#xa;   release and earlier maintenance releases vX.Y.Z.V (V &lt; W).&#xa;&#xa; - &apos;master&apos; branch is used to prepare for the next feature&#xa;   release. In other words, at some point, the tip of &apos;master&apos;&#xa;   branch is tagged with vX.Y.Z.&#xa;&#xa; - &apos;maint&apos; branch is used to prepare for the next maintenance&#xa;   release.  After the feature release vX.Y.Z is made, the tip&#xa;   of &apos;maint&apos; branch is set to that release, and bugfixes will&#xa;   accumulate on the branch, and at some point, the tip of the&#xa;   branch is tagged with vX.Y.Z.1, vX.Y.Z.2, and so on.&#xa;&#xa; - &apos;next&apos; branch is used to publish changes (both enhancements&#xa;   and fixes) that (1) have worthwhile goal, (2) are in a fairly&#xa;   good shape suitable for everyday use, (3) but have not yet&#xa;   demonstrated to be regression free.  New changes are tested&#xa;   in &apos;next&apos; before merged to &apos;master&apos;.&#xa;&#xa; - &apos;pu&apos; branch is used to publish other proposed changes that do&#xa;   not yet pass the criteria set for &apos;next&apos;.&#xa;&#xa; - The tips of &apos;master&apos;, &apos;maint&apos; and &apos;next&apos; branches will always&#xa;   fast-forward, to allow people to build their own&#xa;   customization on top of them.&#xa;&#xa; - Usually &apos;master&apos; contains all of &apos;maint&apos;, &apos;next&apos; contains all&#xa;   of &apos;master&apos; and &apos;pu&apos; contains all of &apos;next&apos;.&#xa;&#xa; - The tip of &apos;master&apos; is meant to be more stable than any&#xa;   tagged releases, and the users are encouraged to follow it.&#xa;&#xa; - The &apos;next&apos; branch is where new action takes place, and the&#xa;   users are encouraged to test it so that regressions and bugs&#xa;   are found before new topics are merged to &apos;master&apos;.&#xa;&#xa; - &apos;pu&apos; branch is used to publish other proposed changes that do&#xa;   not yet pass the criteria set for &apos;next&apos;.&#xa;&#xa; - The tips of &apos;master&apos;, &apos;maint&apos; and &apos;next&apos; branches will always&#xa;   fast-forward, to allow people to build their own&#xa;   customization on top of them.&#xa;&#xa; - Usually &apos;master&apos; contains all of &apos;maint&apos;, &apos;next&apos; contains all&#xa;   of &apos;master&apos; and &apos;pu&apos; contains all of &apos;next&apos;.&#xa;&#xa; - The tip of &apos;master&apos; is meant to be more stable than any&#xa;   tagged releases, and the users are encouraged to follow it.&#xa;&#xa; - The &apos;next&apos; branch is where new action takes place, and the&#xa;   users are encouraged to test it so that regressions and bugs&#xa;   are found before new topics are merged to &apos;master&apos;.&#xa;&#xa;">
 <font NAME="Serif" SIZE="12"/>
 </node>
 </node>
@@ -4642,11 +4486,43 @@
 </node>
 </node>
 </node>
+<node COLOR="#990000" ID="ID_1078926357" 
+	TEXT="和他人共享里程碑">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1050685782" 
+	TEXT="里程碑管理 SOP">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1610498937" 
+	TEXT="Linux 的里程碑命名"/>
+<node COLOR="#111111" ID="ID_741787146" 
+	TEXT="Git 项目的里程碑命名"/>
+<node COLOR="#111111" ID="ID_463312956" 
+	TEXT="里程碑命名规则和名称的排序，到底 git describe 使用哪个 tag？"/>
+</node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_352618381" 
 	TEXT="5 远程版本库">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_1907763309" 
+	TEXT="问题：">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1434155051" 
+	TEXT="如何避免本地分支不会意外的复制到远程？"/>
+<node COLOR="#111111" ID="ID_165356920" 
+	TEXT="我本地创建的一个分支和远程的分支重名了？"/>
+<node COLOR="#111111" ID="ID_1567440842" 
+	TEXT="如何避免个人在本地创建的 tag 被传递到远程服务器互相覆盖。"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_661392679" 
+	TEXT="克隆操作的奥秘">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1365225576" 
+	TEXT="为什么不能把所有的 tag 复制下来？例如 master 分支重置之前的 tag"/>
+<node COLOR="#111111" ID="ID_312512795" 
+	TEXT="远程分支都到哪里去了？"/>
+</node>
 <node COLOR="#990000" FOLDED="true" ID="ID_433746938" 
 	TEXT="直接操作远程版本库的分支">
 <edge STYLE="bezier" WIDTH="thin"/>
@@ -4910,6 +4786,33 @@
 <node COLOR="#111111" ID="ID_1518562701" 
 	TEXT="remote update">
 <font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_160506121" 
+	TEXT="Git 分支复杂操作">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1269085311" 
+	TEXT="git remote add ： 跟踪其他源（除了缺省克隆时指定的源外）">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1258405244" 
+	TEXT="$ git remote add linux-nfs git://linux-nfs.org/pub/nfs-2.6.git&#xa;$ git fetch linux-nfs&#xa;* refs/remotes/linux-nfs/master: storing branch &apos;master&apos; ...&#xa;  commit: bf81b46">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1417723557" 
+	TEXT="相当于对 .git/config 进行了修改">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_530998183" 
+	TEXT="git remote add name url 设定另外的同步源，用于 pull 和 fetch。相当于在 .git/config 文件尾部增加一个 remote 小节">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_416801643" 
+	TEXT="$ tail .git/config&#xa;&#xa;[remote &quot;linux-nfs&quot;]&#xa;        url = git://linux-nfs.org/pub/nfs-2.6.git&#xa;        fetch = +refs/heads/*:refs/remotes/linux-nfs/*&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
 </node>
 </node>
 </node>

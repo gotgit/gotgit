@@ -1060,6 +1060,10 @@ Git 合并操作支持很多合并策略，缺省会选择最适合的合并策�
 
   执行 `git mergetool` 进行冲突解决时调用的图形化工具。变量 `merge.tool` 可以设置为如下内置支持的工具："kdiff3", "tkdiff", "meld", "xxdiff", "emerge", "vimdiff", "gvimdiff", "diffuse", "ecmerge", "tortoisemerge", "p4merge", "araxis" 和 "opendiff"。
 
+  ::
+
+    $ git config --global merge.tool kdiff3
+
   如果将 `merge.tool` 设置为其他值，则使用自定义工具进行冲突解决。自定义工具需要使用 `mergetool.<tool>.cmd` 对自定义工具的命令行进行设置。
 
 * mergetool.<tool>.path
@@ -1078,8 +1082,10 @@ Git 合并操作支持很多合并策略，缺省会选择最适合的合并策�
 
   ::
 
-    /path/to/merge_tool -L1 "$MERGED (Base)" -L2 "$MERGED (Local)" -L3 "$MERGED (Remote)"
-                        --auto -o "$MERGED" "$BASE" "$LOCAL" "$REMOTE" 
+    $ git config --global merge.tool mykdiff3
+    $ git config --global mergetool.mykdiff3.cmd '/usr/bin/kdiff3
+                 -L1 "$MERGED (Base)" -L2 "$MERGED (Local)" -L3 "$MERGED (Remote)"
+                 --auto -o "$MERGED" "$BASE" "$LOCAL" "$REMOTE"'
 
 * merge.log
 
