@@ -3620,102 +3620,6 @@
 </node>
 </node>
 </node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1008288155" 
-	TEXT="Git 分支的奥秘">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="14"/>
-<icon BUILTIN="idea"/>
-<icon BUILTIN="full-2"/>
-<node COLOR="#111111" ID="ID_1319495890" 
-	TEXT="CVS 的分支管理是灾难：不可见，而且速度慢"/>
-<node COLOR="#111111" ID="ID_161218333" 
-	TEXT="SVN 解决了 CVS 分支创建慢的问题，但是用目录复制实现，平添困扰。授权问题。"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_1618650480" 
-	TEXT=".git/refs/heads/ 下是分支名称">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1297388320" 
-	TEXT="$ ls .git/refs/heads/&#xa;master  new&#xa;"/>
-</node>
-<node COLOR="#111111" ID="ID_686167280" 
-	TEXT="例如 .git/refs/heads/master 中记录的是 master 分支对应的 40 位 commit id">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_346325" 
-	TEXT=".git/refs/tags/ 下是里程碑名称。如果目录为空，可能已经打包整理到文件 .git/packed-refs 文件中了。">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_133390599" 
-	TEXT=".git/packed-refs 是 git 版本库经过 gc 整理后的分支和commit 对应索引文件（纯文本文件）">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1050308485" 
-	TEXT=".git/HEAD 文件内容指向具体的分支。例如 ref: refs/heads/newbranch">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1488868592" 
-	TEXT="$ cat .git/HEAD&#xa;ref: refs/heads/new&#xa;"/>
-</node>
-<node COLOR="#111111" ID="ID_1250067505" 
-	TEXT=".git/logs/refs/heads/ 下以分支名称命名的文件，包含对应分支的 commit 历史">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_96167658" 
-	TEXT="一般我们使用简写的名称，实际的对应关系如下。&#xa;    * The branch &quot;test&quot; is short for &quot;refs/heads/test&quot;.&#xa;    * The tag &quot;v2.6.18&quot; is short for &quot;refs/tags/v2.6.18&quot;.&#xa;    * &quot;origin/master&quot; is short for &quot;refs/remotes/origin/master&quot;. &#xa;&#xa;如果存在同名的里程碑和分支，就需要用长的名称（全名）了。">
-<font NAME="Serif" SIZE="12"/>
-<icon BUILTIN="idea"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1746903634" 
-	TEXT="不同路径下的引用">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<icon BUILTIN="forward"/>
-<node COLOR="#111111" ID="ID_623285892" 
-	TEXT="refs/heads">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1301309041" 
-	TEXT="refs/tags">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_828457952" 
-	TEXT="refs/remotes/">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1083169713" 
-	TEXT="refs/top-bases/">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1110131535" 
-	TEXT="refs/changes/">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_757285595" 
-	TEXT="refs/for/">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_189921635" 
-	TEXT="refs/stash">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_937608131" 
-	TEXT="refs/bisect/bad">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1692345880" 
-	TEXT="里程碑/分支名称的合法性问题">
-<font NAME="Serif" SIZE="12"/>
-<icon BUILTIN="forward"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_1282356050" 
-	TEXT="1.7.4开始，分支名称不能以减号（-）开始了。">
-<font NAME="Serif" SIZE="12"/>
-<icon BUILTIN="info"/>
-<node COLOR="#111111" ID="ID_1789485369" 
-	TEXT=" * The option parsers of various commands that create new branch (or    rename existing ones to a new name) were too loose and users were    allowed to call a branch with a name that begins with a dash by    creative abuse of their command line options, which only lead to    burn themselves.  The name of a branch cannot begin with a dash    now. "/>
-</node>
-<node COLOR="#111111" ID="ID_1337413283" 
-	TEXT="代码中看看哪些字符不允许？ "/>
-</node>
-</node>
 <node COLOR="#990000" FOLDED="true" ID="ID_726198213" 
 	TEXT="操作 Git 分支">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
@@ -3984,38 +3888,101 @@
 <icon BUILTIN="idea"/>
 </node>
 </node>
-<node COLOR="#990000" ID="ID_1568326075" 
-	TEXT="分支共享">
-<font NAME="Serif" SIZE="14"/>
-<icon BUILTIN="full-4"/>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1973915817" 
-	TEXT="分支安全性">
+<node COLOR="#990000" FOLDED="true" ID="ID_1008288155" 
+	TEXT="Git 分支的奥秘">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="14"/>
-<icon BUILTIN="full-5"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_1569772311" 
-	TEXT="是否允许 reset，版本库的安全设置">
+<icon BUILTIN="idea"/>
+<icon BUILTIN="full-2"/>
+<node COLOR="#111111" ID="ID_1319495890" 
+	TEXT="CVS 的分支管理是灾难：不可见，而且速度慢"/>
+<node COLOR="#111111" ID="ID_161218333" 
+	TEXT="SVN 解决了 CVS 分支创建慢的问题，但是用目录复制实现，平添困扰。授权问题。"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1618650480" 
+	TEXT=".git/refs/heads/ 下是分支名称">
 <font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1985647956" 
-	TEXT="receive.denyNonFastForwards 如果设置为 true，禁止 non-fast forword"/>
+<node COLOR="#111111" ID="ID_1297388320" 
+	TEXT="$ ls .git/refs/heads/&#xa;master  new&#xa;"/>
 </node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1807048641" 
-	TEXT="是否允许删除分支？">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_329380009" 
-	TEXT="receive.denyDeletes"/>
-</node>
-<node COLOR="#111111" ID="ID_607752764" 
-	TEXT="receive.denyCurrentBranch 缺省是 refuse，导致不能向含工作目录的库 push">
+<node COLOR="#111111" ID="ID_686167280" 
+	TEXT="例如 .git/refs/heads/master 中记录的是 master 分支对应的 40 位 commit id">
 <font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#111111" ID="ID_1772014319" 
-	TEXT="谁能创建分支"/>
-<node COLOR="#111111" ID="ID_1348935904" 
-	TEXT="谁能对分支强制推送"/>
-<node COLOR="#111111" ID="ID_1798723907" 
-	TEXT="谁能删除分支"/>
+<node COLOR="#111111" ID="ID_346325" 
+	TEXT=".git/refs/tags/ 下是里程碑名称。如果目录为空，可能已经打包整理到文件 .git/packed-refs 文件中了。">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_133390599" 
+	TEXT=".git/packed-refs 是 git 版本库经过 gc 整理后的分支和commit 对应索引文件（纯文本文件）">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1050308485" 
+	TEXT=".git/HEAD 文件内容指向具体的分支。例如 ref: refs/heads/newbranch">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1488868592" 
+	TEXT="$ cat .git/HEAD&#xa;ref: refs/heads/new&#xa;"/>
+</node>
+<node COLOR="#111111" ID="ID_1250067505" 
+	TEXT=".git/logs/refs/heads/ 下以分支名称命名的文件，包含对应分支的 commit 历史">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_96167658" 
+	TEXT="一般我们使用简写的名称，实际的对应关系如下。&#xa;    * The branch &quot;test&quot; is short for &quot;refs/heads/test&quot;.&#xa;    * The tag &quot;v2.6.18&quot; is short for &quot;refs/tags/v2.6.18&quot;.&#xa;    * &quot;origin/master&quot; is short for &quot;refs/remotes/origin/master&quot;. &#xa;&#xa;如果存在同名的里程碑和分支，就需要用长的名称（全名）了。">
+<font NAME="Serif" SIZE="12"/>
+<icon BUILTIN="idea"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1746903634" 
+	TEXT="不同路径下的引用">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<icon BUILTIN="forward"/>
+<node COLOR="#111111" ID="ID_623285892" 
+	TEXT="refs/heads">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1301309041" 
+	TEXT="refs/tags">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_828457952" 
+	TEXT="refs/remotes/">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1083169713" 
+	TEXT="refs/top-bases/">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1110131535" 
+	TEXT="refs/changes/">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_757285595" 
+	TEXT="refs/for/">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_189921635" 
+	TEXT="refs/stash">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_937608131" 
+	TEXT="refs/bisect/bad">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1692345880" 
+	TEXT="里程碑/分支名称的合法性问题">
+<font NAME="Serif" SIZE="12"/>
+<icon BUILTIN="forward"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1282356050" 
+	TEXT="1.7.4开始，分支名称不能以减号（-）开始了。">
+<font NAME="Serif" SIZE="12"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_1789485369" 
+	TEXT=" * The option parsers of various commands that create new branch (or    rename existing ones to a new name) were too loose and users were    allowed to call a branch with a name that begins with a dash by    creative abuse of their command line options, which only lead to    burn themselves.  The name of a branch cannot begin with a dash    now. "/>
+</node>
+<node COLOR="#111111" ID="ID_1337413283" 
+	TEXT="代码中看看哪些字符不允许？ "/>
+</node>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_1402402678" 
 	TEXT="分支合并">
@@ -4174,66 +4141,6 @@
 	TEXT="git describe"/>
 </node>
 </node>
-<node COLOR="#990000" FOLDED="true" ID="ID_677538909" 
-	TEXT="Git 里程碑奥秘">
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_222373567" 
-	TEXT="特殊的引用空间"/>
-<node COLOR="#111111" ID="ID_446695308" 
-	TEXT="轻量级里程碑">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_816785129" 
-	TEXT="带注解的里程碑">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_1674727649" 
-	TEXT="轻量级里程碑 和 带注解的里程碑">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<icon BUILTIN="idea"/>
-<node COLOR="#111111" ID="ID_1496367509" 
-	TEXT="带有注解的里程碑是使用 -a 或者 -s 方式创建，并且用 -m 参数添加说明">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1074473132" 
-	TEXT="用 -a 参数创建带有注解的里程碑">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1285089645" 
-	TEXT="$ git tag -a v1.4 -m &apos;my version 1.4&apos;&#xa;$ git tag&#xa;v0.1&#xa;v1.3&#xa;v1.4"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_559835978" 
-	TEXT="-s 参数用 gpg 签名里程碑。用 -v 参数可以校验之">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_520731049" 
-	TEXT="$ git tag -s v1.5 -m &apos;my signed 1.5 tag&apos;&#xa;You need a passphrase to unlock the secret key for&#xa;user: &quot;Scott Chacon &lt;schacon@gee-mail.com&gt;&quot;&#xa;1024-bit DSA key, ID F721C45A, created 2009-02-09"/>
-<node COLOR="#111111" ID="ID_529214851" 
-	TEXT="$ git tag -v v1.4.2.1&#xa;object 883653babd8ee7ea23e6a5c392bb739348b1eb61&#xa;type commit&#xa;tag v1.4.2.1&#xa;tagger Junio C Hamano &lt;junkio@cox.net&gt; 1158138501 -0700&#xa;&#xa;GIT 1.4.2.1&#xa;&#xa;Minor fixes since 1.4.2, including git-mv and git-http with alternates.&#xa;gpg: Signature made Wed Sep 13 02:08:25 2006 PDT using DSA key ID F3119B9A&#xa;gpg: Good signature from &quot;Junio C Hamano &lt;junkio@cox.net&gt;&quot;&#xa;gpg:                 aka &quot;[jpeg image of size 1513]&quot;&#xa;Primary key fingerprint: 3565 2A26 2040 E066 C9A7  4A7D C0C6 D9A4 F311 9B9A"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_916113621" 
-	TEXT="用 git show 命令，查看里程碑的注解">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_682062052" 
-	TEXT="$ git show v1.4&#xa;tag v1.4&#xa;Tagger: Scott Chacon &lt;schacon@gee-mail.com&gt;&#xa;Date:   Mon Feb 9 14:45:11 2009 -0800&#xa;&#xa;my version 1.4&#xa;commit 15027957951b64cf874c3557a0f3547bd83b3ff6&#xa;Merge: 4a447f7... a6b4c97...&#xa;Author: Scott Chacon &lt;schacon@gee-mail.com&gt;&#xa;Date:   Sun Feb 8 19:02:46 2009 -0800&#xa;&#xa;    Merge branch &apos;experiment&apos;"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_593208744" 
-	TEXT="轻量级里程碑，用 git-show 只能看到tag应用到的 commit 本身">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_25205744" 
-	TEXT="$ git tag v1.4-lw&#xa;$ git tag&#xa;v0.1&#xa;v1.3&#xa;v1.4&#xa;v1.4-lw&#xa;v1.5"/>
-<node COLOR="#111111" ID="ID_1403819583" 
-	TEXT="$ git show v1.4-lw&#xa;commit 15027957951b64cf874c3557a0f3547bd83b3ff6&#xa;Merge: 4a447f7... a6b4c97...&#xa;Author: Scott Chacon &lt;schacon@gee-mail.com&gt;&#xa;Date:   Sun Feb 8 19:02:46 2009 -0800&#xa;&#xa;    Merge branch &apos;experiment&apos;"/>
-</node>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1870396988" 
-	TEXT="带签名的里程碑">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1125169278" 
-	TEXT="repo 如何管理签名？">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-</node>
 <node COLOR="#990000" FOLDED="true" ID="ID_356033177" 
 	TEXT="操作 Git 里程碑">
 <edge STYLE="bezier" WIDTH="thin"/>
@@ -4366,38 +4273,64 @@
 	TEXT="修改的里程碑，运行 git push, git pull 不会自动同步"/>
 </node>
 </node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1459232538" 
-	TEXT="共享里程碑">
-<edge STYLE="bezier" WIDTH="thin"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_677538909" 
+	TEXT="Git 里程碑奥秘">
 <font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_222373567" 
+	TEXT="特殊的引用空间"/>
+<node COLOR="#111111" ID="ID_446695308" 
+	TEXT="轻量级里程碑">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_816785129" 
+	TEXT="带注解的里程碑">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1674727649" 
+	TEXT="轻量级里程碑 和 带注解的里程碑">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
 <icon BUILTIN="idea"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_1491796945" 
-	TEXT="缺省 git push 命令不上传 tag 名称到服务器。">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_734059950" 
-	TEXT="By default, the git push command doesn’t transfer tags to remote servers. You will have to explicitly push tags to a shared server after you have created them. This process is just like sharing remote branches – you can run git push origin [tagname].">
+<node COLOR="#111111" ID="ID_1496367509" 
+	TEXT="带有注解的里程碑是使用 -a 或者 -s 方式创建，并且用 -m 参数添加说明">
 <font NAME="Serif" SIZE="12"/>
 </node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_739219089" 
-	TEXT="您必须显示的上传 tag 名">
+<node COLOR="#111111" FOLDED="true" ID="ID_1074473132" 
+	TEXT="用 -a 参数创建带有注解的里程碑">
 <font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_1709782807" 
-	TEXT="git push origin &lt;tagname&gt;">
+<node COLOR="#111111" ID="ID_1285089645" 
+	TEXT="$ git tag -a v1.4 -m &apos;my version 1.4&apos;&#xa;$ git tag&#xa;v0.1&#xa;v1.3&#xa;v1.4"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_559835978" 
+	TEXT="-s 参数用 gpg 签名里程碑。用 -v 参数可以校验之">
 <font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_523576403" 
-	TEXT="$ git push origin v1.5&#xa;Counting objects: 50, done.&#xa;Compressing objects: 100% (38/38), done.&#xa;Writing objects: 100% (44/44), 4.56 KiB, done.&#xa;Total 44 (delta 18), reused 8 (delta 1)&#xa;To git@github.com:schacon/simplegit.git&#xa;* [new tag]         v1.5 -&gt; v1.5"/>
+<node COLOR="#111111" ID="ID_520731049" 
+	TEXT="$ git tag -s v1.5 -m &apos;my signed 1.5 tag&apos;&#xa;You need a passphrase to unlock the secret key for&#xa;user: &quot;Scott Chacon &lt;schacon@gee-mail.com&gt;&quot;&#xa;1024-bit DSA key, ID F721C45A, created 2009-02-09"/>
+<node COLOR="#111111" ID="ID_529214851" 
+	TEXT="$ git tag -v v1.4.2.1&#xa;object 883653babd8ee7ea23e6a5c392bb739348b1eb61&#xa;type commit&#xa;tag v1.4.2.1&#xa;tagger Junio C Hamano &lt;junkio@cox.net&gt; 1158138501 -0700&#xa;&#xa;GIT 1.4.2.1&#xa;&#xa;Minor fixes since 1.4.2, including git-mv and git-http with alternates.&#xa;gpg: Signature made Wed Sep 13 02:08:25 2006 PDT using DSA key ID F3119B9A&#xa;gpg: Good signature from &quot;Junio C Hamano &lt;junkio@cox.net&gt;&quot;&#xa;gpg:                 aka &quot;[jpeg image of size 1513]&quot;&#xa;Primary key fingerprint: 3565 2A26 2040 E066 C9A7  4A7D C0C6 D9A4 F311 9B9A"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_916113621" 
+	TEXT="用 git show 命令，查看里程碑的注解">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_682062052" 
+	TEXT="$ git show v1.4&#xa;tag v1.4&#xa;Tagger: Scott Chacon &lt;schacon@gee-mail.com&gt;&#xa;Date:   Mon Feb 9 14:45:11 2009 -0800&#xa;&#xa;my version 1.4&#xa;commit 15027957951b64cf874c3557a0f3547bd83b3ff6&#xa;Merge: 4a447f7... a6b4c97...&#xa;Author: Scott Chacon &lt;schacon@gee-mail.com&gt;&#xa;Date:   Sun Feb 8 19:02:46 2009 -0800&#xa;&#xa;    Merge branch &apos;experiment&apos;"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_593208744" 
+	TEXT="轻量级里程碑，用 git-show 只能看到tag应用到的 commit 本身">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_25205744" 
+	TEXT="$ git tag v1.4-lw&#xa;$ git tag&#xa;v0.1&#xa;v1.3&#xa;v1.4&#xa;v1.4-lw&#xa;v1.5"/>
+<node COLOR="#111111" ID="ID_1403819583" 
+	TEXT="$ git show v1.4-lw&#xa;commit 15027957951b64cf874c3557a0f3547bd83b3ff6&#xa;Merge: 4a447f7... a6b4c97...&#xa;Author: Scott Chacon &lt;schacon@gee-mail.com&gt;&#xa;Date:   Sun Feb 8 19:02:46 2009 -0800&#xa;&#xa;    Merge branch &apos;experiment&apos;"/>
 </node>
 </node>
-<node COLOR="#111111" FOLDED="true" ID="ID_927753999" 
-	TEXT="或者使用 git push --tags">
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1870396988" 
+	TEXT="带签名的里程碑">
 <font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_146935287" 
-	TEXT="If you have a lot of tags that you want to push up at once, you can also use the --tags option to the git push command. This will transfer all of your tags to the remote server that are not already there.">
+<node COLOR="#111111" ID="ID_1125169278" 
+	TEXT="repo 如何管理签名？">
 <font NAME="Serif" SIZE="12"/>
 </node>
-<node COLOR="#111111" ID="ID_902930995" 
-	TEXT="$ git push origin --tags&#xa;Counting objects: 50, done.&#xa;Compressing objects: 100% (38/38), done.&#xa;Writing objects: 100% (44/44), 4.56 KiB, done.&#xa;Total 44 (delta 18), reused 8 (delta 1)&#xa;To git@github.com:schacon/simplegit.git&#xa; * [new tag]         v0.1 -&gt; v0.1&#xa; * [new tag]         v1.2 -&gt; v1.2&#xa; * [new tag]         v1.4 -&gt; v1.4&#xa; * [new tag]         v1.4-lw -&gt; v1.4-lw&#xa; * [new tag]         v1.5 -&gt; v1.5"/>
 </node>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_1050685782" 
@@ -4719,6 +4652,34 @@
 </node>
 </node>
 </node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1973915817" 
+	TEXT="分支安全性">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="14"/>
+<icon BUILTIN="full-5"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1569772311" 
+	TEXT="是否允许 reset，版本库的安全设置">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1985647956" 
+	TEXT="receive.denyNonFastForwards 如果设置为 true，禁止 non-fast forword"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1807048641" 
+	TEXT="是否允许删除分支？">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_329380009" 
+	TEXT="receive.denyDeletes"/>
+</node>
+<node COLOR="#111111" ID="ID_607752764" 
+	TEXT="receive.denyCurrentBranch 缺省是 refuse，导致不能向含工作目录的库 push">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1772014319" 
+	TEXT="谁能创建分支"/>
+<node COLOR="#111111" ID="ID_1348935904" 
+	TEXT="谁能对分支强制推送"/>
+<node COLOR="#111111" ID="ID_1798723907" 
+	TEXT="谁能删除分支"/>
+</node>
 <node COLOR="#990000" FOLDED="true" ID="ID_160506121" 
 	TEXT="Git 分支复杂操作">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
@@ -4743,6 +4704,40 @@
 <node COLOR="#111111" ID="ID_416801643" 
 	TEXT="$ tail .git/config&#xa;&#xa;[remote &quot;linux-nfs&quot;]&#xa;        url = git://linux-nfs.org/pub/nfs-2.6.git&#xa;        fetch = +refs/heads/*:refs/remotes/linux-nfs/*&#xa;">
 <font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1459232538" 
+	TEXT="共享里程碑">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<icon BUILTIN="idea"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1491796945" 
+	TEXT="缺省 git push 命令不上传 tag 名称到服务器。">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_734059950" 
+	TEXT="By default, the git push command doesn’t transfer tags to remote servers. You will have to explicitly push tags to a shared server after you have created them. This process is just like sharing remote branches – you can run git push origin [tagname].">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_739219089" 
+	TEXT="您必须显示的上传 tag 名">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1709782807" 
+	TEXT="git push origin &lt;tagname&gt;">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_523576403" 
+	TEXT="$ git push origin v1.5&#xa;Counting objects: 50, done.&#xa;Compressing objects: 100% (38/38), done.&#xa;Writing objects: 100% (44/44), 4.56 KiB, done.&#xa;Total 44 (delta 18), reused 8 (delta 1)&#xa;To git@github.com:schacon/simplegit.git&#xa;* [new tag]         v1.5 -&gt; v1.5"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_927753999" 
+	TEXT="或者使用 git push --tags">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_146935287" 
+	TEXT="If you have a lot of tags that you want to push up at once, you can also use the --tags option to the git push command. This will transfer all of your tags to the remote server that are not already there.">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_902930995" 
+	TEXT="$ git push origin --tags&#xa;Counting objects: 50, done.&#xa;Compressing objects: 100% (38/38), done.&#xa;Writing objects: 100% (44/44), 4.56 KiB, done.&#xa;Total 44 (delta 18), reused 8 (delta 1)&#xa;To git@github.com:schacon/simplegit.git&#xa; * [new tag]         v0.1 -&gt; v0.1&#xa; * [new tag]         v1.2 -&gt; v1.2&#xa; * [new tag]         v1.4 -&gt; v1.4&#xa; * [new tag]         v1.4-lw -&gt; v1.4-lw&#xa; * [new tag]         v1.5 -&gt; v1.5"/>
 </node>
 </node>
 </node>
@@ -5009,41 +5004,6 @@
 <font NAME="Serif" SIZE="14"/>
 </node>
 </node>
-<node COLOR="#00b439" FOLDED="true" ID="ID_1998115740" 
-	TEXT="Git filter-branch&#xa;(git 的删除核弹起爆码的工具)">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
-<node COLOR="#990000" FOLDED="true" ID="ID_1939665661" 
-	TEXT="彻底删除某个文件&#xa;">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_1797069334" 
-	TEXT="This occurs fairly commonly. Someone accidentally commits a huge binary file with a thoughtless git add ., and you want to remove it everywhere. Perhaps you accidentally committed a file that contained a password, and you want to make your project open source. filter-branch is the tool you probably want to use to scrub your entire history. To remove a file named passwords.txt from your entire history, you can use the --tree-filter option to filter-branch:&#xa;&#xa;$ git filter-branch --tree-filter &apos;rm -f passwords.txt&apos; HEAD&#xa;Rewrite 6b9b3cf04e7c5686a9cb838c3f36a8cb6a0fc2bd (21/21)&#xa;Ref &apos;refs/heads/master&apos; was rewritten&#xa;&#xa;The --tree-filter option runs the specified command after each checkout of the project and then recommits the results. In this case, you remove a file called passwords.txt from every snapshot, whether it exists or not. If you want to remove all accidentally committed editor backup files, you can run something like git filter-branch --tree-filter &apos;rm -f *~&apos; HEAD.&#xa;&#xa;You’ll be able to watch Git rewriting trees and commits and then move the branch pointer at the end. It’s generally a good idea to do this in a testing branch and then hard-reset your master branch after you’ve determined the outcome is what you really want. To run filter-branch on all your branches, you can pass --all to the command.&#xa;">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_155217472" 
-	TEXT="将某个子目录作为新的根目录">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_849721028" 
-	TEXT="&#xa;&#xa;Suppose you’ve done an import from another source control system and have subdirectories that make no sense (trunk, tags, and so on). If you want to make the trunk subdirectory be the new project root for every commit, filter-branch can help you do that, too:&#xa;&#xa;$ git filter-branch --subdirectory-filter trunk HEAD&#xa;Rewrite 856f0bf61e41a27326cdae8f09fe708d679f596f (12/12)&#xa;Ref &apos;refs/heads/master&apos; was rewritten&#xa;&#xa;Now your new project root is what was in the trunk subdirectory each time. Git will also automatically remove commits that did not affect the subdirectory.&#xa;">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1785288986" 
-	TEXT="批量修改提交的作者邮件地址信息">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_1724380425" 
-	TEXT="&#xa;&#xa;Another common case is that you forgot to run git config to set your name and e-mail address before you started working, or perhaps you want to open-source a project at work and change all your work e-mail addresses to your personal address. In any case, you can change e-mail addresses in multiple commits in a batch with filter-branch as well. You need to be careful to change only the e-mail addresses that are yours, so you use --commit-filter:&#xa;&#xa;$ git filter-branch --commit-filter &apos;&#xa;        if [ &quot;$GIT_AUTHOR_EMAIL&quot; = &quot;schacon@localhost&quot; ];&#xa;        then&#xa;                GIT_AUTHOR_NAME=&quot;Scott Chacon&quot;;&#xa;                GIT_AUTHOR_EMAIL=&quot;schacon@example.com&quot;;&#xa;                git commit-tree &quot;$@&quot;;&#xa;        else&#xa;                git commit-tree &quot;$@&quot;;&#xa;        fi&apos; HEAD&#xa;&#xa;This goes through and rewrites every commit to have your new address. Because commits contain the SHA-1 values of their parents, this command changes every commit SHA in your history, not just those that have the matching e-mail address.">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-</node>
 </node>
 <node COLOR="#0033ff" FOLDED="true" ID="ID_729560922" POSITION="right" 
 	TEXT="版本库迁移">
@@ -5110,6 +5070,41 @@
 <font NAME="Serif" SIZE="14"/>
 <node COLOR="#111111" ID="ID_1582617228" 
 	TEXT="cd projectname.git&#xa;/path/to/fast-export.git/hg-fast-export.sh -r /path/to/project.hg&#xa;git checkout master"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1998115740" 
+	TEXT="Git filter-branch&#xa;(git 的删除核弹起爆码的工具)">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_1939665661" 
+	TEXT="彻底删除某个文件&#xa;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1797069334" 
+	TEXT="This occurs fairly commonly. Someone accidentally commits a huge binary file with a thoughtless git add ., and you want to remove it everywhere. Perhaps you accidentally committed a file that contained a password, and you want to make your project open source. filter-branch is the tool you probably want to use to scrub your entire history. To remove a file named passwords.txt from your entire history, you can use the --tree-filter option to filter-branch:&#xa;&#xa;$ git filter-branch --tree-filter &apos;rm -f passwords.txt&apos; HEAD&#xa;Rewrite 6b9b3cf04e7c5686a9cb838c3f36a8cb6a0fc2bd (21/21)&#xa;Ref &apos;refs/heads/master&apos; was rewritten&#xa;&#xa;The --tree-filter option runs the specified command after each checkout of the project and then recommits the results. In this case, you remove a file called passwords.txt from every snapshot, whether it exists or not. If you want to remove all accidentally committed editor backup files, you can run something like git filter-branch --tree-filter &apos;rm -f *~&apos; HEAD.&#xa;&#xa;You’ll be able to watch Git rewriting trees and commits and then move the branch pointer at the end. It’s generally a good idea to do this in a testing branch and then hard-reset your master branch after you’ve determined the outcome is what you really want. To run filter-branch on all your branches, you can pass --all to the command.&#xa;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_155217472" 
+	TEXT="将某个子目录作为新的根目录">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_849721028" 
+	TEXT="&#xa;&#xa;Suppose you’ve done an import from another source control system and have subdirectories that make no sense (trunk, tags, and so on). If you want to make the trunk subdirectory be the new project root for every commit, filter-branch can help you do that, too:&#xa;&#xa;$ git filter-branch --subdirectory-filter trunk HEAD&#xa;Rewrite 856f0bf61e41a27326cdae8f09fe708d679f596f (12/12)&#xa;Ref &apos;refs/heads/master&apos; was rewritten&#xa;&#xa;Now your new project root is what was in the trunk subdirectory each time. Git will also automatically remove commits that did not affect the subdirectory.&#xa;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1785288986" 
+	TEXT="批量修改提交的作者邮件地址信息">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1724380425" 
+	TEXT="&#xa;&#xa;Another common case is that you forgot to run git config to set your name and e-mail address before you started working, or perhaps you want to open-source a project at work and change all your work e-mail addresses to your personal address. In any case, you can change e-mail addresses in multiple commits in a batch with filter-branch as well. You need to be careful to change only the e-mail addresses that are yours, so you use --commit-filter:&#xa;&#xa;$ git filter-branch --commit-filter &apos;&#xa;        if [ &quot;$GIT_AUTHOR_EMAIL&quot; = &quot;schacon@localhost&quot; ];&#xa;        then&#xa;                GIT_AUTHOR_NAME=&quot;Scott Chacon&quot;;&#xa;                GIT_AUTHOR_EMAIL=&quot;schacon@example.com&quot;;&#xa;                git commit-tree &quot;$@&quot;;&#xa;        else&#xa;                git commit-tree &quot;$@&quot;;&#xa;        fi&apos; HEAD&#xa;&#xa;This goes through and rewrites every commit to have your new address. Because commits contain the SHA-1 values of their parents, this command changes every commit SHA in your history, not just those that have the matching e-mail address.">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
 </node>
 </node>
 </node>
