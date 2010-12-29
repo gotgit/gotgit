@@ -34,7 +34,6 @@
    Transition Dissolve 1
    PageBreak contentsPage
 
-.. include:: ./01-meet-git/010-scm-history.rst
-.. include:: ./01-meet-git/020-love-git.rst
-.. include:: ./01-meet-git/030-git-install.rst
-.. include:: ./01-meet-git/040-git-config.rst
+.. include:: ./010-scm-history.rst
+.. include:: ./020-love-git.rst
+.. include:: ./030-git-install.rst

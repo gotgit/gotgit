@@ -47,7 +47,6 @@
 .. include:: ./01-meet-git/010-scm-history.rst
 .. include:: ./01-meet-git/020-love-git.rst
 .. include:: ./01-meet-git/030-git-install.rst
-.. include:: ./01-meet-git/040-git-config.rst
 
 第 2 篇: Git独奏
 ###########################
@@ -103,10 +102,10 @@
 .. include:: ./06-migrate/010-cvs.rst
 .. include:: ./06-migrate/020-svn.rst
 .. include:: ./06-migrate/030-hg.rst
-.. include:: ./06-migrate/040-git-to-git.rst
-.. include:: ./06-migrate/050-others.rst
+.. include:: ./06-migrate/040-others.rst
+.. include:: ./06-migrate/050-git-to-git.rst
 
-第 7 篇: Git的其它应用
+第 7 篇: Git的其他应用
 #######################
 
 .. include:: ./07-git-app/010-etckeeper.rst
@@ -118,7 +117,7 @@
 ########################
 
 .. include:: ./08-git-misc/010-windows.rst
-.. include:: ./08-git-misc/020-locale.rst
+.. include:: ./08-git-misc/020-git-features.rst
 .. include:: ./08-git-misc/030-hooks.rst
 .. include:: ./08-git-misc/040-attributes.rst
 .. include:: ./08-git-misc/050-templates.rst

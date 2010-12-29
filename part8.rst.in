@@ -35,7 +35,7 @@
    PageBreak contentsPage
 
 .. include:: ./08-git-misc/010-windows.rst
-.. include:: ./08-git-misc/020-locale.rst
+.. include:: ./08-git-misc/020-git-features.rst
 .. include:: ./08-git-misc/030-hooks.rst
 .. include:: ./08-git-misc/040-attributes.rst
 .. include:: ./08-git-misc/050-templates.rst

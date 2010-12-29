@@ -1,5 +1,5 @@
-Gitweb
-*******
+Gitweb 服务器
+*************
 
 Gitweb 本身不能提供 Git 版本库的读写服务。Gitweb 是用 Perl 语言开发的 CGI 脚本，只是一个提供 Git 版本库的 Web 浏览工具。
 

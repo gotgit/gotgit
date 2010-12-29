@@ -37,6 +37,6 @@
 .. include:: ./06-migrate/010-cvs.rst
 .. include:: ./06-migrate/020-svn.rst
 .. include:: ./06-migrate/030-hg.rst
-.. include:: ./06-migrate/040-git-to-git.rst
-.. include:: ./06-migrate/050-others.rst
+.. include:: ./06-migrate/040-others.rst
+.. include:: ./06-migrate/050-git-to-git.rst
 

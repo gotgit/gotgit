@@ -1,5 +1,5 @@
-Git 协议
-********
+Git 协议服务器
+**************
 
 Git 软件包中自带一个名为 git-daemon 的服务软件，可以运行在 9418 端口上，提供 Git 版本库的只读服务。虽然 git-daemon 也可以支持写操作，但因为 git-daemon 没有提供认证支持，因此没有人胆敢配置 git-daemon 提供匿名的写服务。
 
@@ -7,9 +7,10 @@ Git 软件包中自带一个名为 git-daemon 的服务软件，可以运行在 
 
 Git 软件包本身提供了 git-daemon，因此只要安装了 Git，一般就已经安装了 git-daemon。缺省 git-daemon 并没有运行，需要对其进行配置以服务方式运行。
 
-**最简单的方式，是以 inetd 服务方式运行。**
+以 inetd 方式运行
+==================
 
-可以运行在 inetd 服务器方式运行。在配置文件 `/etc/inetd.conf` 中添加设置如下:
+最简单的方式，是以 inetd 服务方式运行 git-daemon。在配置文件 `/etc/inetd.conf` 中添加设置如下:
 
 ::
 
@@ -33,7 +34,8 @@ Git 软件包本身提供了 git-daemon，因此只要安装了 Git，一般就�
         git daemon --inetd --verbose --export-all
         --base-path=/var/cache /var/cache/git
 
-**通过 runit 提供服务**
+通过 runit 提供服务
+====================
 
 runit 是类似于 sysvinit 的服务管理进程，但是更简单。在 Debian/Ubuntu 上的软件包 `git-daemon-run` 就是基于 runit 启动 git-daemon 服务。
 
@@ -59,7 +61,7 @@ runit 是类似于 sysvinit 的服务管理进程，但是更简单。在 Debian
 
 缺省版本库中需要存在文件 `git-daemon-export-ok` ，git-daemon 才对此版本库提供服务。不过可以通过启动 git-daemon 时提供的参数 `--export-all` ，无论版本库是否存在标识文件 `git-daemon-export-ok` ，都对版本库提供 git 访问服务。
 
-通过 git-daemon 提供的 Git 访问协议存在这局限性：
+通过 git-daemon 提供的 Git 访问协议存在着局限性：
 
 * 不支持认证。管理员大概可以做的只是配置防火墙，限制某个网段用户的使用。
 * 只能提供匿名的版本库读取服务。因为写操作没有授权控制，因此一般不用。
