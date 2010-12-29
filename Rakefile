@@ -31,6 +31,11 @@ task:default do
   sh 'rake -T'
 end
 
+task:preface do
+  ENV["DOC_INDEX"] = "preface"
+  sh 'rake html'
+end
+
 task:part1 do
   ENV["DOC_INDEX"] = "part1"
   sh 'rake html'
