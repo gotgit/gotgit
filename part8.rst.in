@@ -3,7 +3,7 @@
 ==================
 
 ---------------------------------------------
-|ArticleSubTitle| —— 第 8 篇: Windows 和 Git
+|ArticleSubTitle| —— 第 8 篇: Git 杂谈
 ---------------------------------------------
 
 :作者: |AuthorOSSXP|_
@@ -34,4 +34,12 @@
    Transition Dissolve 1
    PageBreak contentsPage
 
-.. include:: ./08-windows/010-windows.rst
+.. include:: ./08-git-misc/010-windows.rst
+.. include:: ./08-git-misc/020-locale.rst
+.. include:: ./08-git-misc/030-hooks.rst
+.. include:: ./08-git-misc/040-attributes.rst
+.. include:: ./08-git-misc/050-templates.rst
+.. include:: ./08-git-misc/060-sparse-checkout.rst
+.. include:: ./08-git-misc/070-shallow-clone.rst
+.. include:: ./08-git-misc/080-git-notes.rst
+.. include:: ./08-git-misc/090-git-replace.rst
