@@ -3624,7 +3624,93 @@
 	TEXT="操作 Git 分支">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="Serif" SIZE="14"/>
-<icon BUILTIN="full-3"/>
+<icon BUILTIN="full-2"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1437925658" 
+	TEXT="创建/重名分支">
+<node COLOR="#111111" ID="ID_1504955949" 
+	TEXT="直接创建"/>
+<node COLOR="#111111" ID="ID_1423710783" 
+	TEXT="基于历史提交创建"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_78473186" 
+	TEXT="创建新分支 ： git branch &lt;branch_name&gt; [base_tag]">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1902989864" 
+	TEXT="最当前版本创建">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_494024032" 
+	TEXT="$ git branch new&#xa;$ git branch&#xa;* master&#xa;  new&#xa;$ git checkout new&#xa;Switched to branch &apos;new&apos;&#xa;$ git branch&#xa;  master&#xa;* new">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1903718141" 
+	TEXT="基于旧版本/里程碑创建分支">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1559893999" 
+	TEXT="$ git branch new v1.6.3&#xa;$ git branch&#xa;* master&#xa;  new&#xa;$ git checkout new&#xa;Switched to branch &apos;new&apos;&#xa;$ git branch&#xa;  master&#xa;* new">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_243002548" 
+	TEXT="gitk 可以看到 branch 建立在 tag v1.6.3 上"/>
+</node>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_130784821" 
+	TEXT="重命令分支">
+<node COLOR="#111111" ID="ID_812140481" 
+	TEXT="名称错误，可以重命名分支"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_157107037" 
+	TEXT="切换分支">
+<node COLOR="#111111" FOLDED="true" ID="ID_552692599" 
+	TEXT="切换分支： git checkout &lt;branch_name&gt;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_80286110" 
+	TEXT="$ git branch&#xa;* master&#xa;  new&#xa;$ git checkout new&#xa;Switched to branch &apos;new&apos;&#xa;$ git branch&#xa;  master&#xa;* new">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1411472705" 
+	TEXT="git checkout &lt;tag_name&gt;: 检出旧版本/切换分支">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_183695024" 
+	TEXT="不带参数执行 git checkout：检查当前文件状态和 stage 中的差异">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_858558358" 
+	TEXT="git checkout -- filename 或者 git checkout filename：&#xa;从 stage 中取出文件 filename，如果本地有修改则被覆盖">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_838452361" 
+	TEXT="git checkout . ： 从 stage 中取出当前目录下所有文件。本地文件被覆盖。">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1455820907" 
+	TEXT="git checkout &lt;tag_name&gt; ： 取出旧版本">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1473909945" 
+	TEXT="git checkout &lt;branch_name&gt;： 工作在分支 branch_name 上">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_889609250" 
+	TEXT="git checkout -b &lt;new_branch&gt; [branch_name] ： 继续某分支或当前分支，创建新的分支">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_142134936" 
+	TEXT="如何区分参数是 tag/branch 还是 filename/dirname？ 在文件名/目录名的前面加上两个减号： git checkout [options] [&lt;branch&gt;] -- &lt;file&gt;...">
+<font NAME="Serif" SIZE="12"/>
+<icon BUILTIN="help"/>
+</node>
+</node>
+</node>
+<node COLOR="#111111" ID="ID_1708410805" 
+	TEXT="分支进行提交"/>
+<node COLOR="#111111" ID="ID_141301285" 
+	TEXT="可以在分支进行重置"/>
+<node COLOR="#111111" ID="ID_634020512" 
+	TEXT="具有 reflog"/>
 <node COLOR="#111111" FOLDED="true" ID="ID_399921837" 
 	TEXT="关于 master 分支">
 <edge STYLE="bezier" WIDTH="thin"/>
@@ -3659,6 +3745,43 @@
 	TEXT="$ cat .git/HEAD&#xa;ref: refs/heads/feature&#xa;"/>
 </node>
 </node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1253332433" 
+	TEXT="重新确定分支点： git reset --hard tagname">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_915515851" 
+	TEXT="和 git checkout &lt;branch_name&gt; 的区别在哪里？">
+<font NAME="Serif" SIZE="12"/>
+<icon BUILTIN="help"/>
+</node>
+<node COLOR="#111111" ID="ID_532700123" 
+	TEXT="注意：该命令非常危险，如果原分支点没有其它标记，找回原分支点很麻烦">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_729864830" 
+	TEXT="可以通过  .git/logs/HEAD 查看日志，找到切换分支的新分支点前的 commit id。">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_283842332" 
+	TEXT="再执行 git reset --hard &lt;40-DIGIT-COMMIT-ID&gt;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1053279375" 
+	TEXT="创建和检出一条龙">
+<node COLOR="#111111" ID="ID_481775611" 
+	TEXT="checkout -b"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_348510139" 
+	TEXT="创建并切换到新分支： git checkout -b &lt;new_branch&gt; [base_tag]">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_23978948" 
+	TEXT="$ git checkout -b new&#xa;Switched to a new branch &apos;new&apos;&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+</node>
 <node COLOR="#111111" FOLDED="true" ID="ID_849061571" 
 	TEXT="查看分支： git branch">
 <edge STYLE="bezier" WIDTH="thin"/>
@@ -3668,6 +3791,8 @@
 <font NAME="Serif" SIZE="12"/>
 </node>
 </node>
+<node COLOR="#111111" ID="ID_1222176769" 
+	TEXT="共享分支：refspec"/>
 <node COLOR="#111111" FOLDED="true" ID="ID_1156279952" 
 	TEXT="显示和查看远程分支： git branch -r">
 <edge STYLE="bezier" WIDTH="thin"/>
@@ -3750,81 +3875,8 @@
 </node>
 </node>
 </node>
-<node COLOR="#111111" FOLDED="true" ID="ID_78473186" 
-	TEXT="创建新分支 ： git branch &lt;branch_name&gt; [base_tag]">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_1902989864" 
-	TEXT="最当前版本创建">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_494024032" 
-	TEXT="$ git branch new&#xa;$ git branch&#xa;* master&#xa;  new&#xa;$ git checkout new&#xa;Switched to branch &apos;new&apos;&#xa;$ git branch&#xa;  master&#xa;* new">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1903718141" 
-	TEXT="基于旧版本/里程碑创建分支">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1559893999" 
-	TEXT="$ git branch new v1.6.3&#xa;$ git branch&#xa;* master&#xa;  new&#xa;$ git checkout new&#xa;Switched to branch &apos;new&apos;&#xa;$ git branch&#xa;  master&#xa;* new">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_243002548" 
-	TEXT="gitk 可以看到 branch 建立在 tag v1.6.3 上"/>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_552692599" 
-	TEXT="切换分支： git checkout &lt;branch_name&gt;">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_80286110" 
-	TEXT="$ git branch&#xa;* master&#xa;  new&#xa;$ git checkout new&#xa;Switched to branch &apos;new&apos;&#xa;$ git branch&#xa;  master&#xa;* new">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1411472705" 
-	TEXT="git checkout &lt;tag_name&gt;: 检出旧版本/切换分支">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_183695024" 
-	TEXT="不带参数执行 git checkout：检查当前文件状态和 stage 中的差异">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_858558358" 
-	TEXT="git checkout -- filename 或者 git checkout filename：&#xa;从 stage 中取出文件 filename，如果本地有修改则被覆盖">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_838452361" 
-	TEXT="git checkout . ： 从 stage 中取出当前目录下所有文件。本地文件被覆盖。">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1455820907" 
-	TEXT="git checkout &lt;tag_name&gt; ： 取出旧版本">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1473909945" 
-	TEXT="git checkout &lt;branch_name&gt;： 工作在分支 branch_name 上">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_889609250" 
-	TEXT="git checkout -b &lt;new_branch&gt; [branch_name] ： 继续某分支或当前分支，创建新的分支">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_142134936" 
-	TEXT="如何区分参数是 tag/branch 还是 filename/dirname？ 在文件名/目录名的前面加上两个减号： git checkout [options] [&lt;branch&gt;] -- &lt;file&gt;...">
-<font NAME="Serif" SIZE="12"/>
-<icon BUILTIN="help"/>
-</node>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_348510139" 
-	TEXT="创建并切换到新分支： git checkout -b &lt;new_branch&gt; [base_tag]">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_23978948" 
-	TEXT="$ git checkout -b new&#xa;Switched to a new branch &apos;new&apos;&#xa;">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
+<node COLOR="#111111" ID="ID_1494587824" 
+	TEXT="如何切换到远程版本库的分支？用另外一个用户查看"/>
 <node COLOR="#111111" FOLDED="true" ID="ID_1305006926" 
 	TEXT="删除分支： git branch -d &lt;branch_name&gt; （限制条件： 该分支已经合并到当前分支）">
 <edge STYLE="bezier" WIDTH="thin"/>
@@ -3839,28 +3891,6 @@
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="12"/>
 <icon BUILTIN="yes"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1253332433" 
-	TEXT="重新确定分支点： git reset --hard tagname">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_915515851" 
-	TEXT="和 git checkout &lt;branch_name&gt; 的区别在哪里？">
-<font NAME="Serif" SIZE="12"/>
-<icon BUILTIN="help"/>
-</node>
-<node COLOR="#111111" ID="ID_532700123" 
-	TEXT="注意：该命令非常危险，如果原分支点没有其它标记，找回原分支点很麻烦">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_729864830" 
-	TEXT="可以通过  .git/logs/HEAD 查看日志，找到切换分支的新分支点前的 commit id。">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_283842332" 
-	TEXT="再执行 git reset --hard &lt;40-DIGIT-COMMIT-ID&gt;">
-<font NAME="Serif" SIZE="12"/>
-</node>
 </node>
 <node COLOR="#111111" FOLDED="true" ID="ID_88459081" 
 	TEXT="删除远程分支？">
@@ -3893,11 +3923,9 @@
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="14"/>
 <icon BUILTIN="idea"/>
-<icon BUILTIN="full-2"/>
-<node COLOR="#111111" ID="ID_1319495890" 
-	TEXT="CVS 的分支管理是灾难：不可见，而且速度慢"/>
-<node COLOR="#111111" ID="ID_161218333" 
-	TEXT="SVN 解决了 CVS 分支创建慢的问题，但是用目录复制实现，平添困扰。授权问题。"/>
+<icon BUILTIN="full-3"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1968769325" 
+	TEXT="本地分支">
 <node COLOR="#111111" FOLDED="true" ID="ID_1618650480" 
 	TEXT=".git/refs/heads/ 下是分支名称">
 <font NAME="Serif" SIZE="12"/>
@@ -3906,10 +3934,6 @@
 </node>
 <node COLOR="#111111" ID="ID_686167280" 
 	TEXT="例如 .git/refs/heads/master 中记录的是 master 分支对应的 40 位 commit id">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_346325" 
-	TEXT=".git/refs/tags/ 下是里程碑名称。如果目录为空，可能已经打包整理到文件 .git/packed-refs 文件中了。">
 <font NAME="Serif" SIZE="12"/>
 </node>
 <node COLOR="#111111" ID="ID_133390599" 
@@ -3926,10 +3950,21 @@
 	TEXT=".git/logs/refs/heads/ 下以分支名称命名的文件，包含对应分支的 commit 历史">
 <font NAME="Serif" SIZE="12"/>
 </node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_121585411" 
+	TEXT="远程分支">
+<node COLOR="#111111" ID="ID_346325" 
+	TEXT=".git/refs/tags/ 下是里程碑名称。如果目录为空，可能已经打包整理到文件 .git/packed-refs 文件中了。">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1310953765" 
+	TEXT="分支名称缩写">
 <node COLOR="#111111" ID="ID_96167658" 
 	TEXT="一般我们使用简写的名称，实际的对应关系如下。&#xa;    * The branch &quot;test&quot; is short for &quot;refs/heads/test&quot;.&#xa;    * The tag &quot;v2.6.18&quot; is short for &quot;refs/tags/v2.6.18&quot;.&#xa;    * &quot;origin/master&quot; is short for &quot;refs/remotes/origin/master&quot;. &#xa;&#xa;如果存在同名的里程碑和分支，就需要用长的名称（全名）了。">
 <font NAME="Serif" SIZE="12"/>
 <icon BUILTIN="idea"/>
+</node>
 </node>
 <node COLOR="#111111" FOLDED="true" ID="ID_1746903634" 
 	TEXT="不同路径下的引用">
@@ -3969,33 +4004,20 @@
 <font NAME="Serif" SIZE="12"/>
 </node>
 </node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1692345880" 
-	TEXT="里程碑/分支名称的合法性问题">
-<font NAME="Serif" SIZE="12"/>
-<icon BUILTIN="forward"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_1282356050" 
-	TEXT="1.7.4开始，分支名称不能以减号（-）开始了。">
-<font NAME="Serif" SIZE="12"/>
-<icon BUILTIN="info"/>
-<node COLOR="#111111" ID="ID_1789485369" 
-	TEXT=" * The option parsers of various commands that create new branch (or    rename existing ones to a new name) were too loose and users were    allowed to call a branch with a name that begins with a dash by    creative abuse of their command line options, which only lead to    burn themselves.  The name of a branch cannot begin with a dash    now. "/>
-</node>
-<node COLOR="#111111" ID="ID_1337413283" 
-	TEXT="代码中看看哪些字符不允许？ "/>
-</node>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_1402402678" 
 	TEXT="分支合并">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_1734632324" 
-	TEXT="git merge &lt;branch_name&gt;"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1734632324" 
+	TEXT="git merge &lt;branch_name&gt;">
 <node COLOR="#111111" ID="ID_580430573" 
 	TEXT="merge 操作，在合并分支以及 pull 的时候会发生">
 <font NAME="Serif" SIZE="12"/>
 </node>
 <node COLOR="#111111" ID="ID_4917764" 
 	TEXT="git pull 相当于 git fetch 和 git merge 操作"/>
+</node>
 <node COLOR="#111111" ID="ID_1650808696" 
 	TEXT="cherry-pick">
 <font NAME="Serif" SIZE="12"/>
@@ -4108,6 +4130,20 @@
 	TEXT="分支管理规范">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1692345880" 
+	TEXT="里程碑/分支名称的合法性问题">
+<font NAME="Serif" SIZE="12"/>
+<icon BUILTIN="forward"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1282356050" 
+	TEXT="1.7.4开始，分支名称不能以减号（-）开始了。">
+<font NAME="Serif" SIZE="12"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_1789485369" 
+	TEXT=" * The option parsers of various commands that create new branch (or    rename existing ones to a new name) were too loose and users were    allowed to call a branch with a name that begins with a dash by    creative abuse of their command line options, which only lead to    burn themselves.  The name of a branch cannot begin with a dash    now. "/>
+</node>
+<node COLOR="#111111" ID="ID_1337413283" 
+	TEXT="代码中看看哪些字符不允许？ "/>
+</node>
 <node COLOR="#111111" FOLDED="true" ID="ID_1841236174" 
 	TEXT="各个项目的分支命名">
 <node COLOR="#111111" ID="ID_1031078182" 
