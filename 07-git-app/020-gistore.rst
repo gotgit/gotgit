@@ -148,11 +148,15 @@ Gistore 的使用
 
 * 将当前目录作为备份库进行初始化：
 
+::
+
   $ mkdir backup
   $ cd backup
   $ gistore init
 
-* 将指定的目录作为备份库进行初始化
+* 将指定的目录作为备份库进行初始化:
+
+::
 
   $ sudo gistore init /backup/database
 
