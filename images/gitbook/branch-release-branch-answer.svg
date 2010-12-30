@@ -13,7 +13,10 @@
    id="svg7440"
    version="1.1"
    inkscape:version="0.47 r22583"
-   sodipodi:docname="branch-release-branch-answer.dia">
+   sodipodi:docname="branch-release-branch-answer.svg"
+   inkscape:export-filename="/home/jiangxin/gitwork/gitbook/src/book/images/gitbook/branch-release-branch-answer.png"
+   inkscape:export-xdpi="75.285599"
+   inkscape:export-ydpi="75.285599">
   <metadata
      id="metadata7912">
     <rdf:RDF>
@@ -221,24 +224,24 @@
        id="tspan7504">F1.1</tspan>
   </text>
   <text
-     style="fill: #ff0000;text-anchor:start;font-size:10.16;font-family:sanserif;font-style:normal;font-weight:700"
-     x="415.292"
-     y="583.568"
+     style="font-size:10.15999985px;font-style:normal;font-weight:700;text-anchor:start;fill:#ff0000;font-family:sanserif"
+     x="415.29199"
+     y="583.56799"
      id="text7506">
     <tspan
-       x="415.292"
-       y="583.568"
-       id="tspan7508">fix1</tspan>
+       x="415.29199"
+       y="583.56799"
+       id="tspan7508">fix1'</tspan>
   </text>
   <text
-     style="fill: #ff0000;text-anchor:start;font-size:10.16;font-family:sanserif;font-style:normal;font-weight:700"
+     style="font-size:10.15999985px;font-style:normal;font-weight:700;text-anchor:start;fill:#ff0000;font-family:sanserif"
      x="548.258"
-     y="583.568"
+     y="583.56799"
      id="text7510">
     <tspan
        x="548.258"
-       y="583.568"
-       id="tspan7512">fix2</tspan>
+       y="583.56799"
+       id="tspan7512">fix2'</tspan>
   </text>
   <g
      id="g7514">
@@ -489,14 +492,14 @@
        id="tspan7626">F1.1</tspan>
   </text>
   <text
-     style="fill: #ff0000;text-anchor:start;font-size:10.16;font-family:sanserif;font-style:normal;font-weight:700"
-     x="415.292"
+     style="font-size:10.15999985px;font-style:normal;font-weight:700;text-anchor:start;fill:#ff0000;font-family:sanserif"
+     x="415.29199"
      y="474.586"
      id="text7628">
     <tspan
-       x="415.292"
+       x="415.29199"
        y="474.586"
-       id="tspan7630">fix1</tspan>
+       id="tspan7630">fix1'</tspan>
   </text>
   <g
      id="g7632">
@@ -649,14 +652,14 @@
     </text>
   </g>
   <text
-     style="fill: #ff0000;text-anchor:start;font-size:10.16;font-family:sanserif;font-style:normal;font-weight:700"
+     style="font-size:10.15999985px;font-style:normal;font-weight:700;text-anchor:start;fill:#ff0000;font-family:sanserif"
      x="419.952"
      y="366.25"
      id="text7702">
     <tspan
        x="419.952"
        y="366.25"
-       id="tspan7704">fix1</tspan>
+       id="tspan7704">fix1'</tspan>
   </text>
   <g
      id="g7706">
