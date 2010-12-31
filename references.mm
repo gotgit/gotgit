@@ -3587,6 +3587,225 @@
 	TEXT="ocutpus"/>
 </node>
 </node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_303951238" 
+	TEXT="4 里程碑">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_1579884608" 
+	TEXT="为什么需要里程碑？">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1792141538" 
+	TEXT="40位 SHA1 哈希值不好记"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_611541349" 
+	TEXT="跟踪软件的版本">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1919728658" 
+	TEXT="git describe"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_356033177" 
+	TEXT="操作 Git 里程碑">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1950537415" 
+	TEXT="Git 的 commit-id">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1447221485" 
+	TEXT="COMMIT-ISH 即提交ID，是由 40 个十六进制数字组成，可以由开头的任意长度的数字串指代，只要不冲突。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_442805379" 
+	TEXT="建立/删除和查看 tag">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1528429187" 
+	TEXT="运行 git tag tag_name 即可创建轻量级里程碑">
+<node COLOR="#111111" ID="ID_434774012" 
+	TEXT="git tag v2.5 1b2e1d63ff ： 创建轻量级里程碑">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_253481402" 
+	TEXT="轻量级里程碑，用 git-show 只能看到tag应用到的 commit 本身">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1649246214" 
+	TEXT="$ git tag v1.4-lw&#xa;$ git tag&#xa;v0.1&#xa;v1.3&#xa;v1.4&#xa;v1.4-lw&#xa;v1.5"/>
+<node COLOR="#111111" ID="ID_1650891693" 
+	TEXT="$ git show v1.4-lw&#xa;commit 15027957951b64cf874c3557a0f3547bd83b3ff6&#xa;Merge: 4a447f7... a6b4c97...&#xa;Author: Scott Chacon &lt;schacon@gee-mail.com&gt;&#xa;Date:   Sun Feb 8 19:02:46 2009 -0800&#xa;&#xa;    Merge branch &apos;experiment&apos;"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_544725214" 
+	TEXT="带注解的里程碑">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<icon BUILTIN="idea"/>
+<node COLOR="#111111" ID="ID_9424802" 
+	TEXT="带有注解的里程碑是使用 -a 或者 -s 方式创建，并且用 -m 参数添加说明">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_178956216" 
+	TEXT="用 -a 参数创建带有注解的里程碑">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1982377819" 
+	TEXT="$ git tag -a v1.4 -m &apos;my version 1.4&apos;&#xa;$ git tag&#xa;v0.1&#xa;v1.3&#xa;v1.4"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1134478249" 
+	TEXT="-s 参数用 gpg 签名里程碑。用 -v 参数可以校验之">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1875442721" 
+	TEXT="$ git tag -s v1.5 -m &apos;my signed 1.5 tag&apos;&#xa;You need a passphrase to unlock the secret key for&#xa;user: &quot;Scott Chacon &lt;schacon@gee-mail.com&gt;&quot;&#xa;1024-bit DSA key, ID F721C45A, created 2009-02-09"/>
+<node COLOR="#111111" ID="ID_1332191361" 
+	TEXT="$ git tag -v v1.4.2.1&#xa;object 883653babd8ee7ea23e6a5c392bb739348b1eb61&#xa;type commit&#xa;tag v1.4.2.1&#xa;tagger Junio C Hamano &lt;junkio@cox.net&gt; 1158138501 -0700&#xa;&#xa;GIT 1.4.2.1&#xa;&#xa;Minor fixes since 1.4.2, including git-mv and git-http with alternates.&#xa;gpg: Signature made Wed Sep 13 02:08:25 2006 PDT using DSA key ID F3119B9A&#xa;gpg: Good signature from &quot;Junio C Hamano &lt;junkio@cox.net&gt;&quot;&#xa;gpg:                 aka &quot;[jpeg image of size 1513]&quot;&#xa;Primary key fingerprint: 3565 2A26 2040 E066 C9A7  4A7D C0C6 D9A4 F311 9B9A"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_643957992" 
+	TEXT="用 git show 命令，查看里程碑的注解">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1246653964" 
+	TEXT="$ git show v1.4&#xa;tag v1.4&#xa;Tagger: Scott Chacon &lt;schacon@gee-mail.com&gt;&#xa;Date:   Mon Feb 9 14:45:11 2009 -0800&#xa;&#xa;my version 1.4&#xa;commit 15027957951b64cf874c3557a0f3547bd83b3ff6&#xa;Merge: 4a447f7... a6b4c97...&#xa;Author: Scott Chacon &lt;schacon@gee-mail.com&gt;&#xa;Date:   Sun Feb 8 19:02:46 2009 -0800&#xa;&#xa;    Merge branch &apos;experiment&apos;"/>
+</node>
+</node>
+<node COLOR="#111111" ID="ID_1456091512" 
+	TEXT="删除 tag： git tag -d tagname"/>
+<node COLOR="#111111" ID="ID_1769178636" 
+	TEXT="git tag ： 查看里程碑列表">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" ID="ID_1006292485" 
+	TEXT="查看 tag 对应的 commit id">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_552581117" 
+	TEXT="查看某个 commit id 是否有对应的 tag 或者分支？ (name-rev)">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1411702649" 
+	TEXT="git name-rev 用于查看某个 commit 是否有对应 tag。&#xa;&#xa;$ git name-rev 41008ee&#xa;41008ee tags/v1.0~1&#xa;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1080601147" 
+	TEXT="git name-rev 用于查看某个 commit 是否有对应 tag。&#xa;&#xa;$ git name-rev 41008ee&#xa;41008ee tags/v1.0~1&#xa;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_484431346" 
+	TEXT="能否在 Tag 上提交？">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1592731522" 
+	TEXT="SVN 是可以在 tag 上提交的，但是 git 很好的处理这个问题"/>
+<node COLOR="#111111" ID="ID_1112648429" 
+	TEXT="git co tagname， 实际上 HEAD 内容会变成 40位 commitid，而非 symbol ref name"/>
+<node COLOR="#111111" ID="ID_1290204665" 
+	TEXT="提交不会被保留"/>
+<node COLOR="#111111" ID="ID_1739869171" 
+	TEXT="要想提交被保留，执行 git co -b branch_name"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1971546762" 
+	TEXT="Tag 的实质">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_568608532" 
+	TEXT="里程碑和分支实际上都是 commitid 的对应物"/>
+<node COLOR="#111111" ID="ID_1943737533" 
+	TEXT="分支：实际是一个分支名，指向该分支的顶节点。">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_914294268" 
+	TEXT="* The branch &quot;test&quot; is short for &quot;refs/heads/test&quot;.">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1157001888" 
+	TEXT="* The tag &quot;v2.6.18&quot; is short for &quot;refs/tags/v2.6.18&quot;.">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1491413743" 
+	TEXT="* &quot;origin/master&quot; is short for &quot;refs/remotes/origin/master&quot;.">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_204980636" 
+	TEXT="里程碑的误用">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1511354576" 
+	TEXT="不要修改里程碑"/>
+<node COLOR="#111111" ID="ID_613309185" 
+	TEXT="修改的里程碑，运行 git push, git pull 不会自动同步"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_677538909" 
+	TEXT="Git 里程碑奥秘">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_222373567" 
+	TEXT="特殊的引用空间"/>
+<node COLOR="#111111" ID="ID_446695308" 
+	TEXT="轻量级里程碑">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_816785129" 
+	TEXT="带注解的里程碑">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1674727649" 
+	TEXT="轻量级里程碑 和 带注解的里程碑">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<icon BUILTIN="idea"/>
+<node COLOR="#111111" ID="ID_1496367509" 
+	TEXT="带有注解的里程碑是使用 -a 或者 -s 方式创建，并且用 -m 参数添加说明">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1074473132" 
+	TEXT="用 -a 参数创建带有注解的里程碑">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1285089645" 
+	TEXT="$ git tag -a v1.4 -m &apos;my version 1.4&apos;&#xa;$ git tag&#xa;v0.1&#xa;v1.3&#xa;v1.4"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_559835978" 
+	TEXT="-s 参数用 gpg 签名里程碑。用 -v 参数可以校验之">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_520731049" 
+	TEXT="$ git tag -s v1.5 -m &apos;my signed 1.5 tag&apos;&#xa;You need a passphrase to unlock the secret key for&#xa;user: &quot;Scott Chacon &lt;schacon@gee-mail.com&gt;&quot;&#xa;1024-bit DSA key, ID F721C45A, created 2009-02-09"/>
+<node COLOR="#111111" ID="ID_529214851" 
+	TEXT="$ git tag -v v1.4.2.1&#xa;object 883653babd8ee7ea23e6a5c392bb739348b1eb61&#xa;type commit&#xa;tag v1.4.2.1&#xa;tagger Junio C Hamano &lt;junkio@cox.net&gt; 1158138501 -0700&#xa;&#xa;GIT 1.4.2.1&#xa;&#xa;Minor fixes since 1.4.2, including git-mv and git-http with alternates.&#xa;gpg: Signature made Wed Sep 13 02:08:25 2006 PDT using DSA key ID F3119B9A&#xa;gpg: Good signature from &quot;Junio C Hamano &lt;junkio@cox.net&gt;&quot;&#xa;gpg:                 aka &quot;[jpeg image of size 1513]&quot;&#xa;Primary key fingerprint: 3565 2A26 2040 E066 C9A7  4A7D C0C6 D9A4 F311 9B9A"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_916113621" 
+	TEXT="用 git show 命令，查看里程碑的注解">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_682062052" 
+	TEXT="$ git show v1.4&#xa;tag v1.4&#xa;Tagger: Scott Chacon &lt;schacon@gee-mail.com&gt;&#xa;Date:   Mon Feb 9 14:45:11 2009 -0800&#xa;&#xa;my version 1.4&#xa;commit 15027957951b64cf874c3557a0f3547bd83b3ff6&#xa;Merge: 4a447f7... a6b4c97...&#xa;Author: Scott Chacon &lt;schacon@gee-mail.com&gt;&#xa;Date:   Sun Feb 8 19:02:46 2009 -0800&#xa;&#xa;    Merge branch &apos;experiment&apos;"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_593208744" 
+	TEXT="轻量级里程碑，用 git-show 只能看到tag应用到的 commit 本身">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_25205744" 
+	TEXT="$ git tag v1.4-lw&#xa;$ git tag&#xa;v0.1&#xa;v1.3&#xa;v1.4&#xa;v1.4-lw&#xa;v1.5"/>
+<node COLOR="#111111" ID="ID_1403819583" 
+	TEXT="$ git show v1.4-lw&#xa;commit 15027957951b64cf874c3557a0f3547bd83b3ff6&#xa;Merge: 4a447f7... a6b4c97...&#xa;Author: Scott Chacon &lt;schacon@gee-mail.com&gt;&#xa;Date:   Sun Feb 8 19:02:46 2009 -0800&#xa;&#xa;    Merge branch &apos;experiment&apos;"/>
+</node>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1870396988" 
+	TEXT="带签名的里程碑">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1125169278" 
+	TEXT="repo 如何管理签名？">
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1050685782" 
+	TEXT="里程碑管理规范">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1610498937" 
+	TEXT="Linux 的里程碑命名"/>
+<node COLOR="#111111" ID="ID_741787146" 
+	TEXT="Git 项目的里程碑命名"/>
+<node COLOR="#111111" ID="ID_463312956" 
+	TEXT="里程碑命名规则和名称的排序，到底 git describe 使用哪个 tag？"/>
+</node>
+</node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1165107634" 
 	TEXT="3 分支">
 <edge STYLE="bezier" WIDTH="thin"/>
@@ -3878,19 +4097,27 @@
 <node COLOR="#111111" ID="ID_1494587824" 
 	TEXT="如何切换到远程版本库的分支？用另外一个用户查看"/>
 <node COLOR="#111111" FOLDED="true" ID="ID_1305006926" 
-	TEXT="删除分支： git branch -d &lt;branch_name&gt; （限制条件： 该分支已经合并到当前分支）">
+	TEXT="删除分支： ">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_327619591" 
-	TEXT="$ git branch -d new&#xa;error: Cannot delete the branch &apos;new&apos; which you are currently on.&#xa;$ git checkout master&#xa;Switched to branch &apos;master&apos;&#xa;$ git branch -d new&#xa;Deleted branch new (was f01f109).&#xa;">
+<node COLOR="#111111" ID="ID_1792676337" 
+	TEXT="查看分支是否已经合并： git branch --merged"/>
+<node COLOR="#111111" ID="ID_497954065" 
+	TEXT="相反的命令： git branch --no-merged "/>
+<node COLOR="#111111" ID="ID_839517216" 
+	TEXT="git branch -d &lt;branch_name&gt; （限制条件： 该分支已经合并到当前分支）">
 <font NAME="Serif" SIZE="12"/>
-</node>
 </node>
 <node COLOR="#111111" ID="ID_624958296" 
 	TEXT="无条件删除分支： git branch -D &lt;branch_name&gt; ">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="12"/>
 <icon BUILTIN="yes"/>
+</node>
+<node COLOR="#111111" ID="ID_327619591" 
+	TEXT="$ git branch -d new&#xa;error: Cannot delete the branch &apos;new&apos; which you are currently on.&#xa;$ git checkout master&#xa;Switched to branch &apos;master&apos;&#xa;$ git branch -d new&#xa;Deleted branch new (was f01f109).&#xa;">
+<font NAME="Serif" SIZE="12"/>
+</node>
 </node>
 <node COLOR="#111111" FOLDED="true" ID="ID_88459081" 
 	TEXT="删除远程分支？">
@@ -4159,225 +4386,6 @@
 <font NAME="Serif" SIZE="12"/>
 </node>
 </node>
-</node>
-</node>
-<node COLOR="#00b439" FOLDED="true" ID="ID_303951238" 
-	TEXT="4 里程碑">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
-<node COLOR="#990000" FOLDED="true" ID="ID_1579884608" 
-	TEXT="为什么需要里程碑？">
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_1792141538" 
-	TEXT="40位 SHA1 哈希值不好记"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_611541349" 
-	TEXT="跟踪软件的版本">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1919728658" 
-	TEXT="git describe"/>
-</node>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_356033177" 
-	TEXT="操作 Git 里程碑">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_1950537415" 
-	TEXT="Git 的 commit-id">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1447221485" 
-	TEXT="COMMIT-ISH 即提交ID，是由 40 个十六进制数字组成，可以由开头的任意长度的数字串指代，只要不冲突。">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_442805379" 
-	TEXT="建立/删除和查看 tag">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_1528429187" 
-	TEXT="运行 git tag tag_name 即可创建轻量级里程碑">
-<node COLOR="#111111" ID="ID_434774012" 
-	TEXT="git tag v2.5 1b2e1d63ff ： 创建轻量级里程碑">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_253481402" 
-	TEXT="轻量级里程碑，用 git-show 只能看到tag应用到的 commit 本身">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1649246214" 
-	TEXT="$ git tag v1.4-lw&#xa;$ git tag&#xa;v0.1&#xa;v1.3&#xa;v1.4&#xa;v1.4-lw&#xa;v1.5"/>
-<node COLOR="#111111" ID="ID_1650891693" 
-	TEXT="$ git show v1.4-lw&#xa;commit 15027957951b64cf874c3557a0f3547bd83b3ff6&#xa;Merge: 4a447f7... a6b4c97...&#xa;Author: Scott Chacon &lt;schacon@gee-mail.com&gt;&#xa;Date:   Sun Feb 8 19:02:46 2009 -0800&#xa;&#xa;    Merge branch &apos;experiment&apos;"/>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_544725214" 
-	TEXT="带注解的里程碑">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<icon BUILTIN="idea"/>
-<node COLOR="#111111" ID="ID_9424802" 
-	TEXT="带有注解的里程碑是使用 -a 或者 -s 方式创建，并且用 -m 参数添加说明">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_178956216" 
-	TEXT="用 -a 参数创建带有注解的里程碑">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1982377819" 
-	TEXT="$ git tag -a v1.4 -m &apos;my version 1.4&apos;&#xa;$ git tag&#xa;v0.1&#xa;v1.3&#xa;v1.4"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1134478249" 
-	TEXT="-s 参数用 gpg 签名里程碑。用 -v 参数可以校验之">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1875442721" 
-	TEXT="$ git tag -s v1.5 -m &apos;my signed 1.5 tag&apos;&#xa;You need a passphrase to unlock the secret key for&#xa;user: &quot;Scott Chacon &lt;schacon@gee-mail.com&gt;&quot;&#xa;1024-bit DSA key, ID F721C45A, created 2009-02-09"/>
-<node COLOR="#111111" ID="ID_1332191361" 
-	TEXT="$ git tag -v v1.4.2.1&#xa;object 883653babd8ee7ea23e6a5c392bb739348b1eb61&#xa;type commit&#xa;tag v1.4.2.1&#xa;tagger Junio C Hamano &lt;junkio@cox.net&gt; 1158138501 -0700&#xa;&#xa;GIT 1.4.2.1&#xa;&#xa;Minor fixes since 1.4.2, including git-mv and git-http with alternates.&#xa;gpg: Signature made Wed Sep 13 02:08:25 2006 PDT using DSA key ID F3119B9A&#xa;gpg: Good signature from &quot;Junio C Hamano &lt;junkio@cox.net&gt;&quot;&#xa;gpg:                 aka &quot;[jpeg image of size 1513]&quot;&#xa;Primary key fingerprint: 3565 2A26 2040 E066 C9A7  4A7D C0C6 D9A4 F311 9B9A"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_643957992" 
-	TEXT="用 git show 命令，查看里程碑的注解">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1246653964" 
-	TEXT="$ git show v1.4&#xa;tag v1.4&#xa;Tagger: Scott Chacon &lt;schacon@gee-mail.com&gt;&#xa;Date:   Mon Feb 9 14:45:11 2009 -0800&#xa;&#xa;my version 1.4&#xa;commit 15027957951b64cf874c3557a0f3547bd83b3ff6&#xa;Merge: 4a447f7... a6b4c97...&#xa;Author: Scott Chacon &lt;schacon@gee-mail.com&gt;&#xa;Date:   Sun Feb 8 19:02:46 2009 -0800&#xa;&#xa;    Merge branch &apos;experiment&apos;"/>
-</node>
-</node>
-<node COLOR="#111111" ID="ID_1456091512" 
-	TEXT="删除 tag： git tag -d tagname"/>
-<node COLOR="#111111" ID="ID_1769178636" 
-	TEXT="git tag ： 查看里程碑列表">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#111111" ID="ID_1006292485" 
-	TEXT="查看 tag 对应的 commit id">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_552581117" 
-	TEXT="查看某个 commit id 是否有对应的 tag 或者分支？ (name-rev)">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1411702649" 
-	TEXT="git name-rev 用于查看某个 commit 是否有对应 tag。&#xa;&#xa;$ git name-rev 41008ee&#xa;41008ee tags/v1.0~1&#xa;">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1080601147" 
-	TEXT="git name-rev 用于查看某个 commit 是否有对应 tag。&#xa;&#xa;$ git name-rev 41008ee&#xa;41008ee tags/v1.0~1&#xa;">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_484431346" 
-	TEXT="能否在 Tag 上提交？">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1592731522" 
-	TEXT="SVN 是可以在 tag 上提交的，但是 git 很好的处理这个问题"/>
-<node COLOR="#111111" ID="ID_1112648429" 
-	TEXT="git co tagname， 实际上 HEAD 内容会变成 40位 commitid，而非 symbol ref name"/>
-<node COLOR="#111111" ID="ID_1290204665" 
-	TEXT="提交不会被保留"/>
-<node COLOR="#111111" ID="ID_1739869171" 
-	TEXT="要想提交被保留，执行 git co -b branch_name"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1971546762" 
-	TEXT="Tag 的实质">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_568608532" 
-	TEXT="里程碑和分支实际上都是 commitid 的对应物"/>
-<node COLOR="#111111" ID="ID_1943737533" 
-	TEXT="分支：实际是一个分支名，指向该分支的顶节点。">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_914294268" 
-	TEXT="* The branch &quot;test&quot; is short for &quot;refs/heads/test&quot;.">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1157001888" 
-	TEXT="* The tag &quot;v2.6.18&quot; is short for &quot;refs/tags/v2.6.18&quot;.">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1491413743" 
-	TEXT="* &quot;origin/master&quot; is short for &quot;refs/remotes/origin/master&quot;.">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_204980636" 
-	TEXT="里程碑的误用">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1511354576" 
-	TEXT="不要修改里程碑"/>
-<node COLOR="#111111" ID="ID_613309185" 
-	TEXT="修改的里程碑，运行 git push, git pull 不会自动同步"/>
-</node>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_677538909" 
-	TEXT="Git 里程碑奥秘">
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_222373567" 
-	TEXT="特殊的引用空间"/>
-<node COLOR="#111111" ID="ID_446695308" 
-	TEXT="轻量级里程碑">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_816785129" 
-	TEXT="带注解的里程碑">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_1674727649" 
-	TEXT="轻量级里程碑 和 带注解的里程碑">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<icon BUILTIN="idea"/>
-<node COLOR="#111111" ID="ID_1496367509" 
-	TEXT="带有注解的里程碑是使用 -a 或者 -s 方式创建，并且用 -m 参数添加说明">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1074473132" 
-	TEXT="用 -a 参数创建带有注解的里程碑">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1285089645" 
-	TEXT="$ git tag -a v1.4 -m &apos;my version 1.4&apos;&#xa;$ git tag&#xa;v0.1&#xa;v1.3&#xa;v1.4"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_559835978" 
-	TEXT="-s 参数用 gpg 签名里程碑。用 -v 参数可以校验之">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_520731049" 
-	TEXT="$ git tag -s v1.5 -m &apos;my signed 1.5 tag&apos;&#xa;You need a passphrase to unlock the secret key for&#xa;user: &quot;Scott Chacon &lt;schacon@gee-mail.com&gt;&quot;&#xa;1024-bit DSA key, ID F721C45A, created 2009-02-09"/>
-<node COLOR="#111111" ID="ID_529214851" 
-	TEXT="$ git tag -v v1.4.2.1&#xa;object 883653babd8ee7ea23e6a5c392bb739348b1eb61&#xa;type commit&#xa;tag v1.4.2.1&#xa;tagger Junio C Hamano &lt;junkio@cox.net&gt; 1158138501 -0700&#xa;&#xa;GIT 1.4.2.1&#xa;&#xa;Minor fixes since 1.4.2, including git-mv and git-http with alternates.&#xa;gpg: Signature made Wed Sep 13 02:08:25 2006 PDT using DSA key ID F3119B9A&#xa;gpg: Good signature from &quot;Junio C Hamano &lt;junkio@cox.net&gt;&quot;&#xa;gpg:                 aka &quot;[jpeg image of size 1513]&quot;&#xa;Primary key fingerprint: 3565 2A26 2040 E066 C9A7  4A7D C0C6 D9A4 F311 9B9A"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_916113621" 
-	TEXT="用 git show 命令，查看里程碑的注解">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_682062052" 
-	TEXT="$ git show v1.4&#xa;tag v1.4&#xa;Tagger: Scott Chacon &lt;schacon@gee-mail.com&gt;&#xa;Date:   Mon Feb 9 14:45:11 2009 -0800&#xa;&#xa;my version 1.4&#xa;commit 15027957951b64cf874c3557a0f3547bd83b3ff6&#xa;Merge: 4a447f7... a6b4c97...&#xa;Author: Scott Chacon &lt;schacon@gee-mail.com&gt;&#xa;Date:   Sun Feb 8 19:02:46 2009 -0800&#xa;&#xa;    Merge branch &apos;experiment&apos;"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_593208744" 
-	TEXT="轻量级里程碑，用 git-show 只能看到tag应用到的 commit 本身">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_25205744" 
-	TEXT="$ git tag v1.4-lw&#xa;$ git tag&#xa;v0.1&#xa;v1.3&#xa;v1.4&#xa;v1.4-lw&#xa;v1.5"/>
-<node COLOR="#111111" ID="ID_1403819583" 
-	TEXT="$ git show v1.4-lw&#xa;commit 15027957951b64cf874c3557a0f3547bd83b3ff6&#xa;Merge: 4a447f7... a6b4c97...&#xa;Author: Scott Chacon &lt;schacon@gee-mail.com&gt;&#xa;Date:   Sun Feb 8 19:02:46 2009 -0800&#xa;&#xa;    Merge branch &apos;experiment&apos;"/>
-</node>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1870396988" 
-	TEXT="带签名的里程碑">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1125169278" 
-	TEXT="repo 如何管理签名？">
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1050685782" 
-	TEXT="里程碑管理规范">
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_1610498937" 
-	TEXT="Linux 的里程碑命名"/>
-<node COLOR="#111111" ID="ID_741787146" 
-	TEXT="Git 项目的里程碑命名"/>
-<node COLOR="#111111" ID="ID_463312956" 
-	TEXT="里程碑命名规则和名称的排序，到底 git describe 使用哪个 tag？"/>
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_352618381" 

@@ -69,8 +69,8 @@
 
 .. include:: ./03-git-harmony/010-protocol.rst
 .. include:: ./03-git-harmony/020-conflict.rst
-.. include:: ./03-git-harmony/030-git-branch.rst
 .. include:: ./03-git-harmony/040-git-tag.rst
+.. include:: ./03-git-harmony/030-git-branch.rst
 .. include:: ./03-git-harmony/050-git-remote.rst
 .. include:: ./03-git-harmony/060-git-offline.rst
 
