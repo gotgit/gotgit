@@ -4808,6 +4808,35 @@
 	TEXT="Git 技巧篇：">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="Serif" SIZE="18"/>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1863710685" 
+	TEXT="Windows 下的 Git">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_1549049568" 
+	TEXT="Mac 和 Windows 都忽略文件大小写。">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_449967265" 
+	TEXT="因此在这些平台建立的版本库，都设置了 core.ignorecase true"/>
+<node COLOR="#111111" ID="ID_1028258157" 
+	TEXT="会把大小写不同的文件名当作同一个文件。"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1757189578" 
+	TEXT="改文件名，需要先删除，再添加">
+<node COLOR="#111111" ID="ID_255724487" 
+	TEXT="使用 git mv 不可以"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_249492877" 
+	TEXT="而是两个操作">
+<node COLOR="#111111" ID="ID_1314365861" 
+	TEXT="git rm file"/>
+<node COLOR="#111111" ID="ID_521218432" 
+	TEXT="create NewFile"/>
+<node COLOR="#111111" ID="ID_322655948" 
+	TEXT="git add NewFile"/>
+<node COLOR="#111111" ID="ID_404280656" 
+	TEXT="git commit"/>
+</node>
+</node>
+</node>
+</node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_64232537" 
 	TEXT="Git 定制">
 <edge STYLE="bezier" WIDTH="thin"/>
