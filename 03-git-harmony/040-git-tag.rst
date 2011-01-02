@@ -510,10 +510,14 @@ Git 没有提供对里程碑直接重命名的命令，如果对里程碑名字�
 
 ::
 
-  $ git tag -d mytagt tag -d mytag
+  $ git tag -d mytag
   Deleted tag 'mytag' (was 60a2f4f)
 
 里程碑没有类似 reflog 的变更记录机制，一旦删除不易恢复，慎用。在删除里程碑 `mytag` 的命令输出中，会显示该里程碑所对应的提交ID，一旦发现删除错误，赶紧补救还来得及。
+
+::
+
+  $ git tag mytag 60a2f4f
 
 不要随意更改里程碑
 ==================
@@ -525,7 +529,157 @@ Git 没有提供对里程碑直接重命名的命令，如果对里程碑名字�
 共享里程碑
 ==========
 
-创建的里程碑，缺省只在本地版本库中可见，不会因为对分支执行推送而将里程碑也推送到远程版本库。这样的设计显然更
+现在看看用户 user1 的工作区状态。可以看出现在的工作区相比上游有三个新的提交。
+
+::
+
+  $ git status
+  # On branch master
+  # Your branch is ahead of 'origin/master' by 3 commits.
+  #
+  nothing to commit (working directory clean)
+
+那么如果执行 `git push` 命令向上游推送，会将本地创建的三个里程碑推送到上游么？
+
+* 向上游推送。
+
+  ::
+  
+    $ git push
+    Counting objects: 3, done.
+    Delta compression using up to 2 threads.
+    Compressing objects: 100% (3/3), done.
+    Writing objects: 100% (3/3), 512 bytes, done.
+    Total 3 (delta 0), reused 0 (delta 0)
+    Unpacking objects: 100% (3/3), done.
+    To file:///path/to/repos/helloworld.git
+       3e6070e..ebcf6d6  master -> master
+
+* 通过执行 `git ls-remote` 可以查看上游版本库的引用，会发现本地建立的三个里程碑，并没有推送到上游。
+
+  ::
+
+    $ git ls-remote origin my*
+
+创建的里程碑，缺省只在本地版本库中可见，不会因为对分支执行推送而将里程碑也推送到远程版本库。这样的设计显然更为合理，否则的话，每个用户本地创建的里程碑都自动向上游推送，那么上游的里程碑将有多么杂乱，而且不同用户创建的相同名称的里程碑会互相覆盖。
+
+**那么如何共享里程碑呢？**
+
+如果用户确实需要将某些本地建立的里程碑推送到远程版本库，需要在 `git push` 命令中明确的表示出来。下面在用户 user1 的工作区执行命令，将 `mytag` 里程碑共享到上游版本库。
+
+::
+
+  $ git push origin mytag
+  Total 0 (delta 0), reused 0 (delta 0)
+  To file:///path/to/repos/helloworld.git
+   * [new tag]         mytag -> mytag
+
+
+如果需要将本地建立的所有里程碑全部推送到远程版本库，可以使用通配符。
+
+::
+
+  $ git push origin refs/tags/*
+  Counting objects: 2, done.
+  Delta compression using up to 2 threads.
+  Compressing objects: 100% (2/2), done.
+  Writing objects: 100% (2/2), 687 bytes, done.
+  Total 2 (delta 0), reused 0 (delta 0)
+  Unpacking objects: 100% (2/2), done.
+  To file:///path/to/repos/helloworld.git
+   * [new tag]         mytag2 -> mytag2
+   * [new tag]         mytag3 -> mytag3
+
+再用命令 `git ls-remote` 查看上游版本库的引用，会发现本地建立的三个里程碑，已经能够再上游中看到了。
+
+::
+
+  $ git ls-remote origin my*
+  60a2f4f31e5dddd777c6ad37388fe6e5520734cb        refs/tags/mytag
+  149b6344e80fc190bda5621cd71df391d3dd465e        refs/tags/mytag2
+  8a9f3d16ce2b4d39b5d694de10311207f289153f        refs/tags/mytag2^{}
+  5dc2fc52f2dcb84987f511481cc6b71ec1b381f7        refs/tags/mytag3
+  ebcf6d6b06545331df156687ca2940800a3c599d        refs/tags/mytag3^{}
+
+**当用户从版本库执行拉回操作，会自动获取里程碑么？**
+
+用户 user2 的工作区中如果执行 `git fetch` 或 `git pull` 操作，能自动将用户 user1 推送到共享版本库中的里程碑获取到么？下面实践一下。
+
+* 进入 user2 的工作区。
+
+  ::
+
+    $ cd /path/to/user2/workspace/helloworld/
+
+* 执行 `git pull` 命令，从上游版本库获取提交。
+
+  ::
+
+    $ git pull
+    remote: Counting objects: 5, done.
+    remote: Compressing objects: 100% (5/5), done.
+    remote: Total 5 (delta 0), reused 0 (delta 0)
+    Unpacking objects: 100% (5/5), done.
+    From file:///path/to/repos/helloworld
+       3e6070e..ebcf6d6  master     -> origin/master
+     * [new tag]         mytag3     -> mytag3
+    From file:///path/to/repos/helloworld
+     * [new tag]         mytag      -> mytag
+     * [new tag]         mytag2     -> mytag2
+    Updating 3e6070e..ebcf6d6
+    Fast-forward
+
+**？**
+
+::
+
+  $ git tag -n1 -l my*
+  mytag           blank commit.
+  mytag2          My first annotated tag.
+  mytag3          My first GPG-signed tag.
+  
+  
+  $ git tag -f -m "user2 update this annotated tag." mytag2 HEAD^
+  Updated tag 'mytag2' (was 149b634)
+  
+  $ git cat-file -p mytag2
+  object 8a9f3d16ce2b4d39b5d694de10311207f289153f
+  type commit
+  tag mytag2
+  tagger user2 <user2@moon.ossxp.com> Mon Jan 3 01:14:18 2011 +0800
+  
+  user2 update this annotated tag.
+  
+  
+  $ git push origin mytag2
+  Counting objects: 1, done.
+  Writing objects: 100% (1/1), 171 bytes, done.
+  Total 1 (delta 0), reused 0 (delta 0)
+  Unpacking objects: 100% (1/1), done.
+  To file:///path/to/repos/helloworld.git
+     149b634..0e6c780  mytag2 -> mytag2
+  
+  $ git pull
+  Already up-to-date.
+  
+  
+  $ git pull origin refs/tags/mytag2:refs/tags/mytag2
+  remote: Counting objects: 1, done.
+  remote: Total 1 (delta 0), reused 0 (delta 0)
+  Unpacking objects: 100% (1/1), done.
+  From file:///path/to/repos/helloworld
+   - [tag update]      mytag2     -> mytag2
+  Already up-to-date.
+
+
+显然，Git 关于里程碑共享的设计是非常合理和人性化的：
+
+* 里程碑共享，必须在推送中显式的执行。即在推送命令的参数中，标明要推送哪个里程碑。
+* 用户从上游版本库获取提交，会自动将当前分支的新提交以及这些提交上包含的里程碑一并获取。
+* 如果本地已有名里程碑，缺省不会从上游同步里程碑，即使两者里程碑的指向是不同的。这也就要求里程碑一旦共享，不要再修改。
+
+删除远程版本库的里程碑
+=======================
 
 里程碑管理规范
 ===============
