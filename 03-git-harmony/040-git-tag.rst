@@ -464,16 +464,16 @@ Git 里程碑
 
 ::
 
-  $ git cat-file -p mytag3
+  $ git cat-file tag mytag3
   object ebcf6d6b06545331df156687ca2940800a3c599d
   type commit
   tag mytag3
-  tagger user1 <user1@sun.ossxp.com> Sun Jan 2 17:35:36 2011 +0800
-
+  tagger user1 <user1@sun.ossxp.com> 1293960936 +0800
+  
   My first GPG-signed tag.
   -----BEGIN PGP SIGNATURE-----
   Version: GnuPG v1.4.10 (GNU/Linux)
-
+  
   iQEcBAABAgAGBQJNIEboAAoJEO9W1fg3N5xn42gH/jFDEKobqlupNKFvmkI1t9d6
   lApDFUdcFMPWvxo/eq8VjcQyRcb1X1bGJj+pxXk455fDL1NWonaJa6HE6RLu868x
   CQIWqWelkCelfm05GE9FnPd2SmJsiDkTPZzINya1HylF5ZbrExH506JyCFk//FC2
@@ -483,7 +483,7 @@ Git 里程碑
   =jdrN
   -----END PGP SIGNATURE-----
 
-创建里程碑。
+要验证签名的有效性，如果直接使用 gpg 会比较麻烦，因为需要将这个文件拆分为两个，一个是不包含签名的里程碑内容，另外一个是签名本身。还好可以使用命令 `git tag -v` 来验证里程碑签名的有效性。
 
 ::
 
@@ -496,13 +496,31 @@ Git 里程碑
   My first GPG-signed tag.
   gpg: 于 2011年01月02日 星期日 17时35分36秒 CST 创建的签名，使用 RSA，钥匙号 37379C67
 
+重命名里程碑
+============
+
+Git 没有提供对里程碑直接重命名的命令，如果对里程碑名字不满意的话，需要删除旧的里程碑，然后重新用新的里程碑进行命名。
+
+为什么没有提供重命名里程碑的命令呢？按理说只要将 `.git/refs/tags/` 下的引用文件改名就可以了。这是因为里程碑的名字不但反映在 `.git/refs/tags` 引用目录下的文件名，而且对于带说明或者签名的里程碑，里程碑的名字还反映在 tag 对象的内容中。尤其是带签名的里程碑，如果修改里程碑的名字，不但里程碑对象ID势必要变化，而且里程碑也要重新进行签名，这显然难以自动实现。
 
 删除里程碑
-=============
+===========
+
+如果里程碑建立在了错误的提交上或者对里程碑的命名不满意，可以删除里程碑。删除里程碑使用命令 `git tag -d` ，下面用命令删除里程碑 `mytag` 。
+
+::
+
+  $ git tag -d mytagt tag -d mytag
+  Deleted tag 'mytag' (was 60a2f4f)
+
+里程碑没有类似 reflog 的变更记录机制，一旦删除不易恢复，慎用。在删除里程碑 `mytag` 的命令输出中，会显示该里程碑所对应的提交ID，一旦发现删除错误，赶紧补救还来得及。
 
 不要随意更改里程碑
 ==================
 
+里程碑建立后，如果需要修改，可以使用同样的里程碑名称重新建立，不过需要加上 `-f` 或者 `--force` 参数强制覆盖已有的里程碑。
+
+更改里程碑要慎重，一个原因是里程碑从概念上讲是对历史提交的一个标记，不应该随意变动。另外一个原因是里程碑一旦被他人同步，如果修改里程碑，已经同步该里程碑的用户不会自动更新，导致一个相同名称的里程碑在不同用户的版本库中的指代不同。下面就看看如何与他人共享里程碑。
 
 共享里程碑
 ==========
