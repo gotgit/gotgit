@@ -401,7 +401,7 @@ Git 里程碑
   error: gpg failed to sign the tag
   error: unable to sign the tag
 
-之所以签名失败，是因为找不到签名可用的公钥-私钥对。使用下面的命令可以查看可用的 GnuPG 公钥。
+之所以签名失败，是因为找不到签名可用的公钥-私钥对。使用下面的命令可以查看当前可用的 GnuPG 公钥。
 
 ::
 
@@ -415,7 +415,7 @@ Git 里程碑
 
 可以看到 GnuPG 的公钥链（pubring）中只包含了 `Jiang Xin` 用户的公钥，尚没有 `uesr1` 用户的公钥。
 
-可以在创建带签名的里程碑时，使用 `-u <key-id>` 参数，对于此类可以使用 `Jiang Xin` 用户的 key-id: FBC49D01 。但如果希望使用 `-s` 参数创建带签名的里程碑，就需要为而当前工作区提交者: `user1 <user1@sun.ossxp.com>` ，创建对应的公钥-私钥对。
+实际上在创建带签名的里程碑时，并非一定要使用邮件名匹配的公钥-私钥对进行签名，使用 `-u <key-id>` 参数调用就可以用指定的公钥-私钥对进行签名，对于此例可以使用 `FBC49D01` 作为 `<key-id>` 。但如果没有可用的公钥-私钥对，或者希望使用 `-s` 参数创建带签名的里程碑，就需要为而当前工作区提交者: `user1 <user1@sun.ossxp.com>` 创建对应的公钥-私钥对。
 
 使用命令 `gpg --gen-key` 来创建公钥私钥对。
 
@@ -427,7 +427,7 @@ Git 里程碑
 
 * 在创建公钥-私钥对时，在提示输入用户名时输入 `User1` ，在提示输入邮件地址时输入 `user1@sun.ossxp.com` ，其他可以采用缺省值。
 * 在提示输入密码时，为了简单起见可以直接按下回车，即使用空口令。
-* 在生成公钥私钥对过程，会提示用户做些操作以便产生更好的随机数，这时狂晃鼠标就可以了。
+* 在生成公钥私钥对过程中，会提示用户做一些随机操作以便产生更好的随机数，这时不停的晃动鼠标就可以了。
 
 创建完毕，再查看一下公钥链。
 
@@ -496,13 +496,6 @@ Git 里程碑
   My first GPG-signed tag.
   gpg: 于 2011年01月02日 星期日 17时35分36秒 CST 创建的签名，使用 RSA，钥匙号 37379C67
 
-重命名里程碑
-============
-
-Git 没有提供对里程碑直接重命名的命令，如果对里程碑名字不满意的话，需要删除旧的里程碑，然后重新用新的里程碑进行命名。
-
-为什么没有提供重命名里程碑的命令呢？按理说只要将 `.git/refs/tags/` 下的引用文件改名就可以了。这是因为里程碑的名字不但反映在 `.git/refs/tags` 引用目录下的文件名，而且对于带说明或者签名的里程碑，里程碑的名字还反映在 tag 对象的内容中。尤其是带签名的里程碑，如果修改里程碑的名字，不但里程碑对象ID势必要变化，而且里程碑也要重新进行签名，这显然难以自动实现。
-
 删除里程碑
 ===========
 
@@ -513,18 +506,24 @@ Git 没有提供对里程碑直接重命名的命令，如果对里程碑名字�
   $ git tag -d mytag
   Deleted tag 'mytag' (was 60a2f4f)
 
-里程碑没有类似 reflog 的变更记录机制，一旦删除不易恢复，慎用。在删除里程碑 `mytag` 的命令输出中，会显示该里程碑所对应的提交ID，一旦发现删除错误，赶紧补救还来得及。
+里程碑没有类似 reflog 的变更记录机制，一旦删除不易恢复，慎用。在删除里程碑 `mytag` 的命令输出中，会显示该里程碑所对应的提交ID，一旦发现删除错误，赶紧补救还来得及。下面的命令实现对里程碑 `mytag` 的重建。
 
 ::
 
   $ git tag mytag 60a2f4f
+
+**为什么没有重命名里程碑的命令？**
+
+Git 没有提供对里程碑直接重命名的命令，如果对里程碑名字不满意的话，需要删除旧的里程碑，然后重新用新的里程碑进行命名。
+
+为什么没有提供重命名里程碑的命令呢？按理说只要将 `.git/refs/tags/` 下的引用文件改名就可以了。这是因为里程碑的名字不但反映在 `.git/refs/tags` 引用目录下的文件名，而且对于带说明或者签名的里程碑，里程碑的名字还反映在 tag 对象的内容中。尤其是带签名的里程碑，如果修改里程碑的名字，不但里程碑对象ID势必要变化，而且里程碑也要重新进行签名，这显然难以自动实现。
 
 不要随意更改里程碑
 ==================
 
 里程碑建立后，如果需要修改，可以使用同样的里程碑名称重新建立，不过需要加上 `-f` 或者 `--force` 参数强制覆盖已有的里程碑。
 
-更改里程碑要慎重，一个原因是里程碑从概念上讲是对历史提交的一个标记，不应该随意变动。另外一个原因是里程碑一旦被他人同步，如果修改里程碑，已经同步该里程碑的用户不会自动更新，导致一个相同名称的里程碑在不同用户的版本库中的指代不同。下面就看看如何与他人共享里程碑。
+更改里程碑要慎重，一个原因是里程碑从概念上讲是对历史提交的一个标记，不应该随意变动。另外一个原因是里程碑一旦被他人同步，如果修改里程碑，已经同步该里程碑的用户不会自动更新，导致一个相同名称的里程碑在不同用户的版本库中的指向不同。下面就看看如何与他人共享里程碑。
 
 共享里程碑
 ==========
@@ -590,7 +589,7 @@ Git 没有提供对里程碑直接重命名的命令，如果对里程碑名字�
    * [new tag]         mytag2 -> mytag2
    * [new tag]         mytag3 -> mytag3
 
-再用命令 `git ls-remote` 查看上游版本库的引用，会发现本地建立的三个里程碑，已经能够再上游中看到了。
+再用命令 `git ls-remote` 查看上游版本库的引用，会发现本地建立的三个里程碑，已经能够在上游中看到了。
 
 ::
 
@@ -603,7 +602,7 @@ Git 没有提供对里程碑直接重命名的命令，如果对里程碑名字�
 
 **当用户从版本库执行拉回操作，会自动获取里程碑么？**
 
-用户 user2 的工作区中如果执行 `git fetch` 或 `git pull` 操作，能自动将用户 user1 推送到共享版本库中的里程碑获取到么？下面实践一下。
+用户 user2 的工作区中如果执行 `git fetch` 或 `git pull` 操作，能自动将用户 user1 推送到共享版本库中的里程碑获取到本地版本库么？下面实践一下。
 
 * 进入 user2 的工作区。
 
@@ -629,60 +628,386 @@ Git 没有提供对里程碑直接重命名的命令，如果对里程碑名字�
     Updating 3e6070e..ebcf6d6
     Fast-forward
 
-**？**
+* 可见执行 `git pull` 操作，能够将在获取远程共享版本库的提交的同时，也会获取新的里程碑。下面的命令可以看到本地版本库中的里程碑。
 
-::
+  ::
+  
+    $ git tag -n1 -l my*
+    mytag           blank commit.
+    mytag2          My first annotated tag.
+    mytag3          My first GPG-signed tag.
 
-  $ git tag -n1 -l my*
-  mytag           blank commit.
-  mytag2          My first annotated tag.
-  mytag3          My first GPG-signed tag.
-  
-  
-  $ git tag -f -m "user2 update this annotated tag." mytag2 HEAD^
-  Updated tag 'mytag2' (was 149b634)
-  
-  $ git cat-file -p mytag2
-  object 8a9f3d16ce2b4d39b5d694de10311207f289153f
-  type commit
-  tag mytag2
-  tagger user2 <user2@moon.ossxp.com> Mon Jan 3 01:14:18 2011 +0800
-  
-  user2 update this annotated tag.
-  
-  
-  $ git push origin mytag2
-  Counting objects: 1, done.
-  Writing objects: 100% (1/1), 171 bytes, done.
-  Total 1 (delta 0), reused 0 (delta 0)
-  Unpacking objects: 100% (1/1), done.
-  To file:///path/to/repos/helloworld.git
-     149b634..0e6c780  mytag2 -> mytag2
-  
-  $ git pull
-  Already up-to-date.
-  
-  
-  $ git pull origin refs/tags/mytag2:refs/tags/mytag2
-  remote: Counting objects: 1, done.
-  remote: Total 1 (delta 0), reused 0 (delta 0)
-  Unpacking objects: 100% (1/1), done.
-  From file:///path/to/repos/helloworld
-   - [tag update]      mytag2     -> mytag2
-  Already up-to-date.
+**里程碑变更能够自动同步么？**
+
+里程碑可以被强制更新。当里程碑被改变后，已经获取到里程碑的版本库再次使用获取或拉回操作，能够自动更新里程碑么？答案是不能。可以看看下面的操作。
 
 
-显然，Git 关于里程碑共享的设计是非常合理和人性化的：
+* 用户 user2 强制更新里程碑 `mytag2` 。
 
-* 里程碑共享，必须在推送中显式的执行。即在推送命令的参数中，标明要推送哪个里程碑。
-* 用户从上游版本库获取提交，会自动将当前分支的新提交以及这些提交上包含的里程碑一并获取。
-* 如果本地已有名里程碑，缺省不会从上游同步里程碑，即使两者里程碑的指向是不同的。这也就要求里程碑一旦共享，不要再修改。
+  ::
+    
+    $ git tag -f -m "user2 update this annotated tag." mytag2 HEAD^
+    Updated tag 'mytag2' (was 149b634)
+
+* 里程碑 `mytag2` 已经是不同的对象了。
+    
+  ::
+
+    $ git rev-parse mytag2
+    0e6c780ff0fe06635394db9dac6fb494833df8df
+    $ git cat-file -p mytag2
+    object 8a9f3d16ce2b4d39b5d694de10311207f289153f
+    type commit
+    tag mytag2
+    tagger user2 <user2@moon.ossxp.com> Mon Jan 3 01:14:18 2011 +0800
+    
+    user2 update this annotated tag.
+
+* 为了更改远程共享服务器中的里程碑，同样需要显式推送。即在推送时写上要推送的里程碑名称。
+
+  ::
+
+    $ git push origin mytag2
+    Counting objects: 1, done.
+    Writing objects: 100% (1/1), 171 bytes, done.
+    Total 1 (delta 0), reused 0 (delta 0)
+    Unpacking objects: 100% (1/1), done.
+    To file:///path/to/repos/helloworld.git
+       149b634..0e6c780  mytag2 -> mytag2
+
+* 切换到另外一个用户 user1 的工作区。
+
+  ::
+
+    $ cd /path/to/user1/workspace/helloworld/
+
+* 用户 user1 执行拉回操作，没有获取到新的里程碑。
+
+  ::
+
+    $ git pull
+    Already up-to-date.
+
+* 用户 user1 必需显式的执行拉回操作。即要在 `git pull` 的参数中使用引用表达式。
+
+  所谓引用表达式就是用冒号分隔的引用名称或者通配符。用在这里代表将远程共享版本库的引用 `refs/tag/mytag2` 覆盖本地版本库的同名引用。
+
+  ::
+
+    $ git pull origin refs/tags/mytag2:refs/tags/mytag2
+    remote: Counting objects: 1, done.
+    remote: Total 1 (delta 0), reused 0 (delta 0)
+    Unpacking objects: 100% (1/1), done.
+    From file:///path/to/repos/helloworld
+     - [tag update]      mytag2     -> mytag2
+    Already up-to-date.
+
+关于里程碑的共享和同步操作，看似很繁琐，但用心体会就会感觉到 Git 关于里程碑共享的设计是非常合理和人性化的：
+
+* 里程碑共享，必须显式的推送。即在推送命令的参数中，标明要推送哪个里程碑。
+
+  显式推送是防止用户随意推送里程碑导致共享版本库中里程碑泛滥的方法。当然还可以参考后面关于服务器架设的相关章节为共享版本库添加授权，只允许部分用户向服务器推送里程碑。
+
+* 执行获取或拉回操作，自动从远程版本库获取新里程碑，并在在本地版本库中创建。
+
+  获取或拉回操作，只会将获取的远程分支所包含的新里程碑同步到本地，而不会将其他远程版本库分支中的里程碑获取到本地。这既方便了里程碑的取得，又防止本地里程碑因同步远程版本库而泛滥。
+
+* 如果本地已有名里程碑，缺省不会从上游同步里程碑，即使两者里程碑的指向是不同的。
+
+  理解这一点非常重要。这也就要求里程碑一旦共享，不要再修改。
 
 删除远程版本库的里程碑
 =======================
 
-里程碑管理规范
+假如向远程版本库推送里程碑后，忽然发现里程碑创建在了错误的提交上，为了防止其他人获取到错误的里程碑，应该尽快将里程碑删除。
+
+删除本地里程碑非常简单，使用 `git tag -d <tagname>` 就可以了，但是如何撤销已经推送到远程版本库的里程碑呢？需要登录到服务器上么？或者需要麻烦管理员么？不必！可以在直接在本地版本库执行命令删除远程版本库的里程碑。
+
+使用 `git push` 命令可以删除远程版本库中里程碑的里程碑。用法如下：
+
+::
+
+  命令： git push <remote_url>  :<tagname>
+
+该命令的最后一个参数实际上是一个引用表达式，引用表达式一般的格式为 `<ref>:<ref>` 。该推送命令使用的引用表达式冒号前的引用被省略，其含义是将一个空值推送到远程版本库对应的引用中，亦即删除远程版本库中相关的引用。这个命令不但可以用于删除里程碑，在下一章还可以看到使用这个命令删除远程分支。
+
+下面演示在用户 user1 的工作区执行下面的命令删除远程共享版本库中的里程碑 `mytag2` 。
+
+* 切换到用户 user1 工作区。
+
+  ::
+
+    $ cd /path/to/user1/workspace/helloworld
+
+* 执行推送操作删除远程共享版本库中的里程碑。
+
+  ::
+
+    $ git push origin :mytag2
+    To file:///path/to/repos/helloworld.git
+     - [deleted]         mytag2
+
+* 查看远程共享库中的里程碑，发现 `mytag2` 的确已经被删除。
+
+  ::
+
+    $ git ls-remote origin my*
+    60a2f4f31e5dddd777c6ad37388fe6e5520734cb        refs/tags/mytag
+    5dc2fc52f2dcb84987f511481cc6b71ec1b381f7        refs/tags/mytag3
+    ebcf6d6b06545331df156687ca2940800a3c599d        refs/tags/mytag3^{}
+
+里程碑命名规范
 ===============
 
+在正式项目的版本库管理中，要为里程碑创建订立一些规则，诸如：
 
+* 对创建里程碑进行权限控制，参考后面 Git 服务器架设相关章节。
+* 不能使用轻量级里程碑（只用于本地临时性里程碑），必需使用带说明的里程碑，甚至要求必需使用带签名的里程碑。
+* 如果使用带签名的里程碑，可以考虑设置专用账户，使用专用的私钥创建签名。
+* 里程碑的命名要使用统一的风格，并很容易和最终产品显示的版本号相对应。
 
+Git 的里程碑命名还有一些特殊的约定需要遵守。
+
+* 不能以符号 "`-`" 开头。以免在命令行中被当成命令的选项。
+
+* 可以包含路径分隔符 "`/`" ，但是路径分隔符不能位于最后。
+
+  使用路径分隔符创建 tag 实际上会在引用目录下创建子目录。例如名为 `demo/v1.2.1` 的里程碑，就会创建目录 `.git/refs/tags/demo` 并在该目录下创建引用文件 `v1.2.1` 。
+
+* 不能出现两个连续的点 "`..`" 。因为两个连续的点被用于表示版本范围，当然更不能使用三个连续的点。
+
+* 如果在里程碑命名中使用了路径分隔符 "`/`"，不能在任何一个分隔路径中以点 "`.`" 开头。
+
+  这是因为里程碑在用省略格式时造成以一个点 "`.`" 开头，在用做版本范围的最后一个版本时，造成本来两点操作符变成了三点操作符。
+
+* 不能在里程碑名称的最后出现点 "`.`"。否则在用于表示版本范围用做第一个版本时，本来用两点表示范围，结果被误做三点操作符。
+
+* 不能使用特殊字符，如：空格, 波浪线 "~", 脱字符 "^", 冒号 ":", 问号 "?", 星号 "*", 方括号 "[", 以及编号为 \177（删除字符）或者小于 \040 （32）的 Ascii 码都不能使用。
+
+  这是因为波浪线 "~" 和 脱字符 "^" 都用于表示一个提交的祖先提交。
+
+  冒号被用做引用表达式分隔两个不同的引用，或者用于分隔引用代表的树对象和该目录树中的文件。
+
+  问号、星号、和方括号都被用做通配符用在引用表达式中。
+
+* 不能以 "`.lock`" 为结尾。因为以 "`.lock`" 结尾的文件是里程碑操作过程中的临时文件。
+
+* 不能包含 "`@{`" 字串。因为 reflog 采用使用 "`@{<num>`" 作为语法的一部分。
+
+* 不能包含反斜线 "`\`"。因为反斜线用在命令行或者 shell 脚本会造成意外。
+
+**Linux 中的里程碑**
+
+Linux 项目无疑是使用 Git 版本库时间最久远，也是最重量级的项目。研究 Linux 项目本身的里程碑命名和管理，无疑会为自己的项目提供借鉴。
+
+* 首先看看 Linux 中的里程碑命名。可以看到里程碑都是以字母 `v` 开头。
+
+  ::
+
+    $ git ls-remote --tags \
+      git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6-stable.git \
+      v2.6.36*
+    25427f38d3b791d986812cb81c68df38e8249ef8        refs/tags/v2.6.36
+    f6f94e2ab1b33f0082ac22d71f66385a60d8157f        refs/tags/v2.6.36^{}
+    8ed88d401f908a594cd74a4f2513b0fabd32b699        refs/tags/v2.6.36-rc1
+    da5cabf80e2433131bf0ed8993abc0f7ea618c73        refs/tags/v2.6.36-rc1^{}
+    58d3707b8891f71d4891e6b36129eeacd3ba63f4        refs/tags/v2.6.36-rc2
+    76be97c1fc945db08aae1f1b746012662d643e97        refs/tags/v2.6.36-rc2^{}
+    40f7ec041a61c6b6d419e418818c79f7c23a1007        refs/tags/v2.6.36-rc3
+    2bfc96a127bc1cc94d26bfaa40159966064f9c8c        refs/tags/v2.6.36-rc3^{}
+    8607f6908a65fbd41d8eee6d0572425182eced69        refs/tags/v2.6.36-rc4
+    49553c2ef88749dd502687f4eb9c258bb10a4f44        refs/tags/v2.6.36-rc4^{}
+    f4d2c86897046fb2dd9680b3446dfcc17a11e7f4        refs/tags/v2.6.36-rc5
+    b30a3f6257ed2105259b404d419b4964e363928c        refs/tags/v2.6.36-rc5^{}
+    93590f17a2e3ba2aed400c7608263b97da62b6d4        refs/tags/v2.6.36-rc6
+    899611ee7d373e5eeda08e9a8632684e1ebbbf00        refs/tags/v2.6.36-rc6^{}
+    f3f2d2543afa76bcc13a58fc6a1ff723f28890da        refs/tags/v2.6.36-rc7
+    cb655d0f3d57c23db51b981648e452988c0223f9        refs/tags/v2.6.36-rc7^{}
+    7619e63f48822b2c68d0e108677340573873fb93        refs/tags/v2.6.36-rc8
+    cd07202cc8262e1669edff0d97715f3dd9260917        refs/tags/v2.6.36-rc8^{}
+    9d389cb6dcae347cfcdadf2a1ec5e66fc7a667ea        refs/tags/v2.6.36.1
+    bf6ef02e53e18dd14798537e530e00b80435ee86        refs/tags/v2.6.36.1^{}
+    ee7b38c91f3d718ea4035a331c24a56553e90960        refs/tags/v2.6.36.2
+    a1346c99fc89f2b3d35c7d7e2e4aef8ea4124342        refs/tags/v2.6.36.2^{}
+
+* 以 `-rc<num>` 为后缀的是先于正式版发布的预发布版本。
+
+  可以看出这个里程碑是一个带签名的里程碑。关于此里程碑的说明也是再简练不过了。
+
+  ::
+
+    $ git show v2.6.36-rc1
+    tag v2.6.36-rc1
+    Tagger: Linus Torvalds <torvalds@linux-foundation.org>
+    Date:   Sun Aug 15 17:42:10 2010 -0700
+
+    Linux 2.6.36-rc1
+    -----BEGIN PGP SIGNATURE-----
+    Version: GnuPG v1.4.10 (GNU/Linux)
+
+    iEYEABECAAYFAkxoiWgACgkQF3YsRnbiHLtYKQCfQSIVcj2hvLj6IWgP9xK2FE7T
+    bPoAniJ1CjbwLxQBudRi71FvubqPLuVC
+    =iuls
+    -----END PGP SIGNATURE-----
+
+    commit da5cabf80e2433131bf0ed8993abc0f7ea618c73
+    Author: Linus Torvalds <torvalds@linux-foundation.org>
+    Date:   Sun Aug 15 17:41:37 2010 -0700
+
+        Linux 2.6.36-rc1
+
+    diff --git a/Makefile b/Makefile
+    index 788111d..f3bdff8 100644
+    --- a/Makefile
+    +++ b/Makefile
+    @@ -1,7 +1,7 @@
+     VERSION = 2
+     PATCHLEVEL = 6
+    -SUBLEVEL = 35
+    -EXTRAVERSION =
+    +SUBLEVEL = 36
+    +EXTRAVERSION = -rc1
+     NAME = Sheep on Meth
+     
+     # *DOCUMENTATION*
+
+* 正式发布版去掉了预发布版的后缀。
+
+  ::
+
+    $ git show v2.6.36
+    tag v2.6.36
+    Tagger: Linus Torvalds <torvalds@linux-foundation.org>
+    Date:   Wed Oct 20 13:31:18 2010 -0700
+
+    Linux 2.6.36
+
+    The latest and greatest, and totally bug-free.  At least until 2.6.37
+    comes along and shoves it under a speeding train like some kind of a
+    bully.
+    -----BEGIN PGP SIGNATURE-----
+    Version: GnuPG v1.4.10 (GNU/Linux)
+
+    iEYEABECAAYFAky/UcwACgkQF3YsRnbiHLvg/ACffKjAb1fD6fpqcHbSijHHpbP3
+    4SkAnR4xOy7iKhmfS50ZrVsOkFFTuBHG
+    =JD3z
+    -----END PGP SIGNATURE-----
+
+    commit f6f94e2ab1b33f0082ac22d71f66385a60d8157f
+    Author: Linus Torvalds <torvalds@linux-foundation.org>
+    Date:   Wed Oct 20 13:30:22 2010 -0700
+
+        Linux 2.6.36
+
+    diff --git a/Makefile b/Makefile
+    index 7583116..860c26a 100644
+    --- a/Makefile
+    +++ b/Makefile
+    @@ -1,7 +1,7 @@
+     VERSION = 2
+     PATCHLEVEL = 6
+     SUBLEVEL = 36
+    -EXTRAVERSION = -rc8
+    +EXTRAVERSION =
+     NAME = Flesh-Eating Bats with Fangs
+     
+     # *DOCUMENTATION*
+
+* 正式发布后的升级/修正版本是通过最后一位数字的变动体现的。
+
+  ::
+
+    $ git show v2.6.36.1
+    tag v2.6.36.1
+    Tagger: Greg Kroah-Hartman <gregkh@suse.de>
+    Date:   Mon Nov 22 11:04:17 2010 -0800
+
+    This is the 2.6.36.1 stable release
+    -----BEGIN PGP SIGNATURE-----
+    Version: GnuPG v2.0.15 (GNU/Linux)
+
+    iEYEABECAAYFAkzqvrIACgkQMUfUDdst+ym9VQCgmE1LK2eC/LE9HkscsxL1X62P
+    8F0AnRI28EHENLXC+FBPt+AFWoT9f1N8
+    =BX5O
+    -----END PGP SIGNATURE-----
+
+    commit bf6ef02e53e18dd14798537e530e00b80435ee86
+    Author: Greg Kroah-Hartman <gregkh@suse.de>
+    Date:   Mon Nov 22 11:03:49 2010 -0800
+
+        Linux 2.6.36.1
+
+    diff --git a/Makefile b/Makefile
+    index 860c26a..dafd22a 100644
+    --- a/Makefile
+    +++ b/Makefile
+    @@ -1,7 +1,7 @@
+     VERSION = 2
+     PATCHLEVEL = 6
+     SUBLEVEL = 36
+    -EXTRAVERSION =
+    +EXTRAVERSION = .1
+     NAME = Flesh-Eating Bats with Fangs
+     
+     # *DOCUMENTATION*
+
+**Android 项目**
+
+看看其他项目的里程碑命名，会发现关于里程碑的命名不同项目各不相同。但是对于同一个项目要在里程碑命名上遵照同一标准，并能够正确和软件版本号对应。
+
+Android 项目是一个使用 Git 版本库非常有特色的项目，在后面会用两章介绍 Android 项目为 Git 带来的两个新工具。看看 Android 项目的里程碑编号，对自己版本库管理有无启发。
+
+* 看看 Android 项目中的里程碑命名，会发现其里程碑的命名格式为 `android-<大版本号>_r<小版本号>` 。
+
+  ::
+
+    $ git ls-remote --tags \
+      git://android.git.kernel.org/platform/manifest.git \
+      android-2.2*
+    6a03ae8f564130cbb4a11acfc49bd705df7c8df6        refs/tags/android-2.2.1_r1
+    599e242dea48f84e2f26054b0d1721e489043440        refs/tags/android-2.2.1_r1^{}
+    656ba6fdbd243153af6ec31017de38641060bf1e        refs/tags/android-2.2_r1
+    27cd0e346d1f3420c5747e01d2cb35e9ffd025ea        refs/tags/android-2.2_r1^{}
+    f6b7c499be268f1613d8cd70f2a05c12e01bcb93        refs/tags/android-2.2_r1.1
+    bd3e9923773006a0a5f782e1f21413034096c4b1        refs/tags/android-2.2_r1.1^{}
+    03618e01ec9bdd06fd8fe9afdbdcbaf4b84092c5        refs/tags/android-2.2_r1.2
+    ba7111e1d6fd26ab150bafa029fd5eab8196dad1        refs/tags/android-2.2_r1.2^{}
+    e03485e978ce1662a1285837f37ed39eadaedb1d        refs/tags/android-2.2_r1.3
+    7386d2d07956be6e4f49a7e83eafb12215e835d7        refs/tags/android-2.2_r1.3^{}
+
+* 里程碑的创建过程中使用了专用帐号和 GnuPG 签名。
+
+  ::
+
+    $ git show android-2.2_r1
+    tag android-2.2_r1
+    Tagger: The Android Open Source Project <initial-contribution@android.com>
+    Date:   Tue Jun 29 11:28:52 2010 -0700
+
+    Android 2.2 release 1
+    -----BEGIN PGP SIGNATURE-----
+    Version: GnuPG v1.4.6 (GNU/Linux)
+
+    iD8DBQBMKjtm6K0/gZqxDngRAlBUAJ9QwgFbUL592FgRZLTLLbzhKsSQ8ACffQu5
+    Mjxg5X9oc+7N1DfdU+pmOcI=
+    =0NG0
+    -----END PGP SIGNATURE-----
+
+    commit 27cd0e346d1f3420c5747e01d2cb35e9ffd025ea
+    Author: The Android Open Source Project <initial-contribution@android.com>
+    Date:   Tue Jun 29 11:27:23 2010 -0700
+
+        Manifest for android-2.2_r1
+
+    diff --git a/default.xml b/default.xml
+    index 4f21453..aaa26e3 100644
+    --- a/default.xml
+    +++ b/default.xml
+    @@ -3,7 +3,7 @@
+       <remote  name="korg"
+                fetch="git://android.git.kernel.org/"
+                review="review.source.android.com" />
+    -  <default revision="froyo"
+    +  <default revision="refs/tags/android-2.2_r1"
+                remote="korg" />
+    ...
