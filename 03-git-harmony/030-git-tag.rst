@@ -14,35 +14,35 @@ Git 里程碑
     $ mkdir -p /path/to/repos/
     $ cd /path/to/repos/
 
-* 从 Github 上镜像 `helloworld.git` 版本库。
+* 从 Github 上镜像 `hello-world.git` 版本库。
 
   如果 Git 是 1.6.0 或更新的版本，使用下面的命令建立版本库镜像。
 
   ::
 
-    $ git clone --mirror git://github.com/ossxp-com/helloworld.git 
+    $ git clone --mirror git://github.com/ossxp-com/hello-world.git 
 
   否则使用下面的命令建立版本库镜像。
 
   ::
 
-    $ git clone --bare git://github.com/ossxp-com/helloworld.git helloworld.git 
+    $ git clone --bare git://github.com/ossxp-com/hello-world.git hello-world.git 
 
-完成上面操作后，就在本地建立了一个裸版本库 `/path/to/repos/helloworld.git` 。接下来用户 user1 和 user2 分别在各自工作区克隆这个裸版本库。使用如下命令即可：
+完成上面操作后，就在本地建立了一个裸版本库 `/path/to/repos/hello-world.git` 。接下来用户 user1 和 user2 分别在各自工作区克隆这个裸版本库。使用如下命令即可：
 
 ::
 
-  $ git clone file:///path/to/repos/helloworld.git \
-              /path/to/user1/workspace/helloworld
-  $ git clone file:///path/to/repos/helloworld.git \
-              /path/to/user2/workspace/helloworld
-  $ git --git-dir=/path/to/user1/workspace/helloworld/.git \
+  $ git clone file:///path/to/repos/hello-world.git \
+              /path/to/user1/workspace/hello-world
+  $ git clone file:///path/to/repos/hello-world.git \
+              /path/to/user2/workspace/hello-world
+  $ git --git-dir=/path/to/user1/workspace/hello-world/.git \
         config user.name user1
-  $ git --git-dir=/path/to/user1/workspace/helloworld/.git \
+  $ git --git-dir=/path/to/user1/workspace/hello-world/.git \
         config user.email user1@sun.ossxp.com
-  $ git --git-dir=/path/to/user2/workspace/helloworld/.git \
+  $ git --git-dir=/path/to/user2/workspace/hello-world/.git \
         config user.name user2
-  $ git --git-dir=/path/to/user2/workspace/helloworld/.git \
+  $ git --git-dir=/path/to/user2/workspace/hello-world/.git \
         config user.email user2@moon.ossxp.com 
 
 
@@ -55,7 +55,7 @@ Git 里程碑
 
 ::
 
-  $ cd /path/to/user1/workspace/helloworld
+  $ cd /path/to/user1/workspace/hello-world
   $ git tag
   jx/v1.0
   jx/v1.1
@@ -551,7 +551,7 @@ Git 没有提供对里程碑直接重命名的命令，如果对里程碑名字�
     Writing objects: 100% (3/3), 512 bytes, done.
     Total 3 (delta 0), reused 0 (delta 0)
     Unpacking objects: 100% (3/3), done.
-    To file:///path/to/repos/helloworld.git
+    To file:///path/to/repos/hello-world.git
        3e6070e..ebcf6d6  master -> master
 
 * 通过执行 `git ls-remote` 可以查看上游版本库的引用，会发现本地建立的三个里程碑，并没有推送到上游。
@@ -570,7 +570,7 @@ Git 没有提供对里程碑直接重命名的命令，如果对里程碑名字�
 
   $ git push origin mytag
   Total 0 (delta 0), reused 0 (delta 0)
-  To file:///path/to/repos/helloworld.git
+  To file:///path/to/repos/hello-world.git
    * [new tag]         mytag -> mytag
 
 
@@ -585,7 +585,7 @@ Git 没有提供对里程碑直接重命名的命令，如果对里程碑名字�
   Writing objects: 100% (2/2), 687 bytes, done.
   Total 2 (delta 0), reused 0 (delta 0)
   Unpacking objects: 100% (2/2), done.
-  To file:///path/to/repos/helloworld.git
+  To file:///path/to/repos/hello-world.git
    * [new tag]         mytag2 -> mytag2
    * [new tag]         mytag3 -> mytag3
 
@@ -608,7 +608,7 @@ Git 没有提供对里程碑直接重命名的命令，如果对里程碑名字�
 
   ::
 
-    $ cd /path/to/user2/workspace/helloworld/
+    $ cd /path/to/user2/workspace/hello-world/
 
 * 执行 `git pull` 命令，从上游版本库获取提交。
 
@@ -619,10 +619,10 @@ Git 没有提供对里程碑直接重命名的命令，如果对里程碑名字�
     remote: Compressing objects: 100% (5/5), done.
     remote: Total 5 (delta 0), reused 0 (delta 0)
     Unpacking objects: 100% (5/5), done.
-    From file:///path/to/repos/helloworld
+    From file:///path/to/repos/hello-world
        3e6070e..ebcf6d6  master     -> origin/master
      * [new tag]         mytag3     -> mytag3
-    From file:///path/to/repos/helloworld
+    From file:///path/to/repos/hello-world
      * [new tag]         mytag      -> mytag
      * [new tag]         mytag2     -> mytag2
     Updating 3e6070e..ebcf6d6
@@ -672,14 +672,14 @@ Git 没有提供对里程碑直接重命名的命令，如果对里程碑名字�
     Writing objects: 100% (1/1), 171 bytes, done.
     Total 1 (delta 0), reused 0 (delta 0)
     Unpacking objects: 100% (1/1), done.
-    To file:///path/to/repos/helloworld.git
+    To file:///path/to/repos/hello-world.git
        149b634..0e6c780  mytag2 -> mytag2
 
 * 切换到另外一个用户 user1 的工作区。
 
   ::
 
-    $ cd /path/to/user1/workspace/helloworld/
+    $ cd /path/to/user1/workspace/hello-world/
 
 * 用户 user1 执行拉回操作，没有获取到新的里程碑。
 
@@ -698,7 +698,7 @@ Git 没有提供对里程碑直接重命名的命令，如果对里程碑名字�
     remote: Counting objects: 1, done.
     remote: Total 1 (delta 0), reused 0 (delta 0)
     Unpacking objects: 100% (1/1), done.
-    From file:///path/to/repos/helloworld
+    From file:///path/to/repos/hello-world
      - [tag update]      mytag2     -> mytag2
     Already up-to-date.
 
@@ -737,14 +737,14 @@ Git 没有提供对里程碑直接重命名的命令，如果对里程碑名字�
 
   ::
 
-    $ cd /path/to/user1/workspace/helloworld
+    $ cd /path/to/user1/workspace/hello-world
 
 * 执行推送操作删除远程共享版本库中的里程碑。
 
   ::
 
     $ git push origin :mytag2
-    To file:///path/to/repos/helloworld.git
+    To file:///path/to/repos/hello-world.git
      - [deleted]         mytag2
 
 * 查看远程共享库中的里程碑，发现 `mytag2` 的确已经被删除。
