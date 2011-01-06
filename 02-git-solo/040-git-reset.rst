@@ -8,7 +8,7 @@ Git 重置
   $ cat .git/refs/heads/master 
   e695606fc5e31b2ff9038a48a3d363f4c21a3d86
 
-上一章还通过对提交本身数据结构的分析，看到提交可以通过到父提交的关联实现对提交历史的追溯。注意：下面的命令中使用了 `--oneline` 参数，类似于 `--pretty=oneline` ，除了可以显示更短小的提交ID之外。参数 `--oneline` 在 Git 1.6.3 及以后版本提供，老版本的 Git 可以使用参数 `--pretty=oneline --abbrev-commit` 替代。
+上一章还通过对提交本身数据结构的分析，看到提交可以通过到父提交的关联实现对提交历史的追溯。注意：下面的 `git log` 命令中使用了 `--oneline` 参数，类似于 `--pretty=oneline` ，但是可以显示更短小的提交ID。参数 `--oneline` 在 Git 1.6.3 及以后版本提供，老版本的 Git 可以使用参数 `--pretty=oneline --abbrev-commit` 替代。
 
 ::
 
@@ -119,9 +119,14 @@ Git 重置
 用 reflog 挽救错误的重置
 =========================
 
-如果没有记下重置前 master 分支指向的提交ID，想要重置回原来的提交真的是一件麻烦的事情（去对象库中一个一个去找）。幸好 Git 在 `.git/logs` 目录下的文件中记录了分支的变更历史。
+如果没有记下重置前 master 分支指向的提交ID，想要重置回原来的提交真的是一件麻烦的事情（去对象库中一个一个去找）。幸好 Git 提供了一个挽救机制，通过 `.git/logs` 目录下日志文件记录了分支的变更。缺省非裸版本库都提供分支日志功能，这是因为带有工作区的版本库都有如下设置：
 
-查看一下文件 `.git/logs/refs/heads/master` 文件最后的几行。（为了排版的需要，将40位的SHA1提交ID缩短。）
+::
+
+  $ git config core.logallrefupdates
+  true
+
+查看一下 master 分支的日志文件 `.git/logs/refs/heads/master` 中的内容。下面命令显示了该文件的最后几行。为了排版的需要，还将输出中的40位的SHA1提交ID缩短。
 
 ::
 
@@ -132,7 +137,7 @@ Git 重置
   4902dc3 e695606 Jiang Xin <jiangxin@ossxp.com> 1291436302 +0800    HEAD^: updating HEAD
   e695606 9e8a761 Jiang Xin <jiangxin@ossxp.com> 1291436382 +0800    9e8a761: updating HEAD
 
-可以看出这个文件记录了 master 分支的指向的变迁，最新的改变追加到文件的末尾因此最后出现。最后一行可以看出因为执行了 `git reset --hard` 命令，指向的提交ID由 e695606 改变为 9e8a761。
+可以看出这个文件记录了 master 分支指向的变迁，最新的改变追加到文件的末尾因此最后出现。最后一行可以看出因为执行了 `git reset --hard` 命令，指向的提交ID由 e695606 改变为 9e8a761。
 
 Git 提供了一个 `git reflog` 命令，对这个文件进行操作。使用 show 子命令可以显示此文件的内容。
 
@@ -145,7 +150,7 @@ Git 提供了一个 `git reflog` 命令，对这个文件进行操作。使用 s
   e695606 master@{3}: commit: which version checked in?
   a0c641e master@{4}: commit (amend): who does commit?
 
-使用 `git reflog` 的输出和直接查看日志文件最大的不同显示顺序不同，即最新改变放在了最前面显示，而且只显示每次改变的最终的SHA1哈希值。还有个重要的区别在于使用 `git reflog` 的输出中还提供一个方便易记的表达式： `<refname>@{<n>}` 。这个表达式的含义是引用 `<refname>` 之前第 <n> 次改变时的SHA1哈希值。
+使用 `git reflog` 的输出和直接查看日志文件最大的不同在于显示顺序的不同，即最新改变放在了最前面显示，而且只显示每次改变的最终的SHA1哈希值。还有个重要的区别在于使用 `git reflog` 的输出中还提供一个方便易记的表达式： `<refname>@{<n>}` 。这个表达式的含义是引用 `<refname>` 之前第 <n> 次改变时的SHA1哈希值。
 
 那么将引用 master 切换到两次变更之前的值，可以使用下面的命令。
 
@@ -245,7 +250,7 @@ Git 提供了一个 `git reflog` 命令，对这个文件进行操作。使用 s
 
   工作区和暂存区不改变，但是引用向前回退一次。当对最新提交的提交说明或者提交的更改不满意时，撤销最新的提交以便重新提交。
 
-  在之前曾经出现过一个命令 `git commit --amend` 用于对最新的提交重新提交一次以便对提交说明或者提交内容进行修改。其实相当于执行了下面的命令。（注：文件 `.git/COMMIT_EDITMSG` 保存了上次的提交日志）
+  在之前曾经介绍过一个修补提交命令 `git commit --amend` ，用于对最新的提交进行重新提交以修补错误的提交说明或者错误的提交文件。修补提交命令实际上相当于执行了下面两条命令。（注：文件 `.git/COMMIT_EDITMSG` 保存了上次的提交日志）
 
   ::
   
