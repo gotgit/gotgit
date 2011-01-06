@@ -200,7 +200,7 @@
 
 * 命令: git stash
 
-  保存当前工作进度。会分别对暂存区和工作区的状态分别进行保存。
+  保存当前工作进度。会分别对暂存区和工作区的状态进行保存。
 
 * 命令: git stash list
 
@@ -232,15 +232,15 @@
 
   除了不删除恢复的进度之外，其余和 `git stash pop` 命令一样。
 
-* 命令: git drop [<stash>]
+* 命令: git stash drop [<stash>]
 
   删除一个存储的进度。缺省删除最新的进度。
 
-* 命令: git clear
+* 命令: git stash clear
 
   删除所有存储的进度。
 
-* 命令: git branch <branchname> <stash>
+* 命令: git stash branch <branchname> <stash>
 
   基于进度创建分支。对了，还没有讲到分支呢。 ;-)
   
@@ -383,7 +383,7 @@
 
 对照 `git reflog` 的结果和前面 `git stash list` 的结果，可以肯定用 `git stash` 保存进度，实际上会将进度保存在引用 `refs/stash` 所指向的提交中。多次的进度保存，实际上相当于引用 `refs/stash` 一次又一次的变化，而 `refs/stash` 引用的变化由 reflog（即 `.git/logs/refs/stash` ）所记录下来。这个实现是多么的简单而巧妙啊。
 
-新的一个疑问又出现了，如何在引用 `refs/stash` 中同时保存暂存区的进度和工作区中的进度呢？
+新的一个疑问又出现了，如何在引用 `refs/stash` 中同时保存暂存区的进度和工作区中的进度呢？查看一下引用 `refs/stash` 的提交历史能够看出端倪。
 
 ::
 
@@ -508,7 +508,7 @@
   #       modified:   welcome.txt
   #
 
-删除进度列表。
+显示进度列表，然后删除进度列表。
 
 ::
 
