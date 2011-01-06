@@ -411,6 +411,7 @@ Hello World 开发计划
 * 编译运行 `hello-world` 。
 
   ::
+
     $ cd src
     $ make clean
     rm -f hello main.o version.h
@@ -624,6 +625,11 @@ Hello World 开发计划
 
 分支的变基
 ==========
+
+分支间跟踪
+==========
+
+--track 。 缺省远程版本库克隆会建立跟踪。使用 --track 可以建立本地分支跟踪。
 
 
 分支管理规范
