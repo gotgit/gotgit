@@ -1,11 +1,11 @@
 Git 检出
 ********
 
-在“实践四”中，学习了重置命令（git reset）。重置命令的一个用途就是修改引用（如 master）的游标。实际上重置时修改的是 HEAD，但是因为 HEAD 指向了 refs/heads/master，所以是通过分支“游标”的改变来体现出重置的变化的，HEAD 本身一直指向的是 refs/heads/master，并没有改变。
+在上一章学习了重置命令（git reset）。重置命令的一个用途就是修改引用（如 master）的游标。实际上重置时修改的是 HEAD，但是因为 HEAD 指向了 refs/heads/master，所以是通过分支“游标”的改变来体现出重置的变化的，HEAD 本身一直指向的是 refs/heads/master，并没有改变。
 
 那么 HEAD 的指向如何更改呢？本章学习的检出命令（git checkout）的实质就是修改 HEAD 本身的指向，而该命令不会影响分支“游标”（如master）。
 
-实践五：HEAD 的重置和检出
+HEAD 的重置和检出
 =========================
 
 HEAD 可以理解为“头指针”，是当前工作区的“基础版本”，当执行提交时，HEAD 指向的提交将作为新提交的父提交。看看当前 HEAD 的指向。
@@ -263,7 +263,7 @@ HEAD 可以理解为“头指针”，是当前工作区的“基础版本”，
 
 下面的版本库模型图描述了 git checkout 实际完成的操作。
 
-  .. figure:: images/gitbook/git-checkout.png
+  .. figure:: images/git-solo/git-checkout.png
      :scale: 80
 
 下面通过一些示例，具体的看一下检出命令的不同用法。

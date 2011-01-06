@@ -12,7 +12,7 @@ Git 克隆
 
 Git的版本库目录和工作区在一起，因此存在一损俱损的问题，即如果删除一个项目的工作区，同时也会把这个项目的版本库删除掉。一个项目仅在一个工作区中维护太危险了，如果有两个工作区就会好很多。
 
-.. figure:: images/gitbook/git-clone-pull-push.png
+.. figure:: images/git-solo/git-clone-pull-push.png
    :scale: 80
 
 上图中一个项目使用了两个版本库进行维护，两个版本库之间通过 PULL 和/或 PUSH 操作实现同步。
@@ -53,7 +53,7 @@ Git的 PUSH 和 PULL 命令的用法相似，使用下面的语法：
 
 不使用 `--bare` 或者 `--mirror` 创建出来的克隆包含工作区，这样就会产生两个包含工作区的版本库。这两个版本库是对等的，如下图。
 
-.. figure:: images/gitbook/git-clone-1.png
+.. figure:: images/git-solo/git-clone-1.png
    :scale: 80
 
 这两个工作区本质上没有区别，但是往往提交是在一个版本（A）中进行的，另外一个（B）作为备份。对于这种对等工作区模式，版本库的同步只有一种可行的操作模式，就是在备份库（B）执行 git pull 命令从源版本库（A）拉回新的提交实现版本库同步。为什么不能从版本库A向版本库B执行 git push 的推送操作呢？看看下面的操作。
@@ -177,7 +177,7 @@ Git的 PUSH 和 PULL 命令的用法相似，使用下面的语法：
 
 上一节在对等工作区模式下，工作区之间执行推送，可能会引发大段的错误输出，如果采用裸版本库则没有相应的问题。这是因为裸版本库没有工作区。没有工作区还有一个好处就是空间占用会更小。
 
-.. figure:: images/gitbook/git-clone-2.png
+.. figure:: images/git-solo/git-clone-2.png
    :scale: 80
 
 使用 `--bare` 参数克隆 demo 版本库到 `/path/to/repos/demo.git` ，然后就可以从 demo 版本库向克隆的裸版本库执行推送操作了。（为了说明方便，使用了 `/path/to/repos/` 作为 Git 裸版本的根路径，在后面的章节中这个目录也作为 Git 服务器端版本库的根路径。可以在磁盘中以 root 账户创建该路径并设置正确的权限。）
@@ -254,10 +254,10 @@ Git的 PUSH 和 PULL 命令的用法相似，使用下面的语法：
 
 裸版本库不但可以通过克隆的方式创建，还可以通过 `git init` 命令以初始化的方式创建。之后的同步方式和上一节大同小异。
 
-.. figure:: images/gitbook/git-clone-3.png
+.. figure:: images/git-solo/git-clone-3.png
    :scale: 80
 
-命令 git init 在实践一中就已经用到了，是用于初始化一个版本库的，初始化的版本库是带工作区的，如何初始化一个裸版本库呢？奥秘就在于 `--bare` 参数。
+命令 git init 在“Git初始化”一章就已经用到了，是用于初始化一个版本库的，初始化的版本库是带工作区的，如何初始化一个裸版本库呢？奥秘就在于 `--bare` 参数。
 
 下面的命令会创建一个空的裸版本库于目录 `/path/to/repos/demo-init.git` 中。
 

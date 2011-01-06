@@ -41,7 +41,7 @@ Git 提供了“悔棋”的操作，甚至因为“单步悔棋”是如此经�
    src/hello.h |    1 +
    1 files changed, 1 insertions(+), 0 deletions(-)
 
-最新一次的提交是的确是在“实践八”中使用 qgit 进行的提交，但这和提交内容无关，因此需要改掉这个提交的提交说明。使用下面的命令即可做到。
+最新一次的提交是的确是在上一章使用 qgit 进行的提交，但这和提交内容无关，因此需要改掉这个提交的提交说明。使用下面的命令即可做到。
 
 ::
 
@@ -202,7 +202,7 @@ Git 的重置命令是提供悔棋能力的奥秘，实际上上面介绍的单�
 
 电影《回到未来》（Back to future）第二集，老毕福偷走时光车，到过去（1955年）给了小毕福一本书，导致未来大变。
 
-.. figure:: images/back-to-future/back-to-future.png
+.. figure:: images/git-solo/back-to-future.png
    :scale: 70
 
    布朗博士正在解释为何产生两个平行的未来
@@ -229,17 +229,17 @@ Git 这一台“时光机”也有这样的能力，或者说也会具有这样�
 
 * 前奏：故事人物依次出场，坏蛋 D 在图中被特殊标记。
 
-  .. figure:: images/gitbook/git-rebase-orig.png
+  .. figure:: images/git-solo/git-rebase-orig.png
      :scale: 100
 
 * 第一幕：抛弃提交 D，将正确的提交 E 和 F 重新“嫁接”到提交 C 上，最终坏蛋被消灭。
 
-  .. figure:: images/gitbook/git-rebase-c.png
+  .. figure:: images/git-solo/git-rebase-c.png
      :scale: 100
 
 * 第二幕：坏蛋 D 被 C 感化，融合为 "CD" 复合体，E 和 F 重新“嫁接”到"CD"复合体上，最终大团圆结局。
 
-  .. figure:: images/gitbook/git-rebase-cd.png
+  .. figure:: images/git-solo/git-rebase-cd.png
      :scale: 100
 
 * 道具：分别使用三辆不同的时光车来完成“回到未来”。
@@ -366,7 +366,7 @@ Git 这一台“时光机”也有这样的能力，或者说也会具有这样�
 
 * 使用 qgit 查看版本库提交历史。
 
-  .. figure:: images/gitbook/git-rebase-graph.png
+  .. figure:: images/git-solo/git-rebase-graph.png
      :scale: 80
 
 **幕布拉上，后台重新布景**
@@ -470,7 +470,7 @@ Git 这一台“时光机”也有这样的能力，或者说也会具有这样�
 
 * 使用 gitk 查看版本库提交历史。
 
-  .. figure:: images/gitbook/git-rebase-graph-gitk.png
+  .. figure:: images/git-solo/git-rebase-graph-gitk.png
      :scale: 80
 
 **别忘了后台的重新布景**
@@ -1015,7 +1015,7 @@ Git 这一台“时光机”也有这样的能力，或者说也会具有这样�
 
 使用图形工具查看提交历史，会看到两棵树：最上面的一棵树是刚刚通过变基抛弃了大部分历史提交的新的 master 分支，下面的一棵树则是变基前的提交形成的。下面的一棵树之所以还能够看到，或者说还没有从版本库中重彻底清除，是因为有部分提交仍带有里程碑标签。
 
-.. figure:: images/gitbook/git-rebase-purge-history-graph.png
+.. figure:: images/git-solo/git-rebase-purge-history-graph.png
    :scale: 90
 
 反转提交

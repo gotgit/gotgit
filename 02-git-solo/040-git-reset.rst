@@ -1,7 +1,7 @@
 Git 重置
 ********
 
-在“实践三”中，了解了版本库中对象的存储方式以及分支master的实现。即 master 分支在版本库的引用目录（.git/refs）中体现为一个引用文件 `.git/refs/heads/master` ，其内容就是分支中最新提交的提交 ID。
+在上一章了解了版本库中对象的存储方式以及分支master的实现。即 master 分支在版本库的引用目录（.git/refs）中体现为一个引用文件 `.git/refs/heads/master` ，其内容就是分支中最新提交的提交 ID。
 
 ::
 
@@ -19,7 +19,7 @@ Git 重置
 
 那么是不是有新的提交发生的时候，代表 master 分支的引用文件的内容会改变呢？代表 master 分支的引用文件的内容可以人为的改变么？本章就来探讨用 `git reset` 命令改变分支引用文件内容，即实现分支的重置。
 
-实践四：master 分支游标的探秘
+分支游标 master 的探秘
 =============================
 
 先来看看当有新的提交发生的时候，文件 `.git/refs/heads/master` 的内容如何改变。首先在工作区创建一个新文件，姑且叫做 `new-commit.txt` ，然后提交到版本库中。
@@ -202,7 +202,7 @@ Git 提供了一个 `git reflog` 命令，对这个文件进行操作。使用 s
 
 第二种用法（不使用路径 `<paths>` 的用法）则会 **重置引用** 。根据不同的选项，可以对暂存区或者工作区进行重置。参照下面的版本库模型图，来看一看不同的参数对第二种重置语法的影响。
 
-  .. figure:: images/gitbook/git-reset.png
+  .. figure:: images/git-solo/git-reset.png
      :scale: 80
 
 命令格式: git reset [--soft | --mixed | --hard ] [<commit>]
