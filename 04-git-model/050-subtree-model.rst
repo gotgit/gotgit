@@ -75,7 +75,7 @@ Makefile 文件示例如下：
 子目录方式合并外部版本库
 =========================
 
-下面就用 git 的低端命令 `git read-tree`, `git write-tree`, `git commit-tree` 子命令实现将 util-branch 分支所包含的 util.git 版本库的目录树以子目录（lib/）型式添加到 master 分支。
+下面就用 git 的底层命令 `git read-tree`, `git write-tree`, `git commit-tree` 子命令实现将 util-branch 分支所包含的 util.git 版本库的目录树以子目录（lib/）型式添加到 master 分支。
 
 先来看看 util-branch 分支当前最新提交所指向的目录树（tree）。
 
@@ -284,7 +284,7 @@ Makefile 文件示例如下：
 git subtree 插件
 =================
 
-Git subtree 插件用 shell 脚本开发，安装之后为 Git 提供了新的 `git subtree` 命令，支持前面介绍的子树合并和子树拆分。命令非常简单易用，用户再也不必和低端的 Git 命令打交道了。
+Git subtree 插件用 shell 脚本开发，安装之后为 Git 提供了新的 `git subtree` 命令，支持前面介绍的子树合并和子树拆分。命令非常简单易用，用户再也不必和底层的 Git 命令打交道了。
 
 Git subtree 插件的作者将代码库公布在 Github 上： http://github.com/apenwarr/git-subtree/ 。
 
