@@ -547,13 +547,13 @@ Git 这一台“时光机”也有这样的能力，或者说也会具有这样�
 
 ::
 
-  git rebase --onto C E^ F
+  $ git rebase --onto C E^ F
 
 因为 E^ 等价于 D，并且 F 和当前 HEAD 指向相同，因此可以这样操作：
 
 ::
 
-  git rebase --onto C D
+  $ git rebase --onto C D
 
 有了对变基命令的理解，就可以开始新的“回到未来”之旅了。
 
@@ -674,7 +674,7 @@ Git 这一台“时光机”也有这样的能力，或者说也会具有这样�
 
   ::
 
-    $  git rebase --onto newbase E^ master
+    $ git rebase --onto newbase E^ master
     First, rewinding head to replay your work on top of it...
     Applying: add hello.h
     Applying: modify hello.h
