@@ -618,7 +618,7 @@ Hello world 引发的新问题
 
 ::
 
-  git tag -m "Set tag hello_1.0." hello_1.0
+  $ git tag -m "Set tag hello_1.0." hello_1.0
 
 然后清除上次编译结果后，重新编译和运行，可以看到新的输出。
 
