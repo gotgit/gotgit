@@ -20,7 +20,7 @@ Git 提供了“悔棋”的操作，甚至因为“单步悔棋”是如此经�
 
 ::
 
-  cd /path/to/my/workspace/demo
+  $ cd /path/to/my/workspace/demo
   $ git log --stat -2
   commit 822b4aeed5de74f949c9faa5b281001eb5439444
   Author: Jiang Xin <jiangxin@ossxp.com>
@@ -579,7 +579,7 @@ Git 这一台“时光机”也有这样的能力，或者说也会具有这样�
 
   ::
 
-    $  git rebase --onto C E^ F
+    $ git rebase --onto C E^ F
     First, rewinding head to replay your work on top of it...
     Applying: add hello.h
     Applying: modify hello.h
@@ -616,7 +616,7 @@ Git 这一台“时光机”也有这样的能力，或者说也会具有这样�
 
   $ git checkout master
   Already on 'master'
-  git reset --hard F
+  $ git reset --hard F
   HEAD is now at b6f0b0a modify hello.h
 
 布景完毕，大幕即将再次拉开。
@@ -856,7 +856,7 @@ Git 这一台“时光机”也有这样的能力，或者说也会具有这样�
 
   $ git checkout master
   Already on 'master'
-  git reset --hard F
+  $ git reset --hard F
   HEAD is now at b6f0b0a modify hello.h
 
 布景完毕，大幕即将再次拉开。
