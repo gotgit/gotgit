@@ -1,9 +1,9 @@
 Git 分支
 ********
 
-分支是我们的老朋友了，在第2部分的“Git对象库探秘”和“Git重置”章节中，就早已经从实现原理上理解了 master 分支的存在方式，以及 master 分支的指向是如何随着提交而变化以及如何通过 `git reset` 命令而重置。
+分支是我们的老朋友了，在第2部分的“Git对象库探秘”，“Git重置”和“Git检出”章节中，就早已经从实现原理上理解了 master 分支的存在方式，master 分支的指向是如何随着提交而变化，如何通过 `git reset` 命令而重置，以及如何使用 `git checkout` 命令检出。
 
-在之前的章节中，始终只用到了一个分支：master 分支。本章可以学习到如何创建分支，如何切换到其他分支工作，以及分支之间的合并、变基等。
+在之前的章节中，始终只用到了一个分支：master 分支。本章可以学习到如何对多分支进行操作，如何创建分支，如何切换到其他分支，以及分支之间的合并、变基等。
 
 代码管理之殇
 ============
@@ -255,15 +255,21 @@ Hello World 开发计划
 
 最终决定由用户 user2 负责“多语种支持”，由用户 user1 负责“参数解析框架改造”。
 
-创建特性分支
-============
+基于特性分支的开发
+==================
 
 有了前面“代码管理之殇”的铺垫，在领受任务之后，用户 user1 和 user2 应该为自己负责的功能创建特性分支。
 
 创建分支 user1/getopt
 ----------------------
 
-用户 user1 负责“参数解析框架改造”功能，因为这个功能用到 `getopt` 函数，于是用户 user1 在本地版本库创建分支 `user1/getopt` 。
+用户 user1 负责“参数解析框架改造”功能，因为这个功能用到 `getopt` 函数，于是将这个分支命名为 `user1/getopt` 。用户 user1 使用 `git branch` 命令创建该特性分支。
+
+* 确保工作在用户 user1 的工作区中。
+
+  ::
+
+    $ cd /path/to/user1/workspace/hello-world/
 
 * 用户 user1 基于当前 HEAD 创建分支 `user1/getopt` 。
 
@@ -271,7 +277,7 @@ Hello World 开发计划
 
     $ git branch user1/getopt
 
-* 显示本地分支，当前工作分支仍为 master 分支，在下面的输出中用星号 "*" 标识。
+* 使用 `git branch` 创建分支，并不会自动切换。查看当前分支可以看到仍然工作在 `master` 分支（用星号 "*" 标识）。
 
   ::
 
@@ -286,7 +292,7 @@ Hello World 开发计划
     $ git checkout user1/getopt
     Switched to branch 'user1/getopt'
 
-* 再次查看分支，看到已经切换到新分支上。
+* 再次查看分支列表，当前工作分支的标记符（星号）已经落在 `user1/getopt` 分支上。
 
   ::
 
@@ -294,14 +300,13 @@ Hello World 开发计划
       master
     * user1/getopt
 
-分支的奥秘
-----------
+**分支的奥秘**
 
 分支实际上是创建在目录 `.git/refs/heads` 下的引用，版本库初始时创建的 `master` 分支就是在该目录下。在第2部分“Git重置”的章节中，已经介绍过 master 分支的实现，实际上这也是所有分支的实现方式。
 
 * 查看一下目录 `.git/refs/heads` 目录下的引用。
 
-  可以在该目录下看到 `master` 文件，和一个目录 `user1`。而在 `user1` 目录下是文件 `getopt` 。
+  可以在该目录下看到 `master` 文件，和一个 `user1` 目录。而在 `user1` 目录下是文件 `getopt` 。
 
   ::
 
@@ -310,45 +315,95 @@ Hello World 开发计划
     $ ls -F .git/refs/heads/user1/
     getopt
 
-* 因为引用 `.git/refs/heads/user1/getopt` 是基于头指针 HEAD 创建的分支，因此该文件的内容和 `master` 分支内容应该一致，都执行同一个提交。
+* 引用文件 `.git/refs/heads/user1/getopt` 记录的是一个提交ID。
 
   ::
 
     $ cat .git/refs/heads/user1/getopt 
     ebcf6d6b06545331df156687ca2940800a3c599d
+
+* 因为分支 `user1/getopt` 是基于头指针 HEAD 创建的，因此当前该分支和 `master` 分支指向是一致的。
+
+  ::
+
     $ cat .git/refs/heads/master 
     ebcf6d6b06545331df156687ca2940800a3c599d
-    $ git cat-file -p ebcf6d6
-    tree 1d902fedc4eb732f17e50f111dcecb638f10313e
-    parent 8a9f3d16ce2b4d39b5d694de10311207f289153f
-    author user1 <user1@sun.ossxp.com> 1293959073 +0800
-    committer user1 <user1@sun.ossxp.com> 1293959073 +0800
 
-    blank commit for GnuPG-signed tag test.
+* 当前的工作分支为 `user1/getopt` ，记录在头指针文件 `.git/HEAD` 中。
 
-* 当前分支为 `user1/getopt` ，实际上是因为执行 `git checkout` 命令时更新了 `.git/HEAD` 文件的内容。可以参照第2部分“Git检出”相关章节。
+  切换分支命令 `git checkout` 对文件 `.git/HEAD` 的内容进行更新。可以参照第2部分“Git检出”相关章节。
 
   ::
 
     $ cat .git/HEAD 
     ref: refs/heads/user1/getopt
 
-在 user1/getopt 分支中工作
+创建分支 user2/i18n
+--------------------------------
+
+用户 user2 要完成本地化的工作任务，于是决定将分支定名为 `user2/i18n` 。通常每一次创建分支通常都需要完成以下两个工作：
+
+1. 创建分支：执行 `git branch <branchname>` 命令创建新分支。
+2. 切换分支：执行 `git checkout <branchname>` 命令切换到新分支。
+
+有没有简单的操作，将创建分支后立即切换到新分支上呢？是的，Git 提供了这样一个命令，将上述两条命令所执行的操作一次性完成。用法如下：
+
+::
+
+  用法： git checkout -b <new_branch> [<start_point>]
+
+即检出命令 `git checkout` 通过参数 `-b <new_branch>` 实现了分支创建和切换分支两个动作的合二为一。下面用户 user2 就使用 `git checkout` 命令来创建分支。
+
+* 切换到 user2 的工作目录，并和上游同步一次。
+
+  ::
+
+    $ cd /path/to/user2/workspace/hello-world/
+    $ git pull
+    remote: Counting objects: 1, done.
+    remote: Total 1 (delta 0), reused 0 (delta 0)
+    Unpacking objects: 100% (1/1), done.
+    From file:///path/to/repos/hello-world
+     * [new tag]         v1.0       -> v1.0
+    Already up-to-date.
+
+* 执行 `git checkout -b` 命令，创建并切换到 `user2/i18n` 分支上。
+
+  ::
+
+    $ git checkout -b user2/i18n
+    Switched to a new branch 'user2/i18n'
+
+* 查看本地分支列表，会看到已经切换到 `user2/i18n` 分支上了。
+
+  ::
+
+    $ git branch
+      master
+    * user2/i18n
+
+用户 user1 完成功能开发
 --------------------------
 
 用户 user1 开始在 `user1/getopt` 分支中工作，重构 `hello-world` 中的命令行参数解析的代码。重构时采用 `getopt_long` 函数。
 
+::
+
+  $ cd /path/to/user1/workspace/hello-world/
+
 读者可以试着更改，不过在 `hello-world` 中已经保存了一份改好的代码，可以直接检出。
 
-* 执行下面的命令，用里程碑 `jx/v2.0` 标记的内容替换暂存区和工作区。
+* 执行下面的命令，用里程碑 `jx/v2.0` 标记的内容（已实现参数解析框架改造的功能）替换暂存区和工作区。
+
+  下面的 `git checkout` 命令的最后是一个点 "." ，因此检出只更改了暂存区和工作区，而没有修改头指针。
 
   ::
 
+    $ cd /path/to/user1/workspace/hello-world/
     $ git checkout jx/v2.0 -- .
 
-* 因为上面的 `git checkout` 命令的最后是一个点 "." ，因此检出只更改了暂存区和工作区，而没有修改头指针。
 
-  下面命令可以看出当前分支仍为 `user1/getopt` ，而且文件 `src/main.c` 被修改了。
+* 查看状态，会看到分支仍保持为 `user1/getopt` ，但文件 `src/main.c` 被修改了。
 
   ::
 
@@ -360,7 +415,7 @@ Hello World 开发计划
     #       modified:   src/main.c
     #
 
-* 比较暂存区和HEAD的文件差异，可以看到重构命令行解析对代码的改动。
+* 比较暂存区和HEAD的文件差异，可以看到为实现命令行解析重构而对代码的改动。
 
   ::
 
@@ -392,7 +447,7 @@ Hello World 开发计划
     +        };
     ...
 
-* 提交。
+* 用户 user1 提交代码，完成开发任务。
 
   ::
 
@@ -410,6 +465,8 @@ Hello World 开发计划
 
 * 编译运行 `hello-world` 。
 
+  注意输出中的版本号显示。
+
   ::
 
     $ cd src
@@ -423,56 +480,45 @@ Hello World 开发计划
     Hello world.
     (version: v1.0-1-g0881ca3)
 
-使用 git checkout 命令创建分支
---------------------------------
+将 user1/getopt 分支合并到主线
+-------------------------------
 
-用户 user2 要完成本地化的工作任务，那么分支名可以定为 `user2/i18n` 。每一次创建分支通常都要完成以下两个工作：
+既然用户 user1 负责的功能开发完成了，合并到开发主线 `master` 上吧，这样测试团队（如果有的话）就可以基于开发主线 `master` 进行软件集成和测试了。
 
-1. 执行 `git branch <branchname>` 命令创建新分支。
-2. 执行 `git checkout <branchname>` 命令切换到新分支。
-
-为了简化操作， Git 还提供了更为简练易用的命令，将上述两条命令要执行的动作一次完成。用法如下：
-
-::
-
-  用法： git checkout -b <new_branch> [<start_point>]
-
-即使用 `-b` 参数执行 `git checkout` 命令，实现了分支创建和切换两个动作的合二为一。下面就在 user2 的工作区试着执行一下。
-
-* 切换到 user2 的工作目录，并和上游同步一次。
+* 首先 user1 的工作区先切换到 master 分支。
 
   ::
 
-    $ cd /path/to/user2/workspace/hello-world/
-    $ git pull
-    remote: Counting objects: 1, done.
-    remote: Total 1 (delta 0), reused 0 (delta 0)
-    Unpacking objects: 100% (1/1), done.
-    From file:///path/to/repos/hello-world
-     * [new tag]         v1.0       -> v1.0
-    Already up-to-date.
+    $ git checkout master
+    Switched to branch 'master'
 
-* 执行 `git checkout -b` 命令，创建并切换到 `user2/i18n` 分支上。
+* 然后执行 `git merge` 合并 `user1/getopt` 分支。
 
   ::
 
-    $ git checkout -b user2/i18n
-    Switched to a new branch 'user2/i18n'
+    $ git merge user1/getopt
+    Updating ebcf6d6..0881ca3
+    Fast-forward
+     src/main.c |   41 ++++++++++++++++++++++++++++++++++++-----
+     1 files changed, 36 insertions(+), 5 deletions(-)
 
-* 查看本地分支列表，会看到已经切换到 `user2/i18n` 分支上了。
+* 本次合并非常的顺利，实际上合并后 `master` 分支和 `user1/getopt` 指向同一个提交。
+
+  这是因为合并前的 `master` 分支提交就是 `usr1/getopt` 分支的父提交，所以此次合并相当于分支 `master` 重置到 `user1/getopt` 分支。
 
   ::
 
-    $ git branch
-      master
-    * user2/i18n
+    $ git rev-parse user1/getopt master
+    0881ca3f62ddadcddec08bd9f2f529a44d17cfbf
+    0881ca3f62ddadcddec08bd9f2f529a44d17cfbf
 
-为 `hello-world` 添加本地化支持比较复杂，需要多花些时间，因此在稍后才能完成。
 
-创建发布分支
-============
+用户 user2 对添加本地化支持功能有些犯愁，需要多花些时间，那么就先不等他了。
 
-测试部门终于发现了并报告了 `hello-world` v1.0 版本的两个问题：
+基于发布分支的开发
+==================
+
+测试部门发现了并报告了 `hello-world` v1.0 版本的两个问题：
 
 * 帮助信息中出现文字错误。本应该写为 "--help" 却写成了 "-help"。
 
@@ -480,14 +526,16 @@ Hello World 开发计划
 
   例如执行 "`./hello Jiang Xin`"，本应该输出 "`Hi, Jiang Xin.`"，却只输出了 "`Hi, Jiang.`"。
 
-还是将这两个 Bug 修正工作交给开发者 user1 和 user2 。最终确定：
+为了能够及时修正 v1.0 的这两个 Bug，将这两个 Bug 的修正工作交给两个开发者 user1 和 user2 完成。
 
-* 需要从 v1.0 版本创建一个分支，定名为 `hello-1.x` 。
 * 用户 user1 负责修改文字错误的 Bug。
 * 用户 user2 负责修改显示用户名不完整的 bug。
 
+在前面“代码管理之殇”中介绍的发布分支，适合此场景。
+
 那么就开始吧。
 
+* 首先由用户 user1 创建分支 `hello-1.x` 。
 * 首先由用户 user1 创建分支 `hello-1.x` 。
 
   ::
