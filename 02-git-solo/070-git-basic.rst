@@ -435,8 +435,10 @@ Git 基本操作
       version.h: new_header
 
       new_header:
-              @sed -e "s/<version>/$$(git describe)/g" < version.h.in > version.h.tmp
-              @if diff -q version.h.tmp version.h >/dev/null 2>&1; then \
+              @sed -e "s/<version>/$$(git describe)/g" \
+                      < version.h.in > version.h.tmp
+              @if diff -q version.h.tmp version.h >/dev/null 2>&1; \
+              then \
                       rm version.h.tmp; \
               else \
                       echo "version.h.in => version.h" ; \
