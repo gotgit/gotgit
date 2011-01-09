@@ -263,7 +263,7 @@ Hello World 开发计划
 创建分支 user1/getopt
 ----------------------
 
-用户 user1 负责“参数解析框架改造”功能，因为这个功能用到 `getopt` 函数，于是将这个分支命名为 `user1/getopt` 。用户 user1 使用 `git branch` 命令创建该特性分支。
+用户 user1 负责参数解析框架改造功能，因为这个功能用到 `getopt` 函数，于是将这个分支命名为 `user1/getopt` 。用户 user1 使用 `git branch` 命令创建该特性分支。
 
 * 确保工作在用户 user1 的工作区中。
 
