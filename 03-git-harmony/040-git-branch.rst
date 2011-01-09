@@ -504,13 +504,39 @@ Hello World 开发计划
 
 * 本次合并非常的顺利，实际上合并后 `master` 分支和 `user1/getopt` 指向同一个提交。
 
-  这是因为合并前的 `master` 分支提交就是 `usr1/getopt` 分支的父提交，所以此次合并相当于分支 `master` 重置到 `user1/getopt` 分支。
+  这是因为合并前的 `master` 分支的提交就是 `usr1/getopt` 分支的父提交，所以此次合并相当于分支 `master` 重置到 `user1/getopt` 分支。
 
   ::
 
     $ git rev-parse user1/getopt master
     0881ca3f62ddadcddec08bd9f2f529a44d17cfbf
     0881ca3f62ddadcddec08bd9f2f529a44d17cfbf
+
+* 当前本地 `master` 分支比远程共享版本库的 `master` 分支领先一个提交。
+
+  可以从状态信息中看到本地分支和远程分支的跟踪关系。
+
+  ::
+
+    $ git status
+    # On branch master
+    # Your branch is ahead of 'origin/master' by 1 commit.
+    #
+    nothing to commit (working directory clean)
+
+* 执行推送操作，完成本地分支向远程分支的同步。
+
+  ::
+
+    $ git push
+    Counting objects: 7, done.
+    Delta compression using up to 2 threads.
+    Compressing objects: 100% (4/4), done.
+    Writing objects: 100% (4/4), 689 bytes, done.
+    Total 4 (delta 3), reused 0 (delta 0)
+    Unpacking objects: 100% (4/4), done.
+    To file:///path/to/repos/hello-world.git
+       ebcf6d6..0881ca3  master -> master
 
 
 开发者 user2 对多语种支持功能有些犯愁，需要多花些时间，那么就先不等他了。
@@ -811,6 +837,25 @@ Hello World 开发计划
     $ cd /path/to/user2/workspace/hello-world/
     $ git checkout master
 
+* 从远程共享版本库同步 master 分支。
+
+  同步后本地 `master` 分支包含了开发者 user1 提交的命令行参数解析重构的代码。
+
+  ::
+
+    $ git pull
+    remote: Counting objects: 7, done.
+    remote: Compressing objects: 100% (4/4), done.
+    remote: Total 4 (delta 3), reused 0 (delta 0)
+    Unpacking objects: 100% (4/4), done.
+    From file:///path/to/repos/hello-world
+       ebcf6d6..0881ca3  master     -> origin/master
+    Updating ebcf6d6..0881ca3
+    Fast-forward
+     src/main.c |   41 ++++++++++++++++++++++++++++++++++++-----
+     1 files changed, 36 insertions(+), 5 deletions(-)
+
+
 * 查看分支 `hello-1.x` 的日志，确认要拣选的提交ID。
 
   ::
@@ -826,16 +871,110 @@ Hello World 开发计划
 
   ::
 
-    $ git cherry-pick hello-1.x^1
-    [master a4a90ac] Bugfix: allow spaces in username.
-     1 files changed, 8 insertions(+), 1 deletions(-)
+    $  git cherry-pick hello-1.x^1
+    Automatic cherry-pick failed.  After resolving the conflicts,
+    mark the corrected paths with 'git add <paths>' or 'git rm <paths>'
+    and commit the result with: 
+
+            git commit -c e64f3a216d346669b85807ffcfb23a21f9c5c187
+
+* 拣选操作发生冲突，可以通过状态看到是文件 `src/main.c` 发生了冲突。
+
+  ::
+
+    $ git status
+    # On branch master
+    # Unmerged paths:
+    #   (use "git reset HEAD <file>..." to unstage)
+    #   (use "git add/rm <file>..." as appropriate to mark resolution)
+    #
+    #       both modified:      src/main.c
+    #
+    no changes added to commit (use "git add" and/or "git commit -a")
+
+**冲突解决**
+
+::
+
+  $ vi src/main.c
+
+
+  +----------------------------------------------------------------+----------------------------------------------------------------+
+  |::                                                              |::                                                              |
+  |                                                                |                                                                |
+  |  21 int                                                        |  21 int                                                        |
+  |  22 main(int argc, char **argv)                                |  22 main(int argc, char **argv)                                |
+  |  23 {                                                          |  23 {                                                          |
+  |  24 <<<<<<< HEAD                                               |                                                                |
+  |  25     int c;                                                 |  24     int c;                                                 |
+  |  26     char *uname = NULL;                                    |  25     char **p = NULL;                                       |
+  |  27                                                            |  26                                                            |
+  |  28     while (1) {                                            |  27     while (1) {                                            |
+  |  29         int option_index = 0;                              |  28         int option_index = 0;                              |
+  |  30         static struct option long_options[] = {            |  29         static struct option long_options[] = {            |
+  |  31             {"help", 0, 0, 'h'},                           |  30             {"help", 0, 0, 'h'},                           |
+  |  32             {0, 0, 0, 0}                                   |  31             {0, 0, 0, 0}                                   |
+  |  33         };                                                 |  32         };                                                 |
+  |  34                                                            |  33                                                            |
+  |  35         c = getopt_long(argc, argv, "h",                   |  34         c = getopt_long(argc, argv, "h",                   |
+  |  36                         long_options, &option_index);      |  35                         long_options, &option_index);      |
+  |  37         if (c == -1)                                       |  36         if (c == -1)                                       |
+  |  38            break;                                          |  37            break;                                          |
+  |  39                                                            |  38                                                            |
+  |  40         switch (c) {                                       |  39         switch (c) {                                       |
+  |  41         case 'h':                                          |  40         case 'h':                                          |
+  |  42             return usage(0);                               |  41             return usage(0);                               |
+  |  43         default:                                           |  42         default:                                           |
+  |  44             return usage(1);                               |  43             return usage(1);                               |
+  |  45         }                                                  |  44         }                                                  |
+  |  46     }                                                      |  45     }                                                      |
+  |  47                                                            |  46                                                            |
+  |  48     if (optind < argc) {                                   |  47     if (optind < argc) {                                   |
+  |  49         uname = argv[optind];                              |  48         p = &argv[optind];                                 |
+  |  50     }                                                      |  49     }                                                      |
+  |  51                                                            |  50                                                            |
+  |  52     if (uname == NULL) {                                   |  51     if (p == NULL || *p == NULL) {                         |
+  |  53 =======                                                    |                                                                |
+  |  54     char **p = NULL;                                       |                                                                |
+  |  55                                                            |                                                                |
+  |  56     if (argc == 1) {                                       |                                                                |
+  |  57 >>>>>>> e64f3a2... Bugfix: allow spaces in username.       |                                                                |
+  |  58         printf ("Hello world.\n");                         |  52         printf ("Hello world.\n");                         |
+  |  59     } else {                                               |  53     } else {                                               |
+  |  60 <<<<<<< HEAD                                               |                                                                |
+  |  61         printf ("Hi, %s.\n", uname);                       |                                                                |
+  |  62 =======                                                    |                                                                |
+  |  63         p = &argv[1];                                      |                                                                |
+  |  64         printf ("Hi,");                                    |  54         printf ("Hi,");                                    |
+  |  65         do {                                               |  55         do {                                               |
+  |  66             printf (" %s", *p);                            |  56             printf (" %s", *p);                            |
+  |  67         } while (*(++p));                                  |  57         } while (*(++p));                                  |
+  |  68         printf (".\n");                                    |  58         printf (".\n");                                    |
+  |  69 >>>>>>> e64f3a2... Bugfix: allow spaces in username.       |                                                                |
+  |  70     }                                                      |  59     }                                                      |
+  |  71                                                            |  60                                                            |
+  |  72     printf( "(version: %s)\n", _VERSION );                 |  61     printf( "(version: %s)\n", _VERSION );                 |
+  |  73     return 0;                                              |  62     return 0;                                              |
+  |  74 }                                                          |  63 }                                                          |
+  +----------------------------------------------------------------+----------------------------------------------------------------+
+
+
+::
+
+  $ git add src/main.c
+  
+  $ git commit -C hello-1.x^1
+  [master 10765a7] Bugfix: allow spaces in username.
+   1 files changed, 8 insertions(+), 4 deletions(-)
+
 
 * 再将开发者 user1 提交的修正代码拣选到当前分支（即主线）。
 
   ::
 
     $ git cherry-pick hello-1.x^2
-    [master 545fd51] Fix typo: -help to --help.
+    Finished one cherry-pick.
+    [master d81896e] Fix typo: -help to --help.
      Author: user1 <user1@sun.ossxp.com>
      1 files changed, 1 insertions(+), 1 deletions(-)
 
@@ -843,23 +982,31 @@ Hello World 开发计划
 
   ::
 
-    $ git log -2 --graph --oneline
-    * 545fd51 Fix typo: -help to --help.
-    * a4a90ac Bugfix: allow spaces in username.
+    $ git log -3 --graph --oneline
+    * d81896e Fix typo: -help to --help.
+    * 10765a7 Bugfix: allow spaces in username.
+    * 0881ca3 Refactor: use getopt_long for arguments parsing.
 
 * 推送到远程共享版本库。
 
   ::
 
+    $ git status
+    # On branch master
+    # Your branch is ahead of 'origin/master' by 2 commits.
+    #
+    nothing to commit (working directory clean)
+
     $ git push
     Counting objects: 11, done.
     Delta compression using up to 2 threads.
     Compressing objects: 100% (8/8), done.
-    Writing objects: 100% (8/8), 772 bytes, done.
+    Writing objects: 100% (8/8), 802 bytes, done.
     Total 8 (delta 6), reused 0 (delta 0)
     Unpacking objects: 100% (8/8), done.
     To file:///path/to/repos/hello-world.git
-       ebcf6d6..545fd51  master -> master
+       0881ca3..d81896e  master -> master
+
 
 分支变基
 =========
@@ -869,16 +1016,17 @@ Hello World 开发计划
 
 开发者 user2 针对多语种开发的工作任务还没有介绍呢，在最后就借着“实现”这个稍微复杂的功能来学习一下 Git 分支的变基操作。
 
-* 确认是在 user2 的工作区，并切换到 `user2/i18n` 分支。
+* 进入 user2 的工作区，并切换到 `user2/i18n` 分支。
 
   ::
 
+    $ cd /path/to/user2/workspace/hello-world/
     $ git checkout user2/i18n
     Switched to branch 'user2/i18n'
 
 * 使用 `gettext` 为软件添加多语言支持。
 
-  读者可以尝试实现该功能，不过在 `hello-world` 已经保存了一份关于该功能的实现。见里程碑 `jx/v1.0-i18n` 。
+  读者可以尝试实现该功能。不过在 `hello-world` 已经保存了一份实现该功能的代码（见里程碑 `jx/v1.0-i18n` ），可以直接拿过来用。
 
   - 分支 `jx/v1.0-i18n` 最后的两个提交实现了多语言支持功能。
 
@@ -895,7 +1043,7 @@ Hello World 开发计划
        src/main.c                                 |   18 ++++++++--
        4 files changed, 125 insertions(+), 6 deletions(-)
 
-  - 可以通过拣选命令将这两个提交拣选到 `user2/i18n` 分支中，即在分支 `user2/i18n` 中实现了多语言支持。l
+  - 可以通过拣选命令将这两个提交拣选到 `user2/i18n` 分支中，即在分支 `user2/i18n` 中实现了多语言支持。
 
     ::
 
@@ -912,12 +1060,13 @@ Hello World 开发计划
       7acb3e8 Translate for Chinese.
       90d873b Add I18N support.
 
-* 测试多语言支持功能。
+* 测试开发完成的多语言支持功能。
   
   - 编译。
 
     ::
 
+      $ cd src 
       $ make
       version.h.in => version.h
       cc    -c -o main.o main.c
@@ -925,6 +1074,8 @@ Hello World 开发计划
       cc -o hello main.o
 
   - 帮助已经本地化。
+
+    注意：帮助信息中仍然有文字错误， `--help` 误写为 `-help` 。
 
     ::
 
@@ -952,6 +1103,8 @@ Hello World 开发计划
 
   - 带用户名运行 `hello` 。
 
+    注意：程序仍然存在只显示部分用户名的问题。
+
     ::
 
       $ ./hello Jiang Xin
@@ -974,6 +1127,39 @@ Hello World 开发计划
 
 分支 user2/i18n 变基后推送
 ---------------------------------
+
+在测试刚刚完成的具有多语种支持功能的 `hello-world` 时，之前改正的两个 Bug 又重现了。这并不奇怪，因为分支 `user2/i18n` 在基于 `master` 分支创建的时候，这两个 Bug 还没有发现了，更不要说在 `master` 分支中改正了。但是现在 `master` 分支中不但包含了对这两个 Bug 的修正提交，更包含了开发者 user1 对 `hello-world` 命令行参数解析进行的代码重构。
+
+显然开发者 user2/i18n 
+
+::
+
+  - v1.0 -- getopt -- fix1 -- fix2
+      \
+       ----- i18n' -- i18n"
+
+  - v1.0 -- getopt -- fix1 -- fix2 --*
+      \                             /
+       ----- i18n' -- i18n" -------/
+
+  - v1.0 -- getopt -- fix1 -- fix2  
+                                  \                    
+                                   ----- i18n' -- i18n" 
+
+
+* 确保当前工作在 `user2/i18n` 分支上。
+
+  ::
+
+    $ cd /path/to/user2/workspace/hello-world/
+    $ git checkout user2/i18n
+
+* 执行变基操作。
+
+  ::
+
+    $ git rebase master
+    
 
 
 
