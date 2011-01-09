@@ -531,22 +531,42 @@ Hello World 开发计划
 * 开发者 user1 负责修改文字错误的 Bug。
 * 开发者 user2 负责修改显示用户名不完整的 bug。
 
-现在版本库中 `master` 分支已经包含了
+现在版本库中 `master` 分支相比 v1.0 发布时添加了部分新功能代码，例如 user1 推送的用getopt做参数解析相关代码。如果基于 `master` 分支对用户报告的两个 Bug 进行修改，就会引入尚未经过测试、可能不稳定的新功能的代码。在之前“代码管理之殇”中介绍的发布分支，恰恰适用于此场景。
 
- 在前面“代码管理之殇”中介绍的发布分支，适合此场景。
+创建发布分支
+-------------
 
-那么就开始吧。
+要想解决在 v1.0 版本中发现的 Bug，就需要基于 v1.0 发行版所对应的代码创建发布分支。
 
-* 首先由开发者 user1 创建分支 `hello-1.x` 。
-* 首先由开发者 user1 创建分支 `hello-1.x` 。
+* 软件 `hello-world` 的 v1.0 发布版在版本库中有一个里程碑相对应。
 
   ::
 
     $ cd /path/to/user1/workspace/hello-world/
+    $ git tag -n1 -l v*
+    v1.0            Release 1.0
+
+* 基于里程碑 `v1.0` 创建发布分支 `hello-1.x` 。
+
+  注：使用了 `git checkout` 命令创建分支，最后一个参数 `v1.0` 是新分支 `hello-1.x` 创建的基准点。如果没有里程碑，使用提交ID也是一样。
+
+  ::
+
     $ git checkout -b hello-1.x v1.0
     Switched to a new branch 'hello-1.x'
 
-* 开发者 user1 将分支 `hello-1.x` 推送到远程共享版本库。
+* 用 `git rev-parse` 命令可以看到 `hello-1.x` 分支对应的提交ID和里程碑 `v1.0` 指向的提交一致，但是和 `master` 不一样。
+
+  因为里程碑 v1.0 是一个包含提交说明的里程碑，因此为了显示其对应的提交ID，使用了特别的记法。
+
+  ::
+
+    $ git rev-parse hello-1.x v1.0^{} master
+    ebcf6d6b06545331df156687ca2940800a3c599d
+    ebcf6d6b06545331df156687ca2940800a3c599d
+    0881ca3f62ddadcddec08bd9f2f529a44d17cfbf
+
+* 开发者 user1 将分支 `hello-1.x` 推送到远程共享版本库，因为开发者 user2 修改 bug 时也要用到该分支。
 
   ::
 
@@ -555,9 +575,9 @@ Hello World 开发计划
     To file:///path/to/repos/hello-world.git
      * [new branch]      hello-1.x -> hello-1.x
 
-* 开发者 user2 从远程服务器获取新的分支。
+* 开发者 user2 从远程共享版本库获取新的分支。
 
-  远程共享版本库的新分支 `hello-1.x` 复制到本地引用 `origin/hello-1.x` 。
+  开发者 user2 执行 `git fetch` 命令，将远程共享版本库的新分支 `hello-1.x` 复制到本地引用 `origin/hello-1.x` 上。
 
   ::
 
@@ -568,7 +588,7 @@ Hello World 开发计划
 
 * 开发者 user2 切换到 hello-1.x 分支。
 
-  实际上在本地创建了一个跟踪远程 hello-1.x 分支的本地分支。
+  从输出中可以看出本地分支 `hello-1.x` 创建自 `origin/hello-1.x` ，建立了对远程共享版本库 `hello-1.x` 分支的跟踪。
 
   ::
 
@@ -576,15 +596,22 @@ Hello World 开发计划
     Branch hello-1.x set up to track remote branch hello-1.x from origin.
     Switched to a new branch 'hello-1.x'
 
-* 开发者 user1 修改帮助信息中的错误。
+开发者 user1 工作在发布分支
+---------------------------
 
-  开发者 user1 的改动可以从下面的差异比较中看到。
+开发者 user1 修改帮助信息中的错误。
+
+* 编辑文件 `src/main.c` ，将 "`-help`" 字符串修改为 "`--help`" 。
 
   ::
 
     $ cd /path/to/user1/workspace/hello-world/
     $ vi src/main.c
     ...
+
+* 开发者 user1 的改动可以从下面的差异比较中看到。
+
+  ::
 
     $ git diff
     diff --git a/src/main.c b/src/main.c
@@ -601,7 +628,7 @@ Hello World 开发计划
          return code;
      }
         
-* 开发者 user1 提交并推送到远程共享版本库。
+* 执行提交并推送到远程共享版本库。
 
   ::
 
@@ -619,16 +646,45 @@ Hello World 开发计划
     To file:///path/to/repos/hello-world.git
        ebcf6d6..b56bb51  hello-1.x -> hello-1.x
 
-* 开发者 user2 修改问候用户名显示不全的 Bug。
+开发者 user2 工作在发布分支
+---------------------------
+
+开发者 user2 修改问候时用户名显示不全的 Bug。
+
+* 确保工作在 `hello-1.x` 分支中。
 
   ::
 
-    $ cd /path/to/user1/workspace/hello-world/
+    $ cd /path/to/user2/workspace/hello-world/
+    $ git checkout hello-1.x
+
+* 编辑文件 `src/main.c` ，修改代码中的 Bug。
+
+  ::
+
     $ vi src/main.c
-    ...
+
+* 实际上在 `hello-world` 版本库中包含了我的一份修改，可以看看和您的更改是否一致。
+
+  下面的命令将我对此 Bug 的修改保存为一个补丁文件。
+
+  ::
 
     $ git format-patch jx/v1.1..jx/v1.2 
     0001-Bugfix-allow-spaces-in-username.patch
+
+* 应用我对此Bug的改动补丁。
+
+  如果读者已经自己完成了修改，可以先执行 `git stash` 保存自己的修改进度，然后执行下面的应用补丁命令。当应用完补丁后，再执行 `git stash pop` 将读者的改动合并到工作区。如果我们的改动一致（英雄所见略同），将不会有冲突。
+
+  ::
+
+    $ patch -p1 < 0001-Bugfix-allow-spaces-in-username.patch
+    patching file src/main.c
+
+* 看看代码的改动吧。
+
+  ::
 
     $ git diff
     diff --git a/src/main.c b/src/main.c
@@ -658,6 +714,9 @@ Hello World 开发计划
      
          printf( "(version: %s)\n", _VERSION );
 
+* 本地测试一下改进后的软件，看看是否 Bug 已经被改正。如果运行结果能显示出完整的用户名，则 Bug 成功修正。
+
+  ::
 
     $ cd src/
     $ make
@@ -668,18 +727,254 @@ Hello World 开发计划
     Hi, Jiang Xin.
     (version: v1.0-dirty)
 
+* 提交代码。
 
+  ::
+
+    $ git add -u
     $ git commit -m "Bugfix: allow spaces in username."
-    [user2/i18n 93bb097] Bugfix: allow spaces in username.
+    [hello-1.x e64f3a2] Bugfix: allow spaces in username.
      1 files changed, 8 insertions(+), 1 deletions(-)
 
-分支的变基
-==========
+开发者 user2 合并推送
+---------------------------
 
-分支间跟踪
-==========
+开发者 user2 在推送分支 `hello-1.x` 的改动时没有开发者 user1 那么幸运，因为此时远程共享版本库的 `hello-1.x` 分支已经被开发者 user1 的推送过一次，因此开发者 user2 在推送过程会遇到“非快进式推送”问题。
 
---track 。 缺省远程版本库克隆会建立跟踪。使用 --track 可以建立本地分支跟踪。
+::
+
+  $ git push
+  To file:///path/to/repos/hello-world.git
+   ! [rejected]        hello-1.x -> hello-1.x (non-fast-forward)
+  error: failed to push some refs to 'file:///path/to/repos/hello-world.git'
+  To prevent you from losing history, non-fast-forward updates were rejected
+  Merge the remote changes (e.g. 'git pull') before pushing again.  See the
+  'Note about fast-forwards' section of 'git push --help' for details.
+
+就像在“Git协议和工作协同”一章介绍的那样，开发者 user2 需要执行一个拉回操作，将远程共享服务器的改动获取到本地并和本地提交进行合并。
+
+::
+
+  $ git pull
+  remote: Counting objects: 7, done.
+  remote: Compressing objects: 100% (4/4), done.
+  remote: Total 4 (delta 3), reused 0 (delta 0)
+  Unpacking objects: 100% (4/4), done.
+  From file:///path/to/repos/hello-world
+     ebcf6d6..b56bb51  hello-1.x  -> origin/hello-1.x
+  Auto-merging src/main.c
+  Merge made by recursive.
+   src/main.c |    2 +-
+   1 files changed, 1 insertions(+), 1 deletions(-)
+
+通过显示分支图的方式查看日志，可以看到在执行 `git pull` 操作后发生了合并。
+
+::
+
+  $ git log --graph --oneline
+  *   8cffe5f Merge branch 'hello-1.x' of file:///path/to/repos/hello-world into hello-1.x
+  |\  
+  | * b56bb51 Fix typo: -help to --help.
+  * | e64f3a2 Bugfix: allow spaces in username.
+  |/  
+  * ebcf6d6 blank commit for GnuPG-signed tag test.
+  * 8a9f3d1 blank commit for annotated tag test.
+  * 60a2f4f blank commit.
+  * 3e6070e Show version.
+  * 75346b3 Hello world initialized.
+
+现在开发者 user2 可以将合并后的本地版本库中的提交推送给远程共享版本库了。
+
+::
+
+  $ git push
+  Counting objects: 14, done.
+  Delta compression using up to 2 threads.
+  Compressing objects: 100% (8/8), done.
+  Writing objects: 100% (8/8), 814 bytes, done.
+  Total 8 (delta 6), reused 0 (delta 0)
+  Unpacking objects: 100% (8/8), done.
+  To file:///path/to/repos/hello-world.git
+     b56bb51..8cffe5f  hello-1.x -> hello-1.x
+
+发布分支的提交合并到主线
+----------------------------
+
+当开发者 user1 和 user2 都相继在 `hello-1.x` 分支将相应的 Bug 修改完后，就可以从 `hello-1.x` 编译新的软件产品交给客户使用了。接下来别忘了在主线 `master` 分支也作出同样的更改，因为在 `hello-1.x` 分支修改的Bug同样也存在于主线 `master` 分支中。
+
+使用 Git 提供的拣选命令，就可以直接将发布分支上的进行Bug修正的提交合并到主线上。下面就以开发者 user2 的身份进行操作。
+
+* 进入 user2 工作区并切换到 master 分支。
+
+  ::
+
+    $ cd /path/to/user2/workspace/hello-world/
+    $ git checkout master
+
+* 查看分支 `hello-1.x` 的日志，确认要拣选的提交ID。
+
+  ::
+
+    $ git log -3 --graph --oneline hello-1.x
+    *   8cffe5f Merge branch 'hello-1.x' of file:///path/to/repos/hello-world into hello-1.x
+    |\  
+    | * b56bb51 Fix typo: -help to --help.
+    * | e64f3a2 Bugfix: allow spaces in username.
+    |/  
+
+* 执行拣选操作，先将开发者 user2 提交的修正代码拣选到当前分支（即主线）。
+
+  ::
+
+    $ git cherry-pick hello-1.x^1
+    [master a4a90ac] Bugfix: allow spaces in username.
+     1 files changed, 8 insertions(+), 1 deletions(-)
+
+* 再将开发者 user1 提交的修正代码拣选到当前分支（即主线）。
+
+  ::
+
+    $ git cherry-pick hello-1.x^2
+    [master 545fd51] Fix typo: -help to --help.
+     Author: user1 <user1@sun.ossxp.com>
+     1 files changed, 1 insertions(+), 1 deletions(-)
+
+* 通过日志可以看到在 `master` 分支已经完成了对已知 Bug 的修复。
+
+  ::
+
+    $ git log -2 --graph --oneline
+    * 545fd51 Fix typo: -help to --help.
+    * a4a90ac Bugfix: allow spaces in username.
+
+* 推送到远程共享版本库。
+
+  ::
+
+    $ git push
+    Counting objects: 11, done.
+    Delta compression using up to 2 threads.
+    Compressing objects: 100% (8/8), done.
+    Writing objects: 100% (8/8), 772 bytes, done.
+    Total 8 (delta 6), reused 0 (delta 0)
+    Unpacking objects: 100% (8/8), done.
+    To file:///path/to/repos/hello-world.git
+       ebcf6d6..545fd51  master -> master
+
+分支变基
+=========
+
+完成 user2/i18n 特性分支的开发
+---------------------------------
+
+开发者 user2 针对多语种开发的工作任务还没有介绍呢，在最后就借着“实现”这个稍微复杂的功能来学习一下 Git 分支的变基操作。
+
+* 确认是在 user2 的工作区，并切换到 `user2/i18n` 分支。
+
+  ::
+
+    $ git checkout user2/i18n
+    Switched to branch 'user2/i18n'
+
+* 使用 `gettext` 为软件添加多语言支持。
+
+  读者可以尝试实现该功能，不过在 `hello-world` 已经保存了一份关于该功能的实现。见里程碑 `jx/v1.0-i18n` 。
+
+  - 分支 `jx/v1.0-i18n` 最后的两个提交实现了多语言支持功能。
+
+    ::
+
+      $ git log --oneline -2 --stat jx/v1.0-i18n
+      ade873c Translate for Chinese.
+       src/locale/zh_CN/LC_MESSAGES/helloworld.po |   30 +++++++++++++++++++++------
+       1 files changed, 23 insertions(+), 7 deletions(-)
+      0831248 Add I18N support.
+       src/Makefile                               |   21 +++++++++++-
+       src/locale/helloworld.pot                  |   46 ++++++++++++++++++++++++++++
+       src/locale/zh_CN/LC_MESSAGES/helloworld.po |   46 ++++++++++++++++++++++++++++
+       src/main.c                                 |   18 ++++++++--
+       4 files changed, 125 insertions(+), 6 deletions(-)
+
+  - 可以通过拣选命令将这两个提交拣选到 `user2/i18n` 分支中，即在分支 `user2/i18n` 中实现了多语言支持。l
+
+    ::
+
+      $ git cherry-pick jx/v1.0-i18n~1
+      ...
+      $ git cherry-pick jx/v1.0-i18n
+      ...
+
+  - 看看当前分拣选后的日志。
+
+    ::
+
+      $ git log --oneline -2 
+      7acb3e8 Translate for Chinese.
+      90d873b Add I18N support.
+
+* 测试多语言支持功能。
+  
+  - 编译。
+
+    ::
+
+      $ make
+      version.h.in => version.h
+      cc    -c -o main.o main.c
+      msgfmt -o locale/zh_CN/LC_MESSAGES/helloworld.mo locale/zh_CN/LC_MESSAGES/helloworld.po
+      cc -o hello main.o
+
+  - 帮助已经本地化。
+
+    ::
+
+      $ ./hello --help
+      Hello world 示例 v1.0-2-g7acb3e8
+      版权所有 蒋鑫 <jiangxin AT ossxp DOT com>, 2009
+
+      用法:
+          hello
+                  世界你好。
+
+          hello <username>
+                  向用户问您好。
+
+          hello -h, -help
+                  显示本帮助页。
+
+  - 不带用户名运行 `hello` 。
+
+    ::
+
+      $ ./hello
+      世界你好。
+      (version: v1.0-2-g7acb3e8)
+
+  - 带用户名运行 `hello` 。
+
+    ::
+
+      $ ./hello Jiang Xin
+      您好, Jiang.
+      (version: v1.0-2-g7acb3e8)
+
+* 推送到远程共享服务器。
+
+  ::
+
+    $ git push origin user2/i18n 
+    Counting objects: 21, done.
+    Delta compression using up to 2 threads.
+    Compressing objects: 100% (13/13), done.
+    Writing objects: 100% (17/17), 2.91 KiB, done.
+    Total 17 (delta 6), reused 1 (delta 0)
+    Unpacking objects: 100% (17/17), done.
+    To file:///path/to/repos/hello-world.git
+     * [new branch]      user2/i18n -> user2/i18n
+
+分支 user2/i18n 变基后推送
+---------------------------------
+
 
 
 分支管理规范
