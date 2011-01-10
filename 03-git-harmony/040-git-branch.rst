@@ -625,7 +625,7 @@ Hello World 开发计划
 开发者 user1 工作在发布分支
 ---------------------------
 
-开发者 user1 修改帮助信息中的错误。
+开发者 user1 修改帮助信息中的文字错误。
 
 * 编辑文件 `src/main.c` ，将 "`-help`" 字符串修改为 "`--help`" 。
 
@@ -858,6 +858,8 @@ Hello World 开发计划
 
 * 查看分支 `hello-1.x` 的日志，确认要拣选的提交ID。
 
+  从下面的日志可以看出分支 `hello-1.x` 的最新提交是一个合并提交，而要拣选的提交分别是其第一个父提交和第二个父提交，可以分别用 "`hello-1.x^1`" 和 "`hello-1.x^2`" 表示。
+
   ::
 
     $ git log -3 --graph --oneline hello-1.x
@@ -867,7 +869,9 @@ Hello World 开发计划
     * | e64f3a2 Bugfix: allow spaces in username.
     |/  
 
-* 执行拣选操作，先将开发者 user2 提交的修正代码拣选到当前分支（即主线）。
+* 执行拣选操作。先将开发者 user2 提交的修正代码拣选到当前分支（即主线）。
+
+  拣选操作遇到了冲突，见下面的命令输出。
 
   ::
 
@@ -878,7 +882,7 @@ Hello World 开发计划
 
             git commit -c e64f3a216d346669b85807ffcfb23a21f9c5c187
 
-* 拣选操作发生冲突，可以通过状态看到是文件 `src/main.c` 发生了冲突。
+* 拣选操作发生冲突，可以通过状态看到是在文件 `src/main.c` 上发生了冲突。
 
   ::
 
@@ -892,121 +896,152 @@ Hello World 开发计划
     #
     no changes added to commit (use "git add" and/or "git commit -a")
 
-**冲突解决**
+**冲突发生的原因**
+
+为什么发生了冲突呢？这是因为拣选 `hello-1.x` 分支上的一个提交到 `master` 分支时，因为两个甚至多个提交在相同的位置更改了代码所致。通过下面的命令可以看到到底是哪些提交引起的冲突。
 
 ::
 
-  $ vi src/main.c
+  $ git log master...hello-1.x^1
+  commit e64f3a216d346669b85807ffcfb23a21f9c5c187
+  Author: user2 <user2@moon.ossxp.com>
+  Date:   Sun Jan 9 13:11:19 2011 +0800
 
+      Bugfix: allow spaces in username.
 
-  +----------------------------------------------------------------+----------------------------------------------------------------+
-  |::                                                              |::                                                              |
-  |                                                                |                                                                |
-  |  21 int                                                        |  21 int                                                        |
-  |  22 main(int argc, char **argv)                                |  22 main(int argc, char **argv)                                |
-  |  23 {                                                          |  23 {                                                          |
-  |  24 <<<<<<< HEAD                                               |                                                                |
-  |  25     int c;                                                 |  24     int c;                                                 |
-  |  26     char *uname = NULL;                                    |  25     char **p = NULL;                                       |
-  |  27                                                            |  26                                                            |
-  |  28     while (1) {                                            |  27     while (1) {                                            |
-  |  29         int option_index = 0;                              |  28         int option_index = 0;                              |
-  |  30         static struct option long_options[] = {            |  29         static struct option long_options[] = {            |
-  |  31             {"help", 0, 0, 'h'},                           |  30             {"help", 0, 0, 'h'},                           |
-  |  32             {0, 0, 0, 0}                                   |  31             {0, 0, 0, 0}                                   |
-  |  33         };                                                 |  32         };                                                 |
-  |  34                                                            |  33                                                            |
-  |  35         c = getopt_long(argc, argv, "h",                   |  34         c = getopt_long(argc, argv, "h",                   |
-  |  36                         long_options, &option_index);      |  35                         long_options, &option_index);      |
-  |  37         if (c == -1)                                       |  36         if (c == -1)                                       |
-  |  38            break;                                          |  37            break;                                          |
-  |  39                                                            |  38                                                            |
-  |  40         switch (c) {                                       |  39         switch (c) {                                       |
-  |  41         case 'h':                                          |  40         case 'h':                                          |
-  |  42             return usage(0);                               |  41             return usage(0);                               |
-  |  43         default:                                           |  42         default:                                           |
-  |  44             return usage(1);                               |  43             return usage(1);                               |
-  |  45         }                                                  |  44         }                                                  |
-  |  46     }                                                      |  45     }                                                      |
-  |  47                                                            |  46                                                            |
-  |  48     if (optind < argc) {                                   |  47     if (optind < argc) {                                   |
-  |  49         uname = argv[optind];                              |  48         p = &argv[optind];                                 |
-  |  50     }                                                      |  49     }                                                      |
-  |  51                                                            |  50                                                            |
-  |  52     if (uname == NULL) {                                   |  51     if (p == NULL || *p == NULL) {                         |
-  |  53 =======                                                    |                                                                |
-  |  54     char **p = NULL;                                       |                                                                |
-  |  55                                                            |                                                                |
-  |  56     if (argc == 1) {                                       |                                                                |
-  |  57 >>>>>>> e64f3a2... Bugfix: allow spaces in username.       |                                                                |
-  |  58         printf ("Hello world.\n");                         |  52         printf ("Hello world.\n");                         |
-  |  59     } else {                                               |  53     } else {                                               |
-  |  60 <<<<<<< HEAD                                               |                                                                |
-  |  61         printf ("Hi, %s.\n", uname);                       |                                                                |
-  |  62 =======                                                    |                                                                |
-  |  63         p = &argv[1];                                      |                                                                |
-  |  64         printf ("Hi,");                                    |  54         printf ("Hi,");                                    |
-  |  65         do {                                               |  55         do {                                               |
-  |  66             printf (" %s", *p);                            |  56             printf (" %s", *p);                            |
-  |  67         } while (*(++p));                                  |  57         } while (*(++p));                                  |
-  |  68         printf (".\n");                                    |  58         printf (".\n");                                    |
-  |  69 >>>>>>> e64f3a2... Bugfix: allow spaces in username.       |                                                                |
-  |  70     }                                                      |  59     }                                                      |
-  |  71                                                            |  60                                                            |
-  |  72     printf( "(version: %s)\n", _VERSION );                 |  61     printf( "(version: %s)\n", _VERSION );                 |
-  |  73     return 0;                                              |  62     return 0;                                              |
-  |  74 }                                                          |  63 }                                                          |
-  +----------------------------------------------------------------+----------------------------------------------------------------+
+  commit 0881ca3f62ddadcddec08bd9f2f529a44d17cfbf
+  Author: user1 <user1@sun.ossxp.com>
+  Date:   Mon Jan 3 22:44:52 2011 +0800
 
+      Refactor: use getopt_long for arguments parsing.
+
+可以看出引发冲突的提交一个是当前工作分支 `master` 上的最新提交，即开发者 user1 的重构命令行参数解析的提交，而另外一个引发冲突的是要拣选的提交，即开发者 user2 针对用户名显示不全所做的错误修正提交。一定是因为这两个提交的更改发生了重叠导致了冲突的发生。下面就来解决冲突。
+
+**冲突解决**
+
+冲突解决可以使用图形界面工具，不过对于本例直接编辑冲突文件，手工进行冲突解决也很方便。打开文件 `src/main.c` 就可以看到发生冲突的区域都用特有的标记符标识出来，参见下表中左侧一列中的内容。
+
++----------------------------------------------------------------+----------------------------------------------------------------+
+| 冲突文件 src/main.c 标识出的冲突内容                           | 冲突解决后的内容对照                                           |
++================================================================+================================================================+
+|::                                                              |::                                                              |
+|                                                                |                                                                |
+|  21 int                                                        |  21 int                                                        |
+|  22 main(int argc, char **argv)                                |  22 main(int argc, char **argv)                                |
+|  23 {                                                          |  23 {                                                          |
+|  24 <<<<<<< HEAD                                               |                                                                |
+|  25     int c;                                                 |  24     int c;                                                 |
+|  26     char *uname = NULL;                                    |  25     char **p = NULL;                                       |
+|  27                                                            |  26                                                            |
+|  28     while (1) {                                            |  27     while (1) {                                            |
+|  29         int option_index = 0;                              |  28         int option_index = 0;                              |
+|  30         static struct option long_options[] = {            |  29         static struct option long_options[] = {            |
+|  31             {"help", 0, 0, 'h'},                           |  30             {"help", 0, 0, 'h'},                           |
+|  32             {0, 0, 0, 0}                                   |  31             {0, 0, 0, 0}                                   |
+|  33         };                                                 |  32         };                                                 |
+|  34                                                            |  33                                                            |
+|  35         c = getopt_long(argc, argv, "h",                   |  34         c = getopt_long(argc, argv, "h",                   |
+|  36                         long_options, &option_index);      |  35                         long_options, &option_index);      |
+|  37         if (c == -1)                                       |  36         if (c == -1)                                       |
+|  38            break;                                          |  37            break;                                          |
+|  39                                                            |  38                                                            |
+|  40         switch (c) {                                       |  39         switch (c) {                                       |
+|  41         case 'h':                                          |  40         case 'h':                                          |
+|  42             return usage(0);                               |  41             return usage(0);                               |
+|  43         default:                                           |  42         default:                                           |
+|  44             return usage(1);                               |  43             return usage(1);                               |
+|  45         }                                                  |  44         }                                                  |
+|  46     }                                                      |  45     }                                                      |
+|  47                                                            |  46                                                            |
+|  48     if (optind < argc) {                                   |  47     if (optind < argc) {                                   |
+|  49         uname = argv[optind];                              |  48         p = &argv[optind];                                 |
+|  50     }                                                      |  49     }                                                      |
+|  51                                                            |  50                                                            |
+|  52     if (uname == NULL) {                                   |  51     if (p == NULL || *p == NULL) {                         |
+|  53 =======                                                    |                                                                |
+|  54     char **p = NULL;                                       |                                                                |
+|  55                                                            |                                                                |
+|  56     if (argc == 1) {                                       |                                                                |
+|  57 >>>>>>> e64f3a2... Bugfix: allow spaces in username.       |                                                                |
+|  58         printf ("Hello world.\n");                         |  52         printf ("Hello world.\n");                         |
+|  59     } else {                                               |  53     } else {                                               |
+|  60 <<<<<<< HEAD                                               |                                                                |
+|  61         printf ("Hi, %s.\n", uname);                       |                                                                |
+|  62 =======                                                    |                                                                |
+|  63         p = &argv[1];                                      |                                                                |
+|  64         printf ("Hi,");                                    |  54         printf ("Hi,");                                    |
+|  65         do {                                               |  55         do {                                               |
+|  66             printf (" %s", *p);                            |  56             printf (" %s", *p);                            |
+|  67         } while (*(++p));                                  |  57         } while (*(++p));                                  |
+|  68         printf (".\n");                                    |  58         printf (".\n");                                    |
+|  69 >>>>>>> e64f3a2... Bugfix: allow spaces in username.       |                                                                |
+|  70     }                                                      |  59     }                                                      |
+|  71                                                            |  60                                                            |
+|  72     printf( "(version: %s)\n", _VERSION );                 |  61     printf( "(version: %s)\n", _VERSION );                 |
+|  73     return 0;                                              |  62     return 0;                                              |
+|  74 }                                                          |  63 }                                                          |
++----------------------------------------------------------------+----------------------------------------------------------------+
+
+在文件 `src/main.c` 冲突内容中，第25-52行以及第61行是 `master` 分支中由开发者 user1 重构命令行解析时提交的内容，而第54-56 行以及第63-68行则是分支 `hello-1.x` 中由开发者 user2 提交的修正用户名显示不全Bug的相应代码。
+
+在上面表格的右侧一列则是冲突解决后的内容。为了和冲突前的内容相对照，重新进行了排版，并对差异内容进行加粗显示。读者可以参照完成冲突解决。
+
+将手动编辑完成冲突解决的文件 `src/main.c` 添加到暂存区才真正的完成了冲突解决。执行下面的命令：
 
 ::
 
   $ git add src/main.c
-  
+
+提交时可以重用所拣选提交的提交说明和作者信息，用下面的命令格式执行提交操作。
+
+::
+
   $ git commit -C hello-1.x^1
   [master 10765a7] Bugfix: allow spaces in username.
    1 files changed, 8 insertions(+), 4 deletions(-)
 
+接下来再将开发者 user1 在分支 `hello-1.x` 中的错误修正提交拣选到当前分支。所拣选的提交非常简单，不过是修改了提交说明中的文字错误而已，拣选操作也不会引发异常，直接完成。
 
-* 再将开发者 user1 提交的修正代码拣选到当前分支（即主线）。
+::
 
-  ::
+  $ git cherry-pick hello-1.x^2
+  Finished one cherry-pick.
+  [master d81896e] Fix typo: -help to --help.
+   Author: user1 <user1@sun.ossxp.com>
+   1 files changed, 1 insertions(+), 1 deletions(-)
 
-    $ git cherry-pick hello-1.x^2
-    Finished one cherry-pick.
-    [master d81896e] Fix typo: -help to --help.
-     Author: user1 <user1@sun.ossxp.com>
-     1 files changed, 1 insertions(+), 1 deletions(-)
+现在通过日志可以看到 `master` 分支已经完成了对已知 Bug 的修复。
 
-* 通过日志可以看到在 `master` 分支已经完成了对已知 Bug 的修复。
+::
 
-  ::
+  $ git log -3 --graph --oneline
+  * d81896e Fix typo: -help to --help.
+  * 10765a7 Bugfix: allow spaces in username.
+  * 0881ca3 Refactor: use getopt_long for arguments parsing.
 
-    $ git log -3 --graph --oneline
-    * d81896e Fix typo: -help to --help.
-    * 10765a7 Bugfix: allow spaces in username.
-    * 0881ca3 Refactor: use getopt_long for arguments parsing.
+查看状态可以看到当前的工作分支相对于远程服务器有两个新提交。
 
-* 推送到远程共享版本库。
+::
 
-  ::
+  $ git status
+  # On branch master
+  # Your branch is ahead of 'origin/master' by 2 commits.
+  #
+  nothing to commit (working directory clean)
 
-    $ git status
-    # On branch master
-    # Your branch is ahead of 'origin/master' by 2 commits.
-    #
-    nothing to commit (working directory clean)
+执行推送命令将本地 `master` 分支同步到远程共享版本库。
 
-    $ git push
-    Counting objects: 11, done.
-    Delta compression using up to 2 threads.
-    Compressing objects: 100% (8/8), done.
-    Writing objects: 100% (8/8), 802 bytes, done.
-    Total 8 (delta 6), reused 0 (delta 0)
-    Unpacking objects: 100% (8/8), done.
-    To file:///path/to/repos/hello-world.git
-       0881ca3..d81896e  master -> master
+::
 
+  $ git push
+  Counting objects: 11, done.
+  Delta compression using up to 2 threads.
+  Compressing objects: 100% (8/8), done.
+  Writing objects: 100% (8/8), 802 bytes, done.
+  Total 8 (delta 6), reused 0 (delta 0)
+  Unpacking objects: 100% (8/8), done.
+  To file:///path/to/repos/hello-world.git
+     0881ca3..d81896e  master -> master
 
 分支变基
 =========
@@ -1111,7 +1146,9 @@ Hello World 开发计划
       您好, Jiang.
       (version: v1.0-2-g7acb3e8)
 
-* 推送到远程共享服务器。
+* 推送分支 `user2/i18n` 到远程共享服务器。
+
+  推送该特性分支的目的并非是与他人在此分支上协同工作，主要只是为了进行数据备份。
 
   ::
 
@@ -1125,12 +1162,18 @@ Hello World 开发计划
     To file:///path/to/repos/hello-world.git
      * [new branch]      user2/i18n -> user2/i18n
 
-分支 user2/i18n 变基后推送
+分支 user2/i18n 变基
 ---------------------------------
 
-在测试刚刚完成的具有多语种支持功能的 `hello-world` 时，之前改正的两个 Bug 又重现了。这并不奇怪，因为分支 `user2/i18n` 在基于 `master` 分支创建的时候，这两个 Bug 还没有发现了，更不要说在 `master` 分支中改正了。但是现在 `master` 分支中不但包含了对这两个 Bug 的修正提交，更包含了开发者 user1 对 `hello-world` 命令行参数解析进行的代码重构。
+在测试刚刚完成的具有多语种支持功能的 `hello-world` 时，之前改正的两个 Bug 又重现了。这并不奇怪，因为分支 `user2/i18n` 在基于 `master` 分支创建的时候，这两个 Bug 还没有发现了，更不要说在 `master` 分支中改正了。在刚刚创建 `user2/i18n` 分支时，版本库的结果非常简单，如下图所示。
 
-显然开发者 user2/i18n 
+
+TODO:  --O--O
+
+
+但是现在 `master` 分支中不但包含了对 Bug 的修正提交，还包含了开发者 user1 对 `hello-world` 命令行参数解析进行的代码重构。下图显示的是现在版本库 `master` 分支和 `user2/i18n` 分支的状态。
+
+TODO
 
 ::
 
@@ -1138,16 +1181,27 @@ Hello World 开发计划
       \
        ----- i18n' -- i18n"
 
+开发者 user2 要将分支 `user2/i18n` 中的提交合并到主线中，可以采用上一节介绍的分支合并操作。执行分支合并后版本库的状态将会如下图所示：
+
+::
+
   - v1.0 -- getopt -- fix1 -- fix2 --*
       \                             /
        ----- i18n' -- i18n" -------/
+
+这样操作有利有弊。有利的一面是开发者在 `user2/i18n` 分支中的提交不会发生改变，而且因为 `user2/i18n` 分支是基于 `v1.0` 创建的，可以很容易将多语言支持添加到 1.0 版本的 `hello-world` 中。不过这两个有利的一面对于本项目来说都不重要。再来看看不利的一面，就是这样的合并操作会产生三个提交（包括一个合并提交），对于要对提交进行审核的项目团队来说增加了代码审核的负担。因此很多项目在特性分支合并到开发主线的时候，都不推荐使用合并操作，而是使用变基操作，如下图所示。
+
+::
 
   - v1.0 -- getopt -- fix1 -- fix2  
                                   \                    
                                    ----- i18n' -- i18n" 
 
+很显然，变基完成之后显示的分支图要比合并简单多了，看起来更想是集中式版本控制系统特有的顺序提交。因为减少了一个提交，也减轻了代码审核的负担。
 
-* 确保当前工作在 `user2/i18n` 分支上。
+下面开始执行变基操作。
+
+* 首先确保开发者 user2 的工作区位于分支 `user2/i18n` 上。
 
   ::
 
@@ -1159,12 +1213,213 @@ Hello World 开发计划
   ::
 
     $ git rebase master
-    
+    First, rewinding head to replay your work on top of it...
+    Applying: Add I18N support.
+    Using index info to reconstruct a base tree...
+    Falling back to patching base and 3-way merge...
+    Auto-merging src/main.c
+    CONFLICT (content): Merge conflict in src/main.c
+    Failed to merge in the changes.
+    Patch failed at 0001 Add I18N support.
+
+    When you have resolved this problem run "git rebase --continue".
+    If you would prefer to skip this patch, instead run "git rebase --skip".
+    To restore the original branch and stop rebasing run "git rebase --abort".
+
+变基遇到了冲突，看来这回的麻烦可不小。冲突是在合并 `user2/i18n` 分支中的提交“Add I18N support”时遇到的。首先回顾一下变基的原理（参见第二部分“改变历史”相关章节），对于本例在进行变基操作时会先切换到 `user/i18n` 分支，并强制重置到 `master` 分支所指向的提交。然后再将原 `user/i18n` 分支的提交一一拣选到新的 `user/i18n` 分支上。运行下面的命令可以查看有可能产生冲突的提交列表。
+
+::
+
+  $ git rev-list --pretty=oneline user2/i18n^...master
+  d81896e60673771ef1873b27a33f52df75f70515 Fix typo: -help to --help.
+  10765a7ef46981a73d578466669f6e17b73ac7e3 Bugfix: allow spaces in username.
+  90d873bb93cd7577b7638f1f391bd2ece3141b7a Add I18N support.
+  0881ca3f62ddadcddec08bd9f2f529a44d17cfbf Refactor: use getopt_long for arguments parsing
+
+刚刚发生的冲突是在拣选提交 "Add I18N suppport" 时出现的，所以在冲突文件中标识为他人版本的是 user2 添加多语种支持功能的提交，而冲突文件中标识为自己版本的是修正两个Bug的提交以及开发者 user1 提交的重构命令行参数解析的提交。下面的两个表格是文件 `src/main.c` 发成冲突的两个主要区域，表格的左侧一列是冲突文件中的内容，右侧一列则是冲突解决后的内容。为了方便参照进行了适当排版。
 
 
++-----------------------------------------------------------------+------------------------------------------------------------------+
+| 变基冲突区域一内容（文件 src/main.c）                           | 冲突解决后的内容对照                                             |
++=================================================================+==================================================================+
+|::                                                               |::                                                                |
+|                                                                 |                                                                  |
+|  12 int usage(int code)                                         |  12 int usage(int code)                                          |
+|  13 {                                                           |  13 {                                                            |
+|  14     printf(_("Hello world example %s\n"                     |  14     printf(_("Hello world example %s\n"                      |
+|  15            "Copyright Jiang Xin <jiangxin AT ossxp ...\n"   |  15            "Copyright Jiang Xin <jiangxin AT ossxp ...\n"    |
+|  16            "\n"                                             |  16            "\n"                                              |
+|  17            "Usage:\n"                                       |  17            "Usage:\n"                                        |
+|  18            "    hello\n"                                    |  18            "    hello\n"                                     |
+|  19            "            say hello to the world.\n\n"        |  19            "            say hello to the world.\n\n"         |
+|  20            "    hello <username>\n"                         |  20            "    hello <username>\n"                          |
+|  21            "            say hi to the user.\n\n"            |  21            "            say hi to the user.\n\n"             |
+|  22 <<<<<<< HEAD                                                |                                                                  |
+|  23            "    hello -h, --help\n"                         |  22            "    hello -h, --help\n"                          |
+|  24            "            this help screen.\n\n", _VERSION);  |  23            "            this help screen.\n\n"), _VERSION);  |
+|  25 ||||||| merged common ancestors                             |                                                                  |
+|  26            "    hello -h, -help\n"                          |                                                                  |
+|  27            "            this help screen.\n\n", _VERSION);  |                                                                  |
+|  28 =======                                                     |                                                                  |
+|  29            "    hello -h, -help\n"                          |                                                                  |
+|  30            "            this help screen.\n\n"), _VERSION); |                                                                  |
+|  31 >>>>>>> Add I18N support.                                   |                                                                  |
+|  32     return code;                                            |  24     return code;                                             |
+|  33 }                                                           |  25 }                                                            |
++-----------------------------------------------------------------+------------------------------------------------------------------+
 
-分支管理规范
-============
+
++-----------------------------------------------------------------+------------------------------------------------------------------+
+| 变基冲突区域二内容（文件 src/main.c）                           | 冲突解决后的内容对照                                             |
++=================================================================+==================================================================+
+|::                                                               |::                                                                |
+|                                                                 |                                                                  |
+|  38 <<<<<<< HEAD                                                |                                                                  |
+|  39     int c;                                                  |  30     int c;                                                   |
+|  40     char **p = NULL;                                        |  31     char **p = NULL;                                         |
+|  41                                                             |  32                                                              |
+|                                                                 |  33     setlocale( LC_ALL, "" );                                 |
+|                                                                 |  34     bindtextdomain("helloworld","locale");                   |
+|                                                                 |  35     textdomain("helloworld");                                |
+|                                                                 |  36                                                              |
+|  42     while (1) {                                             |  37     while (1) {                                              |
+|  43         int option_index = 0;                               |  38         int option_index = 0;                                |
+|  44         static struct option long_options[] = {             |  39         static struct option long_options[] = {              |
+|  45             {"help", 0, 0, 'h'},                            |  40             {"help", 0, 0, 'h'},                             |
+|  46             {0, 0, 0, 0}                                    |  41             {0, 0, 0, 0}                                     |
+|  47         };                                                  |  42         };                                                   |
+|  48                                                             |  43                                                              |
+|  49         c = getopt_long(argc, argv, "h",                    |  44         c = getopt_long(argc, argv, "h",                     |
+|  50                         long_options, &option_index);       |  45                         long_options, &option_index);        |
+|  51         if (c == -1)                                        |  46         if (c == -1)                                         |
+|  52            break;                                           |  47            break;                                            |
+|  53                                                             |  48                                                              |
+|  54         switch (c) {                                        |  49         switch (c) {                                         |
+|  55         case 'h':                                           |  50         case 'h':                                            |
+|  56             return usage(0);                                |  51             return usage(0);                                 |
+|  57         default:                                            |  52         default:                                             |
+|  58             return usage(1);                                |  53             return usage(1);                                 |
+|  59         }                                                   |  54         }                                                    |
+|  60     }                                                       |  55     }                                                        |
+|  61                                                             |  56                                                              |
+|  62     if (optind < argc) {                                    |  57     if (optind < argc) {                                     |
+|  63         p = &argv[optind];                                  |  58         p = &argv[optind];                                   |
+|  64     }                                                       |  59     }                                                        |
+|  65                                                             |  60                                                              |
+|  66     if (p == NULL || *p == NULL) {                          |  61     if (p == NULL || *p == NULL) {                           |
+|  67         printf ("Hello world.\n");                          |  62         printf ( _("Hello world.\n") );                      |
+|  68 ||||||| merged common ancestors                             |                                                                  |
+|  69     if (argc == 1) {                                        |                                                                  |
+|  70         printf ("Hello world.\n");                          |                                                                  |
+|  71     } else if ( strcmp(argv[1],"-h") == 0 ||                |                                                                  |
+|  72                 strcmp(argv[1],"--help") == 0 ) {           |                                                                  |
+|  73                 return usage(0);                            |                                                                  |
+|  74 =======                                                     |                                                                  |
+|  75     setlocale( LC_ALL, "" );                                |                                                                  |
+|  76     bindtextdomain("helloworld","locale");                  |                                                                  |
+|  77     textdomain("helloworld");                               |                                                                  |
+|  78                                                             |                                                                  |
+|  79     if (argc == 1) {                                        |                                                                  |
+|  80         printf ( _("Hello world.\n") );                     |                                                                  |
+|  81     } else if ( strcmp(argv[1],"-h") == 0 ||                |                                                                  |
+|  82                 strcmp(argv[1],"--help") == 0 ) {           |                                                                  |
+|  83                 return usage(0);                            |                                                                  |
+|  84 >>>>>>> Add I18N support.                                   |                                                                  |
+|  85     } else {                                                |                                                                  |
+|  86 <<<<<<< HEAD                                                |  63     } else {                                                 |
+|  87         printf ("Hi,");                                     |  64         printf (_("Hi,"));                                   |
+|  88         do {                                                |  65         do {                                                 |
+|  89             printf (" %s", *p);                             |  66             printf (" %s", *p);                              |
+|  90         } while (*(++p));                                   |  67         } while (*(++p));                                    |
+|  91         printf (".\n");                                     |  68         printf (".\n");                                      |
+|  92 ||||||| merged common ancestors                             |                                                                  |
+|  93         printf ("Hi, %s.\n", argv[1]);                      |                                                                  |
+|  94 =======                                                     |                                                                  |
+|  95         printf (_("Hi, %s.\n"), argv[1]);                   |                                                                  |
+|  96 >>>>>>> Add I18N support.                                   |                                                                  |
+|  97     }                                                       |  69     }                                                        |
+|                                                                 |                                                                  |
++-----------------------------------------------------------------+------------------------------------------------------------------+
+
+将完成冲突解决的文件 `src/main.c` 加入暂存区。
+
+::
+
+  $ git add -u
+
+查看工作区状态。
+
+::
+
+  $ git status
+  # Not currently on any branch.
+  # Changes to be committed:
+  #   (use "git reset HEAD <file>..." to unstage)
+  #
+  #       modified:   src/Makefile
+  #       new file:   src/locale/helloworld.pot
+  #       new file:   src/locale/zh_CN/LC_MESSAGES/helloworld.po
+  #       modified:   src/main.c
+  #
+
+现在不要执行提交，而是继续变基操作，变基操作会自动完成对冲突解决的提交，并对分支中的其他提交继续执行变基直至全部完成。
+
+::
+
+  $ git rebase --continue
+  Applying: Add I18N support.
+  Applying: Translate for Chinese.
 
 
+下图显示了版本库执行完变基后的状态。
+
+
+现在需要将 `user2/i18n` 分支的提交合并到主线 `master` 中。实际上不需要在 `master` 分支上再繁琐的执行合并操作，可以直接用推送操作用本地的 `user2/i18n` 分支更新远程版本库的 `master` 分支。
+
+::
+
+  $ git push origin user2/i18n:master
+  Counting objects: 21, done.
+  Delta compression using up to 2 threads.
+  Compressing objects: 100% (13/13), done.
+  Writing objects: 100% (17/17), 2.91 KiB, done.
+  Total 17 (delta 6), reused 1 (delta 0)
+  Unpacking objects: 100% (17/17), done.
+  To file:///path/to/repos/hello-world.git
+
+最后不要忘了更新本地的 `master` 分支。
+
+* 切换到 `master` 分支，会从提示信息中看到本地 `master` 分支落后远程共享版本库 `master` 分支两个提交。
+
+  ::
+
+    $ git checkout master
+    Switched to branch 'master'
+    Your branch is behind 'origin/master' by 2 commits, and can be fast-forwarded.
+
+* 执行拉回操作，将本地 `master` 分支同步到和远程共享版本库相同的状态。
+
+  ::
+
+    $ git pull
+    Updating d81896e..c4acab2
+    Fast-forward
+     src/Makefile                               |   21 ++++++++-
+     src/locale/helloworld.pot                  |   46 ++++++++++++++++++++
+     src/locale/zh_CN/LC_MESSAGES/helloworld.po |   62 ++++++++++++++++++++++++++++
+     src/main.c                                 |   18 ++++++--
+     4 files changed, 141 insertions(+), 6 deletions(-)
+     create mode 100644 src/locale/helloworld.pot
+     create mode 100644 src/locale/zh_CN/LC_MESSAGES/helloworld.po
+
+----
+
+补充：实际上变基之后 `user2/i18n` 分支的本地化模板文件（helloworld.pot）和汉化文件（helloworld.po）都需要作出相应更新，否则 `hello-world` 的一些输出不能进行本地化。
+
+* 更新模板需要删除文件 `helloworld.pot` ，再执行命令 `make po` 。
+* 重新翻译中文本地化文件，可以使用工具 `lokalize` 或者 `kbabel` 。
+
+具体的操作过程就不再赘述了。
+
+----
 
