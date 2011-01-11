@@ -9,12 +9,8 @@ Topgit 协同模型
 
 从2005年开始作者专心于开源软件的研究、定制开发和整合，在这之后的几年，一直使用 Subversion 做版本控制。对于定制开发工作，Subversion 有一种称为卖主分支（Vendor Branch）的模式。
 
-
-::
-
-     +------------V2-------------------------------------V3---   （卖主分支）
-     |             \                                       \
-  ---V1---o1---o2---M1---o3---o4---o5---o6--- ... ---o99---M2--- （主线）
+.. figure:: images/git-module/topgit-branch-vendor-branch.png
+   :scale: 100
 
 卖主分支的工作模式如上图所示：
 
@@ -64,6 +60,9 @@ Topgit 原理
 
 下面的分支图，是一个近似的 Topgit 实现图（略去了重要的 top-bases 分支）。
 
+.. figure:: images/git-module/topgit-topic-branch.png
+   :scale: 100
+
 ::
 
               +---b1--M1---M3--- （特性分支B: refs/heads/t/B）
@@ -77,6 +76,10 @@ Topgit 原理
 在上图中，主线上的 V1 是上游的版本的一次提交。特性分支 A 和 C 都直接依赖主线 master，而特性分支 B 则依赖特性分支 A。提交 M1 是特定分支 B 因为特性分支 A 更新而做的一次迁移。提交 M2 和 M4，则分别是特性分支 A 和 C 因为上游出现了新版本 V2 而做的迁移。当然特性分支 B 也要做相应的迁移，是为 M3。
 
 上述的描述非常粗糙，因为这样的设计很难实现特性分支导出为补丁文件。例如特性分支B的补丁，实际上应该是 M3 和 M2 之间的差异，而绝不是 M3 到 a2 之间的差异。Topgit 为了能够实现分支导出为补丁，又为每个特性的开发引入了一个特殊的引用 (`refs/top-bases/*`) ，用于追踪分支依赖的“变基”。
+
+
+.. figure:: images/git-module/topgit-topic-base-branch.png
+   :scale: 100
 
 ::
 
@@ -449,7 +452,7 @@ tg summary 命令用于显示 Topgit 管理的特性分支的列表及各个分�
 
   $ tg summary --graphviz | dot -T png -o topgit.png
 
-.. figure:: images/topgit/graphviz.png
+.. figure:: images/git-module/topgit-graphviz.png
    :scale: 100
 
    Topgit 特性分支关系图
@@ -836,7 +839,7 @@ Topgit hacks
   $ tg summary --graphviz | dot -T png -o topgit.png
 
 
-.. figure:: images/topgit/topgit-hacks.png
+.. figure:: images/git-module/topgit-hacks.png
    :scale: 100
 
    Topgit hacks 特性分支关系图
