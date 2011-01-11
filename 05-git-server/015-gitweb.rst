@@ -5,7 +5,7 @@ Gitweb 服务器
 
 Gitweb 是用 Perl 语言开发的 CGI 脚本，架设比较方便。Gitweb 支持多个版本库，可以对版本库进行目录浏览（包括历史版本），可以查看文件内容，查看提交历史，提供搜索以及 RSS feed 支持。也可以提供目录文件的打包下载等。
 
-.. figure:: images/gitweb/kernel-org_full.png
+.. figure:: images/git-server/gitweb-kernel-org_full.png
    :scale: 80
 
    Gitweb 界面(kernel.org)
