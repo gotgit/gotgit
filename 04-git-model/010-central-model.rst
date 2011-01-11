@@ -17,7 +17,7 @@
 可以像集中式版本控制系统那样使用 Git，在一个大家都可以访问到的服务器上架设 Git 服务器，每个人从该服务器克隆代码，本地提交推送到服务器上。
 
 
-  .. figure:: images/git-module/central-model.png
+  .. figure:: images/git-model/central-model.png
      :scale: 100
 
      集中式协同模型
