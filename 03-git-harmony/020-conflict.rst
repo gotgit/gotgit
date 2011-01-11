@@ -12,22 +12,22 @@
 
 * 用户 user1 向共享版本库推送时，因为 user2 强制推送已经改变了共享版本库中的提交状态，导致 user1 推送失败。
 
-  .. figure:: images/gitbook/git-merge-pull-1.png
+  .. figure:: images/git-harmony/git-merge-pull-1.png
      :scale: 100
 
 * 用户 user1 执行 PULL 操作的第一阶段，将共享版本库 master 分支的最新提交拉回到本地，并更新本地版本库特定的引用中 `refs/remotes/origin/master` （简称为 `origin/master` ）。
 
-  .. figure:: images/gitbook/git-merge-pull-2.png
+  .. figure:: images/git-harmony/git-merge-pull-2.png
      :scale: 100
 
 * 用户 user1 执行 PULL 操作的第二阶段，将本地分支 master 和共享版本库本地关联分支 `origin/master` 进行合并操作。
 
-  .. figure:: images/gitbook/git-merge-pull-3.png
+  .. figure:: images/git-harmony/git-merge-pull-3.png
      :scale: 100
 
 * 用户 user1 执行 PUSH 操作，将本地提交推送到共享版本库中。
 
-  .. figure:: images/gitbook/git-merge-pull-4.png
+  .. figure:: images/git-harmony/git-merge-pull-4.png
      :scale: 100
 
 实际上拉回（PULL）操作是由两个步骤组成的，一个是获取（FETCH）操作，一个是合并（MERGE）操作。即：
@@ -620,31 +620,31 @@ Git 的合并操作非常智能，大多数情况下会自动完成合并。不�
   -  B：暂存区2中的版本（当前分支更改的版本）。
   -  C：暂存区3中的版本（他人更改的版本）。
 
-  .. figure:: images/gitbook/kdiff3-1.png
+  .. figure:: images/git-harmony/kdiff3-1.png
      :scale: 70
 
 * kdiff3 下方的窗口是合并后文件编辑窗口。
 
   点击标记为“合并冲突”的一行，在弹出菜单中出现 A, B, C 三个选项，分别代表从 A, B, C 三个窗口拷贝相关内容到当前位置。
 
-  .. figure:: images/gitbook/kdiff3-2.png
+  .. figure:: images/git-harmony/kdiff3-2.png
      :scale: 70
 
 * 当通过“合并冲突”位置弹出菜单选择了 B 和 C 后，可以看到在合并窗口出现了标识 B 和 C 的行，分别代表 user2 和 user1 对该行的修改。
 
-  .. figure:: images/gitbook/kdiff3-3.png
+  .. figure:: images/git-harmony/kdiff3-3.png
      :scale: 70
 
 * 在合并窗口进行编辑，将 "`Hello, user1.`" 修改为 "`Hello, user1 and user2.`" 。
 
   修改后，可以看到该行的标识由 `C` 改变为 `m` ，含义是该行是经过手工修改的行。
 
-  .. figure:: images/gitbook/kdiff3-4.png
+  .. figure:: images/git-harmony/kdiff3-4.png
      :scale: 70
 
 * 在合并窗口删除标识为从 B 窗口引入的行 "`Hello, user2.`" 。保存退出即完成图形化冲突解决。
 
-  .. figure:: images/gitbook/kdiff3-5.png
+  .. figure:: images/git-harmony/kdiff3-5.png
      :scale: 70
 
 图形工具保存退出后，显示工作区状态，会看到冲突已经解决。在工作区还会遗留一个以 `.orig` 结尾的合并前文件副本。

@@ -48,7 +48,7 @@ Git 提供了丰富的协议支持，包括： SSH, GIT, HTTP, HTTPS, FTP, FTPS,
 
 使用智能协议在通讯时，会在两个通讯的版本库各自一端分别打开两个程序进行数据交换。使用智能协议最直观的印象就是在数据传输过程中会有清晰的进度显示，而且因为是按需传输所以传输量更小，速度更快。下面的图示显示的就是在执行 PULL 和 PUSH 两个最常用的操作时，两个版本库各自启动的辅助程序的情况。
 
-.. figure:: images/gitbook/git-smart-protocol.png
+.. figure:: images/git-harmony/git-smart-protocol.png
    :scale: 100
 
 上述协议中 SSH, GIT, 以及本地协议（file://）采用智能协议。HTTP 协议需要特殊的配置（用 git-http-backend 配置 CGI）并且客户端需要使用 Git 1.6.6 或更高的版本，才能够使用智能协议。
