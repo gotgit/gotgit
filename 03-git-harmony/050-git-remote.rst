@@ -110,11 +110,10 @@ Git 的 `git branch` 命令也能够查看这些远程分支，不过要加上 "
   origin  file:///path/to/repos/hello-world.git (fetch)
   origin  file:///path/to/repos/hello-world.git (push)
 
-如果查看 `.git/config` 文件会看到下面的配置。为了说明方便还为每一行添加了行号。
+如果查看 `.git/config` 文件会看到其中包含下面的内容。为了说明方便还为每一行添加了行号。
 
 ::
 
-     ...
    6 [remote "origin"]
    7   fetch = +refs/heads/*:refs/remotes/origin/*
    8   url = file:///path/to/repos/hello-world.git
@@ -122,7 +121,30 @@ Git 的 `git branch` 命令也能够查看这些远程分支，不过要加上 "
   10   remote = origin
   11   merge = refs/heads/master
 
-其中第6-8行定义了一个 `[remote]` 小节，该小节配置了远程版本库 `file:///path/to/repos/hello-world.git` 字符串 "origin" 和
+上面看似天书一样的配置，可以按照下面的方式理解：
+
+* 第6-8行定义了一个 `[remote]` 小节，该小节以名称 "origin" 注册了一个远程版本库。
+
+* 第7行设置了执行 `git fetch origin` 操作时使用的缺省引用表达式。
+
+  即执行 `git fetch origin` 相当于执行 `git fetch origin +refs/heads/*:refs/remotes/origin/*` 命令。
+
+* 第8行设置了执行 `git fetch origin` 操作时访问的远程服务器地址。
+
+* 第9-11行定义了一个 `[branch]` 小节，该小节设置了本地 master 分支和远程版本库的对应关系。
+
+* 第10行设置 master 分支缺省对应于 origin 代表的远程版本库。
+
+  即在 master 分支下执行 `git fetch`, `git pull` 以及 `git push` 操作时缺省的远程版本库为 origin。
+
+* 第11行设置 master 分支执行 `git fetch`/`git pull` 操作时要合并的远程版本库对应的分支名称。
+
+正是因为有了 `[remote]` 小节将远程版本库注册为代号 "origin" 并且设置了本地分支对应的远程版本库（origin）和缺省的引用表达式，所以在执行 `git fetch`/`git pull` 操作会将远程版本库的引用复制到本地版本库的目录 `refs/remotes/origin` 下的引用。
+
+**修改远程分支**
+
+
+
 
 $ git checkout helper/master
 Branch helper/master set up to track remote branch helper/master from origin.
