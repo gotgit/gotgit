@@ -25,7 +25,7 @@ Git 分支
 
 于是画了下面的一个图，大致描述了这个团队进行 Bug 修正的过程，从中可以很容易的看出问题的端倪。这个图对于 Git 甚至其他版本库控制系统同样适用。
 
-.. figure:: images/gitbook/branch-release-branch-question.png
+.. figure:: images/git-harmony/branch-release-branch-question.png
    :scale: 80
 
 
@@ -43,7 +43,7 @@ Git 分支
 
 下图演示了如何使用发布分支应对 Bug 修正的问题。
 
-.. figure:: images/gitbook/branch-release-branch-answer.png
+.. figure:: images/git-harmony/branch-release-branch-answer.png
    :scale: 80
 
 说明：
@@ -64,7 +64,7 @@ Git 分支
 
 下面就是这个项目的版本库示意图，显然这个项目的代码管理没有使用分支。
 
-.. figure:: images/gitbook/branch-feature-branch-question.png
+.. figure:: images/git-harmony/branch-feature-branch-question.png
    :scale: 100
 
 说明：
@@ -77,7 +77,7 @@ Git 分支
 
 采用分支将某个功能或模块的开发与开发主线独立出来，是解决类似问题的办法，这种用途的分支被称为特性分支（Feature Branch）或主题分支（Topic Branch）。下面这个图就展示了前面提到的延期的项目在特性分支的帮助下协同多用户的开发。
 
-.. figure:: images/gitbook/branch-feature-branch-answer.png
+.. figure:: images/git-harmony/branch-feature-branch-answer.png
    :scale: 100
 
 说明：
@@ -102,12 +102,9 @@ Git 分支
 
 所谓卖主分支，就是在版本库中创建一个专门和上游代码进行同步的分支，一旦有上游代码发布就检入到卖主分支中。下面的示意图就是一个典型的卖主分支工作流程。
 
-::
-
-     +------------V2-------------------------------------V3---   （卖主分支）
-     |             \                                       \
-  ---V1---o1---o2---M1---o3---o4---o5---o6--- ... ---o99---M2--- （主线）
-
+.. figure:: images/git-harmony/branch-vendor-branch.png
+   :scale: 100
+     
 说明：
 
 * 在主线上检入上游软件的 1.0 版本库。在图中标记为 V1 的提交即是。
@@ -1184,70 +1181,24 @@ Hello World 开发计划
 
 在最早刚刚创建 `user2/i18n` 分支时，版本库的结构非常简单，如下图所示。
 
+.. figure:: images/git-harmony/branch-i18n-initial.png
+   :scale: 100
+     
+但是当前 `master` 分支中不但包含了对两个 Bug 的修正，还包含了开发者 user1 调用 getopt 对命令行参数解析进行的代码重构。下图显示的是当前版本库 `master` 分支和 `user2/i18n` 分支的关系图。
 
-TODO: 
-
-::
-      
-   master
-     |
-     v
-   --O
-     ^
-     |
-  user2/i18n
-
-
-但是当前 `master` 分支中不但包含了对两个 Bug 的修正，还包含了开发者 user1 对 `hello-world` 命令行参数解析进行的代码重构。下图显示的是当前版本库 `master` 分支和 `user2/i18n` 分支的关系图。
-
-TODO
-
-::
-
-                              master
-                                |
-                                v
-  - v1.0 -- getopt -- fix1 -- fix2
-      \
-       ----- i18n' -- i18n"
-                       ^
-                       |
-                    user2/i18n
-
+.. figure:: images/git-harmony/branch-i18n-complete.png
+   :scale: 100
+     
 开发者 user2 要将分支 `user2/i18n` 中的提交合并到主线 `master` 中，可以采用上一节介绍的分支合并操作。如果执行分支合并操作，版本库的状态将会如下图所示：
 
-TODO:
-
-::
-
-                                   master
-                                     |
-                                     v
-  - v1.0 -- getopt -- fix1 -- fix2 --M
-      \                             /
-       ----- i18n' -- i18n" -------/
-                       ^ 
-                       | 
-                   user2/i18n
-
+.. figure:: images/git-harmony/branch-i18n-merge.png
+   :scale: 100
+     
 这样操作有利有弊。有利的一面是开发者在 `user2/i18n` 分支中的提交不会发生改变，这一点对于提交已经被他人共享时很重要。再有因为 `user2/i18n` 分支是基于 `v1.0` 创建的，这样可以很容易将多语言支持功能添加到 1.0 版本的 `hello-world` 中。不过这些对于本项目来说都不重要。至于不利的一面，就是这样的合并操作会产生三个提交（包括一个合并提交），对于要对提交进行审核的项目团队来说增加了代码审核的负担。因此很多项目在特性分支合并到开发主线的时候，都不推荐使用合并操作，而是使用变基操作。如果执行变基操作，版本库相关分支的关系图如下所示。
 
-TODO:
-
-::
-
-
-                             master
-                               |
-                               v
-  - v1.0 -- getopt -- fix1 -- fix2  
-                                  \                    
-                                   ----- i18n' -- i18n" 
-                                                    ^
-                                                    |
-                                                user2/i18n 
-
-
+.. figure:: images/git-harmony/branch-i18n-rebase-complete.png
+   :scale: 100
+     
 很显然，采用变基操作的分支关系图要比采用合并操作的简单多了，看起来更想是集中式版本控制系统特有的顺序提交。因为减少了一个提交，也会减轻代码审核的负担。
 
 下面开发者 user2 就通过变基操作将特性分支 `user2/i18n` 合并到主线。
@@ -1424,21 +1375,8 @@ TODO:
 
 下图显示了版本库执行完变基后的状态。
 
-TODO:
-
-::
-
-
-                             master
-                               |
-                               v
-  - v1.0 -- getopt -- fix1 -- fix2  
-                                  \                    
-                                   ----- i18n' -- i18n" 
-                                                    ^
-                                                    |
-                                                user2/i18n 
-
+.. figure:: images/git-harmony/branch-i18n-rebase.png
+   :scale: 100
 
 现在需要将 `user2/i18n` 分支的提交合并到主线 `master` 中。实际上不需要在 `master` 分支上再执行繁琐的合并操作，而是可以直接用推送操作 —— 用本地的 `user2/i18n` 分支直接更新远程版本库的 `master` 分支。
 
