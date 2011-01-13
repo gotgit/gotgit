@@ -1,13 +1,13 @@
 补丁文件交互
 ************
 
-之前各个章节版本库间的交互都是通过 `git push` 和/或 `git pull` 命令实现的，这种交互模式是Git使用中最主要的模式，但不是全部。使用补丁文件是另外一种交互方式，适用于参与者众多的大型项目的分布式开发。例如 Git 项目本身的代码提交就主要是由贡献者通过邮件传递补丁文件实现的。下面两个链接就是作者在写书过程中发现并解决的两个Git的Bug。
+之前各个章节版本库间的交互都是通过 `git push` 和/或 `git pull` 命令实现的，这是Git最主要的交互模式，但并不是全部。使用补丁文件是另外一种交互方式，适用于参与者众多的大型项目进行分布式的开发。例如 Git 项目本身的代码提交就主要由贡献者通过邮件传递补丁文件实现的。下面两个链接就是作者在写书过程中发现并解决的两个Git的Bug。
 
 * 关于Git文档错误的Bugfix:
 
   http://marc.info/?l=git&m=129248415230151
 
-* 关于git-apply的一个Bugfix:
+* 关于 `git-apply` 的一个Bugfix:
 
   http://article.gmane.org/gmane.comp.version-control.git/162100
 
@@ -19,12 +19,12 @@
 .. http://marc.info/?l=git&m=129248415230151
 .. http://article.gmane.org/gmane.comp.version-control.git/163804
 
-这种使用补丁文件进行提交可以提高项目的参与度。任何人都可以参与项目的开发，只要会将提交转化为补丁，会发邮件即可。
+这种使用补丁文件进行提交可以提高项目的参与度。因为任何人都可以参与项目的开发，只要会将提交转化为补丁，会发邮件即可。
 
 创建补丁
 ===========
 
-Git 提供了将提交批量转换为补丁文件的命令： `git format-patch` 。该命令后面的参数是一个版本范围列表，会将包含在此列表中的提交一一转换为补丁文件，每个补丁文件包含一个序号并以提取提交说明作为文件名。
+Git 提供了将提交批量转换为补丁文件的命令： `git format-patch` 。该命令后面的参数是一个版本范围列表，会将包含在此列表中的提交一一转换为补丁文件，每个补丁文件包含一个序号并从提交说明中提取字符串作为文件名。
 
 下面演示一下在 user1 工作区，将 master 分支的最近 3 个提交转换为补丁文件。
 
@@ -101,27 +101,27 @@ Git 提供了将提交批量转换为补丁文件的命令： `git format-patch`
    N  3 user1@sun.ossxp.c  Thu Jan 13 18:02   95/2893  =?UTF-8?q?=5BPATCH=203/3=5D=20Translate=20for=20Chinese=2E?=
   &
 
-如果邮件不止这三封，需要将三个包含补丁的邮件挑选出来保存到另外的文件中。在 mail 命令的提交符(`&`)下输入命令。
+如果邮件不止这三封，需要将三个包含补丁的邮件挑选出来保存到另外的文件中。在 mail 命令的提示符(`&`)下输入命令。
 
 ::
 
-  & s 1-3 user1-patches
-  "user1-patches" [New file]
+  & s 1-3 user1-mail-archive
+  "user1-mail-archive" [New file]
   & q
 
-现在就在本地创建了一个包含开发者 user1 的代码补丁邮件的归档文件 `user1-patches` ，这个文件时 mbox 格式的，可以用 `mail` 命令打开。
+上面的操作在本地创建了一个由开发者 user1 的补丁邮件组成的归档文件 `user1-mail-archive` ，这个文件是 mbox 格式的，可以用 `mail` 命令打开。
 
 ::
 
-  $ mail -f user1-patches 
+  $ mail -f user1-mail-archive 
   Mail version 8.1.2 01/15/2001.  Type ? for help.
-  "user1-patches": 3 messages
+  "user1-mail-archive": 3 messages
   >   1 user1@sun.ossxp.c  Thu Jan 13 18:02   38/1121  [PATCH 1/3] Fix typo: -help to --help.
       2 user1@sun.ossxp.c  Thu Jan 13 18:02  227/6208  =?UTF-8?q?=5BPATCH=202/3=5D=20Add=20I18N=20support=2E?=
       3 user1@sun.ossxp.c  Thu Jan 13 18:02   95/2894  =?UTF-8?q?=5BPATCH=203/3=5D=20Translate=20for=20Chinese=2E?=
   & q
 
-保存在 mbox 中的邮件可以批量的应用在版本库中，使用 `git am` 命令。am 是 apply-email 的缩写。下面就演示一下如何应用补丁。
+保存在 mbox 中的邮件可以批量的应用在版本库中，使用 `git am` 命令。am 是 apply email 的缩写。下面就演示一下如何应用补丁。
 
 * 基于 HEAD~3 版本创建一个本地分支，以便在该分支下应用补丁。
 
@@ -130,11 +130,11 @@ Git 提供了将提交批量转换为补丁文件的命令： `git format-patch`
     $ git checkout -b user1 HEAD~3
     Switched to a new branch 'user1'
 
-* 将 mbox 文件 `user1-patches` 中的补丁全部应用在当前分支上。
+* 将 mbox 文件 `user1-mail-archive` 中的补丁全部应用在当前分支上。
 
   ::
 
-    $ git am user1-patches
+    $ git am user1-mail-archive
     Applying: Fix typo: -help to --help.
     Applying: Add I18N support.
     Applying: Translate for Chinese.
@@ -181,9 +181,9 @@ Git 提供了将提交批量转换为补丁文件的命令： `git format-patch`
 * 提交的时间信息使用了邮件发送的时间。
 * 作者（Author）的信息被保留，和补丁文件中的一致。
 * 提交者（Commit）全都设置为 `user1` ，因为提交是在 `user1` 的工作区完成的。
-* 提交说明中的签名信息被保留。实际上 `git am` 命令也可以提供 `-s` 参数，再附加应用补丁用户的签名。
+* 提交说明中的签名信息被保留。实际上 `git am` 命令也可以提供 `-s` 参数，在提交说明中附加应用补丁的用户的签名。
 
-对于不习惯在控制台用 `mail` 命令接收邮件的用户，可以将用户通过附件传递的用 `git format-patch` 命令生成的补丁保存成补丁文件，通过管道符调用 `git am` 命令。
+对于不习惯在控制台用 `mail` 命令接收邮件的用户，可以通过邮件附件，U盘或其他方式获取 `git format-patch` 生成的补丁文件，将补丁文件保存在本地，通过管道符调用 `git am` 命令应用补丁。
 
 ::
 
@@ -201,7 +201,7 @@ StGit 和 Quilt
 
 一个复杂功能的开发一定是由多个提交来完成的，对于在以接收和应用补丁文件为开发模式的项目中，复杂的功能需要通过多个补丁文件来完成。补丁文件因为要经过审核才能被接受，因此针对一个功能的多个补丁文件一定要保证各个都是精品：补丁1用来完成一个功能点，补丁2用来完成第二个功能点，等等。一定不能出现这样的情况：补丁3用于修正补丁1的错误，补丁10改正了补丁7中的文字错误，等等。这样就带来补丁的管理的难题。
 
-实际上对于基于特性分支的开发又何尝不是如此？在将特性分支归并到开发主线前，要接受团队的评审，特性分支的开发者一定想将特性分支上的提交进行重整，把一些提交合并或者拆分。使用变基命令可以实现提交的重整，但是操作起来会比较的困难，有什么好办法呢？
+实际上基于特性分支的开发又何尝不是如此？在将特性分支归并到开发主线前，要接受团队的评审，特性分支的开发者一定想将特性分支上的提交进行重整，把一些提交合并或者拆分。使用变基命令可以实现提交的重整，但是操作起来会比较困难，有什么好办法呢？
 
 StGit
 -------
@@ -372,7 +372,7 @@ StGit 是一个 Python 项目，安装起来还是很方便的。在 Debian/Ubun
 
     $ git add locale/zh_CN/LC_MESSAGES/helloworld.po
 
-* 不要提交，而是使用 `stg refresh` 命令更新补丁，同时更新补丁文件和提交。
+* 不要提交，而是使用 `stg refresh` 命令更新补丁，同时更新提交。
 
   ::
 
@@ -393,7 +393,7 @@ StGit 是一个 Python 项目，安装起来还是很方便的。在 Debian/Ubun
     $ ./hello -h
     ...
 
-* 导出补丁，使用命令 `stg export` 。导出的补丁是 Quilt 补丁集格式。
+* 导出补丁，使用命令 `stg export` 。导出的是 Quilt 格式的补丁集。
 
   ::
 
@@ -418,7 +418,7 @@ StGit 是一个 Python 项目，安装起来还是很方便的。在 Debian/Ubun
     add-i18n-support
     translate-for-chinese
 
-通过上面的演示可以看出 StGit 可以非常方便的对提交进行整理，整理提交时无需使用复杂的变基命令，而是采用：提交 stg 化，修改文件，执行 `stg refresh` 的工作流程即可更新补丁和提交。StGit 还可以将补丁导出为补丁文件，虽然导出的补丁文件没有像 `git format-patch` 那样加上代表顺序的数字前缀，但是用文件 `series` 标注了补丁文件的先后顺序。实际上可以在执行 `stg export` 时添加 `-n` 参数为补丁文件添加数字前缀。
+通过上面的演示可以看出 StGit 可以非常方便的对提交进行整理，整理提交时无需使用复杂的变基命令，而是采用：提交 StGit 化，修改文件，执行 `stg refresh` 的工作流程即可更新补丁和提交。StGit 还可以将补丁导出为补丁文件，虽然导出的补丁文件没有像 `git format-patch` 那样加上代表顺序的数字前缀，但是用文件 `series` 标注了补丁文件的先后顺序。实际上可以在执行 `stg export` 时添加 `-n` 参数为补丁文件添加数字前缀。
 
 StGit 还有一些功能，如合并补丁/提交，插入新补丁/提交等，请参照 StGit 帮助，恕不一一举例。
 
@@ -435,12 +435,11 @@ Quilt 约定俗成将补丁集放在项目根目录下的子目录 `patches` 中
 
 简单说一下 Quilt 的使用，会发现真的和 StGit 很像，实际上是先有的 Quilt，后有的 StGit。
 
-* 重置到三个提交前的版本，否则在后面应用补丁的时候会失败。还不要忘了删除 src/locale 目录。
+* 重置到三个提交前的版本，否则应用补丁的时候会失败。还不要忘了删除 src/locale 目录。
 
   ::
 
-    $ git reset HEAD~3
-    $ git checkout -- .
+    $ git reset --hard HEAD~3
     $ rm -rf src/locale/
 
 * 显示补丁列表
