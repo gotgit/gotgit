@@ -557,7 +557,7 @@ Git 的合并操作非常智能，大多数情况下会自动完成合并。不�
   * | 60b10f3 Say hello to user2.
   |/  
 
-提交完成后，会看到 `.git` 目录下和合并相关的文件 `.git/MERGE_HEAD`, `.git/MERGE_MSG`, `.git/MERGE_MODE` 文件都自动删除了。
+提交完成后，会看到 `.git` 目录下与合并相关的文件 `.git/MERGE_HEAD`, `.git/MERGE_MSG`, `.git/MERGE_MODE` 文件都自动删除了。
 
 如果查看暂存区，会发现冲突文件在暂存区中的三个副本也都清除了（实际在对编辑完成的冲突文件执行 `git add` 后就已经清除了）。
 
@@ -571,37 +571,37 @@ Git 的合并操作非常智能，大多数情况下会自动完成合并。不�
 图形工具完成冲突解决
 --------------------
 
-上面介绍的手工编辑完成冲突解决实际上还是非常简单的，对于简单的冲突解决是最快捷的方法。但是如果冲突的区域过多和过大，缺乏足够的上下文以及缺乏原始版本作为参照非常不方便，使用图形工具进行冲突解决非常简单。
+上面介绍的通过手工编辑完成冲突解决并不复杂，对于简单的冲突是最快捷的解决方法。但是如果冲突的区域过多和过大，缺乏足够的上下文以及缺乏原始版本作为参照，在冲突解决过程中就会非常的不方便，这种情况下使用图形工具就显得非常有优势。
 
-还以上面的冲突解决为例，介绍图形工具冲突解决的方法。首先把 user2 辛辛苦苦完成的冲突解决的提交回滚，再执行合并进入冲突状态。
+还以上面的冲突解决为例介绍使用图形工具进行冲突解决的方法。为了制造一个冲突，首先把 user2 辛辛苦苦完成的冲突解决提交回滚，再执行合并进入冲突状态。
 
-将冲突解决的提交回滚，强制重置到前一个版本。
+* 将冲突解决的提交回滚，强制重置到前一个版本。
 
-::
+  ::
 
-  $ git reset --hard HEAD^
+    $ git reset --hard HEAD^
 
-这时查看状态，会显示当前工作分支的最新提交和共享版本库的 master 分支的最新提交出现了偏离（分叉）。
+* 这时查看状态，会显示当前工作分支的最新提交和共享版本库的 master 分支的最新提交出现了偏离。
 
-::
+  ::
 
-  $ git status
-  # On branch master
-  # Your branch and 'refs/remotes/origin/master' have diverged,
-  # and have 1 and 1 different commit(s) each, respectively.
-  #
-  nothing to commit (working directory clean)
+    $ git status
+    # On branch master
+    # Your branch and 'refs/remotes/origin/master' have diverged,
+    # and have 1 and 1 different commit(s) each, respectively.
+    #
+    nothing to commit (working directory clean)
 
-那么执行合并操作吧。冲突发生了。
+* 那么执行合并操作吧。冲突发生了。
 
-::
+  ::
 
-  $ git merge refs/remotes/origin/master
-  Auto-merging doc/README.txt
-  CONFLICT (content): Merge conflict in doc/README.txt
-  Automatic merge failed; fix conflicts and then commit the result.
+    $ git merge refs/remotes/origin/master
+    Auto-merging doc/README.txt
+    CONFLICT (content): Merge conflict in doc/README.txt
+    Automatic merge failed; fix conflicts and then commit the result.
 
-下面就演示使用图形工具进行冲突解决。使用图形工具进行冲突解决需要事先在操作系统中安装相关的工具，如：kdiff3, meld, tortoisemerge, araxis 等。而启动图形工具进行冲突解决也非常简单，只需执行命令 `git mergetool` 即可。
+下面就演示使用图形工具进行冲突解决。使用图形工具进行冲突解决需要事先在操作系统中安装相关的工具软件，如：kdiff3, meld, tortoisemerge, araxis 等。而启动图形工具进行冲突解决也非常简单，只需执行命令 `git mergetool` 即可。
 
 ::
 
@@ -615,7 +615,7 @@ Git 的合并操作非常智能，大多数情况下会自动完成合并。不�
     {remote}: modified
   Hit return to start merge resolution tool (kdiff3): 
 
-运行 `git mergetool` 命令后，会显示支持的图形工具列表，并提示用户选择可用的冲突解决工具。缺省使用 `kdiff3` 。直接按下回车键，自动打开 `kdiff3` 进入冲突解决界面。
+运行 `git mergetool` 命令后，会显示支持的图形工具列表，并提示用户选择可用的冲突解决工具。缺省会选择系统中已经安装的工具软件，如 `kdiff3` 。直接按下回车键，自动打开 `kdiff3` 进入冲突解决界面。
 
 * 启动 kdiff3 后，上方三个窗口由左至右显示冲突文件的三个版本，分别是：
 
@@ -633,7 +633,7 @@ Git 的合并操作非常智能，大多数情况下会自动完成合并。不�
   .. figure:: images/git-harmony/kdiff3-2.png
      :scale: 70
 
-* 当通过“合并冲突”位置弹出菜单选择了 B 和 C 后，可以看到在合并窗口出现了标识 B 和 C 的行，分别代表 user2 和 user1 对该行的修改。
+* 当通过上图显示的弹出菜单选择了 B 和 C 后，可以看到在合并窗口出现了标识 B 和 C 的行，分别代表 user2 和 user1 对该行的修改。
 
   .. figure:: images/git-harmony/kdiff3-3.png
      :scale: 70
@@ -707,7 +707,7 @@ Git 的合并操作非常智能，大多数情况下会自动完成合并。不�
 合并四：树冲突
 ==============
 
-和 Subversion 类似，Git 也存在因为文件名修改造成的冲突，称为树冲突。如果一个用户将某个文件改名，另外一个用户将同样的文件改为另外的名字，当这两个用户的提交合并时，Git 是无法作出决定的，于是就产生冲突。这种树冲突的解决方式比较特别，因此专题介绍。
+如果一个用户将某个文件改名，另外一个用户将同样的文件改为另外的名字，当这两个用户的提交进行合并操作时，Git 显然无法替用户作出裁决，于是就产生了冲突。这种因为文件名修改造成的冲突，称为树冲突。这种树冲突的解决方式比较特别，因此专题介绍。
 
 仍旧使用前面的版本库进行此次实践。为确保两个用户的本地版本库和共享版本库状态一致，先分别对两个用户的本地版本库执行拉回操作。
 
@@ -715,7 +715,9 @@ Git 的合并操作非常智能，大多数情况下会自动完成合并。不�
 
   $ git pull
 
-* 用户 user1 将文件 `doc/README.txt` 改名为 `readme.txt` 。提交并推送到共享版本库。
+下面就分别以两个用户的身份执行提交，将同样的一个文件改为不同的文件名，制造一个树冲突。
+
+* 用户 user1 将文件 `doc/README.txt` 改名为 `readme.txt` ，提交并推送到共享版本库。
 
   ::
 
@@ -900,7 +902,7 @@ Git 的合并操作非常智能，大多数情况下会自动完成合并。不�
 
 执行 `git mergetool` 进行交互式冲突解决状态，会逐一提示用户进行选择。
 
-* 执行 `git mergetool` 命令。忽略开始显示的提示和警告。
+* 执行 `git mergetool` 命令。忽略其中的提示和警告。
 
   ::
 
@@ -998,17 +1000,17 @@ Git 合并操作支持很多合并策略，缺省会选择最适合的合并策�
 
   - ours
 
-    在遇到冲突的时候，选择当前分支的版本。其他分支不冲突的改动才会合并进来。
+    在遇到冲突的时候，选择我们的版本（当前分支的版本），而忽略他人的版本。如果他人的改动和本地改动不冲突，会将他人改动合并进来。
 
     不要将此模式和后面介绍的单纯的 `ours` 合并策略相混淆。后面介绍的 `ours` 合并策略直接丢弃其他分支的变更，无论冲突与否。
 
   - theirs
     
-    和 `ours` 选项相反。
+    和 `ours` 选项相反，遇到冲突时选择他人的版本，丢弃我们的版本。
 
   - subtree[=path]
 
-    这个选项使用子树合并策略，比后面介绍的 `subtree` （子树合并）策略更高级。后面介绍的 `subtree` 合并策略要对两个树的目录偏移进行猜测，而此参数可以直接提供子树的目录。
+    这个选项使用子树合并策略，比下面介绍的 `subtree` （子树合并）策略的定制能力更强。后面介绍的 `subtree` 合并策略要对两个树的目录移动进行猜测，而此参数可以直接对子树目录进行设置。
 
 * octopus
 
@@ -1028,13 +1030,13 @@ Git 合并操作支持很多合并策略，缺省会选择最适合的合并策�
 合并相关的设置
 ==============
 
-可以通过 `git config` 命令设置和合并相关的环境变量，对合并进行配置。下面是常用的一些设置。
+可以通过 `git config` 命令设置与合并相关的环境变量，对合并进行配置。下面是常用的一些设置。
 
 * merge.conflictstyle
 
   该变量定义冲突文件的显示风格，有两个可用的风格，缺省的 "merge" 或者 "diff3"。
 
-  缺省的 "merge" 风格会让冲突文件使用前面看到的冲突分界符（<<<<<<< ======= >>>>>>>）对冲突内容进行标识。
+  缺省的 "merge" 风格使用标准的冲突分界符（<<<<<<< ======= >>>>>>>）对冲突内容进行标识，在其中的两个文字块分别是本地的修改和他人的修改。
 
   如果使用 "diff3" 风格，则会在冲突中出现三个文字块，分别是用 <<<<<<< 和 ||||||| 之间的本地更改版本，在 ||||||| 和 ======= 之间的原始（共同祖先）版本，和在 ======= 和 >>>>>>> 之间的他人更改的版本。例如：
 
@@ -1059,7 +1061,7 @@ Git 合并操作支持很多合并策略，缺省会选择最适合的合并策�
 
     $ git config --global merge.tool kdiff3
 
-  如果将 `merge.tool` 设置为其他值，则使用自定义工具进行冲突解决。自定义工具需要使用 `mergetool.<tool>.cmd` 对自定义工具的命令行进行设置。
+  如果将 `merge.tool` 设置为其他值，则使用自定义工具进行冲突解决。自定义工具需要通过 `mergetool.<tool>.cmd` 对自定义工具的命令行进行设置。
 
 * mergetool.<tool>.path
 
