@@ -31,14 +31,14 @@ Linux 社区就是典型的金字塔结构。Linus Torvalds 的版本库被公�
 
 * 贡献的提交是否是基于上游对应分支的最新提交？如果不是需要变基到上游最新提交，以免产生合并。
 
-  项目的管理者会尽量避免不必要的合并，因此会要求贡献者的提交尽量基于项目的最新提交。因此贡献者首先要将本地跟踪分支（如 master）与上游分支进行同步，然后将特性分支变基到本地用于跟踪上游的分支。
+  项目的管理者会尽量避免不必要的合并，因此会要求贡献者的提交尽量基于项目的最新提交。使用下面的方式建立跟踪远程分支的本地分支，可以很简单的实现在执行 `git pull` 操作时使用变基操作取代合并操作。
 
   ::
 
-    $ git checkout master
+    $ git checkout -b jiangxin/fix-bug-xxx origin/master
+    $ git config branch.jiangxin/fix-bug-xxx.rebase true
+    hack, hack, hack
     $ git pull
-    $ git checkout jiangxin/fix-bug-xxx
-    $ git rebase master
 
 然后贡献者就可以向项目管理者发送通知邮件，告诉项目管理者有贡献的代码等待他/她的审核。邮件中大致包括以下内容：
 
@@ -50,20 +50,12 @@ Linux 社区就是典型的金字塔结构。Linus Torvalds 的版本库被公�
 以补丁方式贡献代码
 ---------------------
 
-TODO
+使用补丁文件方式贡献代码也是开源项目常用的协同方式。Git项目本身就是采用该方式运作的。
 
+* 每个用户先在本地版本库修改代码。
+* 修改完成后，通过执行 `git format-patch` 命令将提交转换为补丁。
+* 如果提交很多且比较杂乱，可以考虑使用 StGit 对提交进行重整。
+* 调用 `git send-email` 命令或者通过图形界面的邮件客户端软件将补丁发到邮件列表以及项目维护者。
+* 项目维护者认可贡献者提交的补丁后，执行 `git am` 命令应用补丁。
 
-git commit -s 为提交增加 SignOff by: 标识。
-
-为了防止因忘记 git add 导致提交不完整，应该在提交完成后，执行 git status 查看是否有未提交的变更，再执行  git show HEAD 检查提交：改动和日志说明。
-
-
-提交贡献的方式：共享版本库。可以使用 git-daemon, http 智能服务器。或者直接用 github。
-
-通过 patch 文件。
-
-* git apply /tmp/patch-ruby-client.patch
-* git apply --check 0001-seeing-if-this-helps-the-gem.patch 
-
-cherry-pick: 将特性分支的某个提交贡献。
-
+在第三篇补丁文件交互一章已经详细介绍了该模式的工作流程，请参考相关章节。
