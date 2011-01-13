@@ -199,11 +199,14 @@ Git 还提供一个命令 `git apply` ，可以应用一般格式的补丁文件
 StGit 和 Quilt
 ================
 
-一个复杂功能的开发一定是由多个提交来完成的，对于在以接收和应用补丁文件为开发模式的项目中，复杂的功能需要通过多个补丁文件来完成。补丁文件因为要经过审核才能被接受，因此针对一个功能的多个补丁文件一定要保证各个都是精品。补丁1是完成一个功能点，补丁2时完成第二个功能点，等等。一定不能出现这样的情况：补丁3时补丁1的错误修正，补丁10改正了补丁7中的文字错误，等等。那么就带来补丁的管理问题。
+一个复杂功能的开发一定是由多个提交来完成的，对于在以接收和应用补丁文件为开发模式的项目中，复杂的功能需要通过多个补丁文件来完成。补丁文件因为要经过审核才能被接受，因此针对一个功能的多个补丁文件一定要保证各个都是精品：补丁1用来完成一个功能点，补丁2用来完成第二个功能点，等等。一定不能出现这样的情况：补丁3用于修正补丁1的错误，补丁10改正了补丁7中的文字错误，等等。这样就带来补丁的管理的难题。
 
 实际上对于基于特性分支的开发又何尝不是如此？在将特性分支归并到开发主线前，要接受团队的评审，特性分支的开发者一定想将特性分支上的提交进行重整，把一些提交合并或者拆分。使用变基命令可以实现提交的重整，但是操作起来会比较的困难，有什么好办法呢？
 
-Stacked Git (http://www.procode.org/stgit/) 简称 StGit 就是上述两个问题的答案。实际上 StGit 在设计上参考了一个著名的补丁管理工具 Quilt，并且可以输出 Quilt 兼容的补丁列表。在本节的后半部分会介绍 Quilt。
+StGit
+-------
+
+Stacked Git (http://www.procode.org/stgit/) 简称 StGit 就是解决上述两个难题的答案。实际上 StGit 在设计上参考了一个著名的补丁管理工具 Quilt，并且可以输出 Quilt 兼容的补丁列表。在本节的后半部分会介绍 Quilt。
 
 StGit 是一个 Python 项目，安装起来还是很方便的。在 Debian/Ubuntu 下，可以直接通过包管理器安装：
 
@@ -291,7 +294,7 @@ StGit 是一个 Python 项目，安装起来还是很方便的。在 Debian/Ubun
     - add-i18n-support
     - translate-for-chinese
 
-* 执行补丁入栈，即应用补丁使用命令 `stg push` 或者 `stg goto` 命令，注意 `stg push` 命令和 `git push` 命令风马牛不相及。
+* 执行补丁入栈，即应用补丁，使用命令 `stg push` 或者 `stg goto` 命令，注意 `stg push` 命令和 `git push` 命令风马牛不相及。
 
   ::
 
@@ -340,6 +343,7 @@ StGit 是一个 Python 项目，安装起来还是很方便的。在 Debian/Ubun
   ::
 
     $ stg show
+    ...
 
 * 将最后一个补丁应用到版本库，遇到冲突。这是因为最后一个补丁是对中文本地化文件的翻译，因为翻译前的模板文件被更改了所以造成了冲突。
 
@@ -352,12 +356,13 @@ StGit 是一个 Python 项目，安装起来还是很方便的。在 Debian/Ubun
            src/locale/zh_CN/LC_MESSAGES/helloworld.po
     Now at patch "translate-for-chinese"
 
-* 这个冲突文件很好解决，直接编辑冲突的 `helloworld.po` 文件即可。编辑好之第50行和第62行要像下面写的一样。
+* 这个冲突文件很好解决，直接编辑冲突文件 `helloworld.po` 即可。编辑好之后，注意一下第50行和第62行是否像下面写的一样。
 
   ::
 
     50 "    hello -h, --help\n"
     51 "            显示本帮助页。\n"
+    ...
     61 msgid "Hi,"
     62 msgstr "您好,"  
 
@@ -388,7 +393,7 @@ StGit 是一个 Python 项目，安装起来还是很方便的。在 Debian/Ubun
     $ ./hello -h
     ...
 
-* 导出补丁，使用命令 `stg export` 。
+* 导出补丁，使用命令 `stg export` 。导出的补丁是 Quilt 补丁集格式。
 
   ::
 
@@ -413,9 +418,12 @@ StGit 是一个 Python 项目，安装起来还是很方便的。在 Debian/Ubun
     add-i18n-support
     translate-for-chinese
 
-通过上面的演示可以看出 StGit 可以非常方便的对提交进行整理，整理提交时无需使用复杂的变基命令，而是采用：修改文件，执行 `stg refresh` 的工作流程即可更新补丁和提交。StGit 还可以将补丁导出为补丁文件，虽然导出的补丁文件没有像 `git format-patch` 那样加上代表顺序的数字前缀，但是用文件 `series` 标注了补丁文件的先后顺序。实际上可以在执行 `stg export` 时添加 `-n` 参数为补丁文件添加数字前缀。
+通过上面的演示可以看出 StGit 可以非常方便的对提交进行整理，整理提交时无需使用复杂的变基命令，而是采用：提交 stg 化，修改文件，执行 `stg refresh` 的工作流程即可更新补丁和提交。StGit 还可以将补丁导出为补丁文件，虽然导出的补丁文件没有像 `git format-patch` 那样加上代表顺序的数字前缀，但是用文件 `series` 标注了补丁文件的先后顺序。实际上可以在执行 `stg export` 时添加 `-n` 参数为补丁文件添加数字前缀。
 
-命令 `stg export` 导出的补丁文件就是 Quilt 格式的补丁集。其中的 `series` 文件也是 Quilt 要求必须存在的记录补丁顺序的索引文件。
+StGit 还有一些功能，如合并补丁/提交，插入新补丁/提交等，请参照 StGit 帮助，恕不一一举例。
+
+Quilt
+-------
 
 Quilt 是一款补丁列表管理软件，用 Shell 语言开发，安装也很简单，在 Debian/Ubuntu 上直接用下面的命令即可安装：
 
@@ -423,9 +431,9 @@ Quilt 是一款补丁列表管理软件，用 Shell 语言开发，安装也很�
 
   $ sudo aptitude install quilt
 
-Quilt 约定俗称将补丁集放在项目下的 `patches` 目录下，否则要通过环境变量 `QUILT_PATCHES` 进行设置。为了减少麻烦，在上面用 `stg export` 导出补丁的时候就导出到了 `patches` 目录下。
+Quilt 约定俗成将补丁集放在项目根目录下的子目录 `patches` 中，否则需要通过环境变量 `QUILT_PATCHES` 对路径进行设置。为了减少麻烦，在上面用 `stg export` 导出补丁的时候就导出到了 `patches` 目录下。
 
-简单说一下 Quilt 的时候，会发现和 StGit 真的很像，实际上是先有的 Quilt，后有的 StGit。
+简单说一下 Quilt 的使用，会发现真的和 StGit 很像，实际上是先有的 Quilt，后有的 StGit。
 
 * 重置到三个提交前的版本，否则在后面应用补丁的时候会失败。还不要忘了删除 src/locale 目录。
 
@@ -476,3 +484,5 @@ Quilt 约定俗称将补丁集放在项目下的 `patches` 目录下，否则要
     patching file src/locale/zh_CN/LC_MESSAGES/helloworld.po
 
     Now at patch 03-translate-for-chinese
+
+Quilt 的功能还有很多，请参照 Quilt 的联机帮助，恕不一一举例。
