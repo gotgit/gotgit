@@ -77,3 +77,11 @@ Mercurial（水银）是和 Git 同时代的、与之齐名的一款著名的分
 
 
 在转换后的 Git 版本库目录中，保存了几个用于记录版本库转换进度的状态文件（.git/hg2git-\*），当在 Git 工作区不带任何参数执行 `hg-fast-export.sh` 命令时，会继续增量式的进行转换，将 Hg 版本库中的新提交迁移到 Git 版本库中。
+
+如果使用了多个不同的 Hg 克隆版本库进行分支管理，就需要一一对 Hg 版本库进行转换，然后在对转换后的 Git 版本库进行合并。在合并 Git 版本库的时候可以参考下面的命令。
+
+::
+
+  $ git remote add <name1> <path/to/repos/1>
+  $ git remote add <name2> <path/to/repos/2>
+  $ git remote update
