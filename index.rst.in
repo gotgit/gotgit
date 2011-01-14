@@ -78,7 +78,7 @@
 #####################
 
 .. include:: ./04-git-model/010-central-model.rst
-.. include:: ./04-git-model/020-integrate-admin-model.rst
+.. include:: ./04-git-model/020-distribute-model.rst
 .. include:: ./04-git-model/030-topgit-model.rst
 .. include:: ./04-git-model/040-submodule-model.rst
 .. include:: ./04-git-model/050-subtree-model.rst
