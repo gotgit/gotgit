@@ -18,62 +18,62 @@ Mercurial（水银）是和 Git 同时代的、与之齐名的一款著名的分
 
 下面就演示一下 Hg 版本库到 Git 版本库的转换。
 
-* 要转换的 Hg 版本库位于路径 `/path/to/hg/mydoc/.hg` 下。
+* 要转换的 Hg 版本库位于路径 `/path/to/hg/hello/.hg` 下。
 
-  查看 Hg 版本库中的最新版本。
+  Hg 不支持真正的分支，而且版本库中可能存在尚未合并的多个头指针。检查一下不要存在具有相同分支名但尚未合并的多个头指针，否则转换会失败。下面显示的该 Hg 版本库中具有两个具名分支 `r1.x` 和 `next` ，还有一个缺省未设置名称的头指针，因为分支名各不相同所以不会为转换过程造成麻烦。
 
   ::
 
-    $ hg tip
-    修改集:      831:41a54016264b
-    分支:        jiangxin
+    $ hg heads
+    修改集:      7:afdd475caeee
+    分支:        r1.x
     标签:        tip
+    父亲:        0:798a9568e10e
+    用户:        Jiang Xin <jiangxin@ossxp.com>
+    日期:        Fri Jan 14 17:01:47 2011 +0800
+    描述:
+    start new branch: r1.x
+
+
+    修改集:      6:7f5a46201dda
+    分支:        next
+    用户:        Jiang Xin <jiangxin@ossxp.com>
+    日期:        Fri Jan 14 17:01:04 2011 +0800
+    文件:        src/locale/zh_CN/LC_MESSAGES/helloworld.po
+    描述:
+    imported patch 100_locale_zh_cn.patch
+
+
+    修改集:      1:97f0a21021c6
     用户:        Jiang Xin <worldhello.net AT gmail DOT com>
-    日期:        Wed Sep 01 09:25:47 2010 +0800
-    摘要:        backup
+    日期:        Sun Aug 23 23:53:05 2009 +0800
+    文件:        src/COPYRIGHT src/main.bak src/main.c
+    描述:
+    Fixed #6: import new upstream version hello-2.0.0
 
 * 初始化一个 Git 版本库，该版本库就是迁移的目标版本库。
 
   ::
 
-    $ mkdir -p /path/to/my/workspace/mydoc
-    $ cd /path/to/my/workspace/mydoc
+    $ mkdir -p /path/to/my/workspace/hello
+    $ cd /path/to/my/workspace/hello
     $ git init
-    Initialized empty Git repository in /path/to/my/workspace/mydoc/.git/
+    Initialized empty Git repository in /path/to/my/workspace/hello/.git/
 
 * 在刚刚完成初始化的 Git 工作区中调用 `hg-fast-export.sh` 脚本完成版本库转换。
 
   ::
 
-    $ /path/to/fast-export/hg-fast-export.sh -r /path/to/hg/mydoc
-    tech: Exporting full revision 1/832 with 97/0/0 added/changed/removed files
-    tech: Exporting simple delta revision 2/832 with 24/0/0 added/changed/removed files
-    ...
-    jiangxin: Exporting simple delta revision 831/832 with 1/3/0 added/changed/removed files
-    jiangxin: Exporting simple delta revision 832/832 with 3/0/0 added/changed/removed files
-    Issued 832 commands
-    git-fast-import statistics:
-    ---------------------------------------------------------------------
-    Alloc'd objects:       5000
-    Total objects:         4773 (      1110 duplicates                  )
-          blobs  :         1789 (       837 duplicates       1070 deltas)
-          trees  :         2152 (       273 duplicates       1607 deltas)
-          commits:          832 (         0 duplicates          0 deltas)
-          tags   :            0 (         0 duplicates          0 deltas)
-    Total branches:           6 (         8 loads     )
-          marks:           1024 (       832 unique    )
-          atoms:            808
-    Memory total:          2294 KiB
-           pools:          2098 KiB
-         objects:           195 KiB
-    ---------------------------------------------------------------------
-    pack_report: getpagesize()            =       4096
-    pack_report: core.packedGitWindowSize =   33554432
-    pack_report: core.packedGitLimit      =  268435456
-    pack_report: pack_used_ctr            =       8431
-    pack_report: pack_mmap_calls          =       2214
-    pack_report: pack_open_windows        =          2 /          5
-    pack_report: pack_mapped              =   34154918 /  167772160
-    ---------------------------------------------------------------------
+    $ /path/to/fast-export/hg-fast-export.sh -r /path/to/hg/hello
+
+* 转换完毕，执行 `git branch` 会看到 Hg 版本库中的具名分支都转换为相应的分支，没有命名的缺省头指针转换为 master 分支。
+
+  ::
+
+    $ git branch
+    * master
+      next
+      r1.x
+
 
 在转换后的 Git 版本库目录中，保存了几个用于记录版本库转换进度的状态文件（.git/hg2git-\*），当在 Git 工作区不带任何参数执行 `hg-fast-export.sh` 命令时，会继续增量式的进行转换，将 Hg 版本库中的新提交迁移到 Git 版本库中。
