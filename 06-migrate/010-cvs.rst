@@ -7,7 +7,7 @@ CVS版本库到Git的迁移
 
 CVS 是最早广泛使用的版本控制系统，因为其服务器端存储结构的简单直白，至今仍受到不少粉丝的钟爱。但是毕竟是几十年前的产物，因为设计上的原因导致缺乏现代版本控制系统的一些必须功能，如：没有原子提交，分支管理不便（慢），分支合并困难因为合并过程缺乏跟踪，不支持文件名/目录名的修改等等。很多 CVS 的用户都已经转换到 Subversion 这一更好的集中式版本控制系统了。如果还在使用 CVS，那么可以考虑直接迁移到 Git。
 
-CVS 到 Git 迁移可以使用 cvs2svn 软件包中的 cvs2git。为什么该项目叫做 cvs2svn 而非 cvs2git 呢？这是因为该项目最早是为 CVS 版本库迁移到 Subversion 版本库服务的，只是最近才增加了 CVS 版本转换为 Git 版本库的功能。cvs2svn 将 CVS 转换为 Subversion 版本库的过程一直以稳定著称，在 cvs2svn 2.1 版开始，增加了将 CVS 版本库转换为 Git 版本库的功能，无疑让这个工具更具生命力，也减少了之前 CVS 到 Git 库的转换环节。在推出 cvs2git 功能之前，通常的 CVS 到 Git 迁移路径是用 cvs2svn 将 CVS 版本库迁移到 Subversion 版本库，再用 git-svn 将 Subversion 版本库迁移到 Git。
+CVS 到 Git 迁移可以使用 cvs2svn 软件包中的 `cvs2git` 命令。为什么该项目叫做 cvs2svn 而非 cvs2git 呢？这是因为该项目最早是为 CVS 版本库迁移到 Subversion 版本库服务的，只是最近才增加了 CVS 版本转换为 Git 版本库的功能。cvs2svn 将 CVS 转换为 Subversion 版本库的过程一直以稳定著称，在 cvs2svn 2.1 版开始，增加了将 CVS 版本库转换为 Git 版本库的功能，无疑让这个工具更具生命力，也减少了之前 CVS 到 Git 库的转换环节。在推出 cvs2git 功能之前，通常的 CVS 到 Git 迁移路径是用 cvs2svn 将 CVS 版本库迁移到 Subversion 版本库，再用 git-svn 将 Subversion 版本库迁移到 Git。
 
 关于 cvs2svn 及 cvs2git 可以参考下面的链接：
 

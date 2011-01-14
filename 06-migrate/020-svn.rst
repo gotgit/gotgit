@@ -18,7 +18,7 @@ Subversion 版本库到 Git 版本库的转换，最好的方法就是 git-svn�
 
 **Subversion 用户名到 Git 用户名的映射**
 
-缺省转后 Git 库的提交者 ID 为如下格式： `userid <userid@SVN-REPOS-UUID>` 即在邮件地址域名处以 SVN 版本库的 UUID 代替。可以在执行 `git svn fetch` 时通过下面的参数提供一个映射文件完成 SVN 用户名到 Git 用户名的转换。
+缺省转换后 Git 库的提交者 ID 为如下格式： `userid <userid@SVN-REPOS-UUID>` 。即在邮件地址域名处以 SVN 版本库的 UUID 代替。可以在执行 `git svn fetch` 时通过下面的参数提供一个映射文件完成 SVN 用户名到 Git 用户名的转换。
 
   ::
 
