@@ -251,28 +251,12 @@
 
 在执行 `git stash` 命令时，Git实际调用了一个脚本文件实现相关的功能，这个脚本的文件名就是 `git-stash` 。看看 git-stash 安装在哪里了。
 
-* 如果是最新版本的 Debian（squeeze）或者 Ubuntu 可以使用下面的命令：
+::
 
-  ::
+  $ git --exec-path
+  /usr/lib/git-core
 
-    $ dpkg -L git |grep "stash$"
-    /usr/lib/git-core/git-stash
-
-* 低版本的 Debian（lenny）或者 Ubuntu，Git 软件包为了避免和 GNUit 重名而使用 git-core 的软件包名称：
-
-  ::
-
-    $ dpkg -L git-core |grep "stash$"
-    /usr/lib/git-core/git-stash
-
-* 在 RedHat 或者类似系统，可以使用下面的命令从 git 安装文件列表中查找 git-stash 。
-
-  ::
-
-    $ rpm -ql git |grep "stash$"
-    /usr/libexec/git-core/git-stash
-
-如果查看一下保存 `git-stash` 文件的目录，会震惊的。
+如果检查一下这个目录，会震惊的。
 
 ::
 
