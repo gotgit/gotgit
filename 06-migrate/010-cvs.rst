@@ -1,6 +1,7 @@
 随着 Git 版本控制系统的成熟，越来越多的项目把版本控制系统迁移到了 Git 上。迁移大多是无损的，即迁移到 Git 后忠实的保留之前的变更历史，保留分支和里程碑。如果正打算进行版本控制系统的迁移，下面介绍的版本库迁移方法和注意事项会提供帮助。
 
-首先会介绍几个著名的开源版本控制系统 CVS, Subversion, Mercurial 如何迁移到 Git 上，还会介绍通过 Git 子树的方法整理 Git 版本库。对于其它版本控制系统，会在最后介绍一个一般性的版本库迁移方法。
+首先会介绍几个著名的开源版本控制系统 CVS, Subversion, Mercurial 如何迁移到 Git 上，至于其他版本控制系统或者可以找到类似的迁移方案，或者可以针对 git-fast-import 通过编程定制转换过程。在最后还会介绍一个让 Git 版本库改头换面的更为强大的工具 git-filter-branch。
+汇总 Git 版本库的整理转换方法。
 
 CVS版本库到Git的迁移
 ********************
@@ -16,6 +17,8 @@ CVS 到 Git 迁移可以使用 cvs2svn 软件包中的 `cvs2git` 命令。为什
 
 安装 cvs2svn（含 cvs2git）
 ==========================
+
+**Linux下cvs2svn的安装**
 
 大部分 Linux 发行版都提供 cvs2svn 的发布包，可以直接用平台自带的 cvs2svn 软件包。cvs2svn 在 2.1 版本之后开始引入了到 Git 库的转换，2.3.0 版本有了独立的 cvs2git 转换脚本，cvs2git 正在逐渐完善当中，因此尽量选择最新版本的 cvs2svn 。
 
@@ -62,6 +65,22 @@ cvs2svn 对其它软件包的依赖：
 * CVS: 如果在转换中使用了 --use-cvs，就需要安装 CVS 软件包。参见： `http://ccvs.cvshome.org/` 。
 * Git: 1.5.4.4 或以上的版本。之前版本的 Git 的 "git fast-import" 命令有 Bug，加载 cvs2git 导出文件有问题。
 
+**Mac OSX 下 cvs2svn 的安装**
+
+Mac OSX 下可以使用 brew 安装 cvs2svn。
+
+* Mac OSX 缺省安装的 python 缺少 cvs2svn 依赖的 gdbm 模组，先用 brew 来重新安装 python。
+
+  ::
+
+    $ brew install python
+
+* 安装 cvs2svn
+
+  ::
+
+    $ export PATH=/usr/local/bin:$PATH
+    $ brew install cvs2svn
 
 版本库转换（命令行参数模式）
 =============================
@@ -141,7 +160,7 @@ CVS 中保存的数据在服务器端直接和同名文件（文件多了一个 
 
   可以看出保存文件内容的导出文件 (git-blob.dat) 相对更大一些。
 
-* 创建空的 Git 库，从 cvs2git 的导出文件导入数据。
+* 创建空的 Git 库，使用 Git 通用的数据迁移命令 git-fast-import 将 cvs2git 的导出文件导入版本库中。
 
   ::
 
@@ -382,7 +401,7 @@ cvs2svn 软件包提供了一个 cvs2git 的配置示例文件，见源码中的
     9.8M    cvs2svn-tmp/git-blob.dat
     24K     cvs2svn-tmp/git-dump.dat
 
-* 创建空的 Git 库，从 cvs2git 的导出文件导入数据。
+* 创建空的 Git 库，使用 Git 通用的数据迁移命令 git-fast-import 将 cvs2git 的导出文件导入版本库中。
 
   ::
 

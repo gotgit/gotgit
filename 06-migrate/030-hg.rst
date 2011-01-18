@@ -5,7 +5,7 @@ Mercurial（水银）是和 Git 同时代的、与之齐名的一款著名的分
 
 但是 Hg 存在一些不足。例如服务器的存储效率不能和 Git 相比，服务器存储空间占用更大。Hg 还不支持真正的分支，只能通过版本库克隆来进行分支开发。因为 Hg 不支持真正的分支，所以不能向 git-svn 那样完整的将 Subversion 版本库转换和互操作。Hg 的速度相比 Git 要慢，尤其是网络操作没有像 Git 一样精确的进度显示。Hg 提交只能回退一次，要想多次回退和整理版本库需要用到 MQ 插件。作为定制开发的利器 Hg+MQ 不适合多人协作开发而 Git+Topgit 更为适合。
 
-不论是何原因想从 Hg 迁移到 Git，用一个名为 fast-export 的转换工具可以很方便的实现。fast-export 是一个用 Python 开发的命令行工具，可以将本地的 Hg 版本库迁移为 Git 版本库。
+不论是何原因想从 Hg 迁移到 Git，用一个名为 fast-export 的转换工具可以很方便的实现。fast-export 是一个用 Python 开发的命令行工具，可以将本地的 Hg 版本库迁移为 Git 版本库。其原理和 CVS 版本库迁移至 Git 时使用的 cvs2git 相仿，都是先从源版本库生成导出文件，再用 Git 的通用版本库转换工具 git-fast-import 导入到新建的 Git 版本库中。
 
 安装 fast-export 非常简单，只要用 Git 克隆 fast-export 的版本库即可。
 
@@ -85,3 +85,6 @@ Mercurial（水银）是和 Git 同时代的、与之齐名的一款著名的分
   $ git remote add <name1> <path/to/repos/1>
   $ git remote add <name2> <path/to/repos/2>
   $ git remote update
+  $ git checkout -b <branch1> origin/<name1>/master
+  $ git checkout -b <branch2> origin/<name2>/master
+
