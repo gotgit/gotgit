@@ -75,58 +75,99 @@
 
   $ git push
 
-
 而我只要执行 `git pull` 操作就可以获得小崔对我文稿的修订（图中步骤8）。采用这种工作方式，文稿竟然拥有6个拷贝，比狡兔还要多三窟。
 
+现场版本控制
+=============
 
-现场版本库创建
-===========================
+所谓现场版本控制，就是在客户现场或者在产品部属的现场，进行源代码的修改，并在修改过程中进行版本控制，以便在完成修改后能够将修改过程和修改结果带走，并能够将修改过程和结果合并到公司的对应的代码库中。
 
-**需求** ：
+**Subversion 的解决方案**
 
-  有的时候，为了调试方便，可能要直接在软件部署的目录内进行现场修改。为了对修改进行追踪，就需要临时创建版本库，以便在修改完毕后能将改动以补丁文件的方式回传到工作机，并注入正式的版本库中。
+如果使用 Subversion 进行版本控制，首先要将服务器上部署的产品代码目录变成 Subversion 工作区，这个过程会显得很繁琐。最后将改动结果导出也非常不便。
 
-**Subversion** ：
+* 在其他位置建立一个 Subversion 版本库。
 
-  需要在另外的目录下建立版本库，再检出空版本库到当前目录下，添加文件，提交。
+  ::
 
-  * 建库
+    $ svnadmin create /path/to/repos/project1
 
-    ::
+* 在需要版本控制的目录下检出刚刚建立的空版本库。
 
-      $ svnadmin create /path/to/repos/project1
+  ::
+  
+    $ svn checkout file:///path/to/repos/project1 .
 
-  * 检出
+* 执行添加文件操作，然后执行提交操作。这个提交成为版本库编号为1的提交。
 
-    ::
-    
-      $ svn checkout file:///path/to/repos/project1 .
+  ::
 
-  * 添加文件并提交
+    $ svn add *
+    $ svn ci -m "initialized"
 
-    ::
+* 然后开始在工作区中修改文件，提交。
 
-      $ svn add *
-      $ svn ci -m "initialized"
+  ::
 
-**Git** ：
+    $ svn ci
 
-  Git相比Subversion省去了检出的步骤，而且不会在工作目录引入多余的 .svn 目录等，关于引入 .svn 目录的危害后面会介绍。
+* 当对修改结果满意，想将工作成果保存带走，可以通过创建补丁文件的方式。但是 Subversion 很难逐一对每次提交创建补丁，一般用下面的命令和最早的提交比较，创建出一个大补丁文件。
 
-  * 现场版本库创建
+  ::
 
-    ::
+    $ svn diff -r1 > hacks.patch
 
-      $ git init
+但是 Subversion 的补丁文件不支持二进制文件，因此采用补丁文件的方式有可能丢失数据。更为稳妥但也更为复杂的方式可能要用到 svnadmin dump 命令，如下：
 
-  * 添加文件并提交
+::
 
-    ::
+  $ svnadmin dump --incremental -r2:HEAD /path/to/repos/project1/ > hacks.dump
 
-      $ git add .
-      $ git commit -m "initialized"
+但是通过导出文件逐一恢复提交也是一件麻烦事。还是来看看 Git 在这种情况下的表现吧。
 
-.. tip:: 只要通过简单的配置 `git commit` 就可简写为 `git ci` ，会在后面的“Git配置”章节中介绍。
+**Git 的解决方案**
+
+Git 对产品部署目录进行到工作区的转化相比 Subversion 要更为简单，而且将历次提交导出为补丁文件，Git 的方法也更为简练和实用。
+
+* 现场版本库创建。直接在需要版本控制的目录下执行 Git 版本库初始化命令。
+
+  ::
+
+    $ git init
+
+* 添加文件并提交。
+
+  ::
+
+    $ git add -A
+    $ git commit -m "initialized"
+
+* 为初始版本建立一个里程碑。
+
+  ::
+
+    $ git tag v1.0
+
+* 然后开始在工作区中修改文件，提交。
+
+  ::
+
+    $ git commit -a
+
+* 当对修改结果满意，想将工作成果保存带走，可以通过下面的命令将从 v1.0 开始的历次提交逐一导出为补丁文件。转换的补丁文件都包含一个数字前缀，并提取提交日志信息作为文件名。而且补丁文件还提供对二进制文件的支持。下面命令的输出摘自本书中的实例。
+
+  ::
+
+    $ git format-patch v1.0..HEAD
+    0001-Fix-typo-help-to-help.patch
+    0002-Add-I18N-support.patch
+    0003-Translate-for-Chinese.patch
+
+* 通过邮件将补丁文件发出。
+
+  ::
+
+    $ git send-email *.patch
 
 避免引入辅助目录
 =================
