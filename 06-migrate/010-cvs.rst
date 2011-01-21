@@ -65,11 +65,11 @@ cvs2svn 对其它软件包的依赖：
 * CVS: 如果在转换中使用了 --use-cvs，就需要安装 CVS 软件包。参见： `http://ccvs.cvshome.org/` 。
 * Git: 1.5.4.4 或以上的版本。之前版本的 Git 的 "git fast-import" 命令有 Bug，加载 cvs2git 导出文件有问题。
 
-**Mac OSX 下 cvs2svn 的安装**
+**Mac OS X 下 cvs2svn 的安装**
 
-Mac OSX 下可以使用 brew 安装 cvs2svn。
+Mac OS X 下可以使用 brew 安装 cvs2svn。
 
-* Mac OSX 缺省安装的 python 缺少 cvs2svn 依赖的 gdbm 模组，先用 brew 来重新安装 python。
+* Mac OS X 缺省安装的 python 缺少 cvs2svn 依赖的 gdbm 模组，先用 brew 来重新安装 python。
 
   ::
 

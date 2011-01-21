@@ -247,4 +247,4 @@ Torvalds 以一个文件系统设计者和内核开发者的视角对 Git 进行
 
 经过短短的几年的发展，众多的开源项目都纷纷从 SVN 或其他版本控制系统迁移到 Git。因为迁移到Git会带来开发效率的极大提升，带来巨大的效益，很快就会忘记迁移过程的痛苦，很快就会适应新的工作模式。在 Git 网站列出了几个使用 Git 的重量级项目，个个都是人们耳熟能详的，除了 Git 和 Linux 内核外，还有：Perl, Eclipse, Gnome, KDE, Qt, Ruby on Rails, Android, PostgreSQL, Debian, X.org。当然还有 GitHub 的上百万个项目。
 
-Git 虽然是在 Linux 下开发的，现在已经可以跨平台运行在所有主流的操作系统上，包括 Linux, Windows 和 Mac OSX 等。可以说每一个使用计算机的用户都可以分享 Git 带来的便利和快乐。
+Git 虽然是在 Linux 下开发的，现在已经可以跨平台运行在所有主流的操作系统上，包括 Linux, Windows 和 Mac OS X 等。可以说每一个使用计算机的用户都可以分享 Git 带来的便利和快乐。
