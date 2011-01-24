@@ -130,28 +130,107 @@ Git 诞生于 Linux 平台并服务于 Linux 核心的版本控制，因此在 L
       echo "Installed Git $ver."
   done
 
-Mac 下的安装
-==============
+Mac OS X 下的安装
+==================
 
-Mac OS X 被称为最人性化的操作系统，工作在 Mac 上是件非常惬意的，工作中怎能没有 Git？
+Mac OS X 被称为最人性化的操作系统，工作在 Mac 上是件非常惬意的事情，工作中怎能没有 Git？
 
-Git 在 Mac OS X 中也有好几种安装方法。最为简单的方式是直接安装针对 Mac OS X 打包的 dmg 格式 Git 安装包。
+**以二进制发布包的形式安装**
 
-* 访问 git-osx-installer 的官方网站： http://code.google.com/p/git-osx-installer/ 。下载 Git 安装包。
-* dmg 格式的软件包实际上是一个磁盘映像，点击该文件就直接挂载到 Finder 中，并打开。
-* 点击其中扩展名为 .pkg 的安装包，根据提示完成 Git 的安装。
+Git 在 Mac OS X 中也有好几种安装方法。最为简单的方式是安装 `.dmg` 格式的安装包。
 
-安装完毕，git 会被安装到 `/usr/local/git/bin/` 目录下。重启终端，才能让 `/etc/paths.d/git` 文件中设置的命令查找路径生效。
+访问 git-osx-installer 的官方网站： http://code.google.com/p/git-osx-installer/ ，下载 Git 安装包。安装包带有 `.dmg` 扩展名，是苹果磁盘镜像（Apple Disk Image）格式的软件发布包。从官方网站上下载文件名类似 git-a.b.c.d-<arch>-leopard.dmg 的安装包文件，例如：git-1.7.3.5-x86_64-leopard.dmg 是 64 位的安装包，git-1.7.3.5-i386-leopard.dmg 是 32 位的安装包。建议选择 64 位的软件包，因为 Mac OS X 10.6 雪豹完美的兼容 32 位和 64位（开机按住键盘数字3和2进入32位系统，按住6和4进入64位系统），即使在核心出于32位架构下，也可以放心的运行64位软件包。
 
-对于非终端应用因为不从终端环境继承 PATH 环境变量，因此可能找不到按装载 /usr/local/git/bin  目录下的 git。运行安装脚本，将 git 的安装路径也在文件 ~/.MacOSX/environment.plist 中记录。
+苹果的 `.dmg` 格式的软件包实际上是一个磁盘映像，安装起来非常方便，点击该文件就直接挂载到 Finder 中，并打开。
 
+.. figure:: images/meet-git/mac-install-1.png
+   :scale: 100
+
+   图：在 Mac OS X 下打开 .dmg 格式磁盘镜像
+
+其中带有一个正在解包图标的文件，扩展名为 `.pkg` 是 Git 的安装程序，另外的两个脚本程序，一个用于应用的卸载（ `uninstall.sh` ），另外一个带有长长文件名的脚本可以在 Git 安装后执行的，为非终端应用注册 Git 的安装路径，因为 Git 部署在标准的系统路径之外 `/usr/local/git/bin` 。
+
+点击扩展名为 `.pkg` 的安装程序，开始 Git 的安装，根据提示按步骤完成安装。
+
+.. figure:: images/meet-git/mac-install-2.png
+   :scale: 100
+
+   图：在 Mac OS X 下安装 Git。
+
+安装完毕，git 会被安装到 `/usr/local/git/bin/` 目录下。重启终端程序，才能让安装程序添加的文件 `/etc/paths.d/git` 在 PATH 环境变量中注册生效。然后就可以在终端中直接运行 `git` 命令了。
+
+**安装 Xcode**
+
+Mac OS X 基于 Unix 内核，因此也可以很方便的通过源码编译的方式进行安装，但是缺省安装的 Mac OS X 缺乏相应的开发工具，需要安装苹果提供的 Xcode 软件包。实际上在随机附送的光盘（Mac OS X Install DVD）的可选安装文件夹下就有 Xcode 的安装包。通过随机光盘安装可以省去了网络下载的麻烦，要知道 Xcode 有3GB以上。
+
+.. figure:: images/meet-git/xcode-install.png
+   :scale: 100
+
+   图：在 Mac OS X 下安装 Xcode。
 
 **使用 Homebrew 安装 Git**
 
-必须先安装 Xcode，在 Mac OS X 的安装光盘中就有。
+Mac OS X 有好几个方便软件包安装的包管理器，有传统的 MacPort, Fink，还有更为简单易用的 Homebrew。下面就介绍一下如何通过 Homebrew 包管理器，以源码包编译的方式安装 Git。
 
+Homebrew 用 ruby 语言开发，支持千余种开源软件在 Mac OS X 中的部署和管理。Homebrew 项目托管在 Github 上，网址为: https://github.com/mxcl/homebrew 。
 
-**从Git库安装 Git**
+首先是安装 Homebrew，执行下面的命令：
+
+::
+
+  $ ruby -e "$(curl -fsSL https://gist.github.com/raw/323731/install_homebrew.rb)"
+
+安装完成后，Homebrew 的主程序安装在 `/usr/local/bin/brew` ，在目录 `/usr/local/Library/Formula/` 下保存了所有 Homebrew 支持的软件的安装指引文件。
+
+运行 `brew` ，安装 Git 使用下面的命令。
+
+::
+
+  $ brew install git
+
+使用 Homebrew 安装，Git 被安装在 `/usr/local/Cellar/git/1.7.3.5` ，可执行程序在 `/usr/local/bin` 目录下创建符号连接，可以直接在终端程序中访问。
+
+通过 `brew list` 命令可以查看安装的开源软件包。
+
+::
+
+  $ brew list
+  git
+
+也可以查看某个软件包安装的详细路径和安装内容。
+
+::
+
+  $ brew list git
+  /usr/local/Cellar/git/1.7.3.5/bin/gitk
+  ...
+
+**从Git源码进行安装**
+
+如果需要安装历史版本的 Git 或者安装开发中的 Git，就需要从源码安装或者通过克隆 Git 版本库进行安装。既然 Homebrew 安装 Git 是通过源码进行安装，那么也应该可以直接从源码进行安装，但是使用 Homebrew 安装 Git 和直接通过源码安装并不等同，例如 Homebrew 就不是通过源码编译安装的 Git 文档，而是通过下载已经编译好的 Git 文档包进行安装。
+
+直接通过源码安装 Git 包括文档，会遇到一些困难，主要原因是相关工具 Xcode 没有提供。这些工具可以通过 Homebrew 进行安装。安装过程可能会遇到一些小问题，不过大多可以通过参考命令输出予以解决。
+
+::
+
+  $ brew install asciidoc
+  $ brew install docbook2x
+  $ brew install xmlto
+
+当编译源码及文档的工具部署完全后，就可以通过源码编译 Git。
+
+::
+
+  $ make prefix=/usr/local all doc info
+  $ sudo make prefix=/usr/local install install-doc install-html install-info
+
+**其他工具软件的安装**
+
+命令 `sha1sum` 在 Git 版本库中的对象分析中会经常遇到，但在 Mac OS X 以及 Xcode 中并未提供。实际上 `sha1sum` 及其另外一个名为 `md5sum` 的工具可以用 brew 安装。
+
+::
+
+  $ brew install md5sha1sum
 
 
 Windows 下的安装
