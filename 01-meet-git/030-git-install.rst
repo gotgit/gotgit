@@ -203,7 +203,7 @@ Mac OS X 基于 Unix 内核，因此也可以很方便的通过源码编译的�
 使用 Homebrew 安装 Git
 -------------------------
 
-Mac OS X 有好几个方便软件包安装的包管理器，有传统的 MacPort, Fink，还有更为简单易用的 Homebrew。下面就介绍一下如何通过 Homebrew 包管理器，以源码包编译的方式安装 Git。
+Mac OS X 有好几个包管理器实现对一些开源软件在 Mac OS X 上的安装和升级进行管理。有传统的 MacPort, Fink，还有更为简单易用的 Homebrew。下面就介绍一下如何通过 Homebrew 包管理器，以源码包编译的方式安装 Git。
 
 Homebrew 用 ruby 语言开发，支持千余种开源软件在 Mac OS X 中的部署和管理。Homebrew 项目托管在 Github 上，网址为: https://github.com/mxcl/homebrew 。
 
@@ -221,7 +221,7 @@ Homebrew 用 ruby 语言开发，支持千余种开源软件在 Mac OS X 中的�
 
   $ brew install git
 
-使用 Homebrew 安装，Git 被安装在 `/usr/local/Cellar/git/1.7.3.5` ，可执行程序在 `/usr/local/bin` 目录下创建符号连接，可以直接在终端程序中访问。
+使用 Homebrew 方式安装，Git 被安装在 `/usr/local/Cellar/git/1.7.3.5` ，可执行程序自动在 `/usr/local/bin` 目录下创建符号连接，可以直接在终端程序中访问。
 
 通过 `brew list` 命令可以查看安装的开源软件包。
 
@@ -241,9 +241,9 @@ Homebrew 用 ruby 语言开发，支持千余种开源软件在 Mac OS X 中的�
 从Git源码进行安装
 -------------------------
 
-如果需要安装历史版本的 Git 或者安装开发中的 Git，就需要从源码安装或者通过克隆 Git 版本库进行安装。既然 Homebrew 安装 Git 是通过源码进行安装，那么也应该可以直接从源码进行安装，但是使用 Homebrew 安装 Git 和直接通过源码安装并不等同，例如 Homebrew 就不是通过源码编译安装的 Git 文档，而是通过下载已经编译好的 Git 文档包进行安装。
+如果需要安装历史版本的 Git 或者安装尚在开发中的未发布版本的 Git，就需要从源码安装或者通过克隆 Git 源码库进行安装。既然 Homebrew 就是通过源码编译方式安装 Git 的，那么也应该可以直接从源码进行安装，但是使用 Homebrew 安装 Git 和直接通过 Git 源码安装并不等同，例如 Homebrew 就不是通过源码编译安装 Git 文档，而是通过下载已经编译好的 Git 文档包进行安装。
 
-直接通过源码安装 Git 包括文档，会遇到一些困难，主要原因是相关工具 Xcode 没有提供。这些工具可以通过 Homebrew 进行安装。安装过程可能会遇到一些小问题，不过大多可以通过参考命令输出予以解决。
+直接通过源码安装 Git 包括文档，会遇到一些困难，主要原因是 Git 文档编译需要的相关工具没有在 Xcode 中提供。这些工具可以通过 Homebrew 进行安装。下面工具软件的安装过程可能会遇到一些小麻烦，不过大多可以通过参考命令输出予以解决。
 
 ::
 
@@ -261,15 +261,12 @@ Homebrew 用 ruby 语言开发，支持千余种开源软件在 Mac OS X 中的�
 命令自动补齐
 -------------------------
 
-Git 通过 bash_completion 实现命令补齐。
+Git 通过 bash-completion 软件包实现命令补齐，在 Mac OS X 下可以通过 Homebrew 安装。
 
 ::
 
   $ brew search completion
   bash-completion
-
-::
-
   $ brew install bash-completion
   ...
   Add the following lines to your ~/.bash_profile file:
@@ -301,12 +298,20 @@ Git 通过 bash_completion 实现命令补齐。
 其他辅助工具的安装
 -------------------------
 
-命令 `sha1sum` 在 Git 版本库中的对象分析中会经常遇到，但在 Mac OS X 以及 Xcode 中并未提供。实际上 `sha1sum` 及其另外一个名为 `md5sum` 的工具可以用 brew 安装。
+本书中还会用到一些常用的 GNU 或者其他开源软件，在 Mac OS X 下也可以通过 Homebrew 进行安装。这些软件包有：
 
-::
+* gnupg: 数字签名和加密工具。在为 Git 版本库建立签名里程碑时会用到。
+* md5sha1sum: 生成 MD5 或者 SHA1 摘要。在研究 Git 版本库中的对象过程中会用到。
+* cvs2svn: CVS 版本库迁移到 SVN 或者 Git 的工具。在版本库迁移时会用到。
+* stgit: Git 的补丁和提交管理工具。
+* quilt: 一种补丁管理工具。在介绍 StGit 时用到。
 
-  $ brew install md5sha1sum
+在 Mac OS X 下能够使用到的 Git 图形工具除了 Git 软件包自带的 `gitk` 和 `git gui` 之外，还可以安装 GitX。下载地址：
 
+* GitX 的原始版本：http://gitx.frim.nl/
+* 或者 GitX 的一个分支版本，提供增强的功能：https://github.com/brotherbard/gitx/downloads
+
+Git 的图形工具一般需要在本地克隆版本库的工作区中执行，为了能和 Mac OS X 有更好的整合，可以安装插件实现和 Finder 的整合。在 git-osx-installer 的官方网站： http://code.google.com/p/git-osx-installer/ ，有两个以 `OpenInGitGui-` 和 `OpenInGitX-` 为前缀的软件包，可以分别实现和 `git gui` 以及 `gitx` 的整合：在 Finder 中进入工作区目录，点击对应插件的图标，启动 `git gui` 或者 `gitx` 。
 
 Windows 下的安装
 =================
