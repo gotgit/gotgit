@@ -8,7 +8,8 @@ Linux 下的安装
 
 Git 诞生于 Linux 平台并服务于 Linux 核心的版本控制，因此在 Linux 安装 Git 是非常方便的。可以通过不同的方式在 Linux 上安装 Git。一种方法是通过 Linux 发行版的包管理器安装已经编译好的二进制格式的 Git 软件包。另外一种方式就是从 Git 源码开始安装。
 
-**包管理器方式安装**
+包管理器方式安装
+-------------------------
 
 用 Linux 发行版的包管理器安装 Git，最为简单，但安装的 Git 可能不是最新的版本。还有一点要注意，就是 Git 软件包在有的 Linux 发行版中可能不叫做 git，而叫做 git-core。这是因为在 Git 之前就有一款叫做 GNU 交互工具（GNU Interactive Tools）的 GNU 软件在有的 Linux 发行版（Deian lenny）中已经占用了 git 的名称。为了以示区分，作为版本控制系统的 Git ，其软件包在这些平台就被命名为 git-core。不过因为作为版本控制系统的 Git 太有名了，最终导致在一些 Linux 发行版的最新版本中，将 GNU Interactive Tools 软件包改名为 gnuit，将 git-core 改名为 git。所以在下面介绍的在不同的 Linux 发行版中安装 Git 时，会看到有 git 和 git-core 两个不同的名称。
 
@@ -39,7 +40,8 @@ Git 诞生于 Linux 平台并服务于 Linux 核心的版本控制，因此在 L
 
 其它发行版安装 Git 的过程和上面介绍的方法向类似。Git 软件包在这些发行版里或者称为 git，或者称为 git-core。
 
-**从源代码开始安装**
+从源代码开始安装
+-------------------------
 
 访问 Git 的官方网站： http://git-scm.com/ 。下载 Git 源码包，例如: git-1.7.3.5.tar.bz2 。
 
@@ -66,7 +68,8 @@ Git 诞生于 Linux 平台并服务于 Linux 核心的版本控制，因此在 L
 
 安装完毕之后，就可以在 `/usr/local/bin` 下找到 `git` 命令。
 
-**从Git版本库进行安装**
+从Git版本库进行安装
+-------------------------
 
 如果在本地克隆一个 Git 版本库，可以直接通过版本库同步获得最新版本的 Git，这样就不必把时间浪费在下载不同版本的 Git 源码包的过程中。当然使用这种方法的前提是已经用其他方法安装好了 Git。
 
@@ -135,7 +138,8 @@ Mac OS X 下的安装
 
 Mac OS X 被称为最人性化的操作系统，工作在 Mac 上是件非常惬意的事情，工作中怎能没有 Git？
 
-**以二进制发布包的形式安装**
+以二进制发布包的形式安装
+-------------------------
 
 Git 在 Mac OS X 中也有好几种安装方法。最为简单的方式是安装 `.dmg` 格式的安装包。
 
@@ -159,7 +163,8 @@ Git 在 Mac OS X 中也有好几种安装方法。最为简单的方式是安装
 
 安装完毕，git 会被安装到 `/usr/local/git/bin/` 目录下。重启终端程序，才能让安装程序添加的文件 `/etc/paths.d/git` 在 PATH 环境变量中注册生效。然后就可以在终端中直接运行 `git` 命令了。
 
-**安装 Xcode**
+安装 Xcode
+-------------------------
 
 Mac OS X 基于 Unix 内核，因此也可以很方便的通过源码编译的方式进行安装，但是缺省安装的 Mac OS X 缺乏相应的开发工具，需要安装苹果提供的 Xcode 软件包。实际上在随机附送的光盘（Mac OS X Install DVD）的可选安装文件夹下就有 Xcode 的安装包。通过随机光盘安装可以省去了网络下载的麻烦，要知道 Xcode 有3GB以上。
 
@@ -168,7 +173,8 @@ Mac OS X 基于 Unix 内核，因此也可以很方便的通过源码编译的�
 
    图：在 Mac OS X 下安装 Xcode。
 
-**使用 Homebrew 安装 Git**
+使用 Homebrew 安装 Git
+-------------------------
 
 Mac OS X 有好几个方便软件包安装的包管理器，有传统的 MacPort, Fink，还有更为简单易用的 Homebrew。下面就介绍一下如何通过 Homebrew 包管理器，以源码包编译的方式安装 Git。
 
@@ -205,7 +211,8 @@ Homebrew 用 ruby 语言开发，支持千余种开源软件在 Mac OS X 中的�
   /usr/local/Cellar/git/1.7.3.5/bin/gitk
   ...
 
-**从Git源码进行安装**
+从Git源码进行安装
+-------------------------
 
 如果需要安装历史版本的 Git 或者安装开发中的 Git，就需要从源码安装或者通过克隆 Git 版本库进行安装。既然 Homebrew 安装 Git 是通过源码进行安装，那么也应该可以直接从源码进行安装，但是使用 Homebrew 安装 Git 和直接通过源码安装并不等同，例如 Homebrew 就不是通过源码编译安装的 Git 文档，而是通过下载已经编译好的 Git 文档包进行安装。
 
@@ -224,7 +231,48 @@ Homebrew 用 ruby 语言开发，支持千余种开源软件在 Mac OS X 中的�
   $ make prefix=/usr/local all doc info
   $ sudo make prefix=/usr/local install install-doc install-html install-info
 
-**其他工具软件的安装**
+命令自动补齐
+-------------------------
+
+Git 通过 bash_completion 实现命令补齐。
+
+::
+
+  $ brew search completion
+  bash-completion
+
+::
+
+  $ brew install bash-completion
+  ...
+  Add the following lines to your ~/.bash_profile file:
+  if [ -f `brew --prefix`/etc/bash_completion ]; then
+    . `brew --prefix`/etc/bash_completion
+  fi
+  ...
+
+根据 bash-completion 安装过程中的提示，修改文件 `~/.bash_profile` 文件，并在其中加入如下内容，以便在终端加载时自动启用命令补齐。
+
+::
+
+  if [ -f `brew --prefix`/etc/bash_completion ]; then
+    . `brew --prefix`/etc/bash_completion
+  fi
+
+将 Git 的命令补齐脚本拷贝到 bash-completion 对应的目录中。
+
+::
+
+  $ cp contrib/completion/git-completion.bash `brew --prefix`/etc/bash_completion.d/
+
+不用重启终端程序，只需要运行下面的命令，即可立即在当前的 shell 中加载命令补齐。
+
+::
+
+  . `brew --prefix`/etc/bash_completion
+
+其他辅助工具的安装
+-------------------------
 
 命令 `sha1sum` 在 Git 版本库中的对象分析中会经常遇到，但在 Mac OS X 以及 Xcode 中并未提供。实际上 `sha1sum` 及其另外一个名为 `md5sum` 的工具可以用 brew 安装。
 
