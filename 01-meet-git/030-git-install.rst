@@ -133,6 +133,33 @@ Git 诞生于 Linux 平台并服务于 Linux 核心的版本控制，因此在 L
       echo "Installed Git $ver."
   done
 
+命令补齐
+-------------------------
+
+Linux 的 shell 环境（bash）通过 bash-completion 软件包提供命令补齐功能，能够实现在命令的参数录入时按一下或者两下 TAB 键，实现参数的自动补齐或者提示。例如输入 `git com` 后按下 TAB 键，会自动补齐为 `git commit` 。
+
+通过包管理器方式安装 Git，一般都已经为 Git 配置好了自动补齐，但是如果是以源码编译方式安装 Git，就需要为命令补齐多做些工作。
+
+* 将 Git 源码包中的命令补齐脚本复制到 bash-completion 对应的目录中。
+
+  ::
+
+    $ cp contrib/completion/git-completion.bash /usr/local/etc/bash_completion.d/
+
+* 重新加载自动补齐脚本，使之在当前 shell 中生效。
+
+  ::
+
+    $ . /etc/bash_completion
+
+* 为了能够在终端开启时自动加载 bash_completion 脚本，需要在本地配置文件 `~/.bash_profile` 或者全局文件 `/etc/bashrc` 文件中添加下面的内容。
+
+  ::
+
+    if [ -f /etc/bash_completion ]; then
+      . /etc/bash_completion
+    fi
+
 Mac OS X 下的安装
 ==================
 
