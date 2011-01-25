@@ -13,7 +13,7 @@ Android 的源代码的 Git 库有 160 多个（截止置2010年10月）：
 
   git://android.git.kernel.org/device/common.git
 
-* 160 多个其它的版本库...
+* 160 多个其他的版本库...
 
 如果要是把 160 多个版本库都列在这里，恐怕各位的下巴会掉下来。那么为什么 Android 的版本库这么多呢？怎么管理这么复杂的版本库呢？
 
@@ -146,7 +146,7 @@ TODO
 * 参数 --repo-branch
 * 参数 --no-repo-verify
 
-实际上，完成 repo.git 版本库的克隆，这个 repo 引导脚本就江郎才尽了，init 子命令的后续处理（以及其它子命令）都交给刚刚克隆出来的 `.repo/repo/main.py` 来继续执行。
+实际上，完成 repo.git 版本库的克隆，这个 repo 引导脚本就江郎才尽了，init 子命令的后续处理（以及其他子命令）都交给刚刚克隆出来的 `.repo/repo/main.py` 来继续执行。
 
 **清单库是什么？从哪里下载？**
 
@@ -219,7 +219,7 @@ Repo 初始化命令（repo init）可以执行多次：
 * 第6行用于设置各个项目缺省的远程源地址（remote）为 korg, 缺省的分支为 `master` 。当然各个项目（project元素）可以定义自己的 remote 和 revision 覆盖该缺省配置。
 * 第9行定义一个项目，该项目的远程版本库相对路径为："platform/build"，在工作区克隆的位置为："build"。
 * 第10行，即 project 元素的子元素 copyfile，定义了项目克隆后的一个附加动作：拷贝文件从 "core/root.mk" 至 "Makefile"。
-* 第13行后后续的100多行定义了其它160个项目，都是采用类似的 project 元素语法。name 参数定义远程版本库的相对路径，path 参数定义克隆到本地工作区的路径。
+* 第13行后后续的100多行定义了其他160个项目，都是采用类似的 project 元素语法。name 参数定义远程版本库的相对路径，path 参数定义克隆到本地工作区的路径。
 * 还可以出现 manifest-server 元素，其 url 属性定义了通过 XMLRPC 提供实时更新清单的服务器URL。只有当执行 `repo sync --smart-sync` 的时候，才会检查该值，并用动态获取的 manifest 覆盖掉缺省的清单。
 
 同步项目
@@ -438,7 +438,7 @@ repo status 子命令实际上是对 `git diff-index`, `git diff-files` 命令�
 上面示例输出显示了 repo 项目的 devwork 分支的修改状态。
 
 * 每个小节的首行显示项目名称，以及所在分支名称。
-* 之后显示该项目中文件变更状态。头两个字母显示变更状态，后面显示文件名或者其它变更信息。
+* 之后显示该项目中文件变更状态。头两个字母显示变更状态，后面显示文件名或者其他变更信息。
 * 第一个字母表示暂存区的文件修改状态。
 
   其实是 `git-diff-index` 命令输出中的状态标识并大写显示。
@@ -448,7 +448,7 @@ repo status 子命令实际上是对 `git diff-index`, `git diff-files` 命令�
   - M:  修改          （  在HEAD中，  在暂存区，内容不同      ）
   - D:  删除          （  在HEAD中，不在暂存区                ）
   - R:  重命名        （不在HEAD中，  在暂存区，路径修改      ）
-  - C:  拷贝          （不在HEAD中，  在暂存区，从其它文件拷贝）
+  - C:  拷贝          （不在HEAD中，  在暂存区，从其他文件拷贝）
   - T:  文件状态改变  （  在HEAD中，  在暂存区，内容相同      ）
   - U:  未合并，需要冲突解决
 
@@ -510,7 +510,7 @@ repo branches 读取各个项目的分支列表并汇总显示。该命令实际
 
   - | not in project1
 
-   该分支不存在于这些项目中。即除了 project1 项目外，其它项目都包含此分支。
+   该分支不存在于这些项目中。即除了 project1 项目外，其他项目都包含此分支。
 
 
 repo diff 命令
@@ -589,7 +589,7 @@ repo upload 命令执行推送，实际上会以类似如下的命令行格式�
 repo download 命令
 -------------------
 
-repo download 命令主要用于代码审核者下载和评估贡献者提交的修订。贡献者的修订在 git 版本库中以 `refs/changes/<changeid>/<patchset>` 引用方式命名（缺省的 patchset 为1），和其它 Git 引用一样，用 `git fetch` 获取，该引用所指向的最新的提交就是贡献者待审核的修订。使用 repo download 命令实际上就是用 `git fetch` 获取到对应项目的 refs/changes/<changeid>/patchset>` 引用，并自动切换到对应的引用上。
+repo download 命令主要用于代码审核者下载和评估贡献者提交的修订。贡献者的修订在 git 版本库中以 `refs/changes/<changeid>/<patchset>` 引用方式命名（缺省的 patchset 为1），和其他 Git 引用一样，用 `git fetch` 获取，该引用所指向的最新的提交就是贡献者待审核的修订。使用 repo download 命令实际上就是用 `git fetch` 获取到对应项目的 refs/changes/<changeid>/patchset>` 引用，并自动切换到对应的引用上。
 
 用法：
 
@@ -642,7 +642,7 @@ repo abandon 命令
   repo abandon <branchname> [<project>...]
 
 
-其它命令
+其他命令
 --------------
 
 * grep

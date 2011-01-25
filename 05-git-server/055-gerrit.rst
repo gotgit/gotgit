@@ -213,7 +213,7 @@ Gerrit 需要数据库来维护账户信息、跟踪评审任务等。目前支�
     
 * SSH 服务相关设置。
 
-  Gerrit 的基于 SSH 协议的 Git 服务非常重要，缺省的端口为 29418。换做其它端口也无妨，因为 repo 可以自动探测到该端口。
+  Gerrit 的基于 SSH 协议的 Git 服务非常重要，缺省的端口为 29418。换做其他端口也无妨，因为 repo 可以自动探测到该端口。
 
   ::
 
@@ -233,7 +233,7 @@ Gerrit 需要数据库来维护账户信息、跟踪评审任务等。目前支�
     
 * HTTP 服务相关设置。
 
-  缺省启用内置的 HTTP 服务器，端口为 8080，如果该端口被占用（如 Tomcat），则需要更换为其它端口，否则服务启动失败。如下例就换做了 8888 端口。
+  缺省启用内置的 HTTP 服务器，端口为 8080，如果该端口被占用（如 Tomcat），则需要更换为其他端口，否则服务启动失败。如下例就换做了 8888 端口。
 
   ::
 
@@ -289,7 +289,7 @@ Gerrit 服务的启动脚本支持 start, stop, restart 参数，可以作为 in
 
 如果架设有 LDAP 服务器，并且用户帐号都在 LDAP 中进行管理，那么采用 LDAP 认证也是非常好的方法。登录时提供的用户名和口令通过 LDAP 服务器验证之后，Gerrit 会自动从 LDAP 服务器中获取相应的字段属性，为用户创建帐号。创建的帐号的用户全名和邮件地址因为来自于 LDAP，因此不能在 Gerrit 更改，但是用户可以注册新的邮件地址。我在配置 LDAP 认证时遇到了一个问题就是创建帐号的用户全名是空白，这是因为在 LDAP 相关的字段没有填写的原因。如果 LDAP 服务器使用的是 OpenLDAP，Gerrit 会从 displayName 字段获取用户全名，如果使用 Active Directory 则用 givenName 和 sn 字段的值拼接形成用户全名。
 
-Gerrit 还支持使用 HTTP 认证，这种认证方式需要架设 Apache 反向代理，在 Apache 中配置 HTTP 认证。当用户访问 Gerrit 网站首先需要通过 Apache 配置的 HTTP Basic Auth 认证，当 Gerrit 发现用户已经登录后，会要求用户确认邮件地址。当用户邮件地址确认后，再填写其它必须的字段完成帐号注册。HTTP 认证方式的缺点除了在口令文件管理上需要管理员手工维护比较麻烦之外，还有一个缺点就是用户一旦登录成功后，想退出登录或者更换其它用户帐号登录变得非常麻烦，除非关闭浏览器。关于切换用户有一个小窍门：例如 Gerrit 登录 URL 为 https://server/gerrit/login/ ，则用浏览器访问 https://nobody:wrongpass@server/gerrit/login/ ，即用错误的用户名和口令覆盖掉浏览器缓存的认证用户名和口令，这样就可以重新认证了。
+Gerrit 还支持使用 HTTP 认证，这种认证方式需要架设 Apache 反向代理，在 Apache 中配置 HTTP 认证。当用户访问 Gerrit 网站首先需要通过 Apache 配置的 HTTP Basic Auth 认证，当 Gerrit 发现用户已经登录后，会要求用户确认邮件地址。当用户邮件地址确认后，再填写其他必须的字段完成帐号注册。HTTP 认证方式的缺点除了在口令文件管理上需要管理员手工维护比较麻烦之外，还有一个缺点就是用户一旦登录成功后，想退出登录或者更换其他用户帐号登录变得非常麻烦，除非关闭浏览器。关于切换用户有一个小窍门：例如 Gerrit 登录 URL 为 https://server/gerrit/login/ ，则用浏览器访问 https://nobody:wrongpass@server/gerrit/login/ ，即用错误的用户名和口令覆盖掉浏览器缓存的认证用户名和口令，这样就可以重新认证了。
 
 在后面的 Gerrit 演示和介绍中，为了设置帐号的方便，使用了 HTTP 认证，因此下面再介绍一下 HTTP 认证的配置方法。
 
@@ -643,7 +643,7 @@ Gerrit 的数据库访问
 
    Gerrit 中项目列表
 
-在项目列表中可以看到除了新建的 new/project 项目之外还有一个名为“-- All Projects --”的项目，其实它并非一个真实存在的项目，只是为了项目授权管理的方便 —— 在“-- All Projects --” 中建立的项目授权能够被其它项目共享。
+在项目列表中可以看到除了新建的 new/project 项目之外还有一个名为“-- All Projects --”的项目，其实它并非一个真实存在的项目，只是为了项目授权管理的方便 —— 在“-- All Projects --” 中建立的项目授权能够被其他项目共享。
 
 在服务器端也可以看到 Gerrit 部署中版本库根目录下已经有同名的 Git 版本库被创建。
 
@@ -904,7 +904,7 @@ Gerrit 的界面对用户非常友好。例如在添加授权的界面中，只�
 
    Gerrit 用户组列表
 
-接下来要为新的用户组授权，需要访问“Admin”菜单下的“Projects”子菜单，点击对应的项目进入权限编辑界面。为了简便起见，选择“-- All Projects --”，对其授权的更改可以被所有其它的项目共享。下面是为 Reviewer 用户组建立授权过程的页面。
+接下来要为新的用户组授权，需要访问“Admin”菜单下的“Projects”子菜单，点击对应的项目进入权限编辑界面。为了简便起见，选择“-- All Projects --”，对其授权的更改可以被所有其他的项目共享。下面是为 Reviewer 用户组建立授权过程的页面。
 
 .. figure:: images/git-server/gerrit-acl-1-reviewer.png
    :scale: 70
@@ -1079,7 +1079,7 @@ Repo 是 Gerrit 的最佳伴侣，凡是需要和 Gerrit 版本库交互的工�
 
    Gerrit 评审任务未通过
 
-注意到 Dev2 用户的评审对话框有三个按钮，多出的 “Publish and Submit” 按钮是因为 Dev2 拥有 Submit 授权。Dev2 用户在上面的对话框中，选择了“-1: Fails”，当点击“Publish Comments” 按钮，该评审任务的评审记录被重置，同时提交者和其它评审参与者会收到通知邮件。
+注意到 Dev2 用户的评审对话框有三个按钮，多出的 “Publish and Submit” 按钮是因为 Dev2 拥有 Submit 授权。Dev2 用户在上面的对话框中，选择了“-1: Fails”，当点击“Publish Comments” 按钮，该评审任务的评审记录被重置，同时提交者和其他评审参与者会收到通知邮件。
 
 .. figure:: images/git-server/gerrit-review-7-review-mail-notify-failed.png
    :scale: 70

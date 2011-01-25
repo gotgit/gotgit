@@ -219,7 +219,7 @@ Git-svn 作为 Git 软件包的一部分，当 Git 从源码包进行安装时�
   
       git-svn-id: file:///path/to/svn/repos/demo/trunk@1 f79726c4-f016-41bd-acd5-6c9acb7664b2
 
-现在就可以向 Subversion 服务器推送改动了。但真实的环境中，往往在向服务器推送时，已经有其它用户已经在服务器上进行了提交，而且往往更糟的是，先于我们的提交会造成我们的提交冲突！现在就人为的制造一个冲突：使用 svn 命令在 Subversion 版本库中执行一次提交。
+现在就可以向 Subversion 服务器推送改动了。但真实的环境中，往往在向服务器推送时，已经有其他用户已经在服务器上进行了提交，而且往往更糟的是，先于我们的提交会造成我们的提交冲突！现在就人为的制造一个冲突：使用 svn 命令在 Subversion 版本库中执行一次提交。
 
 ::
 
@@ -431,7 +431,7 @@ Git 库配置文件的扩展及分支映射
           branches = branches/*:refs/remotes/*
           tags = tags/*:refs/remotes/tags/*
 
-缺省 svn-remote 的名字为 "svn"，所以新增的配置小节的名字为： `[svn-remote "svn"]` 。在 git-svn 克隆时，可以使用 `--remote` 参数设置不同的 svn-remote 名称，但是并不建议使用。因为一旦使用 `--remote` 参数更改 svn-remote 名称，必须在 git-svn 的其它命令中都使用 --remote 参数，否则报告 `[svn-remote "svn"]` 配置小节未找到。
+缺省 svn-remote 的名字为 "svn"，所以新增的配置小节的名字为： `[svn-remote "svn"]` 。在 git-svn 克隆时，可以使用 `--remote` 参数设置不同的 svn-remote 名称，但是并不建议使用。因为一旦使用 `--remote` 参数更改 svn-remote 名称，必须在 git-svn 的其他命令中都使用 --remote 参数，否则报告 `[svn-remote "svn"]` 配置小节未找到。
 
 在该小节中主要的配置有：
 
@@ -556,7 +556,7 @@ Git 缺省工作的分支是 master，而看到上例中的 Subversion 主线在
   No changes between current HEAD and refs/remotes/demo-1.0
   Resetting to the latest refs/remotes/demo-1.0
 
-其它辅助文件
+其他辅助文件
 -------------
 
 在 Git 版本库中，git-svn 在 `.git/svn` 目录下保存了一些索引文件，便于 git-svn 更加快速的执行。
@@ -665,7 +665,7 @@ Git 缺省工作的分支是 master，而看到上例中的 Subversion 主线在
           tags = tags/{1.0,2.0}/src:refs/remotes/tags/*
 
 
-如果只关心 Subversion 的某个分支甚至某个子目录，而不关心其它分支或目录，那就更简单了，不带参数的执行 `git svn init` 针对 Subversion 的某个具体路径执行初始化就可以了。
+如果只关心 Subversion 的某个分支甚至某个子目录，而不关心其他分支或目录，那就更简单了，不带参数的执行 `git svn init` 针对 Subversion 的某个具体路径执行初始化就可以了。
 
 ::
 

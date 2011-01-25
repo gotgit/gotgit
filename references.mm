@@ -826,7 +826,7 @@
 <font NAME="Serif" SIZE="14"/>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_1002208138" 
-	TEXT="其它">
+	TEXT="其他">
 <font NAME="Serif" SIZE="14"/>
 <node COLOR="#111111" ID="ID_1742665431" 
 	TEXT=" * Various commands given by the end user (e.g. diff.type.textconv,&#xa;   and GIT_EDITOR) can be specified with command line arguments.  E.g. it&#xa;   is now possible to say &quot;[diff &quot;utf8doc&quot;] textconv = nkf -w&quot;.&#xa;">
@@ -1652,7 +1652,7 @@
 <font NAME="Serif" SIZE="14"/>
 </node>
 <node COLOR="#990000" ID="ID_960656006" 
-	TEXT="命令扩展也使用其它方式实现。">
+	TEXT="命令扩展也使用其他方式实现。">
 <font NAME="Serif" SIZE="14"/>
 </node>
 </node>
@@ -1679,7 +1679,7 @@
 <font NAME="Serif" SIZE="14"/>
 </node>
 <node COLOR="#990000" ID="ID_982584316" 
-	TEXT="意味着 git 命令本身就能够完成建库，提交的操作。不像其它版本库要分别使用不同的工具。">
+	TEXT="意味着 git 命令本身就能够完成建库，提交的操作。不像其他版本库要分别使用不同的工具。">
 <font NAME="Serif" SIZE="14"/>
 </node>
 <node COLOR="#990000" FOLDED="true" ID="ID_1385414587" 
@@ -1803,7 +1803,7 @@
 <font NAME="Serif" SIZE="12"/>
 </node>
 <node COLOR="#111111" ID="ID_1096076984" 
-	TEXT="Redmine 或者其它软件，要依靠 AuthorID 还是 Commit ID 建立用户映射，所以不要太随意了。">
+	TEXT="Redmine 或者其他软件，要依靠 AuthorID 还是 Commit ID 建立用户映射，所以不要太随意了。">
 <font NAME="Serif" SIZE="12"/>
 </node>
 <node COLOR="#111111" ID="ID_1274299345" 
@@ -2820,7 +2820,7 @@
 <node COLOR="#111111" ID="ID_490673257" 
 	TEXT="master@{&quot;1 month ago&quot;} "/>
 <node COLOR="#111111" ID="ID_403138643" 
-	TEXT="其它，如： {yesterday}, {1 month 2 weeks 3 days 1 hour 1 second            ago} or {1979-02-26 18:30:00}"/>
+	TEXT="其他，如： {yesterday}, {1 month 2 weeks 3 days 1 hour 1 second            ago} or {1979-02-26 18:30:00}"/>
 </node>
 <node COLOR="#111111" FOLDED="true" ID="ID_671940362" 
 	TEXT="ordinal spec ： master@{5}  ： 实际上是对 reflog 的操作">
@@ -3974,7 +3974,7 @@
 <icon BUILTIN="help"/>
 </node>
 <node COLOR="#111111" ID="ID_532700123" 
-	TEXT="注意：该命令非常危险，如果原分支点没有其它标记，找回原分支点很麻烦">
+	TEXT="注意：该命令非常危险，如果原分支点没有其他标记，找回原分支点很麻烦">
 <font NAME="Serif" SIZE="12"/>
 </node>
 <node COLOR="#111111" ID="ID_729864830" 
@@ -4404,7 +4404,7 @@
 <node COLOR="#111111" ID="ID_1567440842" 
 	TEXT="如何避免个人在本地创建的 tag 被传递到远程服务器互相覆盖。"/>
 <node COLOR="#111111" FOLDED="true" ID="ID_1550421566" 
-	TEXT="如果向其它版本库 PUSH 的时候，会将本地所有分支推送到版本库中么？">
+	TEXT="如果向其他版本库 PUSH 的时候，会将本地所有分支推送到版本库中么？">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="12"/>
 <node COLOR="#111111" ID="ID_101142689" 
@@ -6047,7 +6047,7 @@
 <node COLOR="#111111" ID="ID_1445737651" 
 	TEXT="--incremental: 已经被打包的对象被忽略"/>
 <node COLOR="#111111" ID="ID_1475657418" 
-	TEXT="--local ： 从其它版本库借用的对象不予打包"/>
+	TEXT="--local ： 从其他版本库借用的对象不予打包"/>
 <node COLOR="#111111" FOLDED="true" ID="ID_831373639" 
 	TEXT="--no-reuse-delta">
 <node COLOR="#111111" ID="ID_1417060553" 

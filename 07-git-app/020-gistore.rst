@@ -58,7 +58,7 @@ Gistore 的安装
 用 easy_install 安装
 --------------------
 
-Gistore 是用 Python 语言开发，已经在 PYPI 上注册： http://pypi.python.org/pypi/gistore 。就像其它 Python 软件包一样，可以使用 easy_install 进行安装。
+Gistore 是用 Python 语言开发，已经在 PYPI 上注册： http://pypi.python.org/pypi/gistore 。就像其他 Python 软件包一样，可以使用 easy_install 进行安装。
 
 * 确保机器上已经安装了 setuptools。
 
@@ -439,7 +439,7 @@ Gistore 的备份项管理
 
 * 当 Git 库的 master 主线的提交数达到规定的阈值（缺省200），对 gistore 分支进行回滚，并基于当前 master 打上分支： `gistore/1` 。
 
-  - 如果设置了5个回滚分支，并且存在其它回滚分支，则分支依次向后回滚。
+  - 如果设置了5个回滚分支，并且存在其他回滚分支，则分支依次向后回滚。
   - 删除 `gistore/5` ， `gistore/4` 分支改名为 `gistore/5` ， ... ，`gistore/1` 重命名为 `gistore/2` 。
   - 基于当前 master 建立分支 `gistore/1` 。
   - 将当前 master 重置为里程碑 `gistore/0` 指向的内容，并对备份项进行一次完全备份。
@@ -451,7 +451,7 @@ Gistore 的备份项管理
 **如何找回历史备份？**
 
 通过上面介绍的 Gistore 回滚的实现方法，会知道当回滚发生后，主线 master 只包含两个提交。一个空提交（来自于 Tag `gistore/0` ），另外一个是备份项的全备份。
-这是似乎备份历史被完全丢弃了。其实，可以从分支 `gistore/1` 中看到最近备份的历史，其它分支会看到更老的历史。
+这是似乎备份历史被完全丢弃了。其实，可以从分支 `gistore/1` 中看到最近备份的历史，其他分支会看到更老的历史。
 
 查看回滚分支的提交历史：
 

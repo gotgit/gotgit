@@ -38,7 +38,7 @@ Git 诞生于 Linux 平台并服务于 Linux 核心的版本控制，因此在 L
     $ yum install git
     $ yum install git-svn git-email gitk 
 
-其它发行版安装 Git 的过程和上面介绍的方法向类似。Git 软件包在这些发行版里或者称为 git，或者称为 git-core。
+其他发行版安装 Git 的过程和上面介绍的方法向类似。Git 软件包在这些发行版里或者称为 git，或者称为 git-core。
 
 从源代码开始安装
 -------------------------
