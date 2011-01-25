@@ -38,7 +38,7 @@ Git 诞生于 Linux 平台并服务于 Linux 核心的版本控制，因此在 L
     $ yum install git
     $ yum install git-svn git-email gitk 
 
-其他发行版安装 Git 的过程和上面介绍的方法向类似。Git 软件包在这些发行版里或者称为 git，或者称为 git-core。
+其他发行版安装 Git 的过程和上面介绍的方法向类似。Git 软件包在这些发行版里或称为 git，或称为 git-core。
 
 从源代码开始安装
 -------------------------
@@ -136,7 +136,7 @@ Git 诞生于 Linux 平台并服务于 Linux 核心的版本控制，因此在 L
 命令补齐
 -------------------------
 
-Linux 的 shell 环境（bash）通过 bash-completion 软件包提供命令补齐功能，能够实现在命令的参数录入时按一下或者两下 TAB 键，实现参数的自动补齐或者提示。例如输入 `git com` 后按下 TAB 键，会自动补齐为 `git commit` 。
+Linux 的 shell 环境（bash）通过 bash-completion 软件包提供命令补齐功能，能够实现在命令的参数录入时按一下或两下 TAB 键，实现参数的自动补齐或提示。例如输入 `git com` 后按下 TAB 键，会自动补齐为 `git commit` 。
 
 通过包管理器方式安装 Git，一般都已经为 Git 配置好了自动补齐，但是如果是以源码编译方式安装 Git，就需要为命令补齐多做些工作。
 
@@ -152,7 +152,7 @@ Linux 的 shell 环境（bash）通过 bash-completion 软件包提供命令补�
 
     $ . /etc/bash_completion
 
-* 为了能够在终端开启时自动加载 bash_completion 脚本，需要在本地配置文件 `~/.bash_profile` 或者全局文件 `/etc/bashrc` 文件中添加下面的内容。
+* 为了能够在终端开启时自动加载 bash_completion 脚本，需要在本地配置文件 `~/.bash_profile` 或全局文件 `/etc/bashrc` 文件中添加下面的内容。
 
   ::
 
@@ -241,7 +241,7 @@ Homebrew 用 ruby 语言开发，支持千余种开源软件在 Mac OS X 中的�
 从Git源码进行安装
 -------------------------
 
-如果需要安装历史版本的 Git 或者安装尚在开发中的未发布版本的 Git，就需要从源码安装或者通过克隆 Git 源码库进行安装。既然 Homebrew 就是通过源码编译方式安装 Git 的，那么也应该可以直接从源码进行安装，但是使用 Homebrew 安装 Git 和直接通过 Git 源码安装并不等同，例如 Homebrew 就不是通过源码编译安装 Git 文档，而是通过下载已经编译好的 Git 文档包进行安装。
+如果需要安装历史版本的 Git 或是安装尚在开发中的未发布版本的 Git，就需要从源码安装或通过克隆 Git 源码库进行安装。既然 Homebrew 就是通过源码编译方式安装 Git 的，那么也应该可以直接从源码进行安装，但是使用 Homebrew 安装 Git 和直接通过 Git 源码安装并不等同，例如 Homebrew 就不是通过源码编译安装 Git 文档，而是通过下载已经编译好的 Git 文档包进行安装。
 
 直接通过源码安装 Git 包括文档，会遇到一些困难，主要原因是 Git 文档编译需要的相关工具没有在 Xcode 中提供。这些工具可以通过 Homebrew 进行安装。下面工具软件的安装过程可能会遇到一些小麻烦，不过大多可以通过参考命令输出予以解决。
 
@@ -298,20 +298,20 @@ Git 通过 bash-completion 软件包实现命令补齐，在 Mac OS X 下可以�
 其他辅助工具的安装
 -------------------------
 
-本书中还会用到一些常用的 GNU 或者其他开源软件，在 Mac OS X 下也可以通过 Homebrew 进行安装。这些软件包有：
+本书中还会用到一些常用的 GNU 或其他开源软件，在 Mac OS X 下也可以通过 Homebrew 进行安装。这些软件包有：
 
 * gnupg: 数字签名和加密工具。在为 Git 版本库建立签名里程碑时会用到。
-* md5sha1sum: 生成 MD5 或者 SHA1 摘要。在研究 Git 版本库中的对象过程中会用到。
-* cvs2svn: CVS 版本库迁移到 SVN 或者 Git 的工具。在版本库迁移时会用到。
+* md5sha1sum: 生成 MD5 或 SHA1 摘要。在研究 Git 版本库中的对象过程中会用到。
+* cvs2svn: CVS 版本库迁移到 SVN 或 Git 的工具。在版本库迁移时会用到。
 * stgit: Git 的补丁和提交管理工具。
 * quilt: 一种补丁管理工具。在介绍 StGit 时用到。
 
 在 Mac OS X 下能够使用到的 Git 图形工具除了 Git 软件包自带的 `gitk` 和 `git gui` 之外，还可以安装 GitX。下载地址：
 
 * GitX 的原始版本：http://gitx.frim.nl/
-* 或者 GitX 的一个分支版本，提供增强的功能：https://github.com/brotherbard/gitx/downloads
+* 或 GitX 的一个分支版本，提供增强的功能：https://github.com/brotherbard/gitx/downloads
 
-Git 的图形工具一般需要在本地克隆版本库的工作区中执行，为了能和 Mac OS X 有更好的整合，可以安装插件实现和 Finder 的整合。在 git-osx-installer 的官方网站： http://code.google.com/p/git-osx-installer/ ，有两个以 `OpenInGitGui-` 和 `OpenInGitX-` 为前缀的软件包，可以分别实现和 `git gui` 以及 `gitx` 的整合：在 Finder 中进入工作区目录，点击对应插件的图标，启动 `git gui` 或者 `gitx` 。
+Git 的图形工具一般需要在本地克隆版本库的工作区中执行，为了能和 Mac OS X 有更好的整合，可以安装插件实现和 Finder 的整合。在 git-osx-installer 的官方网站： http://code.google.com/p/git-osx-installer/ ，有两个以 `OpenInGitGui-` 和 `OpenInGitX-` 为前缀的软件包，可以分别实现和 `git gui` 以及 `gitx` 的整合：在 Finder 中进入工作区目录，点击对应插件的图标，启动 `git gui` 或 `gitx` 。
 
 Windows 下的安装
 =================
