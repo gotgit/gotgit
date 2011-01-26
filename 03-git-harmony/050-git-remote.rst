@@ -138,7 +138,7 @@ Git 这样的设计是非常巧妙的，在从远程版本库执行获取操作�
 分支追踪
 ================
 
-为了能够在远程分支 `refs/remotes/origin/hello-1.x` 上进行工作，需要基于基于该远程分支创建本地分支。远程分支可以使用简写 `origin/hello-1.x` 。如果 Git 的版本是 1.6.6 或者更新的版本，可以使用下面的命令同时完成分支的创建和切换。
+为了能够在远程分支 `refs/remotes/origin/hello-1.x` 上进行工作，需要基于该远程分支创建本地分支。远程分支可以使用简写 `origin/hello-1.x` 。如果 Git 的版本是 1.6.6 或者更新的版本，可以使用下面的命令同时完成分支的创建和切换。
 
 ::
 
@@ -146,11 +146,13 @@ Git 这样的设计是非常巧妙的，在从远程版本库执行获取操作�
   Branch hello-1.x set up to track remote branch hello-1.x from origin.
   Switched to a new branch 'hello-1.x'
 
-如果 Git 的版本比较老，或者注册了多个远程版本库因此存多个在名为 `hello-1.x` 的远程分支，就不能使用上面简洁的分支创建和切换命令，而需要使用在上一章学习到的分支创建命令，显式的从远程分支创建本地分支。
+如果 Git 的版本比较老，或注册了多个远程版本库因此存在多个名为 `hello-1.x` 的远程分支，就不能使用上面简洁的分支创建和切换命令，而需要使用在上一章学习到的分支创建命令，显式的从远程分支创建本地分支。
 
 ::
 
   $ git checkout -b hello-1.x origin/hello-1.x
+  Branch hello-1.x set up to track remote branch hello-1.x from origin.
+  Switched to a new branch 'hello-1.x'
 
 在上面基于远程分支创建本地分支的过程中，命令输出的第一行说的是建立了本地分支和远程分支的跟踪。和远程分支建立跟踪后，本地分支就具有下列特征：
 
@@ -158,7 +160,7 @@ Git 这样的设计是非常巧妙的，在从远程版本库执行获取操作�
 * 当执行 `git pull` 命令时，会和被跟踪的远程分支进行合并（或者变基），如果两者出现版本偏离的话。
 * 当执行 `git push` 命令时，会推送到远程版本库的同名分支中。
 
-先来看看查看状态时显示本地分支和远程分支的状态跟踪。
+下面就在基于远程分支创建的本地跟踪分支中进行操作，看看本地分支是如何与远程分支建立关联的。
 
 * 先将本地 `hello-1.x` 分支向后重置两个版本。
 
@@ -179,15 +181,15 @@ Git 这样的设计是非常巧妙的，在从远程版本库执行获取操作�
     #
     nothing to commit (working directory clean)
 
-执行 `git pull` 命令，会自动从跟踪的远程分支进行合并，相当于找回最新的3个提交。
+* 执行 `git pull` 命令，会自动从跟踪的远程分支进行合并，相当于找回最新的3个提交。
 
-::
+  ::
 
-  $ git pull
-  Updating ebcf6d6..8cffe5f
-  Fast-forward
-   src/main.c |   11 +++++++++--
-   1 files changed, 9 insertions(+), 2 deletions(-)
+    $ git pull
+    Updating ebcf6d6..8cffe5f
+    Fast-forward
+     src/main.c |   11 +++++++++--
+     1 files changed, 9 insertions(+), 2 deletions(-)
 
 但是如果基于本地分支创建另外一个本地分支则没有分支跟踪的功能。下面就从本地的 `hello-1.x` 分支创建 `hello-jx` 分支。
 
@@ -469,15 +471,15 @@ PUSH 和 PULL 操作与远程版本库
 * 如果为注册的远程版本库设置了 `fetch` 参数，即通过 `remote.<remote>.fetch` 配置了一个引用表达式，则使用该引用表达式执行获取操作。
 * 接下来要确定合并的分支。如果设定了 `branch.<branchname>.merge` ，则对其设定的分支执行合并，否则报错退出。
 
-在执行 `git pull` 操作的时候可以通过参数 `--rebase` 设置使用变基而非合并操作，将本地分支的改动变基到跟踪分支上。为了避免因为忘记使用 `--rebase` 参数导致提交的合并，可以执行如下命令进行设置。注意将 <branchname> 替换为对应的分支名称。
+在执行 `git pull` 操作的时候可以通过参数 `--rebase` 设置使用变基而非合并操作，将本地分支的改动变基到跟踪分支上。为了避免因为忘记使用 `--rebase` 参数导致分支的合并，可以执行如下命令进行设置。注意将 `<branchname>` 替换为对应的分支名称。
 
 ::
 
   $ git config branch.<branchname>.rebase true
 
-有了这个设置之后，当工作在 `<branchname>` 分支中执行 `git pull` 命令，则在遇到本地和远程分支出现偏离的时候，采用变基操作。
+有了这个设置之后，当工作在 `<branchname>` 分支中执行 `git pull` 命令，则在遇到本地和远程分支出现偏离的时候，采用变基操作替代默认的合并操作。
 
-如果为本地版本库设置参数 `branch.autosetuprebase` 为 `true` ，则在基于远程分支建立本地追踪分支时，会自动配置 `branch.<branchname>.rebase` 参数，在执行 `git pull` 命令时使用变基操作取代缺省的合并操作。
+如果为本地版本库设置参数 `branch.autosetuprebase` 为 `true` ，则在基于远程分支建立本地追踪分支时，会自动配置 `branch.<branchname>.rebase` 参数，在执行 `git pull` 命令时使用变基操作取代默认的合并操作。
 
 里程碑和远程版本库
 ====================
@@ -490,13 +492,15 @@ PUSH 和 PULL 操作与远程版本库
 
 ::
 
-  $ git fetch --no-tags file:///path/to/repos/hello-world.git refs/heads/*:refs/remotes/hello-world/*
+  $ git fetch --no-tags file:///path/to/repos/hello-world.git \
+        refs/heads/*:refs/remotes/hello-world/*
 
 在注册远程版本库的时候，也可以使用 `--no-tags` 参数，避免将远程版本库的里程碑引入本地版本库。例如：
 
 ::
 
-  $ git remote add --no-tags hell-world file:///path/to/repos/hello-world.git
+  $ git remote add --no-tags hell-world \
+        file:///path/to/repos/hello-world.git
 
 
 分支和里程碑的安全性
