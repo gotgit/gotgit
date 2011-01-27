@@ -1,9 +1,9 @@
 Android 式多版本库协同
 **********************
 
-Android 是谷歌(Google)开发的手持设备的操作系统，提供了当前最为吸引眼球的开源的手机操作平台，大有超越苹果(Apple.com)的专有的 IOS 的趋势。Android 的源代码就是使用 Git 进行维护的，Android 项目在源代码管理上有两个伟大的创造，一个是用 Python 语言开发名为 repo 的命令行工具用于多版本库的管理，另外一个是用 Java 开发的名为 Gerrit 的代码审核服务器。本节重点介绍 repo 是如何管理多代码库的。
+Android 是谷歌（Google）开发的适合手持设备的操作系统，提供了当前最为吸引眼球的开源的手机操作平台，大有超越苹果（Apple.com）的专有的 iOS 的趋势。而 Android 的源代码就是使用 Git 进行维护的。Android 项目在使用 Git 进行源代码管理上有两个伟大的创造，一个是用 Python 语言开发名为 repo 的命令行工具用于多版本库的管理，另外一个是用 Java 开发的名为 Gerrit 的代码审核服务器。本节重点介绍 repo 是如何管理多代码库的。
 
-Android 的源代码的 Git 库有 160 多个（截止置2010年10月）：
+Android 的源代码的 Git 库有 160 多个（截止至2010年10月）：
 
 * Android 的版本库管理工具 repo：
 
@@ -26,22 +26,22 @@ Android 版本库众多的原因，主要原因是版本库太大以及 Git 不�
 * 当执行 `git submodule update` 命令时，开始分别克隆这 160 多个版本库。
 * 如果想修改某个版本库中的内容，需要进入到相应的子模组目录，执行切换分支的操作。因为子模组是以某个固定提交的状态存在的，是不能更改的，必须先切换到某个工作分支后，才能进行修改和提交。
 * 如果要将所有的子模组都切换到某个分支（如 master）进行修改，必须自己通过脚本对这 160 多个版本库一一切换。
-* Android 有多个版本：android-1.0, android-1.5, ..., android-2.2_r1.3, ... 如何维护这么多的版本呢？也许索引库要通过分支和里程碑，和子模组的各个不同的提交状态进行对应。但是由于子模组的状态只是一个提交ID，如何管理分支，真的给不出答案。
+* Android 有多个版本：android-1.0, android-1.5, ..., android-2.2_r1.3, ... 如何维护这么多的版本呢？也许索引库要通过分支和里程碑，和子模组的各个不同的提交状态进行对应。但是由于子模组的状态只是一个提交ID，如何能够动态指定到分支，真的给不出答案。
 
-幸好，上面只是假设。聪明的 Google 程序设计师一早就考虑到了 Git 子模组的局限性以及版本库管理的问题，开发出了 repo 这一工具。
+幸好，上面只是假设。聪明的 Android 程序设计师一早就考虑到了 Git 子模组的局限性以及多版本库管理的问题，开发出了 repo 这一工具。
 
-Android 之父安迪·鲁宾在回应乔布斯谈及 Android 的开放性造成麻烦的言论时，在 Twitter (http://twitter.com/Arubin) 上留了下面这段简短的话：
+关于 repo 有这么一则小故事：Android 之父安迪·鲁宾在回应乔布斯关于 Android 太开放导致开发维护更麻烦的言论时，在 Twitter (http://twitter.com/Arubin) 上留了下面这段简短的话：
 
 ::
 
   the definition of open: "mkdir android ; cd android ; repo init -u git://android.git.kernel.org/platform/manifest.git ; repo sync ; make"
 
-是的，就是 repo 让 Android 变得如此简单。
+是的，就是 repo 让 Android 的开发变得如此简单。
 
 关于 repo
 ==========
 
-Repo 是 Google 开发的用于管理 Android 版本库的一个工具。Repo 并不是用于取代 Git，是用 Python 对 Git 进行了一定的封装，简化了对多个 Git 版本库的管理。对于 repo 管理下的版本库的任何一个，都还是需要使用 Git 命令进行操作。
+Repo 是 Google 开发的用于管理 Android 版本库的一个工具。Repo 并不是用于取代 Git，是用 Python 对 Git 进行了一定的封装，简化了对多个 Git 版本库的管理。对于 repo 管理的任何一个版本库，都还是需要使用 Git 命令进行操作。
 
 repo 的使用过程大致如下：
 
@@ -57,14 +57,14 @@ repo 的使用过程大致如下：
 安装 repo
 ==========
 
-首先下载 repo 的引导脚本，可以使用 wget, curl 甚至浏览器从地址 http://android.git.kernel.org/repo 下载。并把 repo 脚本设置为可执行，并复制到可执行的路径中。在 Linux 上可以用下面的指令将 repo 下载并复制到用户主目录的 bin 目录下。
+首先下载 repo 的引导脚本，可以使用 wget, curl 甚至浏览器从地址 http://android.git.kernel.org/repo 下载。把 repo 脚本设置为可执行，并复制到可执行的路径中。在 Linux 上可以用下面的指令将 repo 下载并复制到用户主目录的 bin 目录下。
 
 ::
 
   $ curl http://android.git.kernel.org/repo > ~/bin/repo 
   $ chmod a+x ~/bin/repo
 
-为什么说下载的 repo 只是一个引导文件（bootstrap）而不是直接称为 repo 呢？因为 repo 的大部分功能代码不在其中，下载的只是一个帮助完成整个 repo 程序的继续下载和加载工具。如果您是一个程序员，对 repo 的执行比较好奇，可以一起分析一下 repo 引导脚本。否则可以跳到下一节。
+为什么说下载的 repo 只是一个引导脚本（bootstrap）而不是直接称为 repo 呢？因为 repo 的大部分功能代码不在其中，下载的只是一个帮助完成整个 repo 程序的继续下载和加载工具。如果您是一个程序员，对 repo 的执行比较好奇，可以一起分析一下 repo 引导脚本。否则可以跳到下一节。
 
 看看 repo 引导脚本的前几行（为方便描述，把注释和版权信息过滤掉了），会发现一个神奇的魔法：
 
@@ -140,11 +140,9 @@ Repo init 要完成如下操作：
 
 如果不想从缺省任务获取 repo，或者不想获取稳定版（stable分支）的 repo，可以在 `repo init` 子命令中通过下面的参数覆盖缺省的设置，从指定的源地址克隆 repo 代码库。
 
-TODO 
-
-* 参数 --repo-url
-* 参数 --repo-branch
-* 参数 --no-repo-verify
+* 参数 --repo-url，用于设定 repo 的版本库地址。
+* 参数 --repo-branch，用于设定要检出的分支。
+* 参数 --no-repo-verify，设定不要对 repo 的里程碑签名进行严格的验证。
 
 实际上，完成 repo.git 版本库的克隆，这个 repo 引导脚本就江郎才尽了，init 子命令的后续处理（以及其他子命令）都交给刚刚克隆出来的 `.repo/repo/main.py` 来继续执行。
 
@@ -383,18 +381,14 @@ Repo 子命令实际上是 Git 命令的简单或者复杂的封装。每一个 
 repo init 命令
 --------------
 
-如前所述，子命令  init，完成的主要是检出清单版本库（manifest.git），并配置 Git 用户的用户名和邮件地址。
+repo init 子命令，主要完成检出清单版本库（manifest.git），以及配置 Git 用户的用户名和邮件地址的工作。
 
 实际上，完全可以进入到 `.repo/manifests` 目录，用 git 命令操作清单库。对 manifests 的修改不会因为执行 `repo init` 而丢失，除非是处于未跟踪状态。
 
 repo sync 命令
 --------------
 
-如前所述，sync 子命令用于参照清单文件克隆/同步版本库。
-
-如果某个项目版本库尚不存在，则执行 `repo sync` 命令相当于执行 `git clone` 。
-
-如果项目版本库已经存在，则相当于执行下面的两个命令：
+repo sync 子命令用于参照清单文件克隆或者同步版本库。如果某个项目版本库尚不存在，则执行 `repo sync` 命令相当于执行 `git clone` 。如果项目版本库已经存在，则相当于执行下面的两个命令：
 
 * git remote update
 
@@ -407,7 +401,7 @@ repo sync 命令
 repo start 命令
 ----------------
 
-repo start 子命令实际上是对 `git checkout -b` 命令的封装。为指定的项目或者所有项目（--all），以清单文件中设定的项目的版本为基础，创建特性分支。特性分支由命令的第一个参数指定。相当于执行 checkout -b 。
+repo start 子命令实际上是对 `git checkout -b` 命令的封装。为指定的项目或者所有项目（若使用 --all 参数），以清单文件中为项目设定的分支或里程碑为基础，创建特性分支。特性分支的名称由命令的第一个参数指定。相当于执行 checkout -b 。
 
 用法:
 
@@ -441,7 +435,7 @@ repo status 子命令实际上是对 `git diff-index`, `git diff-files` 命令�
 * 之后显示该项目中文件变更状态。头两个字母显示变更状态，后面显示文件名或者其他变更信息。
 * 第一个字母表示暂存区的文件修改状态。
 
-  其实是 `git-diff-index` 命令输出中的状态标识并大写显示。
+  其实是 `git-diff-index` 命令输出中的状态标识，并用大写显示。
 
   - -:  没有改变
   - A:  添加          （不在HEAD中，  在暂存区                ）
@@ -454,7 +448,7 @@ repo status 子命令实际上是对 `git diff-index`, `git diff-files` 命令�
 
 * 第二个字母表示工作区文件的更改状态。
 
-  其实是 `git-diff-files` 命令输出中的状态标识并小写显示。
+  其实是 `git-diff-files` 命令输出中的状态标识，并用小写显示。
 
   - -:  新/未知       （不在暂存区，  在工作区                ）
   - m:  修改          （  在暂存区，  在工作区，被修改        ）
@@ -552,7 +546,7 @@ repo upload 相当于 `git push` ，但是又有很大的不同。执行 `repo u
     -t                    发送本地分支名称到 Gerrit 代码审核服务器。
     --replace             发送此分支的更新补丁集。注意使用该参数，只能指定一个项目。
     --re=REVIEWERS, --reviewers=REVIEWERS
-                          要求有指定的人员进行审核。
+                          要求由指定的人员进行审核。
     --cc=CC               同时发送通知到如下邮件地址。
 
 **确定推送服务器的端口**
@@ -573,7 +567,7 @@ repo upload 相当于 `git push` ，但是又有很大的不同。执行 `repo u
 
   repo upload --replace project_name
 
-当使用 `--replace` 参数后，repo 会检查本地版本库名为 `refs/published/branch_name` 的特殊引用，获得其对应的哈希值。然后在代码审核服务器的 `refs/changes/` 命名空间下的特殊引用，匹配的名称中即包含变更集ID，直接用此变更集ID作为新的变更集ID提交到代码审核服务器。
+当使用 `--replace` 参数后，repo 会检查本地版本库名为 `refs/published/branch_name` 的特殊引用（上一次提交的修订），获得其对应的提交SHA1哈希值。然后在代码审核服务器的 `refs/changes/` 命名空间下的特殊引用中寻找和提交SHA1哈希值匹配的引用，找到的匹配引用其名称中就所包含有变更集ID，直接用此变更集ID作为新的变更集ID提交到代码审核服务器。
 
 **Gerrit 服务器魔法**
 
@@ -581,15 +575,16 @@ repo upload 命令执行推送，实际上会以类似如下的命令行格式�
 
 ::
 
-  git push --receive-pack='gerrit receive-pack --reviewer charlie@example.com' ssh://review.example.com:29418/project HEAD:refs/for/master
+  git push --receive-pack='gerrit receive-pack --reviewer charlie@example.com' \
+           ssh://review.example.com:29418/project HEAD:refs/for/master
 
-当 Gerrit 服务器接收到 git push 请求后，会自动将对分支的提交转换为 change_id，显示于 Gerrit 的提交审核界面中。Gerrit 的魔法破解的关键点就在于 git push 命令的 --receive-pack 参数。即提交交由 gerrit-receive-pack 命令执行，进入非标准的 git 处理流程，将提交转换为在 `refs/changes` 命名空间下的引用，而不在 `refs/for` 命名空加下创建引用。
+当 Gerrit 服务器接收到 git push 请求后，会自动将对分支的提交转换为修订集，显示于 Gerrit 的提交审核界面中。Gerrit 的魔法破解的关键点就在于 git push 命令的 --receive-pack 参数。即提交交由 gerrit-receive-pack 命令执行，进入非标准的 git 处理流程，将提交转换为在 `refs/changes` 命名空间下的引用，而不在 `refs/for` 命名空加下创建引用。
 
 
 repo download 命令
 -------------------
 
-repo download 命令主要用于代码审核者下载和评估贡献者提交的修订。贡献者的修订在 git 版本库中以 `refs/changes/<changeid>/<patchset>` 引用方式命名（缺省的 patchset 为1），和其他 Git 引用一样，用 `git fetch` 获取，该引用所指向的最新的提交就是贡献者待审核的修订。使用 repo download 命令实际上就是用 `git fetch` 获取到对应项目的 refs/changes/<changeid>/patchset>` 引用，并自动切换到对应的引用上。
+repo download 命令主要用于代码审核者下载和评估贡献者提交的修订。贡献者的修订在 git 版本库中以 `refs/changes/<changeid>/<patchset>` 引用方式命名（缺省的 patchset 为1），和其他 Git 引用一样，用 `git fetch` 获取，该引用所指向的最新的提交就是贡献者待审核的修订。使用 repo download 命令实际上就是用 `git fetch` 获取到对应项目的 `refs/changes/<changeid>/patchset>` 引用，并自动切换到对应的引用上。
 
 用法：
 
@@ -645,27 +640,27 @@ repo abandon 命令
 其他命令
 --------------
 
-* grep
+* repo grep
 
   相当于对 `git grep` 的封装，用于在项目文件中进行内容查找。
 
-* smartsync
+* repo smartsync
 
   相当于用 -s 参数执行 `repo sync` 。
 
-* forall
+* repo forall
 
   迭代器，可以对 repo 管理的项目进行迭代。
 
-* manifest
+* repo manifest
 
   显示 manifest 文件内容。
 
-* version
+* repo version
 
   显示 repo 的版本号。
 
-* selfupdate
+* repo selfupdate
 
   用于 repo 自身的更新。如果提供 --repo-upgraded 参数，还会更新各个项目的钩子脚本。
 
@@ -673,7 +668,10 @@ repo abandon 命令
 Repo 命令的工作流
 ==================
 
-下图是 repo 的工作流，每一个代码贡献都起始于 `repo start` 创建本地工作分支，最终都以 `repo upload` 命令将代码补丁发布于代码审核服务器。
+图25-1是 repo 的工作流，每一个代码贡献都起始于 `repo start` 创建本地工作分支，最终都以 `repo upload` 命令将代码补丁发布于代码审核服务器。
+
+TODO
+
 ::
 
   +------------+
@@ -696,6 +694,8 @@ Repo 命令的工作流
                       +---- repo upload --replace    : 以相同的修订编号向代码审核服务器重新上传修订
 
                             repo prune               : 删除以合并分支
+
+图25-1：repo工作流
 
 好东西不能 android 独享
 =======================

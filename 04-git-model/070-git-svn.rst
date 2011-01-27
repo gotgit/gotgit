@@ -92,7 +92,9 @@ Git-svn 作为 Git 软件包的一部分，当 Git 从源码包进行安装时�
 使用 git-svn 的一般流程
 ========================
 
-使用 git-svn 的一般流程为:
+使用 git-svn 的一般流程参见图26-1。
+
+TODO
 
 ::
 
@@ -118,6 +120,8 @@ Git-svn 作为 Git 软件包的一部分，当 Git 从源码包进行安装时�
         v
   git svn dcommit
       
+图26-1：git-svn工作流
+
 首先用 git svn clone 命令对 Subversion 进行克隆，创建一个包含 git-svn 扩展的本地 Git 库。在下面的示例中，使用 Subversion 的本地协议(file://) 来访问之前创立的 Subversion 示例版本库，实际上 git-svn 可以使用任何 Subversion 可用的协议，并可以对远程版本库进行操作。
 
 ::
