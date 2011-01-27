@@ -1,6 +1,6 @@
 Gitolite 服务架设
 ******************
-Gitolite 是一款 Perl 语言开发的 Git 服务管理工具，通过公钥对用户进行认证，并能够通过配置文件对写操作进行基于分支和路径的的精细授权。Gitolite 采用的是 SSH 协议并且使用 SSH 公钥认证，因此需要用户对 SSH 非常熟悉，无论是管理员还是普通用户。因此在开始之前，请确认已经通读过之前的“SSH 协议”一章。
+Gitolite 是一款 Perl 语言开发的 Git 服务管理工具，通过公钥对用户进行认证，并能够通过配置文件对写操作进行基于分支和路径的的精细授权。Gitolite 采用的是 SSH 协议并且使用 SSH 公钥认证，因此需要用户对 SSH 非常熟悉，无论是管理员还是普通用户。因此在开始之前，请确认已经通读过前面第29章“使用SSH协议”。
 
 Gitolite 的官方网址是: http://github.com/sitaramc/gitolite 。从提交日志里可以看出作者是 Sitaram Chamarty，最早的提交开始于 2009年8月。作者是受到了 Gitosis 的启发，开发了这款功能更为强大和易于安装的软件。Gitolite 的命名，作者的原意是 Gitosis 和 lite 的组合，不过因为 Gitolite 的功能越来越强大，已经超越了 Gitosis，因此作者笑称 Gitolite 可以看作是 Github-lite —— 轻量级的 Github。
 
@@ -44,7 +44,7 @@ Gitolite 的实现机制概括如下：
 
   即用户不会通过 git 用户进入服务器的 shell，也就不会对系统的安全造成威胁。
 
-* 当管理员授权，用户可以远程在服务器上创建新版本库。
+* 若管理员授权，用户可以远程在服务器上创建新版本库。
 
 下面介绍 Gitolite 的部署和使用。在下面的示例中，约定：服务器的名称为 `server` ，Gitolite 的安装帐号为 `git` ，管理员的 ID 为 `admin` 。 
 
@@ -211,12 +211,11 @@ Gitolite 安装可以在客户端执行，而不需要在服务器端操作，�
 
 * 自动打开编辑器(vi)，编辑 .gitolite.rc 文件，编辑结束，上传到服务器。
 
-
-  以下为缺省配置，一般无须改变：
+  该配置文件为 perl 语法，注意保持文件格式和语法。以下为默认配置，一般无须改变。退出 vi 编辑器，输入 "<ESC>:q" （不带引号）。
 
   * $REPO_BASE="repositories";
 
-    用于设置 Git 服务器的根目录，缺省是 Git 用户主目录下的 repositories 目录，可以使用绝对路径。所有 Git 库都将部署在该目录下。
+    用于设置 Git 服务器的根目录，默认是 Git 用户主目录下的 repositories 目录，可以使用绝对路径。所有 Git 库都将部署在该目录下。
 
   * $REPO_UMASK = 0007;         # gets you 'rwxrwx---'
 
@@ -230,7 +229,6 @@ Gitolite 安装可以在客户端执行，而不需要在服务器端操作，�
 
     缺省支持通配符版本库授权。
 
-  该配置文件为 perl 语法，注意保持文件格式和语法。退出 vi 编辑器，输入 ":q" （不带引号）。
 
 * 至此完成安装。
 
@@ -273,71 +271,67 @@ Gitolite 安装可以在客户端执行，而不需要在服务器端操作，�
 
 1. 首先也要在服务器端先创建一个专用的帐号，如: git 。
 
-  ::
+   ::
 
-    $ sudo adduser --system --shell /bin/bash --group git
+     $ sudo adduser --system --shell /bin/bash --group git
 
 2. 将管理员公钥复制到服务器上。
 
-  管理员在客户端执行下面的命令：
+   管理员在客户端执行下面的命令：
 
-  ::
+   ::
 
-    $ scp ~/.ssh/id_rsa.pub server:/tmp/admin.pub
+     $ scp ~/.ssh/id_rsa.pub server:/tmp/admin.pub
 
-3. 服务器端安装 Gitolite。
+3. 服务器端安装 Gitolite（源码方式安装）。
 
-  推荐采用源码方式安装，因为如果以平台自带软件包模式安装 Gitolite，其中不包含我对 Gitolite 的改进。
+   推荐采用源码方式安装，因为如果以平台自带软件包模式安装 Gitolite，其中不包含我对 Gitolite 的改进。
 
-  - 从源码安装。
+   * 使用 git 下载 Gitolite 的源代码。
 
-    使用 git 下载 Gitolite 的源代码。
+     ::
 
-    ::
+       $ git clone git://github.com/ossxp-com/gitolite.git
 
-      $ git clone git://github.com/ossxp-com/gitolite.git
+   * 创建目录。
 
-    创建目录。
+     ::
 
-    ::
+       $ sudo mkdir -p /usr/local/share/gitolite/conf /usr/local/share/gitolite/hooks
 
-      $ sudo mkdir -p /usr/local/share/gitolite/conf /usr/local/share/gitolite/hooks
+   * 进入 gitolite/src 目录，执行安装。
 
-    进入 gitolite/src 目录，执行安装。
+     ::
 
-    ::
+       $ cd gitolite/src
+       $ sudo ./gl-system-install /usr/local/bin /usr/local/share/gitolite/conf /usr/local/share/gitolite/hooks
 
-      $ cd gitolite/src
-      $ sudo ./gl-system-install /usr/local/bin /usr/local/share/gitolite/conf /usr/local/share/gitolite/hooks
+4. 服务器端安装 Gitolite（平台包管理器安装）。
 
-  - 采用平台自带的软件包安装。
+   例如在 Debian/Ubuntu 平台，执行下面命令：
 
-    例如在 Debian/Ubuntu 平台，执行下面命令：
+   ::
 
-    ::
+     $ sudo aptitude install gitolite
 
-      $ sudo aptitude install gitolite
+5. 在服务器端以专用帐号执行安装脚本。
 
-    Redhat 则使用 yum 命令安装。
+   例如服务器端的专用帐号为 git。
+ 
+   ::
+ 
+     $ sudo su - git
+     $ gl-setup /tmp/admin.pub
 
-4. 在服务器端以专用帐号执行安装脚本。
+6. 管理员在客户端，克隆 gitolite-admin 库
 
-  例如服务器端的专用帐号为 git。
+   ::
 
-  ::
-
-    $ sudo su - git
-    $ gl-setup /tmp/admin.pub
-
-5. 管理员在客户端，克隆 gitolite-admin 库
-
-  ::
-
-    $ git clone git@server:gitolite-admin
+     $ git clone git@server:gitolite-admin
 
 升级 Gitolite:
 
-* 只需要执行上面的第3个步骤即可完成升级。
+* 只需要执行上面的第3或者第4个步骤即可完成升级。
 
 * 如果修改或增加了新的了钩子脚本，还需要重新执行第4个步骤。
 
@@ -356,8 +350,6 @@ Gitolite 安装可以在客户端执行，而不需要在服务器端操作，�
 ::
 
   $ git clone gitolite:gitolite-admin.git
-
-  $ git clone gitolite:gitolite-admin.git 
   Initialized empty Git repository in /data/tmp/gitolite-admin/.git/
   remote: Counting objects: 6, done.
   remote: Compressing objects: 100% (4/4), done.
@@ -415,7 +407,7 @@ Gitolite 安装可以在客户端执行，而不需要在服务器端操作，�
 
   用户可以通过邮件或者其他方式将公钥传递给管理员，切记不要将私钥误传给管理员。如果发生私钥泄漏，马上重新生成新的公钥/私钥对，并将新的公钥传递给管理员，并申请将旧的公钥作废。
 
-  用户从不同的客户端主机访问有着不同的公钥，如果希望使用同一个用户名进行授权，可以按照 `username@host.pub` 方式命名公钥文件，和名为 `username@pub` 的公钥指向同一个用户 `username` 。
+  用户从不同的客户端主机访问有着不同的公钥，如果希望使用同一个用户名进行授权，可以按照 `username@host.pub` 方式命名公钥文件，和名为 `username.pub` 的公钥指向同一个用户 `username` 。
   
   Gitolite 也支持邮件地址格式的公钥，即形如 `username@gmail.com.pub` 的公钥。Gitolite 能够很智能的区分是以邮件地址命名的公钥还是相同用户在不同主机上的公钥。如果是邮件地址命名的公钥，将以整个邮件地址作为用户名。
 
@@ -561,7 +553,7 @@ Gitolite 授权详解
 授权文件的基本语法
 ------------------
 
-下面看一个不那么简单的授权文件:
+下面看一个不那么简单的授权文件。为方便描述，添加了行号。
 
 ::
 
@@ -693,7 +685,7 @@ Gitolite 授权详解
   
 * R, RW, 和 RW+
 
-  R 为只读。RW 为读写权限。RW+ 含义为除了具有读写外，还可以对 rewind 的提交强制 PUSH。
+  R 为只读。RW 为读写权限。RW+ 含义为除了具有读写外，还可以对非快进式推送的提交强制 PUSH。
 
 * RWC, RW+C
 
@@ -711,13 +703,13 @@ Gitolite 授权详解
 Gitolite 授权机制
 -----------------
 
-Gitolite 的授权实际分为两个阶段，第一个阶段称为前Git阶段，即在 Git 命令执行前，由 SSH 链接触发的 `gl-auth-command` 命令执行的授权检查。包括：
+Gitolite 的授权实际分为两个阶段，第一个阶段称为前Git阶段，即在 Git 命令执行前，由 SSH 连接触发的 `gl-auth-command` 命令执行的授权检查。包括：
 
 * 版本库的读。
 
   用户必须拥有版本库至少一个分支的下列权限之一： `R`, `RW`, 或 `RW+` ，则整个版本库包含所有分支对用户均可读。
 
-  而版本库分支实际上在这个阶段获取不到，即版本库的读取不能按照分支授权，只能是版本库的整体授权。
+  而版本库分支在这个阶段还获取不到，即版本库的读取不能按照分支授权，只能是版本库的整体授权。
 
 * 版本库的写。
 
@@ -735,7 +727,7 @@ Gitolite 的授权实际分为两个阶段，第一个阶段称为前Git阶段�
 
 * 钩子脚本 `update` 针对 PUSH 操作的各个分支进行逐一检查，因此第二个阶段可以进行针对分支写操作的精细授权。
 
-* 在这个阶段也可以获取到要更新的新的和老的 ref 的 SHA 摘要，因此也可以进行是否有回滚（rewind）的发生，即是否允许强制更新，还可以对分支的创建和删除进行授权检测。
+* 在这个阶段也可以获取到要更新的新的和老的 ref 的 SHA1 哈希值，因此也可以进行是否有非快进式推送的发生，即是否允许强制更新，还可以对分支的创建和删除进行授权检测。
 
 * 基于路径的写授权，也是在这个阶段进行的。
 
@@ -900,7 +892,7 @@ Gitolite 原来对通配符版本库的实现是克隆即创建，但是这样�
 
 在只使用传统的授权关键字的情况下，有如下注意事项：
 
-* rewind 必须拥有 `+` 的授权。
+* 非快进式推送必须拥有 `+` 的授权。
 * 创建引用必须拥有 `W` 的授权。
 * 删除引用必须拥有 `+` 的授权。
 * 如果没有在授权指令中提供引用相关的参数，相当于提供 `refs/.*` 作为引用的参数，意味着对所有引用均有效。
@@ -932,7 +924,7 @@ Gitolite 原来对通配符版本库的实现是克隆即创建，但是这样�
 
 扩展模式的引用授权，指的是该版本库的授权指令出现了下列授权关键字中的一个或多个： `RWC`, `RWD`, `RWCD`, `RW+C`, `RW+D`, `RW+CD` 。
 
-* rewind 必须拥有 `+` 的授权。
+* 非快进式推送必须拥有 `+` 的授权。
 * 创建引用必须拥有 `C` 的授权。
 * 删除引用必须拥有 `D` 的授权。
 
@@ -1202,7 +1194,7 @@ Gitolite 功能拓展
 Git 版本库控制系统往往并不需要设计特别的容灾备份，因为每一个Git用户就是一个备份。但是下面的情况，就很有必要考虑容灾了。
 
 * Git 版本库的使用者很少（每个库可能只有一个用户）。
-* 版本库检出只限制在办公区并且服务器也在办公区内（所有鸡蛋在一个篮子里）。
+* 版本库克隆只限制在办公区并且服务器也在办公区内（所有鸡蛋在一个篮子里）。
 * Git 版本库采用集中式的应用模型，需要建立双机热备（以便在故障出现时，实现快速的服务器切换）。
 
 Gitolite 提供了服务器间版本库同步的设置。原理是：
@@ -1218,13 +1210,13 @@ Gitolite 提供了服务器间版本库同步的设置。原理是：
 
   缺省的钩子在源代码的 `hooks/common` 目录下，名称为 `post-receive.mirrorpush` ，要将其改名为 `post-receive` 。否则版本库的 `post-receive` 脚本不能生效。
 
-* 主服务器配置到从服务器的公钥认证，并且配置使用特殊的 SHELL： `gl-mirror-shell` 。
+* 主服务器配置到从服务器的公钥认证，并且配置使用特殊的 shell： `gl-mirror-shell` 。
 
-  这是因为主服务器在向从服务器同步版本库的时候，如果从服务器版本库没有创建，直接通过 SSH 登录到从服务器，执行创建命令。因此需要通过一个特殊的SHELL，能够同时支持 Gitolite 的授权访问以及 SHELL 环境。这个特殊的 SHELL 就是 `gl-mirror-shell` 。而且这个 SHELL，通过特殊的环境变量绕过服务器的权限检查，避免因为授权问题导致同步失败。
+  这是因为主服务器在向从服务器同步版本库的时候，如果从服务器版本库没有创建，直接通过 SSH 登录到从服务器，执行创建命令。因此需要通过一个特殊的shell，能够同时支持 Gitolite 的授权访问以及 shell 环境。这个特殊的 shell 就是 `gl-mirror-shell` 。而且这个 shell，通过特殊的环境变量绕过服务器的权限检查，避免因为授权问题导致同步失败。
 
   实际应用中，不光主服务器，每个服务器都进行类似设置，目的是主从服务器可能相互切换。
 
-  在 Gitolite 不同的安装模式下， `gl-mirror-shell` 的安装位置可能不同。下面的命令用于在服务器端设置其他服务器访问时使用这个特殊的 SHELL。
+  在 Gitolite 不同的安装模式下， `gl-mirror-shell` 的安装位置可能不同。下面的命令用于在服务器端设置其他服务器访问时使用这个特殊的 shell。
 
   假设在服务器 foo 上，安装来自服务器 bar 和 baz 的公钥认证。公钥分别是 bar.pub 和 baz.pub。
 
@@ -1290,8 +1282,8 @@ Gitolite 提供了服务器间版本库同步的设置。原理是：
   切换非常简单，就是修改 `~/.gitolite.rc` 配置文件，修改 `$GL_SLAVE_MODE` 设置：主服务器设置为 0，从服务器设置为1。 
 
 
-Gitweb 和 Gitdaemon 支持
-------------------------
+Gitweb 和 Git daemon 支持
+--------------------------
 
 Gitolite 和 git-daemon 的整合很简单，就是在版本库目录中创建一个空文件 `git-daemon-export-ok` 。
 
@@ -1305,7 +1297,7 @@ Gitolite 和 Gitweb 的整合，则提供了两个方面的内容。一个是可
   reponame "owner name" = "one line of description"
 
 * 第1行，为名为 `reponame` 的版本库设定描述。
-* 第1行，同时设定版本库的属主名称，和一行版本库描述。
+* 第2行，同时设定版本库的属主名称，和一行版本库描述。
 
 对于通配符版本库，使用这种方法则很不现实。Gitolite 提供了 SSH 子命令，供版本库的创建者使用。
 

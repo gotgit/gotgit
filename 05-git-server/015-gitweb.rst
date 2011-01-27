@@ -1,14 +1,14 @@
 Gitweb 服务器
 =============
 
-前面介绍的 HTTP 哑协议和智能 HTTP 协议服务架设，都可以用于提供 Git 版本库的读写服务，而本章介绍的 Gitweb 作为一个 Web 应用，只提供版本库的图形化浏览功能，而不能提供版本库本身的读写。
+前面介绍的 HTTP 哑协议和智能 HTTP 协议服务架设，都可以用于提供 Git 版本库的读写服务，而本节介绍的 Gitweb 作为一个 Web 应用，只提供版本库的图形化浏览功能，而不能提供版本库本身的读写。
 
-Gitweb 是用 Perl 语言开发的 CGI 脚本，架设比较方便。Gitweb 支持多个版本库，可以对版本库进行目录浏览（包括历史版本），可以查看文件内容，查看提交历史，提供搜索以及 RSS feed 支持。也可以提供目录文件的打包下载等。
+Gitweb 是用 Perl 语言开发的 CGI 脚本，架设比较方便。Gitweb 支持多个版本库，可以对版本库进行目录浏览（包括历史版本），可以查看文件内容，查看提交历史，提供搜索以及 RSS feed 支持。也可以提供目录文件的打包下载等。图27-1就是kernel.org上的Gitweb示例。
 
 .. figure:: images/git-server/gitweb-kernel-org_full.png
    :scale: 80
 
-   Gitweb 界面(kernel.org)
+   图27-1：Gitweb 界面(kernel.org)
 
 Gitweb 安装
 -----------
@@ -63,7 +63,7 @@ Gitweb 配置
 
     $home_text = "indextext.html";
 
-  在 CGI 脚本所在的目录下，创建 `indextext.html` 文件。下面是我们公司（群英汇）内部 gitweb 自定义首页的内容。
+  在 CGI 脚本所在的目录下，创建 `indextext.html` 文件。下面是我们公司（北京群英汇信息技术有限公司）内部 gitweb 自定义首页的内容。
 
   ::
 
@@ -101,9 +101,9 @@ Gitweb 配置
 
   后面介绍的 Gitosis 和 Gitolite 都可以自动生成这么一个版本库列表，供 gitweb 使用。
 
-* Gitweb 菜单定制
+* Gitweb 菜单定制。
 
-  - 在 tree view 文件的旁边显示 blame 链接
+  - 在 tree view 文件的旁边显示追溯（blame）链接。
 
     ::
 
@@ -119,7 +119,7 @@ Gitweb 配置
         [gitweb]
         blame = 0
     
-  - 为每个tree 添加 snapshot 链接
+  - 为每个tree 添加快照（snapshot）下载链接。
 
     ::
 

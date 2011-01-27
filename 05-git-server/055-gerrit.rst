@@ -1,21 +1,21 @@
 Gerrit 代码审核服务器
 *********************
 
-谷歌 Android 开源项目在 Git 的使用上有两个重要的创新，一个是为多版本库协同而引入的 repo，之前已经详细讨论过。另外一个重要的创新就是 Gerrit —— 代码审核服务器。Gerrit 为 Git 引入的代码审核是强制性的，就是说除非特别的授权设置，向 Git 版本库的推送（Push）必须要经过 Gerrit 服务器，修订必须经过代码审核的一套工作流之后，才可能经批准并纳入正式代码库中。
+谷歌 Android 开源项目在 Git 的使用上有两个重要的创新，一个是为多版本库协同而引入的 repo，在前面第25章已经详细讨论过。另外一个重要的创新就是 Gerrit —— 代码审核服务器。Gerrit 为 Git 引入的代码审核是强制性的，就是说除非特别的授权设置，向 Git 版本库的推送（Push）必须要经过 Gerrit 服务器，修订必须经过代码审核的一套工作流之后，才可能经批准并纳入正式代码库中。
 
 首先贡献者的代码通过 git 命令（或 repo 封装）推送到 Gerrit 管理下的 Git 版本库，推送的提交转化为一个一个的代码审核任务，审核任务可以通过 `refs/changes/` 下的引用访问到。代码审核者可以通过 Web 界面查看审核任务、代码变更，通过 Web 界面做出通过代码审核或者打回等决定。测试者也可以通过 `refs/changes/` 之下的引用获取（fetch）修订对其进行测试，如果测试通过就可以将该评审任务设置为校验通过（verified）。最后经过了审核和校验的修订可以通过 Gerrit 界面中提交动作合并到版本库对应的分支中。
 
-在 Android 项目的网站的代码贡献流程图更为详细的介绍了 Gerrit 代码审核服务器的工作流程。
+Android 项目网站上有一个代码贡献流程图，详细的介绍了 Gerrit 代码审核服务器的工作流程。翻译后的工作流程图见图32-1。
 
-  .. figure:: images/git-server/gerrit-workflow.png
-     :scale: 80
+.. figure:: images/git-server/gerrit-workflow.png
+   :scale: 80
 
-     Gerrit 代码审核工作流
+   图32-1：Gerrit 代码审核工作流
 
 Gerrit 的实现原理
 =================
 
-Gerrit 更准确的说应该称为 Gerrit2。因为 Android 项目最早使用的评审服务器 Gerrit 不是今天这个样子，最早版本的 Gerrit 是用 Python 开发运行于 Google App Engine 上，是从 Python 之父 Guido van Rossum 开发的 Rietveld 分支而来。在这里要讨论的 Gerrit 实为 Gerrit2，是用 Java 语言实现的。从 `这里 <http://code.google.com/p/gerrit/wiki/Background>`_ 可以看到 Gerrit 更为详尽的发展历史。
+Gerrit 更准确的说应该称为 Gerrit2。因为 Android 项目最早使用的评审服务器 Gerrit 不是今天这个样子，最早版本的 Gerrit 是用 Python 开发运行于 Google App Engine 上，是从 Python 之父 Guido van Rossum 开发的 Rietveld 分支而来。在这里要讨论的 Gerrit 实为 Gerrit2，是用 Java 语言实现的。从这里（http://code.google.com/p/gerrit/wiki/Background）可以看到 Gerrit 更为详尽的发展历史。
 
 **SSH 协议的 Git 服务器**
 
@@ -50,21 +50,21 @@ Gerrit 的 Git 服务器，禁止用户向 `refs/heads` 命名空间下的引用
 
 Gerrit 另外一个重要的组件就是 Web 服务器，通过 Web 服务器实现对整个评审工作流的控制。关于 Gerrit 工作流，参见在本章开头出现的 Gerrit 工作流程图。
 
-感受一下 Gerrit 的魅力？直接访问 Android 项目的 Gerrit 网站： https://review.source.android.com/ 。
+感受一下 Gerrit 的魅力？直接访问 Android 项目的 Gerrit 网站： https://review.source.android.com/ 。会看到如图32-2的界面。
 
   .. figure:: images/git-server/android-gerrit-merged.png
      :scale: 70
 
-     Android 项目代码审核网站
+     图32-2：Android 项目代码审核网站
 
-Android 项目的评审网站，匿名即可访问。点击菜单中的 “Merged” 显示了已经通过评审合并到代码库中的审核任务。下面的一个界面就是 Andorid 一个已经合并到代码库中的历史评审任务。
+Android 项目的评审网站，匿名即可访问。点击菜单中的 “Merged” 显示了已经通过评审合并到代码库中的审核任务。图32-3中显示的就是 Andorid 一个已经合并到代码库中的历史评审任务。
 
   .. figure:: images/git-server/android-gerrit-16993.png
      :scale: 70
 
-     Android 项目的 16993 号评审
+     图32-3：Android 项目的 16993 号评审
 
-在该界面可以看到：
+从图32-3可以看出：
 
 * URL 中显示的评审任务编号为 16993。
 * 该评审任务的 Change-Id 以字母 I 开头，包含了一个唯一的 40 位 SHA1 哈希。
@@ -88,7 +88,7 @@ Android 项目的评审网站，匿名即可访问。点击菜单中的 “Merge
 
 **下载 war 包**
 
-Gerrit 是由 Java 开发的，封装为一个 war 包: gerrit.war ，安装非常简洁。如果需要从源码编译出 war 包，可以参照文档: http://gerrit.googlecode.com/svn/documentation/2.1.5/dev-readme.html 。不过最简单的就是从 Google Code 上直接下载编译号的 war 包。 
+Gerrit 是由 Java 开发的，封装为一个 war 包: gerrit.war ，安装非常简洁。如果需要从源码编译出 war 包，可以参照文档: http://gerrit.googlecode.com/svn/documentation/2.1.5/dev-readme.html 。不过最简单的就是从 Google Code 上直接下载编译好的 war 包。 
 
 从下面的地址下载 Gerrit 的 war 包： http://code.google.com/p/gerrit/downloads/list 。在下载页面会有一个文件名类似 Gerrit-x.x.x.war 的 war 包，这个文件就是 Gerrit 的全部。示例中使用的是 2.1.5.1 版本，把下载的 Gerrit-2.1.5.1.war 包重命名为 Gerrit.war 。下面的介绍就是基于这个版本。
 
@@ -96,7 +96,7 @@ Gerrit 是由 Java 开发的，封装为一个 war 包: gerrit.war ，安装非�
 
 Gerrit 需要数据库来维护账户信息、跟踪评审任务等。目前支持的数据库类型有 PostgreSQL, MySQL 以及嵌入式的 H2 数据库。
 
-选择使用缺省的 H2 内置数据库是最简单的，因为这样无须任何设置。如果想使用更为熟悉的 PostgreSQL 或者 MySQL，则预先建立数据库。
+选择使用默认的 H2 内置数据库是最简单的，因为这样无须任何设置。如果想使用更为熟悉的 PostgreSQL 或者 MySQL，则预先建立数据库。
 
 对于 PostgreSQL，在数据库中创建一个用户 gerrit，并创建一个数据库 reviewdb。
 
@@ -496,59 +496,59 @@ Gerrit 的数据库访问
 立即注册为 Gerrit 管理员
 =========================
 
-第一个 Gerrit 账户自动成为权限最高的管理员，因此 Gerrit 安装完毕后的第一件事情就是立即注册或者登录，以便初始化管理员帐号。下面的示例是在本机(localhost) 以 HTTP 认证方式架设的 Gerrit 审核服务器。当第一次访问的时候，会弹出非常眼熟的 HTTP Basic Auth 认证界面：
+第一个 Gerrit 账户自动成为权限最高的管理员，因此 Gerrit 安装完毕后的第一件事情就是立即注册或者登录，以便初始化管理员帐号。下面的示例是在本机(localhost) 以 HTTP 认证方式架设的 Gerrit 审核服务器。当第一次访问的时候，会弹出非常眼熟的 HTTP Basic Auth 认证界面，如图32-4。
 
 .. figure:: images/git-server/gerrit-account-http-auth.png
    :scale: 100
 
-   Http Basic Auth 认证界面
+   图32-4：Http Basic Auth 认证界面
 
-输入正确的用户名和口令登录后，系统自动创建 ID 为 1000000 的帐号，该帐号是第一个注册的帐号，会自动该被赋予管理员身份。因为使用的是 HTTP 认证，用户的邮件地址等个人信息尚未确定，因此登录后首先进入到个人信息设置界面。
+输入正确的用户名和口令登录后，系统自动创建 ID 为 1000000 的帐号，该帐号是第一个注册的帐号，会自动该被赋予管理员身份。因为使用的是 HTTP 认证，用户的邮件地址等个人信息尚未确定，因此登录后首先进入到个人信息设置界面。如图32-5。
 
 .. figure:: images/git-server/gerrit-account-init-1.png
    :scale: 70
 
-   Gerrit 第一次登录后的个人信息设置界面
+   图32-5：Gerrit 第一次登录后的个人信息设置界面
    
-在上面的截图中可以看到在菜单中有 “Admin” 菜单项，说明当前登录的用户被赋予了管理员权限。在下面的联系方式确认对话框中有一个注册新邮件地址的按钮，点击该按钮弹出邮件地址录入对话框。
+在图32-5中可以看到在菜单中有 “Admin” 菜单项，说明当前登录的用户被赋予了管理员权限。在图32-5的联系方式确认对话框中有一个注册新邮件地址的按钮，点击该按钮弹出邮件地址录入对话框，如图32-6。
 
 .. figure:: images/git-server/gerrit-account-init-2.png
    :scale: 100
 
-   输入个人的邮件地址
+   图32-6：输入个人的邮件地址
 
-必须输入一个有效的邮件地址以便能够收到确认邮件。这个邮件地址非常重要，因为 Git 代码提交时在提交说明中出现的邮件地址需要和这个地址一致。当填写了邮件地址后，会收到一封确认邮件，点击邮件中的确认链接会重新进入到 Gerrit 帐号设置界面。
+必须输入一个有效的邮件地址以便能够收到确认邮件。这个邮件地址非常重要，因为 Git 代码提交时在提交说明中出现的邮件地址需要和这个地址一致。当填写了邮件地址后，会收到一封确认邮件，点击邮件中的确认链接会重新进入到 Gerrit 帐号设置界面，如图32-7。
 
 .. figure:: images/git-server/gerrit-account-init-4-settings-username.png
    :scale: 70
 
-   邮件地址确认后进入 Gerrit 界面
+   图32-7：邮件地址确认后进入 Gerrit 界面
 
 在 Full Name 字段输入用户名，点击保存更改后，右上角显示的 “Anonymous Coward” 就会显示为登录用户的姓名和邮件地址。
 
-接下来需要做的最重要的一件事就是配置公钥。通过该公钥，注册用户可以通过 SSH 协议向 Gerrit 的 Git 服务器提交，如果具有管理员权限还能够远程管理 Gerrit 服务器。
+接下来需要做的最重要的一件事就是配置公钥（如图32-8）。通过该公钥，注册用户可以通过 SSH 协议向 Gerrit 的 Git 服务器提交，如果具有管理员权限还能够远程管理 Gerrit 服务器。
 
 .. figure:: images/git-server/gerrit-account-init-5-settings-ssh-pubkey.png
    :scale: 70
 
-   Gerrit 的SSH公钥设置界面
+   图32-8：Gerrit 的SSH公钥设置界面
 
-在文本框中粘贴公钥。关于如何生成和管理公钥，可以参见 SSH 服务架设相关章节。TODO
+在文本框中粘贴公钥。关于如何生成和管理公钥，参见第29章“使用SSH协议”相关内容。
 
-点击 “Add” 按钮，完成公钥的添加。添加的公钥就会显示在列表中。一个用户可以添加多个公钥。
+点击 “Add” 按钮，完成公钥的添加。添加的公钥就会显示在列表中（如图32-9）。一个用户可以添加多个公钥。
 
 .. figure:: images/git-server/gerrit-account-init-6-settings-ssh-pubkey-added.png
    :scale: 70
 
-   用户的公钥列表
+   图32-9：用户的公钥列表
 
-点击左侧的 “Groups” （用户组）菜单项，可以看到当前用户所属的分组。
+点击左侧的 “Groups” （用户组）菜单项，可以看到当前用户所属的分组，如图32-10。
 
 
 .. figure:: images/git-server/gerrit-account-init-7-settings-groups.png
    :scale: 70
 
-   Gerrit 用户所属的用户组
+   图32-10：Gerrit 用户所属的用户组
 
 第一个注册的用户同时属于三个用户组，一个是管理员用户组（Administrators），另外两个分别是 Anonymous Users （任何用户）和 Registered Users（注册用户）。
 
@@ -636,12 +636,12 @@ Gerrit 的数据库访问
   $ ssh -p 29418 localhost gerrit ls-projects
   new/project
 
-在 Gerrit 的 Web 管理界面，也可以看到新项目已经建立。
+在 Gerrit 的 Web 管理界面，也可以看到新项目已经建立，如图32-11。
 
 .. figure:: images/git-server/gerrit-project-1-list.png
    :scale: 70
 
-   Gerrit 中项目列表
+   图32-11：Gerrit 中项目列表
 
 在项目列表中可以看到除了新建的 new/project 项目之外还有一个名为“-- All Projects --”的项目，其实它并非一个真实存在的项目，只是为了项目授权管理的方便 —— 在“-- All Projects --” 中建立的项目授权能够被其他项目共享。
 
@@ -683,19 +683,19 @@ Gerrit 的数据库访问
 
 但是如果希望将版本库的历史提交不经审核直接推送到 Gerrit 维护的 Git 版本库中可以么？是的，只要通过 Gerrit 的管理界面为该项目授权：允许某个用户组（如 Administrators 组）的用户可以向分支推送。（注意该授权在推送完毕后尽快撤销，以免被滥用）
 
-Gerrit 的界面对用户非常友好。例如在添加授权的界面中，只要在用户组的输入框中输入前几个字母，就会弹出用户组列表供选择。
+Gerrit 的界面对用户非常友好（如图32-12）。例如在添加授权的界面中，只要在用户组的输入框中输入前几个字母，就会弹出用户组列表供选择。
 
 .. figure:: images/git-server/gerrit-project-3-acl-create-branch.png
    :scale: 70
 
-   添加授权的界面
+   图32-12：添加授权的界面
 
-添加授权完毕后，项目 “new/project” 的授权列表就会出现新增的为 Administrators 管理员添加的 “+2: Create Branch” 授权。
+添加授权完毕后，项目 “new/project” 的授权列表就会出现新增的为 Administrators 管理员添加的 “+2: Create Branch” 授权，如图32-13。
 
 .. figure:: images/git-server/gerrit-project-4-acl-created-branch.png
    :scale: 70
 
-   添加授权后的授权列表
+   图32-13：添加授权后的授权列表
 
 因为已经为管理员分配了直接向 `refs/heads/*` 引用推送的授权，这样就能够向 Git 版本库推送数据了。再执行一次推送任务，看看能否成功。
 
@@ -775,7 +775,8 @@ Gerrit 的界面对用户非常友好。例如在添加授权的界面中，只�
 
 ::
 
-  $ git clone --mirror /home/gerrit/review_site/git/new/project.git /home/gerrit/review_site/git/hello.git
+  $ git clone --mirror /home/gerrit/review_site/git/new/project.git \
+        /home/gerrit/review_site/git/hello.git
   Cloning into bare repository /home/gerrit/review_site/git/hello.git...
   done.
 
@@ -811,12 +812,12 @@ Gerrit 的界面对用户非常友好。例如在添加授权的界面中，只�
   hello
   new/project
 
-可以登录到 Gerrit 项目对新建立的项目进行相关设置。例如修改项目的说明，项目的提交策略，是否要求提交说明中必须包含“Signed-off-by”信息等。
+可以登录到 Gerrit 项目对新建立的项目进行相关设置。例如修改项目的说明，项目的提交策略，是否要求提交说明中必须包含“Signed-off-by”信息等，如图32-14。
 
 .. figure:: images/git-server/gerrit-project-5-newproject-settings.png
    :scale: 70
 
-   项目基本设置
+   图32-14：项目基本设置
 
 这种通过修改数据库从已有版本库创建项目的方法适合大批量的项目创建。下面就对新建立的 hello 进行一次完整的 Gerrit 评审流程。
 
@@ -825,7 +826,9 @@ Gerrit 的界面对用户非常友好。例如在添加授权的界面中，只�
 
 刚刚安装好的 Gerrit 的评审工作流并不完整，还不能正常的开展评审工作，需要对项目授权进行设置以定制适合的评审工作流。
 
-缺省安装的 Gerrit 中只有下面内置的四个用户组。
+缺省安装的 Gerrit 中只内置了四个用户组，如表32-1所示。
+
+  表32-1：Gerrit内置用户组
 
   +--------------------------+-------------------------------+
   | 用户组                   | 说明                          |
@@ -841,7 +844,9 @@ Gerrit 的界面对用户非常友好。例如在添加授权的界面中，只�
 
 未登录的用户只属于 Anonymous Users，登录用户则同时拥有 Anonymous Users 和 Registered Users 的权限。对于管理员则还拥有 Administrators 用户组权限。
 
-查看全局（伪项目“-- All Projects --”）的初始权限设置。会看到类似下面的表格：
+查看全局（伪项目“-- All Projects --”）的初始权限设置。会看到如表32-2一样的授权表格。
+
+  表32-2：Gerrit授权表格
 
   +--------+-----------------+-------------------+-----------------+-------------------------------------------------------+
   | 编号   | 类别            | 用户组名称        | 引用名称        | 权限范围                                              |
@@ -879,39 +884,42 @@ Gerrit 的界面对用户非常友好。例如在添加授权的界面中，只�
 
 下面的示例中，创建两个新的用户组 Reviewer 和 Verifier，并为其赋予相应的授权。
 
-创建用户组，可以通过 Web 界面或者命令行。如果通过 Web 界面添加用户组，选择“Admin” 菜单下的“Groups” 子菜单。
+创建用户组，可以通过 Web 界面或者命令行。如果通过 Web 界面添加用户组，选择“Admin” 菜单下的“Groups” 子菜单，如图32-15。
 
 .. figure:: images/git-server/gerrit-addgroup-1.png
    :scale: 70
 
-   Gerrit 用户组创建
+   图32-15：Gerrit 用户组创建
 
-输入用户组名称后，点击 “Create Group” 按钮。进入创建用户组后的设置页。
+输入用户组名称后，点击 “Create Group” 按钮。进入创建用户组后的设置页，如图32-16。
 
 .. figure:: images/git-server/gerrit-addgroup-2.png
    :scale: 70
 
-   Gerrit 用户组设置页
+   图32-16：Gerrit 用户组设置页
 
 注意到在用户设置页面中有一个 Owners 字段名称和用户组名称相同，实际上这是 Gerrit 关于用户组的一个特别的功能。一个用户组可以设置另外一个用户组为本用户组的 Owners，属于 Owners 用户组的用户实际上相当于本用户组的管理者，可以添加用户、修改用户组名称等。不过一般最常用的设置是使用同名的用户组作为 Owners。
 
 在用户组设置页面的最下面，是用户组用户分配对话框，可以将用户分配到用户组中。注意 Gerrit 的用户组不能包含，即只能将用户分配到用户组中。
 
-下面是添加了两个新用户组后的用户组列表：
+图32-17是添加了两个新用户组后的用户组列表：
 
 .. figure:: images/git-server/gerrit-addgroup-3-list.png
    :scale: 70
 
-   Gerrit 用户组列表
+   图32-17：Gerrit 用户组列表
 
-接下来要为新的用户组授权，需要访问“Admin”菜单下的“Projects”子菜单，点击对应的项目进入权限编辑界面。为了简便起见，选择“-- All Projects --”，对其授权的更改可以被所有其他的项目共享。下面是为 Reviewer 用户组建立授权过程的页面。
+接下来要为新的用户组授权，需要访问“Admin”菜单下的“Projects”子菜单，点击对应的项目进入权限编辑界面。为了简便起见，选择“-- All Projects --”，对其授权的更改可以被所有其他的项目共享。图32-18是为 Reviewer 用户组建立授权过程的页面。
 
 .. figure:: images/git-server/gerrit-acl-1-reviewer.png
    :scale: 70
 
-   为 Reviewer 用户组建立授权
+   图32-18：为 Reviewer 用户组建立授权
 
-分别为两个新建立的用户组分配授权，如下面的表格所示。编号从 6 开始，是因为这里补充的授权是建立在前面的缺省授权列表的基础上的。
+分别为两个新建立的用户组分配授权，如表32-3所示。编号从 6 开始，是因为这里补充的授权是建立在前面的缺省授权列表的基础上的。
+
+
+  表32-3：新用户组权限分配表
 
   +--------+-----------------+-------------------+-----------------+-------------------------------------------------------+
   | 编号   | 类别            | 用户组名称        | 引用名称        | 权限范围                                              |
@@ -1029,62 +1037,62 @@ Repo 是 Gerrit 的最佳伴侣，凡是需要和 Gerrit 版本库交互的工�
 审核评审任务
 --------------
 
-以 Dev1 用户登录 Gerrit 网站，点击“All”菜单下的“Open”标签，可以新提交到 Gerrit 状态为 Open 的评审任务。
+以 Dev1 用户登录 Gerrit 网站，点击“All”菜单下的“Open”标签，可以新提交到 Gerrit 状态为 Open 的评审任务，如图32-19。
 
 .. figure:: images/git-server/gerrit-review-1-tasklist.png
    :scale: 70
 
-   Gerrit 评审任务列表
+   图32-19：Gerrit 评审任务列表
 
-点击该评审任务，显示关于此评审任务的详细信息。
+点击该评审任务，显示关于此评审任务的详细信息，如图32-20。
 
 .. figure:: images/git-server/gerrit-review-2-changeid_full.png
    :scale: 70
 
-   Gerrit 评审任务概述
+   图32-20：Gerrit 评审任务概述
 
 从 URL 地址栏可以看到该评审任务的评审编号为1。目前该评审任务有一个补丁集（Patch Set 1），可以点击 “Diff All Side-by-Side” 查看变更集，以决定该提交是否应该被接受。作为测试，先让此次提交通过代码审核，于是以 Dev1 用户身份点击 “Review” 按钮。
 
-点击 “Review” 按钮后，弹出代码评审对话框，如下：
+点击 “Review” 按钮后，弹出代码评审对话框，如图32-21。
 
 .. figure:: images/git-server/gerrit-review-3-review-approved.png
    :scale: 70
 
-   Gerrit 任务评审对话框
+   图32-21：Gerrit 任务评审对话框
 
 选择 “+2: Looks good to me, approved.”，点击按钮 “Publish Comments” 以通过评审。注意因为没有给 Dev1 用户（Reviewer用户组）授予 Submit 权限，因此此时 Dev1 还不能将此审核任务提交。
 
-当 Dev1 用户做出通过评审的决定后，代码提交者 jiangxin 会收到一封邮件。
+当 Dev1 用户做出通过评审的决定后，代码提交者 jiangxin 会收到一封邮件，如图32-22。
 
 .. figure:: images/git-server/gerrit-review-4-review-mail-notify.png
    :scale: 70
 
-   Gerrit 通知邮件
+   图32-22：Gerrit 通知邮件
 
 评审任务没有通过测试
 ---------------------
 
-下面以 Dev2 帐号登录 Gerrit，查看处于打开状态的评审任务，会看到评审任务1 的代码评审已经通过，但是尚未进行测试检查（Verify）。于是 Dev2 可以下载该补丁集，在本机进行测试。
+下面以 Dev2 帐号登录 Gerrit，查看处于打开状态的评审任务，如图32-23。会看到评审任务1 的代码评审已经通过，但是尚未进行测试检查（Verify）。于是 Dev2 可以下载该补丁集，在本机进行测试。
 
 
 .. figure:: images/git-server/gerrit-review-5-review-verify-view.png
    :scale: 70
 
-   Gerrit 评审任务显示
+   图32-23：Gerrit 评审任务显示
 
-假设测试没有通过，Dev2 用户点击该评审任务的 “Review” 按钮，重置该任务的评审状态。
+假设测试没有通过，Dev2 用户点击该评审任务的 “Review” 按钮，重置该任务的评审状态，如图32-24。
 
 .. figure:: images/git-server/gerrit-review-6-review-verify-failed.png
    :scale: 70
 
-   Gerrit 评审任务未通过
+   图32-24：Gerrit 评审任务未通过
 
-注意到 Dev2 用户的评审对话框有三个按钮，多出的 “Publish and Submit” 按钮是因为 Dev2 拥有 Submit 授权。Dev2 用户在上面的对话框中，选择了“-1: Fails”，当点击“Publish Comments” 按钮，该评审任务的评审记录被重置，同时提交者和其他评审参与者会收到通知邮件。
+注意到图32-24中 Dev2 用户的评审对话框有三个按钮，多出的 “Publish and Submit” 按钮是因为 Dev2 拥有 Submit 授权。Dev2 用户在上面的对话框中，选择了“-1: Fails”，当点击“Publish Comments” 按钮，该评审任务的评审记录被重置，同时提交者和其他评审参与者会收到通知邮件，如图32-25。
 
 .. figure:: images/git-server/gerrit-review-7-review-mail-notify-failed.png
    :scale: 70
 
-   Gerrit 通知邮件：评审未通过
+   图32-25：Gerrit 通知邮件：评审未通过
 
 
 重新提交新的补丁集
@@ -1156,37 +1164,37 @@ Repo 是 Gerrit 的最佳伴侣，凡是需要和 Gerrit 版本库交互的工�
 新修订集通过评审
 ------------------
 
-当提交者重新针对评审任务进行提交时，原评审任务的审核者会收到通知邮件，提醒有新的补丁集等待评审。
+当提交者重新针对评审任务进行提交时，原评审任务的审核者会收到通知邮件，提醒有新的补丁集等待评审，如图32-26。
 
 .. figure:: images/git-server/gerrit-review-8-2-review-new-patchset-mail-notify.png
    :scale: 70
 
-   Gerrit 通知邮件：新补丁集
+   图32-26：Gerrit 通知邮件：新补丁集
 
-登录 Gerrit 的 Web 界面，可以看到评审任务1 有了新的补丁集。
+登录 Gerrit 的 Web 界面，可以看到评审任务1 有了新的补丁集，如图32-27。
 
 .. figure:: images/git-server/gerrit-review-8-review-new-patchset.png
    :scale: 70
 
-   Gerrit 新补丁集显示
+   图32-27：Gerrit 新补丁集显示
 
-再经过代码审核和测试，这次 Dev2 用户决定让评审通过，点击了 “Publish and Submit” 按钮。Submit（提交）动作会将评审任务（refs/changes/01/1/2）合并到对应分支（master）。下图显示的是通过评审完成合并的评审任务1。
+再经过代码审核和测试，这次 Dev2 用户决定让评审通过，点击了 “Publish and Submit” 按钮。Submit（提交）动作会将评审任务（refs/changes/01/1/2）合并到对应分支（master）。图32-28显示的是通过评审完成合并的评审任务1。
 
 .. figure:: images/git-server/gerrit-review-9-review-patchset-merged.png
    :scale: 70
 
-   Gerrit 合并后的评审任务
+   图32-28：Gerrit 合并后的评审任务
 
 
 从远程版本库更新
 ------------------
 
-当 Dev1 和 Dev2 用户完成代码评审，提交者会收到多封通知邮件。这其中最让人激动的就是代码被接受并合并到开发主线（master）中，这是多么另开发者感到荣耀的啊。
+当 Dev1 和 Dev2 用户完成代码评审，提交者会收到多封通知邮件。这其中最让人激动的就是代码被接受并合并到开发主线（master）中（如图32-29），这是多么另开发者感到荣耀的啊。
 
 .. figure:: images/git-server/gerrit-review-10-review-merged-mail-notify.png
    :scale: 70
 
-   Gerrit 通知邮件：修订已合并
+   图32-29：Gerrit 通知邮件：修订已合并
 
 代码提交者执行 `git pull` ，和 Gerrit 管理的版本库同步。
 

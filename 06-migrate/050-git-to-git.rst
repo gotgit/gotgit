@@ -181,7 +181,7 @@ Git 提供了太多武器进行版本库的整理，可以将一个 Git 版本�
 
   $ git filter-branch --commit-filter 'git_commit_non_empty_tree "$@"' 
 
-函数 git_commit_non_empty_tree 函数是在脚本 `git-filter-branch` 中已经定义过的函数。可以打开文件 `\`git --exec-path\`/git-filter-branch` 查看。
+函数 git_commit_non_empty_tree 函数是在脚本 `git-filter-branch` 中已经定义过的函数。可以打开文件 `$(git --exec-path)/git-filter-branch` 查看。
 
 ::
 

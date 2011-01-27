@@ -3,7 +3,7 @@ Gitosis 服务架设
 
 Gitosis 是 Gitolite 的鼻祖，同样也是一款基于SSH公钥认证的 Git 服务管理工具，但是功能要比之前介绍的 Gitolite 要弱的多。Gitosis 由 Python 语言开发，对于偏爱 Python 不喜欢 Perl 的开发者（我就是其中之一），可以对 Gitosis 加以关注。
 
-Gitosis 的出现远远早于 Gitolite，作者 Tommi Virtanen 从 2007 年5月就开始了 gitosis 的开发，最后一次提交是在 2009 年9月，已经停止更新了。但是 Gitosis 依然有其生命力。
+Gitosis 的出现远早于 Gitolite，作者 Tommi Virtanen 从 2007 年5月就开始了 gitosis 的开发，最后一次提交是在 2009 年9月，已经停止更新了。但是 Gitosis 依然有其生命力。
 
 * 配置简洁，可以直接在服务器端编辑，成为为某些服务定制的内置的无需管理的 Git 服务。
 
@@ -27,9 +27,9 @@ Gitosis 的出现远远早于 Gitolite，作者 Tommi Virtanen 从 2007 年5月�
 
 Gitosis 因为是 Gitolite 的鼻祖，因此下面的 Gitosis 实现机理，似曾相识：
 
-* Gitosis 安装在服务器(server.name) 某个帐号之下，例如 `git` 帐号
+* Gitosis 安装在服务器(server.name) 某个帐号之下，例如 `git` 帐号。
 
-* 管理员通过 git 命令检出名为 gitosis-admin 的版本库
+* 管理员通过 git 命令检出名为 gitosis-admin 的版本库。
 
   ::
 
@@ -45,11 +45,11 @@ Gitosis 因为是 Gitolite 的鼻祖，因此下面的 Gitosis 实现机理，�
 
       command="gitosis-serve jiangxin",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-rsa <公钥内容来自于 jiangxin.pub ...>
 
-  - 更新服务器端的授权文件 `~/.gitosis.conf`
+  - 更新服务器端的授权文件 `~/.gitosis.conf` 。
 
-* 用户可以用 git 命令访问授权的版本库
+* 用户可以用 git 命令访问授权的版本库。
 
-* 当管理员授权，用户可以远程在服务器上创建新版本库
+* 当管理员授权，用户可以远程在服务器上创建新版本库。
 
 下面介绍 Gitosis 的部署和使用。在下面的示例中，约定：服务器的名称为 `server` ，Gitolite 的安装帐号为 `git` 。 
 
@@ -116,13 +116,13 @@ Gitosis 服务初始化，就是初始化一个 gitosis-admin 库，并为管理
 
 * 如果管理员在客户端没有公钥，使用下面命令创建
 
-  ..
+  ::
 
     $ ssh-keygen
 
 * 管理员上传公钥到服务器
 
-  ..
+  ::
 
     $ scp ~/.ssh/id_rsa.pub server:/tmp
 
@@ -130,12 +130,14 @@ Gitosis 服务初始化，就是初始化一个 gitosis-admin 库，并为管理
 
   以 git 用户身份执行 gitosis-init 命令，并向其提供管理员公钥。
 
-  ..
+  ::
   
     $ sudo su - git 
     $ gitosis-init < /tmp/id_rsa.pub    
 
 * 确保 gitosis-admin 版本库的钩子脚本可执行。
+
+  ::
 
     $ sudo chmod a+x ~git/repositories/gitosis-admin.git/hooks/post-update
 
@@ -264,61 +266,59 @@ Gitosis 服务初始化，就是初始化一个 gitosis-admin 库，并为管理
 
 新用户添加完毕，可能需要重新进行授权。更改授权的方法也非常简单，即修改 gitosis.conf 配置文件，提交并 PUSH 。 
 
-* 管理员进入 gitosis-admin 本地克隆版本库中，编辑 gitosis.conf 。
+首先管理员进入 gitosis-admin 本地克隆版本库中，编辑 gitosis.conf 。
 
-  ::
+::
 
-    $ vi gitosis.conf
+  $ vi gitosis.conf
 
-* 授权指令比较复杂，先通过建立一个新用户组并授权新版本库 testing 尝试一下更改授权文件。
+授权指令比较复杂，先通过建立一个新用户组并授权新版本库 testing 尝试一下更改授权文件。例如在 gitosis.conf 中添加如下授权内容：
 
-  在 gitosis.conf 中添加如下授权内容：
+::
 
-  ::
+  1   [group testing-admin]
+  2   members = jiangxin @gitosis-admin
+  3   admin = testing
+  4 
+  5   [group testing-devloper]
+  6   members = dev1 dev2
+  7   writable = testing
+  8 
+  9   [group testing-reader]
+  10  members = @all
+  11  readonly = testing
+  
 
-    1   [group testing-admin]
-    2   members = jiangxin @gitosis-admin
-    3   admin = testing
-    4 
-    5   [group testing-devloper]
-    6   members = dev1 dev2
-    7   writable = testing
-    8 
-    9   [group testing-reader]
-    10  members = @all
-    11  readonly = testing
-    
+* 上面的授权文件为版本库 testing 赋予了三个角色。分别是 @testing-admin 用户组，@testing-developer 用户组和 @testing-reader 用户组。
 
-  * 上面的授权文件为版本库 testing 赋予了三个角色。分别是 @testing-admin 用户组，@testing-developer 用户组和 @testing-reader 用户组。
+* 第1行开始的 testing-admin 小节，定义了用户组 @testing-admin 。
 
-  * 第1行开始的 testing-admin 小节，定义了用户组 @testing-admin 。
+* 第2行设定该用户组包含的用户有 jiangxin，以及前面定义的 @gitosis-admin 用户组用户。
 
-  * 第2行设定该用户组包含的用户有 jiangxin，以及前面定义的 @gitosis-admin 用户组用户。
+* 第3行用 admin 指令，设定该用户组用户可以创建版本库 testing 。
 
-  * 第3行用 admin 指令，设定该用户组用户可以创建版本库 testing 。
+  admin 指令是笔者新增的授权指令，请确认安装的 Gitosis 包含笔者的改进。
 
-    admin 指令是笔者新增的授权指令，请确认安装的 Gitosis 包含笔者的改进。
+* 第7行用 writable 授权指令，设定该 @testing-developer 用户组用户可以读写版本库 testing 。
 
-  * 第7行用 writable 授权指令，设定该 @testing-developer 用户组用户可以读写版本库 testing 。
+  笔者改进后的 Gitosis 也可以使用 write 作为 writable 指令的同义词指令。
 
-    笔者改进后的 Gitosis 也可以使用 write 作为 writable 指令的同义词指令。
+* 第11行用 readonly 授权指令，设定该 @testing-reader 用户组用户（所有用户）可以只读访问版本库 testing 。
 
-  * 第11行用 readonly 授权指令，设定该 @testing-reader 用户组用户（所有用户）可以只读访问版本库 testing 。
+  笔者改进后的 Gitosis 也可以使用 read 作为 readonly 指令的同义词指令。
 
-    笔者改进后的 Gitosis 也可以使用 read 作为 readonly 指令的同义词指令。
+编辑结束，提交改动。
 
-* 编辑结束，提交改动。
+::
 
-  ::
+  $ git add gitosis.conf
+  $ git commit -q -m "auth for repo testing."
 
-    $ git add gitosis.conf
-    $ git commit -q -m "auth for repo testing."
+执行 git push，同步到服务器，才真正完成授权文件的编辑。
 
-* 执行 git push，同步到服务器，才真正完成授权文件的编辑。
+::
 
-  ::
-
-    $ git push
+  $ git push
   
 Gitosis 授权详解
 =================
