@@ -3,9 +3,9 @@
 
 有的时候，需要将对代码的改动以补丁文件的方式进行传递，最终合并入版本库。例如直接在软件部署目录内进行改动，再将改动传送到开发平台。或者是因为在某个开源软件的官方版本库中没有提交权限，需要将自己的改动以补丁文件的方式提供给官方。
 
-关于补丁文件的格式，补丁的生成和应用在第一章 TODO 已经进行了介绍，使用的是 Gnu diff 和 patch 命令。很多版本控制系统也可以生成 GNU 兼容的 diff 文件，例如 `svn diff` 命令。但是 GNU 的 diff 格式有一个不足：不支持二进制文件。即如果有二进制文件发生了变化或者增加了新的二进制文件，在差异文件中无法体现，这样的差异文件应用到代码树中，二进制文件丢失了！
+关于补丁文件的格式，补丁的生成和应用在第3篇第20章“补丁文件交互”当中已经进行了介绍，使用的是 Gnu diff 和 patch 命令。很多版本控制系统也可以生成 GNU 兼容的 diff 文件，例如 `svn diff` 命令。但是 GNU 的差异（diff）格式有一个不足：不支持二进制文件。即如果有二进制文件发生了变化或者增加了新的二进制文件，在差异文件中无法体现，这样的差异文件应用到代码树中，二进制文件丢失了！
 
-Git 突破了传统 DIFF 格式的限制，通过引入新的 DIFF 格式，实现了对二进制文件的支持。
+Git 突破了传统差异格式的限制，通过引入新的差异格式，实现了对二进制文件的支持。
 
 Git 版本库中二进制文件变更的支持
 ================================
@@ -38,7 +38,7 @@ Git 版本库中二进制文件变更的支持
 
   注：拷贝 `/bin/ls` 可执行文件（二进制）的前32个字节作为 `binary.data` 文件。
 
-* 如果执行 `git diff --cached` 看到的是未扩展的 DIFF 格式。
+* 如果执行 `git diff --cached` 看到的是未扩展的差异格式。
 
   ::
 
@@ -102,7 +102,7 @@ Git 版本库中二进制文件变更的支持
     [master a79bcbe] change binary.data.
      1 files changed, 0 insertions(+), 0 deletions(-)
 
-* 看看更改二进制文件的新 DIFF 格式。
+* 看看更改二进制文件的新差异格式。
 
   ::
 
@@ -208,9 +208,8 @@ Git 对补丁文件的扩展，实际上不只是增加了二进制文件的支�
 
 不在 Git 版本库中的文件和目录可以比较生成 Git 格式的补丁文件么，以及可以执行应用补丁（apply patch）的操作么？
 
-是的，Git 的 diff 命令和 apply 命令支持对非 Git 版本库/工作区进行操作。但是当前 Git 最新版本(1.7.3)的 `git apply` 命令有一个 bug，这个 bug 导致目前的 `git apply` 命令只能引用 patch level（补丁文件前缀级别） 为 1 的补丁。我已经将改正这个 Bug 的补丁文件提交到 Git 开发列表中，参见：
+是的，Git 的 diff 命令和 apply 命令支持对非 Git 版本库/工作区进行操作。但是当前 Git 最新版本(1.7.3)的 `git apply` 命令有一个 bug，这个 bug 导致目前的 `git apply` 命令只能应用 patch level（补丁文件前缀级别） 为 1 的补丁。我已经将改正这个 Bug 的补丁文件提交到 Git 开发列表中，但有其他人先于我修正了这个Bug。不管最终是谁修正的，在新版本的 Git 中，这个问题应该已经解决。参见我发给Git邮件列表的相关讨论。
 
-* http://permalink.gmane.org/gmane.comp.version-control.git/162046
 * http://marc.info/?l=git&m=129058163119515&w=2
 
 下面的示例演示一下如何对非 Git 版本库使用 `git diff` 和 `git patch` 命令。首先准备两个目录，一个为 hello-1.0 目录，在其中创建一个文本文件以及一个二进制文件。
@@ -287,28 +286,28 @@ Git 对补丁文件的扩展，实际上不只是增加了二进制文件的支�
 
 Git 对二进制提供支持的扩展的补丁文件格式，已经称为补丁文件格式的新标准被其他一些应用软件所接受。例如 Mercual/Hg 就提供了对 Git 扩展补丁格式的支持。
 
-* 为 `hg diff` 命令增加 `--git` 参数，实现 Git 扩展 diff 格式输出。
+为 `hg diff` 命令增加 `--git` 参数，实现 Git 扩展 diff 格式输出。
 
-  ::
+::
 
-    $ hg diff --git
+  $ hg diff --git
 
-* Hg 的 MQ 插件提供对 Git 补丁的支持。
+Hg 的 MQ 插件提供对 Git 补丁的支持。
 
-  ::
+::
 
-    $ cat .hg/patches/1.diff 
-    # HG changeset patch
-    # User Jiang Xin <worldhello.net AT gmail DOT com>
-    # Date 1286711219 -28800
-    # Node ID ba66b7bca4baec41a7d29c5cae6bea6d868e2c4b
-    # Parent  0b44094c755e181446c65c16a8b602034e65efd7
-    new data
+  $ cat .hg/patches/1.diff 
+  # HG changeset patch
+  # User Jiang Xin <worldhello.net AT gmail DOT com>
+  # Date 1286711219 -28800
+  # Node ID ba66b7bca4baec41a7d29c5cae6bea6d868e2c4b
+  # Parent  0b44094c755e181446c65c16a8b602034e65efd7
+  new data
 
-    diff --git a/binary.data b/binary.data
-    new file mode 100644
-    index 0000000000000000000000000000000000000000..dc2e37f81e0fa88308bec48cd5195b6542e61a20
-    GIT binary patch
-    literal 32
-    bc$}+u^>JfjWMqH=CI&kO5HCR00n7&gGBE;C
+  diff --git a/binary.data b/binary.data
+  new file mode 100644
+  index 0000000000000000000000000000000000000000..dc2e37f81e0fa88308bec48cd5195b6542e61a20
+  GIT binary patch
+  literal 32
+  bc$}+u^>JfjWMqH=CI&kO5HCR00n7&gGBE;C
 
