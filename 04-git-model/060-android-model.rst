@@ -670,51 +670,29 @@ Repo 命令的工作流
 
 图25-1是 repo 的工作流，每一个代码贡献都起始于 `repo start` 创建本地工作分支，最终都以 `repo upload` 命令将代码补丁发布于代码审核服务器。
 
-TODO
+.. figure:: images/git-model/repo-workflow.png
+   :scale: 80
 
-::
-
-  +------------+
-  | Git Server | --+------> repo init                : repo 和清单库初始化
-  +------------+   |
-                   +------> repo sync                : 根据清单执行项目初始化
-                            
-                            repo start               : 创建本地分支
-                            
-                            git add
-                            git status
-                            git commit
-                            
-                            repo status              : 项目状态汇总
-  +---------------+
-  | Review Server | <-+---- repo upload              : 修订上传代码审核服务器
-  +---------------+   |      
-                      |     git commit --amend       : 针对审核意见进行修改再提交
-                      |
-                      +---- repo upload --replace    : 以相同的修订编号向代码审核服务器重新上传修订
-
-                            repo prune               : 删除以合并分支
-
-图25-1：repo工作流
+   图25-1：repo工作流
 
 好东西不能 android 独享
 =======================
 
-通过前面的介绍能够体会到 repo 的精巧。的确 repo 巧妙的实现了多 Git 版本库的管理。而其中清单版本库，使得 repo 这一工具并没有被限制在某个项目中使用，repo 可以被任何项目使用。下面就介绍两种 repo 的使用模式，将 repo 引入自己的（非 android）项目中。
+通过前面的介绍能够体会到 repo 的精巧 —— repo 巧妙的实现了多 Git 版本库的管理。因为 repo 使用了清单版本库，所以 repo 这一工具并没有被局限于 Android 项目，可以在任何项目中使用。下面就介绍三种 repo 的使用模式，将 repo 引入自己的（非 Android）项目中，其中第三种 repo 使用模式是用作者改造后的 repo 实现脱离 Gerrit 服务器进行推送。
 
 Repo + Gerrit 模式
 ------------------
 
-Repo 和 Gerrit 是 Android 代码管理的两大支柱。正如前面在 repo 工作流中介绍的，部分的repo命令从 git 服务器读取，这个 git 服务器可以是只读的版本库控制服务器，还有部分 repo 命令（repo upload, repo download）访问的是代码审核服务器，其中 repo upload 命令还要向代码审核服务器进行 git push 操作。
+Repo 和 Gerrit 是 Android 代码管理的两大支柱。正如前面在 repo 工作流中介绍的，部分的repo命令从 git 服务器读取，这个 git 服务器可以是只读的版本库控制服务器，还有部分 repo 命令（repo upload, repo download）访问的则是代码审核服务器，其中 repo upload 命令还要向代码审核服务器进行 git push 操作。
 
-在不改动 repo 的情况下引入 repo 来维护自己的项目（多个版本库组成），必须搭建 Gerrit 代码审核服务器。
+在使用未经改动的 repo 来维护自己的项目（多个版本库组成）时，必须搭建 Gerrit 代码审核服务器。
 
 搭建项目的版本控制系统环境的一般方法为：
 
-* 用 git-daemon 或者 http 服务搭建 Git 服务器。具体搭建方法参见后面服务器搭建章节。
+* 用 git-daemon 或者 http 服务搭建 Git 服务器。具体搭建方法参见第5篇“搭建Git服务器”相关章节。
 * 导入 repo.git 工具库。非必须，只是为了减少不必要的互联网操作。
 * 还可以在内部 http 服务器维护一个定制的 repo 引导脚本。非必须。
-* 建立 Gerrit 代码审核服务器。会在后面的章节讨论 Gerrit 代码审核服务器的安装和使用。
+* 建立 Gerrit 代码审核服务器。会在第5篇第32章“Gerrit代码审核服务器”中介绍Gerrit的安装和使用。
 * 将相关的子项目代码库一一创建。
 * 建立一个 manifest.git 清单库，其中 remote 元素的 fetch 属性指向只读 git 服务器地址，review 属性指向代码审核服务器地址。示例如下：
 
@@ -733,7 +711,7 @@ Repo 和 Gerrit 是 Android 代码管理的两大支柱。正如前面在 repo �
 Repo 无审核模式
 ------------------
 
-Gerrit 代码审核服务器部署比较麻烦，更不要说因为 Gerrit 用户界面的学习和用户使用习惯的更改而带来的困难了。在一个固定的团队内部使用 repo 可能真的没有必要使用 Gerrit，因为团队成员都应该熟悉 Git 的操作，团队成员的编程能力都可信，单元测试质量由提交者保证，集成测试由单独的测试团队进行，即团队拥有一套完整、成型的研发工作流，Gerrit 并不适合引入。
+Gerrit 代码审核服务器部署比较麻烦，更不要说因为 Gerrit 用户界面的学习和用户使用习惯的更改而带来的困难了。在一个固定的团队内部使用 repo 可能真的没有必要使用 Gerrit，因为团队成员都应该熟悉 Git 的操作，团队成员的编程能力都可信，单元测试质量由提交者保证，集成测试由单独的测试团队进行，即团队拥有一套完整、成型的研发工作流，引入 Gerrit 并非必要。
 
 脱离了 Gerrit 服务器，直接跟 Git 服务器打交道，repo 可以工作么？是的，可以利用 repo forall 迭代器实现多项目代码的 PUSH，其中有如下关键点需要重点关注。
 
@@ -748,13 +726,13 @@ Gerrit 代码审核服务器部署比较麻烦，更不要说因为 Gerrit 用�
 
     $ repo start master --all
 
-* 上传代码，不能使用 `repo upload` ，而需要使用 `git push` 命令。
+* 推送不能使用 `repo upload` ，而需要使用 `git push` 命令。
 
   可以利用 `repo forall` 迭代器实现批命令方式执行。例如：
 
   ::
 
-    repo forall -c git push
+    $ repo forall -c git push
 
 * 如果清单库中的上游 git 库地址用的是只读地址，需要为本地版本库一一更改上游版本库地址。
 
@@ -762,14 +740,15 @@ Gerrit 代码审核服务器部署比较麻烦，更不要说因为 Gerrit 用�
 
   ::
 
-    repo forall -c 'git remote set-url --push bj android@bj.ossxp.com:android/${REPO_PROJECT}.git'
+    $ repo forall -c \
+      'git remote set-url --push bj android@bj.ossxp.com:android/${REPO_PROJECT}.git'
 
 改进的 Repo 无审核模式
 -----------------------
 
-前面介绍的使用 repo forall 迭代器实现无审核服务器模式下向上游提交代码，只是权宜之计，尤其是用 repo start 建立工作分支要求和上游一致，实在是有点强人所难。
+前面介绍的使用 repo forall 迭代器实现在无审核服务器情况下向上游推送提交，只是权宜之计，尤其是用 repo start 建立工作分支要求和上游一致，实在是有点强人所难。
 
-我改造了 repo，增加了两个新的子命令 `repo config` 和 `repo push` ，让 repo 可以脱离 Gerrit 服务器直接向上游提交。代码托管在 Github 上: http://github.com/ossxp-com/repo.git 。下面简单介绍一下如何使用改造之后的 repo。
+我改造了 repo，增加了两个新的子命令 `repo config` 和 `repo push` ，让 repo 可以脱离 Gerrit 服务器直接向上游推送。代码托管在 Github 上: http://github.com/ossxp-com/repo.git 。下面简单介绍一下如何使用改造之后的 repo。
 
 下载改造后的 repo 引导脚本
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -793,7 +772,7 @@ Gerrit 代码审核服务器部署比较麻烦，更不要说因为 Gerrit 用�
   $ repo init -u git://github.com/ossxp-com/manifest.git
   $ repo sync
 
-如果用的是老的 repo 脚本，用下面的命令。
+如果用的是标准的（未经改造的）repo 引导脚本，用下面的命令。
 
 ::
 
@@ -878,13 +857,13 @@ Gerrit 代码审核服务器部署比较麻烦，更不要说因为 Gerrit 用�
 PUSH 到远程服务器
 ^^^^^^^^^^^^^^^^^^^ 
 
-直接执行 `repo push` 就可以将各个项目的改动进行提交。
+直接执行 `repo push` 就可以将各个项目的改动进行推送。
 
 ::
 
   $ repo push
 
-如果有多个项目同时进行了改动，为了避免出错，会弹出编辑器显示有改动需要提交的项目列表。
+如果有多个项目同时进行了改动，为了避免出错，会弹出编辑器显示因为包含改动而需要推送的项目列表。
 
 ::
 
@@ -898,7 +877,7 @@ PUSH 到远程服务器
   #  branch jiangxin ( 1 commit, Mon Oct 25 18:06:51 2010 +0800):
   #         86683ece 0.2-dev -> 0.2-jiangxin
 
-每一行前面的井号是注释，被忽略的行。将希望提交的分支前的注释去掉，就可以将该项目的分支执行推送动作。下面的操作中，把其中的两个分支的注释都去掉了，这两个项目当前分支的改动会 push 到上游服务器。
+每一行前面的井号是注释，会被忽略。将希望推送的分支前的注释去掉，就可以将该项目的分支执行推送动作。下面的操作中，把其中的两个分支的注释都去掉了，这两个项目当前分支的改动会 push 到上游服务器。
 
 ::
 
@@ -912,7 +891,7 @@ PUSH 到远程服务器
   branch jiangxin ( 1 commit, Mon Oct 25 18:06:51 2010 +0800):
   #         86683ece 0.2-dev -> 0.2-jiangxin
 
-保存退出（如果使用 vi 编辑器，输入 :wq 执行保存退出）后，马上开始对选择的各个项目执行 git push。
+保存退出（如果使用 vi 编辑器，输入 <ESC>:wq 执行保存退出）后，马上开始对选择的各个项目执行 git push。
 
 ::
 
@@ -933,9 +912,9 @@ PUSH 到远程服务器
   [OK    ] test/test1/     jiangxin
   [OK    ] test/test2/     jiangxin
 
-从提交日志可以看出来本地的工作分支 jiangxin 的改动被推送的远程服务器的 master 分支（本地工作分支跟踪的上游分支）。
+从推送的命令输出可以看出来本地的工作分支 jiangxin 的改动被推送的远程服务器的 master 分支（本地工作分支跟踪的上游分支）。
 
-再次执行 repo push ，会显示没有项目需要提交。
+再次执行 repo push ，会显示没有项目需要推送。
 
 ::
 
@@ -946,14 +925,14 @@ PUSH 到远程服务器
 在远程服务器创建新分支
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-如果想在服务器上创建一个新的分支，该如何操作呢？
+如果想在服务器上创建一个新的分支，该如何操作呢？如下使用 `--new_branch` 参数调用 `repo push` 命令。
 
 ::
 
   $ repo start feature1 --all
   $ repo push --new_branch
 
-经过同样的编辑器选择之后，自动调用 git push ，在服务器上创建新分支 `feature1` 。
+经过同样的编辑操作之后，自动调用 git push ，在服务器上创建新分支 `feature1` 。
 
 ::
 
@@ -968,7 +947,7 @@ PUSH 到远程服务器
   [OK    ] test/test1/     feature1
   [OK    ] test/test2/     feature1
 
-也可以用 git ls-remote 命令查看远程服务器上的分支。
+用 `git ls-remote` 命令查看远程版本库的分支，会发现远程版本库中已经建立了新的分支。
 
 ::
 
