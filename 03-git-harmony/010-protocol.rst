@@ -243,15 +243,15 @@ Git 提供了丰富的协议支持，包括： SSH, GIT, HTTP, HTTPS, FTP, FTPS,
     Merge the remote changes (e.g. 'git pull') before pushing again.  See the
     'Note about fast-forwards' section of 'git push --help' for details.
 
-用户 user2 的推送失败了。把错误日志翻译一下。
+* 用户 user2 的推送失败了。把错误日志翻译一下。
 
-::
+  ::
 
-  到版本库 file:///path/to/repos/shared.git
-   ! [被拒绝]        master -> master (非快进)
-  错误：部分引用向 'file:///path/to/repos/shared.git' 推送失败
-  为防止您丢失历史，非快进式更新被拒绝。
-  在推送前请先合并远程改动，例如执行 'git pull'。
+    到版本库 file:///path/to/repos/shared.git
+     ! [被拒绝]        master -> master (非快进)
+    错误：部分引用向 'file:///path/to/repos/shared.git' 推送失败
+    为防止您丢失历史，非快进式更新被拒绝。
+    在推送前请先合并远程改动，例如执行 'git pull'。
 
 可见推送失败不是坏事情，反倒是一件好事情，避免了用户提交的相互覆盖。一般情况下，推送只允许“快进式”推送。所谓快进式推送，就是本地版本库要推送的提交是建立在服务器端现有提交基础上的，即服务器上相应分支的最新提交是本地版本库最新提交的祖先提交。但现在的情况并非如此：
 
