@@ -15,7 +15,7 @@ Linux / Unix 的用户对 `/etc` 目录都是再熟悉不过了，在这个最�
 
 那么 etckeeper 是如何实现的呢？以 git 作为 etckeeper 的后端为例进行说明，其他的分布式版本控制系统大同小异。
 
-* 将 `/etc` 目录 git 化。将会创建 Git 库于目录 `/etc/.git` 中，`/etc` 目录作为工作区。
+* 将 `/etc` 目录 git 化。将会创建 Git 库于目录 `/etc/.git` 中， `/etc` 目录作为工作区。
 * 与系统的包管理器，如 Debian/Ubuntu 的 apt，Redhat 上的 yum 等整合。一旦有软件包安装或删除，对 `/etc` 目录下的改动执行提交操作。
 * 除了能够记录 `/etc` 目录中的文件内容，还可以记录文件属性等元信息。因为 `/etc` 目录下的文件的权限设置往往是非常重要和致命的。
 * 因为 `/etc` 目录已经是一个版本库了，可以用 git 命令对 `/etc` 下的文件进行操作：查看历史，回退到历史版本...
@@ -24,7 +24,7 @@ Linux / Unix 的用户对 `/etc` 目录都是再熟悉不过了，在这个最�
 安装 etckeeper
 ===============
 
-安装 etckeeper 是一个最简单的活，因为 etckeeper 在主流的 Linux 发行版都有自己的安装包。使用相应 Linux 平台的包管理工具（apt, yum）即可安装。
+安装 etckeeper 是一个最简单的活，因为 etckeeper 在主流的 Linux 发行版都有对应的安装包。使用相应 Linux 平台的包管理器（apt, yum）即可安装。
 
 在 Debian / Ubuntu 上安装 etckeeper 如下：
 
@@ -44,7 +44,7 @@ Linux / Unix 的用户对 `/etc` 目录都是再熟悉不过了，在这个最�
 配置 etckeeper
 ===============
 
-配置 etckeeper 就是要选择好某一分布式版本库控制系统，如 Git；初始化 /etc 目录，并做一次提交。
+配置 etckeeper 首先要选择好某一分布式版本库控制工具，如 Git，然后用相应的版本控制工具初始化 /etc 目录，并做一次提交。
 
 * 编辑配置文件 `/etc/etckeeper/etckeeper.conf` 。
 
@@ -54,19 +54,15 @@ Linux / Unix 的用户对 `/etc` 目录都是再熟悉不过了，在这个最�
   
     VCS="git"
 
-* 初始化 `/etc` 目录。即将其 git 化。
+* 初始化 `/etc` 目录。即将其 git 化。执行下面的命令（需要以 root 用户身份），会将 `/etc` 目录 git 化。
 
-  执行下面的命令（需要以 root 用户身份），会将 `/etc` 目录 git 化。
+  整个过程可能会比较慢，因为要对 /etc 下的文件执行 `git add` ，因为文件太多，会慢一些。
 
   ::
 
     $ sudo etckeeper init
 
-  整个过程可能会比较慢，因为要对 /etc 下的文件执行 `git add` ，因为文件太多，会慢一些。
-
-* 执行第一次提交。
-
-  用 etckeeper 命令而非 git 命令进行提交。
+* 执行第一次提交。注意使用 etckeeper 命令而非 git 命令进行提交。
 
   ::
 
