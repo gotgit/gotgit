@@ -149,7 +149,8 @@
 
   ::
 
-    $ cat /path/to/file/dump1.dat /path/to/file/dump2.dat | git fast-import
+    $ cat /path/to/file/dump1.dat \
+          /path/to/file/dump2.dat | git fast-import
 
 * 导入之后的日志显示：
 
@@ -233,8 +234,8 @@
 
   ::
 
-    $ cat /path/to/file/dump1.dat /path/to/file/dump2.dat /path/to/file/dump3.dat \
-      | git fast-import
+    $ cat /path/to/file/dump1.dat /path/to/file/dump2.dat \
+          /path/to/file/dump3.dat | git fast-import
 
 * 查看创建的版本库的日志。
 

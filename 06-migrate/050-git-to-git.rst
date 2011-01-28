@@ -139,7 +139,9 @@ Git 提供了太多武器进行版本库的整理，可以将一个 Git 版本�
 ::
 
   $ git filter-branch --parent-filter \
-            'test $GIT_COMMIT = <commit-id> && echo "-p <graft-id>" || cat' HEAD
+            'test $GIT_COMMIT = <commit-id> && \
+             echo "-p <graft-id>" || cat
+            ' HEAD
 
 关于嫁接，Git 可以通过配置文件 `.git/info/grafts` 实现，而 `git filter-branch` 命令可以基于该配置文件对版本库实现永久性的更改。
 

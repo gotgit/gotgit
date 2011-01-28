@@ -408,7 +408,8 @@ cvs2svn 软件包提供了一个 cvs2git 的配置示例文件，见源码中的
     $ mkdir test
     $ cd test
     $ git init
-    $ cat ../cvs2svn-tmp/git-blob.dat ../cvs2svn-tmp/git-dump.dat | git fast-import
+    $ cat ../cvs2svn-tmp/git-blob.dat \
+          ../cvs2svn-tmp/git-dump.dat | git fast-import
 
 * 检查导出结果。
 
