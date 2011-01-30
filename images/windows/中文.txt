@@ -23,15 +23,19 @@ Connection abandoned.
 fatal: The remote end hung up unexpectedly
 
 
-$ git clone git@bj.ossxp.com:ossxp/gitbook.git
-Cloning into gitbook...
+$ /cygdrive/c/Program\ Files/PuTTY/plink.exe git@bj.ossxp.com
 The server's host key is not cached in the registry. You
 have no guarantee that the server is the computer you
 think it is.
 The server's rsa2 key fingerprint is:
 ssh-rsa 2048 49:eb:04:30:70:ab:b3:28:42:03:19:fe:82:f8:1a:00
-Connection abandoned.
-fatal: The remote end hung up unexpectedly
+If you trust this host, enter "y" to add the key to
+PuTTY's cache and carry on connecting.
+If you want to carry on connecting just once, without
+adding the key to the cache, enter "n".
+If you do not trust this host, press Return to abandon the
+connection.
+Store key in cache? (y/n)
 
 
 $ /cygdrive/c/Program\ Files/PuTTY/plink.exe -i .ssh/jiangxin-cygwin.ppk git@bj
