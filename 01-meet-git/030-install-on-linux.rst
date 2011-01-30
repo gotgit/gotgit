@@ -183,7 +183,7 @@ Linux 平台的中文用户一般会使用 utf-8 字符集，Git在 utf-8 字符
   $ git status -s
   ?? "\350\257\264\346\230\216.txt"
 
-通过设置变量 `core.quotepath` 为 `false` ，就可以解决中文文件名在一些 Git 命令输出中的显示问题。
+通过设置变量 `core.quotepath` 为 `false` ，就可以解决中文文件名在这些 Git 命令输出中的显示问题。
 
 ::
 
