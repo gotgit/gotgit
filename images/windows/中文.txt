@@ -1,0 +1,48 @@
+$ git clone git@bj.ossxp.com:ossxp/gitbook.git
+Cloning into gitbook...
+The server's host key is not cached in the registry. You
+have no guarantee that the server is the computer you
+think it is.
+The server's rsa2 key fingerprint is:
+ssh-rsa 2048 49:eb:04:30:70:ab:b3:28:42:03:19:fe:82:f8:1a:00
+Connection abandoned.
+fatal: The remote end hung up unexpectedly
+
+
+$ git clone git@bj.ossxp.com:ossxp/gitbook.git
+Cloning into gitbook...
+The server's host key is not cached in the registry. You
+have no guarantee that the server is the computer you
+think it is.
+The server's rsa2 key fingerprint is:
+ssh-rsa 2048 49:eb:04:30:70:ab:b3:28:42:03:19:fe:82:f8:1a:00
+Connection abandoned.
+fatal: The remote end hung up unexpectedly
+
+
+$ /cygdrive/c/Program\ Files/PuTTY/plink.exe -i .ssh/jiangxin-cygwin.ppk git@bj
+.ossxp.com
+Using username "git".
+Server refused to allocate pty
+hello jiangxin, the gitolite version here is v1.5.5-9-g4c11bd8
+the gitolite config gives you the following access:
+     R          gistore-bj.ossxp.com/.*$
+     R          gistore-ossxp.com/.*$
+  C  R  W       ossxp/.*$
+     R  W       test/repo1
+     R  W       test/repo2
+     R  W       test/repo3
+    @R @W       test/repo4
+ @C @R  W       users/jiangxin/.+$
+
+
+
+$ declare -x GIT_SSH=~/bin/ssh-jiangxin
+
+$ cat bin/ssh-jiangxin
+#!/bin/sh
+
+/cygdrive/c/Program\ Files/PuTTY/plink.exe -i .ssh/jiangxin-cygwin.ppk $*
+
+
+
