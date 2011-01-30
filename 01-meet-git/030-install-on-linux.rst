@@ -144,7 +144,7 @@ Linux 的 shell 环境（bash）通过 bash-completion 软件包提供命令补�
 
   ::
 
-    $ cp contrib/completion/git-completion.bash /usr/local/etc/bash_completion.d/
+    $ cp contrib/completion/git-completion.bash /etc/bash_completion.d/
 
 * 重新加载自动补齐脚本，使之在当前 shell 中生效。
 
@@ -163,23 +163,50 @@ Linux 的 shell 环境（bash）通过 bash-completion 软件包提供命令补�
 中文支持
 -------------------
 
-Linux 平台下使用中文一般会使用 utf-8 字符集，Git工作在 utf-8 字符集下对中文的支持非常好。
+Git 的本地化做的并不完善，命令的输出以及命令的帮助还只能输出英文，也许在未来版本会使用 gettext 实现本地化，就像目前对 git-gui 命令所做的那样。
+
+使用中文的用户最关心的问题还有：是否可以在提交说明中使用中文？是否可以使用中文文件名或者目录名？是否可以使用中文来命名分支或者里程碑？简单的说，可以在提交说明中使用中文，但是若使用非 UTF-8 字符集需要为 Git 做些设置。至于使用中文来命名文件、目录或引用，Git 目前支持的非常不好，除非所有用户都使用同一字符集（如UTF-8），否则不要使用。
+
+**UTF-8 字符集**
+
+Linux 平台的中文用户一般会使用 utf-8 字符集，Git在 utf-8 字符集下可以工作的非常好。
 
 * 在提交时，可以在提交说明中输入中文。
 * 显示提交历史，能够正常显示提交说明中的中文字符。
 * 可以添加中文文件名的文件，并可以在同样 utf-8 字符集的 Linux 环境中克隆及检出。
 * 可以创建带有中文字符的里程碑名称。
 
-但是默认设置下，带有中文文件名的文件，在工作区状态输出，查看历史更改概要中，以及在产生的补丁文件中，不能正确显示为中文，而是显示若干8进制数字表示的字符，如下：
+但是默认设置下，带有中文文件名的文件，在工作区状态输出，查看历史更改概要，以及在补丁文件中，文件名不能正确显示为中文，而是用若干8进制编码来显示中文，如下：
 
 ::
 
   $ git status -s
   ?? "\350\257\264\346\230\216.txt"
 
+通过设置变量 `core.quotepath` 为 `false` ，就可以解决中文文件名在一些 Git 命令输出中的显示问题。
 
 ::
 
   $ git config --global core.quotepath false
+  $ git status -s
+  ?? 说明.txt
+
+**GBK 字符集**
+
+但如果 Linux 平台采用非 UTF-8 字符集，例如用 zh_CN.GBK 字符集编码，就要另外再做些工作了。
+
+* 设置提交说明显示所使用的字符集为 gbk，这样使用 `git log` 查看提交说明才能够正确显示其中的中文。
+
+  ::
+
+    $ git config --global i18n.logOutputEncoding gbk
+
+* 设置录入提交说明时所使用的字符集，以便在 commit 对象中对字符集正确标注。
+
+  Git 在提交时并不会对提交说明进行从 GBK 字符集到 UTF-8 的转换，但是可以在提交说明中标注所使用的字符集，因此在非 UTF-8 字符集的平台录入中文，需要用下面指令设置录入提交说明的字符集，以便在 commit 对象中嵌入正确的编码说明。
+
+  ::
+
+    $ git config --global i18n.commitEncoding gbk
 
 
