@@ -1,3 +1,17 @@
+$ mount
+C:/cygwin/bin on /usr/bin type ntfs (binary,auto)
+C:/cygwin/lib on /usr/lib type ntfs (binary,auto)
+C:/cygwin on / type ntfs (binary,auto)
+C: on /cygdrive/c type ntfs (binary,posix=0,user,noumount,auto)
+D: on /cygdrive/d type ntfs (binary,posix=0,user,noumount,auto)
+
+$ cygpath -u c:\\Windows
+/cygdrive/c/Windows
+
+$ cygpath -w ~/
+C:\cygwin\home\demo\
+
+
 $ git clone git@bj.ossxp.com:ossxp/gitbook.git
 Cloning into gitbook...
 The server's host key is not cached in the registry. You
