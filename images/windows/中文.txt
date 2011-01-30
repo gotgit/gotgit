@@ -42,7 +42,4 @@ $ declare -x GIT_SSH=~/bin/ssh-jiangxin
 $ cat bin/ssh-jiangxin
 #!/bin/sh
 
-/cygdrive/c/Program\ Files/PuTTY/plink.exe -i .ssh/jiangxin-cygwin.ppk $*
-
-
-
+/cygdrive/c/Program\ Files/PuTTY/plink.exe -i c:/cygwin/home/demo/.ssh/jiangxin-cygwin.ppk $*
