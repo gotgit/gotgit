@@ -1,211 +1,165 @@
 Windows 下安装和使用 Git（msysGit篇）
 =====================================
 
+运行在 Cygwin 下的 Git 不是直接使用 Windows 的系统调用，而是通过二传手 `cygwin1.dll` 来进行，即使 Cygwin 的 git 命令能够在 Windows 下的 `cmd.exe` 命令窗口中依然运行的非常好，但 Cygwin 下的 Git 并不能看作是 Windows 下的原生程序。相比 Cygwin 下的 Git，msysGit 是原生的 Windows 程序，msysGit 下运行的 Git 直接通过 Windows 的系统调用运行。
+
+msysGit 的名字前面的四个字母来源于 MSYS 项目。MSYS 项目源自于 MinGW（Minimalist GNU for Windows，最简GNU工具集），通过增加了一个 bash 提供的shell 环境以及其他相关工具软件，组成了一个最简系统（Minimal SYStem），简称 MSYS。利用 MinGW 提供的工具，以及 Git 针对 MinGW 形成的一个分支版本，在 Windows 平台为 Git 编译出一个原生应用，这就是 msysGit。
+
 msysGit 的安装和使用
 -------------------------
 
-.. figure:: images/windows/msysGit-1.png
+安装 msysGit 非常简单，访问 msysGit 的项目主页（http://code.google.com/p/msysgit/），可以下载 msysGit。最简单的方式是下载名为 `Git-<VERSION>-preview<DATE>.exe` 的软件包，如：`Git-1.7.3.1-preview20101002.exe` 。如果有时间和耐心，喜欢观察 Git 是如何在 Windows 上是编译为原生应用的，也可以下载带 `msysGit-fullinstall-` 前缀的软件包。
+
+点击下载的安装程序（如 `Git-1.7.3.1-preview20101002.exe` ），开始安装，如图3-18。
+
+.. figure:: images/windows/msysgit-1.png
    :scale: 80
 
-   图3-4：选择网络安装或是本地安装
+   图3-18：启动 msysGit 安装
 
+默认安装到 `C:\\Program Files\\Git` 目录中。
 
-
-在 Windows 下安装和使用 Git 有两个不同的方案，通过安装 msysGit 或者通过安装 Cygwin 来使用 Git。在这两种不同的方案下，Git 的使用和在 Linux 下使用完全一致。再有一个就是基于 msysGit 的图形界面工具 —— TortoiseGit，也就是在 CVS 和 SVN 时代就已经广为人知的 Tortoise 系列软件的 Git 版本。TortoiseGit 提供和资源管理器的整合，提供 Git 操作的图形化界面。
-
-先介绍通过 Cygwin 来使用 Git 的原因，不是因为这是最便捷的方法，如果需要在 Windows 快速安装和使用 Git，下节介绍的 msysGit 才是。之所以将 Cygwin 放在前面介绍是因为本书在介绍 Git 原理部分以及介绍其他 Git 相关软件时用到了大量的开源工具，这些开源工具在 Cygwin 下很容易获得，而 msysGit 的 MinGW（Minimalist GNU for Windows，最简GNU工具集）则不能满足我们的需要。因此我建议使用 Windows 平台的读者在跟随本书学习 Git 的过程中，首选 Cygwin，当完成 Git 的学习后，无论是 msysGit 或者 TortoiseGit 也都会应对自足。
-
-Cygwin 是一款伟大的软件，通过一个小小的DLL（cygwin1.dll）建立 Linux 和 Windows 系统调用及API之间的转换，实现了 Linux 下绝大多数软件到 Windows 的迁移。Cygwin 通过 cygwin1.dll 所建立的中间层和诸如 VMWare、VirtualBox 等虚拟机软件完全不同，不会对系统资源进行独占。像 VMWare 等虚拟机，只要启动一个虚拟机（操作系统），即使不在其中执行任何命令，同样会占用大量的系统资源：内存、CPU时间等等。
-
-Cygwin 还提供了一个强大易用的包管理工具（setup.exe），实现了几千个开源软件包在 Cygwin 下便捷的安装和升级，Git 就是 Cygwin 下支持的几千个开源软件的一员。
-
-我对 Cygwin 有着深厚的感情，Cygwin 让我在 Windows 平台能用 Linux 的方式更有效率的做事，使用 Linux 风格的控制台替换 Windows 黑乎乎的、冰冷的、由 cmd.exe 提供的命令行。Cygwin 帮助我逐渐摆脱对 Linux 的依赖，当我完全转换到 Linux 平台时，没有感到一丝的障碍。
-
-
-安装 Cygwin
--------------
-
-安装 Cygwin 非常简单，访问其官方网站 http://www.cygwin.com/ ，下载安装程序 —— 一个只有几百KB的 `setup.exe` ，即可开始安装。
-
-安装过程会让用户选择安装模式，可以选择网络安装、仅下载，或者通过本地软件包缓存（在安装过程自动在本地目录下建立软件包缓存）进行安装。如果是第一次安装 Cygwin，因为本地尚没有软件包缓存，当然只能选择从网络安装，如图3-4所示。
-
-
-.. figure:: images/windows/cygwin-2.png
+.. figure:: images/windows/msysgit-3.png
    :scale: 80
 
-   图3-4：选择安装模式
+   图3-19：选择 msysGit 的安装目录
 
-接下来，Cygwin 询问安装目录，默认为 `C:\\cygwin` ，如图3-5所示。这个目录将作为 Cygwin shell 环境的根目录（根卷），Windows 的各个盘符将挂载在根卷之下。
+在安装过程中会询问是否修改环境变量，如图3-20。默认选择“Use Git Bash Only”，即只在 msysGit 提供的 shell 环境（类似 Cygwin）中使用 Git，不修改环境变量。注意如果选择最后一项，会将 msysGit 所有的可执行程序全部加入 Windows 的 PATH 路径中，有的命令会覆盖 Windows 相同文件名的程序（如 find.exe 和 sort.exe）。而且如果选择最后一项，还会为 Windows 添加 HOME 环境变量，如果安装有 Cygwin，Cygwin 会受到 msysGit 引入的 HOME 环境变量的影响（参见前面 3.3.3 节的相关讨论）。
 
-.. figure:: images/windows/cygwin-3.png
+.. figure:: images/windows/msysgit-6.png
    :scale: 80
 
-   图3-5：选择安装目录
+   图3-20：是否修改系统的环境变量
 
-询问本地软件包缓存目录，默认是 `setup.exe` 所处的目录，如图3-6所示。
+如果系统中安装有 PuTTY，安装过程还会询问使用内置的 ssh 命令还是 PuTTY 提供的 `plink.exe` ，如图3-21。
 
-.. figure:: images/windows/cygwin-4.png
+.. figure:: images/windows/msysgit-7.png
    :scale: 80
 
-   图3-6：选择本地软件包缓存目录
+   图3-21：选择 SSH 客户端
 
-询问网络连接方式，是否使用代理等，如图3-7所示。默认会选择第一项：“直接网络连接”。如果一个团队有很多人要使用 Cygwin，架设一个能够提供软件包缓存的 HTTP 代理服务器会节省大量的网络带宽和节省大把的时间。用 Debian 的 apt-cacher-ng 就可以非常简单的搭建一个软件包代理服务器。图3-7显示的就是我在公司内网安装 Cygwin 时使用了我们公司内网的服务器 `bj.ossxp.com` 做为 HTTP 代理的截图，端口设置为 9999，因为这是 apt-cacher-ng 的默认端口。
 
-.. figure:: images/windows/cygwin-5-mirror.png
+还会询问换行符的转换方式，使用默认设置就好。参见图3-22。关于换行符转换，参见本书第8篇相关章节。
+
+.. figure:: images/windows/msysgit-8.png
    :scale: 80
 
-   图3-7：是否使用代理下载 Cygwin 软件包
+   图3-22：换行符转换方式
 
-选择一个 Cygwin 源，如图3-8所示。如果在上一个步骤选择了使用 HTTP 代理服务器，就必须选择 HTTP 协议的 Cygwin 源。
+根据提示，完成 msysGit 的安装。
 
-.. figure:: images/windows/cygwin-6.png
-   :scale: 80
-
-   图3-8：选择 Cygwin 源
-
-接下来就会从所选的 Cygwin 源下载软件包索引文件，然后显示软件包管理器界面，如图3-9所示。
-
-.. figure:: images/windows/cygwin-8.png
-   :scale: 80
-
-   图3-9：Cygwin 软件包管理器
-
-Cygwin 的软件包管理器非常强大和易用（如果习惯了其界面）。软件包归类于各个分组中，点击分组前的加号就可以展开分组。在展开的 Admin 分组中，如图3-10所示（这个截图不是首次安装 Cygwin 的截图），有的软件包如 `libattr1` 已经安装过了，因为没有新版本而标记为“Keep”（保持）。至于没有安装过并且不准备安装的软件包则标记为 “Skip”（跳过）。
-
-.. figure:: images/windows/cygwin-8-expand-admin-group.png
-   :scale: 80
-
-   图3-10：Cygwin 软件包管理器展开分组
-
-鼠标点击分组名称后面动作名称（文字“Default”），会进行软件包安装动作的切换。例如图3-11，将 Admin 分组的安装动作由“Default”（默认）切换为“Install”（安装），会看到 Admin 分组下的所有软件包都标记为安装（显示具体要安装的软件包版本号）。也可以通过鼠标点击，单独的为软件包进行安装动作的设定，可以强制重新安装、安装旧版本、或者不安装。
-
-.. figure:: images/windows/cygwin-8-expand-admin-group-install.png
-   :scale: 80
-
-   图3-11：Cygwin 软件包管理器展开分组
-
-当通过软件包管理器对要安装的软件包定制完毕后，点击下一步，开始下载软件包、安装软件包和软件包后处理，直至完成安装。根据选择的软件包的多少，网络情况以及是否有架设好的代理服务器，首次安装 Cygwin 的时间可能从几分钟到几个小时不等。
-
-安装 Git
--------------
-
-默认安装的 Cygwin 没有安装 Git 软件包。如果在首次安装过程中忘记通过包管理器选择安装 Git 或其他相关软件包，可以在安装后再次运行 Cygwin 的安装程序 `setup.exe` 。当再次进入 Cygwin 包管理器界面时，在搜索框中输入 git。如图3-12所示。
-
-.. figure:: images/windows/cygwin-8-search-git.png
-   :scale: 80
-
-   图3-12：Cygwin 软件包管理器中搜索 git
-
-从图3-12中看出在 Cygwin 中包含了很多和 Git 相关的软件包，把这些 Git 相关的软件包都安装吧，如图3-13所示。
-
-.. figure:: images/windows/cygwin-8-search-git-install.png
-   :scale: 80
-
-   图3-13：Cygwin 软件包管理器中安装 git
-
-需要安装的其他软件包：
-
-* git-completion: 提供 Git 命令自动补齐功能。安装该软件包会自动安装依赖的 bash-completion 软件包。
-* openssh：SSH 客户端，提供 Git 访问 ssh 协议的版本库。
-* vim：是 Git 缺省的编辑器。
-
-
-Cygwin 的配置和使用
+msysGit 的配置和使用
 ---------------------
 
-运行 Cygwin，就会进入 shell 环境中，见到熟悉的 Linux 提示符。如图 3-14 所示。
+完成 msysGit 的安装后，点击 Git Bash 图标，启动 msysGit，如图3-23。会发现 Git Bash 的界面和 Cygwin 的非常相像。
 
-.. figure:: images/windows/cygwin-startup.png
+.. figure:: images/windows/msysgit-startup.png
    :scale: 80
 
-   图3-14：运行 Cygwin
-
-显示 Cygwin 中安装的软件包的版本，可以通过执行 `cygcheck` 命令来查看，例如查看 cygwin 软件包本身的版本：
-
-::
-
-  $ cygcheck -c cygwin
-  Cygwin Package Information
-  Package              Version        Status
-  cygwin               1.7.7-1        OK
+   图3-23：启动 Git Bash
 
 如何访问 Windows 的磁符
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-刚刚接触 Cygwin 的用户遇到的头一个问题就是 Cygwin 如何访问 Windows 的各个磁盘目录，以及在 Windows 平台如何访问 Cygwin 中的目录？
-
-执行 `mount` 命令，可以看到 Windows 下的盘符映射到 `/cygdrive` 特殊目录下。
+在 msysGit 下访问 Windows 的各个盘符，要比 Cygwin 简单，直接通过 "`/c`" 即可访问 Windows 的 C: 盘，用 "`/d`" 访问 Windows 的 D: 盘。
 
 ::
 
-  $ mount
-  C:/cygwin/bin on /usr/bin type ntfs (binary,auto)
-  C:/cygwin/lib on /usr/lib type ntfs (binary,auto)
-  C:/cygwin on / type ntfs (binary,auto)
-  C: on /cygdrive/c type ntfs (binary,posix=0,user,noumount,auto)
-  D: on /cygdrive/d type ntfs (binary,posix=0,user,noumount,auto)
+  $ ls -ld /c/Windows
+  drwxr-xr-x  233 jiangxin Administ        0 Jan 31 00:44 /c/Windows
 
-也就是说在 Windows 下的 `C:\\Windows` 目录，在 Cygwin 以路径 `/cygdrive/c/Windows` 进行访问。实际上 Cygwin 提供一个命令 `cygpath` 实现 Windows 平台和 Cygwin 之间目录名称的变换。如下：
+至于 msysGit 的根目录，实际上就是 msysGit 安装的目录，如：“C:\\Program Files\\Git”。
+
+命令行补齐和忽略文件大小写
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+msysGit 缺省已经安装了 Git 的命令补齐功能。要想实现对文件名命令补齐时忽略大小写，可以修改配置文件 `/etc/inputrc` 。在其中添加设置:
 
 ::
 
-  $ cygpath -u C:\\Windows
-  /cygdrive/c/Windows
+  set completion-ignore-case on
 
-  $ cygpath -w ~/
-  C:\cygwin\home\jiangxin\
+msysGit 的 shell 环境的中文支持
+--------------------------------
 
-从上面的示例也可以看出，Cygwin 下的用户主目录（即 `/home/jiangxin/` ）相当于 Windows 下的 `C:\\cygwin\\home\\jiangxin\\` 目录。
+在介绍 Cygwin 的章节中曾经提到过，msysGit 的中文支持相当于老版本的 Cygwin，需要配置才能够实现在 Git Bash 环境下录入中文和显示中文。
 
-用户主目录不一致的问题
-^^^^^^^^^^^^^^^^^^^^^^^^
+修改配置文件 `/etc/inputrc` ，增加或修改相关配置如下：
 
-如果其他某些软件（如 msysGit）为 Windows 设置了 HOME 环境变量，会影响到 Cygwin 中用户主目录的设置，甚至造成在 Cygwin 中不同命令有不同的用户主目录的设置。例如：Cygwin 下 Git 的用户主目录设置为 “/cygdrive/c/Documents and Settings/jiangxin”，而 SSH 客户端软件的主目录为 “/home/jiangxin”，这会造成用户的困惑。
+::
 
-出现这种情况，是因为 Cygwin 确定用户主目录有几个原则，依照顺序确定主目录。首先查看系统的 HOME 环境变量，其次查看 /etc/passwd 中为用户设置的主目录。有的软件遵照这个原则，而有些 Cygwin 应用如 ssh，却没有使用 HOME 环境变量而直接使用 /etc/passwd 中的的设置。要想避免在同一个 Cygwin 环境下有两个不同的用户主目录设置，可以采用下面两种方法。
+  # disable/enable 8bit input
+  set meta-flag on
+  set input-meta on
+  set output-meta on
+  set convert-meta off
 
-* 方法1：修改 Cygwin 启动的批处理文件（如： `C:\\cygwin\\Cygwin.bat` ），在批处理的开头添加如下的一行，就可以清除其他软件为 Windows 引入的 HOME 环境变量。
+关闭 Git Bash 再重启，就可以在 msysGit 的 shell 环境中输入中文了。
+
+::
+
+  $ echo 您好
+  您好
+
+但现在最常用的 `ls` 命令的输出对中文支持有问题，需要进行设置。
+
+::
+
+  $ echo 您好 > 您好.txt
+
+  $ cat \*.txt
+  您好
+
+  $ ls \*.txt
+  ????.txt
+
+实际上 `ls` 命令只要增加参数 `--show-control-chars` 即可正确显示中文。
+
+::
+
+  $ ls --show-control-chars *.txt
+  您好.txt
+
+为方便起见，为 `ls` 命令设置一个别名。
+
+::
+
+  $ alias ls="ls --show-control-chars"
+
+  $ ls \*.txt
+  您好.txt
+
+将上面的 alias 命令添加到配置文件 `/etc/profile` 中，实现在每次运行 Git Bash 时自动加载。
+
+msysGit 中 Git 的中文支持
+--------------------------------
+
+非常遗憾的是 msysGit 中的 Git 对中文支持没有 Cygwin 中的 Git 做的那么好。msysGit 中的 Git 对中文支持的程度，就相当于前面讨论过的 Linux 使用 GBK 字符集时 Git 的情况。
+
+* 要为 Git 设置参数 i18n.logOutputEncoding，以设置提交说明显示所使用的字符集为 gbk，这样使用 `git log` 查看提交说明才能够正确显示其中的中文。
 
   ::
 
-    set HOME=
+    $ git config --system i18n.logOutputEncoding gbk
 
-* 方法2：如果希望使用 HOME 环境变量指向的主目录，则通过手工编辑 /etc/passwd 文件，将其中用户主目录修改成 HOME 环境变量所指向的目录。
+* 还要为 Git 设置参数 i18n.commitEncoding，设置录入提交说明时所使用的字符集，以便在 commit 对象中对字符集正确标注。
 
-命令行补齐忽略文件大小写
-^^^^^^^^^^^^^^^^^^^^^^^^^
+  Git 在提交时并不会对提交说明进行从 GBK 字符集到 UTF-8 的转换，但是可以在提交说明中标注所使用的字符集，因此在非 UTF-8 字符集的平台录入中文，需要用下面指令设置录入提交说明的字符集，以便在 commit 对象中嵌入正确的编码说明。
 
-Windows 的文件系统忽略文件名大小写，在 Cygwin 下最好对命令行补齐进行相关设置以忽略大小写，这样使用起来更方便。
+  ::
 
-编辑文件 `~/.inputrc` ，在其中添加设置 "set completion-ignore-case on" ，或者取消已有相关设置前面的井号注释符。修改完毕后，再重新进入 Cygwin，就可以实现文件名补齐对大小写的忽略。
+    $ git config --system i18n.commitEncoding gbk
 
+* 同样，为了能够让带有中文文件名的文件，在工作区状态输出，查看历史更改概要，以及在补丁文件中，能够正常显示，要为 Git 配置 core.quotepath 变量，将其设置为 false。
 
-Cygwin/Git 的中文支持
-----------------------
+  ::
 
-Cygwin 当前版本 1.7.x，对中文的支持非常好。无需任何配置就可以在 Cygwin 的窗口内输入中文，以及执行 `ls` 命令显示中文文件名。这与我记忆中的6、7年前的 Cygwin 1.5.x 完全不一样了。老版本的 Cygwin 还需要做一些工作才能在控制台输入中文和显示中文，但是最新的 Cygwin 已经完全不需要了。反倒是后面要介绍的 msysGit 的控制台仍然需要做出类似（老版本 Cygwin）的改动才能够正常显示和输入中文。
+    $ git config --system core.quotepath false
+    $ git status -s
+    ?? 说明.txt
 
-Cygwin 下的 Git 对中文支持同样非常出色，虽然中文 Windows 本身使用 GBK 字符集，但是在 Cygwin 下 Git 的行为就如同工作在 UTF-8 字符集的 Linux 下，对中文的支持非常的好。
+说明：上面为 Git 配置环境变量时，注意不要影响到 Cygwin 中 Git 的运行。因为 Cygwin 的 Git 和 msysGit 的系统配置文件位置不同，所以上面更改 Git 环境使用了系统级配置文件。
 
-* 在提交时，可以在提交说明中输入中文。
-* 显示提交历史，能够正常显示提交说明中的中文字符。
-* 可以添加中文文件名的文件，并可以在使用 utf-8 字符集的 Linux 环境中克隆及检出。
-* 可以创建带有中文字符的里程碑名称。
-
-但是和 Linux 平台一样，在默认设置下，带有中文文件名的文件，在工作区状态输出，查看历史更改概要，以及在补丁文件中，文件名不能正确显示为中文，而是用若干8进制编码来显示中文，如下：
-
-::
-
-  $ git status -s
-  ?? "\350\257\264\346\230\216.txt"
-
-通过设置变量 `core.quotepath` 为 `false` ，就可以解决中文文件名在这些 Git 命令输出中的显示问题。
-
-::
-
-  $ git config --global core.quotepath false
-  $ git status -s
-  ?? 说明.txt
 
 Cygwin/Git 访问 SSH 服务
 ---------------------------
