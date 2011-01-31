@@ -49,7 +49,8 @@
 .. include:: ./01-meet-git/020-love-git.rst
 .. include:: ./01-meet-git/030-install-on-linux.rst
 .. include:: ./01-meet-git/040-install-on-mac.rst
-.. include:: ./01-meet-git/050-install-on-windows.rst
+.. include:: ./01-meet-git/050-install-on-windows-cygwin.rst
+.. include:: ./01-meet-git/060-install-on-windows-msysgit.rst
 
 第 2 篇: Git独奏
 ###########################

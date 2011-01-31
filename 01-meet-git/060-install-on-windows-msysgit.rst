@@ -1,5 +1,15 @@
-Windows 下安装和使用 Git（Cygwin篇）
+Windows 下安装和使用 Git（msysGit篇）
 =====================================
+
+msysGit 的安装和使用
+-------------------------
+
+.. figure:: images/windows/msysGit-1.png
+   :scale: 80
+
+   图3-4：选择网络安装或是本地安装
+
+
 
 在 Windows 下安装和使用 Git 有两个不同的方案，通过安装 msysGit 或者通过安装 Cygwin 来使用 Git。在这两种不同的方案下，Git 的使用和在 Linux 下使用完全一致。再有一个就是基于 msysGit 的图形界面工具 —— TortoiseGit，也就是在 CVS 和 SVN 时代就已经广为人知的 Tortoise 系列软件的 Git 版本。TortoiseGit 提供和资源管理器的整合，提供 Git 操作的图形化界面。
 
@@ -173,7 +183,7 @@ Windows 的文件系统忽略文件名大小写，在 Cygwin 下最好对命令�
 Cygwin/Git 的中文支持
 ----------------------
 
-Cygwin 当前版本 1.7.x，对中文的支持非常好。无需任何配置就可以在 Cygwin 的窗口内输入中文，以及执行 `ls` 命令显示中文文件名。这在我记忆中6、7年前的 Cygwin 1.5.x 完全不一样了。老版本的 Cygwin 还需要做一些工作才能在控制台输入中文和显示中文，但是最新的 Cygwin 已经完全不需要了。反倒是后面要介绍的 msysGit 的控制台仍然需要做出类似（老版本 Cygwin）的改动才能够正常显示和输入中文。
+Cygwin 当前版本 1.7.x，对中文的支持非常好。无需任何配置就可以在 Cygwin 的窗口内输入中文，以及执行 `ls` 命令显示中文文件名。这与我记忆中的6、7年前的 Cygwin 1.5.x 完全不一样了。老版本的 Cygwin 还需要做一些工作才能在控制台输入中文和显示中文，但是最新的 Cygwin 已经完全不需要了。反倒是后面要介绍的 msysGit 的控制台仍然需要做出类似（老版本 Cygwin）的改动才能够正常显示和输入中文。
 
 Cygwin 下的 Git 对中文支持同样非常出色，虽然中文 Windows 本身使用 GBK 字符集，但是在 Cygwin 下 Git 的行为就如同工作在 UTF-8 字符集的 Linux 下，对中文的支持非常的好。
 
@@ -350,23 +360,7 @@ Git 在使用命令行工具 Plink（ `plink.exe` ）做为 SSH 客户端访问 
 
 
 
-msysGit 的安装和使用
--------------------------
-
-.. figure:: images/windows/msysGit-1.png
-   :scale: 80
-
-   图3-4：选择网络安装或是本地安装
-
-
-
 
 TortoiseGit 的安装和使用
 -------------------------
-
-帮助
-===========
-
-* git help <subcommand>
-* git help -w <subcommand>
 
