@@ -1,14 +1,14 @@
 Windows 下安装和使用 Git（msysGit篇）
 =====================================
 
-运行在 Cygwin 下的 Git 不是直接使用 Windows 的系统调用，而是通过二传手 `cygwin1.dll` 来进行，即使 Cygwin 的 git 命令能够在 Windows 下的 `cmd.exe` 命令窗口中依然运行的非常好，但 Cygwin 下的 Git 并不能看作是 Windows 下的原生程序。相比 Cygwin 下的 Git，msysGit 是原生的 Windows 程序，msysGit 下运行的 Git 直接通过 Windows 的系统调用运行。
+运行在 Cygwin 下的 Git 不是直接使用 Windows 的系统调用，而是通过二传手 `cygwin1.dll` 来进行，虽然 Cygwin 的 git 命令能够在 Windows 下的 `cmd.exe` 命令窗口中运行的非常好，但 Cygwin 下的 Git 并不能看作是 Windows 下的原生程序。相比 Cygwin 下的 Git，msysGit 是原生的 Windows 程序，msysGit 下运行的 Git 直接通过 Windows 的系统调用运行。
 
-msysGit 的名字前面的四个字母来源于 MSYS 项目。MSYS 项目源自于 MinGW（Minimalist GNU for Windows，最简GNU工具集），通过增加了一个 bash 提供的shell 环境以及其他相关工具软件，组成了一个最简系统（Minimal SYStem），简称 MSYS。利用 MinGW 提供的工具，以及 Git 针对 MinGW 形成的一个分支版本，在 Windows 平台为 Git 编译出一个原生应用，这就是 msysGit。
+msysGit 的名字前面的四个字母来源于 MSYS 项目。MSYS 项目源自于 MinGW（Minimalist GNU for Windows，最简GNU工具集），通过增加了一个 bash 提供的shell 环境以及其他相关工具软件，组成了一个最简系统（Minimal SYStem），简称 MSYS。利用 MinGW 提供的工具，以及 Git 针对 MinGW 的一个分支版本，在 Windows 平台为 Git 编译出一个原生应用，接合 MSYS 就组成了 msysGit。
 
-msysGit 的安装和使用
--------------------------
+安装 msysGit
+-------------
 
-安装 msysGit 非常简单，访问 msysGit 的项目主页（http://code.google.com/p/msysgit/），可以下载 msysGit。最简单的方式是下载名为 `Git-<VERSION>-preview<DATE>.exe` 的软件包，如：`Git-1.7.3.1-preview20101002.exe` 。如果有时间和耐心，喜欢观察 Git 是如何在 Windows 上是编译为原生应用的，也可以下载带 `msysGit-fullinstall-` 前缀的软件包。
+安装 msysGit 非常简单，访问 msysGit 的项目主页（http://code.google.com/p/msysgit/），下载 msysGit。最简单的方式是下载名为 `Git-<VERSION>-preview<DATE>.exe` 的软件包，如：`Git-1.7.3.1-preview20101002.exe` 。如果有时间和耐心，喜欢观察 Git 是如何在 Windows 上是编译为原生应用的，也可以下载带 `msysGit-fullinstall-` 前缀的软件包。
 
 点击下载的安装程序（如 `Git-1.7.3.1-preview20101002.exe` ），开始安装，如图3-18。
 
@@ -79,12 +79,12 @@ msysGit 缺省已经安装了 Git 的命令补齐功能。要想实现对文件�
 
   set completion-ignore-case on
 
-msysGit 的 shell 环境的中文支持
+msysGit shell 环境的中文支持
 --------------------------------
 
 在介绍 Cygwin 的章节中曾经提到过，msysGit 的中文支持相当于老版本的 Cygwin，需要配置才能够实现在 Git Bash 环境下录入中文和显示中文。
 
-修改配置文件 `/etc/inputrc` ，增加或修改相关配置如下：
+为了能在 shell 界面中输入中文，需要修改配置文件 `/etc/inputrc` ，增加或修改相关配置如下：
 
 ::
 
@@ -101,7 +101,7 @@ msysGit 的 shell 环境的中文支持
   $ echo 您好
   您好
 
-但现在最常用的 `ls` 命令的输出对中文支持有问题，需要进行设置。
+但现在最常用的 `ls` 命令的输出对中文支持有问题。下面的命令创建了一个中文文件名的文件，显示文件内容中的中文没有问题，但是显示文件名本身会显示为一串问号。
 
 ::
 
@@ -134,23 +134,33 @@ msysGit 的 shell 环境的中文支持
 msysGit 中 Git 的中文支持
 --------------------------------
 
-非常遗憾的是 msysGit 中的 Git 对中文支持没有 Cygwin 中的 Git 做的那么好。msysGit 中的 Git 对中文支持的程度，就相当于前面讨论过的 Linux 使用 GBK 字符集时 Git 的情况。
+非常遗憾的是 msysGit 中的 Git 对中文支持没有 Cygwin 中的 Git 做的那么好。msysGit 中的 Git 对中文支持的程度，就相当于前面讨论过的 Linux 使用了 GBK 字符集时 Git 的情况。
 
-* 要为 Git 设置参数 i18n.logOutputEncoding，以设置提交说明显示所使用的字符集为 gbk，这样使用 `git log` 查看提交说明才能够正确显示其中的中文。
+* 使用 msysGit 提交时，如果在提交说明中输入中文，从 Linux 平台或其他 UTF-8 字符集平台上查看提交说明显示乱码。
+* 同样从 Linux 平台或者其他使用 UTF-8 字符集平台进行的提交若提交说明包含中文，在 msysGit 中也显示乱码。
+* 如果 msysGit 中添加中文文件名的文件，在 Linux（或其他 utf-8）平台检出文件名显示为乱码。
+* 反之亦然。
+* 不能创建带有文字符的里程碑名称。
+
+
+为解决日志显示乱码问题，msysGit 要为 Git 设置参数 i18n.logOutputEncoding，将该参数
+
+
+以设置提交说明显示所使用的字符集为 gbk，这样使用 `git log` 查看提交说明才能够正确显示其中的中文。
 
   ::
 
     $ git config --system i18n.logOutputEncoding gbk
 
-* 还要为 Git 设置参数 i18n.commitEncoding，设置录入提交说明时所使用的字符集，以便在 commit 对象中对字符集正确标注。
+还要为 Git 设置参数 i18n.commitEncoding，设置录入提交说明时所使用的字符集，以便在 commit 对象中对字符集正确标注。
 
-  Git 在提交时并不会对提交说明进行从 GBK 字符集到 UTF-8 的转换，但是可以在提交说明中标注所使用的字符集，因此在非 UTF-8 字符集的平台录入中文，需要用下面指令设置录入提交说明的字符集，以便在 commit 对象中嵌入正确的编码说明。
+Git 在提交时并不会对提交说明进行从 GBK 字符集到 UTF-8 的转换，但是可以在提交说明中标注所使用的字符集，因此在非 UTF-8 字符集的平台录入中文，需要用下面指令设置录入提交说明的字符集，以便在 commit 对象中嵌入正确的编码说明。
 
   ::
 
     $ git config --system i18n.commitEncoding gbk
 
-* 同样，为了能够让带有中文文件名的文件，在工作区状态输出，查看历史更改概要，以及在补丁文件中，能够正常显示，要为 Git 配置 core.quotepath 变量，将其设置为 false。
+同样，为了能够让带有中文文件名的文件，在工作区状态输出，查看历史更改概要，以及在补丁文件中，能够正常显示，要为 Git 配置 core.quotepath 变量，将其设置为 false。
 
   ::
 
