@@ -73,7 +73,7 @@ msysGit 的配置和使用
 命令行补齐和忽略文件大小写
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-msysGit 缺省已经安装了 Git 的命令补齐功能。要想实现对文件名命令补齐时忽略大小写，可以修改配置文件 `/etc/inputrc` 。在其中添加设置:
+msysGit 缺省已经安装了 Git 的命令补齐功能，并且在对文件名命令补齐时忽略大小写。这是因为 msysGit 已经在配置文件 `/etc/inputrc` 中包含了下列的设置:
 
 ::
 
@@ -82,9 +82,12 @@ msysGit 缺省已经安装了 Git 的命令补齐功能。要想实现对文件�
 msysGit shell 环境的中文支持
 --------------------------------
 
-在介绍 Cygwin 的章节中曾经提到过，msysGit 的中文支持相当于老版本的 Cygwin，需要配置才能够实现在 Git Bash 环境下录入中文和显示中文。
+在介绍 Cygwin 的章节中曾经提到过，msysGit 的 shell 环境的中文支持相当于老版本的 Cygwin，需要配置才能够实现录入中文和显示中文。
 
-为了能在 shell 界面中输入中文，需要修改配置文件 `/etc/inputrc` ，增加或修改相关配置如下：
+中文录入问题
+^^^^^^^^^^^^^
+
+缺省安装的 msysGit 的 shell 环境无法输入中文。为了能在 shell 界面中输入中文，需要修改配置文件 `/etc/inputrc` ，增加或修改相关配置如下：
 
 ::
 
@@ -101,7 +104,34 @@ msysGit shell 环境的中文支持
   $ echo 您好
   您好
 
-但现在最常用的 `ls` 命令的输出对中文支持有问题。下面的命令创建了一个中文文件名的文件，显示文件内容中的中文没有问题，但是显示文件名本身会显示为一串问号。
+分页器中文输出问题
+^^^^^^^^^^^^^^^^^^^
+
+当对 `/etc/inputrc` 进行正确的配置之后，能够在 shell 下输入中文，但是执行下面的命令会显示乱码。这显然是 `less` 分页器命令导致的问题。
+
+::
+
+  $ echo 您好 | less
+  <C4><FA><BA><C3>
+
+通过管道符调用分页器命令 `less` 后，原本的中文输出变成了乱码显示。这将会导致 Git 很多命令的输出都会出险中文乱码问题，因为 Git 大量的使用 `less` 命令做为分页器。之所以 `less` 命令出险乱码，是因为该命令没有把中文当作正常的字符，可以通过设置 LESSCHARSET 环境变量，将 utf-8 编码字符视为正规字符显示，则中文就能正常显示了。下面的操作，可以在 `less` 分页器中正常显示中文。
+
+::
+
+  $ export LESSCHARSET=utf-8
+  $ echo 您好 | less
+  您好  
+
+编辑配置文件 `/etc/profile` ，将对环境变量 LESSCHARSET 的设置加入其中，以便 msysGit 的 shell 环境一启动即加载。
+
+::
+
+  declare -x LESSCHARSET=utf-8
+
+ls 命令对中文文件名的显示
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+最常用的显示目录和文件名列表的命令 `ls` 对中文文件名的显示有问题。下面的命令创建了一个中文文件名的文件，显示文件内容中的中文没有问题，但是显示文件名本身会显示为一串问号。
 
 ::
 
@@ -113,14 +143,14 @@ msysGit shell 环境的中文支持
   $ ls \*.txt
   ????.txt
 
-实际上 `ls` 命令只要增加参数 `--show-control-chars` 即可正确显示中文。
+实际上只要在 `ls` 命令后添加参数 `--show-control-chars` 即可正确显示中文。
 
 ::
 
   $ ls --show-control-chars *.txt
   您好.txt
 
-为方便起见，为 `ls` 命令设置一个别名。
+为方便起见，可以为 `ls` 命令设置一个别名，这样就不必在输入 `ls` 命令时输入长长的参数了。
 
 ::
 
@@ -134,17 +164,17 @@ msysGit shell 环境的中文支持
 msysGit 中 Git 的中文支持
 --------------------------------
 
-非常遗憾的是 msysGit 中的 Git 对中文支持没有 Cygwin 中的 Git 做的那么好。msysGit 中的 Git 对中文支持的程度，就相当于前面讨论过的 Linux 使用了 GBK 字符集时 Git 的情况。
+非常遗憾的是 msysGit 中的 Git 对中文支持没有 Cygwin 中的 Git 做的那么好，msysGit 中的 Git 对中文支持的程度，就相当于前面讨论过的 Linux 使用了 GBK 字符集时 Git 的情况。
 
-* 使用 msysGit 提交时，如果在提交说明中输入中文，从 Linux 平台或其他 UTF-8 字符集平台上查看提交说明显示乱码。
-* 同样从 Linux 平台或者其他使用 UTF-8 字符集平台进行的提交若提交说明包含中文，在 msysGit 中也显示乱码。
-* 如果 msysGit 中添加中文文件名的文件，在 Linux（或其他 utf-8）平台检出文件名显示为乱码。
-* 反之亦然。
-* 不能创建带有文字符的里程碑名称。
+* 未经配置的 msysGit 提交时，如果在提交说明中输入中文，从 Linux 平台或其他 UTF-8 字符集平台上查看提交说明显示乱码。
+* 同样从 Linux 平台或者其他使用 UTF-8 字符集平台进行的提交，若提交说明包含中文，在未经配置的 msysGit 中也显示乱码。
+* 如果使用 msysGit 向版本库中添加带有中文文件名的文件，在 Linux（或其他 utf-8）平台检出文件名显示为乱码。反之亦然。
+* 不能创建带有中文字符的引用（里程碑、分支等）。
+
+如果希望版本库中出现中文文件名的文件，最好不要使用 msysGit，而是使用 Cygwin 下的 Git。如果只是想在提交说明中使用中文，经过一定的设置 msysGit 还是可以实现的。
 
 
 为解决日志显示乱码问题，msysGit 要为 Git 设置参数 i18n.logOutputEncoding，将该参数
-
 
 以设置提交说明显示所使用的字符集为 gbk，这样使用 `git log` 查看提交说明才能够正确显示其中的中文。
 
@@ -169,159 +199,6 @@ Git 在提交时并不会对提交说明进行从 GBK 字符集到 UTF-8 的转�
     ?? 说明.txt
 
 说明：上面为 Git 配置环境变量时，注意不要影响到 Cygwin 中 Git 的运行。因为 Cygwin 的 Git 和 msysGit 的系统配置文件位置不同，所以上面更改 Git 环境使用了系统级配置文件。
-
-
-Cygwin/Git 访问 SSH 服务
----------------------------
-
-在本书第5篇第29章介绍的公钥认证方式访问 Git 服务，是 Git 写操作最重要的服务。公钥认证方式访问 SSH 协议的 Git 服务器时无需输入口令，而且更为安全。使用公钥认证就涉及到创建公钥-私钥对，以及在 SSH 连接时选择哪一个私钥的问题（如果建立有多个私钥）。
-
-Cygwin 下的 openssh 软件包提供的 ssh 命令和 Linux 下的没有什么区别，也提供 ssh-keygen 命令管理 SSH 公钥-私钥对。但是 Cygwin 当前的 openssh（版本号：5.7p1-1）有一个 Bug，偶尔在用 Git 克隆使用 SSH 协议的版本库时会中断，无法完成版本库克隆。如下：
-
-::
-
-  $ git clone git@bj.ossxp.com:ossxp/gitbook.git
-  Cloning into gitbook...
-  The server's host key is not cached in the registry. You
-  have no guarantee that the server is the computer you
-  think it is.
-  The server's rsa2 key fingerprint is:
-  ssh-rsa 2048 49:eb:04:30:70:ab:b3:28:42:03:19:fe:82:f8:1a:00
-  Connection abandoned.
-  fatal: The remote end hung up unexpectedly
-
-如果读者也遇到同样的问题，建议使用 PuTTY 提供的 plink.exe 做为 SSH 客户端，替代存在问题的 Cygwin 自带的 ssh 命令。
-
-安装 PuTTY
-^^^^^^^^^^^
-
-PuTTY 是 Windows 下一个开源软件，提供 SSH 客户端服务，还包括公钥管理相关工具。访问 PuTTY 的主页（http://www.chiark.greenend.org.uk/~sgtatham/putty/），下载并安装 PuTTY。安装完毕会发现 PuTTY 软件包包含了好几个可执行程序，对于和 Git 整合，下面几个命令会用到。
-
-* Plink： 即 plink.exe，是命令行的 SSH 客户端，用于替代 ssh 命令。默认安装于 `C:\\Program Files\\PuTTY\\plink.exe` 。
-* PuTTYgen ：用于管理 PuTTY 格式的私钥，也可以用于将 openssh 格式的私钥转换为 PuTTY 格式的私钥。
-* Pageant ：是 SSH 认证代理，运行于后台，负责为 SSH 连接提供私钥访问服务。
-
-PuTTY 格式的私钥
-^^^^^^^^^^^^^^^^^
-
-PuTTY 使用自定义格式的私钥文件（扩展名为 `.ppk` ），而不能直接使用 openssh 格式的私钥。即用 openssh 的 ssh-keygen 命令创建的私钥不能直接被 PuTTY 拿过来使用，必需经过转换。程序 PuTTYgen 可以实现私钥格式的转换。
-
-运行 PuTTYgen 程序，如图3-15所示。
-
-.. figure:: images/windows/putty-keygen-1.png
-   :scale: 80
-
-   图3-15：运行 PuTTYgen 程序
-
-PuTTYgen 既可以重新创建私钥文件，也可以通过点击加载按钮（load）读取 openssh 格式的私钥文件，从而可以将其转换为 PuTTY 格式私钥。点击加载按钮，会弹出文件选择对话框，选择 openssh 格式的私钥文件（如文件 id_rsa），如果转换成功，会显示如图3-16的界面。
-
-.. figure:: images/windows/putty-keygen-2.png
-   :scale: 80
-
-   图3-16：PuTTYgen 完成私钥加载
-
-然后点击 “Save private key”（保存私钥），就可以将私钥保存为 PuTTY 的 `.ppk` 格式的私钥。例如将私钥保存到文件 `~/.ssh/jiangxin-cygwin.ppk` 中。
-
-Git 使用 Pageant 进行公钥认证
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Git 在使用命令行工具 Plink（ `plink.exe` ）做为 SSH 客户端访问 SSH 协议的版本库服务器时，如何选择公钥呢？使用 Pageant 是一个非常好的选择。Pageant 是 PuTTY 软件包中为各个 PuTTY 应用提供私钥请求的代理软件，当 Plink 连接 SSH 服务器需要请求公钥认证时，Pageant 就会提供给 Plink 相应的私钥。
-
-运行 Pageant ，启动后显示为托盘区中的一个图标，在后台运行。当使用鼠标右键单击 Pageant 的图标，就会显示弹出菜单如图3-17所示。
-
-.. figure:: images/windows/pageant.png
-   :scale: 80
-
-   图3-17：Pageant 的弹出菜单
-
-点击弹出菜单中的 “Add Key”（添加私钥）按钮，弹出文件选择框，选择扩展名为 `.ppk` 的 PuTTY 格式的公钥，即完成了 Pageant 的私钥准备工作。
-
-接下来，还需要对 Git 进行设置，设置 Git 使用 `plink.exe` 做为 SSH 客户端，而不是缺省的 `ssh`  命令。通过设置 GIT_SSH 环境变量即可实现。
-
-::
-
-  $ export GIT_SSH=/cygdrive/c/Program\ Files/PuTTY/plink.exe
-
-上面在设置 GIT_SSH 环境变量的过程中，使用了 Cygwin 格式的路径，而非 Windows 格式，这是因为 Git 是在 Cygwin 的环境中调用 `plink.exe` 命令的，当然要使用 Cygwin 能够理解的路径。
-
-然后就可以用 Git 访问 SSH 协议的 Git 服务器了。运行在后台的 Pageant 会在需要的时候为 plink.exe 提供私钥访问服务。但在首次连接一个使用 SSH 协议的 Git 服务器的时候，很可能会因为远程SSH服务器的公钥没有经过确认导致 git 命令执行失败。如下所示。
-
-::
-
-  $ git clone git@bj.ossxp.com:ossxp/gitbook.git
-  Cloning into gitbook...
-  The server's host key is not cached in the registry. You
-  have no guarantee that the server is the computer you
-  think it is.
-  The server's rsa2 key fingerprint is:
-  ssh-rsa 2048 49:eb:04:30:70:ab:b3:28:42:03:19:fe:82:f8:1a:00
-  Connection abandoned.
-  fatal: The remote end hung up unexpectedly
-
-这是因为首次连接一个 SSH 服务器时，要对其公钥进行确认（以防止被钓鱼），而运行于 Git 下的 `plink.exe` 没有机会从用户那里获取输入以建立对该SSH服务器公钥的信任，因此 Git 访问失败。解决办法非常简单，就是直接运行 `plink.exe` 连接一次远程 SSH 服务器，对公钥确认进行应答。如下：
-
-::
-
-  $ /cygdrive/c/Program\ Files/PuTTY/plink.exe git@bj.ossxp.com
-  The server's host key is not cached in the registry. You
-  have no guarantee that the server is the computer you
-  think it is.
-  The server's rsa2 key fingerprint is:
-  ssh-rsa 2048 49:eb:04:30:70:ab:b3:28:42:03:19:fe:82:f8:1a:00
-  If you trust this host, enter "y" to add the key to
-  PuTTY's cache and carry on connecting.
-  If you want to carry on connecting just once, without
-  adding the key to the cache, enter "n".
-  If you do not trust this host, press Return to abandon the
-  connection.
-  Store key in cache? (y/n)
-
-输入 “y”，将公钥保存在信任链中，以后再次连接就不会弹出该确认应答了。当然执行 Git 命令，也就可以成功执行了。
-
-使用自定义 SSH 脚本取代 Pageant
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-使用 Pageant 还要在每次启动 Pageant 时手动选择私钥文件，比较的麻烦。实际上可以创建一个脚本对 `plink.exe` 进行封装，在封装的脚本中指定私钥文件，这样就可以不必使用 Pageant 而实现公钥认证了。
-
-例如：创建脚本 `~/bin/ssh-jiangxin` ，文件内容如下了：
-
-::
-
-  #!/bin/sh
-
-  /cygdrive/c/Program\ Files/PuTTY/plink.exe -i c:/cygwin/home/jiangxin/.ssh/jiangxin-cygwin.ppk $*
-
-设置该脚本可执行。
-
-::
-
-  $ chmod a+x ~/bin/ssh-jiangxin
-
-通过该脚本和远程 SSH 服务器连接，使用下面的命令：
-
-::
-
-  $ ~/bin/ssh-jiangxin git@bj.ossxp.com
-  Using username "git".
-  Server refused to allocate pty
-  hello jiangxin, the gitolite version here is v1.5.5-9-g4c11bd8
-  the gitolite config gives you the following access:
-       R          gistore-bj.ossxp.com/.*$
-       R          gistore-ossxp.com/.*$
-    C  R  W       ossxp/.*$
-       R  W       test/repo1
-       R  W       test/repo2
-       R  W       test/repo3
-      @R @W       test/repo4
-   @C @R  W       users/jiangxin/.+$
-
-
-设置 GIT_SSH 变量，使之指向新建立的脚本，然后就可以使用 Git 来连接 SSH 协议的 Git 库了。
-
-::
-
-  $ export GIT_SSH=~/bin/ssh-jiangxin
-
 
 
 
