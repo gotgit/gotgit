@@ -79,6 +79,11 @@ msysGit 缺省已经安装了 Git 的命令补齐功能，并且在对文件名�
 
   set completion-ignore-case on
 
+多用户使用 HOME 环境问题
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+
 msysGit shell 环境的中文支持
 --------------------------------
 
@@ -171,35 +176,33 @@ msysGit 中 Git 的中文支持
 * 如果使用 msysGit 向版本库中添加带有中文文件名的文件，在 Linux（或其他 utf-8）平台检出文件名显示为乱码。反之亦然。
 * 不能创建带有中文字符的引用（里程碑、分支等）。
 
-如果希望版本库中出现中文文件名的文件，最好不要使用 msysGit，而是使用 Cygwin 下的 Git。如果只是想在提交说明中使用中文，经过一定的设置 msysGit 还是可以实现的。
+如果希望版本库中出现使用中文文件名的文件，最好不要使用 msysGit，而是使用 Cygwin 下的 Git。而如果只是想在提交说明中使用中文，经过一定的设置 msysGit 还是可以实现的。
+
+为了解决日志显示乱码问题，msysGit 要为 Git 设置参数 i18n.logOutputEncoding，将日志输出编码设置为 gbk。
+
+::
+
+  $ git config --system i18n.logOutputEncoding gbk
+
+Git 在提交时并不会对提交说明进行从 GBK 字符集到 UTF-8 的转换，但是可以在提交说明中标注所使用的字符集，因此在非 UTF-8 字符集的平台录入中文，需要用下面指令设置录入提交说明的字符集，以便在 commit 对象中嵌入正确的编码说明。为了使 msysGit 提交时输入的中文说明能够在 Linux 或其他使用 UTF-8 编码的平台中正确显示，还必须对参数 i18n.commitEncoding 设置。
+
+::
+
+  $ git config --system i18n.commitEncoding gbk
 
 
-为解决日志显示乱码问题，msysGit 要为 Git 设置参数 i18n.logOutputEncoding，将该参数
+同样，为了能够让带有中文文件名的文件，在工作区状态输出，查看历史更改概要，以及在补丁文件中，能够正常显示，要为 Git 配置 core.quotepath 变量，将其设置为 false。但是要注意在 msysGit 中添加中文文件名的文件，只能在 msysGit 环境中正确显示，而在其他环境（Linux, Mac OS X, Cygwin）中文件名会出现乱码。
 
-以设置提交说明显示所使用的字符集为 gbk，这样使用 `git log` 查看提交说明才能够正确显示其中的中文。
+::
 
-  ::
+  $ git config --system core.quotepath false
+  $ git status -s
+  ?? 说明.txt
 
-    $ git config --system i18n.logOutputEncoding gbk
+注意：如果同时安装了 Cygwin 和 msysGit 时，为 msysGit 配置的上述 Git 环境变量，不要影响到 Cygwin 环境中的 Git。幸好 Cygwin 和 msysGit 环境中的 Git 的系统配置文件位置不同，所以上面为 msysGit 设置 Git 环境时使用了系统级配置文件。
 
-还要为 Git 设置参数 i18n.commitEncoding，设置录入提交说明时所使用的字符集，以便在 commit 对象中对字符集正确标注。
-
-Git 在提交时并不会对提交说明进行从 GBK 字符集到 UTF-8 的转换，但是可以在提交说明中标注所使用的字符集，因此在非 UTF-8 字符集的平台录入中文，需要用下面指令设置录入提交说明的字符集，以便在 commit 对象中嵌入正确的编码说明。
-
-  ::
-
-    $ git config --system i18n.commitEncoding gbk
-
-同样，为了能够让带有中文文件名的文件，在工作区状态输出，查看历史更改概要，以及在补丁文件中，能够正常显示，要为 Git 配置 core.quotepath 变量，将其设置为 false。
-
-  ::
-
-    $ git config --system core.quotepath false
-    $ git status -s
-    ?? 说明.txt
-
-说明：上面为 Git 配置环境变量时，注意不要影响到 Cygwin 中 Git 的运行。因为 Cygwin 的 Git 和 msysGit 的系统配置文件位置不同，所以上面更改 Git 环境使用了系统级配置文件。
-
+使用 SSH 协议
+------------------
 
 
 TortoiseGit 的安装和使用
