@@ -31,32 +31,24 @@ msysGit 的名字前面的四个字母来源于 MSYS 项目。MSYS 项目源自�
 
    图3-20：是否修改系统的环境变量
 
-如果系统中安装有 PuTTY，安装过程还会询问使用内置的 ssh 命令还是 PuTTY 提供的 `plink.exe` ，如图3-21。
-
-.. figure:: images/windows/msysgit-7.png
-   :scale: 80
-
-   图3-21：选择 SSH 客户端
-
-
-还会询问换行符的转换方式，使用默认设置就好。参见图3-22。关于换行符转换，参见本书第8篇相关章节。
+还会询问换行符的转换方式，使用默认设置就好。参见图3-21。关于换行符转换，参见本书第8篇相关章节。
 
 .. figure:: images/windows/msysgit-8.png
    :scale: 80
 
-   图3-22：换行符转换方式
+   图3-21：换行符转换方式
 
 根据提示，完成 msysGit 的安装。
 
 msysGit 的配置和使用
 ---------------------
 
-完成 msysGit 的安装后，点击 Git Bash 图标，启动 msysGit，如图3-23。会发现 Git Bash 的界面和 Cygwin 的非常相像。
+完成 msysGit 的安装后，点击 Git Bash 图标，启动 msysGit，如图3-22。会发现 Git Bash 的界面和 Cygwin 的非常相像。
 
 .. figure:: images/windows/msysgit-startup.png
    :scale: 80
 
-   图3-23：启动 Git Bash
+   图3-22：启动 Git Bash
 
 如何访问 Windows 的磁符
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -78,11 +70,6 @@ msysGit 缺省已经安装了 Git 的命令补齐功能，并且在对文件名�
 ::
 
   set completion-ignore-case on
-
-多用户使用 HOME 环境问题
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-
 
 msysGit shell 环境的中文支持
 --------------------------------
@@ -119,7 +106,7 @@ msysGit shell 环境的中文支持
   $ echo 您好 | less
   <C4><FA><BA><C3>
 
-通过管道符调用分页器命令 `less` 后，原本的中文输出变成了乱码显示。这将会导致 Git 很多命令的输出都会出险中文乱码问题，因为 Git 大量的使用 `less` 命令做为分页器。之所以 `less` 命令出险乱码，是因为该命令没有把中文当作正常的字符，可以通过设置 LESSCHARSET 环境变量，将 utf-8 编码字符视为正规字符显示，则中文就能正常显示了。下面的操作，可以在 `less` 分页器中正常显示中文。
+通过管道符调用分页器命令 `less` 后，原本的中文输出变成了乱码显示。这将会导致 Git 很多命令的输出都会出现中文乱码问题，因为 Git 大量的使用 `less` 命令做为分页器。之所以 `less` 命令出现乱码，是因为该命令没有把中文当作正常的字符，可以通过设置 LESSCHARSET 环境变量，将 utf-8 编码字符视为正规字符显示，则中文就能正常显示了。下面的操作，可以在 `less` 分页器中正常显示中文。
 
 ::
 
@@ -210,4 +197,47 @@ msysGit 软件包包含的 ssh 命令和 Linux 下的没有什么区别，也提
 
 TortoiseGit 的安装和使用
 -------------------------
+
+TortoiseGit 提供了 Git 和 Windows 资源管理器的整合，提供了 Git 的图形化操作界面。像其他 Tortoise 系列产品（TortoiseCVS, TortoiseSVN）一样，Git 工作区的目录和文件的图标附加了标识版本控制状态的图像，可以非常直观的看到哪些文件被更改了需要提交。通过对右键菜单的扩展，可以非常方便的在资源管理器中操作 Git 版本库。
+
+安装 TortoiseGit 非常简单，访问网站 http://code.google.com/p/tortoisegit/ ，下载安装包，开始安装。
+
+安装过程中会询问要使用的 SSH 客户端，如图3-23。缺省使用内置的 TortoisePLink（来自 PuTTY 项目）做为 SSH 客户端。
+
+.. figure:: images/windows/tgit-3.png
+   :scale: 80
+
+   图3-23：启动 Git Bash
+
+TortoisePLink 和 TortoiseGit 的整合性更好，可以直接通过对话框设置 SSH 私钥（PuTTY格式），而无需再到字符界面去配置 SSH 私钥和其他配置文件。如果安装过程中选择了 OpenSSH，可以在安装完毕之后，通过 TortoiseGit 的设置对话框重新选择缺省 SSH 客户端程序，如图3-24。
+
+.. figure:: images/windows/tgit-settings-network-plink.png
+   :scale: 80
+
+   图3-24：配置缺省 SSH 客户端
+
+当配置使用 TortoisePLink 做为缺省 SSH 客户端时，在执行克隆操作时，在操作界面中可以选择一个 PuTTY 格式的私钥文件进行认证。
+
+.. figure:: images/windows/tgit-clone.png
+   :scale: 80
+
+   图3-25：克隆操作选择 PuTTY 格式私钥文件
+
+如果连接一个服务器的 SSH 私钥需要更换，可以通过 Git 远程服务器配置界面对私钥文件进行重新设置。如图3-26。
+
+.. figure:: images/windows/tgit-settings-remote.png
+   :scale: 80
+
+   图3-26：配置 msysGit 可执行程序目录
+
+如果安装有多个 msysGit 拷贝，也可以通过 TortoiseGit 的配置界面进行选择，如图3-27。
+
+.. figure:: images/windows/tgit-settings-general.png
+   :scale: 80
+
+   图3-27：配置 msysGit 可执行程序目录
+
+
+
+images/windows/tgit-settings-network.png
 
