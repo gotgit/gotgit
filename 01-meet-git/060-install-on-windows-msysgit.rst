@@ -200,7 +200,7 @@ TortoiseGit 的安装和使用
 
 TortoiseGit 提供了 Git 和 Windows 资源管理器的整合，提供了 Git 的图形化操作界面。像其他 Tortoise 系列产品（TortoiseCVS, TortoiseSVN）一样，Git 工作区的目录和文件的图标附加了标识版本控制状态的图像，可以非常直观的看到哪些文件被更改了需要提交。通过对右键菜单的扩展，可以非常方便的在资源管理器中操作 Git 版本库。
 
-安装 TortoiseGit 非常简单，访问网站 http://code.google.com/p/tortoisegit/ ，下载安装包，开始安装。
+TortoiseGit 是对 msysGit 命令行的封装，因此需要先安装 msysGit。安装 TortoiseGit 非常简单，访问网站 http://code.google.com/p/tortoisegit/ ，下载安装包，然后根据提示完成安装。
 
 安装过程中会询问要使用的 SSH 客户端，如图3-23。缺省使用内置的 TortoisePLink（来自 PuTTY 项目）做为 SSH 客户端。
 
@@ -237,7 +237,16 @@ TortoisePLink 和 TortoiseGit 的整合性更好，可以直接通过对话框�
 
    图3-27：配置 msysGit 可执行程序目录
 
+TortoiseGit 的中文支持
+-------------------------
 
+TortoiseGit 虽用低层需要调用 msysGit，但是 TortoiseGit 的中文支持的实现和 msysGit 不一样，甚至对 msysGit 中文支持做进行的配制会破坏 TortoiseGit。
 
-images/windows/tgit-settings-network.png
+TortoiseGit 在提交时，会将提交说明转换为 UTF-8 字符集，因此无须对 i18n.commitEncoding 变量进行设置。相反，如果设置了 i18n.commitEncoding 为 gbk 或其他，则在提交对象中包含错误的编码设置，有可能在显示提交说明时造成麻烦。
+
+TortoiseGit 在显示提交说明时，认为所有的提交说明都是 UTF-8 编码，会转换为合适的 Windows 本地字符集显示，而无须设置 i18n.logOutputEncoding 变量。因为当前版本的 TortoiseGit 没有对提交对象中的 encoding 设置进行检查，因此使用 GBK 字符集的提交说明中的中文不能正常显示。
+
+因此，如果需要同时使用 msysGit 和 TortoiseGit，并需要在提交说明中使用中文，可以安装两套 msysGit，并确保 TortoiseGit 关联的 msysGit 没有对 i18n.commitEncoding 进行设置。
+
+TortoiseGit 对使用中文命名的文件和目录的支持和 msysGit 一样，都存在缺陷，因此应当避免在 msysGit 和 TortoiseGit 中添加用中文命名的文件和目录，如果确实需要，可以使用 Cygwin。
 
