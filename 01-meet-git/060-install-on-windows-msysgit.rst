@@ -165,7 +165,7 @@ msysGit 中 Git 的中文支持
 
 如果希望版本库中出现使用中文文件名的文件，最好不要使用 msysGit，而是使用 Cygwin 下的 Git。而如果只是想在提交说明中使用中文，经过一定的设置 msysGit 还是可以实现的。
 
-为了解决日志显示乱码问题，msysGit 要为 Git 设置参数 i18n.logOutputEncoding，将日志输出编码设置为 gbk。
+为了解决提交说明显示乱码问题，msysGit 要为 Git 设置参数 i18n.logOutputEncoding，将提交说明的输出编码设置为 gbk。
 
 ::
 
@@ -186,7 +186,7 @@ Git 在提交时并不会对提交说明进行从 GBK 字符集到 UTF-8 的转�
   $ git status -s
   ?? 说明.txt
 
-注意：如果同时安装了 Cygwin 和 msysGit 时，为 msysGit 配置的上述 Git 环境变量，不要影响到 Cygwin 环境中的 Git。幸好 Cygwin 和 msysGit 环境中的 Git 的系统配置文件位置不同，所以上面为 msysGit 设置 Git 环境时使用了系统级配置文件。
+注意：如果同时安装了 Cygwin 和 msysGit（可能配置了相同的用户主目录），或者因为中文支持问题而需要单独为 TortoiseGit 准备一套 msysGit 时，为了保证不同的 msysGit 之间，以及和 Cygwin 之间的配置不会互相影响，而在配置 Git 环境时使用 `--system` 参数。这是因为不同的 msysGit 安装以及 Cygwin 有着不同的系统配置文件，但是用户级配置文件位置却可能重合。
 
 使用 SSH 协议
 ------------------
@@ -216,7 +216,7 @@ TortoisePLink 和 TortoiseGit 的整合性更好，可以直接通过对话框�
 
    图3-24：配置缺省 SSH 客户端
 
-当配置使用 TortoisePLink 做为缺省 SSH 客户端时，在执行克隆操作时，在操作界面中可以选择一个 PuTTY 格式的私钥文件进行认证。
+当配置使用 TortoisePLink 做为缺省 SSH 客户端时，在执行克隆操作时，在操作界面中可以选择一个 PuTTY 格式的私钥文件进行认证，如图3-25。
 
 .. figure:: images/windows/tgit-clone.png
    :scale: 80
@@ -228,25 +228,25 @@ TortoisePLink 和 TortoiseGit 的整合性更好，可以直接通过对话框�
 .. figure:: images/windows/tgit-settings-remote.png
    :scale: 80
 
-   图3-26：配置 msysGit 可执行程序目录
+   图3-26：更换连接远程 SSH 服务器的私钥
 
 如果安装有多个 msysGit 拷贝，也可以通过 TortoiseGit 的配置界面进行选择，如图3-27。
 
 .. figure:: images/windows/tgit-settings-general.png
    :scale: 80
 
-   图3-27：配置 msysGit 可执行程序目录
+   图3-27：配置 msysGit 的可执行程序位置
 
 TortoiseGit 的中文支持
 -------------------------
 
-TortoiseGit 虽用低层需要调用 msysGit，但是 TortoiseGit 的中文支持的实现和 msysGit 不一样，甚至对 msysGit 中文支持做进行的配制会破坏 TortoiseGit。
+TortoiseGit 虽然在底层调用了 msysGit，但是 TortoiseGit 的中文支持和 msysGit 有区别，甚至前面介绍 msysGit 中文支持时所进行的配制会破坏 TortoiseGit。
 
-TortoiseGit 在提交时，会将提交说明转换为 UTF-8 字符集，因此无须对 i18n.commitEncoding 变量进行设置。相反，如果设置了 i18n.commitEncoding 为 gbk 或其他，则在提交对象中包含错误的编码设置，有可能在显示提交说明时造成麻烦。
+TortoiseGit 在提交时，会将提交说明转换为 UTF-8 字符集，因此无须对 i18n.commitEncoding 变量进行设置。相反，如果设置了 i18n.commitEncoding 为 gbk 或其他，则在提交对象中会包含错误的编码设置，有可能为提交说明的显示带来麻烦。
 
 TortoiseGit 在显示提交说明时，认为所有的提交说明都是 UTF-8 编码，会转换为合适的 Windows 本地字符集显示，而无须设置 i18n.logOutputEncoding 变量。因为当前版本的 TortoiseGit 没有对提交对象中的 encoding 设置进行检查，因此使用 GBK 字符集的提交说明中的中文不能正常显示。
 
-因此，如果需要同时使用 msysGit 和 TortoiseGit，并需要在提交说明中使用中文，可以安装两套 msysGit，并确保 TortoiseGit 关联的 msysGit 没有对 i18n.commitEncoding 进行设置。
+因此，如果需要同时使用 msysGit 的文字界面 Git Bash 以及 TortoiseGit，并需要在提交说明中使用中文，可以安装两套 msysGit，并确保 TortoiseGit 关联的 msysGit 没有对 i18n.commitEncoding 进行设置。
 
 TortoiseGit 对使用中文命名的文件和目录的支持和 msysGit 一样，都存在缺陷，因此应当避免在 msysGit 和 TortoiseGit 中添加用中文命名的文件和目录，如果确实需要，可以使用 Cygwin。
 
