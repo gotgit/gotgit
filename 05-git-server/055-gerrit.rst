@@ -77,7 +77,9 @@ Android 项目的评审网站，匿名即可访问。点击菜单中的 “Merge
 
 ::
 
-  $ git ls-remote ssh://review.source.android.com:29418/platform/sdk refs/changes/93/16993*
+  $ git ls-remote \
+        ssh://review.source.android.com:29418/platform/sdk \
+        refs/changes/93/16993*
   5fb1e79b01166f5192f11c5f509cf51f06ab023d        refs/changes/93/16993/1
   d342ef5b41f07c0202bc26e2bfff745b7c86d5a7        refs/changes/93/16993/2
 
@@ -272,7 +274,9 @@ Gerrit 服务的启动脚本支持 start, stop, restart 参数，可以作为 in
 
 ::
 
-  $ sudo ln -snf /home/gerrit/review_site/bin/gerrit.sh /etc/init.d/gerrit.sh
+  $ sudo ln -snf \
+         /home/gerrit/review_site/bin/gerrit.sh \
+         /etc/init.d/gerrit.sh
   $ sudo ln -snf ../init.d/gerrit.sh /etc/rc2.d/S90gerrit
   $ sudo ln -snf ../init.d/gerrit.sh /etc/rc3.d/S90gerrit
 
@@ -775,10 +779,9 @@ Gerrit 的界面对用户非常友好（如图32-12）。例如在添加授权�
 
 ::
 
-  $ git clone --mirror /home/gerrit/review_site/git/new/project.git \
+  $ git clone --mirror \
+        /home/gerrit/review_site/git/new/project.git \
         /home/gerrit/review_site/git/hello.git
-  Cloning into bare repository /home/gerrit/review_site/git/hello.git...
-  done.
 
 这时查看版本库列表，却看不到新建立的名为 hello.git 的 Git 库出现在项目列表中。
 

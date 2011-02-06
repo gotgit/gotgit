@@ -231,7 +231,7 @@ git-svn 作为 Git 软件包的一部分，当 Git 从源码包进行安装时�
   $ git svn fetch
           M       README
   r5 = fae6dab863ed2152f71bcb2348d476d47194fdd4 (refs/remotes/trunk)
-  15:37:08 jiangxin@hp:/path/to/my/workspace/git-svn-demo$ git st
+  $ git st
   # On branch master
   nothing to commit (working directory clean)
 
@@ -270,7 +270,8 @@ git-svn 作为 Git 软件包的一部分，当 Git 从源码包进行安装时�
   #       both modified:      README
   #
   no changes added to commit (use "git add" and/or "git commit -a")
-  15:49:30 jiangxin@hp:/path/to/my/workspace/git-svn-demo$ vi README 
+
+  $ vi README 
 
 处于冲突状态的 REAEME 文件内容。
 
@@ -671,7 +672,8 @@ Git 缺省工作的分支是 master，而看到上例中的 Subversion 主线在
 
 ::
 
-  $ git svn clone -r 6:HEAD file:///path/to/svn/repos/demo/trunk git-svn-test 
+  $ git svn clone -r 6:HEAD \
+        file:///path/to/svn/repos/demo/trunk git-svn-test 
   Initialized empty Git repository in /path/to/my/workspace/git-svn-test/.git/
           A       README
   r6 = 053b641b7edd2f1a59a007f27862d98fe5bcda57 (refs/remotes/git-svn)

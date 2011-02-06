@@ -73,7 +73,7 @@ Makefile 文件示例如下。注意第二行前面的空白是 `<TAB>` 字符�
 
 * 从 `util/master` 远程分支创建一个本地分支 `util-branch` ，并切换分支。
 
-::
+  ::
 
     $ git checkout -b util-branch util/master
     Branch util-branch set up to track remote branch master from util.

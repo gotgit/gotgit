@@ -54,13 +54,9 @@ HTTP 协议是版本控制非常重要的一种协议，具有安全（HTTPS）�
 
 要求版本库目录下必须存在文件 `.git/info/refs` ，该文件中包含了版本库中所有的引用列表，且引用都指向正确的 SHA1哈希值。而且还要存在文件 `.git/objects/info/packs` ，以便对象库打包后，能够通过该文件定位到打包文件。
 
-* 这是因为 git 命令（相当于web客户端），无法通过其他方法获得 Git 库的版本库的分支列表和指向。
+* 这是因为 git 命令（相当于web客户端），无法通过其他方法获得 Git 库的版本库的分支列表和指向。版本库分支记录在 `.git/refs/` 下的单独的文件中，如果 Web 服务器不允许目录浏览，是看不到这些文件的。
 
-  版本库分支记录在 `refs/` 下的单独的文件中，如果 Web 服务器不允许目录浏览，是看不到这些文件的。
-
-* 通过执行 `git update-server-info` 命令，能够创建和更新 `.git/info/refs` 和 `.git/objects/info/packs` 这几个专为 HTTP 哑协议准备的文件。
-
-  可以通过版本库的 `post-update` 脚本，自动执行更新相关索引文件的命令。Git 版本库缺省的 `post-update.sample` 示例脚本内容：
+* 通过执行 `git update-server-info` 命令，能够创建和更新 `.git/info/refs` 和 `.git/objects/info/packs` 这几个专为 HTTP 哑协议准备的文件。可以通过版本库的 `post-update` 脚本，自动执行更新相关索引文件的命令。Git 版本库缺省的 `post-update.sample` 示例脚本内容：
 
   ::
 

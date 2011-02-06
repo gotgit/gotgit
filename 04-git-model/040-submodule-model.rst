@@ -46,7 +46,7 @@ $ git --git-dir=/path/to/repos/super.git init --bare
     $ git commit -m "add data for libA"
     $ git push origin master
 
- * 克隆 libB.git 版本库，添加一些数据，然后提交并推送。
+* 克隆 libB.git 版本库，添加一些数据，然后提交并推送。
 
   ::
    

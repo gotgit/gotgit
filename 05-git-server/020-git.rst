@@ -65,7 +65,7 @@ runit 是类似于 sysvinit 的服务管理进程，但是更简单。在 Debian
 
 * 配置 `git-daemon-run` ：
 
-  缺省的服务配置文件： `/etc/sv/git-daemon/run` 。
+  缺省的服务配置文件： `/etc/sv/git-daemon/run` 。和之前的 inetd 运行方式相比，以独立的服务进程启动，相应速度更快。
 
   ::
 
@@ -75,7 +75,6 @@ runit 是类似于 sysvinit 的服务管理进程，但是更简单。在 Debian
     exec chpst -ugitdaemon \
       "$(git --exec-path)"/git-daemon --verbose --export-all --base-path=/var/cache /var/cache/git
 
-  和之前的 inetd 运行方式相比，以独立的服务进程启动，相应速度更快。
 
 缺省版本库中需要存在文件 `git-daemon-export-ok` ，git-daemon 才对此版本库提供服务。不过可以通过启动 git-daemon 时提供的参数 `--export-all` ，无论版本库是否存在标识文件 `git-daemon-export-ok` ，都对版本库提供 git 访问服务。
 
