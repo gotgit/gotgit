@@ -3,7 +3,7 @@ Windows 下安装和使用 Git（Cygwin篇）
 
 在 Windows 下安装和使用 Git 有两个不同的方案，通过安装 msysGit 或者通过安装 Cygwin 来使用 Git。在这两种不同的方案下，Git 的使用和在 Linux 下使用完全一致。再有一个就是基于 msysGit 的图形界面工具 —— TortoiseGit，也就是在 CVS 和 SVN 时代就已经广为人知的 Tortoise 系列软件的 Git 版本。TortoiseGit 提供和资源管理器的整合，提供 Git 操作的图形化界面。
 
-先介绍通过 Cygwin 来使用 Git 的原因，不是因为这是最便捷的方法，如果需要在 Windows 快速安装和使用 Git，下节介绍的 msysGit 才是。之所以将 Cygwin 放在前面介绍是因为本书在介绍 Git 原理部分以及介绍其他 Git 相关软件时用到了大量的开源工具，这些开源工具在 Cygwin 下很容易获得，而 msysGit 的 MinGW（Minimalist GNU for Windows，最简GNU工具集）则不能满足我们的需要。因此我建议使用 Windows 平台的读者在跟随本书学习 Git 的过程中，首选 Cygwin，当完成 Git 的学习后，无论是 msysGit 或者 TortoiseGit 也都会应对自足。
+先介绍通过 Cygwin 来使用 Git 的原因，不是因为这是最便捷的方法，如果需要在 Windows 快速安装和使用 Git，下节介绍的 msysGit 才是。之所以将 Cygwin 放在前面介绍是因为本书在介绍 Git 原理部分以及介绍其他 Git 相关软件时用到了大量的开源工具，这些开源工具在 Cygwin 下很容易获得，而 msysGit 的 MSYS（Minimal SYStem，最简系统）则不能满足我们的需要。因此我建议使用 Windows 平台的读者在跟随本书学习 Git 的过程中，首选 Cygwin，当完成 Git 的学习后，无论是 msysGit 或者 TortoiseGit 也都会应对自足。
 
 Cygwin 是一款伟大的软件，通过一个小小的DLL（cygwin1.dll）建立 Linux 和 Windows 系统调用及API之间的转换，实现了 Linux 下绝大多数软件到 Windows 的迁移。Cygwin 通过 cygwin1.dll 所建立的中间层和诸如 VMWare、VirtualBox 等虚拟机软件完全不同，不会对系统资源进行独占。像 VMWare 等虚拟机，只要启动一个虚拟机（操作系统），即使不在其中执行任何命令，同样会占用大量的系统资源：内存、CPU时间等等。
 
@@ -234,13 +234,11 @@ Cygwin 下的 openssh 软件包提供的 ssh 命令和 Linux 下的没有什么�
 
   $ git clone git@bj.ossxp.com:ossxp/gitbook.git
   Cloning into gitbook...
-  The server's host key is not cached in the registry. You
-  have no guarantee that the server is the computer you
-  think it is.
-  The server's rsa2 key fingerprint is:
-  ssh-rsa 2048 49:eb:04:30:70:ab:b3:28:42:03:19:fe:82:f8:1a:00
-  Connection abandoned.
-  fatal: The remote end hung up unexpectedly
+  remote: Counting objects: 3486, done.
+  remote: Compressing objects: 100% (1759/1759), done.
+  fatal: The remote end hung up unexpectedly MiB | 3.03 MiB/s
+  fatal: early EOFs:  75% (2615/3486), 13.97 MiB | 3.03 MiB/s
+  fatal: index-pack failed
 
 如果读者也遇到同样的问题，建议使用 PuTTY 提供的 plink.exe 做为 SSH 客户端，替代存在问题的 Cygwin 自带的 ssh 命令。
 
@@ -341,9 +339,10 @@ Git 在使用命令行工具 Plink（ `plink.exe` ）做为 SSH 客户端访问 
 
   #!/bin/sh
 
-  /cygdrive/c/Program\ Files/PuTTY/plink.exe -i c:/cygwin/home/jiangxin/.ssh/jiangxin-cygwin.ppk $*
+  /cygdrive/c/Program\ Files/PuTTY/plink.exe -i \
+      c:/cygwin/home/jiangxin/.ssh/jiangxin-cygwin.ppk $*
 
-设置该脚本可执行。
+设置该脚本为可执行。
 
 ::
 
@@ -368,11 +367,8 @@ Git 在使用命令行工具 Plink（ `plink.exe` ）做为 SSH 客户端访问 
    @C @R  W       users/jiangxin/.+$
 
 
-设置 GIT_SSH 变量，使之指向新建立的脚本，然后就可以使用 Git 来连接 SSH 协议的 Git 库了。
+设置 GIT_SSH 变量，使之指向新建立的脚本，然后就可以脱离 Pageant 来连接 SSH 协议的 Git 库了。
 
 ::
 
   $ export GIT_SSH=~/bin/ssh-jiangxin
-
-
-

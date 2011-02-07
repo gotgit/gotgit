@@ -8,7 +8,7 @@ msysGit 的名字前面的四个字母来源于 MSYS 项目。MSYS 项目源自�
 安装 msysGit
 -------------
 
-安装 msysGit 非常简单，访问 msysGit 的项目主页（http://code.google.com/p/msysgit/），下载 msysGit。最简单的方式是下载名为 `Git-<VERSION>-preview<DATE>.exe` 的软件包，如：`Git-1.7.3.1-preview20101002.exe` 。如果有时间和耐心，喜欢观察 Git 是如何在 Windows 上是编译为原生应用的，也可以下载带 `msysGit-fullinstall-` 前缀的软件包。
+安装 msysGit 非常简单，访问 msysGit 的项目主页（http://code.google.com/p/msysgit/），下载 msysGit。最简单的方式是下载名为 `Git-<VERSION>-preview<DATE>.exe` 的软件包，如： `Git-1.7.3.1-preview20101002.exe` 。如果有时间和耐心，喜欢观察 Git 是如何在 Windows 上是编译为原生应用的，也可以下载带 `msysGit-fullinstall-` 前缀的软件包。
 
 点击下载的安装程序（如 `Git-1.7.3.1-preview20101002.exe` ），开始安装，如图3-18。
 
@@ -178,7 +178,7 @@ Git 在提交时并不会对提交说明进行从 GBK 字符集到 UTF-8 的转�
   $ git config --system i18n.commitEncoding gbk
 
 
-同样，为了能够让带有中文文件名的文件，在工作区状态输出，查看历史更改概要，以及在补丁文件中，能够正常显示，要为 Git 配置 core.quotepath 变量，将其设置为 false。但是要注意在 msysGit 中添加中文文件名的文件，只能在 msysGit 环境中正确显示，而在其他环境（Linux, Mac OS X, Cygwin）中文件名会出现乱码。
+同样，为了能够让带有中文文件名的文件，在工作区状态输出、查看历史更改概要、以及在补丁文件中，能够正常显示，要为 Git 配置 core.quotepath 变量，将其设置为 false。但是要注意在 msysGit 中添加中文文件名的文件，只能在 msysGit 环境中正确显示，而在其他环境（Linux, Mac OS X, Cygwin）中文件名会出现乱码。
 
 ::
 
@@ -209,7 +209,7 @@ TortoiseGit 是对 msysGit 命令行的封装，因此需要先安装 msysGit。
 
    图3-23：启动 Git Bash
 
-TortoisePLink 和 TortoiseGit 的整合性更好，可以直接通过对话框设置 SSH 私钥（PuTTY格式），而无需再到字符界面去配置 SSH 私钥和其他配置文件。如果安装过程中选择了 OpenSSH，可以在安装完毕之后，通过 TortoiseGit 的设置对话框重新选择缺省 SSH 客户端程序，如图3-24。
+TortoisePLink 和 TortoiseGit 的整合性更好，可以直接通过对话框设置 SSH 私钥（PuTTY格式），而无需再到字符界面去配置 SSH 私钥和其他配置文件。如果安装过程中选择了 OpenSSH，可以在安装完毕之后，通过 TortoiseGit 的设置对话框重新选择 TortoisePLink 做为缺省 SSH 客户端程序，如图3-24。
 
 .. figure:: images/windows/tgit-settings-network-plink.png
    :scale: 80
