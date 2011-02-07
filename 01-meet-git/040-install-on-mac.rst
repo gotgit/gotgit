@@ -8,7 +8,7 @@ Mac OS X 被称为最人性化的操作系统，工作在 Mac 上是件非常惬
 
 Git 在 Mac OS X 中也有好几种安装方法。最为简单的方式是安装 `.dmg` 格式的安装包。
 
-访问 git-osx-installer 的官方网站： http://code.google.com/p/git-osx-installer/ ，下载 Git 安装包。安装包带有 `.dmg` 扩展名，是苹果磁盘镜像（Apple Disk Image）格式的软件发布包。从官方网站上下载文件名类似 git-a.b.c.d-<arch>-leopard.dmg 的安装包文件，例如：git-1.7.3.5-x86_64-leopard.dmg 是 64 位的安装包，git-1.7.3.5-i386-leopard.dmg 是 32 位的安装包。建议选择 64 位的软件包，因为 Mac OS X 10.6 雪豹完美的兼容 32 位和 64位（开机按住键盘数字3和2进入32位系统，按住6和4进入64位系统），即使在核心处于32位架构下，也可以放心的运行64位软件包。
+访问 git-osx-installer 的官方网站： http://code.google.com/p/git-osx-installer/ ，下载 Git 安装包。安装包带有 `.dmg` 扩展名，是苹果磁盘镜像（Apple Disk Image）格式的软件发布包。从官方网站上下载文件名类似 git-<version>-<arch>-leopard.dmg 的安装包文件，例如：git-1.7.3.5-x86_64-leopard.dmg 是 64 位的安装包，git-1.7.3.5-i386-leopard.dmg 是 32 位的安装包。建议选择 64 位的软件包，因为 Mac OS X 10.6 雪豹完美的兼容 32 位和 64位（开机按住键盘数字3和2进入32位系统，按住6和4进入64位系统），即使在核心处于32位架构下，也可以放心的运行64位软件包。
 
 苹果的 `.dmg` 格式的软件包实际上是一个磁盘映像，安装起来非常方便，点击该文件就直接挂载到 Finder 中，并打开，如图3-1所示。
 
@@ -53,7 +53,7 @@ Homebrew 用 ruby 语言开发，支持千余种开源软件在 Mac OS X 中的�
 
 安装完成后，Homebrew 的主程序安装在 `/usr/local/bin/brew` ，在目录 `/usr/local/Library/Formula/` 下保存了所有 Homebrew 支持的软件的安装指引文件。
 
-运行 `brew` ，安装 Git 使用下面的命令。
+运行 `brew` 安装 Git，使用下面的命令。
 
 ::
 

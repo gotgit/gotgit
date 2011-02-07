@@ -191,7 +191,7 @@ Git 在提交时并不会对提交说明进行从 GBK 字符集到 UTF-8 的转�
 使用 SSH 协议
 ------------------
 
-msysGit 软件包包含的 ssh 命令和 Linux 下的没有什么区别，也提供 ssh-keygen 命令管理 SSH 公钥-私钥对。在使用 msysGit 的 ssh 命令时，没有遇到 Cygwin 中的 ssh 命令（版本号：5.7p1-1）不稳定的问题，即 msysGit 下的 ssh 命令可以非常稳定的工作。
+msysGit 软件包包含的 ssh 命令和 Linux 下的没有什么区别，也提供 ssh-keygen 命令管理 SSH 公钥/私钥对。在使用 msysGit 的 ssh 命令时，没有遇到 Cygwin 中的 ssh 命令（版本号：5.7p1-1）不稳定的问题，即 msysGit 下的 ssh 命令可以非常稳定的工作。
 
 如果需要和 Windows 有更好的整合，希望使用图形化工具管理公钥，也可以使用 PuTTY 提供的 plink.exe 做为 SSH 客户端。关于如何使用 PuTTY 可以参见 3.3.5 节 Cygwin 和 PuTTY 整合的相关内容。
 
