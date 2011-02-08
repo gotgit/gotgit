@@ -49,7 +49,8 @@ Homebrew 用 ruby 语言开发，支持千余种开源软件在 Mac OS X 中的�
 
 ::
 
-  $ ruby -e "$(curl -fsSL https://gist.github.com/raw/323731/install_homebrew.rb)"
+  $ ruby -e \
+    "$(curl -fsSL https://gist.github.com/raw/323731/install_homebrew.rb)"
 
 安装完成后，Homebrew 的主程序安装在 `/usr/local/bin/brew` ，在目录 `/usr/local/Library/Formula/` 下保存了所有 Homebrew 支持的软件的安装指引文件。
 
@@ -94,7 +95,8 @@ Homebrew 用 ruby 语言开发，支持千余种开源软件在 Mac OS X 中的�
 ::
 
   $ make prefix=/usr/local all doc info
-  $ sudo make prefix=/usr/local install install-doc install-html install-info
+  $ sudo make prefix=/usr/local install \
+    install-doc install-html install-info
 
 命令自动补齐
 -------------------------
@@ -125,7 +127,8 @@ Git 通过 bash-completion 软件包实现命令补齐，在 Mac OS X 下可以�
 
 ::
 
-  $ cp contrib/completion/git-completion.bash `brew --prefix`/etc/bash_completion.d/
+  $ cp contrib/completion/git-completion.bash \
+       `brew --prefix`/etc/bash_completion.d/
 
 不用重启终端程序，只需要运行下面的命令，即可立即在当前的 shell 中加载命令补齐。
 
@@ -147,7 +150,8 @@ Git 通过 bash-completion 软件包实现命令补齐，在 Mac OS X 下可以�
 在 Mac OS X 下能够使用到的 Git 图形工具除了 Git 软件包自带的 `gitk` 和 `git gui` 之外，还可以安装 GitX。下载地址：
 
 * GitX 的原始版本：http://gitx.frim.nl/
-* 或 GitX 的一个分支版本，提供增强的功能：https://github.com/brotherbard/gitx/downloads
+* 或 GitX 的一个分支版本，提供增强的功能：
+  https://github.com/brotherbard/gitx/downloads
 
 Git 的图形工具一般需要在本地克隆版本库的工作区中执行，为了能和 Mac OS X 有更好的整合，可以安装插件实现和 Finder 的整合。在 git-osx-installer 的官方网站： http://code.google.com/p/git-osx-installer/ ，有两个以 `OpenInGitGui-` 和 `OpenInGitX-` 为前缀的软件包，可以分别实现和 `git gui` 以及 `gitx` 的整合：在 Finder 中进入工作区目录，点击对应插件的图标，启动 `git gui` 或 `gitx` 。
 

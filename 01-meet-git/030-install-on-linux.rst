@@ -137,7 +137,8 @@ Git 诞生于 Linux 平台并做为版本控制系统帅先服务于 Linux 核�
       git reset --hard
       git clean -fdx
       git checkout $ver || exit 1
-      make prefix=/opt/git/$ver all && sudo make prefix=/opt/git/$ver install || exit 1
+      make prefix=/opt/git/$ver all && \
+      sudo make prefix=/opt/git/$ver install || exit 1
       echo "Installed Git $ver."
   done
 
