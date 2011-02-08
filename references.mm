@@ -4804,23 +4804,428 @@
 </node>
 </node>
 </node>
-<node COLOR="#0033ff" FOLDED="true" ID="ID_241320967" POSITION="right" 
-	TEXT="Git 技巧篇：">
+<node COLOR="#0033ff" FOLDED="true" ID="ID_729560922" POSITION="right" 
+	TEXT="版本库迁移">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="Serif" SIZE="18"/>
-<node COLOR="#00b439" FOLDED="true" ID="ID_1863710685" 
-	TEXT="Windows 下的 Git">
+<node COLOR="#00b439" FOLDED="true" ID="ID_817211914" 
+	TEXT="subversion -&gt; git">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_1012857098" 
+	TEXT="使用 git-svn">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1551573758" 
+	TEXT="使用 git-svnimport">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_748600261" 
+	TEXT="cvs-&gt;git">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_211996291" 
+	TEXT="使用 git-cvsimport">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1719466356" 
+	TEXT="从 cvs 库创建 git 库">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1232557468" 
+	TEXT="git cvsimport -v -d &lt;cvsroot&gt; -C &lt;destination&gt; &lt;module&gt;"/>
+<node COLOR="#111111" ID="ID_1055991420" 
+	TEXT="说明： git 库创建在 &lt;destination&gt; 下"/>
+<node COLOR="#111111" ID="ID_1144790678" 
+	TEXT="说明： cvs 在一个cvsroot下有若干 module，一次将一个 module 转换为一个 git 库"/>
+</node>
+<node COLOR="#990000" ID="ID_540762047" 
+	TEXT="git 库和 cvs 库同步">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1361210779" 
+	TEXT="hg -&gt; git">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_1955808505" 
+	TEXT="下载工具 hg-fast-export.sh">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_990812560" 
+	TEXT="git clone git://repo.or.cz/fast-export.git">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" ID="ID_1112499831" 
+	TEXT="将其中的脚本文件拷贝到 /usr/local/bin/"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1256971631" 
+	TEXT="创建一个 git 版本库">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_854653216" 
+	TEXT="git init projectname.git"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1551713709" 
+	TEXT="运行 hg-fast-export.sh 转换">
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1582617228" 
+	TEXT="cd projectname.git&#xa;/path/to/fast-export.git/hg-fast-export.sh -r /path/to/project.hg&#xa;git checkout master"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1998115740" 
+	TEXT="Git filter-branch&#xa;(git 的删除核弹起爆码的工具)">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" FOLDED="true" ID="ID_1939665661" 
+	TEXT="彻底删除某个文件&#xa;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1797069334" 
+	TEXT="This occurs fairly commonly. Someone accidentally commits a huge binary file with a thoughtless git add ., and you want to remove it everywhere. Perhaps you accidentally committed a file that contained a password, and you want to make your project open source. filter-branch is the tool you probably want to use to scrub your entire history. To remove a file named passwords.txt from your entire history, you can use the --tree-filter option to filter-branch:&#xa;&#xa;$ git filter-branch --tree-filter &apos;rm -f passwords.txt&apos; HEAD&#xa;Rewrite 6b9b3cf04e7c5686a9cb838c3f36a8cb6a0fc2bd (21/21)&#xa;Ref &apos;refs/heads/master&apos; was rewritten&#xa;&#xa;The --tree-filter option runs the specified command after each checkout of the project and then recommits the results. In this case, you remove a file called passwords.txt from every snapshot, whether it exists or not. If you want to remove all accidentally committed editor backup files, you can run something like git filter-branch --tree-filter &apos;rm -f *~&apos; HEAD.&#xa;&#xa;You’ll be able to watch Git rewriting trees and commits and then move the branch pointer at the end. It’s generally a good idea to do this in a testing branch and then hard-reset your master branch after you’ve determined the outcome is what you really want. To run filter-branch on all your branches, you can pass --all to the command.&#xa;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_155217472" 
+	TEXT="将某个子目录作为新的根目录">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_849721028" 
+	TEXT="&#xa;&#xa;Suppose you’ve done an import from another source control system and have subdirectories that make no sense (trunk, tags, and so on). If you want to make the trunk subdirectory be the new project root for every commit, filter-branch can help you do that, too:&#xa;&#xa;$ git filter-branch --subdirectory-filter trunk HEAD&#xa;Rewrite 856f0bf61e41a27326cdae8f09fe708d679f596f (12/12)&#xa;Ref &apos;refs/heads/master&apos; was rewritten&#xa;&#xa;Now your new project root is what was in the trunk subdirectory each time. Git will also automatically remove commits that did not affect the subdirectory.&#xa;">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1785288986" 
+	TEXT="批量修改提交的作者邮件地址信息">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1724380425" 
+	TEXT="&#xa;&#xa;Another common case is that you forgot to run git config to set your name and e-mail address before you started working, or perhaps you want to open-source a project at work and change all your work e-mail addresses to your personal address. In any case, you can change e-mail addresses in multiple commits in a batch with filter-branch as well. You need to be careful to change only the e-mail addresses that are yours, so you use --commit-filter:&#xa;&#xa;$ git filter-branch --commit-filter &apos;&#xa;        if [ &quot;$GIT_AUTHOR_EMAIL&quot; = &quot;schacon@localhost&quot; ];&#xa;        then&#xa;                GIT_AUTHOR_NAME=&quot;Scott Chacon&quot;;&#xa;                GIT_AUTHOR_EMAIL=&quot;schacon@example.com&quot;;&#xa;                git commit-tree &quot;$@&quot;;&#xa;        else&#xa;                git commit-tree &quot;$@&quot;;&#xa;        fi&apos; HEAD&#xa;&#xa;This goes through and rewrites every commit to have your new address. Because commits contain the SHA-1 values of their parents, this command changes every commit SHA in your history, not just those that have the matching e-mail address.">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+</node>
+</node>
+</node>
+</node>
+<node COLOR="#0033ff" FOLDED="true" ID="ID_1066566912" POSITION="right" 
+	TEXT="跨平台操作 Git">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="SansSerif" SIZE="18"/>
+<node COLOR="#00b439" FOLDED="true" ID="ID_51237843" 
+	TEXT="字符集问题">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="SansSerif" SIZE="16"/>
-<node COLOR="#990000" FOLDED="true" ID="ID_1549049568" 
-	TEXT="Mac 和 Windows 都忽略文件大小写。">
+<node COLOR="#990000" ID="ID_526941999" 
+	TEXT="Log 中使用非 UTF-8 字符集，用 git cat-file commit &lt;COMMIT-ID&gt; 来查看">
 <font NAME="SansSerif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_449967265" 
-	TEXT="因此在这些平台建立的版本库，都设置了 core.ignorecase true"/>
-<node COLOR="#111111" ID="ID_1028258157" 
-	TEXT="会把大小写不同的文件名当作同一个文件。"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_1757189578" 
+</node>
+<node COLOR="#990000" ID="ID_688573439" 
+	TEXT="但并不能保证所有 Git 实现都遵守这个约定。如 TortoiseGit。尽量使用 UTF-8.">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1836918754" 
+	TEXT="换行符问题">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_886245775" 
+	TEXT="Git 对文件是二进制还是文本文件，如何判断？">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1292589244" 
+	TEXT="Git 1.7.2 对换行符支持的改进">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_896273575" 
+	TEXT="1.7.2 开始，增加了 core.eol 配置和 text/eol 属性，设置文件的换行符">
+<font NAME="Serif" SIZE="12"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_1317985734">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+       * core.eol configuration and text/eol attributes are the new way to control
+    </p>
+    <p>
+         the end of line conventions for files in the working tree.
+    </p>
+  </body>
+</html></richcontent>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_970809965" 
+	TEXT="1.7.2 开始，配置 core.autocrlf 更加安全了。只对新文件，以及以LF-only格式的版本库文件起作用。&#xa;为了对版本库中使用了 CRLF 换行符的文件进行标准化，请使用新的 eol/text 属性。">
+<font NAME="Serif" SIZE="12"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_776161248">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+       * core.autocrlf has been made safer - it will now only handle line
+    </p>
+    <p>
+         endings for new files and files that are LF-only in the
+    </p>
+    <p>
+         repository. To normalize content that has been checked in with
+    </p>
+    <p>
+         CRLF, use the new eol/text attributes.
+    </p>
+  </body>
+</html></richcontent>
+</node>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_568830809" 
+	TEXT="core.autocrlf">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1822312602">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+        Setting this variable to &quot;true&quot; is almost the same as setting
+    </p>
+    <p>
+        the `text` attribute to &quot;auto&quot; on all files except that text
+    </p>
+    <p>
+        files are not guaranteed to be normalized: files that contain
+    </p>
+    <p>
+        `CRLF` in the repository will not be touched.  Use this
+    </p>
+    <p>
+        setting if you want to have `CRLF` line endings in your
+    </p>
+    <p>
+        working directory even though the repository does not have
+    </p>
+    <p>
+        normalized line endings.  This variable can be set to 'input',
+    </p>
+    <p>
+        in which case no output conversion is performed.
+    </p>
+  </body>
+</html></richcontent>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1582617238" 
+	TEXT="Git 1.5.1 的处理方式">
+<node COLOR="#111111" ID="ID_664874350">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+        - core.autocrlf configuration, when set to 'true', makes git
+    </p>
+    <p>
+          to convert CRLF at the end of lines in text files to LF when
+    </p>
+    <p>
+          reading from the filesystem, and convert in reverse when
+    </p>
+    <p>
+          writing to the filesystem.  The variable can be set to
+    </p>
+    <p>
+          'input', in which case the conversion happens only while
+    </p>
+    <p>
+          reading from the filesystem but files are written out with
+    </p>
+    <p>
+          LF at the end of lines.  Currently, which paths to consider
+    </p>
+    <p>
+          'text' (i.e. be subjected to the autocrlf mechanism) is
+    </p>
+    <p>
+          decided purely based on the contents, but the plan is to
+    </p>
+    <p>
+          allow users to explicitly override this heuristic based on
+    </p>
+    <p>
+          paths.
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1231870734" 
+	TEXT="Git 1.5.5">
+<node COLOR="#111111" ID="ID_16493609">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+       * You can be warned when core.autocrlf conversion is applied in
+    </p>
+    <p>
+         such a way that results in an irreversible conversion.
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_922261539" 
+	TEXT="1.7.2 开始，配置 core.autocrlf 更加安全了。只对新文件，以及以LF-only格式的版本库文件起作用。&#xa;为了对版本库中使用了 CRLF 换行符的文件进行标准化，请使用新的 eol/text 属性。">
+<font NAME="Serif" SIZE="12"/>
+<icon BUILTIN="info"/>
+<icon BUILTIN="info"/>
+<node COLOR="#111111" ID="ID_850442434">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+       * core.autocrlf has been made safer - it will now only handle line
+    </p>
+    <p>
+         endings for new files and files that are LF-only in the
+    </p>
+    <p>
+         repository. To normalize content that has been checked in with
+    </p>
+    <p>
+         CRLF, use the new eol/text attributes.
+    </p>
+  </body>
+</html></richcontent>
+</node>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1846167412" 
+	TEXT="core.eol">
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_510643007" 
+	TEXT="core.eol 在 1.7.2 开始提供"/>
+<node COLOR="#111111" ID="ID_1312320536">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      core.eol::
+    </p>
+    <p>
+        Sets the line ending type to use in the working directory for
+    </p>
+    <p>
+        files that have the `text` property set.  Alternatives are
+    </p>
+    <p>
+        'lf', 'crlf' and 'native', which uses the platform's native
+    </p>
+    <p>
+        line ending.  The default value is `native`.  See
+    </p>
+    <p>
+        linkgit:gitattributes[5] for more information on end-of-line
+    </p>
+    <p>
+        conversion.
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1832344364">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      core.safecrlf
+    </p>
+  </body>
+</html>
+</richcontent>
+<font NAME="SansSerif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1560037404">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+        If true, makes git check if converting `CRLF` is reversible when
+    </p>
+    <p>
+        end-of-line conversion is active.  Git will verify if a command
+    </p>
+    <p>
+        modifies a file in the work tree either directly or indirectly.
+    </p>
+    <p>
+        For example, committing a file followed by checking out the
+    </p>
+    <p>
+        same file should yield the original file in the work tree.  If
+    </p>
+    <p>
+        this is not the case for the current setting of
+    </p>
+    <p>
+        `core.autocrlf`, git will reject the file.  The variable can
+    </p>
+    <p>
+        be set to &quot;warn&quot;, in which case git will only warn about an
+    </p>
+    <p>
+        irreversible conversion but continue the operation.
+    </p>
+  </body>
+</html></richcontent>
+<font NAME="SansSerif" SIZE="12"/>
+</node>
+</node>
+<node COLOR="#990000" ID="ID_541474687" 
+	TEXT="参见文档 config.txt 和 gitattributes.txt">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_290295160" 
+	TEXT="文件名大小写问题">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_1549049568" 
+	TEXT="Mac 和 Windows 都忽略文件大小写。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_449967265" 
+	TEXT="因此在这些平台建立的版本库，都设置了 core.ignorecase true">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1028258157" 
+	TEXT="会把大小写不同的文件名当作同一个文件。">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_1757189578" 
 	TEXT="改文件名，需要先删除，再添加">
+<font NAME="SansSerif" SIZE="14"/>
 <node COLOR="#111111" ID="ID_255724487" 
 	TEXT="使用 git mv 不可以"/>
 <node COLOR="#111111" FOLDED="true" ID="ID_249492877" 
@@ -4837,14 +5242,98 @@
 </node>
 </node>
 </node>
-<node COLOR="#00b439" FOLDED="true" ID="ID_64232537" 
-	TEXT="Git 定制">
+<node COLOR="#0033ff" FOLDED="true" ID="ID_241320967" POSITION="right" 
+	TEXT="Git 其他特性">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="Serif" SIZE="18"/>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1778813255" 
+	TEXT="钩子">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
-<node COLOR="#990000" ID="ID_83627666" 
-	TEXT="git config 各个选项">
+<node COLOR="#990000" FOLDED="true" ID="ID_1226110405" 
+	TEXT="版本配置和Git 钩子扩展 hooks">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_796068935" 
+	TEXT=".git/config 配置">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_876456543" 
+	TEXT="[receive]">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1604623377" 
+	TEXT="[receive]&#xa;    denyDeletes = true&#xa;    denyNonFastForwards = true"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1954045181" 
+	TEXT="服务器端钩子">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1189801060" 
+	TEXT="pre-receive">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1709747262" 
+	TEXT="对客户端向服务器push 进行检查。&#xa;You can use this hook to do things like make sure none of the updated references are non-fast-forwards; or to check that the user doing the pushing has create, delete, or push access or access to push updates to all the files they’re modifying with the push."/>
+</node>
+<node COLOR="#111111" ID="ID_1732958776" 
+	TEXT="post-receive">
+<font NAME="Serif" SIZE="12"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_188100690" 
+	TEXT="update">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1290637007" 
+	TEXT="类似 pre-receive。不同点在于 pre-receive 只运行一次，而 update 针对每个分支运行一次。&#xa;即提交者如果同时提交多个分支改动，pre-receive 只运行一次。update 运行多次。&#xa;如果以非零退出，则拒绝提交，update只针对该分支。"/>
+</node>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_228072560" 
+	TEXT="示例">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_1165311425" 
+	TEXT="脚本示例">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" ID="ID_1032042229" 
+	TEXT="#!/usr/bin/env ruby&#xa;&#xa;$refname = ARGV[0]&#xa;$oldrev  = ARGV[1]&#xa;$newrev  = ARGV[2]&#xa;$user    = ENV[&apos;USER&apos;]&#xa;&#xa;puts &quot;Enforcing Policies... \n(#{$refname}) (#{$oldrev[0,6]}) (#{$newrev[0,6]})&quot;"/>
+</node>
+<node COLOR="#111111" FOLDED="true" ID="ID_1272283821" 
+	TEXT="禁止 non-fast-forward 提交">
+<font NAME="Serif" SIZE="12"/>
+<node COLOR="#111111" FOLDED="true" ID="ID_741193138" 
+	TEXT="git 1.6 之后的版本，可以通过配置文件进行设置">
+<node COLOR="#111111" ID="ID_615596209" 
+	TEXT="receive.denyDeletes&#xa;receive.denyNonFastForwards "/>
+</node>
+<node COLOR="#111111" ID="ID_304708195" 
+	TEXT="# enforces fast-forward only pushes &#xa;def check_fast_forward&#xa;  missed_refs = `git rev-list #{$newrev}..#{$oldrev}`&#xa;  missed_ref_count = missed_refs.split(&quot;\n&quot;).size&#xa;  if missed_ref_count &gt; 0&#xa;    puts &quot;[POLICY] Cannot push a non fast-forward reference&quot;&#xa;    exit 1&#xa;  end&#xa;end&#xa;&#xa;check_fast_forward"/>
+<node COLOR="#111111" ID="ID_978121075" LINK="http://progit.org/book/ch7-4.html" 
+	TEXT="progit.org &gt; Book &gt; Ch7-4"/>
+</node>
+</node>
+</node>
+<node COLOR="#990000" ID="ID_235904464" 
+	TEXT="Gerrit 利用本地版本库的钩子脚本，为提交日志中迁入唯一标识。">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1713298631" 
+	TEXT="Topgit 利用钩子脚本，。。。">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_981581523" 
+	TEXT="哑协议，要自动执行更新文件。">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1363732874" 
+	TEXT="Gitosis">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1046250411" 
+	TEXT="Gitolite">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_878512967" 
+	TEXT="git-svn?">
+<font NAME="SansSerif" SIZE="14"/>
 </node>
 </node>
 <node COLOR="#00b439" FOLDED="true" ID="ID_1455669451" 
@@ -4959,111 +5448,76 @@
 </node>
 </node>
 </node>
-<node COLOR="#00b439" FOLDED="true" ID="ID_1778813255" 
-	TEXT="钩子">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
-<node COLOR="#990000" FOLDED="true" ID="ID_1226110405" 
-	TEXT="版本配置和Git 钩子扩展 hooks">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_796068935" 
-	TEXT=".git/config 配置">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_876456543" 
-	TEXT="[receive]">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1604623377" 
-	TEXT="[receive]&#xa;    denyDeletes = true&#xa;    denyNonFastForwards = true"/>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1954045181" 
-	TEXT="服务器端钩子">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_1189801060" 
-	TEXT="pre-receive">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1709747262" 
-	TEXT="对客户端向服务器push 进行检查。&#xa;You can use this hook to do things like make sure none of the updated references are non-fast-forwards; or to check that the user doing the pushing has create, delete, or push access or access to push updates to all the files they’re modifying with the push."/>
-</node>
-<node COLOR="#111111" ID="ID_1732958776" 
-	TEXT="post-receive">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_188100690" 
-	TEXT="update">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1290637007" 
-	TEXT="类似 pre-receive。不同点在于 pre-receive 只运行一次，而 update 针对每个分支运行一次。&#xa;即提交者如果同时提交多个分支改动，pre-receive 只运行一次。update 运行多次。&#xa;如果以非零退出，则拒绝提交，update只针对该分支。"/>
-</node>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_228072560" 
-	TEXT="示例">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_1165311425" 
-	TEXT="脚本示例">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" ID="ID_1032042229" 
-	TEXT="#!/usr/bin/env ruby&#xa;&#xa;$refname = ARGV[0]&#xa;$oldrev  = ARGV[1]&#xa;$newrev  = ARGV[2]&#xa;$user    = ENV[&apos;USER&apos;]&#xa;&#xa;puts &quot;Enforcing Policies... \n(#{$refname}) (#{$oldrev[0,6]}) (#{$newrev[0,6]})&quot;"/>
-</node>
-<node COLOR="#111111" FOLDED="true" ID="ID_1272283821" 
-	TEXT="禁止 non-fast-forward 提交">
-<font NAME="Serif" SIZE="12"/>
-<node COLOR="#111111" FOLDED="true" ID="ID_741193138" 
-	TEXT="git 1.6 之后的版本，可以通过配置文件进行设置">
-<node COLOR="#111111" ID="ID_615596209" 
-	TEXT="receive.denyDeletes&#xa;receive.denyNonFastForwards "/>
-</node>
-<node COLOR="#111111" ID="ID_304708195" 
-	TEXT="# enforces fast-forward only pushes &#xa;def check_fast_forward&#xa;  missed_refs = `git rev-list #{$newrev}..#{$oldrev}`&#xa;  missed_ref_count = missed_refs.split(&quot;\n&quot;).size&#xa;  if missed_ref_count &gt; 0&#xa;    puts &quot;[POLICY] Cannot push a non fast-forward reference&quot;&#xa;    exit 1&#xa;  end&#xa;end&#xa;&#xa;check_fast_forward"/>
-<node COLOR="#111111" ID="ID_978121075" LINK="http://progit.org/book/ch7-4.html" 
-	TEXT="progit.org &gt; Book &gt; Ch7-4"/>
-</node>
-</node>
-</node>
-</node>
-<node COLOR="#00b439" ID="ID_426928459" 
+<node COLOR="#00b439" FOLDED="true" ID="ID_426928459" 
 	TEXT="模板">
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_1859406792" 
+	TEXT="在创建版本库时，自动初始化钩子脚本等？">
+<font NAME="SansSerif" SIZE="14"/>
 </node>
-<node COLOR="#00b439" ID="ID_1366306704" 
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1878748169" 
+	TEXT="稀疏检出">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_586115338" 
+	TEXT="不检出所有目录，只检出部分。">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1366306704" 
 	TEXT="git sparse checkout">
 <edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
+<font NAME="Serif" SIZE="14"/>
 </node>
-<node COLOR="#00b439" FOLDED="true" ID="ID_868780133" 
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_676507694" 
+	TEXT="浅克隆">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_1510070538" 
+	TEXT="不克隆全部历史，只克隆部分历史">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" FOLDED="true" ID="ID_868780133" 
 	TEXT="git shallow clone">
 <edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
-<node COLOR="#990000" ID="ID_1396851347" 
-	TEXT="本地协议使用 file://，而不能使用 /">
 <font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_1396851347" 
+	TEXT="本地协议使用 file://，而不能使用 /">
+<font NAME="Serif" SIZE="12"/>
 </node>
 </node>
-<node COLOR="#00b439" ID="ID_1408876651" 
-	TEXT="git replace">
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_103779235" 
+	TEXT="提交说明注解">
 <edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_1900323447" 
+	TEXT="为提交说明添加注解">
+<font NAME="SansSerif" SIZE="14"/>
 </node>
-<node COLOR="#00b439" FOLDED="true" ID="ID_640899539" 
+<node COLOR="#990000" FOLDED="true" ID="ID_640899539" 
 	TEXT="git notes">
 <edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
-<node COLOR="#990000" ID="ID_861826055" 
-	TEXT="可以为提交说明添加评注。">
 <font NAME="Serif" SIZE="14"/>
+<node COLOR="#111111" ID="ID_861826055" 
+	TEXT="可以为提交说明添加评注。">
+<font NAME="Serif" SIZE="12"/>
 </node>
 </node>
-<node COLOR="#00b439" FOLDED="true" ID="ID_1242975695" 
-	TEXT="grep 和 git grep">
+</node>
+<node COLOR="#00b439" FOLDED="true" ID="ID_999750451" 
+	TEXT="提交嫁接">
 <edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
-<node COLOR="#990000" ID="ID_582867299" 
-	TEXT="Subversion 那种在每个目录下 .svn 目录保存文件原始备份的方式，会导致 grep 搜索，两份拷贝。">
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_1877899233" 
+	TEXT="Git 发明之前，Linux 源码位与 Bitkeeper 版本库中，迁移历史和 Git 现有数据嫁接，拥有完整历史。">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1408876651" 
+	TEXT="git replace">
+<edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="14"/>
 </node>
 </node>
@@ -5078,134 +5532,8 @@
 </node>
 </node>
 </node>
-<node COLOR="#0033ff" FOLDED="true" ID="ID_729560922" POSITION="right" 
-	TEXT="版本库迁移">
-<edge STYLE="sharp_bezier" WIDTH="8"/>
-<font NAME="Serif" SIZE="18"/>
-<node COLOR="#00b439" FOLDED="true" ID="ID_817211914" 
-	TEXT="subversion -&gt; git">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
-<node COLOR="#990000" ID="ID_1012857098" 
-	TEXT="使用 git-svn">
-<font NAME="Serif" SIZE="14"/>
-</node>
-<node COLOR="#990000" ID="ID_1551573758" 
-	TEXT="使用 git-svnimport">
-<font NAME="Serif" SIZE="14"/>
-</node>
-</node>
-<node COLOR="#00b439" FOLDED="true" ID="ID_748600261" 
-	TEXT="cvs-&gt;git">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
-<node COLOR="#990000" ID="ID_211996291" 
-	TEXT="使用 git-cvsimport">
-<font NAME="Serif" SIZE="14"/>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1719466356" 
-	TEXT="从 cvs 库创建 git 库">
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_1232557468" 
-	TEXT="git cvsimport -v -d &lt;cvsroot&gt; -C &lt;destination&gt; &lt;module&gt;"/>
-<node COLOR="#111111" ID="ID_1055991420" 
-	TEXT="说明： git 库创建在 &lt;destination&gt; 下"/>
-<node COLOR="#111111" ID="ID_1144790678" 
-	TEXT="说明： cvs 在一个cvsroot下有若干 module，一次将一个 module 转换为一个 git 库"/>
-</node>
-<node COLOR="#990000" ID="ID_540762047" 
-	TEXT="git 库和 cvs 库同步">
-<font NAME="Serif" SIZE="14"/>
-</node>
-</node>
-<node COLOR="#00b439" FOLDED="true" ID="ID_1361210779" 
-	TEXT="hg -&gt; git">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
-<node COLOR="#990000" FOLDED="true" ID="ID_1955808505" 
-	TEXT="下载工具 hg-fast-export.sh">
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_990812560" 
-	TEXT="git clone git://repo.or.cz/fast-export.git">
-<font NAME="Serif" SIZE="12"/>
-</node>
-<node COLOR="#111111" ID="ID_1112499831" 
-	TEXT="将其中的脚本文件拷贝到 /usr/local/bin/"/>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1256971631" 
-	TEXT="创建一个 git 版本库">
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_854653216" 
-	TEXT="git init projectname.git"/>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1551713709" 
-	TEXT="运行 hg-fast-export.sh 转换">
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_1582617228" 
-	TEXT="cd projectname.git&#xa;/path/to/fast-export.git/hg-fast-export.sh -r /path/to/project.hg&#xa;git checkout master"/>
-</node>
-</node>
-<node COLOR="#00b439" FOLDED="true" ID="ID_1998115740" 
-	TEXT="Git filter-branch&#xa;(git 的删除核弹起爆码的工具)">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
-<node COLOR="#990000" FOLDED="true" ID="ID_1939665661" 
-	TEXT="彻底删除某个文件&#xa;">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_1797069334" 
-	TEXT="This occurs fairly commonly. Someone accidentally commits a huge binary file with a thoughtless git add ., and you want to remove it everywhere. Perhaps you accidentally committed a file that contained a password, and you want to make your project open source. filter-branch is the tool you probably want to use to scrub your entire history. To remove a file named passwords.txt from your entire history, you can use the --tree-filter option to filter-branch:&#xa;&#xa;$ git filter-branch --tree-filter &apos;rm -f passwords.txt&apos; HEAD&#xa;Rewrite 6b9b3cf04e7c5686a9cb838c3f36a8cb6a0fc2bd (21/21)&#xa;Ref &apos;refs/heads/master&apos; was rewritten&#xa;&#xa;The --tree-filter option runs the specified command after each checkout of the project and then recommits the results. In this case, you remove a file called passwords.txt from every snapshot, whether it exists or not. If you want to remove all accidentally committed editor backup files, you can run something like git filter-branch --tree-filter &apos;rm -f *~&apos; HEAD.&#xa;&#xa;You’ll be able to watch Git rewriting trees and commits and then move the branch pointer at the end. It’s generally a good idea to do this in a testing branch and then hard-reset your master branch after you’ve determined the outcome is what you really want. To run filter-branch on all your branches, you can pass --all to the command.&#xa;">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_155217472" 
-	TEXT="将某个子目录作为新的根目录">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_849721028" 
-	TEXT="&#xa;&#xa;Suppose you’ve done an import from another source control system and have subdirectories that make no sense (trunk, tags, and so on). If you want to make the trunk subdirectory be the new project root for every commit, filter-branch can help you do that, too:&#xa;&#xa;$ git filter-branch --subdirectory-filter trunk HEAD&#xa;Rewrite 856f0bf61e41a27326cdae8f09fe708d679f596f (12/12)&#xa;Ref &apos;refs/heads/master&apos; was rewritten&#xa;&#xa;Now your new project root is what was in the trunk subdirectory each time. Git will also automatically remove commits that did not affect the subdirectory.&#xa;">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-<node COLOR="#990000" FOLDED="true" ID="ID_1785288986" 
-	TEXT="批量修改提交的作者邮件地址信息">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="14"/>
-<node COLOR="#111111" ID="ID_1724380425" 
-	TEXT="&#xa;&#xa;Another common case is that you forgot to run git config to set your name and e-mail address before you started working, or perhaps you want to open-source a project at work and change all your work e-mail addresses to your personal address. In any case, you can change e-mail addresses in multiple commits in a batch with filter-branch as well. You need to be careful to change only the e-mail addresses that are yours, so you use --commit-filter:&#xa;&#xa;$ git filter-branch --commit-filter &apos;&#xa;        if [ &quot;$GIT_AUTHOR_EMAIL&quot; = &quot;schacon@localhost&quot; ];&#xa;        then&#xa;                GIT_AUTHOR_NAME=&quot;Scott Chacon&quot;;&#xa;                GIT_AUTHOR_EMAIL=&quot;schacon@example.com&quot;;&#xa;                git commit-tree &quot;$@&quot;;&#xa;        else&#xa;                git commit-tree &quot;$@&quot;;&#xa;        fi&apos; HEAD&#xa;&#xa;This goes through and rewrites every commit to have your new address. Because commits contain the SHA-1 values of their parents, this command changes every commit SHA in your history, not just those that have the matching e-mail address.">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="12"/>
-</node>
-</node>
-</node>
-</node>
-<node COLOR="#0033ff" FOLDED="true" ID="ID_380728796" POSITION="right" 
-	TEXT="附录">
-<edge STYLE="sharp_bezier" WIDTH="8"/>
-<font NAME="Serif" SIZE="18"/>
-<node COLOR="#00b439" FOLDED="true" ID="ID_393878955" 
-	TEXT="SVN/GIT 面对面">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
-<node COLOR="#990000" ID="ID_1161210646" 
-	TEXT="Subversion 企业版本控制系统。">
-<font NAME="Serif" SIZE="14"/>
-</node>
-<node COLOR="#990000" ID="ID_1916342526" 
-	TEXT="SVN 提交可以不写提交说明，而 Git 必须写。">
-<font NAME="Serif" SIZE="14"/>
-</node>
-</node>
-<node COLOR="#00b439" ID="ID_524793917" 
-	TEXT="HG/GIT 面对面">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
-</node>
-</node>
 <node COLOR="#0033ff" FOLDED="true" ID="ID_297855551" POSITION="right" 
-	TEXT="Git 命令">
+	TEXT="附录——Git 命令索引">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="Serif" SIZE="18"/>
 <node COLOR="#00b439" FOLDED="true" ID="ID_60126118" 
@@ -6391,6 +6719,29 @@
 <font NAME="Serif" SIZE="12"/>
 </node>
 </node>
+</node>
+</node>
+<node COLOR="#0033ff" FOLDED="true" ID="ID_380728796" POSITION="right" 
+	TEXT="附录">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="Serif" SIZE="18"/>
+<node COLOR="#00b439" FOLDED="true" ID="ID_393878955" 
+	TEXT="SVN/GIT 面对面">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_1161210646" 
+	TEXT="Subversion 企业版本控制系统。">
+<font NAME="Serif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_1916342526" 
+	TEXT="SVN 提交可以不写提交说明，而 Git 必须写。">
+<font NAME="Serif" SIZE="14"/>
+</node>
+</node>
+<node COLOR="#00b439" ID="ID_524793917" 
+	TEXT="HG/GIT 面对面">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
 </node>
 </node>
 <node COLOR="#0033ff" FOLDED="true" ID="ID_1872967347" POSITION="left" 
