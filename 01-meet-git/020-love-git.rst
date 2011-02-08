@@ -125,7 +125,8 @@
 
 ::
 
-  $ svnadmin dump --incremental -r2:HEAD /path/to/repos/project1/ > hacks.dump
+  $ svnadmin dump --incremental -r2:HEAD \
+    /path/to/repos/project1/ > hacks.dump
 
 将 svnadmin 命令创建的导出文件恢复到版本库中也非常具有挑战性，就不再详细说明了。还是来看看 Git 在这种情况下的表现吧。
 

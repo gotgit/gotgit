@@ -72,7 +72,8 @@ Git 诞生于 Linux 平台并做为版本控制系统帅先服务于 Linux 核�
   ::
 
     $ make prefix=/usr/local doc info
-    $ sudo make prefix=/usr/local install-doc install-html install-info
+    $ sudo make prefix=/usr/local \
+      install-doc install-html install-info
 
 安装完毕之后，就可以在 `/usr/local/bin` 下找到 `git` 命令。
 
@@ -120,7 +121,8 @@ Git 诞生于 Linux 平台并做为版本控制系统帅先服务于 Linux 核�
   ::
 
     $ make prefix=/usr/local all doc info
-    $ sudo make prefix=/usr/local install install-doc install-html install-info
+    $ sudo make prefix=/usr/local install \
+      install-doc install-html install-info
 
 我在撰写本书的过程中，就通过 Git 版本库的方式安装，在 /opt/git 目录下安装了多个不同版本的 Git，以测试 Git 的兼容性。使用类似下面的脚本，可以批量安装不同版本的 Git。
 
@@ -153,7 +155,8 @@ Linux 的 shell 环境（bash）通过 bash-completion 软件包提供命令补�
 
   ::
 
-    $ cp contrib/completion/git-completion.bash /etc/bash_completion.d/
+    $ cp contrib/completion/git-completion.bash \
+         /etc/bash_completion.d/
 
 * 重新加载自动补齐脚本，使之在当前 shell 中生效。
 
