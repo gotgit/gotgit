@@ -15,17 +15,17 @@ Git 诞生于 Linux 平台并做为版本控制系统帅先服务于 Linux 核�
 
 * Ubuntu 10.10 (maverick) 或更新版本, Debian (squeeze) 或更新版本：
 
+  ::
+
+    $ sudo aptitude install git
+    $ sudo aptitude install git-doc git-svn git-email gitk 
+
   其中 git 软件包包含了大部分 Git 命令，是必装的软件包。
 
   软件包 git-svn、git-email、gitk 本来也是 Git 软件包的一部分，但是因为有着不一样的软件包依赖（如更多 perl 模组，tk等），所以单独作为软件包发布。
 
   软件包 git-doc 则包含了 Git 的 HTML 格式文档，可以选择安装。如果安装了 Git 的 HTML 格式的文档，则可以通过执行 `git help -w <sub-command>` 命令，自动用 Web 浏览器打开相关子命令 <sub-command> 的 HTML 帮助。
   
-  ::
-
-    $ sudo aptitude install git
-    $ sudo aptitude install git-doc git-svn git-email gitk 
-
 * Ubuntu 10.04 (lucid) 或更老版本, Debian (lenny) 或更老版本：
  
   在老版本的 Debian 中，软件包 git 实际上是 Gnu Interactive Tools，而非作为版本控制系统的 Git。做为版本控制系统的 Git 在软件包 git-core 中。 
