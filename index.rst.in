@@ -120,7 +120,7 @@
 第 8 篇: Git 杂谈
 ########################
 
-.. include:: ./08-git-misc/010-windows.rst
+.. include:: ./08-git-misc/010-git-cross-os.rst
 .. include:: ./08-git-misc/020-git-features.rst
 .. include:: ./08-git-misc/030-hooks.rst
 .. include:: ./08-git-misc/040-attributes.rst
