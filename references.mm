@@ -6889,5 +6889,19 @@
 </node>
 </node>
 </node>
+<node COLOR="#0033ff" FOLDED="true" ID="ID_1198866428" POSITION="right" 
+	TEXT="补充">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="SansSerif" SIZE="18"/>
+<node COLOR="#00b439" FOLDED="true" ID="ID_1737548018" 
+	TEXT="新安装Git设置颜色输出">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="SansSerif" SIZE="16"/>
+<node COLOR="#990000" ID="ID_957025545" 
+	TEXT="git config --system color.ui true">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+</node>
+</node>
 </node>
 </map>
