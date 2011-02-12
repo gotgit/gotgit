@@ -477,7 +477,7 @@ PUSH 和 PULL 操作与远程版本库
 
   $ git config branch.<branchname>.rebase true
 
-有了这个设置之后，当工作在 `<branchname>` 分支中执行 `git pull` 命令，则在遇到本地和远程分支出现偏离的时候，采用变基操作替代默认的合并操作。
+有了这个设置之后，如果是在 `<branchname>` 工作分支中执行 `git pull` 命令，在遇到冲突（本地和远程分支出现偏离）的情况下，会采用变基操作，而不是默认的合并操作。
 
 如果为本地版本库设置参数 `branch.autosetuprebase` ，值为 `true` ，则在基于远程分支建立本地追踪分支时，会自动配置 `branch.<branchname>.rebase` 参数，在执行 `git pull` 命令时使用变基操作取代默认的合并操作。
 
