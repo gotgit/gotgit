@@ -1,9 +1,83 @@
 换行符问题
 ===========
 
-core.eol
+每一个通用的版本控制系统，无论是 CVS、Subversion、Git 或是其他，都要面对换行符转换的问题。这是因为作为通用的版本控制系统要面对来自不同操作系统的文件，而不同的操作系统在处理文本文件时，可能使用不同的换行符。
 
-    Sets the line ending type to use in the working directory for files that have the text property set. Alternatives are lf, crlf and native, which uses the platform’s native line ending. The default value is native. See gitattributes(5) for more information on end-of-line conversion.
+**不同的操作系统可能使用不同的换行符**
+
+文本文件的每一行结尾用一个或者两个特殊的 ASCII 字符进行标识，这个标识就是换行符。主要的换行符有三种：LF（换行 line feed, C语言等用 '\n' 表示, 相当于十六进制的 0x0A）, CR（回车 Carriage return, C语言等用 '\r' 表示, 相当于十六进制的 0x0D） 和 CRLF（即由两个字符 CR + LF 组成，相当于 '\r\n'，相当于十六进制的 0x0D 0x0A），分别用在不同的操作系统中（摘自 http://en.wikipedia.org/wiki/Newline）。
+
+* LF: 用于 Multics、Unix、类Unix（如 GNU/Linux、AIX、Xenix、Mac OS X、FreeBSD, 等)、BeOS、Amiga、RISC OS 等操作系统中。
+* CR+LF: 用于 DEC TOPS-10、RT-11 和其他早期的非Unix，以及 CP/M、MP/M、DOS (MS-DOS、PC-DOS 等）、Atari TOS、OS/2、Microsoft Windows、Symbian OS、Palm OS 等系统中。
+* CR: Commodore 8位机、TRS-80、苹果II家族、Mac OS 9 及更早版本。
+
+实际上，自从苹果的 Mac OS X 转向 Unix 内核开始，主流的操作系统根据文本文件换行符的差异划分为两大阵营，一个是微软 Windows 作为一方，使用 CRLF 作为换行符，另外一方包括 Unix、类Unix（如 Linux 和 Mac OS X等）使用 LF 作为换行符。不同阵营的操作系统之间因为换行符的不同在交换文件时会遇到障碍，同样的如果存在跨平台使用版本控制系统时，项目也会遇到麻烦：
+
+* 编辑器不能识别换行符，可能会显示为特殊字符，如 Linux 上的编辑器显示的 ^M 特殊字符，就是拜 Windows 的 CRLF 换行符所赐。或者丢弃换行符，如来自 Linux 的文本文件，在 Windows 上打开可能会因为识别不了换行符，导致所有的行合并在一起。
+
+* 版本库中的文件被来自不同操作系统的用户改来改去，在某一次提交中换行符为 LF，在下一次提交中被替换为 CRLF，这不但会在查看文件版本间差异时造成困惑（所有的行都存在变更），还给版本库的存储带来不必要的冗余。
+
+* 可能会在一个文件中引入混杂的换行符，即有的行是 LF，而有的行是 CRLF。无论在那个操作系统用编辑器打开这样的文件，都会或多或少感到困惑。
+
+* 如果版本控制系统提供文本文件换行符的自动转换，在 Windows 平台进行版本库文件导出为源码包并发布，当该源码包被 Linux 用户下载，编译、运行可能会有问题，反之亦然。
+
+**文本文件和二进制文件的判别，是换行符转换的基础**
+
+几乎所有的版本库控制系统都采用这样的解决方案：对于 **文本文件** ，在版本库中保存时换行符使用 LF，当文件从版本库检出到工作区时，则根据平台的不同或者用户的设置的不同，对文本文件的换行符进行转换（转换为 LF、CR 或 CRLF）。
+
+为什么换行符转换要特意强调文本文件呢？这是因为如果对二进制文件（程序或者数据）当中出现的换行符进行上述转换，会导致二进制文件被破坏。因此判别文件类型是文本文件还是二进制文件，是进行正确文件换行符转换的基础。
+
+有的版本控制系统，如 CVS，必须在添加文件时人工设定文件类型（用 `-kb` 参数设定二进制文件），一旦用户忘记对二进制文件进行标记，就会造成二进制文件被破坏。这种破坏有时藏的比较深，例如在 Linux 上检出文件一切正常，因为版本库中错误的当作文本文件的图形文件中的字符 `0x0A` 在 Linux 上检出没有改变，但是在 Windows 上检出会导致图形文件中的 `0x0A` 字符被转换为 `0x0D 0x0A` 两个字符，造成图片被破坏。
+
+有的版本控制系统可以自动识别文本文件和二进制文件，但是识别算法存在问题。例如 Subversion 检查文件的前 1024 字节的内容，如果其中包含 NULL 字符（0x0），或者超过 15% 是非 ASCII 字符，则 Subversion 认定此文件为二进制文件。这种算法会将包含大量中文的文本文件当作二进制文件，不进行换行符转换，也不能进行版本间的比较（除非强制执行）。
+
+Git 显然比 Subversion 更了解这个世界上文字的多样性，因此在判别二进制文件上没有多余的判别步骤，只对 blob 对象的前 8000 个字符进行检查，如果其中出现 NULL 字符（0x0）则当作二进制文件，否则为文本文件。Git 还允许用户通过属性文件对文件类型进行设置，属性文件设置优先。
+
+Git 缺省并不开启文本文件的换行符转换，因为毕竟 Git 对文件是否是二进制的判断中存在误判的可能。如果用户通过属性文件或者其他方式显式的对文件类型进行了设置，则 Git 就会开启文件换行符转换。
+
+例如版本库中如果存在下面的属性文件（为方便描述标以行号），则以 “.txt”、“.vcproj”、“.sh” 为扩展名的文件被视为文本文件，在处理过程中会进行换行符转换，而以 “.jpg”、“.jpeg” 为扩展名的文件被视为二进制文件，不进行换行符转换。
+
+::
+
+  1  \*.txt           text
+  2  \*.vcproj        eol=crlf
+  3  \*.sh            eol=lf
+  4  \*.jpg           -text
+  5  \*.jpeg          binary
+
+**依据属性文件进行换行符转换**
+
+关于属性文件，会在后面的章节详细介绍，现在可以将其理解为工作区目录下的 `.gitattributes` 文件，其文件匹配方法及该文件的作用范围和 `.gitignore` 文件非常类似。
+
+像上面的属性文件示例，第1行设置了扩展名为“.txt”的文件具有 text 属性，则所有扩展名为“.txt”的文件添加到版本库时，在版本库中创建的 blob 文件的换行符一律转换为 LF。而当扩展名为“.txt”的文件检出到工作区时，则根据平台的不同使用不同的换行符，如在 Linux 上检出使用 LF 换行符，在 Windows 上检出使用 CRLF 换行符。
+
+示例中的第2行设置扩展名为“.vcproj”的文件的属性 eol 的值为 crlf，潜藏着该文件属于文本文件的含义，当向版本库添加扩展名为“.vcproj”文件时，在版本库中创建的 blob 文件的换行符一律转换为 LF。而当该类型的文件检出到工作区时，则一律使用 CRLF 作为换行符，不管是在 Windows 上检出，还是在 Linux 上检出。
+
+同理示例中的第3行设置的扩展名为“.sh”的文件也会进行类似的换行符转换，区别在于该类型文件无论在哪个平台检出，都使用 LF 作为换行符。
+
+向上面那样一一为不同类型的文件设置换行符格式显得很麻烦，可以在属性文件中添加下面的设置，为所有文件开启自动文件类型判断。
+
+::
+
+  \*    text=auto
+
+当为所有文件设置了 `text=auto` 的属性后，Git 就会在文件检入和检出时对文件是否是二进制进行判断，采用前面提到的方法：如果文件头部8000个字符中出现NULL字符则为二进制文件。如果判断文件是二进制就会启用换行符转换。至于本地检出文件采用什么换行符格式，实际上是由 core.eol 变量进行设置的，不过因为 core.eol 没有设置时采用缺省值 native，才使得工作区文本文件的检出采用操作系统默认的换行符格式。变量 core.eol 除了默认的 native 外，还可以使用 lf 和 crlf ，不过一般较少用到。
+
+**使用Git配置变量控制换行符转换**
+
+使用属性定义换行符转换在 Git 1.7.4 之前，只能逐一为版本库进行设置，如果要开启本地全部版本库的换行符转换就非常麻烦了。Git 提供了通过配置变量 core.autocrlf 来开启文本文件换行符转换的功能。
+
+缺省 core.autocrlf 没有设置，因此 Git 不对文本文件进行换行符转换。但是当 core.autocrlf 设置为下列值时，会对文本文件进行下列转换。
+
+* 设置 core.autocrlf 为 true。
+
+  效果就相当于为版本库中所有文件设置了 `text=auto` 的属性。即通过 Git 对文件类型的自动判定，对文本文件进行换行符转换。在版本库的 blob 文件中使用 LF 作为换行符，当检出到工作区使用 CRLF 为换行符。注意当设置了 `core.autocrlf` 为 `true` 时，会忽略 `core.eol` 的设置，工作区文件始终使用 CRLF 作为换行符。
+
+* 设置 core.autocrlf 为 input。
+
+  开启对文本文件进行换行符转换，但只是在文件提交到版本库时，将新增入库的 blob 文件的换行符转换为 LF。当从版本库检出文件到工作区，则不进行文件转换，即版本库中文件若是采用 LF 换行符，检出仍旧是 LF 作为换行符。
+
+**配制 core.safecrlf 捕捉异常的换行符转换**
 
 
 core.safecrlf
@@ -17,11 +91,6 @@ core.safecrlf
     Unfortunately, the desired effect of cleaning up text files with mixed line endings and the undesired effect of corrupting binary files cannot be distinguished. In both cases CRLFs are removed in an irreversible way. For text files this is the right thing to do because CRLFs are line endings, while for binary files converting CRLFs corrupts data.
 
     Note, this safety check does not mean that a checkout will generate a file identical to the original file for a different setting of core.eol and core.autocrlf, but only for the current one. For example, a text file with LF would be accepted with core.eol=lf and could later be checked out with core.eol=crlf, in which case the resulting file would contain CRLF, although the original file contained LF. However, in both work trees the line endings would be consistent, that is either all LF or all CRLF, but never mixed. A file with mixed line endings would be reported by the core.safecrlf mechanism.
-
-
-core.autocrlf
-
-    Setting this variable to "true" is almost the same as setting the text attribute to "auto" on all files except that text files are not guaranteed to be normalized: files that contain CRLF in the repository will not be touched. Use this setting if you want to have CRLF line endings in your working directory even though the repository does not have normalized line endings. This variable can be set to input, in which case no output conversion is performed.
 
 
 
