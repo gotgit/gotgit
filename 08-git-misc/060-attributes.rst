@@ -1,13 +1,85 @@
 Git 属性
 ==============
 
-提到属性，熟悉 Subversion 的用户马上就会联想起 SVN 无处不在的属性，如 svn:ignore、svn:eol-style、svn:externals等属性。Git 属性与之类似，都是为版本库中的路径设置附加的属性值，使得文件或目录做特殊处理。
+Git 通过属性文件为版本库中的文件或目录添加属性。设置了属性的文件或目录，例如在之前介绍换行符转换时设置了文本属性（text）的文件，在执行 Git 相关操作时会做特殊处理。
 
-但是 Git 的属性又和 SVN 的属性有很大不同。最主要的不同就是 Git 是通过配置文件，对路径的属性进行设置。配置文件可能位于工作区的目录之下，也可能位于版本库的 `.git/info` 目录，也可能位于系统目录下或用户主目录下，定义系统或全局的属性。不同位置的属性文件具有不同的优先级。
+属性文件是一个普通的文本文件，每一行为一个路径（可使用通配符）定义相应的属性。语法格式如下：
 
-*
-*
-*
+::
+
+  pattern attr1 attr2 ...
+
+即路径由可使用通配符的 pattern 定义，属性可以设置多个，不同的属性之间用空格分开。路径中通配符的用法和文件忽略（.gitignore）的语法格式相同，参见本书第2篇第10章“10.8节文件忽略”相关内容。下面以 text 属性为例，介绍属性的不同写法：
+
+* text
+
+  直接通过属性名进行设置，相当于设置 text 属性的值为 true。
+
+  对于设置了 text 属性的文件，不再需要 Git 对文件类型进行猜测，而直接判定为文本文件并进行相应的换行符转换。
+
+* -text
+
+  在属性名前用减号标识，相当于设置 text 属性值为 false。
+
+  对于取反设置 text 属性的文件，直接判定为二进制文件，在文件检入和检出时不进行换行符转换。
+
+* !text
+
+  在属性名前面添加感叹号，相当于该属性没有设置，即不等于 true，也不等于 false。
+
+  对于未定义 text 属性的文件，根据 Git 是否配置了 core.autocrlf 变量，决定是否进行换行符转换。因此对于 text 属性没有定义和 text 属性的取反设置，两者存在差异。
+
+* text=auto
+
+  属性除了上述 true、false、未设置三个状态外，还可以被设置为相关的枚举值（预定义的字符串）。不同的属性值可能有不同的枚举值，对于 text 属性可以设置为 `auto` 。
+
+  对于 text 属性设置为 auto 的文件，文件类型实际上尚未确定，需要 Git 读取文件内容进行智能判别，判别为文本文件则进行换行符转换。显然当设置 text 属性为 auto 时，并不等同于 true。
+
+属性文件可以以 `.gitattributes` 文件名保存在工作区目录中，提交到版本库后就可以和其他用户共享项目文件的属性设置。属性文件也可以保存在工作区之外，例如保存在文件 `.git/info/attributes` 中，仅对本版本库生效，若保存在 `/etc/gitattributes` 文件中则全局生效。在查询某个工作区某一文件的属性时，在不同位置的属性文件具有不同的优先级，Git 依据下列顺序依次访问属性文件。
+
+* 文件 `.git/info/attributes` 具有最高的优先级。
+* 接下来检查工作区同一目录下的 `.gitattributes` ，并依次向上递归查找 `.gitattributes` 文件，直到工作区的根目录。
+* 然后查询由 Git 的配置变量 `core.attributesfile` 指定的全局属性文件。
+* 最后是系统属性文件，即文件 `$(prefix)/etc/gitattributes` 。不同的 Git 安装方式这个文件的位置可能不同，但是该文件始终和 Git 的系统配置文件（可以通过 `git config --system -e` 命令打开进而知道位置）位于同一目录中。
+
+下面是关于属性文件应用的示例。
+
+(in $GIT_DIR/info/attributes)
+
+a*      foo !bar -baz
+
+(in .gitattributes)
+abc     foo bar baz
+
+(in t/.gitattributes)
+ab*     merge=filfre
+abc     -foo -bar
+*.c     frotz
+
+
+the attributes given to path t/abc are computed as follows:
+
+   1.
+
+      By examining t/.gitattributes (which is in the same directory as the path in question), git finds that the first line matches. merge attribute is set. It also finds that the second line matches, and attributes foo and bar are unset.
+   2.
+
+      Then it examines .gitattributes (which is in the parent directory), and finds that the first line matches, but t/.gitattributes file already decided how merge, foo and bar attributes should be given to this path, so it leaves foo and bar unset. Attribute baz is set.
+   3.
+
+      Finally it examines $GIT_DIR/info/attributes. This file is used to override the in-tree settings. The first line is a match, and foo is set, bar is reverted to unspecified state, and baz is unset.
+
+As the result, the attributes assignment to t/abc becomes:
+
+foo     set to true
+bar     unspecified
+baz     set to false
+merge   set to string value "filfre"
+frotz   unspecified
+
+
+
+
 
 就是通过配置文件为版本库中的文件设置属性值。例如：下面的事例就是在版本库工作区目录中的 `.gitattributes` 文件，为工作区该目录及其子目录下的相关文件设置相应的属性。
 
