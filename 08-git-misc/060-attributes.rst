@@ -1,7 +1,10 @@
 Git 属性
 ==============
 
-Git 通过属性文件为版本库中的文件或目录添加属性。设置了属性的文件或目录，例如在之前介绍换行符转换时设置了文本属性（text）的文件，在执行 Git 相关操作时会做特殊处理。
+Git 通过属性文件为版本库中的文件或目录添加属性。设置了属性的文件或目录，如之前介绍换行符转换时设置了文本属性（text）的文件，在执行 Git 相关操作时会做特殊处理。
+
+属性定义
+---------
 
 属性文件是一个普通的文本文件，每一行为一个路径（可使用通配符）定义相应的属性。语法格式如下：
 
@@ -35,6 +38,9 @@ Git 通过属性文件为版本库中的文件或目录添加属性。设置了�
 
   对于 text 属性设置为 auto 的文件，文件类型实际上尚未确定，需要 Git 读取文件内容进行智能判别，判别为文本文件则进行换行符转换。显然当设置 text 属性为 auto 时，并不等同于 true。
 
+属性文件及优先级
+-----------------
+
 属性文件可以以 `.gitattributes` 文件名保存在工作区目录中，提交到版本库后就可以和其他用户共享项目文件的属性设置。属性文件也可以保存在工作区之外，例如保存在文件 `.git/info/attributes` 中，仅对本版本库生效，若保存在 `/etc/gitattributes` 文件中则全局生效。在查询某个工作区某一文件的属性时，在不同位置的属性文件具有不同的优先级，Git 依据下列顺序依次访问属性文件。
 
 * 文件 `.git/info/attributes` 具有最高的优先级。
@@ -42,518 +48,327 @@ Git 通过属性文件为版本库中的文件或目录添加属性。设置了�
 * 然后查询由 Git 的配置变量 `core.attributesfile` 指定的全局属性文件。
 * 最后是系统属性文件，即文件 `$(prefix)/etc/gitattributes` 。不同的 Git 安装方式这个文件的位置可能不同，但是该文件始终和 Git 的系统配置文件（可以通过 `git config --system -e` 命令打开进而知道位置）位于同一目录中。
 
-下面是关于属性文件应用的示例。
+注意只有在 1.7.4 或更新版本的 Git 才提供后两种（全局和系统级的）属性文件。可以通过下面的例子来理解属性文件的优先级和属性设置方法。
 
-(in $GIT_DIR/info/attributes)
+首先来看看某个版本库即系统中所包含的属性文件：
 
-a*      foo !bar -baz
+* 其一是位于版本库中的文件 `.git/info/attributes` ，内容如下：
 
-(in .gitattributes)
-abc     foo bar baz
+  ::
 
-(in t/.gitattributes)
-ab*     merge=filfre
-abc     -foo -bar
-*.c     frotz
+    a*      foo !bar -baz
 
+* 其二是位于工作区子目录 `t` 下的属性文件，即 `t/.gitattributes` ，内容入下：
 
-the attributes given to path t/abc are computed as follows:
+  ::
 
-   1.
+    ab*     merge=filfre
+    abc     -foo -bar
+    *.c     frotz
 
-      By examining t/.gitattributes (which is in the same directory as the path in question), git finds that the first line matches. merge attribute is set. It also finds that the second line matches, and attributes foo and bar are unset.
-   2.
+* 再一个是位于工作区根目录下的属性文件 `.gitattributes` ，内容入下：
 
-      Then it examines .gitattributes (which is in the parent directory), and finds that the first line matches, but t/.gitattributes file already decided how merge, foo and bar attributes should be given to this path, so it leaves foo and bar unset. Attribute baz is set.
-   3.
+  ::
 
-      Finally it examines $GIT_DIR/info/attributes. This file is used to override the in-tree settings. The first line is a match, and foo is set, bar is reverted to unspecified state, and baz is unset.
+    abc     foo bar baz
 
-As the result, the attributes assignment to t/abc becomes:
+* 系统文件 `/etc/gitconfig` 文件中包含如下配置：
 
-foo     set to true
-bar     unspecified
-baz     set to false
-merge   set to string value "filfre"
-frotz   unspecified
+  ::
 
+    [core]
+      attributesfile = ~/.gitattributes
 
+* 相应的位于用户主目录下的属性文件 `~/.gitattributes` 内容如下：
 
+  ::
 
+    * text=auto
 
-就是通过配置文件为版本库中的文件设置属性值。例如：下面的事例就是在版本库工作区目录中的 `.gitattributes` 文件，为工作区该目录及其子目录下的相关文件设置相应的属性。
+当查询工作区文件 `t/abc` 的属性时，根据属性文件的优先级，按照下列顺序进行检索：
+
+1. 先检查属性文件 `.git/info/attributes` 。显然该文件中唯一的一行就和文件 `t/abc` 匹配，因此文件 `t/abc` 的属性如下：
+
+  ::
+
+    foo   : true
+    bar   : 未设置
+    baz   : false
+
+2. 再检查和文件 `t/abc` 同目录的属性文件 `t/.gitattributes` 。该属性文件的前两行和路径 `t/abc` 相匹配，但是因为第二行设置 foo 和 bar 属性已经由属性文件 `.git/info/attributes` 提供，因此第二行的设置不起作用。经过这一步，文件 `t/abc` 获得的属性为：
+
+  ::
+
+    foo   : true
+    bar   : 未设置
+    baz   : false
+    merge : filfre
+    
+3. 然后沿工作区当前目录向上遍历属性文件，找到工作区根目录下的属性文件 `.gitattributes` ，进行检查。因为该属性文件设置的属性已经由前面的属性文件提供，所以文件 `t/abc` 的属性和上面第2步的结果一样。
+
+4. 因为设置了 `core.attributesfile` 为 `~/.gitattributes` 文件，因此接下来查找用户主目录下文件即 `.gitattributes` 。该文件唯一的一行匹配所有文件，因此 `t/abc` 又被附加了新的属性值 `text=auto` 。最终文件 `t/abc` 的属性如下。
+
+  ::
+
+    foo   : true
+    bar   : 未设置
+    baz   : false
+    merge : filfre
+    text  : auto
+
+常用属性介绍
+-------------
+
+text
+^^^^
+
+属性 text 用于显式的指定文件的类型：二进制（-text）、文本文件（text）或是开启文件类型的智能判别（text=auto）。对于文本文件，Git 会对其进行换行符转换。本书第40章“40.3换行符问题”中已经详细介绍了属性 text 的用法，并且在本章“40.1.1 属性定义”的示例中对属性 text 的取值做了总结，在此不再赘述。
+
+在“换行符问题”一节，我们还知道可以通过在Git配置文件中设置 `core.autocrlf` 变量，来开启Git对文件类型的智能判别，并对文本文件开启换行符转换。那么Git的配置变量 `core.autocrlf` 和属性 `text` 有什么异同呢？
+
+当设置了Git了配置变量 `core.autocrlf` 为 true 或者 input 后，相当于设置了属性 `text=auto` 。但是Git配置文件中的变量只能在本地进行设置并且只对本地版本库有效，不能通过共享版本库传递到其他用户的本地版本库中，因而 `core.autocrlf` 开启换行符转换不能跟其他用户共享，或者说不能将换行符转换策略设置为整个项目（版本库）的强制规范。属性文件则不同，可以被检入到版本库中并通过共享版本库传递给其他用户，因此可以通过在检入的 `.gitattributes` 文件中设置 text 属性，或者干脆设置 `text=auto` 属性，强制同一项目的所有用户在提交文本文件时都要规范换行符。
+
+建议所有存在跨平台开发可能的项目都在项目根目录中检入一个 `.gitattributes` 文件，根据文件扩展名设置文件的 `text` 属性，或者使用即将介绍的 `eol` 属性。
+
+eol
+^^^
+
+属性 eol 用于设定文本文件的换行符格式。对于设置了 eol 属性的文件，如果没有设定 text 属性时，默认会设置 text 属性为 true。属性 eol 的取值如下：
+
+* eol=crlf
+
+  当文件检入版本库时，blob 对象使用 LF 作为换行符。当检出到工作区时，使用 CRLF 作为换行符。
+
+* eol=lf
+
+  当文件检入版本库时，blob 对象使用 LF 作为换行符，检出的时候工作区文件也使用 LF 作为换行符。
+
+除了通过属性设定换行符格式外，还可以在 Git 的配置文件通过 `core.eol` 变量来设定。两者的区别在于配置文件中的 `core.eol` 变量设置的换行符是一个缺省值，没有通过 eol 属性指定换行符格式的文本文件会采用 `core.eol` 的设置。变量 `core.eol` 的值可以设定为 `lf` 、 `crlf` 和 `native` 。默认 `core.eol` 的取值为 `native` ，即采用操作系统标准的换行符格式。
+
+下面的示例通过属性文件设置文件的换行符格式。
 
 ::
 
-  *.txt           text
   *.vcproj        eol=crlf
   *.sh            eol=lf
-  *.jpg           -text
 
-该属性文件对所在目录及其子目录进行了如下的设置：
+扩展名为 `.vcproj` 的文件使用 CRLF 作为换行符，而扩展名为 `.sh` 的文件使用 LF 作为换行符。在版本库中检入类似的属性文件，会使得Git客户端无论在什么操作系统中都能够在工作区检出一致的换行符格式，这样无论是在 Windows 上还是在 Linux 上使用 `git archive` 命令将工作区文件打包，导出的文件都会保持正确的换行符格式。
 
-* 扩展名为 `.txt` 的文件，被视做文本（text）文件。
-* 扩展名为 `.vcproj` 的文件，换行符设置为 DOS 格式换行符（CRLF）。
-* 扩展名为 `.sh` 的文件，换行符设置为 Linux 格式换行符（LF）。
-* 扩展名为 `.jpg` 的文件，被视为非文本文件。
+ident
+^^^^^
 
-属性文件的语法结构
-^^^^^^^^^^^^^^^^^^^
+属性 ident 开启文本文件中的关键字扩展，即关键字 `$Id$` 的自动扩展。当检出到工作区时， `$Id$` 自动扩展为 `$Id:` ，后面紧接着40位SHA1哈希值（相应blob对象的哈希值），然后以一个 `$` 字符结尾。当文件检入时，要对内容中出现的以 `$Id:` 开始，以 `$` 结束的内容替换为 `$Id$` 再保存到 blob 对象中。
+ 
+这个功能可以说是对 CVS 相应功能的模仿，自动扩展的内容使用的是 blob 的哈希值而非提交本身的哈希值，因此并无太大实际意义，不建议使用。如果希望在文本文件中扩展出提交者姓名、提交ID等更有实际意义的内容，可以参照后面介绍的属性 export-subst。
 
-属性文件的每一行为一组匹配的文件设置对应的属性，语法格式为：
+filter
+^^^^^^
+
+属性 filter 为文件设置一个自定义转换过滤器，以便文件在检入版本库及检出到工作区时进行相应的转换。定义转换过滤器通过 Git 配置文件来完成，因此这个属性应该只在本地进行设置，而不要通过检入到版本库中的 `.gitattributes` 文件传递。
+
+例如下面的属性文件设置了所有的 C 语言源文件在检入和检出的时候使用名为 indent 的代码格式化过滤器。
 
 ::
 
-  pattern attr1 attr2 ...
+  *.c     filter=indent
 
+然后还要通过 Git 配置文件设定 indent 过滤器，示例如下：
 
+::
 
+  [filter "indent"]
+          clean = indent
+          smudge = cat
 
- * System-wide fallback default attributes can be stored in
-   /etc/gitattributes; the core.attributesfile configuration variable can
-   be used to customize the path to this file.
+定义过滤器只要设置两条命令，一条是名为 clean 的配置设定的的命令，用于在文件检入时执行，另外一条是名为 smudge 的配置设定的命令，用于将文件检出到工作区时使用的命令。对于本例，在代码检入时执行 indent 对代码格式化后，再保存到版本库中。当检出到工作区执行 cat 命令，实际上相当于直接将 blob 对象复制到工作区。
 
-
-
-gitattributes(5) Manual Page
-NAME
-
-gitattributes - defining attributes per path
-SYNOPSIS
-
-$GIT_DIR/info/attributes, .gitattributes
-DESCRIPTION
-
-A gitattributes file is a simple text file that gives attributes to pathnames.
-
-Each line in gitattributes file is of form:
-
-pattern attr1 attr2 ...
-
-That is, a pattern followed by an attributes list, separated by whitespaces. When the pattern matches the path in question, the attributes listed on the line are given to the path.
-
-Each attribute can be in one of these states for a given path:
-
-Set
-
-    The path has the attribute with special value "true"; this is specified by listing only the name of the attribute in the attribute list.
-Unset
-
-    The path has the attribute with special value "false"; this is specified by listing the name of the attribute prefixed with a dash - in the attribute list.
-Set to a value
-
-    The path has the attribute with specified string value; this is specified by listing the name of the attribute followed by an equal sign = and its value in the attribute list.
-Unspecified
-
-    No pattern matches the path, and nothing says if the path has or does not have the attribute, the attribute for the path is said to be Unspecified.
-
-When more than one pattern matches the path, a later line overrides an earlier line. This overriding is done per attribute. The rules how the pattern matches paths are the same as in .gitignore files; see gitignore(5).
-
-When deciding what attributes are assigned to a path, git consults $GIT_DIR/info/attributes file (which has the highest precedence), .gitattributes file in the same directory as the path in question, and its parent directories up to the toplevel of the work tree (the further the directory that contains .gitattributes is from the path in question, the lower its precedence).
-
-If you wish to affect only a single repository (i.e., to assign attributes to files that are particular to one user’s workflow), then attributes should be placed in the $GIT_DIR/info/attributes file. Attributes which should be version-controlled and distributed to other repositories (i.e., attributes of interest to all users) should go into .gitattributes files.
-
-Sometimes you would need to override an setting of an attribute for a path to unspecified state. This can be done by listing the name of the attribute prefixed with an exclamation point !.
-EFFECTS
-
-Certain operations by git can be influenced by assigning particular attributes to a path. Currently, the following operations are attributes-aware.
-Checking-out and checking-in
-
-These attributes affect how the contents stored in the repository are copied to the working tree files when commands such as git checkout and git merge run. They also affect how git stores the contents you prepare in the working tree in the repository upon git add and git commit.
-text
-
-This attribute enables and controls end-of-line normalization. When a text file is normalized, its line endings are converted to LF in the repository. To control what line ending style is used in the working directory, use the eol attribute for a single file and the core.eol configuration variable for all text files.
-
-Set
-
-    Setting the text attribute on a path enables end-of-line normalization and marks the path as a text file. End-of-line conversion takes place without guessing the content type.
-Unset
-
-    Unsetting the text attribute on a path tells git not to attempt any end-of-line conversion upon checkin or checkout.
-Set to string value "auto"
-
-    When text is set to "auto", the path is marked for automatic end-of-line normalization. If git decides that the content is text, its line endings are normalized to LF on checkin.
-Unspecified
-
-    If the text attribute is unspecified, git uses the core.autocrlf configuration variable to determine if the file should be converted.
-
-Any other value causes git to act as if text has been left unspecified.
-eol
-
-This attribute sets a specific line-ending style to be used in the working directory. It enables end-of-line normalization without any content checks, effectively setting the text attribute.
-
-Set to string value "crlf"
-
-    This setting forces git to normalize line endings for this file on checkin and convert them to CRLF when the file is checked out.
-Set to string value "lf"
-
-    This setting forces git to normalize line endings to LF on checkin and prevents conversion to CRLF when the file is checked out.
-
-Backwards compatibility with crlf attribute
-
-For backwards compatibility, the crlf attribute is interpreted as follows:
-
-crlf            text
--crlf           -text
-crlf=input      eol=lf
-
-End-of-line conversion
-
-While git normally leaves file contents alone, it can be configured to normalize line endings to LF in the repository and, optionally, to convert them to CRLF when files are checked out.
-
-Here is an example that will make git normalize .txt, .vcproj and .sh files, ensure that .vcproj files have CRLF and .sh files have LF in the working directory, and prevent .jpg files from being normalized regardless of their content.
-
-*.txt           text
-*.vcproj        eol=crlf
-*.sh            eol=lf
-*.jpg           -text
-
-Other source code management systems normalize all text files in their repositories, and there are two ways to enable similar automatic normalization in git.
-
-If you simply want to have CRLF line endings in your working directory regardless of the repository you are working with, you can set the config variable "core.autocrlf" without changing any attributes.
-
-[core]
-        autocrlf = true
-
-This does not force normalization of all text files, but does ensure that text files that you introduce to the repository have their line endings normalized to LF when they are added, and that files that are already normalized in the repository stay normalized.
-
-If you want to interoperate with a source code management system that enforces end-of-line normalization, or you simply want all text files in your repository to be normalized, you should instead set the text attribute to "auto" for all files.
-
-*       text=auto
-
-This ensures that all files that git considers to be text will have normalized (LF) line endings in the repository. The core.eol configuration variable controls which line endings git will use for normalized files in your working directory; the default is to use the native line ending for your platform, or CRLF if core.autocrlf is set.
-Note
-  When text=auto normalization is enabled in an existing repository, any text files containing CRLFs should be normalized. If they are not they will be normalized the next time someone tries to change them, causing unfortunate misattribution. From a clean working directory:
-
-$ echo "* text=auto" >>.gitattributes
-$ rm .git/index     # Remove the index to force git to
-$ git reset         # re-scan the working directory
-$ git status        # Show files that will be normalized
-$ git add -u
-$ git add .gitattributes
-$ git commit -m "Introduce end-of-line normalization"
-
-If any files that should not be normalized show up in git status, unset their text attribute before running git add -u.
-
-manual.pdf      -text
-
-Conversely, text files that git does not detect can have normalization enabled manually.
-
-weirdchars.txt  text
-
-If core.safecrlf is set to "true" or "warn", git verifies if the conversion is reversible for the current setting of core.autocrlf. For "true", git rejects irreversible conversions; for "warn", git only prints a warning but accepts an irreversible conversion. The safety triggers to prevent such a conversion done to the files in the work tree, but there are a few exceptions. Even though…
-
-    *
-
-      git add itself does not touch the files in the work tree, the next checkout would, so the safety triggers;
-    *
-
-      git apply to update a text file with a patch does touch the files in the work tree, but the operation is about text files and CRLF conversion is about fixing the line ending inconsistencies, so the safety does not trigger;
-    *
-
-      git diff itself does not touch the files in the work tree, it is often run to inspect the changes you intend to next git add. To catch potential problems early, safety triggers.
-
-ident
-
-When the attribute ident is set for a path, git replaces $Id$ in the blob object with $Id:, followed by the 40-character hexadecimal blob object name, followed by a dollar sign $ upon checkout. Any byte sequence that begins with $Id: and ends with $ in the worktree file is replaced with $Id$ upon check-in.
-filter
-
-A filter attribute can be set to a string value that names a filter driver specified in the configuration.
-
-A filter driver consists of a clean command and a smudge command, either of which can be left unspecified. Upon checkout, when the smudge command is specified, the command is fed the blob object from its standard input, and its standard output is used to update the worktree file. Similarly, the clean command is used to convert the contents of worktree file upon checkin.
-
-A missing filter driver definition in the config is not an error but makes the filter a no-op passthru.
-
-The content filtering is done to massage the content into a shape that is more convenient for the platform, filesystem, and the user to use. The key phrase here is "more convenient" and not "turning something unusable into usable". In other words, the intent is that if someone unsets the filter driver definition, or does not have the appropriate filter program, the project should still be usable.
-
-For example, in .gitattributes, you would assign the filter attribute for paths.
-
-*.c     filter=indent
-
-Then you would define a "filter.indent.clean" and "filter.indent.smudge" configuration in your .git/config to specify a pair of commands to modify the contents of C programs when the source files are checked in ("clean" is run) and checked out (no change is made because the command is "cat").
-
-[filter "indent"]
-        clean = indent
-        smudge = cat
-
-For best results, clean should not alter its output further if it is run twice ("clean→clean" should be equivalent to "clean"), and multiple smudge commands should not alter clean's output ("smudge→smudge→clean" should be equivalent to "clean"). See the section on merging below.
-
-The "indent" filter is well-behaved in this regard: it will not modify input that is already correctly indented. In this case, the lack of a smudge filter means that the clean filter must accept its own output without modifying it.
-Interaction between checkin/checkout attributes
-
-In the check-in codepath, the worktree file is first converted with filter driver (if specified and corresponding driver defined), then the result is processed with ident (if specified), and then finally with text (again, if specified and applicable).
-
-In the check-out codepath, the blob content is first converted with text, and then ident and fed to filter.
-Merging branches with differing checkin/checkout attributes
-
-If you have added attributes to a file that cause the canonical repository format for that file to change, such as adding a clean/smudge filter or text/eol/ident attributes, merging anything where the attribute is not in place would normally cause merge conflicts.
-
-To prevent these unnecessary merge conflicts, git can be told to run a virtual check-out and check-in of all three stages of a file when resolving a three-way merge by setting the merge.renormalize configuration variable. This prevents changes caused by check-in conversion from causing spurious merge conflicts when a converted file is merged with an unconverted file.
-
-As long as a "smudge→clean" results in the same output as a "clean" even on files that are already smudged, this strategy will automatically resolve all filter-related conflicts. Filters that do not act in this way may cause additional merge conflicts that must be resolved manually.
-Generating diff text
 diff
+^^^^
 
-The attribute diff affects how git generates diffs for particular files. It can tell git whether to generate a textual patch for the path or to treat the path as a binary file. It can also affect what line is shown on the hunk header @@ -k,l +n,m @@ line, tell git to use an external command to generate the diff, or ask git to convert binary files to a text format before generating the diff.
+和前面介绍的属性不同，属性 diff 不会对文件检入检出造成影响，而只是在查看文件历史变更时起作用。属性 diff 可以取值如下：
 
-Set
+* diff
 
-    A path to which the diff attribute is set is treated as text, even when they contain byte values that normally never appear in text files, such as NUL.
-Unset
+  进行版本间比较时，以文本方式进行比较，即使文件看起来像是二进制文件（包含NULL字符），或者被设置为二进制文件（-text）。
 
-    A path to which the diff attribute is unset will generate Binary files differ (or a binary patch, if binary patches are enabled).
-Unspecified
+* -diff
 
-    A path to which the diff attribute is unspecified first gets its contents inspected, and if it looks like text, it is treated as text. Otherwise it would generate Binary files differ.
-String
+  不以文本方式进行差异比较，而以二进制方式进行比较，默认查看版本间差异时只显示文本文件差异不显示二进制文件差异。对于有些文本文件（如 postscript 文件）进行差异比较没有意义，可以对其设置 `-diff` 属性，避免在显示提交间差异时造成干扰。
 
-    Diff is shown using the specified diff driver. Each driver may specify one or more options, as described in the following section. The options for the diff driver "foo" are defined by the configuration variables in the "diff.foo" section of the git config file.
+* !diff
 
-Defining an external diff driver
+  不设置 diff 属性，相当于在执行差异比较时要对文件内容进行智能判别，如果文件看起来像是文本文件，则显示文本格式的差异比较。
 
-The definition of a diff driver is done in gitconfig, not gitattributes file, so strictly speaking this manual page is a wrong place to talk about it. However…
+* diff=<driver>
 
-To define an external diff driver jcdiff, add a section to your $GIT_DIR/config file (or $HOME/.gitconfig file) like this:
+  设定一个外部的驱动用于文件的差异比较。例如对于 Word 文档的差异比较就可以通过这种方式进行配置。
 
-[diff "jcdiff"]
-        command = j-c-diff
+Word 文档属于二进制文件，默认不显示差异比较。在 Linux 上有一个名为 `antiword` 的应用软件可以将 Word 文档转换为文本文件显示，借助该软件就可以实现在 Linux （包括 Mac OS X）上显示 Word 文件的版本间差异。
 
-When git needs to show you a diff for the path with diff attribute set to jcdiff, it calls the command you specified with the above configuration, i.e. j-c-diff, with 7 parameters, just like GIT_EXTERNAL_DIFF program is called. See git(1) for details.
-Defining a custom hunk-header
+下面的 Git 配置就定义了一个名为 antiword 的适用于 Word 差异比较的驱动：
 
-Each group of changes (called a "hunk") in the textual diff output is prefixed with a line of the form:
+::
 
-@@ -k,l +n,m @@ TEXT
+  [diff "antiword"]
+    textconv=antiword
 
-This is called a hunk header. The "TEXT" portion is by default a line that begins with an alphabet, an underscore or a dollar sign; this matches what GNU diff -p output uses. This default selection however is not suited for some contents, and you can use a customized pattern to make a selection.
+其中 `textconv` 属性用于设定一个文件转换命令行，这里设置为 antiword，用于将 Word 文档转换为纯文本。
 
-First, in .gitattributes, you would assign the diff attribute for paths.
+然后还需要设置属性，修改版本库下的 `.git/info/attributes` 文件就可以，新增属性设置如下：
 
-*.tex   diff=tex
+::
 
-Then, you would define a "diff.tex.xfuncname" configuration to specify a regular expression that matches a line that you would want to appear as the hunk header "TEXT". Add a section to your $GIT_DIR/config file (or $HOME/.gitconfig file) like this:
+  *.doc  diff=antiword
 
-[diff "tex"]
-        xfuncname = "^(\\\\(sub)*section\\{.*)$"
+关于更多的差异比较外部驱动的设置，执行 `git help --web attributes` 参见帮助。
 
-Note. A single level of backslashes are eaten by the configuration file parser, so you would need to double the backslashes; the pattern above picks a line that begins with a backslash, and zero or more occurrences of sub followed by section followed by open brace, to the end of line.
-
-There are a few built-in patterns to make this easier, and tex is one of them, so you do not have to write the above in your configuration file (you still need to enable this with the attribute mechanism, via .gitattributes). The following built in patterns are available:
-
-    *
-
-      bibtex suitable for files with BibTeX coded references.
-    *
-
-      cpp suitable for source code in the C and C++ languages.
-    *
-
-      csharp suitable for source code in the C# language.
-    *
-
-      fortran suitable for source code in the Fortran language.
-    *
-
-      html suitable for HTML/XHTML documents.
-    *
-
-      java suitable for source code in the Java language.
-    *
-
-      objc suitable for source code in the Objective-C language.
-    *
-
-      pascal suitable for source code in the Pascal/Delphi language.
-    *
-
-      php suitable for source code in the PHP language.
-    *
-
-      python suitable for source code in the Python language.
-    *
-
-      ruby suitable for source code in the Ruby language.
-    *
-
-      tex suitable for source code for LaTeX documents.
-
-Customizing word diff
-
-You can customize the rules that git diff --word-diff uses to split words in a line, by specifying an appropriate regular expression in the "diff.*.wordRegex" configuration variable. For example, in TeX a backslash followed by a sequence of letters forms a command, but several such commands can be run together without intervening whitespace. To separate them, use a regular expression in your $GIT_DIR/config file (or $HOME/.gitconfig file) like this:
-
-[diff "tex"]
-        wordRegex = "\\\\[a-zA-Z]+|[{}]|\\\\.|[^\\{}[:space:]]+"
-
-A built-in pattern is provided for all languages listed in the previous section.
-Performing text diffs of binary files
-
-Sometimes it is desirable to see the diff of a text-converted version of some binary files. For example, a word processor document can be converted to an ASCII text representation, and the diff of the text shown. Even though this conversion loses some information, the resulting diff is useful for human viewing (but cannot be applied directly).
-
-The textconv config option is used to define a program for performing such a conversion. The program should take a single argument, the name of a file to convert, and produce the resulting text on stdout.
-
-For example, to show the diff of the exif information of a file instead of the binary information (assuming you have the exif tool installed), add the following section to your $GIT_DIR/config file (or $HOME/.gitconfig file):
-
-[diff "jpg"]
-        textconv = exif
-
-Note
-  The text conversion is generally a one-way conversion; in this example, we lose the actual image contents and focus just on the text data. This means that diffs generated by textconv are not suitable for applying. For this reason, only git diff and the git log family of commands (i.e., log, whatchanged, show) will perform text conversion. git format-patch will never generate this output. If you want to send somebody a text-converted diff of a binary file (e.g., because it quickly conveys the changes you have made), you should generate it separately and send it as a comment in addition to the usual binary diff that you might send.
-
-Because text conversion can be slow, especially when doing a large number of them with git log -p, git provides a mechanism to cache the output and use it in future diffs. To enable caching, set the "cachetextconv" variable in your diff driver’s config. For example:
-
-[diff "jpg"]
-        textconv = exif
-        cachetextconv = true
-
-This will cache the result of running "exif" on each blob indefinitely. If you change the textconv config variable for a diff driver, git will automatically invalidate the cache entries and re-run the textconv filter. If you want to invalidate the cache manually (e.g., because your version of "exif" was updated and now produces better output), you can remove the cache manually with git update-ref -d refs/notes/textconv/jpg (where "jpg" is the name of the diff driver, as in the example above).
-Performing a three-way merge
 merge
+^^^^^
 
-The attribute merge affects how three versions of a file is merged when a file-level merge is necessary during git merge, and other commands such as git revert and git cherry-pick.
+属性 merge 用于为文件设置指定的合并策略，受影响的 Git 命令有： `git merge` 、 `git revert` 和 `git cherry-pick` 等。属性 merge 可以取值如下：
 
-Set
+* merge
 
-    Built-in 3-way merge driver is used to merge the contents in a way similar to merge command of RCS suite. This is suitable for ordinary text files.
-Unset
+  使用内置的三向合并策略。
 
-    Take the version from the current branch as the tentative merge result, and declare that the merge has conflicts. This is suitable for binary files that does not have a well-defined merge semantics.
-Unspecified
+* -merge
 
-    By default, this uses the same built-in 3-way merge driver as is the case the merge attribute is set. However, merge.default configuration variable can name different merge driver to be used for paths to which the merge attribute is unspecified.
-String
+  将当前分支的文件版本设置为暂时的合并结果，并且声明合并发生了冲突，这实际上是二进制文件默认的合并方式。可以对文本文件设置该属性，使得在合并时的行为类似二进制文件。
 
-    3-way merge is performed using the specified custom merge driver. The built-in 3-way merge driver can be explicitly specified by asking for "text" driver; the built-in "take the current branch" driver can be requested with "binary".
+* !merge
 
-Built-in merge drivers
+  和定义了 merge 属性效果类似，使用内置的三向合并策略。然而当通过 Git 配置文件的 `merge.default` 变量设置了合并策略后，如果没有为文件设置 merge 属性，则使用 `merge.default` 设定的策略。
 
-There are a few built-in low-level merge drivers defined that can be asked for via the merge attribute.
+* merge=<driver>
 
-text
+  使用指定的合并驱动执行三向文件合并。驱动可以是内置的三个驱动，也可以是用户通过 Git 配置文件自定义的驱动。
 
-    Usual 3-way file level merge for text files. Conflicted regions are marked with conflict markers <<<<<<<, ======= and >>>>>>>. The version from your branch appears before the ======= marker, and the version from the merged branch appears after the ======= marker.
-binary
+下面重点说一说如何为属性 merge 指定驱动。先来看看 Git 提供的三个内置驱动：
 
-    Keep the version from your branch in the work tree, but leave the path in the conflicted state for the user to sort out.
-union
+* merge=text
 
-    Run 3-way file level merge for text files, but take lines from both versions, instead of leaving conflict markers. This tends to leave the added lines in the resulting file in random order and the user should verify the result. Do not use this if you do not understand the implications.
+  默认文本文件在进行三向合并时使用的驱动。会在合并后的文本文件中用特殊的标识 `<<<<<<<` 、 `=======` 和 `>>>>>>>` 来标记冲突的内容。
 
-Defining a custom merge driver
+* merge=binary
 
-The definition of a merge driver is done in the .git/config file, not in the gitattributes file, so strictly speaking this manual page is a wrong place to talk about it. However…
+  默认二进制文件在进行三向合并时使用的驱动。会在工作区中保持当前分支中的版本不变，但是会通过在三个暂存区中进行冲突标识使得文件处于冲突状态。
 
-To define a custom merge driver filfre, add a section to your $GIT_DIR/config file (or $HOME/.gitconfig file) like this:
+* merge=union
 
-[merge "filfre"]
-        name = feel-free merge driver
-        driver = filfre %O %A %B
-        recursive = binary
+  在文本文件三向合并过程中，不使用冲突标志符标识冲突，而是将冲突双方的内容简单的罗列在文件中。用户应该对合并后的文件进行检查。请审用此合并驱动。
 
-The merge.*.name variable gives the driver a human-readable name.
+用户还可以自定义驱动。例如 Topgit 就使用自定义合并驱动的方式来控制两个 Topgit 管理文件 `.topmsg` 和 `.topdeps` 的合并行为。
 
-The ‘merge.*.driver` variable’s value is used to construct a command to run to merge ancestor’s version (%O), current version (%A) and the other branches’ version (%B). These three tokens are replaced with the names of temporary files that hold the contents of these versions when the command line is built. Additionally, %L will be replaced with the conflict marker size (see below).
+Topgit 会在版本库的配置文件 `.git/info/config` 中添加下面的设置定义一个名为 ours 的合并驱动。注意不要将此 ours 驱动和本书第3篇第16章“16.6合并策略”一节中介绍的 ours 合并策略弄混淆。
 
-The merge driver is expected to leave the result of the merge in the file named with %A by overwriting it, and exit with zero status if it managed to merge them cleanly, or non-zero if there were conflicts.
+::
 
-The merge.*.recursive variable specifies what other merge driver to use when the merge driver is called for an internal merge between common ancestors, when there are more than one. When left unspecified, the driver itself is used for both internal merge and the final merge.
-conflict-marker-size
+  [merge "ours"]
+    name = \"always keep ours\" merge driver
+    driver = touch %A
 
-This attribute controls the length of conflict markers left in the work tree file during a conflicted merge. Only setting to the value to a positive integer has any meaningful effect.
+定义的合并驱动的名称由 `merge.*.name` 给出，合并时执行的命令则由配置 `merge.*.driver` 给出。本例中的合并驱动设置的合并命令为 `touch %A` 含义为简单的触碰（更新文件时间戳）当前分支中的版本，亦即合并冲突时采用本地版本，丢弃其他版本。
 
-For example, this line in .gitattributes can be used to tell the merge machinery to leave much longer (instead of the usual 7-character-long) conflict markers when merging the file Documentation/git-merge.txt results in a conflict.
+Topgit 还会在版本库 `.git/info/attributes` 属性文件中包含下面的属性设置：
 
-Documentation/git-merge.txt     conflict-marker-size=32
+::
 
-Checking whitespace errors
+  .topmsg merge=ours
+  .topdeps  merge=ours
+
+含义为对这两个 Topgit 管理文件，采用在 Git 配置文件中设定的 ours 合并驱动。Topgit 之所以要这么实现是因为不同特性分支的管理文件之间并无关联，也不需要合并，在遇到冲突时只使用自己的版本即可。这对于 Topgit 经常执行变基和分支合并，设置这个策略可以简化管理，但同时这个设置在特定情况下也存在不合理之处。例如两个用户工作在同一分支上同时更改了 `.topmsg` 文件以修改特性分支的描述，在合并时会覆盖对方的修改，这显然是不好的行为。但是权衡利弊，还是如此实现最好。
+
 whitespace
+^^^^^^^^^^
 
-The core.whitespace configuration variable allows you to define what diff and apply should consider whitespace errors for all paths in the project (See git-config(1)). This attribute gives you finer control per path.
+Git 可以对文本文件中空白字符的使用是否规范做出检查，在文件差异比较时，将使用不当的空白字符用红色进行标记（开启 color.diff.whitespace）。也可以在执行 `git apply` 时通过参数 `--whitespace=error` 防止错误的空白字符应用到提交中。
 
-Set
+Git 默认开启对下面三类错误空白字符的检查。
 
-    Notice all types of potential whitespace errors known to git.
-Unset
+* blank-at-eol
 
-    Do not notice anything as error.
-Unspecified
+  在行尾出现的空白字符（换行符之前）被视为误用。
 
-    Use the value of core.whitespace configuration variable to decide what to notice as error.
-String
+* space-before-tab
 
-    Specify a comma separate list of common whitespace problems to notice in the same format as core.whitespace configuration variable.
+  在行首缩进中出现在 TAB 字符前面的空白字符视为误用。
 
-Creating an archive
+* blank-at-eof
+
+  在文件末尾的空白行视为误用。
+
+Git 还支持对更多空白字符的误用做出检测，包括：
+
+* indent-with-non-tab
+
+  用8个或者更多的空格进行缩进视为误用。
+
+* tab-in-indent
+
+  在行首的缩进中使用 TAB 字符视为误用。显然这个设置和上面的 indent-with-non-tab 互斥。
+
+* trailing-space
+
+  相当于同时启用 blank-at-eol 和 blank-at-eof。
+
+* cr-at-eol
+
+  将行尾的 CR（回车）字符视为换行符的一部分。也就是说，在行尾前出现的 CR 字符不会引起 trailing-space 报错。
+
+* tabwidth=<n>
+
+  设置一个 TAB 字符相当于几个空格，缺省为 8 个。
+
+可以通过 Git 配置文件中的 core.whitespace 变量，设置开启更多的空白字符检查，将要开启的空白字符检查项用逗号分开即可。
+
+如果希望对特定路径进行空白字符检查，则可以通过属性 whitespace 进行。属性 whitespace 可以有如下设置：
+
+
+* whitespace
+
+  开启所有的空白字符误用检查。
+
+* -whitespace
+
+  不对空白字符进行误用检查。
+
+* !whitespace
+
+  使用 core.whitespace 配置变量的设置进行空白字符误用检查。
+
+* whitespace=...
+
+  和 core.whitespace 的语法一样，用逗号分隔各个空白字符检查项。
+
 export-ignore
+^^^^^^^^^^^^^^
 
-Files and directories with the attribute export-ignore won’t be added to archive files.
+设置了该属性的文件和目录在执行 `git archive` 时不予导出。
+
 export-subst
+^^^^^^^^^^^^
 
-If the attribute export-subst is set for a file then git will expand several placeholders when adding this file to an archive. The expansion depends on the availability of a commit ID, i.e., if git-archive(1) has been given a tree instead of a commit or a tag then no replacement will be done. The placeholders are the same as those for the option --pretty=format: of git-log(1), except that they need to be wrapped like this: $Format:PLACEHOLDERS$ in the file. E.g. the string $Format:%H$ will be replaced by the commit hash.
-Packing objects
+如果为文件设置了属性 export-subst，则在使用 `git archive` 导出项目文件时，会对相应文件内容中的占位符展开，然后再添加到归档中。注意如果在使用 `git archive` 导出时使用树ID，而没有使用提交或者里程碑，则不会发生占位符展开。占位符的格式为 `$Format:PLACEHOLDERS$` ，其中 `PLACEHOLDERS` 使用 `git log --pretty=format:` 相同的参数（具体参见 git help log 显示的帮助页）。例如：$Format:%H$ 将展开为提交的哈希值，$Format:%an$ 将展开为提交者姓名。
+
 delta
+^^^^^^
 
-Delta compression will not be attempted for blobs for paths with the attribute delta set to false.
-Viewing files in GUI tools
+如果设置属性 delta 为 false，则不对该路径指向的 blob 文件执行 Delta 压缩。
+
 encoding
+^^^^^^^^^
 
-The value of this attribute specifies the character encoding that should be used by GUI tools (e.g. gitk(1) and git-gui(1)) to display the contents of the relevant file. Note that due to performance considerations gitk(1) does not use this attribute unless you manually enable per-file encodings in its options.
+设置文件所使用的字符集，以便使用 GUI 工具（如 gitk 和 git-gui）能够正确显示文件内容。基于性能上的考虑，gitk 默认不检查该属性，除非通过 gitk 的偏好设置启用“Support per-file encodings”。
 
-If this attribute is not set or has an invalid value, the value of the gui.encoding configuration variable is used instead (See git-config(1)).
-USING ATTRIBUTE MACROS
+如果没有为文件设置 encoding 属性，则使用 `git.encoding` 配置变量。
 
-You do not want any end-of-line conversions applied to, nor textual diffs produced for, any binary file you track. You would need to specify e.g.
+binary
+^^^^^^^
 
-*.jpg -text -diff
+属性 binary 严格来说是一个宏，相当于 `-text -diff` 。即禁止换行符转换及禁止文本方式显示文件差异。
 
-but that may become cumbersome, when you have many attributes. Using attribute macros, you can specify groups of attributes set or unset at the same time. The system knows a built-in attribute macro, binary:
+用户也可以自定义宏。自定义宏只能在工作区根目录中的 `.gitattributes` 文件中添加，以内置的 binary 宏为例，相当于在属性文件中进行了如下的设置：
 
-*.jpg binary
+::
 
-which is equivalent to the above. Note that the attribute macros can only be "Set" (see the above example that sets "binary" macro as if it were an ordinary attribute --- setting it in turn unsets "text" and "diff").
-DEFINING ATTRIBUTE MACROS
-
-Custom attribute macros can be defined only in the .gitattributes file at the toplevel (i.e. not in any subdirectory). The built-in attribute macro "binary" is equivalent to:
-
-[attr]binary -diff -text
-
-EXAMPLE
-
-If you have these three gitattributes file:
-
-(in $GIT_DIR/info/attributes)
-
-a*      foo !bar -baz
-
-(in .gitattributes)
-abc     foo bar baz
-
-(in t/.gitattributes)
-ab*     merge=filfre
-abc     -foo -bar
-*.c     frotz
-
-the attributes given to path t/abc are computed as follows:
-
-   1.
-
-      By examining t/.gitattributes (which is in the same directory as the path in question), git finds that the first line matches. merge attribute is set. It also finds that the second line matches, and attributes foo and bar are unset.
-   2.
-
-      Then it examines .gitattributes (which is in the parent directory), and finds that the first line matches, but t/.gitattributes file already decided how merge, foo and bar attributes should be given to this path, so it leaves foo and bar unset. Attribute baz is set.
-   3.
-
-      Finally it examines $GIT_DIR/info/attributes. This file is used to override the in-tree settings. The first line is a match, and foo is set, bar is reverted to unspecified state, and baz is unset.
-
-As the result, the attributes assignment to t/abc becomes:
-
-foo     set to true
-bar     unspecified
-baz     set to false
-merge   set to string value "filfre"
-frotz   unspecified
-
-GIT
-
-Part of the git(1) suite
-Last updated 2011-01-06 00:05:26 UTC
-
+  [attr]binary -diff -text
