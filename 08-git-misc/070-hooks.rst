@@ -1,180 +1,162 @@
 Git 钩子
 =========
 
-::
+Git 的钩子脚本位于版本库 `.git/hooks` 目录下，当 Git 执行特定操作时会调用特定的钩子脚本。当版本库通过 `git init` 或者 `git clone` 创建时，会在 `.git/hooks` 目录下创建示例脚本，用户可以参照示例脚本的写法开发适合的钩子脚本。
 
-  githooks(5) Manual Page
-  NAME
+钩子脚本要设置为可运行，并使用特定的名称。下面分别对可用的钩子脚本逐一介绍：
 
-  githooks - Hooks used by git
-  SYNOPSIS
+* applypatch-msg
 
-  $GIT_DIR/hooks/*
-  DESCRIPTION
+  该钩子脚本由 `git am` 命令调用。该脚本只有一个参数，即保存提交说明的文件名。如果该脚本运行失败（返回非零值），则 `git am` 命令在应用该补丁之前终止。
 
-  Hooks are little scripts you can place in $GIT_DIR/hooks directory to trigger action at certain points. When git init is run, a handful of example hooks are copied into the hooks directory of the new repository, but by default they are all disabled. To enable a hook, rename it by removing its .sample suffix.
-  Note
-    It is also a requirement for a given hook to be executable. However - in a freshly initialized repository - the .sample files are executable by default.
+  这个钩子脚本可以修改文件中保存的提交说明，以便对提交说明进行规范化以符合项目的标准（如果有的话）。如果提交说明不符合项目标准，脚本直接以非零值退出拒绝提交。
 
-  This document describes the currently defined hooks.
-  HOOKS
-  applypatch-msg
+  如果该脚本被启用，还会执行 commit-msg 钩子脚本，如果存在的话。
 
-  This hook is invoked by git am script. It takes a single parameter, the name of the file that holds the proposed commit log message. Exiting with non-zero status causes git am to abort before applying the patch.
+* pre-applypatch
 
-  The hook is allowed to edit the message file in place, and can be used to normalize the message into some project standard format (if the project has one). It can also be used to refuse the commit after inspecting the message file.
+  该钩子脚本由 `git am` 命令调用。该脚本没有参数，在补丁应用后但尚未提交之前运行。如果该脚本运行失败（返回非零值），则已经应用补丁的工作区文件不会被提交。
 
-  The default applypatch-msg hook, when enabled, runs the commit-msg hook, if the latter is enabled.
-  pre-applypatch
+  这个脚本可以用于对应用补丁后的工作区进行测试，如果测试没有通过则拒绝提交。
 
-  This hook is invoked by git am. It takes no parameter, and is invoked after the patch is applied, but before a commit is made.
+  如果该脚本被启用，还会执行 pre-commit 钩子脚本，如果存在的话。
 
-  If it exits with non-zero status, then the working tree will not be committed after applying the patch.
+* post-applypatch
 
-  It can be used to inspect the current working tree and refuse to make a commit if it does not pass certain test.
+  该钩子脚本由 `git am` 命令调用。该脚本没有参数，在补丁应用并且提交之后运行，因此该钩子脚本不会影响 `git am` 的运行结果，一般用于发送通知。
 
-  The default pre-applypatch hook, when enabled, runs the pre-commit hook, if the latter is enabled.
-  post-applypatch
+* pre-commit
 
-  This hook is invoked by git am. It takes no parameter, and is invoked after the patch is applied and a commit is made.
+  该钩子脚本由 `git commit` 命令调用。可以向该脚本传递 `--no-verify` 参数，此外别无参数。该脚本获取提交说明之前运行。如果该脚本运行失败（返回非零值），Git 提交被终止。
 
-  This hook is meant primarily for notification, and cannot affect the outcome of git am.
-  pre-commit
+  该脚本主要用于对提交数据的检查，例如可以用于检查是否提交了非ASCII字符命名的文件，以及是否在提交文件中使用了不规范的空白字符等。
 
-  This hook is invoked by git commit, and can be bypassed with --no-verify option. It takes no parameter, and is invoked before obtaining the proposed commit log message and making a commit. Exiting with non-zero status from this script causes the git commit to abort.
+* prepare-commit-msg
 
-  The default pre-commit hook, when enabled, catches introduction of lines with trailing whitespaces and aborts the commit when such a line is found.
+  该钩子脚本由 `git commit` 命令调用，在默认的提交信息准备完成后但编辑器尚未启动之前运行。
 
-  All the git commit hooks are invoked with the environment variable GIT_EDITOR=: if the command will not bring up an editor to modify the commit message.
-  prepare-commit-msg
+  该脚本有1到3个参数。第一个参数是包含提交说明的文件名。第二个参数是提交说明的来源，可以是 `message` （由 `-m` 或者 `-F` 参数提供），可以是 `template` （如果使用了 `-t` 参数或者由 `commit.template` 配置变量提供），或者是 `merge` （如果提交是一个合并或存在 .git/MERGE_MSG 文件），或者是 `squash` （如果存在 .git/SQUASH_MSG 文件），或者是 `commit` 并跟着一个提交SHA1哈希值（如果使用 `-c` 、 `-C` 或者 `--amend` 参数）。
 
-  This hook is invoked by git commit right after preparing the default log message, and before the editor is started.
+  如果该脚本运行失败（返回非零值），Git 提交被终止。
 
-  It takes one to three parameters. The first is the name of the file that contains the commit log message. The second is the source of the commit message, and can be: message (if a -m or -F option was given); template (if a -t option was given or the configuration option commit.template is set); merge (if the commit is a merge or a .git/MERGE_MSG file exists); squash (if a .git/SQUASH_MSG file exists); or commit, followed by a commit SHA1 (if a -c, -C or --amend option was given).
+  该脚本用于对提交说明进行编辑，并且该脚本不会因为 `--no-verify` 参数被禁用。
 
-  If the exit status is non-zero, git commit will abort.
+  Git 的示例 `prepare-commit-msg` 脚本，可以用于向提交说明中自动嵌入提交者签名，或者将来自 `merge` 的提交说明中的“Conflicts:”去掉。
 
-  The purpose of the hook is to edit the message file in place, and it is not suppressed by the --no-verify option. A non-zero exit means a failure of the hook and aborts the commit. It should not be used as replacement for pre-commit hook.
+* commit-msg
 
-  The sample prepare-commit-msg hook that comes with git comments out the Conflicts: part of a merge’s commit message.
-  commit-msg
+  该钩子脚本由 `git commit` 命令调用，可以通过传递 --no-verify 参数而禁用。该脚本有一个参数，即包含提交信息的文件名。如果该脚本运行失败（返回非零值），Git 提交被终止。
 
-  This hook is invoked by git commit, and can be bypassed with --no-verify option. It takes a single parameter, the name of the file that holds the proposed commit log message. Exiting with non-zero status causes the git commit to abort.
+  该脚本可以直接修改提交说明，可以用于对提交说明规范化以符合项目的标准（如果有的话）。如果提交说明不符合标准，可以拒绝提交。
 
-  The hook is allowed to edit the message file in place, and can be used to normalize the message into some project standard format (if the project has one). It can also be used to refuse the commit after inspecting the message file.
+  示例 commit-msg 钩子可以检查提交说明中重复出现的 "Signed-off-by" 行，如果发现即终止提交。
 
-  The default commit-msg hook, when enabled, detects duplicate "Signed-off-by" lines, and aborts the commit if one is found.
-  post-commit
+* post-commit
 
-  This hook is invoked by git commit. It takes no parameter, and is invoked after a commit is made.
+  该钩子脚本由 `git commit` 命令调用，不带参数运行，是在提交完成之后被触发执行。
 
-  This hook is meant primarily for notification, and cannot affect the outcome of git commit.
-  pre-rebase
+  该钩子脚本不会影响 `git commit` 的运行结果，一般用于发送通知。
 
-  This hook is called by git rebase and can be used to prevent a branch from getting rebased.
-  post-checkout
+* pre-rebase
 
-  This hook is invoked when a git checkout is run after having updated the worktree. The hook is given three parameters: the ref of the previous HEAD, the ref of the new HEAD (which may or may not have changed), and a flag indicating whether the checkout was a branch checkout (changing branches, flag=1) or a file checkout (retrieving a file from the index, flag=0). This hook cannot affect the outcome of git checkout.
+  该钩子脚本由 `git rebase` 命令调用，用于防止某个分支参与变基。
 
-  It is also run after git clone, unless the --no-checkout (-n) option is used. The first parameter given to the hook is the null-ref, the second the ref of the new HEAD and the flag is always 1.
+* post-checkout
 
-  This hook can be used to perform repository validity checks, auto-display differences from the previous HEAD if different, or set working dir metadata properties.
-  post-merge
+  该钩子脚本由 `git checkout` 命令调用，是在完成工作区更新之后触发执行。该钩子脚本有三个参数：前一个HEAD的引用，新HEAD的引用（可能和前一个一样也可能不一样），以及一个标识用于表示此次检出是否是分支检出（分支检出为1，文件检出是0）。该钩子脚本不会影响 `git checkout` 命令的结果。
 
-  This hook is invoked by git merge, which happens when a git pull is done on a local repository. The hook takes a single parameter, a status flag specifying whether or not the merge being done was a squash merge. This hook cannot affect the outcome of git merge and is not executed, if the merge failed due to conflicts.
+  该钩子脚本也在 `git clone` 命令执行后被触发，除非使用了 `--no-checkout (-n)` 参数。第一个参数给出的引用是空引用，则第二个和第三个参数都为 1。
 
-  This hook can be used in conjunction with a corresponding pre-commit hook to save and restore any form of metadata associated with the working tree (eg: permissions/ownership, ACLS, etc). See contrib/hooks/setgitperms.perl for an example of how to do this.
-  pre-receive
+  这个钩子一般用于版本库的有效性检查，自动显示和前一个HEAD的差异，或者设置工作区属性。
 
-  This hook is invoked by git-receive-pack on the remote repository, which happens when a git push is done on a local repository. Just before starting to update refs on the remote repository, the pre-receive hook is invoked. Its exit status determines the success or failure of the update.
+* post-merge
 
-  This hook executes once for the receive operation. It takes no arguments, but for each ref to be updated it receives on standard input a line of the format:
+  该钩子脚本由 `git merge` 命令调用，当在本地版本库完成 `git pull` 操作后触发执行。该钩子脚本有一个参数，标识合并是否是一个压缩合并。该钩子脚本不会影响 `git merge` 命令的结果。如果合并因为冲突而失败，该脚本不会执行。
 
-  <old-value> SP <new-value> SP <ref-name> LF
+  该钩子脚本可以与 `pre-commit` 钩子脚本一起实现对工作区目录树属性（如权限/属主/ACL等）的保存和恢复。参见Git源码文件 `contrib/hooks/setgitperms.perl` 中的示例。
 
-  where <old-value> is the old object name stored in the ref, <new-value> is the new object name to be stored in the ref and <ref-name> is the full name of the ref. When creating a new ref, <old-value> is 40 0.
+* pre-receive
 
-  If the hook exits with non-zero status, none of the refs will be updated. If the hook exits with zero, updating of individual refs can still be prevented by the update hook.
+  该钩子脚本由远程版本库的 `git receive-pack` 命令调用，当从本地版本库完成一个推送之后。在远程服务器上开始批量更新引用之前，该钩子脚本被触发执行。该钩子脚本的退出状态决定了更新引用的成功与否。
 
-  Both standard output and standard error output are forwarded to git send-pack on the other end, so you can simply echo messages for the user.
-  update
+  该钩子脚本在接收（receive）操作中只执行一次。该脚本不通过命令行传递参数，而是通过标准输入进行传递。通过标准输入传递的每一行的语法格式为：
 
-  This hook is invoked by git-receive-pack on the remote repository, which happens when a git push is done on a local repository. Just before updating the ref on the remote repository, the update hook is invoked. Its exit status determines the success or failure of the ref update.
+  ::
 
-  The hook executes once for each ref to be updated, and takes three parameters:
+    <old-value> <new-value> <ref-name>
 
-      *
+  `<old-value>` 是引用更新前保存的老的对象ID， `<new-value>` 是引用即将更新到的对象ID， `<ref-name>` 是引用的全名。当创建一个新引用时， `<old-value>` 是 40 个 0。
 
-        the name of the ref being updated,
-      *
+  如果该钩子脚本以非零值退出，一个引用也不会更新。如果该脚本正常退出，每一个单独的引用的更新仍有可能被 `update` 钩子所阻止。
 
-        the old object name stored in the ref,
-      *
+  标准输出和标准错误都重定向到在另外一端执行的 `git send-pack` ，所以可以直接通过 `echo` 命令向用户传递信息。
 
-        and the new objectname to be stored in the ref.
+* update
 
-  A zero exit from the update hook allows the ref to be updated. Exiting with a non-zero status prevents git-receive-pack from updating that ref.
+  该钩子脚本由远程版本库的 `git receive-pack` 命令调用，当从本地版本库完成一个推送之后。在远程服务器上更新引用时，该钩子脚本被触发执行。该钩子脚本的退出状态决定了更新引用的成功与否。
 
-  This hook can be used to prevent forced update on certain refs by making sure that the object name is a commit object that is a descendant of the commit object named by the old object name. That is, to enforce a "fast-forward only" policy.
+  该钩子脚本在每一个引用更新的时候都会执行一次。该脚本有三个参数。
 
-  It could also be used to log the old..new status. However, it does not know the entire set of branches, so it would end up firing one e-mail per ref when used naively, though. The post-receive hook is more suited to that.
+  * 参数1：要更新的引用的名称。
+  * 参数2：引用中保存的旧对象名称。
+  * 参数3：将要保存到引用中的新对象名称。
 
-  Another use suggested on the mailing list is to use this hook to implement access control which is finer grained than the one based on filesystem group.
+  正常退出（返回0）允许引用的更新，而以非零值退出禁止 `git-receive-pack` 更新该引用。
 
-  Both standard output and standard error output are forwarded to git send-pack on the other end, so you can simply echo messages for the user.
+  该钩子脚本可以用于防止对某些引用的强制更新，因为该脚本可以通过检查新旧引用对象是否存在继承关系，从而提供更为细致的“非快进式推送”的授权。
 
-  The default update hook, when enabled—and with hooks.allowunannotated config option unset or set to false—prevents unannotated tags to be pushed.
-  post-receive
+  该钩子脚本也可以用于记录（如用邮件）引用变更历史 `old..new` 。然而因为该脚本不知道整个的分支，所以可能会导致每一个引用发送一封邮件。因此可能 `post-receive` 钩子脚本更适合。
 
-  This hook is invoked by git-receive-pack on the remote repository, which happens when a git push is done on a local repository. It executes on the remote repository once after all the refs have been updated.
+  另外，该脚本可以实现基于路径的授权。
+
+  标准输出和标准错误都重定向到在另外一端执行的 `git send-pack` ，所以可以直接通过 `echo` 命令向用户传递信息。
+
+  Git 提供的示例 update 脚本如果被启用，并将 hooks.allowunannotated 设置为未定义或者 false，会阻止向版本库推送轻量级里程碑。
+
+* post-receive
+
+  该钩子脚本由远程版本库的 `git receive-pack` 命令调用，当从本地版本库完成一个推送之后。当所有引用都更新完毕后，在远程服务器上该钩子脚本被触发执行。
 
   This hook executes once for the receive operation. It takes no arguments, but gets the same information as the pre-receive hook does on its standard input.
+  该钩子脚本在接收（receive）操作中只执行一次。该脚本不通过命令行传递参数，但是像 pre-receive 钩子脚本那样，通过标准输入以相同格式获取信息。
 
-  This hook does not affect the outcome of git-receive-pack, as it is called after the real work is done.
+  该钩子脚本不会影响 `git-receive-pack` 的结果，因为调用该脚本时工作已经完成。
 
-  This supersedes the post-update hook in that it gets both old and new values of all the refs in addition to their names.
+  该钩子脚本胜过 `post-update` 脚本之处在于可以获得所有引用的老的和新的值，以及引用的名称。
 
-  Both standard output and standard error output are forwarded to git send-pack on the other end, so you can simply echo messages for the user.
+  标准输出和标准错误都重定向到在另外一端执行的 `git send-pack` ，所以可以直接通过 `echo` 命令向用户传递信息。
 
-  The default post-receive hook is empty, but there is a sample script post-receive-email provided in the contrib/hooks directory in git distribution, which implements sending commit emails.
-  post-update
+  Git 默认提供的 `post-receive` 钩子为空，但是在 `contrib/hooks` 目录下有一个名为 `post-receive-email` 的示例脚本，实现了发送提交邮件的功能。
 
-  This hook is invoked by git-receive-pack on the remote repository, which happens when a git push is done on a local repository. It executes on the remote repository once after all the refs have been updated.
+* post-update
 
-  It takes a variable number of parameters, each of which is the name of ref that was actually updated.
+  该钩子脚本由远程版本库的 `git receive-pack` 命令调用，当从本地版本库完成一个推送之后。当所有引用都更新完毕后，在远程服务器上该钩子脚本被触发执行。
 
-  This hook is meant primarily for notification, and cannot affect the outcome of git-receive-pack.
+  该脚本接收不定长的参数，每一个参数实际上就是已成功更新的引用名。
 
-  The post-update hook can tell what are the heads that were pushed, but it does not know what their original and updated values are, so it is a poor place to do log old..new. The post-receive hook does get both original and updated values of the refs. You might consider it instead if you need them.
+  该钩子脚本不会影响 `git-receive-pack` 的结果，因此主要用于通知。
 
-  When enabled, the default post-update hook runs git update-server-info to keep the information used by dumb transports (e.g., HTTP) up-to-date. If you are publishing a git repository that is accessible via HTTP, you should probably enable this hook.
+  钩子脚本 `post-update` 虽然能够提供那些引用被更新了，但是该脚本不知道引用更新前后的对象SHA1哈希值，所以在这个脚本中不能记录形如 old..new 的引用变更范围。而钩子脚本 `post-receive` 知道更新引用前后的对象ID，因此更适合此种场合。
 
-  Both standard output and standard error output are forwarded to git send-pack on the other end, so you can simply echo messages for the user.
-  pre-auto-gc
+  Git 默认提供的 `post-update` 脚本会运行 `git update-server-info` 命令，以更新哑协议需要的索引文件。如果通过哑协议共享版本库，应该启用该钩子脚本。
 
-  This hook is invoked by git gc --auto. It takes no parameter, and exiting with non-zero status from this script causes the git gc --auto to abort.
-  post-rewrite
+  标准输出和标准错误都重定向到在另外一端执行的 `git send-pack` ，所以可以直接通过 `echo` 命令向用户传递信息。
 
-  This hook is invoked by commands that rewrite commits (git commit --amend, git-rebase; currently git-filter-branch does not call it!). Its first argument denotes the command it was invoked by: currently one of amend or rebase. Further command-dependent arguments may be passed in the future.
+* pre-auto-gc
 
-  The hook receives a list of the rewritten commits on stdin, in the format
+  该钩子脚本由 `git gc --auto` 命令调用，不带参数运行，如果以非零值退出会导致 `git gc --auto` 被中断。
 
-  <old-sha1> SP <new-sha1> [ SP <extra-info> ] LF
+* post-rewrite
 
-  The extra-info is again command-dependent. If it is empty, the preceding SP is also omitted. Currently, no commands pass any extra-info.
+  该钩子脚本由一些重写提交的命令调用，如 `git commit --amend` 、 `git rebase` ，而 git-filter-branch 当前尚未调用该钩子脚本。
 
-  The hook always runs after the automatic note copying (see "notes.rewrite.<command>" in linkgit:git-config.txt) has happened, and thus has access to these notes.
+  该脚本的第一个参数用于判断调用来自哪个命令，当前有 `amend` 和 `rebase` 两个取值，也可能将来会有其他更多命令相关参数传递。
 
-  The following command-specific comments apply:
+  该脚本通过标准输入接收一个重写提交列表，每一行输入的格式如下：
 
-  rebase
+  ::
 
-      For the squash and fixup operation, all commits that were squashed are listed as being rewritten to the squashed commit. This means that there will be several lines sharing the same new-sha1.
+    <old-sha1> <new-sha1> [<extra-info>]
 
-      The commits are guaranteed to be listed in the order that they were processed by rebase.
-
-  GIT
-
-  Part of the git(1) suite
-  Last updated 2011-02-10 16:08:27 CST
+  前两个是旧的和新的对象 SHA1 哈希值。而 `<extra-info>` 参数是和调用命令相关的。当前该参数为空。
 

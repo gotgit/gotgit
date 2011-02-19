@@ -1,57 +1,32 @@
 Git 模板
 ========
 
-TEMPLATE DIRECTORY
-------------------
+当执行 `git init` 或 `git clone` 创建版本库时，会自动在版本库中创建钩子脚本（.git/hooks/\*）、忽略文件（.git/info/exclude）及其他文件，实际上这些文件均拷贝自模板目录。
+
+Git 按照以下列顺序第一个确认的路径即为模板目录。
+
+* 如果执行 `git init` 或 `git clone` 命令时，提供 `--template=<DIR>` 参数，则使用指定的目录作为模板目录。
+* 由环境变量 `$GIT_TEMPLATE_DIR` 指定的模板目录。
+* 由 Git 配置变量 `init.templatedir` 指定的模板目录。
+* 缺省的模板目录，根据 Git 安装路径的不同可能位于不同的目录下。可以通过下面命令确认其实际位置：
+
+  ::
+
+    $ ( cd $(git --html-path)/../../git-core/templates; pwd )
+    /usr/share/git-core/templates
+
+如果在执行版本库初始化时传递了空的模板路径，则不会在版本库中创建钩子脚本等文件。
 
 ::
 
-  The template directory contains files and directories that will be copied to
-  the `$GIT_DIR` after it is created.
+  $ git init --template= no-template
+  Initialized empty Git repository in /path/to/my/workspace/no-template/.git/
 
-  The template directory used will (in order):
+执行下面的命令，查看新创建的版本库 `.git` 目录下的文件。
 
-   - The argument given with the `--template` option.
+::
 
-   - The contents of the `$GIT_TEMPLATE_DIR` environment variable.
+  $ ls -F no-template/.git/
+  HEAD     config   objects/ refs/
 
-   - The `init.templatedir` configuration variable.
-
-   - The default template directory: `/usr/share/git-core/templates`.
-
-  The default template directory includes some directory structure, some
-  suggested "exclude patterns", and copies of sample "hook" files.
-  The suggested patterns and hook files are all modifiable and extensible.
-
-
-  * "git init --template=" with blank "template" parameter linked files
-    under root directories to .git, which was a total nonsense.  Instead, it
-    means "I do not want to use anything from the template directory".
-
-   * "git init" can be told to look at init.templatedir configuration
-     variable (obviously that has to come from either /etc/gitconfig or
-     $HOME/.gitconfig).
-
-
-  init.templatedir::
-    Specify the directory from which templates will be copied.
-    (See the "TEMPLATE DIRECTORY" section of linkgit:git-init[1].)
-
-
-  git clone, git init both has --template=
-
-commit-template
------------------
-
-  - "git commit" can use "-t templatefile" option and commit.template
-    configuration variable to prime the commit message given to you in the
-    editor.
-
-commit.template::
-
-  Specify a file to use as the template for new commit messages.
-  "{tilde}/" is expanded to the value of `$HOME` and "{tilde}user/" to the
-  specified user's home directory.
-    
-
-
+可以看到不使用模板目录创建的版本库下面的文件少的可怜。可以通过对模板目录下的文件的定制，在版本库初始化时使用自定义的钩子脚本、忽略文件、属性文件等。这对于服务器或者对版本库操作有特殊要求的项目带来方便。
