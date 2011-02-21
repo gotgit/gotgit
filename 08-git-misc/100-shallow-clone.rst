@@ -1,115 +1,64 @@
 浅克隆
 ================
 
-Git 1.5.0:
+上一节介绍的稀疏检出，可以部分检出版本库中的文件，但是版本库本身仍然包含所有的文件和历史。如果只对一个大的版本库的最近的部分历史提交感兴趣，而不想克隆整个版本库，稀疏检出是解决不了的，而是要采用本节介绍的浅克隆。
 
-Shallow clones
--------------------
+实现版本库的浅克隆的非常简单，只需要在执行 `git clone` 或者 `git fetch` 操作时用 `--depth <depth>` 参数设定要获取的历史提交的深度（ `<depth>` 大于0），就会把源版本库分支上最近的 `<depth> + 1` 个历史提交作为新版本库的全部历史提交。
 
-::
+通过浅克隆方式克隆出来的版本库每一个提交的SHA1哈希值和源版本库的相同，包括提交的根节点也是如次，但是 Git 通过特殊的实现，使得浅克隆的根节点提交看起来没有父提交。正因为浅克隆的提交对象的SHA1哈希值和源版本库一致，所以浅克隆版本库可以执行 `git fetch` 或者 `git pull` 从源版本库获取新的提交。但是浅克隆版本库也存在着很多限制，如：
 
-   - There is a partial support for 'shallow' repositories that
-     keeps only recent history.  A 'shallow clone' is created by
-     specifying how deep that truncated history should be
-     (e.g. "git clone --depth 5 git://some.where/repo.git").
+* 不能从浅克隆版本库克隆出新的版本库。
+* 其他版本库不能从浅克隆获取提交。
+* 其他版本库不能推送提交到浅克隆版本库。
+* 不要从浅克隆版本库推送提交至其他版本库，除非确认推送的目标版本库包含浅克隆版本库中不完整提交的完整版本（全部历史版本），否则会造成目标版本库包含不完整的提交历史导致版本库无法操作。
+* 在浅克隆版本库中执行合并操作时，如果所合并的提交出现在浅克隆历史中，则可以顺利合并，否则会出现大量的冲突，就好像和无关的历史进行合并一样。
 
-     Currently a shallow repository has number of limitations:
+由于浅克隆包含上述限制，因此浅克隆一般用于对远程版本库的查看、研究，如果在浅克隆版本库中进行了提交，最好通过 `git format-patch` 命令导出为补丁文件再应用到远程版本库中。
 
-
-     - Cloning and fetching _from_ a shallow clone are not
-       supported (nor tested -- so they might work by accident but
-       they are not expected to).
-
-     - Pushing from nor into a shallow clone are not expected to
-       work.
-
-     - Merging inside a shallow repository would work as long as a
-       merge base is found in the recent history, but otherwise it
-       will be like merging unrelated histories and may result in
-       huge conflicts.
-
-     but this would be more than adequate for people who want to
-     look at near the tip of a big project with a deep history and
-     send patches in e-mail format.
-
-fetch-options.txt
--------------------
+下面的操作使用 `git clone` 命令创建一个浅克隆。注意：源版本库如果是本地版本库要使用 `file://` 协议，若直接接使用本地路径则不会实现浅克隆。
 
 ::
 
-  --depth=<depth>::
-    Deepen the history of a 'shallow' repository created by
-    `git clone` with `--depth=<depth>` option (see linkgit:git-clone[1])
-    by the specified number of commits. 
-    
+  $ git clone --depth 2 file:///path/to/repos/hello-world.git shallow1
 
-
-git-clone
------------
+然后进入到本地克隆目录中，会看到当前分支上只有 3 个提交。
 
 ::
 
-  --depth <depth>::
-    Create a 'shallow' clone with a history truncated to the
-    specified number of revisions.  A shallow repository has a
-    number of limitations (you cannot clone or fetch from
-    it, nor push from nor into it), but is adequate if you 
-    are only interested in the recent history of a large project
-    with a long history, and would want to send in fixes
-    as patches.
+  $ git log  --oneline
+  c4acab2 Translate for Chinese.
+  683448a Add I18N support.
+  d81896e Fix typo: -help to --help.
 
-
-technical/shallow.txt
--------------------------
+查看提交的根节点 `d81896e` ，则会看到该提交实际上也包含父提交。
 
 ::
 
-  Def.: Shallow commits do have parents, but not in the shallow
-  repo, and therefore grafts are introduced pretending that
-  these commits have no parents.
+  $ git cat-file -p HEAD^^
+  tree f9d7f6b0af6f3fffa74eb995f1d781d3c4876b25
+  parent 10765a7ef46981a73d578466669f6e17b73ac7e3
+  author user1 <user1@sun.ossxp.com> 1294069736 +0800
+  committer user2 <user2@moon.ossxp.com> 1294591238 +0800
 
-  The basic idea is to write the SHA1s of shallow commits into
-  $GIT_DIR/shallow, and handle its contents like the contents
-  of $GIT_DIR/info/grafts (with the difference that shallow
-  cannot contain parent information).
+  Fix typo: -help to --help.
 
-  This information is stored in a new file instead of grafts, or
-  even the config, since the user should not touch that file
-  at all (even throughout development of the shallow clone, it
-  was never manually edited!).
+而查看该提交的父提交，Git 会报错。
 
-  Each line contains exactly one SHA1. When read, a commit_graft
-  will be constructed, which has nr_parent < 0 to make it easier
-  to discern from user provided grafts.
+::
 
-  Since fsck-objects relies on the library to read the objects,
-  it honours shallow commits automatically.
+  $ git log 10765a7ef46981a73d578466669f6e17b73ac7e3
+  fatal: bad object 10765a7ef46981a73d578466669f6e17b73ac7e3
 
-  There are some unfinished ends of the whole shallow business:
+对于正常的 Git 版本库来说，如果对象库中一个提交丢失绝对是大问题，版本库不可能被正常使用。而浅克隆之所以看起来一切正常，是因为 Git 使用了类似嫁接（下一节即将介绍）的技术。
 
-  - maybe we have to force non-thin packs when fetching into a
-    shallow repo (ATM they are forced non-thin).
+在浅克隆版本库中存在一个文件 `.git/shallow` ，这个文件中罗列了应该被视为提交根节点的提交SHA1哈希值。查看这个文件会看到提交 `d81896e` 正在其中：
 
-  - A special handling of a shallow upstream is needed. At some
-    stage, upload-pack has to check if it sends a shallow commit,
-    and it should send that information early (or fail, if the
-    client does not support shallow repositories). There is no
-    support at all for this in this patch series.
+::
 
-  - Instead of locking $GIT_DIR/shallow at the start, just
-    the timestamp of it is noted, and when it comes to writing it,
-    a check is performed if the mtime is still the same, dying if
-    it is not.
+  $ cat .git/shallow 
+  b56bb510a947651e4717b356587945151ac32166
+  d81896e60673771ef1873b27a33f52df75f70515
+  e64f3a216d346669b85807ffcfb23a21f9c5c187
 
-  - It is unclear how "push into/from a shallow repo" should behave.
+列在 `.git/shallow` 文件中的提交会相应的构建出对应的嫁接提交（commit_graft，不包含父提交），就好像这些对象存在于 `.git/info/grafts` （下节讨论）中那样，当 Git 访问这些对象时实际访问的是嫁接后的对象，对于此例就实现了浅克隆的根提交节点。
 
-  - If you deepen a history, you'd want to get the tags of the
-    newly stored (but older!) commits. This does not work right now.
-
-  To make a shallow clone, you can call "git-clone --depth 20 repo".
-  The result contains only commit chains with a length of at most 20.
-  It also writes an appropriate $GIT_DIR/shallow.
-
-  You can deepen a shallow repository with "git-fetch --depth 20
-  repo branch", which will fetch branch from repo, but stop at depth
-  20, updating $GIT_DIR/shallow.
