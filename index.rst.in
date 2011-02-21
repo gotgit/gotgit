@@ -130,8 +130,8 @@
 .. include:: ./08-git-misc/080-templates.rst
 .. include:: ./08-git-misc/090-sparse-checkout.rst
 .. include:: ./08-git-misc/100-shallow-clone.rst
-.. include:: ./08-git-misc/110-git-notes.rst
-.. include:: ./08-git-misc/120-git-replace.rst
+.. include:: ./08-git-misc/110-graft-and-replace.rst
+.. include:: ./08-git-misc/120-git-notes.rst
 
 第 9 篇: 附录
 ##############
