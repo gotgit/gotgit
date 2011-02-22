@@ -1,376 +1,214 @@
-提交说明注解
+Git 评注
 ================
+
+从 1.6.6 版本开始，Git 提供了一个 `git notes` 命令可以为提交添加评注，实现在不改变提交对象的情况下在提交说明的后面附加评注。图41-1展示了 Github 利用 `git notes` 实现的在提交显示界面中显示评注（如果存在的话）和添加评注的界面。
+
+.. figure:: images/git-misc/github-notes.png
+   :scale: 70
+
+   图41-1：Github 上显示和添加评注
+
+评注的奥秘
+----------
+
+实际上 Git 评注可以针对任何对象，而且评注的内容也不限于文字，因为评注的内容是保存在 Git 对象库中的一个 blob 对象中。不过评注目前最主要的应用还是在提交说明后添加评注。
+
+在第2篇“第11.4.6节二分查找”中用到的 `gitdemo-commit-tree` 版本库实际上就包含了提交评注，只不过之前尚未将评注获取到本地版本库而已。如果工作区中的 `gitdemo-commit-tree` 版本库已经不存在，可以使用下面的命令从 Github 上再克隆一个：
 
 ::
 
-  git-notes(1)
-  ============
+  $ git clone -q git://github.com/ossxp-com/gitdemo-commit-tree.git 
+  $ cd gitdemo-commit-tree
 
-  NAME
-  ----
-  git-notes - Add or inspect object notes
+执行下面的命令，查看最后一次提交的提交说明：
 
-  SYNOPSIS
-  --------
-  [verse]
-  'git notes' [list [<object>]]
-  'git notes' add [-f] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
-  'git notes' copy [-f] ( --stdin | <from-object> <to-object> )
-  'git notes' append [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
-  'git notes' edit [<object>]
-  'git notes' show [<object>]
-  'git notes' merge [-v | -q] [-s <strategy> ] <notes_ref>
-  'git notes' merge --commit [-v | -q]
-  'git notes' merge --abort [-v | -q]
-  'git notes' remove [<object>]
-  'git notes' prune [-n | -v]
-  'git notes' get-ref
+::
 
+  $ git log -1
+  commit 6652a0dce6a5067732c00ef0a220810a7230655e
+  Author: Jiang Xin <jiangxin@ossxp.com>
+  Date:   Thu Dec 9 16:07:11 2010 +0800
 
-  DESCRIPTION
-  -----------
-  Adds, removes, or reads notes attached to objects, without touching
-  the objects themselves.
+      Add Images for git treeview.
+      
+      Signed-off-by: Jiang Xin <jiangxin@ossxp.com>
 
-  By default, notes are saved to and read from `refs/notes/commits`, but
-  this default can be overridden.  See the OPTIONS, CONFIGURATION, and
-  ENVIRONMENT sections below.  If this ref does not exist, it will be
-  quietly created when it is first needed to store a note.
+下面为默认的 origin 远程版本库再添加一个引用获取表达式，以便在执行 `git fetch` 命令时能够同步评注相关的引用。命令如下：
 
-  A typical use of notes is to supplement a commit message without
-  changing the commit itself. Notes can be shown by 'git log' along with
-  the original commit message. To distinguish these notes from the
-  message stored in the commit object, the notes are indented like the
-  message, after an unindented line saying "Notes (<refname>):" (or
-  "Notes:" for `refs/notes/commits`).
+::
 
-  To change which notes are shown by 'git log', see the
-  "notes.displayRef" configuration in linkgit:git-log[1].
+  $ git config --add remote.origin.fetch refs/notes/*:refs/notes/*
 
-  See the "notes.rewrite.<command>" configuration for a way to carry
-  notes across commands that rewrite commits.
+执行 `git fetch` 会获取到一个新的引用 `refs/notes/commits` ，如下：
 
+::
 
-  SUBCOMMANDS
-  -----------
+  $ git fetch
+  remote: Counting objects: 6, done.
+  remote: Compressing objects: 100% (5/5), done.
+  remote: Total 6 (delta 0), reused 0 (delta 0)
+  Unpacking objects: 100% (6/6), done.
+  From git://github.com/ossxp-com/gitdemo-commit-tree
+   * [new branch]      refs/notes/commits -> refs/notes/commits
 
-  list::
-    List the notes object for a given object. If no object is
-    given, show a list of all note objects and the objects they
-    annotate (in the format "<note object> <annotated object>").
-    This is the default subcommand if no subcommand is given.
+当获取到新的评注相关的引用之后，再来查看最后一次提交的提交说明，会看到下面的命令输出中提交说明的最后两行就是附加的提交评注。
 
-  add::
-    Add notes for a given object (defaults to HEAD). Abort if the
-    object already has notes (use `-f` to overwrite an
-    existing note).
+::
 
-  copy::
-    Copy the notes for the first object onto the second object.
-    Abort if the second object already has notes, or if the first
-    object has none (use -f to overwrite existing notes to the
-    second object). This subcommand is equivalent to:
-    `git notes add [-f] -C $(git notes list <from-object>) <to-object>`
-  +
-  In `\--stdin` mode, take lines in the format
-  +
-  ----------
-  <from-object> SP <to-object> [ SP <rest> ] LF
-  ----------
-  +
-  on standard input, and copy the notes from each <from-object> to its
-  corresponding <to-object>.  (The optional `<rest>` is ignored so that
-  the command can read the input given to the `post-rewrite` hook.)
+  $ git log -1
+  commit 6652a0dce6a5067732c00ef0a220810a7230655e
+  Author: Jiang Xin <jiangxin@ossxp.com>
+  Date:   Thu Dec 9 16:07:11 2010 +0800
 
-  append::
-    Append to the notes of an existing object (defaults to HEAD).
-    Creates a new notes object if needed.
-
-  edit::
-    Edit the notes for a given object (defaults to HEAD).
-
-  show::
-    Show the notes for a given object (defaults to HEAD).
-
-  merge::
-    Merge the given notes ref into the current notes ref.
-    This will try to merge the changes made by the given
-    notes ref (called "remote") since the merge-base (if
-    any) into the current notes ref (called "local").
-  +
-  If conflicts arise and a strategy for automatically resolving
-  conflicting notes (see the -s/--strategy option) is not given,
-  the "manual" resolver is used. This resolver checks out the
-  conflicting notes in a special worktree (`.git/NOTES_MERGE_WORKTREE`),
-  and instructs the user to manually resolve the conflicts there.
-  When done, the user can either finalize the merge with
-  'git notes merge --commit', or abort the merge with
-  'git notes merge --abort'.
-
-  remove::
-    Remove the notes for a given object (defaults to HEAD).
-    This is equivalent to specifying an empty note message to
-    the `edit` subcommand.
-
-  prune::
-    Remove all notes for non-existing/unreachable objects.
-
-  get-ref::
-    Print the current notes ref. This provides an easy way to
-    retrieve the current notes ref (e.g. from scripts).
-
-  OPTIONS
-  -------
-  -f::
-  --force::
-    When adding notes to an object that already has notes,
-    overwrite the existing notes (instead of aborting).
-
-  -m <msg>::
-  --message=<msg>::
-    Use the given note message (instead of prompting).
-    If multiple `-m` options are given, their values
-    are concatenated as separate paragraphs.
-    Lines starting with `#` and empty lines other than a
-    single line between paragraphs will be stripped out.
-
-  -F <file>::
-  --file=<file>::
-    Take the note message from the given file.  Use '-' to
-    read the note message from the standard input.
-    Lines starting with `#` and empty lines other than a
-    single line between paragraphs will be stripped out.
-
-  -C <object>::
-  --reuse-message=<object>::
-    Take the note message from the given blob object (for
-    example, another note).
-
-  -c <object>::
-  --reedit-message=<object>::
-    Like '-C', but with '-c' the editor is invoked, so that
-    the user can further edit the note message.
-
-  --ref <ref>::
-    Manipulate the notes tree in <ref>.  This overrides
-    'GIT_NOTES_REF' and the "core.notesRef" configuration.  The ref
-    is taken to be in `refs/notes/` if it is not qualified.
-
-  -n::
-  --dry-run::
-    Do not remove anything; just report the object names whose notes
-    would be removed.
-
-  -s <strategy>::
-  --strategy=<strategy>::
-    When merging notes, resolve notes conflicts using the given
-    strategy. The following strategies are recognized: "manual"
-    (default), "ours", "theirs", "union" and "cat_sort_uniq".
-    See the "NOTES MERGE STRATEGIES" section below for more
-    information on each notes merge strategy.
-
-  --commit::
-    Finalize an in-progress 'git notes merge'. Use this option
-    when you have resolved the conflicts that 'git notes merge'
-    stored in .git/NOTES_MERGE_WORKTREE. This amends the partial
-    merge commit created by 'git notes merge' (stored in
-    .git/NOTES_MERGE_PARTIAL) by adding the notes in
-    .git/NOTES_MERGE_WORKTREE. The notes ref stored in the
-    .git/NOTES_MERGE_REF symref is updated to the resulting commit.
-
-  --abort::
-    Abort/reset a in-progress 'git notes merge', i.e. a notes merge
-    with conflicts. This simply removes all files related to the
-    notes merge.
-
-  -q::
-  --quiet::
-    When merging notes, operate quietly.
-
-  -v::
-  --verbose::
-    When merging notes, be more verbose.
-    When pruning notes, report all object names whose notes are
-    removed.
-
-
-  DISCUSSION
-  ----------
-
-  Commit notes are blobs containing extra information about an object
-  (usually information to supplement a commit's message).  These blobs
-  are taken from notes refs.  A notes ref is usually a branch which
-  contains "files" whose paths are the object names for the objects
-  they describe, with some directory separators included for performance
-  reasons footnote:[Permitted pathnames have the form
-  'ab'`/`'cd'`/`'ef'`/`'...'`/`'abcdef...': a sequence of directory
-  names of two hexadecimal digits each followed by a filename with the
-  rest of the object ID.].
-
-  Every notes change creates a new commit at the specified notes ref.
-  You can therefore inspect the history of the notes by invoking, e.g.,
-  `git log -p notes/commits`.  Currently the commit message only records
-  which operation triggered the update, and the commit authorship is
-  determined according to the usual rules (see linkgit:git-commit[1]).
-  These details may change in the future.
-
-  It is also permitted for a notes ref to point directly to a tree
-  object, in which case the history of the notes can be read with
-  `git log -p -g <refname>`.
-
-
-  NOTES MERGE STRATEGIES
-  ----------------------
-
-  The default notes merge strategy is "manual", which checks out
-  conflicting notes in a special work tree for resolving notes conflicts
-  (`.git/NOTES_MERGE_WORKTREE`), and instructs the user to resolve the
-  conflicts in that work tree.
-  When done, the user can either finalize the merge with
-  'git notes merge --commit', or abort the merge with
-  'git notes merge --abort'.
-
-  "ours" automatically resolves conflicting notes in favor of the local
-  version (i.e. the current notes ref).
-
-  "theirs" automatically resolves notes conflicts in favor of the remote
-  version (i.e. the given notes ref being merged into the current notes
-  ref).
-
-  "union" automatically resolves notes conflicts by concatenating the
-  local and remote versions.
-
-  "cat_sort_uniq" is similar to "union", but in addition to concatenating
-  the local and remote versions, this strategy also sorts the resulting
-  lines, and removes duplicate lines from the result. This is equivalent
-  to applying the "cat | sort | uniq" shell pipeline to the local and
-  remote versions. This strategy is useful if the notes follow a line-based
-  format where one wants to avoid duplicated lines in the merge result.
-  Note that if either the local or remote version contain duplicate lines
-  prior to the merge, these will also be removed by this notes merge
-  strategy.
-
-
-  EXAMPLES
-  --------
-
-  You can use notes to add annotations with information that was not
-  available at the time a commit was written.
-
-  ------------
-  $ git notes add -m 'Tested-by: Johannes Sixt <j6t@kdbg.org>' 72a144e2
-  $ git show -s 72a144e
-  [...]
-      Signed-off-by: Junio C Hamano <gitster@pobox.com>
+      Add Images for git treeview.
+      
+      Signed-off-by: Jiang Xin <jiangxin@ossxp.com>
 
   Notes:
-      Tested-by: Johannes Sixt <j6t@kdbg.org>
-  ------------
+      Bisect test: Bad commit, for doc/B.txt exists.
 
-  In principle, a note is a regular Git blob, and any kind of
-  (non-)format is accepted.  You can binary-safely create notes from
-  arbitrary files using 'git hash-object':
+附加的提交评注来自于哪里呢？显然应该和刚刚获取到的引用相关。查看一下获取到的最新引用，会发现引用 `refs/notes/commits` 指向的是一个提交对象。
 
-  ------------
-  $ cc *.c
-  $ blob=$(git hash-object -w a.out)
-  $ git notes --ref=built add -C "$blob" HEAD
-  ------------
+::
 
-  Of course, it doesn't make much sense to display non-text-format notes
-  with 'git log', so if you use such notes, you'll probably need to write
-  some special-purpose tools to do something useful with them.
+  $ git show-ref refs/notes/commits
+  6f01cdc59004892741119318ceb2330d6dc0cef1 refs/notes/commits
+  $ git cat-file -t refs/notes/commits
+  commit
 
+既然新获取的评注引用是一个提交对象，那么就应该能够查看评注引用的提交日志：
 
-  CONFIGURATION
-  -------------
+::
 
-  core.notesRef::
-    Notes ref to read and manipulate instead of
-    `refs/notes/commits`.  Must be an unabbreviated ref name.
-    This setting can be overridden through the environment and
-    command line.
+  $ git log --stat refs/notes/commits
+  commit 6f01cdc59004892741119318ceb2330d6dc0cef1
+  Author: Jiang Xin <jiangxin@ossxp.com>
+  Date:   Tue Feb 22 09:32:10 2011 +0800
 
-  notes.displayRef::
-    Which ref (or refs, if a glob or specified more than once), in
-    addition to the default set by `core.notesRef` or
-    'GIT_NOTES_REF', to read notes from when showing commit
-    messages with the 'git log' family of commands.
-    This setting can be overridden on the command line or by the
-    'GIT_NOTES_DISPLAY_REF' environment variable.
-    See linkgit:git-log[1].
+      Notes added by 'git notes add'
 
-  notes.rewrite.<command>::
-    When rewriting commits with <command> (currently `amend` or
-    `rebase`), if this variable is `false`, git will not copy
-    notes from the original to the rewritten commit.  Defaults to
-    `true`.  See also "`notes.rewriteRef`" below.
-  +
-  This setting can be overridden by the 'GIT_NOTES_REWRITE_REF'
-  environment variable.
+   6652a0dce6a5067732c00ef0a220810a7230655e |    1 +
+   1 files changed, 1 insertions(+), 0 deletions(-)
 
-  notes.rewriteMode::
-    When copying notes during a rewrite, what to do if the target
-    commit already has a note.  Must be one of `overwrite`,
-    `concatenate`, and `ignore`.  Defaults to `concatenate`.
-  +
-  This setting can be overridden with the `GIT_NOTES_REWRITE_MODE`
-  environment variable.
+  commit 9771e1076d2218922acc9800f23d5e78d5894a9f
+  Author: Jiang Xin <jiangxin@ossxp.com>
+  Date:   Tue Feb 22 09:31:54 2011 +0800
 
-  notes.rewriteRef::
-    When copying notes during a rewrite, specifies the (fully
-    qualified) ref whose notes should be copied.  May be a glob,
-    in which case notes in all matching refs will be copied.  You
-    may also specify this configuration several times.
-  +
-  Does not have a default value; you must configure this variable to
-  enable note rewriting.
-  +
-  Can be overridden with the 'GIT_NOTES_REWRITE_REF' environment variable.
+      Notes added by 'git notes add'
 
+   e80aa7481beda65ae00e35afc4bc4b171f9b0ebf |    1 +
+   1 files changed, 1 insertions(+), 0 deletions(-)
 
-  ENVIRONMENT
-  -----------
+从上面的评注引用的提交日志可以看出，存在两次提交，并且从提交说明可以看出是使用 `git notes add` 命令添加的。至于每次提交添加的文件却很让人困惑，所添加文件的文件名居然是40位的哈希值。您当然可以通过 `git checkout -b` 命令检出该引用来研究其中所包含的文件，不过也可以运用我们已经学习到的 Git 命令直接对其进行研究。
 
-  'GIT_NOTES_REF'::
-    Which ref to manipulate notes from, instead of `refs/notes/commits`.
-    This overrides the `core.notesRef` setting.
+* 用 `git show` 命令显示目录树。
 
-  'GIT_NOTES_DISPLAY_REF'::
-    Colon-delimited list of refs or globs indicating which refs,
-    in addition to the default from `core.notesRef` or
-    'GIT_NOTES_REF', to read notes from when showing commit
-    messages.
-    This overrides the `notes.displayRef` setting.
-  +
-  A warning will be issued for refs that do not exist, but a glob that
-  does not match any refs is silently ignored.
+  ::
 
-  'GIT_NOTES_REWRITE_MODE'::
-    When copying notes during a rewrite, what to do if the target
-    commit already has a note.
-    Must be one of `overwrite`, `concatenate`, and `ignore`.
-    This overrides the `core.rewriteMode` setting.
+    $ git show -p refs/notes/commits^{tree}
+    tree refs/notes/commits^{tree}
 
-  'GIT_NOTES_REWRITE_REF'::
-    When rewriting commits, which notes to copy from the original
-    to the rewritten commit.  Must be a colon-delimited list of
-    refs or globs.
-  +
-  If not set in the environment, the list of notes to copy depends
-  on the `notes.rewrite.<command>` and `notes.rewriteRef` settings.
+    6652a0dce6a5067732c00ef0a220810a7230655e
+    e80aa7481beda65ae00e35afc4bc4b171f9b0ebf
 
+* 用 `git ls-tree` 命令查看文件大小及对应的 blob 对象的 SHA1 哈希值。
 
-  Author
-  ------
-  Written by Johannes Schindelin <johannes.schindelin@gmx.de> and
-  Johan Herland <johan@herland.net>
+  ::
 
-  Documentation
-  -------------
-  Documentation by Johannes Schindelin and Johan Herland
+    $ git ls-tree -l refs/notes/commits
+    100644 blob 80b1d249069959ce5d83d52ef7bd0507f774c2b0      47    6652a0dce6a5067732c00ef0a220810a7230655e
+    100644 blob e894f2164e77abf08d95d9bdad4cd51d00b47845      56    e80aa7481beda65ae00e35afc4bc4b171f9b0ebf
 
-  GIT
-  ---
-  Part of the linkgit:git[7] suite
+* 文件名既然是一个40位的SHA1哈希值，那么文件名一定有意义，通过下面的命令可以看到文件名包含的40位哈希值实际对应于一个提交。
 
+  ::
+
+    $ git cat-file -p 6652a0dce6a5067732c00ef0a220810a7230655e
+    tree e33be9e8e7ca5f887c7d5601054f2f510e6744b8
+    parent 81993234fc12a325d303eccea20f6fd629412712
+    author Jiang Xin <jiangxin@ossxp.com> 1291882031 +0800
+    committer Jiang Xin <jiangxin@ossxp.com> 1291882892 +0800
+
+    Add Images for git treeview.
+
+    Signed-off-by: Jiang Xin <jiangxin@ossxp.com>
+
+* 用 `git cat-file` 命令查看该文件的内容，可以看到其内容就是附加在相应提交上的评注。
+
+  ::
+
+    $ git cat-file -p refs/notes/commits:6652a0dce6a5067732c00ef0a220810a7230655e
+    Bisect test: Bad commit, for doc/B.txt exists.
+
+综上所述，评注记录在一个 blob 对象中，并且以所评注对象的SHA1哈希值命名。因为对象SHA1哈希值的唯一性，所以可以将评注都放在同一个文件系统下而不会发生覆盖。针对包含评注的特殊的文件系统的更改被提交到一个特殊的引用 `refs/notes/commits` 当中。
+
+评注相关命令
+-------------
+
+Git 提供了 `git notes` 命令，对评注进行管理。如果执行 `git notes list` 或者像下面这样不带任何参数进行调用，会显示和上面 `git ls-tree` 类似的输出：
+
+::
+
+  $ git notes
+  80b1d249069959ce5d83d52ef7bd0507f774c2b0 6652a0dce6a5067732c00ef0a220810a7230655e
+  e894f2164e77abf08d95d9bdad4cd51d00b47845 e80aa7481beda65ae00e35afc4bc4b171f9b0ebf
+
+右边的一列是要评注的提交对象，而左边一列是附加在对应提交上的包含评注内容的 blob 对象。显示附加在某个提交上的评注可以使用 `git notes show` 命令。如下：
+
+::
+
+  $ git notes show G^0
+  Bisect test: Good commit, for doc/B.txt does not exist.
+
+注意上面的命令中使用 `G^0` 而非 `G` ，是因为 `G` 是一个里程碑对象，而评注是建立在里程碑对象所指向的提交对象上。
+
+添加评注可以使用下面的 `git notes add` 和 `git notes append` 子命令：
+
+::
+
+  用法1：git notes add [-f] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
+  用法2：git notes append [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
+
+用法1是添加评注，而用法2是在已有评注后面追加。两者的命令行格式和 `git commit` 非常类似，可以用类似写提交说明的方法写提交评注。如果省略最后一个 `<object>` 参数，则意味着向头指针 HEAD 添加评注。子命令 `git notes add` 中的参数 `-f` 意味着强制添加，会覆盖对象已有的评注。
+
+使用 `git notes copy` 子命令可以将一个对象的评注拷贝到另外一个对象上。
+
+::
+
+  用法：git notes copy [-f] ( --stdin | <from-object> <to-object> )
+
+修改评注可以使用下面的 `git notes edit` 子命令：
+
+::
+
+  用法：git notes edit [<object>]
+
+删除评注可以使用的 `git notes remote` 子命令，而 `git notes prune` 则可以清除已经不存在的对象上的评注。用法如下：
+
+::
+
+  用法1：git notes remove [<object>]
+  用法2：git notes prune [-n | -v]
+
+评注以文件形式保存在特殊的引用中，如果该引用被共享并且出现多人撰写评注时，有可能出现该引用的合并冲突。可以用 `git notes merge` 命令来解决合并冲突。评注引用也可以使用其他的引用名称，合并其他的评注引用也可以使用本命令。下面是 `git notes merge` 命令的用法：
+
+::
+
+  用法1：git notes merge [-v | -q] [-s <strategy> ] <notes_ref>
+  用法2：git notes merge --commit [-v | -q]
+  用法3：git notes merge --abort [-v | -q]
+
+评注相关配置
+------------
+
+默认提交评注保存在引用 `refs/notes/commits` 中，这个默认的设置可以通过 `core.notesRef` 配置变量修改。如须更改，要在 `core.notesRef` 配置变量中使用引用的全称而不能使用缩写。
+
+在执行 `git log` 命令显示提交评注的时候，如果配置了 `notes.displayRef` 配置变量（可以使用通配符，并且可以配置多个），则在显示提交评注时，除了会参考 `core.notesRef` 设定的引用（或默认的 `refs/notes/commits` 引用）外，还会显示 `notes.displayRef` 指向的引用（一个或多个）。
+
+配置变量 `notes.rewriteRef` 用于配置哪个/哪些引用中的提交评注会随着提交的修改而复制到新的提交之上。这个配置变量可以使用多次，或者使用通配符，但该配置变量没有缺省值，因此为了使得提交评注能够随着提交的修改（修补提交、变基等）继续保持，必须对该配置变量进行设定。如：
+
+::
+
+  $ git config --global notes.rewriteRef refs/notes/*
+
+还有 `notes.rewrite.amend` 和 `notes.rewrite.rebase` 配置变量可以分别对两种提交修改模式（amend 和 rebase）是否启用评注复制进行设置，默认启用。配置变量 `notes.rewriteMode` 默认设置为 `concatenate` ，即提交评注复制到修改后的提交时，如果已有评注则对评注进行合并操作。
