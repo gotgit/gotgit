@@ -1027,6 +1027,14 @@
 	TEXT="以下 helper 程序，当Git访问的远程版本库使用的是Git自身不支持的协议，则调用相应的Helper程序协助完成访问。">
 <font NAME="SansSerif" SIZE="14"/>
 </node>
+<node COLOR="#990000" ID="ID_1955796981" 
+	TEXT="git remote-ext">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
+<node COLOR="#990000" ID="ID_234746418" 
+	TEXT="git remote-fd">
+<font NAME="SansSerif" SIZE="14"/>
+</node>
 <node COLOR="#990000" FOLDED="true" ID="ID_1033434040" 
 	TEXT="git-remote-ftp">
 <edge STYLE="bezier" WIDTH="thin"/>
