@@ -303,15 +303,6 @@
 	TEXT="对象库操作">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="Serif" SIZE="18"/>
-<node COLOR="#00b439" ID="ID_818562917" 
-	TEXT="git-cat-file">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
-<icon BUILTIN="bookmark"/>
-<icon BUILTIN="bookmark"/>
-<icon BUILTIN="bookmark"/>
-<icon BUILTIN="bookmark"/>
-</node>
 <node COLOR="#00b439" ID="ID_981344143" 
 	TEXT="git-commit-tree">
 <edge STYLE="bezier" WIDTH="thin"/>
@@ -988,7 +979,7 @@
 </node>
 </node>
 <node COLOR="#0033ff" FOLDED="true" ID="ID_1379744010" POSITION="right" 
-	TEXT="服务相关">
+	TEXT="协议相关">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="Serif" SIZE="18"/>
 <node COLOR="#00b439" ID="ID_492081894" 
@@ -1073,6 +1064,51 @@
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="14"/>
 </node>
+</node>
+</node>
+<node COLOR="#0033ff" FOLDED="true" ID="ID_240081027" POSITION="right" 
+	TEXT="版本库转换和交互">
+<edge STYLE="sharp_bezier" WIDTH="8"/>
+<font NAME="Serif" SIZE="18"/>
+<node COLOR="#00b439" ID="ID_526393101" 
+	TEXT="git-archimport">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" ID="ID_573036575" 
+	TEXT="git-bundle：版本打包和解包（用于无连接两个版本库的文件传递）。版本库可以从打包文件 fetch 和 pull。">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" ID="ID_1216693980" 
+	TEXT="git-cvsexportcommit">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" ID="ID_1466663196" 
+	TEXT="git-cvsimport">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" ID="ID_1556978662" 
+	TEXT="git-cvsserver">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" ID="ID_1133380841" 
+	TEXT="git-fast-export">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" ID="ID_1664882062" 
+	TEXT="git-fast-import">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
+</node>
+<node COLOR="#00b439" ID="ID_320173644" 
+	TEXT="git-svn">
+<edge STYLE="bezier" WIDTH="thin"/>
+<font NAME="Serif" SIZE="16"/>
 </node>
 </node>
 <node COLOR="#0033ff" FOLDED="true" ID="ID_1644254501" POSITION="right" 
@@ -1185,11 +1221,6 @@
 <edge STYLE="bezier" WIDTH="thin"/>
 <font NAME="Serif" SIZE="16"/>
 </node>
-</node>
-<node COLOR="#0033ff" FOLDED="true" ID="ID_1030636757" POSITION="right" 
-	TEXT="脚本扩展及辅助">
-<edge STYLE="sharp_bezier" WIDTH="8"/>
-<font NAME="Serif" SIZE="18"/>
 <node COLOR="#00b439" ID="ID_273487450" 
 	TEXT="git-parse-remote：包含操作远程版本库的函数">
 <edge STYLE="bezier" WIDTH="thin"/>
@@ -1216,55 +1247,10 @@
 <font NAME="Serif" SIZE="16"/>
 </node>
 </node>
-<node COLOR="#0033ff" FOLDED="true" ID="ID_240081027" POSITION="right" 
-	TEXT="其他版本控制系统转换和交互">
-<edge STYLE="sharp_bezier" WIDTH="8"/>
-<font NAME="Serif" SIZE="18"/>
-<node COLOR="#00b439" ID="ID_526393101" 
-	TEXT="git-archimport">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
-</node>
-<node COLOR="#00b439" ID="ID_1216693980" 
-	TEXT="git-cvsexportcommit">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
-</node>
-<node COLOR="#00b439" ID="ID_1466663196" 
-	TEXT="git-cvsimport">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
-</node>
-<node COLOR="#00b439" ID="ID_1556978662" 
-	TEXT="git-cvsserver">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
-</node>
-<node COLOR="#00b439" ID="ID_1133380841" 
-	TEXT="git-fast-export">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
-</node>
-<node COLOR="#00b439" ID="ID_1664882062" 
-	TEXT="git-fast-import">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
-</node>
-<node COLOR="#00b439" ID="ID_320173644" 
-	TEXT="git-svn">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
-</node>
-</node>
 <node COLOR="#0033ff" FOLDED="true" ID="ID_587416680" POSITION="right" 
 	TEXT="其他">
 <edge STYLE="sharp_bezier" WIDTH="8"/>
 <font NAME="Serif" SIZE="18"/>
-<node COLOR="#00b439" ID="ID_573036575" 
-	TEXT="git-bundle：版本打包和解包（用于无连接两个版本库的文件传递）。版本库可以从打包文件 fetch 和 pull。">
-<edge STYLE="bezier" WIDTH="thin"/>
-<font NAME="Serif" SIZE="16"/>
-</node>
 <node COLOR="#00b439" ID="ID_1927688069" 
 	TEXT="git-check-attr： 显示某个文件是否设置了属性">
 <edge STYLE="bezier" WIDTH="thin"/>
