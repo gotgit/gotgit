@@ -110,6 +110,7 @@ Topgit 的可执行命令只有一个 `tg` 。其官方参考手册见: http://r
 
 ::
 
+  $ prefix=/usr make
   $ sudo prefix=/usr make install
 
 作者对 Topgit 做了一些增强和改进，在后面的章节予以介绍。如果想安装改进的版本，需要预先安装 quilt 补丁管理工具。然后进行如下操作。
@@ -119,7 +120,7 @@ Topgit 的可执行命令只有一个 `tg` 。其官方参考手册见: http://r
   $ git clone git://github.com/ossxp-com/topgit.git
   $ cd topgit
   $ QUILT_PATCHES=debian/patches quilt push -a
-  $ make
+  $ prefix=/usr make
   $ sudo prefix=/usr make install
 
 如果用的是 Ubuntu 或者 Debian Linux 操作系统，还可以这么安装。
