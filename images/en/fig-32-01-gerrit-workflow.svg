@@ -1,0 +1,2380 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="45cm"
+   height="57cm"
+   viewBox="180 -40 893 1136"
+   id="svg3020"
+   version="1.1"
+   inkscape:version="0.48.0 r9654"
+   sodipodi:docname="fig-32-01-gerrit-workflow.dia">
+  <metadata
+     id="metadata3950">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs3948" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1280"
+     inkscape:window-height="752"
+     id="namedview3946"
+     showgrid="false"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:zoom="0.73382521"
+     inkscape:cx="579.87518"
+     inkscape:cy="1782.1471"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg3020" />
+  <g
+     id="g3022">
+    <path
+       style="fill: #688037"
+       d="M 592.167 402 L 690.833,402 C 704.456,402 715.5,425.337 715.5,454.125 C 715.5,482.913 704.456,506.25 690.833,506.25 L 592.167,506.25 C 578.544,506.25 567.5,482.913 567.5,454.125 C 567.5,425.337 578.544,402 592.167,402z"
+       id="path3024" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       d="M 592.167 402 L 690.833,402 C 704.456,402 715.5,425.337 715.5,454.125 C 715.5,482.913 704.456,506.25 690.833,506.25 L 592.167,506.25 C 578.544,506.25 567.5,482.913 567.5,454.125 C 567.5,425.337 578.544,402 592.167,402"
+       id="path3026" />
+    <text
+       style="fill: #000000;text-anchor:middle;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+       x="641.5"
+       y="458.125"
+       id="text3028">
+      <tspan
+         x="641.5"
+         y="458.125"
+         id="tspan3030" />
+    </text>
+  </g>
+  <g
+     id="g3032">
+    <path
+       style="fill: #507baf"
+       d="M 239 -17 L 311,-17 C 347,-17 347,-17 347,42.75 L 347,162.25 C 347,222 347,222 311,222 L 239,222 C 203,222 203,222 203,162.25 L 203,42.75 C 203,-17 203,-17 239,-17z"
+       id="path3034" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #507baf"
+       d="M 239 -17 L 311,-17 C 347,-17 347,-17 347,42.75 L 347,162.25 C 347,222 347,222 311,222 L 239,222 C 203,222 203,222 203,162.25 L 203,42.75 C 203,-17 203,-17 239,-17"
+       id="path3036" />
+    <text
+       style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+       x="220.2"
+       y="5.65"
+       id="text3038">
+      <tspan
+         x="220.2"
+         y="5.65"
+         id="tspan3040" />
+    </text>
+  </g>
+  <rect
+     id="rect3044"
+     height="54"
+     width="108.4"
+     y="14"
+     x="222.37601"
+     style="fill:#afc2da" />
+  <rect
+     id="rect3046"
+     height="54"
+     width="108.4"
+     y="14"
+     x="222.37601"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text3048"
+     y="28.949276"
+     x="276.57599"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan3050"
+       y="28.949276"
+       x="276.57599">代码作者通过</tspan>
+    <tspan
+       id="tspan3052"
+       y="44.949276"
+       x="276.57599">Git 或 repo</tspan>
+    <tspan
+       id="tspan3054"
+       y="60.949276"
+       x="276.57599">设置本地工作环境</tspan>
+  </text>
+  <rect
+     id="rect3058"
+     height="54"
+     width="108.4"
+     y="128.7"
+     x="219.7"
+     style="fill:#afc2da" />
+  <rect
+     id="rect3060"
+     height="54"
+     width="108.4"
+     y="128.7"
+     x="219.7"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text3062"
+     y="151.64925"
+     x="273.89999"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan3064"
+       y="151.64925"
+       x="273.89999">代码作者开发</tspan>
+    <tspan
+       id="tspan3066"
+       y="167.64925"
+       x="273.89999">代码，提交修改</tspan>
+  </text>
+  <g
+     id="g3068">
+    <path
+       style="fill: #afc2da"
+       d="M 515.35 0 L 586.85,0 C 597.575,16.9 601.15,25.35 601.15,42.25 C 601.15,59.15 597.575,67.6 586.85,84.5 L 515.35,84.5 C 504.625,67.6 501.05,59.15 501.05,42.25 C 501.05,25.35 504.625,16.9 515.35,0z"
+       id="path3070" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       d="M 515.35 0 L 586.85,0 C 597.575,16.9 601.15,25.35 601.15,42.25 C 601.15,59.15 597.575,67.6 586.85,84.5 L 515.35,84.5 C 504.625,67.6 501.05,59.15 501.05,42.25 C 501.05,25.35 504.625,16.9 515.35,0"
+       id="path3072" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       d="M 586.85 0 C 576.125,16.9 572.55,25.35 572.55,42.25 C 572.55,59.15 576.125,67.6 586.85,84.5"
+       id="path3074" />
+    <text
+       style="fill: #000000;text-anchor:middle;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+       x="543.95"
+       y="22.25"
+       id="text3076">
+      <tspan
+         x="543.95"
+         y="22.25"
+         id="tspan3078">从公开的</tspan>
+      <tspan
+         x="543.95"
+         y="38.25"
+         id="tspan3080">代码库</tspan>
+      <tspan
+         x="543.95"
+         y="54.25"
+         id="tspan3082">同步代码</tspan>
+      <tspan
+         x="543.95"
+         y="70.25"
+         id="tspan3084">到本地</tspan>
+    </text>
+  </g>
+  <rect
+     id="rect3088"
+     height="54"
+     width="110.8"
+     y="129.2"
+     x="499.5"
+     style="fill:#afc2da" />
+  <rect
+     id="rect3090"
+     height="54"
+     width="110.8"
+     y="129.2"
+     x="499.5"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text3092"
+     y="144.14925"
+     x="554.90002"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan3094"
+       y="144.14925"
+       x="554.90002">代码作者将代码</tspan>
+    <tspan
+       id="tspan3096"
+       y="160.14925"
+       x="554.90002">修订提交到 Gerrit</tspan>
+    <tspan
+       id="tspan3098"
+       y="176.14925"
+       x="554.90002">进入审核流程</tspan>
+  </text>
+  <g
+     id="g3100">
+    <path
+       style="fill: #afc2da"
+       d="M 411 260.85 C 431.2,274.35 441.3,274.35 461.5,260.85 C 481.7,247.35 491.8,247.35 512,260.85 L 512,341.85 C 491.8,328.35 481.7,328.35 461.5,341.85 C 441.3,355.35 431.2,355.35 411,341.85 L 411,260.85z"
+       id="path3102" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       d="M 411 260.85 C 431.2,274.35 441.3,274.35 461.5,260.85 C 481.7,247.35 491.8,247.35 512,260.85 L 512,341.85 C 491.8,328.35 481.7,328.35 461.5,341.85 C 441.3,355.35 431.2,355.35 411,341.85 L 411,260.85"
+       id="path3104" />
+    <text
+       style="fill: #000000;text-anchor:middle;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+       x="461.5"
+       y="289.35"
+       id="text3106">
+      <tspan
+         x="461.5"
+         y="289.35"
+         id="tspan3108">通过 Gerrit 或</tspan>
+      <tspan
+         x="461.5"
+         y="305.35"
+         id="tspan3110">邮件，作者通知</tspan>
+      <tspan
+         x="461.5"
+         y="321.35"
+         id="tspan3112">代码审核者</tspan>
+    </text>
+  </g>
+  <g
+     id="g3114">
+    <path
+       style="fill: #d9d9d9"
+       d="M 592.7 260.85 C 612.9,274.35 623,274.35 643.2,260.85 C 663.4,247.35 673.5,247.35 693.7,260.85 L 693.7,341.85 C 673.5,328.35 663.4,328.35 643.2,341.85 C 623,355.35 612.9,355.35 592.7,341.85 L 592.7,260.85z"
+       id="path3116" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       d="M 592.7 260.85 C 612.9,274.35 623,274.35 643.2,260.85 C 663.4,247.35 673.5,247.35 693.7,260.85 L 693.7,341.85 C 673.5,328.35 663.4,328.35 643.2,341.85 C 623,355.35 612.9,355.35 592.7,341.85 L 592.7,260.85"
+       id="path3118" />
+    <text
+       style="fill: #000000;text-anchor:middle;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+       x="643.2"
+       y="289.35"
+       id="text3120">
+      <tspan
+         x="643.2"
+         y="289.35"
+         id="tspan3122">Gerrit通知</tspan>
+      <tspan
+         x="643.2"
+         y="305.35"
+         id="tspan3124">项目所有者或</tspan>
+      <tspan
+         x="643.2"
+         y="321.35"
+         id="tspan3126">检查者</tspan>
+    </text>
+  </g>
+  <rect
+     id="rect3130"
+     height="58"
+     width="125.2"
+     y="427.39999"
+     x="398.39999"
+     style="fill:#facca7" />
+  <rect
+     id="rect3132"
+     height="58"
+     width="125.2"
+     y="427.39999"
+     x="398.39999"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text3134"
+     y="444.3494"
+     x="461"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan3136"
+       y="444.3494"
+       x="461">审核者通过Gerrit</tspan>
+    <tspan
+       id="tspan3138"
+       y="460.3494"
+       x="461">查看代码修改，以</tspan>
+    <tspan
+       id="tspan3140"
+       y="476.3494"
+       x="461">确定提交是否适合？</tspan>
+  </text>
+  <rect
+     id="rect3144"
+     height="58"
+     width="125.2"
+     y="427.39999"
+     x="581.12598"
+     style="fill:#cadaa9" />
+  <rect
+     id="rect3146"
+     height="58"
+     width="125.2"
+     y="427.39999"
+     x="581.12598"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text3148"
+     y="444.3494"
+     x="643.72601"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan3150"
+       y="444.3494"
+       x="643.72601">检查者将作者的补丁</tspan>
+    <tspan
+       id="tspan3152"
+       y="460.3494"
+       x="643.72601">合并到本地代码树，</tspan>
+    <tspan
+       id="tspan3154"
+       y="476.3494"
+       x="643.72601">编译和测试</tspan>
+  </text>
+  <rect
+     id="rect3158"
+     height="58.799999"
+     width="127.706"
+     y="537.20001"
+     x="580"
+     style="fill:#facca7" />
+  <rect
+     id="rect3160"
+     height="58.799999"
+     width="127.706"
+     y="537.20001"
+     x="580"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text3162"
+     y="554.54938"
+     x="643.85303"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan3164"
+       y="554.54938"
+       x="643.85303">审核者为修订设置</tspan>
+    <tspan
+       id="tspan3166"
+       y="570.54938"
+       x="643.85303">&quot;code looks good&quot;</tspan>
+    <tspan
+       id="tspan3168"
+       y="586.54938"
+       x="643.85303">标识和添加评论</tspan>
+  </text>
+  <g
+     id="g3170">
+    <rect
+       style="fill: #facca7"
+       x="397.4"
+       y="653.9"
+       width="129.079"
+       height="62.8205"
+       id="rect3172" />
+    <rect
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x="397.4"
+       y="653.9"
+       width="129.079"
+       height="62.8205"
+       id="rect3174" />
+    <text
+       style="fill: #000000;text-anchor:middle;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+       x="461.939"
+       y="670.01"
+       id="text3176">
+      <tspan
+         x="461.939"
+         y="670.01"
+         id="tspan3178">审核者添加评论，</tspan>
+      <tspan
+         x="461.939"
+         y="686.01"
+         id="tspan3180">通知代码作者</tspan>
+    </text>
+  </g>
+  <polygon
+     id="polygon3184"
+     points="461.816,598.756 389.986,565.875 461.816,532.994 533.646,565.875 "
+     style="fill:#ffffff" />
+  <polygon
+     id="polygon3186"
+     points="461.816,598.756 389.986,565.875 461.816,532.994 533.646,565.875 "
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text3188"
+     y="569.8244"
+     x="461.81601"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan3190"
+       y="569.8244"
+       x="461.81601">改动是否合适？</tspan>
+  </text>
+  <polygon
+     id="polygon3194"
+     points="820.279,493.015 757.914,456.91 820.279,420.806 882.644,456.91 "
+     style="fill:#ffffff" />
+  <polygon
+     id="polygon3196"
+     points="820.279,493.015 757.914,456.91 820.279,420.806 882.644,456.91 "
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text3198"
+     y="452.85938"
+     x="820.27899"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan3200"
+       y="452.85938"
+       x="820.27899">修订正确，</tspan>
+    <tspan
+       id="tspan3202"
+       y="468.85938"
+       x="820.27899">测试通过？</tspan>
+  </text>
+  <rect
+     id="rect3206"
+     height="70"
+     width="114.85"
+     y="422.20001"
+     x="939.578"
+     style="fill:#cadaa9" />
+  <rect
+     id="rect3208"
+     height="70"
+     width="114.85"
+     y="422.20001"
+     x="939.578"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text3210"
+     y="437.14938"
+     x="997.00299"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan3212"
+       y="437.14938"
+       x="997.00299">检查者在 Gerrit 中</tspan>
+    <tspan
+       id="tspan3214"
+       y="453.14938"
+       x="997.00299">为修订设置</tspan>
+    <tspan
+       id="tspan3216"
+       y="469.14938"
+       x="997.00299">&quot;verified&quot; 标记，</tspan>
+    <tspan
+       id="tspan3218"
+       y="485.14938"
+       x="997.00299">然后正式提交修订</tspan>
+  </text>
+  <rect
+     id="rect3222"
+     height="58"
+     width="126.1"
+     y="605.20001"
+     x="757.85199"
+     style="fill:#cadaa9" />
+  <rect
+     id="rect3224"
+     height="58"
+     width="126.1"
+     y="605.20001"
+     x="757.85199"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text3226"
+     y="622.14941"
+     x="820.90198"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan3228"
+       y="622.14941"
+       x="820.90198">检查者重置修订的</tspan>
+    <tspan
+       id="tspan3230"
+       y="638.14941"
+       x="820.90198">&quot;code looks good&quot;</tspan>
+    <tspan
+       id="tspan3232"
+       y="654.14941"
+       x="820.90198">标识，添加评论</tspan>
+  </text>
+  <g
+     id="g3234">
+    <rect
+       style="fill: #d9d9d9"
+       x="933.252"
+       y="604.5"
+       width="129.454"
+       height="58.25"
+       id="rect3236" />
+    <rect
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x="933.252"
+       y="604.5"
+       width="129.454"
+       height="58.25"
+       id="rect3238" />
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="946.197"
+       y1="604.5"
+       x2="946.197"
+       y2="662.75"
+       id="line3240" />
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="1049.76"
+       y1="604.5"
+       x2="1049.76"
+       y2="662.75"
+       id="line3242" />
+    <text
+       style="fill: #000000;text-anchor:middle;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+       x="997.979"
+       y="621.625"
+       id="text3244">
+      <tspan
+         x="997.979"
+         y="621.625"
+         id="tspan3246">Gerrit 合并修订</tspan>
+      <tspan
+         x="997.979"
+         y="637.625"
+         id="tspan3248">到版本库对应</tspan>
+      <tspan
+         x="997.979"
+         y="653.625"
+         id="tspan3250">的分支上</tspan>
+    </text>
+  </g>
+  <g
+     id="g3252">
+    <rect
+       style="fill: #d9d9d9"
+       x="396.92"
+       y="735.2"
+       width="152.25"
+       height="71"
+       id="rect3254" />
+    <rect
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x="396.92"
+       y="735.2"
+       width="152.25"
+       height="71"
+       id="rect3256" />
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="412.145"
+       y1="735.2"
+       x2="412.145"
+       y2="806.2"
+       id="line3258" />
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="533.945"
+       y1="735.2"
+       x2="533.945"
+       y2="806.2"
+       id="line3260" />
+    <text
+       style="fill: #000000;text-anchor:middle;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+       x="473.045"
+       y="758.7"
+       id="text3262">
+      <tspan
+         x="473.045"
+         y="758.7"
+         id="tspan3264">修订的 &quot;verified&quot;和</tspan>
+      <tspan
+         x="473.045"
+         y="774.7"
+         id="tspan3266">&quot;code looks good&quot;</tspan>
+      <tspan
+         x="473.045"
+         y="790.7"
+         id="tspan3268">标记被重置</tspan>
+    </text>
+  </g>
+  <g
+     id="g3270">
+    <rect
+       style="fill: #d9d9d9"
+       x="699.996"
+       y="869.9"
+       width="135.813"
+       height="71"
+       id="rect3272" />
+    <rect
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x="699.996"
+       y="869.9"
+       width="135.813"
+       height="71"
+       id="rect3274" />
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="713.577"
+       y1="869.9"
+       x2="713.577"
+       y2="940.9"
+       id="line3276" />
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="822.227"
+       y1="869.9"
+       x2="822.227"
+       y2="940.9"
+       id="line3278" />
+    <text
+       style="fill: #000000;text-anchor:middle;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+       x="767.902"
+       y="901.4"
+       id="text3280">
+      <tspan
+         x="767.902"
+         y="901.4"
+         id="tspan3282">修订的 &quot;verified&quot;</tspan>
+      <tspan
+         x="767.902"
+         y="917.4"
+         id="tspan3284">标记被重置</tspan>
+    </text>
+  </g>
+  <polygon
+     id="polygon3288"
+     points="767.277,812.016 678.716,770.611 767.277,729.206 855.839,770.611 "
+     style="fill:#ffffff" />
+  <polygon
+     id="polygon3290"
+     points="767.277,812.016 678.716,770.611 767.277,729.206 855.839,770.611 "
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text3292"
+     y="765.43542"
+     x="767.27698"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan3294"
+       y="765.43542"
+       x="767.27698">相同文件上的合并</tspan>
+    <tspan
+       id="tspan3296"
+       y="781.43542"
+       x="767.27698">是否未出现冲突？</tspan>
+  </text>
+  <polygon
+     id="polygon3300"
+     points="997.445,806.422 922.912,770.357 997.445,734.292 1071.98,770.357 "
+     style="fill:#ffffff" />
+  <polygon
+     id="polygon3302"
+     points="997.445,806.422 922.912,770.357 997.445,734.292 1071.98,770.357 "
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text3304"
+     y="765.18146"
+     x="997.44501"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan3306"
+       y="765.18146"
+       x="997.44501">合并是否没有</tspan>
+    <tspan
+       id="tspan3308"
+       y="781.18146"
+       x="997.44501">出现冲突？</tspan>
+  </text>
+  <g
+     id="g3310">
+    <path
+       style="fill: #d9d9d9"
+       d="M 508.802 870.325 C 530.962,881.95 542.042,881.95 564.202,870.325 C 586.362,858.7 597.442,858.7 619.602,870.325 L 619.602,940.075 C 597.442,928.45 586.362,928.45 564.202,940.075 C 542.042,951.7 530.962,951.7 508.802,940.075 L 508.802,870.325z"
+       id="path3312" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       d="M 508.802 870.325 C 530.962,881.95 542.042,881.95 564.202,870.325 C 586.362,858.7 597.442,858.7 619.602,870.325 L 619.602,940.075 C 597.442,928.45 586.362,928.45 564.202,940.075 C 542.042,951.7 530.962,951.7 508.802,940.075 L 508.802,870.325"
+       id="path3314" />
+    <text
+       style="fill: #000000;text-anchor:middle;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+       x="564.202"
+       y="901.2"
+       id="text3316">
+      <tspan
+         x="564.202"
+         y="901.2"
+         id="tspan3318">Gerrit 通知校验者</tspan>
+      <tspan
+         x="564.202"
+         y="917.2"
+         id="tspan3320">需手动合并</tspan>
+    </text>
+  </g>
+  <g
+     id="g3322">
+    <path
+       style="fill: #d9d9d9"
+       d="M 953.552 856.95 L 1041.05,856.95 C 1054.18,874.55 1058.55,883.35 1058.55,900.95 C 1058.55,918.55 1054.18,927.35 1041.05,944.95 L 953.552,944.95 C 940.427,927.35 936.052,918.55 936.052,900.95 C 936.052,883.35 940.427,874.55 953.552,856.95z"
+       id="path3324" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       d="M 953.552 856.95 L 1041.05,856.95 C 1054.18,874.55 1058.55,883.35 1058.55,900.95 C 1058.55,918.55 1054.18,927.35 1041.05,944.95 L 953.552,944.95 C 940.427,927.35 936.052,918.55 936.052,900.95 C 936.052,883.35 940.427,874.55 953.552,856.95"
+       id="path3326" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       d="M 1041.05 856.95 C 1027.93,874.55 1023.55,883.35 1023.55,900.95 C 1023.55,918.55 1027.93,927.35 1041.05,944.95"
+       id="path3328" />
+    <text
+       style="fill: #000000;text-anchor:middle;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+       x="988.552"
+       y="888.95"
+       id="text3330">
+      <tspan
+         x="988.552"
+         y="888.95"
+         id="tspan3332">修订合并到</tspan>
+      <tspan
+         x="988.552"
+         y="904.95"
+         id="tspan3334">公开的</tspan>
+      <tspan
+         x="988.552"
+         y="920.95"
+         id="tspan3336">版本库中</tspan>
+    </text>
+  </g>
+  <rect
+     id="rect3340"
+     height="63.299999"
+     width="108.404"
+     y="995.95001"
+     x="510.802"
+     style="fill:#cadaa9" />
+  <rect
+     id="rect3342"
+     height="63.299999"
+     width="108.404"
+     y="995.95001"
+     x="510.802"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text3344"
+     y="1015.5499"
+     x="565.00403"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan3346"
+       y="1015.5499"
+       x="565.00403">检查者手动合并</tspan>
+    <tspan
+       id="tspan3348"
+       y="1031.5491"
+       x="565.00403">或者通知作者</tspan>
+    <tspan
+       id="tspan3350"
+       y="1047.5488"
+       x="565.00403">合并和重新提交</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="26.4475"
+     sodipodi:rx="27.427601"
+     sodipodi:cy="1027.91"
+     sodipodi:cx="753.19397"
+     id="ellipse3354"
+     ry="26.4475"
+     rx="27.427601"
+     cy="1027.91"
+     cx="753.19397"
+     style="fill:#ffffff" />
+  <ellipse
+     sodipodi:ry="26.4475"
+     sodipodi:rx="27.427601"
+     sodipodi:cy="1027.91"
+     sodipodi:cx="753.19397"
+     id="ellipse3356"
+     ry="26.4475"
+     rx="27.427601"
+     cy="1027.91"
+     cx="753.19397"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text3358"
+     y="1021.6099"
+     x="753.19397"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan3360"
+       y="1021.6099"
+       x="753.19397">至&quot;A&quot;</tspan>
+    <tspan
+       id="tspan3362"
+       y="1037.609"
+       x="753.19397">继续</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="20.0336"
+     sodipodi:rx="20.9203"
+     sodipodi:cy="375.216"
+     sodipodi:cx="784.78802"
+     id="ellipse3366"
+     ry="20.0336"
+     rx="20.9203"
+     cy="375.216"
+     cx="784.78802"
+     style="fill:#ffffff" />
+  <ellipse
+     sodipodi:ry="20.0336"
+     sodipodi:rx="20.9203"
+     sodipodi:cy="375.216"
+     sodipodi:cx="784.78802"
+     id="ellipse3368"
+     ry="20.0336"
+     rx="20.9203"
+     cy="375.216"
+     cx="784.78802"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text3370"
+     y="378.04044"
+     x="784.78802"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan3372"
+       y="378.04044"
+       x="784.78802">&quot;A&quot;</tspan>
+  </text>
+  <g
+     id="g3374">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="331.777"
+       y1="41.3074"
+       x2="491.314"
+       y2="42.1958"
+       id="line3376" />
+    <polygon
+       style="fill: #000000"
+       points="498.814,42.2375 488.786,47.1818 491.314,42.1958 488.842,37.1819 "
+       id="polygon3378" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="498.814,42.2375 488.786,47.1818 491.314,42.1958 488.842,37.1819 "
+       id="polygon3380" />
+  </g>
+  <g
+     id="g3382">
+    <polyline
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="551.1,84.5 551.1,106.6 273.9,106.6 273.9,118.964 "
+       id="polyline3384" />
+    <polygon
+       style="fill: #000000"
+       points="273.9,126.464 268.9,116.464 273.9,118.964 278.9,116.464 "
+       id="polygon3386" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="273.9,126.464 268.9,116.464 273.9,118.964 278.9,116.464 "
+       id="polygon3388" />
+  </g>
+  <g
+     id="g3390">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="328.1"
+       y1="155.7"
+       x2="489.764"
+       y2="156.172"
+       id="line3392" />
+    <polygon
+       style="fill: #000000"
+       points="497.264,156.193 487.249,161.164 489.764,156.172 487.279,151.164 "
+       id="polygon3394" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="497.264,156.193 487.249,161.164 489.764,156.172 487.279,151.164 "
+       id="polygon3396" />
+  </g>
+  <g
+     id="g3398">
+    <polyline
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="554.9,183.2 554.9,226.662 461.5,226.662 461.5,251.114 "
+       id="polyline3400" />
+    <polygon
+       style="fill: #000000"
+       points="461.5,258.614 456.5,248.614 461.5,251.114 466.5,248.614 "
+       id="polygon3402" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="461.5,258.614 456.5,248.614 461.5,251.114 466.5,248.614 "
+       id="polygon3404" />
+  </g>
+  <g
+     id="g3406">
+    <polyline
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="554.9,183.2 554.9,226.618 643.2,226.618 643.2,251.114 "
+       id="polyline3408" />
+    <polygon
+       style="fill: #000000"
+       points="643.2,258.614 638.2,248.614 643.2,251.114 648.2,248.614 "
+       id="polygon3410" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="643.2,258.614 638.2,248.614 643.2,251.114 648.2,248.614 "
+       id="polygon3412" />
+  </g>
+  <g
+     id="g3414">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="461.5"
+       y1="341.85"
+       x2="461.057"
+       y2="417.664"
+       id="line3416" />
+    <polygon
+       style="fill: #000000"
+       points="461.013,425.164 456.072,415.135 461.057,417.664 466.071,415.193 "
+       id="polygon3418" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="461.013,425.164 456.072,415.135 461.057,417.664 466.071,415.193 "
+       id="polygon3420" />
+  </g>
+  <g
+     id="g3422">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="643.2"
+       y1="341.85"
+       x2="643.666"
+       y2="417.664"
+       id="line3424" />
+    <polygon
+       style="fill: #000000"
+       points="643.712,425.164 638.651,415.195 643.666,417.664 648.651,415.133 "
+       id="polygon3426" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="643.712,425.164 638.651,415.195 643.666,417.664 648.651,415.133 "
+       id="polygon3428" />
+  </g>
+  <g
+     id="g3430">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="763.868"
+       y1="375.216"
+       x2="654.738"
+       y2="375.018"
+       id="line3432" />
+    <polygon
+       style="fill: #000000"
+       points="647.238,375.004 657.247,370.022 654.738,375.018 657.229,380.022 "
+       id="polygon3434" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="647.238,375.004 657.247,370.022 654.738,375.018 657.229,380.022 "
+       id="polygon3436" />
+  </g>
+  <g
+     id="g3438">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="461"
+       y1="485.4"
+       x2="461.651"
+       y2="523.259"
+       id="line3440" />
+    <polygon
+       style="fill: #000000"
+       points="461.78,530.758 456.608,520.846 461.651,523.259 466.607,520.674 "
+       id="polygon3442" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="461.78,530.758 456.608,520.846 461.651,523.259 466.607,520.674 "
+       id="polygon3444" />
+  </g>
+  <g
+     id="g3446">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="533.648"
+       y1="565.874"
+       x2="570.265"
+       y2="566.448"
+       id="line3448" />
+    <polygon
+       style="fill: #000000"
+       points="577.764,566.565 567.687,571.408 570.265,566.448 567.844,561.409 "
+       id="polygon3450" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="577.764,566.565 567.687,571.408 570.265,566.448 567.844,561.409 "
+       id="polygon3452" />
+  </g>
+  <g
+     id="g3454">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="643.854"
+       y1="537.2"
+       x2="643.75"
+       y2="495.136"
+       id="line3456" />
+    <polygon
+       style="fill: #000000"
+       points="643.732,487.636 648.756,497.624 643.75,495.136 638.756,497.648 "
+       id="polygon3458" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="643.732,487.636 648.756,497.624 643.75,495.136 638.756,497.648 "
+       id="polygon3460" />
+  </g>
+  <g
+     id="g3462">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="706.326"
+       y1="456.4"
+       x2="748.178"
+       y2="456.815"
+       id="line3464" />
+    <polygon
+       style="fill: #000000"
+       points="755.678,456.89 745.629,461.79 748.178,456.815 745.728,451.791 "
+       id="polygon3466" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="755.678,456.89 745.629,461.79 748.178,456.815 745.728,451.791 "
+       id="polygon3468" />
+  </g>
+  <g
+     id="g3470">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="882.642"
+       y1="456.912"
+       x2="929.842"
+       y2="457.151"
+       id="line3472" />
+    <polygon
+       style="fill: #000000"
+       points="937.342,457.189 927.317,462.138 929.842,457.151 927.367,452.138 "
+       id="polygon3474" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="937.342,457.189 927.317,462.138 929.842,457.151 927.367,452.138 "
+       id="polygon3476" />
+  </g>
+  <g
+     id="g3478">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="820.278"
+       y1="493.016"
+       x2="820.848"
+       y2="595.464"
+       id="line3480" />
+    <polygon
+       style="fill: #000000"
+       points="820.89,602.964 815.834,592.992 820.848,595.464 825.834,592.936 "
+       id="polygon3482" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="820.89,602.964 815.834,592.992 820.848,595.464 825.834,592.936 "
+       id="polygon3484" />
+  </g>
+  <g
+     id="g3486">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="997.002"
+       y1="492.2"
+       x2="997.895"
+       y2="594.764"
+       id="line3488" />
+    <polygon
+       style="fill: #000000"
+       points="997.961,602.264 992.874,592.308 997.895,594.764 1002.87,592.221 "
+       id="polygon3490" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="997.961,602.264 992.874,592.308 997.895,594.764 1002.87,592.221 "
+       id="polygon3492" />
+  </g>
+  <g
+     id="g3494">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="997.98"
+       y1="662.75"
+       x2="997.517"
+       y2="724.556"
+       id="line3496" />
+    <polygon
+       style="fill: #000000"
+       points="997.461,732.056 992.536,722.019 997.517,724.556 1002.54,722.094 "
+       id="polygon3498" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="997.461,732.056 992.536,722.019 997.517,724.556 1002.54,722.094 "
+       id="polygon3500" />
+  </g>
+  <g
+     id="g3502">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="922.912"
+       y1="770.356"
+       x2="865.574"
+       y2="770.575"
+       id="line3504" />
+    <polygon
+       style="fill: #000000"
+       points="858.074,770.603 868.055,765.565 865.574,770.575 868.093,775.565 "
+       id="polygon3506" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="858.074,770.603 868.055,765.565 865.574,770.575 868.093,775.565 "
+       id="polygon3508" />
+  </g>
+  <g
+     id="g3510">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="997.444"
+       y1="806.422"
+       x2="997.329"
+       y2="847.214"
+       id="line3512" />
+    <polygon
+       style="fill: #000000"
+       points="997.308,854.714 992.336,844.7 997.329,847.214 1002.34,844.728 "
+       id="polygon3514" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="997.308,854.714 992.336,844.7 997.329,847.214 1002.34,844.728 "
+       id="polygon3516" />
+  </g>
+  <g
+     id="g3518">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="767.276"
+       y1="812.016"
+       x2="767.797"
+       y2="860.165"
+       id="line3520" />
+    <polygon
+       style="fill: #000000"
+       points="767.878,867.664 762.77,857.719 767.797,860.165 772.769,857.611 "
+       id="polygon3522" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="767.878,867.664 762.77,857.719 767.797,860.165 772.769,857.611 "
+       id="polygon3524" />
+  </g>
+  <g
+     id="g3526">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="678.716"
+       y1="770.612"
+       x2="558.906"
+       y2="770.693"
+       id="line3528" />
+    <polygon
+       style="fill: #000000"
+       points="551.406,770.698 561.403,765.692 558.906,770.693 561.409,775.692 "
+       id="polygon3530" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="551.406,770.698 561.403,765.692 558.906,770.693 561.409,775.692 "
+       id="polygon3532" />
+  </g>
+  <g
+     id="g3534">
+    <polyline
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="473.045,806.2 473.045,905.2 499.066,905.2 "
+       id="polyline3536" />
+    <polygon
+       style="fill: #000000"
+       points="506.566,905.2 496.566,910.2 499.066,905.2 496.566,900.2 "
+       id="polygon3538" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="506.566,905.2 496.566,910.2 499.066,905.2 496.566,900.2 "
+       id="polygon3540" />
+  </g>
+  <g
+     id="g3542">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="699.996"
+       y1="905.4"
+       x2="629.338"
+       y2="905.224"
+       id="line3544" />
+    <polygon
+       style="fill: #000000"
+       points="621.838,905.206 631.85,900.23 629.338,905.224 631.826,910.23 "
+       id="polygon3546" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="621.838,905.206 631.85,900.23 629.338,905.224 631.826,910.23 "
+       id="polygon3548" />
+  </g>
+  <g
+     id="g3550">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="564.447"
+       y1="941.011"
+       x2="564.905"
+       y2="986.214"
+       id="line3552" />
+    <polygon
+       style="fill: #000000"
+       points="564.981,993.714 559.88,983.765 564.905,986.214 569.88,983.664 "
+       id="polygon3554" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="564.981,993.714 559.88,983.765 564.905,986.214 569.88,983.664 "
+       id="polygon3556" />
+  </g>
+  <g
+     id="g3558">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="619.206"
+       y1="1027.6"
+       x2="716.03"
+       y2="1027.88"
+       id="line3560" />
+    <polygon
+       style="fill: #000000"
+       points="723.53,1027.9 713.516,1032.87 716.03,1027.88 713.544,1022.87 "
+       id="polygon3562" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="723.53,1027.9 713.516,1032.87 716.03,1027.88 713.544,1022.87 "
+       id="polygon3564" />
+  </g>
+  <g
+     id="g3566">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="461.864"
+       y1="599.658"
+       x2="461.926"
+       y2="644.164"
+       id="line3568" />
+    <polygon
+       style="fill: #000000"
+       points="461.937,651.664 456.923,641.671 461.926,644.164 466.923,641.657 "
+       id="polygon3570" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="461.937,651.664 456.923,641.671 461.926,644.164 466.923,641.657 "
+       id="polygon3572" />
+  </g>
+  <g
+     id="g3574">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="757.852"
+       y1="634.2"
+       x2="282.442"
+       y2="633.759"
+       id="line3576" />
+    <polygon
+       style="fill: #000000"
+       points="274.942,633.752 284.947,628.761 282.442,633.759 284.937,638.761 "
+       id="polygon3578" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="274.942,633.752 284.947,628.761 282.442,633.759 284.937,638.761 "
+       id="polygon3580" />
+  </g>
+  <g
+     id="g3582">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="397.4"
+       y1="685.31"
+       x2="282.442"
+       y2="685.255"
+       id="line3584" />
+    <polygon
+       style="fill: #000000"
+       points="274.942,685.251 284.944,680.256 282.442,685.255 284.94,690.256 "
+       id="polygon3586" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="274.942,685.251 284.944,680.256 282.442,685.255 284.94,690.256 "
+       id="polygon3588" />
+  </g>
+  <g
+     id="g3590">
+    <polyline
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="510.802,1027.6 273.9,1027.6 273.9,192.436 "
+       id="polyline3592" />
+    <polygon
+       style="fill: #000000"
+       points="273.9,184.936 278.9,194.936 273.9,192.436 268.9,194.936 "
+       id="polygon3594" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="273.9,184.936 278.9,194.936 273.9,192.436 268.9,194.936 "
+       id="polygon3596" />
+  </g>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+     x="272.704"
+     y="1095.75"
+     id="text3598">
+    <tspan
+       x="272.704"
+       y="1095.75"
+       id="tspan3600">摘自： http://source.android.com/source/life-of-a-patch.html</tspan>
+  </text>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+     x="545.706"
+     y="556"
+     id="text3602">
+    <tspan
+       x="545.706"
+       y="556"
+       id="tspan3604">是</tspan>
+  </text>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+     x="898.406"
+     y="447.05"
+     id="text3606">
+    <tspan
+       x="898.406"
+       y="447.05"
+       id="tspan3608">是</tspan>
+  </text>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+     x="1001.11"
+     y="827.75"
+     id="text3610">
+    <tspan
+       x="1001.11"
+       y="827.75"
+       id="tspan3612">是</tspan>
+  </text>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+     x="775.706"
+     y="838.5"
+     id="text3614">
+    <tspan
+       x="775.706"
+       y="838.5"
+       id="tspan3616">是</tspan>
+  </text>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+     x="629.706"
+     y="759.25"
+     id="text3618">
+    <tspan
+       x="629.706"
+       y="759.25"
+       id="tspan3620">否</tspan>
+  </text>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+     x="904.706"
+     y="760.25"
+     id="text3622">
+    <tspan
+       x="904.706"
+       y="760.25"
+       id="tspan3624">否</tspan>
+  </text>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+     x="835.106"
+     y="512.75"
+     id="text3626">
+    <tspan
+       x="835.106"
+       y="512.75"
+       id="tspan3628">否</tspan>
+  </text>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+     x="472.806"
+     y="617.45"
+     id="text3630">
+    <tspan
+       x="472.806"
+       y="617.45"
+       id="tspan3632">否</tspan>
+  </text>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:15.8044;font-family:sanserif;font-style:normal;font-weight:normal"
+     x="779.978"
+     y="53.9442"
+     id="text3634">
+    <tspan
+       x="779.978"
+       y="53.9442"
+       id="tspan3636">图例</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="7.4456"
+     sodipodi:rx="7.61273"
+     sodipodi:cy="13.8509"
+     sodipodi:cx="222.39101"
+     id="ellipse3640"
+     ry="7.4456"
+     rx="7.61273"
+     cy="13.8509"
+     cx="222.39101"
+     style="fill:#afc2da" />
+  <ellipse
+     sodipodi:ry="7.4456"
+     sodipodi:rx="7.61273"
+     sodipodi:cy="13.8509"
+     sodipodi:cx="222.39101"
+     id="ellipse3642"
+     ry="7.4456"
+     rx="7.61273"
+     cy="13.8509"
+     cx="222.39101"
+     style="fill:none;stroke:#000000" />
+  <text
+     id="text3644"
+     y="17.200361"
+     x="222.39101"
+     style="font-size:10.15999985px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:serif">
+    <tspan
+       id="tspan3646"
+       y="17.200361"
+       x="222.39101">A</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="7.4456"
+     sodipodi:rx="7.61273"
+     sodipodi:cy="128.403"
+     sodipodi:cx="218.19099"
+     id="ellipse3650"
+     ry="7.4456"
+     rx="7.61273"
+     cy="128.403"
+     cx="218.19099"
+     style="fill:#afc2da" />
+  <ellipse
+     sodipodi:ry="7.4456"
+     sodipodi:rx="7.61273"
+     sodipodi:cy="128.403"
+     sodipodi:cx="218.19099"
+     id="ellipse3652"
+     ry="7.4456"
+     rx="7.61273"
+     cy="128.403"
+     cx="218.19099"
+     style="fill:none;stroke:#000000" />
+  <text
+     id="text3654"
+     y="131.75243"
+     x="218.19099"
+     style="font-size:10.15999985px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:serif">
+    <tspan
+       id="tspan3656"
+       y="131.75243"
+       x="218.19099">A</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="7.4456"
+     sodipodi:rx="7.61273"
+     sodipodi:cy="0.403339"
+     sodipodi:cx="514.45099"
+     id="ellipse3660"
+     ry="7.4456"
+     rx="7.61273"
+     cy="0.403339"
+     cx="514.45099"
+     style="fill:#afc2da" />
+  <ellipse
+     sodipodi:ry="7.4456"
+     sodipodi:rx="7.61273"
+     sodipodi:cy="0.403339"
+     sodipodi:cx="514.45099"
+     id="ellipse3662"
+     ry="7.4456"
+     rx="7.61273"
+     cy="0.403339"
+     cx="514.45099"
+     style="fill:none;stroke:#000000" />
+  <text
+     id="text3664"
+     y="3.7527626"
+     x="514.45099"
+     style="font-size:10.15999985px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:serif">
+    <tspan
+       id="tspan3666"
+       y="3.7527626"
+       x="514.45099">A</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="7.4456"
+     sodipodi:rx="7.61273"
+     sodipodi:cy="127.253"
+     sodipodi:cx="497.80099"
+     id="ellipse3670"
+     ry="7.4456"
+     rx="7.61273"
+     cy="127.253"
+     cx="497.80099"
+     style="fill:#afc2da" />
+  <ellipse
+     sodipodi:ry="7.4456"
+     sodipodi:rx="7.61273"
+     sodipodi:cy="127.253"
+     sodipodi:cx="497.80099"
+     id="ellipse3672"
+     ry="7.4456"
+     rx="7.61273"
+     cy="127.253"
+     cx="497.80099"
+     style="fill:none;stroke:#000000" />
+  <text
+     id="text3674"
+     y="130.60243"
+     x="497.80099"
+     style="font-size:10.15999985px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:serif">
+    <tspan
+       id="tspan3676"
+       y="130.60243"
+       x="497.80099">A</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="7.4456"
+     sodipodi:rx="7.61273"
+     sodipodi:cy="260.27802"
+     sodipodi:cx="410.45099"
+     id="ellipse3680"
+     ry="7.4456"
+     rx="7.61273"
+     cy="260.27802"
+     cx="410.45099"
+     style="fill:#afc2da" />
+  <ellipse
+     sodipodi:ry="7.4456"
+     sodipodi:rx="7.61273"
+     sodipodi:cy="260.27802"
+     sodipodi:cx="410.45099"
+     id="ellipse3682"
+     ry="7.4456"
+     rx="7.61273"
+     cy="260.27802"
+     cx="410.45099"
+     style="fill:none;stroke:#000000" />
+  <text
+     id="text3684"
+     y="263.6275"
+     x="410.45099"
+     style="font-size:10.15999985px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:serif">
+    <tspan
+       id="tspan3686"
+       y="263.6275"
+       x="410.45099">A</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="7.4841599"
+     sodipodi:rx="7.6521602"
+     sodipodi:cy="260.15399"
+     sodipodi:cx="591.45001"
+     id="ellipse3690"
+     ry="7.4841599"
+     rx="7.6521602"
+     cy="260.15399"
+     cx="591.45001"
+     style="fill:#d9d9d9" />
+  <ellipse
+     sodipodi:ry="7.4841599"
+     sodipodi:rx="7.6521602"
+     sodipodi:cy="260.15399"
+     sodipodi:cx="591.45001"
+     id="ellipse3692"
+     ry="7.4841599"
+     rx="7.6521602"
+     cy="260.15399"
+     cx="591.45001"
+     style="fill:none;stroke:#000000" />
+  <text
+     id="text3694"
+     y="263.50348"
+     x="591.45001"
+     style="font-size:10.15999985px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:serif">
+    <tspan
+       id="tspan3696"
+       y="263.50348"
+       x="591.45001">G</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="7.4456"
+     sodipodi:rx="7.61273"
+     sodipodi:cy="427.40399"
+     sodipodi:cx="397.95099"
+     id="ellipse3700"
+     ry="7.4456"
+     rx="7.61273"
+     cy="427.40399"
+     cx="397.95099"
+     style="fill:#facca7" />
+  <ellipse
+     sodipodi:ry="7.4456"
+     sodipodi:rx="7.61273"
+     sodipodi:cy="427.40399"
+     sodipodi:cx="397.95099"
+     id="ellipse3702"
+     ry="7.4456"
+     rx="7.61273"
+     cy="427.40399"
+     cx="397.95099"
+     style="fill:none;stroke:#000000" />
+  <text
+     id="text3704"
+     y="430.75351"
+     x="397.95099"
+     style="font-size:10.15999985px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:serif">
+    <tspan
+       id="tspan3706"
+       y="430.75351"
+       x="397.95099">R</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="7.4456"
+     sodipodi:rx="7.61273"
+     sodipodi:cy="655.27802"
+     sodipodi:cx="398.211"
+     id="ellipse3710"
+     ry="7.4456"
+     rx="7.61273"
+     cy="655.27802"
+     cx="398.211"
+     style="fill:#facca7" />
+  <ellipse
+     sodipodi:ry="7.4456"
+     sodipodi:rx="7.61273"
+     sodipodi:cy="655.27802"
+     sodipodi:cx="398.211"
+     id="ellipse3712"
+     ry="7.4456"
+     rx="7.61273"
+     cy="655.27802"
+     cx="398.211"
+     style="fill:none;stroke:#000000" />
+  <text
+     id="text3714"
+     y="658.6275"
+     x="398.211"
+     style="font-size:10.15999985px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:serif">
+    <tspan
+       id="tspan3716"
+       y="658.6275"
+       x="398.211">R</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="7.4456"
+     sodipodi:rx="7.61273"
+     sodipodi:cy="537.87799"
+     sodipodi:cx="580.56097"
+     id="ellipse3720"
+     ry="7.4456"
+     rx="7.61273"
+     cy="537.87799"
+     cx="580.56097"
+     style="fill:#facca7" />
+  <ellipse
+     sodipodi:ry="7.4456"
+     sodipodi:rx="7.61273"
+     sodipodi:cy="537.87799"
+     sodipodi:cx="580.56097"
+     id="ellipse3722"
+     ry="7.4456"
+     rx="7.61273"
+     cy="537.87799"
+     cx="580.56097"
+     style="fill:none;stroke:#000000" />
+  <text
+     id="text3724"
+     y="541.22754"
+     x="580.56097"
+     style="font-size:10.15999985px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:serif">
+    <tspan
+       id="tspan3726"
+       y="541.22754"
+       x="580.56097">R</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="7.4456"
+     sodipodi:rx="7.61273"
+     sodipodi:cy="605.354"
+     sodipodi:cx="758.68701"
+     id="ellipse3730"
+     ry="7.4456"
+     rx="7.61273"
+     cy="605.354"
+     cx="758.68701"
+     style="fill:#cadaa9" />
+  <ellipse
+     sodipodi:ry="7.4456"
+     sodipodi:rx="7.61273"
+     sodipodi:cy="605.354"
+     sodipodi:cx="758.68701"
+     id="ellipse3732"
+     ry="7.4456"
+     rx="7.61273"
+     cy="605.354"
+     cx="758.68701"
+     style="fill:none;stroke:#000000" />
+  <text
+     id="text3734"
+     y="608.70349"
+     x="758.68701"
+     style="font-size:10.15999985px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:serif">
+    <tspan
+       id="tspan3736"
+       y="608.70349"
+       x="758.68701">V</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="7.4456"
+     sodipodi:rx="7.61273"
+     sodipodi:cy="427.65399"
+     sodipodi:cx="580.94098"
+     id="ellipse3740"
+     ry="7.4456"
+     rx="7.61273"
+     cy="427.65399"
+     cx="580.94098"
+     style="fill:#cadaa9" />
+  <ellipse
+     sodipodi:ry="7.4456"
+     sodipodi:rx="7.61273"
+     sodipodi:cy="427.65399"
+     sodipodi:cx="580.94098"
+     id="ellipse3742"
+     ry="7.4456"
+     rx="7.61273"
+     cy="427.65399"
+     cx="580.94098"
+     style="fill:none;stroke:#000000" />
+  <text
+     id="text3744"
+     y="431.00351"
+     x="580.94098"
+     style="font-size:10.15999985px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:serif">
+    <tspan
+       id="tspan3746"
+       y="431.00351"
+       x="580.94098">V</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="7.4456"
+     sodipodi:rx="7.61273"
+     sodipodi:cy="421.004"
+     sodipodi:cx="938.29102"
+     id="ellipse3750"
+     ry="7.4456"
+     rx="7.61273"
+     cy="421.004"
+     cx="938.29102"
+     style="fill:#cadaa9" />
+  <ellipse
+     sodipodi:ry="7.4456"
+     sodipodi:rx="7.61273"
+     sodipodi:cy="421.004"
+     sodipodi:cx="938.29102"
+     id="ellipse3752"
+     ry="7.4456"
+     rx="7.61273"
+     cy="421.004"
+     cx="938.29102"
+     style="fill:none;stroke:#000000" />
+  <text
+     id="text3754"
+     y="424.35352"
+     x="938.29102"
+     style="font-size:10.15999985px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:serif">
+    <tspan
+       id="tspan3756"
+       y="424.35352"
+       x="938.29102">V</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="7.4456"
+     sodipodi:rx="7.61273"
+     sodipodi:cy="995.47803"
+     sodipodi:cx="510.64099"
+     id="ellipse3760"
+     ry="7.4456"
+     rx="7.61273"
+     cy="995.47803"
+     cx="510.64099"
+     style="fill:#cadaa9" />
+  <ellipse
+     sodipodi:ry="7.4456"
+     sodipodi:rx="7.61273"
+     sodipodi:cy="995.47803"
+     sodipodi:cx="510.64099"
+     id="ellipse3762"
+     ry="7.4456"
+     rx="7.61273"
+     cy="995.47803"
+     cx="510.64099"
+     style="fill:none;stroke:#000000" />
+  <text
+     id="text3764"
+     y="998.82751"
+     x="510.64099"
+     style="font-size:10.15999985px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:serif">
+    <tspan
+       id="tspan3766"
+       y="998.82751"
+       x="510.64099">V</tspan>
+  </text>
+  <g
+     id="g3770">
+    <g
+       id="g3772">
+      <rect
+         id="rect3774"
+         height="25.75"
+         width="11.452"
+         y="72.75"
+         x="841.25201"
+         style="fill:#afc2da" />
+      <rect
+         id="rect3776"
+         height="25.75"
+         width="11.452"
+         y="72.75"
+         x="841.25201"
+         style="fill:none;stroke:#000000;stroke-width:1" />
+      <text
+         id="text3778"
+         y="78.324997"
+         x="846.97803"
+         style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+        <tspan
+           id="tspan3780"
+           y="78.324997"
+           x="846.97803" />
+      </text>
+    </g>
+    <text
+       id="text3782"
+       y="92.5"
+       x="873.70398"
+       style="font-size:14.1111002px;font-style:normal;font-weight:normal;text-anchor:start;fill:#000000;font-family:sanserif">
+      <tspan
+         id="tspan3784"
+         y="92.5"
+         x="873.70398">作者</tspan>
+    </text>
+    <g
+       id="g3786">
+      <rect
+         id="rect3788"
+         height="25.75"
+         width="11.452"
+         y="114.47"
+         x="841.25201"
+         style="fill:#507baf" />
+      <rect
+         id="rect3790"
+         height="25.75"
+         width="11.452"
+         y="114.47"
+         x="841.25201"
+         style="fill:none;stroke:#000000;stroke-width:1" />
+      <text
+         id="text3792"
+         y="120.045"
+         x="846.97803"
+         style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+        <tspan
+           id="tspan3794"
+           y="120.045"
+           x="846.97803" />
+      </text>
+    </g>
+    <text
+       id="text3796"
+       y="134.22"
+       x="873.70398"
+       style="font-size:14.1111002px;font-style:normal;font-weight:normal;text-anchor:start;fill:#000000;font-family:sanserif">
+      <tspan
+         id="tspan3798"
+         y="134.22"
+         x="873.70398">作者本地环境</tspan>
+    </text>
+    <g
+       id="g3800">
+      <rect
+         id="rect3802"
+         height="25.75"
+         width="11.452"
+         y="156.19"
+         x="841.25201"
+         style="fill:#facca7" />
+      <rect
+         id="rect3804"
+         height="25.75"
+         width="11.452"
+         y="156.19"
+         x="841.25201"
+         style="fill:none;stroke:#000000;stroke-width:1" />
+      <text
+         id="text3806"
+         y="161.765"
+         x="846.97803"
+         style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+        <tspan
+           id="tspan3808"
+           y="161.765"
+           x="846.97803" />
+      </text>
+    </g>
+    <text
+       id="text3810"
+       y="175.94"
+       x="873.70398"
+       style="font-size:14.1111002px;font-style:normal;font-weight:normal;text-anchor:start;fill:#000000;font-family:sanserif">
+      <tspan
+         id="tspan3812"
+         y="175.94"
+         x="873.70398">审核者</tspan>
+    </text>
+    <g
+       id="g3814">
+      <rect
+         id="rect3816"
+         height="25.75"
+         width="11.452"
+         y="197.91"
+         x="841.25201"
+         style="fill:#cadaa9" />
+      <rect
+         id="rect3818"
+         height="25.75"
+         width="11.452"
+         y="197.91"
+         x="841.25201"
+         style="fill:none;stroke:#000000;stroke-width:1" />
+      <text
+         id="text3820"
+         y="203.485"
+         x="846.97803"
+         style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+        <tspan
+           id="tspan3822"
+           y="203.485"
+           x="846.97803" />
+      </text>
+    </g>
+    <text
+       id="text3824"
+       y="217.66"
+       x="873.70398"
+       style="font-size:14.1111002px;font-style:normal;font-weight:normal;text-anchor:start;fill:#000000;font-family:sanserif">
+      <tspan
+         id="tspan3826"
+         y="217.66"
+         x="873.70398">检验者</tspan>
+    </text>
+    <g
+       id="g3828">
+      <rect
+         id="rect3830"
+         height="25.75"
+         width="11.452"
+         y="239.63"
+         x="841.25201"
+         style="fill:#688037" />
+      <rect
+         id="rect3832"
+         height="25.75"
+         width="11.452"
+         y="239.63"
+         x="841.25201"
+         style="fill:none;stroke:#000000;stroke-width:1" />
+      <text
+         id="text3834"
+         y="245.205"
+         x="846.97803"
+         style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+        <tspan
+           id="tspan3836"
+           y="245.205"
+           x="846.97803" />
+      </text>
+    </g>
+    <text
+       id="text3838"
+       y="259.38"
+       x="873.70398"
+       style="font-size:14.1111002px;font-style:normal;font-weight:normal;text-anchor:start;fill:#000000;font-family:sanserif">
+      <tspan
+         id="tspan3840"
+         y="259.38"
+         x="873.70398">检验者本地环境</tspan>
+    </text>
+    <g
+       id="g3842">
+      <rect
+         id="rect3844"
+         height="25.75"
+         width="11.452"
+         y="281.35001"
+         x="841.25201"
+         style="fill:#d9d9d9" />
+      <rect
+         id="rect3846"
+         height="25.75"
+         width="11.452"
+         y="281.35001"
+         x="841.25201"
+         style="fill:none;stroke:#000000;stroke-width:1" />
+      <text
+         id="text3848"
+         y="286.92499"
+         x="846.97803"
+         style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+        <tspan
+           id="tspan3850"
+           y="286.92499"
+           x="846.97803" />
+      </text>
+    </g>
+    <text
+       id="text3852"
+       y="301.10001"
+       x="873.70398"
+       style="font-size:14.1111002px;font-style:normal;font-weight:normal;text-anchor:start;fill:#000000;font-family:sanserif">
+      <tspan
+         id="tspan3854"
+         y="301.10001"
+         x="873.70398">Gerrit 自动过程</tspan>
+    </text>
+  </g>
+  <ellipse
+     style="fill:#cadaa9"
+     cx="835.94098"
+     cy="202.028"
+     rx="7.61273"
+     ry="7.4456"
+     id="ellipse3858"
+     sodipodi:cx="835.94098"
+     sodipodi:cy="202.028"
+     sodipodi:rx="7.61273"
+     sodipodi:ry="7.4456" />
+  <ellipse
+     style="fill:none;stroke:#000000"
+     cx="835.94098"
+     cy="202.028"
+     rx="7.61273"
+     ry="7.4456"
+     id="ellipse3860"
+     sodipodi:cx="835.94098"
+     sodipodi:cy="202.028"
+     sodipodi:rx="7.61273"
+     sodipodi:ry="7.4456" />
+  <text
+     style="font-size:10.15999985px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:serif"
+     x="835.94098"
+     y="205.3774"
+     id="text3862">
+    <tspan
+       x="835.94098"
+       y="205.3774"
+       id="tspan3864">V</tspan>
+  </text>
+  <ellipse
+     style="fill:#d9d9d9"
+     cx="835.97998"
+     cy="286.06601"
+     rx="7.6521602"
+     ry="7.4841599"
+     id="ellipse3868"
+     sodipodi:cx="835.97998"
+     sodipodi:cy="286.06601"
+     sodipodi:rx="7.6521602"
+     sodipodi:ry="7.4841599" />
+  <ellipse
+     style="fill:none;stroke:#000000"
+     cx="835.97998"
+     cy="286.06601"
+     rx="7.6521602"
+     ry="7.4841599"
+     id="ellipse3870"
+     sodipodi:cx="835.97998"
+     sodipodi:cy="286.06601"
+     sodipodi:rx="7.6521602"
+     sodipodi:ry="7.4841599" />
+  <text
+     style="font-size:10.15999985px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:serif"
+     x="835.97998"
+     y="289.4155"
+     id="text3872">
+    <tspan
+       x="835.97998"
+       y="289.4155"
+       id="tspan3874">G</tspan>
+  </text>
+  <ellipse
+     style="fill:#facca7"
+     cx="835.94098"
+     cy="159.153"
+     rx="7.61273"
+     ry="7.4456"
+     id="ellipse3878"
+     sodipodi:cx="835.94098"
+     sodipodi:cy="159.153"
+     sodipodi:rx="7.61273"
+     sodipodi:ry="7.4456" />
+  <ellipse
+     style="fill:none;stroke:#000000"
+     cx="835.94098"
+     cy="159.153"
+     rx="7.61273"
+     ry="7.4456"
+     id="ellipse3880"
+     sodipodi:cx="835.94098"
+     sodipodi:cy="159.153"
+     sodipodi:rx="7.61273"
+     sodipodi:ry="7.4456" />
+  <text
+     style="font-size:10.15999985px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:serif"
+     x="835.94098"
+     y="162.5024"
+     id="text3882">
+    <tspan
+       x="835.94098"
+       y="162.5024"
+       id="tspan3884">R</tspan>
+  </text>
+  <ellipse
+     style="fill:#afc2da"
+     cx="835.94098"
+     cy="74.153397"
+     rx="7.61273"
+     ry="7.4456"
+     id="ellipse3888"
+     sodipodi:cx="835.94098"
+     sodipodi:cy="74.153397"
+     sodipodi:rx="7.61273"
+     sodipodi:ry="7.4456" />
+  <ellipse
+     style="fill:none;stroke:#000000"
+     cx="835.94098"
+     cy="74.153397"
+     rx="7.61273"
+     ry="7.4456"
+     id="ellipse3890"
+     sodipodi:cx="835.94098"
+     sodipodi:cy="74.153397"
+     sodipodi:rx="7.61273"
+     sodipodi:ry="7.4456" />
+  <text
+     style="font-size:10.15999985px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:serif"
+     x="835.94098"
+     y="77.502853"
+     id="text3892">
+    <tspan
+       x="835.94098"
+       y="77.502853"
+       id="tspan3894">A</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="7.4841599"
+     sodipodi:rx="7.6521602"
+     sodipodi:cy="855.802"
+     sodipodi:cx="952.83002"
+     id="ellipse3898"
+     ry="7.4841599"
+     rx="7.6521602"
+     cy="855.802"
+     cx="952.83002"
+     style="fill:#d9d9d9" />
+  <ellipse
+     sodipodi:ry="7.4841599"
+     sodipodi:rx="7.6521602"
+     sodipodi:cy="855.802"
+     sodipodi:cx="952.83002"
+     id="ellipse3900"
+     ry="7.4841599"
+     rx="7.6521602"
+     cy="855.802"
+     cx="952.83002"
+     style="fill:none;stroke:#000000" />
+  <text
+     id="text3902"
+     y="859.15149"
+     x="952.83002"
+     style="font-size:10.15999985px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:serif">
+    <tspan
+       id="tspan3904"
+       y="859.15149"
+       x="952.83002">G</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="7.4841599"
+     sodipodi:rx="7.6521602"
+     sodipodi:cy="607.50201"
+     sodipodi:cx="933.53003"
+     id="ellipse3908"
+     ry="7.4841599"
+     rx="7.6521602"
+     cy="607.50201"
+     cx="933.53003"
+     style="fill:#d9d9d9" />
+  <ellipse
+     sodipodi:ry="7.4841599"
+     sodipodi:rx="7.6521602"
+     sodipodi:cy="607.50201"
+     sodipodi:cx="933.53003"
+     id="ellipse3910"
+     ry="7.4841599"
+     rx="7.6521602"
+     cy="607.50201"
+     cx="933.53003"
+     style="fill:none;stroke:#000000" />
+  <text
+     id="text3912"
+     y="610.8515"
+     x="933.53003"
+     style="font-size:10.15999985px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:serif">
+    <tspan
+       id="tspan3914"
+       y="610.8515"
+       x="933.53003">G</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="7.4841599"
+     sodipodi:rx="7.6521602"
+     sodipodi:cy="870.20203"
+     sodipodi:cx="701.22998"
+     id="ellipse3918"
+     ry="7.4841599"
+     rx="7.6521602"
+     cy="870.20203"
+     cx="701.22998"
+     style="fill:#d9d9d9" />
+  <ellipse
+     sodipodi:ry="7.4841599"
+     sodipodi:rx="7.6521602"
+     sodipodi:cy="870.20203"
+     sodipodi:cx="701.22998"
+     id="ellipse3920"
+     ry="7.4841599"
+     rx="7.6521602"
+     cy="870.20203"
+     cx="701.22998"
+     style="fill:none;stroke:#000000" />
+  <text
+     id="text3922"
+     y="873.55151"
+     x="701.22998"
+     style="font-size:10.15999985px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:serif">
+    <tspan
+       id="tspan3924"
+       y="873.55151"
+       x="701.22998">G</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="7.4841599"
+     sodipodi:rx="7.6521602"
+     sodipodi:cy="872.90198"
+     sodipodi:cx="507.92999"
+     id="ellipse3928"
+     ry="7.4841599"
+     rx="7.6521602"
+     cy="872.90198"
+     cx="507.92999"
+     style="fill:#d9d9d9" />
+  <ellipse
+     sodipodi:ry="7.4841599"
+     sodipodi:rx="7.6521602"
+     sodipodi:cy="872.90198"
+     sodipodi:cx="507.92999"
+     id="ellipse3930"
+     ry="7.4841599"
+     rx="7.6521602"
+     cy="872.90198"
+     cx="507.92999"
+     style="fill:none;stroke:#000000" />
+  <text
+     id="text3932"
+     y="876.25153"
+     x="507.92999"
+     style="font-size:10.15999985px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:serif">
+    <tspan
+       id="tspan3934"
+       y="876.25153"
+       x="507.92999">G</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="7.4841599"
+     sodipodi:rx="7.6521602"
+     sodipodi:cy="735.10199"
+     sodipodi:cx="397.63"
+     id="ellipse3938"
+     ry="7.4841599"
+     rx="7.6521602"
+     cy="735.10199"
+     cx="397.63"
+     style="fill:#d9d9d9" />
+  <ellipse
+     sodipodi:ry="7.4841599"
+     sodipodi:rx="7.6521602"
+     sodipodi:cy="735.10199"
+     sodipodi:cx="397.63"
+     id="ellipse3940"
+     ry="7.4841599"
+     rx="7.6521602"
+     cy="735.10199"
+     cx="397.63"
+     style="fill:none;stroke:#000000" />
+  <text
+     id="text3942"
+     y="738.45154"
+     x="397.63"
+     style="font-size:10.15999985px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:serif">
+    <tspan
+       id="tspan3944"
+       y="738.45154"
+       x="397.63">G</tspan>
+  </text>
+</svg>

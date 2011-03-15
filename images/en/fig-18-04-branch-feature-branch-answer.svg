@@ -1,0 +1,921 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="30cm"
+   height="13cm"
+   viewBox="134 233 589 247"
+   id="svg14592"
+   version="1.1"
+   inkscape:version="0.48.0 r9654"
+   sodipodi:docname="branch-feature-branch-answer.svg"
+   inkscape:export-filename="/Users/jiangxin/gitbook/src/book/images/git-harmony/branch-feature-branch-answer.png"
+   inkscape:export-xdpi="75.285599"
+   inkscape:export-ydpi="75.285599">
+  <metadata
+     id="metadata14968">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs14966" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="640"
+     inkscape:window-height="480"
+     id="namedview14964"
+     showgrid="false"
+     inkscape:zoom="0.47883706"
+     inkscape:cx="531.49603"
+     inkscape:cy="230.31496"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg14592" />
+  <g
+     id="g14594">
+    <g
+       id="g14596">
+      <line
+         style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+         x1="188.062"
+         y1="454.608"
+         x2="711.424"
+         y2="454.502"
+         id="line14598" />
+      <polygon
+         style="fill: #000000"
+         points="718.924,454.5 708.925,459.502 711.424,454.502 708.923,449.502 "
+         id="polygon14600" />
+      <polygon
+         style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+         points="718.924,454.5 708.925,459.502 711.424,454.502 708.923,449.502 "
+         id="polygon14602" />
+    </g>
+    <text
+       style="fill: #000000;text-anchor:start;font-size:10.16;font-family:sanserif;font-style:normal;font-weight:700"
+       x="211.282"
+       y="479.452"
+       id="text14604">
+      <tspan
+         x="211.282"
+         y="479.452"
+         id="tspan14606">F1.1</tspan>
+    </text>
+    <text
+       style="fill: #0000ff;text-anchor:start;font-size:10.16;font-family:sanserif;font-style:italic;font-weight:700"
+       x="277.776"
+       y="479.748"
+       id="text14608">
+      <tspan
+         x="277.776"
+         y="479.748"
+         id="tspan14610">F2.1</tspan>
+    </text>
+    <text
+       style="fill: #000000;text-anchor:start;font-size:10.16;font-family:sanserif;font-style:normal;font-weight:700"
+       x="344.272"
+       y="479.748"
+       id="text14612">
+      <tspan
+         x="344.272"
+         y="479.748"
+         id="tspan14614">F1.2</tspan>
+    </text>
+    <text
+       style="fill: #0000ff;text-anchor:start;font-size:10.16;font-family:sanserif;font-style:italic;font-weight:700"
+       x="410.768"
+       y="479.452"
+       id="text14616">
+      <tspan
+         x="410.768"
+         y="479.452"
+         id="tspan14618">F2.2</tspan>
+    </text>
+    <g
+       id="g14620">
+      <polygon
+         style="fill: #afc2da"
+         points="283.916,467.082 295.325,467.082 289.62,457.438 "
+         id="polygon14622" />
+      <polygon
+         style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff"
+         points="283.916,467.082 295.325,467.082 289.62,457.438 "
+         id="polygon14624" />
+      <text
+         style="fill: #000000;text-anchor:middle;font-size:2.25778;font-family:sanserif;font-style:normal;font-weight:normal"
+         x="289.62"
+         y="465.377"
+         id="text14626">
+        <tspan
+           x="289.62"
+           y="465.377"
+           id="tspan14628" />
+      </text>
+    </g>
+    <g
+       id="g14630">
+      <ellipse
+         style="fill: #ffffff"
+         cx="223.084"
+         cy="461.778"
+         rx="4.87978"
+         ry="4.78364"
+         id="ellipse14632" />
+      <ellipse
+         style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+         cx="223.084"
+         cy="461.778"
+         rx="4.87978"
+         ry="4.78364"
+         id="ellipse14634" />
+      <text
+         style="fill: #000000;text-anchor:middle;font-size:2.82222;font-family:sanserif;font-style:normal;font-weight:normal"
+         x="223.084"
+         y="460.714"
+         id="text14636">
+        <tspan
+           x="223.084"
+           y="460.714"
+           id="tspan14638" />
+      </text>
+    </g>
+    <g
+       id="g14640">
+      <ellipse
+         style="fill: #ffffff"
+         cx="356.156"
+         cy="461.778"
+         rx="4.87978"
+         ry="4.78364"
+         id="ellipse14642" />
+      <ellipse
+         style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+         cx="356.156"
+         cy="461.778"
+         rx="4.87978"
+         ry="4.78364"
+         id="ellipse14644" />
+      <text
+         style="fill: #000000;text-anchor:middle;font-size:2.82222;font-family:sanserif;font-style:normal;font-weight:normal"
+         x="356.156"
+         y="460.714"
+         id="text14646">
+        <tspan
+           x="356.156"
+           y="460.714"
+           id="tspan14648" />
+      </text>
+    </g>
+    <g
+       id="g14650">
+      <polygon
+         style="fill: #afc2da"
+         points="416.988,467.082 428.397,467.082 422.692,457.438 "
+         id="polygon14652" />
+      <polygon
+         style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff"
+         points="416.988,467.082 428.397,467.082 422.692,457.438 "
+         id="polygon14654" />
+      <text
+         style="fill: #000000;text-anchor:middle;font-size:2.25778;font-family:sanserif;font-style:normal;font-weight:normal"
+         x="422.692"
+         y="465.377"
+         id="text14656">
+        <tspan
+           x="422.692"
+           y="465.377"
+           id="tspan14658" />
+      </text>
+    </g>
+    <g
+       id="g14660">
+      <polygon
+         style="fill: #ff0000"
+         points="483.216,457.276 494.625,457.276 488.92,466.92 "
+         id="polygon14662" />
+      <polygon
+         style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff"
+         points="483.216,457.276 494.625,457.276 488.92,466.92 "
+         id="polygon14664" />
+      <text
+         style="fill: #000000;text-anchor:middle;font-size:2.25778;font-family:sanserif;font-style:normal;font-weight:normal"
+         x="488.92"
+         y="460.393"
+         id="text14666">
+        <tspan
+           x="488.92"
+           y="460.393"
+           id="tspan14668" />
+      </text>
+    </g>
+    <text
+       style="fill: #ff0000;text-anchor:start;font-size:10.16;font-family:sanserif;font-style:italic;font-weight:700"
+       x="477.462"
+       y="479.748"
+       id="text14670">
+      <tspan
+         x="477.462"
+         y="479.748"
+         id="tspan14672">F2.X</tspan>
+    </text>
+    <text
+       style="fill: #000000;text-anchor:start;font-size:10.16;font-family:sanserif;font-style:normal;font-weight:700"
+       x="544.422"
+       y="479.452"
+       id="text14674">
+      <tspan
+         x="544.422"
+         y="479.452"
+         id="tspan14676">F1.3</tspan>
+    </text>
+    <g
+       id="g14678">
+      <ellipse
+         style="fill: #ffffff"
+         cx="556.308"
+         cy="461.778"
+         rx="4.87978"
+         ry="4.78364"
+         id="ellipse14680" />
+      <ellipse
+         style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+         cx="556.308"
+         cy="461.778"
+         rx="4.87978"
+         ry="4.78364"
+         id="ellipse14682" />
+      <text
+         style="fill: #000000;text-anchor:middle;font-size:2.82222;font-family:sanserif;font-style:normal;font-weight:normal"
+         x="556.308"
+         y="460.714"
+         id="text14684">
+        <tspan
+           x="556.308"
+           y="460.714"
+           id="tspan14686" />
+      </text>
+    </g>
+    <text
+       style="fill: #000000;text-anchor:start;font-size:10.16;font-family:sanserif;font-style:normal;font-weight:700"
+       x="610.922"
+       y="479.452"
+       id="text14688">
+      <tspan
+         x="610.922"
+         y="479.452"
+         id="tspan14690">F1.4</tspan>
+    </text>
+    <g
+       id="g14692">
+      <ellipse
+         style="fill: #ffffff"
+         cx="622.808"
+         cy="461.778"
+         rx="4.87978"
+         ry="4.78364"
+         id="ellipse14694" />
+      <ellipse
+         style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+         cx="622.808"
+         cy="461.778"
+         rx="4.87978"
+         ry="4.78364"
+         id="ellipse14696" />
+      <text
+         style="fill: #000000;text-anchor:middle;font-size:2.82222;font-family:sanserif;font-style:normal;font-weight:normal"
+         x="622.808"
+         y="460.714"
+         id="text14698">
+        <tspan
+           x="622.808"
+           y="460.714"
+           id="tspan14700" />
+      </text>
+    </g>
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       d="M 488.92 457.276 C 489.09,441.676 487.124,426.886 494.97,418.114 C 502.816,409.344 509.808,408.242 522.97,408.114 C 536.132,407.986 690.776,408.394 690.66,408.312"
+       id="path14702" />
+    <text
+       style="fill: #0000ff;text-anchor:start;font-size:10.16;font-family:sanserif;font-style:italic;font-weight:700"
+       x="523.446"
+       y="432.964"
+       id="text14704">
+      <tspan
+         x="523.446"
+         y="432.964"
+         id="tspan14706">F2.1'</tspan>
+    </text>
+    <text
+       style="fill: #0000ff;text-anchor:start;font-size:10.16;font-family:sanserif;font-style:italic;font-weight:700"
+       x="589.436"
+       y="432.666"
+       id="text14708">
+      <tspan
+         x="589.436"
+         y="432.666"
+         id="tspan14710">F2.2'</tspan>
+    </text>
+    <g
+       id="g14712">
+      <polygon
+         style="fill: #afc2da"
+         points="529.584,420.296 540.993,420.296 535.288,410.652 "
+         id="polygon14714" />
+      <polygon
+         style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff"
+         points="529.584,420.296 540.993,420.296 535.288,410.652 "
+         id="polygon14716" />
+      <text
+         style="fill: #000000;text-anchor:middle;font-size:2.25778;font-family:sanserif;font-style:normal;font-weight:normal"
+         x="535.288"
+         y="418.591"
+         id="text14718">
+        <tspan
+           x="535.288"
+           y="418.591"
+           id="tspan14720" />
+      </text>
+    </g>
+    <g
+       id="g14722">
+      <polygon
+         style="fill: #afc2da"
+         points="595.656,420.296 607.065,420.296 601.36,410.652 "
+         id="polygon14724" />
+      <polygon
+         style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff"
+         points="595.656,420.296 607.065,420.296 601.36,410.652 "
+         id="polygon14726" />
+      <text
+         style="fill: #000000;text-anchor:middle;font-size:2.25778;font-family:sanserif;font-style:normal;font-weight:normal"
+         x="601.36"
+         y="418.591"
+         id="text14728">
+        <tspan
+           x="601.36"
+           y="418.591"
+           id="tspan14730" />
+      </text>
+    </g>
+    <text
+       style="fill: #0000ff;text-anchor:start;font-size:10.16;font-family:sanserif;font-style:italic;font-weight:700"
+       x="655.576"
+       y="432.666"
+       id="text14732">
+      <tspan
+         x="655.576"
+         y="432.666"
+         id="tspan14734">F2.3</tspan>
+    </text>
+    <g
+       id="g14736">
+      <polygon
+         style="fill: #afc2da"
+         points="661.796,420.296 673.205,420.296 667.5,410.652 "
+         id="polygon14738" />
+      <polygon
+         style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff"
+         points="661.796,420.296 673.205,420.296 667.5,410.652 "
+         id="polygon14740" />
+      <text
+         style="fill: #000000;text-anchor:middle;font-size:2.25778;font-family:sanserif;font-style:normal;font-weight:normal"
+         x="667.5"
+         y="418.591"
+         id="text14742">
+        <tspan
+           x="667.5"
+           y="418.591"
+           id="tspan14744" />
+      </text>
+    </g>
+    <text
+       style="fill: #000000;text-anchor:start;font-size:10.16;font-family:sanserif;font-style:normal;font-weight:700"
+       x="677.836"
+       y="479.156"
+       id="text14746">
+      <tspan
+         x="677.836"
+         y="479.156"
+         id="tspan14748">F1.5</tspan>
+    </text>
+    <g
+       id="g14750">
+      <ellipse
+         style="fill: #ffffff"
+         cx="689.722"
+         cy="461.778"
+         rx="4.87978"
+         ry="4.78364"
+         id="ellipse14752" />
+      <ellipse
+         style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+         cx="689.722"
+         cy="461.778"
+         rx="4.87978"
+         ry="4.78364"
+         id="ellipse14754" />
+      <text
+         style="fill: #000000;text-anchor:middle;font-size:2.82222;font-family:sanserif;font-style:normal;font-weight:normal"
+         x="689.722"
+         y="460.714"
+         id="text14756">
+        <tspan
+           x="689.722"
+           y="460.714"
+           id="tspan14758" />
+      </text>
+    </g>
+  </g>
+  <g
+     id="g14760">
+    <g
+       id="g14762">
+      <line
+         style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+         x1="183.973"
+         y1="240.27"
+         x2="513.104"
+         y2="240.311"
+         id="line14764" />
+      <polygon
+         style="fill: #000000"
+         points="520.604,240.312 510.603,245.31 513.104,240.311 510.605,235.31 "
+         id="polygon14766" />
+      <polygon
+         style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+         points="520.604,240.312 510.603,245.31 513.104,240.311 510.605,235.31 "
+         id="polygon14768" />
+    </g>
+    <text
+       style="fill: #000000;text-anchor:start;font-size:10.16;font-family:sanserif;font-style:normal;font-weight:700"
+       x="207.192"
+       y="265.114"
+       id="text14770">
+      <tspan
+         x="207.192"
+         y="265.114"
+         id="tspan14772">F1.1</tspan>
+    </text>
+    <text
+       style="fill: #0000ff;text-anchor:start;font-size:10.16;font-family:sanserif;font-style:italic;font-weight:700"
+       x="273.688"
+       y="265.41"
+       id="text14774">
+      <tspan
+         x="273.688"
+         y="265.41"
+         id="tspan14776">F2.1</tspan>
+    </text>
+    <text
+       style="fill: #000000;text-anchor:start;font-size:10.16;font-family:sanserif;font-style:normal;font-weight:700"
+       x="340.184"
+       y="265.41"
+       id="text14778">
+      <tspan
+         x="340.184"
+         y="265.41"
+         id="tspan14780">F1.2</tspan>
+    </text>
+    <text
+       style="fill: #0000ff;text-anchor:start;font-size:10.16;font-family:sanserif;font-style:italic;font-weight:700"
+       x="406.678"
+       y="265.114"
+       id="text14782">
+      <tspan
+         x="406.678"
+         y="265.114"
+         id="tspan14784">F2.2</tspan>
+    </text>
+    <g
+       id="g14786">
+      <polygon
+         style="fill: #afc2da"
+         points="279.826,252.744 291.235,252.744 285.53,243.1 "
+         id="polygon14788" />
+      <polygon
+         style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff"
+         points="279.826,252.744 291.235,252.744 285.53,243.1 "
+         id="polygon14790" />
+      <text
+         style="fill: #000000;text-anchor:middle;font-size:2.25778;font-family:sanserif;font-style:normal;font-weight:normal"
+         x="285.53"
+         y="251.039"
+         id="text14792">
+        <tspan
+           x="285.53"
+           y="251.039"
+           id="tspan14794" />
+      </text>
+    </g>
+    <g
+       id="g14796">
+      <ellipse
+         style="fill: #ffffff"
+         cx="218.996"
+         cy="247.44"
+         rx="4.87978"
+         ry="4.78364"
+         id="ellipse14798" />
+      <ellipse
+         style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+         cx="218.996"
+         cy="247.44"
+         rx="4.87978"
+         ry="4.78364"
+         id="ellipse14800" />
+      <text
+         style="fill: #000000;text-anchor:middle;font-size:2.82222;font-family:sanserif;font-style:normal;font-weight:normal"
+         x="218.996"
+         y="246.376"
+         id="text14802">
+        <tspan
+           x="218.996"
+           y="246.376"
+           id="tspan14804" />
+      </text>
+    </g>
+    <g
+       id="g14806">
+      <ellipse
+         style="fill: #ffffff"
+         cx="352.068"
+         cy="247.44"
+         rx="4.87978"
+         ry="4.78364"
+         id="ellipse14808" />
+      <ellipse
+         style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+         cx="352.068"
+         cy="247.44"
+         rx="4.87978"
+         ry="4.78364"
+         id="ellipse14810" />
+      <text
+         style="fill: #000000;text-anchor:middle;font-size:2.82222;font-family:sanserif;font-style:normal;font-weight:normal"
+         x="352.068"
+         y="246.376"
+         id="text14812">
+        <tspan
+           x="352.068"
+           y="246.376"
+           id="tspan14814" />
+      </text>
+    </g>
+    <g
+       id="g14816">
+      <polygon
+         style="fill: #afc2da"
+         points="412.9,252.744 424.309,252.744 418.604,243.1 "
+         id="polygon14818" />
+      <polygon
+         style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff"
+         points="412.9,252.744 424.309,252.744 418.604,243.1 "
+         id="polygon14820" />
+      <text
+         style="fill: #000000;text-anchor:middle;font-size:2.25778;font-family:sanserif;font-style:normal;font-weight:normal"
+         x="418.604"
+         y="251.039"
+         id="text14822">
+        <tspan
+           x="418.604"
+           y="251.039"
+           id="tspan14824" />
+      </text>
+    </g>
+  </g>
+  <g
+     id="g14826">
+    <g
+       id="g14828">
+      <line
+         style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+         x1="187.167"
+         y1="348.316"
+         x2="650.932"
+         y2="347.991"
+         id="line14830" />
+      <polygon
+         style="fill: #000000"
+         points="658.432,347.986 648.435,352.993 650.932,347.991 648.428,342.993 "
+         id="polygon14832" />
+      <polygon
+         style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+         points="658.432,347.986 648.435,352.993 650.932,347.991 648.428,342.993 "
+         id="polygon14834" />
+    </g>
+    <text
+       style="fill: #000000;text-anchor:start;font-size:10.16;font-family:sanserif;font-style:normal;font-weight:700"
+       x="210.386"
+       y="373.158"
+       id="text14836">
+      <tspan
+         x="210.386"
+         y="373.158"
+         id="tspan14838">F1.1</tspan>
+    </text>
+    <text
+       style="fill: #0000ff;text-anchor:start;font-size:10.16;font-family:sanserif;font-style:italic;font-weight:700"
+       x="276.882"
+       y="373.456"
+       id="text14840">
+      <tspan
+         x="276.882"
+         y="373.456"
+         id="tspan14842">F2.1</tspan>
+    </text>
+    <text
+       style="fill: #000000;text-anchor:start;font-size:10.16;font-family:sanserif;font-style:normal;font-weight:700"
+       x="343.376"
+       y="373.456"
+       id="text14844">
+      <tspan
+         x="343.376"
+         y="373.456"
+         id="tspan14846">F1.2</tspan>
+    </text>
+    <text
+       style="fill: #0000ff;text-anchor:start;font-size:10.16;font-family:sanserif;font-style:italic;font-weight:700"
+       x="409.872"
+       y="373.158"
+       id="text14848">
+      <tspan
+         x="409.872"
+         y="373.158"
+         id="tspan14850">F2.2</tspan>
+    </text>
+    <g
+       id="g14852">
+      <polygon
+         style="fill: #afc2da"
+         points="283.02,360.788 294.429,360.788 288.724,351.144 "
+         id="polygon14854" />
+      <polygon
+         style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff"
+         points="283.02,360.788 294.429,360.788 288.724,351.144 "
+         id="polygon14856" />
+      <text
+         style="fill: #000000;text-anchor:middle;font-size:2.25778;font-family:sanserif;font-style:normal;font-weight:normal"
+         x="288.724"
+         y="359.083"
+         id="text14858">
+        <tspan
+           x="288.724"
+           y="359.083"
+           id="tspan14860" />
+      </text>
+    </g>
+    <g
+       id="g14862">
+      <ellipse
+         style="fill: #ffffff"
+         cx="222.19"
+         cy="355.486"
+         rx="4.87978"
+         ry="4.78364"
+         id="ellipse14864" />
+      <ellipse
+         style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+         cx="222.19"
+         cy="355.486"
+         rx="4.87978"
+         ry="4.78364"
+         id="ellipse14866" />
+      <text
+         style="fill: #000000;text-anchor:middle;font-size:2.82222;font-family:sanserif;font-style:normal;font-weight:normal"
+         x="222.19"
+         y="354.422"
+         id="text14868">
+        <tspan
+           x="222.19"
+           y="354.422"
+           id="tspan14870" />
+      </text>
+    </g>
+    <g
+       id="g14872">
+      <ellipse
+         style="fill: #ffffff"
+         cx="355.262"
+         cy="355.486"
+         rx="4.87978"
+         ry="4.78364"
+         id="ellipse14874" />
+      <ellipse
+         style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+         cx="355.262"
+         cy="355.486"
+         rx="4.87978"
+         ry="4.78364"
+         id="ellipse14876" />
+      <text
+         style="fill: #000000;text-anchor:middle;font-size:2.82222;font-family:sanserif;font-style:normal;font-weight:normal"
+         x="355.262"
+         y="354.422"
+         id="text14878">
+        <tspan
+           x="355.262"
+           y="354.422"
+           id="tspan14880" />
+      </text>
+    </g>
+    <g
+       id="g14882">
+      <polygon
+         style="fill: #afc2da"
+         points="416.092,360.788 427.501,360.788 421.796,351.144 "
+         id="polygon14884" />
+      <polygon
+         style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff"
+         points="416.092,360.788 427.501,360.788 421.796,351.144 "
+         id="polygon14886" />
+      <text
+         style="fill: #000000;text-anchor:middle;font-size:2.25778;font-family:sanserif;font-style:normal;font-weight:normal"
+         x="421.796"
+         y="359.083"
+         id="text14888">
+        <tspan
+           x="421.796"
+           y="359.083"
+           id="tspan14890" />
+      </text>
+    </g>
+    <g
+       id="g14892">
+      <polygon
+         style="fill: #ff0000"
+         points="482.32,350.984 493.729,350.984 488.024,360.628 "
+         id="polygon14894" />
+      <polygon
+         style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff"
+         points="482.32,350.984 493.729,350.984 488.024,360.628 "
+         id="polygon14896" />
+      <text
+         style="fill: #000000;text-anchor:middle;font-size:2.25778;font-family:sanserif;font-style:normal;font-weight:normal"
+         x="488.024"
+         y="354.101"
+         id="text14898">
+        <tspan
+           x="488.024"
+           y="354.101"
+           id="tspan14900" />
+      </text>
+    </g>
+    <text
+       style="fill: #ff0000;text-anchor:start;font-size:10.16;font-family:sanserif;font-style:italic;font-weight:700"
+       x="476.566"
+       y="373.456"
+       id="text14902">
+      <tspan
+         x="476.566"
+         y="373.456"
+         id="tspan14904">F2.X</tspan>
+    </text>
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       d="M 488.024 350.984 C 488.194,335.384 485.866,320.482 493.712,311.71 C 501.558,302.94 508.55,301.838 521.712,301.71 C 534.874,301.582 626.358,301.808 626.242,301.726"
+       id="path14906" />
+    <text
+       style="fill: #0000ff;text-anchor:start;font-size:10.16;font-family:sanserif;font-style:italic;font-weight:700"
+       x="522.188"
+       y="326.56"
+       id="text14908">
+      <tspan
+         x="522.188"
+         y="326.56"
+         id="tspan14910">F2.1'</tspan>
+    </text>
+    <text
+       style="fill: #0000ff;text-anchor:start;font-size:10.16;font-family:sanserif;font-style:italic;font-weight:700"
+       x="588.178"
+       y="326.262"
+       id="text14912">
+      <tspan
+         x="588.178"
+         y="326.262"
+         id="tspan14914">F2.2'</tspan>
+    </text>
+    <g
+       id="g14916">
+      <polygon
+         style="fill: #afc2da"
+         points="528.326,313.892 539.735,313.892 534.03,304.248 "
+         id="polygon14918" />
+      <polygon
+         style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff"
+         points="528.326,313.892 539.735,313.892 534.03,304.248 "
+         id="polygon14920" />
+      <text
+         style="fill: #000000;text-anchor:middle;font-size:2.25778;font-family:sanserif;font-style:normal;font-weight:normal"
+         x="534.03"
+         y="312.187"
+         id="text14922">
+        <tspan
+           x="534.03"
+           y="312.187"
+           id="tspan14924" />
+      </text>
+    </g>
+    <g
+       id="g14926">
+      <polygon
+         style="fill: #afc2da"
+         points="594.398,313.892 605.807,313.892 600.102,304.248 "
+         id="polygon14928" />
+      <polygon
+         style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff"
+         points="594.398,313.892 605.807,313.892 600.102,304.248 "
+         id="polygon14930" />
+      <text
+         style="fill: #000000;text-anchor:middle;font-size:2.25778;font-family:sanserif;font-style:normal;font-weight:normal"
+         x="600.102"
+         y="312.187"
+         id="text14932">
+        <tspan
+           x="600.102"
+           y="312.187"
+           id="tspan14934" />
+      </text>
+    </g>
+    <g
+       id="g14936">
+      <path
+         style="fill: none; fill-opacity:0; stroke-width: 1; stroke-dasharray: 4; stroke: #ff0000"
+         d="M 288.724 351.144 C 327.012,323.358 398.012,316.858 431.512,302.358 C 465.012,287.858 515.512,280.358 534.03,304.248"
+         id="path14938" />
+      <polygon
+         style="fill: #ff0000"
+         points="534.03,304.248 524.307,296.602 528.516,297.135 529.049,292.926 "
+         id="polygon14940" />
+      <polygon
+         style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #ff0000"
+         points="534.03,304.248 524.307,296.602 528.516,297.135 529.049,292.926 "
+         id="polygon14942" />
+    </g>
+    <g
+       id="g14944">
+      <path
+         style="fill: none; fill-opacity:0; stroke-width: 1; stroke-dasharray: 4; stroke: #ff0000"
+         d="M 421.796 351.144 C 447.012,319.858 456.512,311.858 499.012,292.358 C 541.512,272.858 590.512,280.858 600.102,304.248"
+         id="path14946" />
+      <polygon
+         style="fill: #ff0000"
+         points="600.102,304.248 592.774,294.283 596.688,295.921 598.325,292.007 "
+         id="polygon14948" />
+      <polygon
+         style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #ff0000"
+         points="600.102,304.248 592.774,294.283 596.688,295.921 598.325,292.007 "
+         id="polygon14950" />
+    </g>
+  </g>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal"
+     x="134.45"
+     y="246.49"
+     id="text14952">
+    <tspan
+       x="134.45"
+       y="246.49"
+       id="tspan14954">①</tspan>
+  </text>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal"
+     x="134.45"
+     y="353.592"
+     id="text14956">
+    <tspan
+       x="134.45"
+       y="353.592"
+       id="tspan14958">②</tspan>
+  </text>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal"
+     x="134.45"
+     y="460.692"
+     id="text14960">
+    <tspan
+       x="134.45"
+       y="460.692"
+       id="tspan14962">③</tspan>
+  </text>
+</svg>

@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="35cm"
+   height="19cm"
+   viewBox="209 90 700 375"
+   id="svg4274"
+   version="1.1"
+   inkscape:version="0.48.0 r9654"
+   sodipodi:docname="fig-06-01-git-objects.svg">
+  <metadata
+     id="metadata4470">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs4468" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1280"
+     inkscape:window-height="752"
+     id="namedview4466"
+     showgrid="false"
+     inkscape:zoom="0.55036892"
+     inkscape:cx="633.41573"
+     inkscape:cy="498.0326"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg4274" />
+  <g
+     id="g4276">
+    <path
+       style="fill: #afc2da"
+       d="M 395.748 113.563 L 722.748,113.563 C 886.248,113.563 886.248,113.563 886.248,195.782 L 886.248,360.222 C 886.248,442.441 886.248,442.441 722.748,442.441 L 395.748,442.441 C 232.248,442.441 232.248,442.441 232.248,360.222 L 232.248,195.782 C 232.248,113.563 232.248,113.563 395.748,113.563z"
+       id="path4278" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #333333"
+       d="M 395.748 113.563 L 722.748,113.563 C 886.248,113.563 886.248,113.563 886.248,195.782 L 886.248,360.222 C 886.248,442.441 886.248,442.441 722.748,442.441 L 395.748,442.441 C 232.248,442.441 232.248,442.441 232.248,360.222 L 232.248,195.782 C 232.248,113.563 232.248,113.563 395.748,113.563"
+       id="path4280" />
+    <text
+       style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+       x="274.948"
+       y="140.707"
+       id="text4282">
+      <tspan
+         x="274.948"
+         y="140.707"
+         id="tspan4284" />
+    </text>
+  </g>
+  <rect
+     style="fill:#ffffff;stroke:#333333;stroke-width:1.9981333;stroke-miterlimit:4;stroke-dasharray:none"
+     x="277"
+     y="311.93979"
+     width="156.78444"
+     height="20"
+     id="rect6285" />
+  <text
+     style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:黑体;font-style:normal;font-weight:normal"
+     x="272.7"
+     y="141.5"
+     id="text4286">
+    <tspan
+       x="272.7"
+       y="141.5"
+       id="tspan4288">对象库 (.git/objects) </tspan>
+  </text>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+     x="353.578"
+     y="264.374"
+     id="text4290">
+    <tspan
+       x="353.578"
+       y="264.374"
+       id="tspan4292" />
+  </text>
+  <rect
+     id="rect4298"
+     height="20"
+     width="156.78444"
+     y="174"
+     x="277"
+     style="fill:#ffffff;stroke:#333333;stroke-width:1.99813335000000003;stroke-miterlimit:4;stroke-dasharray:none" />
+  <text
+     id="text4300"
+     y="187.94885"
+     x="355.10471"
+     style="font-size:12.80000019px;font-style:normal;font-weight:700;text-anchor:middle;fill:#000000;font-family:sanserif">COMMIT</text>
+  <g
+     id="g4450"
+     transform="translate(0,19.191112)">
+    <polyline
+       style="fill:none;stroke:#000000;stroke-width:2"
+       points="310.5,223 413.874,223 413.874,205.442 507.512,205.442 "
+       id="polyline4452" />
+    <polygon
+       style="fill:#000000"
+       points="505.012,200.442 515.012,205.442 505.012,210.442 507.512,205.442 "
+       id="polygon4454" />
+    <polygon
+       style="fill:none;stroke:#000000;stroke-width:2"
+       points="505.012,200.442 515.012,205.442 505.012,210.442 507.512,205.442 "
+       id="polygon4456" />
+  </g>
+  <rect
+     id="rect4304"
+     height="76"
+     width="156.78444"
+     y="194"
+     x="277"
+     style="fill:#ffffff;stroke:#333333;stroke-width:1.99813335000000003;stroke-miterlimit:4;stroke-dasharray:none" />
+  <ellipse
+     sodipodi:ry="2"
+     sodipodi:rx="2"
+     sodipodi:cy="205"
+     sodipodi:cx="282"
+     id="ellipse4306"
+     ry="2"
+     rx="2"
+     cy="205"
+     cx="282"
+     style="fill:none;stroke:#333333;stroke-width:0.2" />
+  <text
+     id="text4308"
+     y="212"
+     x="286"
+     style="font-size:14.39999962px;font-style:normal;font-weight:normal;text-anchor:start;fill:#000000;font-family:monospace">Id</text>
+  <text
+     id="text4310"
+     y="212"
+     x="345.28409"
+     style="font-size:14.39999962px;font-style:normal;font-weight:normal;text-anchor:start;fill:#000000;font-family:monospace">e695606</text>
+  <ellipse
+     sodipodi:ry="2"
+     sodipodi:rx="2"
+     sodipodi:cy="223"
+     sodipodi:cx="282"
+     id="ellipse4312"
+     ry="2"
+     rx="2"
+     cy="223"
+     cx="282"
+     style="fill:none;stroke:#333333;stroke-width:0.2" />
+  <text
+     id="text4314"
+     y="230"
+     x="286"
+     style="font-size:14.39999962px;font-style:normal;font-weight:normal;text-anchor:start;fill:#000000;font-family:monospace">Tree</text>
+  <text
+     id="text4316"
+     y="230"
+     x="345.28409"
+     style="font-size:14.39999962px;font-style:normal;font-weight:normal;text-anchor:start;fill:#000000;font-family:monospace">f58da9a</text>
+  <ellipse
+     sodipodi:ry="2"
+     sodipodi:rx="2"
+     sodipodi:cy="241"
+     sodipodi:cx="282"
+     id="ellipse4318"
+     ry="2"
+     rx="2"
+     cy="241"
+     cx="282"
+     style="fill:none;stroke:#333333;stroke-width:0.2" />
+  <text
+     id="text4320"
+     y="248"
+     x="286"
+     style="font-size:14.39999962px;font-style:normal;font-weight:normal;text-anchor:start;fill:#000000;font-family:monospace">Parent</text>
+  <text
+     id="text4322"
+     y="248"
+     x="345.28409"
+     style="font-size:14.39999962px;font-style:normal;font-weight:normal;text-anchor:start;fill:#000000;font-family:monospace">a0c641e</text>
+  <ellipse
+     sodipodi:ry="2"
+     sodipodi:rx="2"
+     sodipodi:cy="259"
+     sodipodi:cx="282"
+     id="ellipse4324"
+     ry="2"
+     rx="2"
+     cy="259"
+     cx="282"
+     style="fill:none;stroke:#333333;stroke-width:0.2" />
+  <text
+     id="text4326"
+     y="266"
+     x="286"
+     style="font-size:14.39999962px;font-style:normal;font-weight:normal;text-anchor:start;fill:#000000;font-family:monospace">Author</text>
+  <text
+     id="text4328"
+     y="266"
+     x="345.28409"
+     style="font-size:14.39999962px;font-style:normal;font-weight:normal;text-anchor:start;fill:#000000;font-family:monospace">Jiang Xin</text>
+  <text
+     id="text4336"
+     y="326.19226"
+     x="355.10471"
+     style="font-size:12.80000019px;font-style:normal;font-weight:700;text-anchor:middle;fill:#000000;font-family:sanserif">COMMIT</text>
+  <rect
+     style="fill:#ffffff;stroke:#333333;stroke-width:1.9981333;stroke-miterlimit:4;stroke-dasharray:none"
+     x="277"
+     y="331.93979"
+     width="156.78444"
+     height="76"
+     id="rect6287" />
+  <ellipse
+     sodipodi:ry="2"
+     sodipodi:rx="2"
+     sodipodi:cy="343.45001"
+     sodipodi:cx="282"
+     id="ellipse4342"
+     ry="2"
+     rx="2"
+     cy="343.45001"
+     cx="282"
+     style="fill:none;stroke:#333333;stroke-width:0.2" />
+  <text
+     id="text4344"
+     y="350.45001"
+     x="286"
+     style="font-size:14.39999962px;font-style:normal;font-weight:normal;text-anchor:start;fill:#000000;font-family:monospace">Id</text>
+  <text
+     id="text4346"
+     y="350.45001"
+     x="345.11533"
+     style="font-size:14.39999962px;font-style:normal;font-weight:normal;text-anchor:start;fill:#000000;font-family:monospace">a0c641e</text>
+  <ellipse
+     sodipodi:ry="2"
+     sodipodi:rx="2"
+     sodipodi:cy="361.45001"
+     sodipodi:cx="282"
+     id="ellipse4348"
+     ry="2"
+     rx="2"
+     cy="361.45001"
+     cx="282"
+     style="fill:none;stroke:#333333;stroke-width:0.2" />
+  <text
+     id="text4350"
+     y="368.45001"
+     x="286"
+     style="font-size:14.39999962px;font-style:normal;font-weight:normal;text-anchor:start;fill:#000000;font-family:monospace">Tree</text>
+  <text
+     id="text4352"
+     y="368.45001"
+     x="344.3208"
+     style="font-size:14.39999962px;font-style:normal;font-weight:normal;text-anchor:start;fill:#000000;font-family:monospace">190d840</text>
+  <ellipse
+     sodipodi:ry="2"
+     sodipodi:rx="2"
+     sodipodi:cy="379.45001"
+     sodipodi:cx="282"
+     id="ellipse4354"
+     ry="2"
+     rx="2"
+     cy="379.45001"
+     cx="282"
+     style="fill:none;stroke:#333333;stroke-width:0.2" />
+  <text
+     id="text4356"
+     y="386.45001"
+     x="286"
+     style="font-size:14.39999962px;font-style:normal;font-weight:normal;text-anchor:start;fill:#000000;font-family:monospace">Parent</text>
+  <text
+     id="text4358"
+     y="386.45001"
+     x="345.15753"
+     style="font-size:14.39999962px;font-style:normal;font-weight:normal;text-anchor:start;fill:#000000;font-family:monospace">9e8a761</text>
+  <ellipse
+     sodipodi:ry="2"
+     sodipodi:rx="2"
+     sodipodi:cy="397.45001"
+     sodipodi:cx="282"
+     id="ellipse4360"
+     ry="2"
+     rx="2"
+     cy="397.45001"
+     cx="282"
+     style="fill:none;stroke:#333333;stroke-width:0.2" />
+  <text
+     id="text4362"
+     y="404.45001"
+     x="286"
+     style="font-size:14.39999962px;font-style:normal;font-weight:normal;text-anchor:start;fill:#000000;font-family:monospace">Author</text>
+  <text
+     id="text4364"
+     y="404.45001"
+     x="345.28409"
+     style="font-size:14.39999962px;font-style:normal;font-weight:normal;text-anchor:start;fill:#000000;font-family:monospace">Jiang Xin</text>
+  <g
+     id="g4366">
+    <polyline
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="277,241 245.248,241 245.248,343.45 267.264,343.45 "
+       id="polyline4368" />
+    <polygon
+       style="fill: #000000"
+       points="274.764,343.45 264.764,348.45 267.264,343.45 264.764,338.45 "
+       id="polygon4370" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="274.764,343.45 264.764,348.45 267.264,343.45 264.764,338.45 "
+       id="polygon4372" />
+  </g>
+  <g
+     id="g4374">
+    <path
+       style="fill: #ffffff"
+       d="M 740.998 191.063 L 851.998,191.063 L 851.998,268.205 C 829.798,255.348 818.698,255.348 796.498,268.205 C 774.298,281.063 763.198,281.063 740.998,268.205 L 740.998,191.063z"
+       id="path4376" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #333333"
+       d="M 740.998 191.063 L 851.998,191.063 L 851.998,268.205 C 829.798,255.348 818.698,255.348 796.498,268.205 C 774.298,281.063 763.198,281.063 740.998,268.205 L 740.998,191.063"
+       id="path4378" />
+    <text
+       style="fill: #000000;text-anchor:middle;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+       x="796.498"
+       y="227.205"
+       id="text4380">
+      <tspan
+         x="796.498"
+         y="227.205"
+         id="tspan4382" />
+    </text>
+  </g>
+  <g
+     id="g4384">
+    <polygon
+       style="fill: #ffffff"
+       points="517.75,193.25 521.98,193.25 529.03,173.25 574.149,173.25 581.199,193.25 651.698,193.25 658.748,197.966 658.748,287.563 517.75,287.563 "
+       id="polygon4386" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #333333"
+       points="517.75,193.25 521.98,193.25 529.03,173.25 574.149,173.25 581.199,193.25 651.698,193.25 658.748,197.966 658.748,287.563 517.75,287.563 "
+       id="polygon4388" />
+    <text
+       style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+       x="527.75"
+       y="203.95"
+       id="text4390">
+      <tspan
+         x="527.75"
+         y="203.95"
+         id="tspan4392" />
+    </text>
+  </g>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:14.1111;font-family:sanserif;font-style:normal;font-weight:700"
+     x="535.45"
+     y="187.85"
+     id="text4394">
+    <tspan
+       x="535.45"
+       y="187.85"
+       id="tspan4396">tree</tspan>
+  </text>
+  <g
+     id="g4398">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #333333"
+       x1="535.621"
+       y1="250.75"
+       x2="535.753"
+       y2="279.812"
+       id="line4400" />
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #333333"
+       x1="535.668"
+       y1="261.128"
+       x2="550.248"
+       y2="261.062"
+       id="line4402" />
+  </g>
+  <g
+     id="g4404">
+    <path
+       style="fill: #e6e6e6"
+       d="M 526.673 233.651 C 526.673,230.126 526.673,230.126 529.22,230.126 C 531.767,230.126 531.767,230.126 534.314,230.126 C 536.86,230.126 536.86,230.126 536.86,233.651 C 536.86,233.651 544.501,233.651 544.501,233.651 C 544.501,233.651 544.501,247.751 544.501,247.751 C 544.501,247.751 526.673,247.751 526.673,247.751 C 526.673,247.751 526.673,237.176 526.673,233.651z"
+       id="path4406" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #333333"
+       d="M 526.673 233.651 C 526.673,230.126 526.673,230.126 529.22,230.126 C 531.767,230.126 531.767,230.126 534.314,230.126 C 536.86,230.126 536.86,230.126 536.86,233.651 C 536.86,233.651 544.501,233.651 544.501,233.651 C 544.501,233.651 544.501,247.751 544.501,247.751 C 544.501,247.751 526.673,247.751 526.673,247.751 C 526.673,247.751 526.673,237.176 526.673,233.651"
+       id="path4408" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 0.2; stroke: #333333"
+       d="M 526.673 233.651 C 526.673,230.126 526.673,230.126 529.22,230.126 C 531.767,230.126 531.767,230.126 534.314,230.126 C 536.86,230.126 536.86,230.126 536.86,233.651 C 536.86,233.651 544.501,233.651 544.501,233.651 C 544.501,233.651 544.501,247.751 544.501,247.751 C 544.501,247.751 526.673,247.751 526.673,247.751 C 526.673,247.751 526.673,237.176 526.673,233.651"
+       id="path4410" />
+    <polygon
+       style="fill: #ffffff"
+       points="526.673,247.751 524.126,235.414 541.954,235.414 544.501,247.751 "
+       id="polygon4412" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #333333"
+       points="526.673,247.751 524.126,235.414 541.954,235.414 544.501,247.751 "
+       id="polygon4414" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 0.2; stroke: #333333"
+       points="526.673,247.751 524.126,235.414 541.954,235.414 544.501,247.751 "
+       id="polygon4416" />
+    <text
+       style="fill: #000000;text-anchor:middle;font-size:1.6;font-family:sanserif;font-style:normal;font-weight:normal"
+       x="534.314"
+       y="240.32"
+       id="text4418">
+      <tspan
+         x="534.314"
+         y="240.32"
+         id="tspan4420" />
+    </text>
+  </g>
+  <g
+     id="g4422">
+    <polygon
+       style="fill: #ffffff"
+       points="553.126,254.126 560.26,254.126 562.639,256.504 562.639,266.017 553.126,266.017 "
+       id="polygon4424" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #333333"
+       points="553.126,254.126 560.26,254.126 562.639,256.504 562.639,266.017 553.126,266.017 "
+       id="polygon4426" />
+    <polyline
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #333333"
+       points="560.26,254.126 560.26,256.504 562.639,256.504 562.639,256.504 "
+       id="polyline4428" />
+  </g>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:14.1111;font-family:monospace;font-style:normal;font-weight:normal"
+     x="526.5"
+     y="211"
+     id="text4430">
+    <tspan
+       x="526.5"
+       y="211"
+       id="tspan4432">Id: f58da9a</tspan>
+  </text>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+     x="571.5"
+     y="264.75"
+     id="text4434">
+    <tspan
+       x="571.5"
+       y="264.75"
+       id="tspan4436">welcome.txt</tspan>
+  </text>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:14.1111;font-family:monospace;font-style:normal;font-weight:normal"
+     x="751.698"
+     y="206.862"
+     id="text4438">
+    <tspan
+       x="751.698"
+       y="206.862"
+       id="tspan4440">Id: fd3c069</tspan>
+    <tspan
+       x="751.698"
+       y="224.501"
+       id="tspan4442" />
+    <tspan
+       x="751.698"
+       y="242.14"
+       id="tspan4444">内容...</tspan>
+  </text>
+  <line
+     style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #333333"
+     x1="740.998"
+     y1="210.348"
+     x2="851.998"
+     y2="210.348"
+     id="line4446" />
+  <line
+     style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #333333"
+     x1="516.498"
+     y1="217.062"
+     x2="657.748"
+     y2="217.812"
+     id="line4448" />
+  <g
+     id="g4458">
+    <polyline
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="557.882,266.016 557.882,308.442 695.248,308.442 695.248,210.348 731.262,210.348 "
+       id="polyline4460" />
+    <polygon
+       style="fill: #000000"
+       points="738.762,210.348 728.762,215.348 731.262,210.348 728.762,205.348 "
+       id="polygon4462" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="738.762,210.348 728.762,215.348 731.262,210.348 728.762,205.348 "
+       id="polygon4464" />
+  </g>
+</svg>

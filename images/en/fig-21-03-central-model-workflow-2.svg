@@ -1,0 +1,1006 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="39cm"
+   height="45cm"
+   viewBox="33 -94 763 884"
+   id="svg7055"
+   version="1.1"
+   inkscape:version="0.48.0 r9654"
+   sodipodi:docname="fig-21-03-central-model-workflow-2.dia">
+  <metadata
+     id="metadata7487">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs7485" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1280"
+     inkscape:window-height="752"
+     id="namedview7483"
+     showgrid="false"
+     inkscape:zoom="0.46475598"
+     inkscape:cx="1062.453"
+     inkscape:cy="1174.14"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg7055" />
+  <g
+     id="g7057">
+    <path
+       style="fill: #facca7"
+       d="M 515.872 342.75 L 739.872,342.75 C 770.8,342.75 795.872,390.935 795.872,450.375 C 795.872,509.815 770.8,558 739.872,558 L 515.872,558 C 484.944,558 459.872,509.815 459.872,450.375 C 459.872,390.935 484.944,342.75 515.872,342.75z"
+       id="path7059" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 4; stroke: #000000"
+       d="M 515.872 342.75 L 739.872,342.75 C 770.8,342.75 795.872,390.935 795.872,450.375 C 795.872,509.815 770.8,558 739.872,558 L 515.872,558 C 484.944,558 459.872,509.815 459.872,450.375 C 459.872,390.935 484.944,342.75 515.872,342.75"
+       id="path7061" />
+    <text
+       style="fill: #000000;text-anchor:middle;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+       x="627.872"
+       y="454.375"
+       id="text7063">
+      <tspan
+         x="627.872"
+         y="454.375"
+         id="tspan7065" />
+    </text>
+  </g>
+  <g
+     id="g7067">
+    <path
+       style="fill: #afc2da"
+       d="M 50.2 -92.5 L 126.7,-92.5 C 138.175,-75.6 142,-67.15 142,-50.25 C 142,-33.35 138.175,-24.9 126.7,-8 L 50.2,-8 C 38.725,-24.9 34.9,-33.35 34.9,-50.25 C 34.9,-67.15 38.725,-75.6 50.2,-92.5z"
+       id="path7069" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       d="M 50.2 -92.5 L 126.7,-92.5 C 138.175,-75.6 142,-67.15 142,-50.25 C 142,-33.35 138.175,-24.9 126.7,-8 L 50.2,-8 C 38.725,-24.9 34.9,-33.35 34.9,-50.25 C 34.9,-67.15 38.725,-75.6 50.2,-92.5"
+       id="path7071" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       d="M 126.7 -92.5 C 115.225,-75.6 111.4,-67.15 111.4,-50.25 C 111.4,-33.35 115.225,-24.9 126.7,-8"
+       id="path7073" />
+    <text
+       style="fill: #000000;text-anchor:middle;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+       x="80.8"
+       y="-46.25"
+       id="text7075">
+      <tspan
+         x="80.8"
+         y="-46.25"
+         id="tspan7077">git clone</tspan>
+    </text>
+  </g>
+  <rect
+     id="rect7081"
+     height="29"
+     width="92"
+     y="370.5"
+     x="592"
+     style="fill:#ffffff" />
+  <rect
+     id="rect7083"
+     height="29"
+     width="92"
+     y="370.5"
+     x="592"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text7085"
+     y="388.78827"
+     x="638"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan7087"
+       y="388.78827"
+       x="638">git fetch</tspan>
+  </text>
+  <rect
+     id="rect7091"
+     height="38"
+     width="92"
+     y="462"
+     x="519.29999"
+     style="fill:#ffffff" />
+  <rect
+     id="rect7093"
+     height="38"
+     width="92"
+     y="462"
+     x="519.29999"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text7095"
+     y="476.78827"
+     x="565.29999"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan7097"
+       y="476.78827"
+       x="565.29999">git merge</tspan>
+    <tspan
+       id="tspan7099"
+       y="492.78827"
+       x="565.29999">origin/master</tspan>
+  </text>
+  <rect
+     id="rect7103"
+     height="38"
+     width="92"
+     y="462.5"
+     x="664.29999"
+     style="fill:#ffffff" />
+  <rect
+     id="rect7105"
+     height="38"
+     width="92"
+     y="462.5"
+     x="664.29999"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text7107"
+     y="477.28827"
+     x="710.29999"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan7109"
+       y="477.28827"
+       x="710.29999">git rebase</tspan>
+    <tspan
+       id="tspan7111"
+       y="493.28827"
+       x="710.29999">origin/master</tspan>
+  </text>
+  <polygon
+     id="polygon7115"
+     points="638.001,629.751 593.294,612.138 638.001,594.526 682.707,612.138 "
+     style="fill:#ffffff" />
+  <polygon
+     id="polygon7117"
+     points="638.001,629.751 593.294,612.138 638.001,594.526 682.707,612.138 "
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text7119"
+     y="615.92627"
+     x="638.00098"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan7121"
+       y="615.92627"
+       x="638.00098">冲突？</tspan>
+  </text>
+  <rect
+     id="rect7125"
+     height="54"
+     width="123.5"
+     y="735.25"
+     x="576.25"
+     style="fill:#ffffff" />
+  <rect
+     id="rect7127"
+     height="54"
+     width="123.5"
+     y="735.25"
+     x="576.25"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text7129"
+     y="758.03827"
+     x="638"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan7131"
+       y="758.03827"
+       x="638">git push origin</tspan>
+    <tspan
+       id="tspan7133"
+       y="774.03827"
+       x="638">My/Branch:master</tspan>
+  </text>
+  <rect
+     id="rect7137"
+     height="54"
+     width="92"
+     y="16.5"
+     x="592"
+     style="fill:#ffffff" />
+  <rect
+     id="rect7139"
+     height="54"
+     width="92"
+     y="16.5"
+     x="592"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text7141"
+     y="30.17938"
+     x="638"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan7143"
+       y="30.17938"
+       x="638">git push</tspan>
+    <tspan
+       id="tspan7145"
+       y="46.179363"
+       x="638">origin</tspan>
+    <tspan
+       id="tspan7147"
+       y="62.179363"
+       x="638">My/Branch</tspan>
+  </text>
+  <g
+     id="g7149">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="142"
+       y1="-50.25"
+       x2="219.83"
+       y2="-50.25"
+       id="line7151" />
+    <polygon
+       style="fill: #000000"
+       points="227.33,-50.25 217.33,-45.25 219.83,-50.25 217.33,-55.25 "
+       id="polygon7153" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="227.33,-50.25 217.33,-45.25 219.83,-50.25 217.33,-55.25 "
+       id="polygon7155" />
+  </g>
+  <g
+     id="g7157">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="323.166"
+       y1="-50.25"
+       x2="400.998"
+       y2="-50.25"
+       id="line7159" />
+    <polygon
+       style="fill: #000000"
+       points="408.498,-50.25 398.498,-45.25 400.998,-50.25 398.498,-55.25 "
+       id="polygon7161" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="408.498,-50.25 398.498,-45.25 400.998,-50.25 398.498,-55.25 "
+       id="polygon7163" />
+  </g>
+  <g
+     id="g7165">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="638"
+       y1="-24.7994"
+       x2="638"
+       y2="6.76393"
+       id="line7167" />
+    <polygon
+       style="fill: #000000"
+       points="638,14.2639 633,4.26393 638,6.76393 643,4.26393 "
+       id="polygon7169" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="638,14.2639 633,4.26393 638,6.76393 643,4.26393 "
+       id="polygon7171" />
+  </g>
+  <g
+     id="g7173">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="638"
+       y1="70.5"
+       x2="638"
+       y2="114.389"
+       id="line7175" />
+    <polygon
+       style="fill: #000000"
+       points="638,121.889 633,111.889 638,114.389 643,111.889 "
+       id="polygon7177" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="638,121.889 633,111.889 638,114.389 643,111.889 "
+       id="polygon7179" />
+  </g>
+  <g
+     id="g7181">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="638"
+       y1="629.75"
+       x2="638"
+       y2="725.514"
+       id="line7183" />
+    <polygon
+       style="fill: #000000"
+       points="638,733.014 633,723.014 638,725.514 643,723.014 "
+       id="polygon7185" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="638,733.014 633,723.014 638,725.514 643,723.014 "
+       id="polygon7187" />
+  </g>
+  <rect
+     id="rect7191"
+     height="38"
+     width="92"
+     y="-69.25"
+     x="410.73401"
+     style="fill:#ffffff" />
+  <rect
+     id="rect7193"
+     height="38"
+     width="92"
+     y="-69.25"
+     x="410.73401"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text7195"
+     y="-55.570641"
+     x="456.73401"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan7197"
+       y="-55.570641"
+       x="456.73401">git checkout</tspan>
+    <tspan
+       id="tspan7199"
+       y="-39.570637"
+       x="456.73401">-b My/Branch</tspan>
+  </text>
+  <g
+     id="g7201">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="502.734"
+       y1="-50.25"
+       x2="578.414"
+       y2="-50.25"
+       id="line7203" />
+    <polygon
+       style="fill: #000000"
+       points="585.914,-50.25 575.914,-45.25 578.414,-50.25 575.914,-55.25 "
+       id="polygon7205" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="585.914,-50.25 575.914,-45.25 578.414,-50.25 575.914,-55.25 "
+       id="polygon7207" />
+  </g>
+  <g
+     id="g7209">
+    <path
+       style="fill: #afc2da"
+       d="M 229.566 -74.625 C 248.286,-66.5 257.646,-66.5 276.366,-74.625 C 295.086,-82.75 304.446,-82.75 323.166,-74.625 L 323.166,-25.875 C 304.446,-34 295.086,-34 276.366,-25.875 C 257.646,-17.75 248.286,-17.75 229.566,-25.875 L 229.566,-74.625z"
+       id="path7211" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       d="M 229.566 -74.625 C 248.286,-66.5 257.646,-66.5 276.366,-74.625 C 295.086,-82.75 304.446,-82.75 323.166,-74.625 L 323.166,-25.875 C 304.446,-34 295.086,-34 276.366,-25.875 C 257.646,-17.75 248.286,-17.75 229.566,-25.875 L 229.566,-74.625"
+       id="path7213" />
+    <text
+       style="fill: #000000;text-anchor:middle;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+       x="276.366"
+       y="-46.25"
+       id="text7215">
+      <tspan
+         x="276.366"
+         y="-46.25"
+         id="tspan7217">master分支</tspan>
+    </text>
+  </g>
+  <g
+     id="g7219">
+    <path
+       style="fill: #afc2da"
+       d="M 588.15 -74.625 C 608.09,-66.5 618.06,-66.5 638,-74.625 C 657.94,-82.75 667.91,-82.75 687.85,-74.625 L 687.85,-25.875 C 667.91,-34 657.94,-34 638,-25.875 C 618.06,-17.75 608.09,-17.75 588.15,-25.875 L 588.15,-74.625z"
+       id="path7221" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       d="M 588.15 -74.625 C 608.09,-66.5 618.06,-66.5 638,-74.625 C 657.94,-82.75 667.91,-82.75 687.85,-74.625 L 687.85,-25.875 C 667.91,-34 657.94,-34 638,-25.875 C 618.06,-17.75 608.09,-17.75 588.15,-25.875 L 588.15,-74.625"
+       id="path7223" />
+    <text
+       style="fill: #000000;text-anchor:middle;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+       x="638"
+       y="-46.25"
+       id="text7225">
+      <tspan
+         x="638"
+         y="-46.25"
+         id="tspan7227">My/Branch分支</tspan>
+    </text>
+  </g>
+  <rect
+     id="rect7231"
+     height="29"
+     width="92"
+     y="124.125"
+     x="592"
+     style="fill:#ffffff" />
+  <rect
+     id="rect7233"
+     height="29"
+     width="92"
+     y="124.125"
+     x="592"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text7235"
+     y="141.30443"
+     x="638"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan7237"
+       y="141.30443"
+       x="638">git commit</tspan>
+  </text>
+  <rect
+     id="rect7241"
+     height="29"
+     width="92"
+     y="254.62601"
+     x="592"
+     style="fill:#ffffff" />
+  <rect
+     id="rect7243"
+     height="29"
+     width="92"
+     y="254.62601"
+     x="592"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text7245"
+     y="271.80542"
+     x="638"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan7247"
+       y="271.80542"
+       x="638">git push</tspan>
+  </text>
+  <g
+     id="g7249">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="638"
+       y1="153.125"
+       x2="638"
+       y2="179.639"
+       id="line7251" />
+    <polygon
+       style="fill: #000000"
+       points="638,187.139 633,177.139 638,179.639 643,177.139 "
+       id="polygon7253" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="638,187.139 633,177.139 638,179.639 643,177.139 "
+       id="polygon7255" />
+  </g>
+  <g
+     id="g7257">
+    <polyline
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="638,284.474 638,311.374 501,311.374 501,94.7088 638,94.7088 638,114.389 "
+       id="polyline7259" />
+    <polygon
+       style="fill: #000000"
+       points="638,121.889 633,111.889 638,114.389 643,111.889 "
+       id="polygon7261" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="638,121.889 633,111.889 638,114.389 643,111.889 "
+       id="polygon7263" />
+  </g>
+  <rect
+     id="rect7267"
+     height="29"
+     width="92"
+     y="189.375"
+     x="592"
+     style="fill:#ffffff" />
+  <rect
+     id="rect7269"
+     height="29"
+     width="92"
+     y="189.375"
+     x="592"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text7271"
+     y="206.55443"
+     x="638"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan7273"
+       y="206.55443"
+       x="638">git commit</tspan>
+  </text>
+  <g
+     id="g7275">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="638"
+       y1="218.374"
+       x2="638"
+       y2="244.89"
+       id="line7277" />
+    <polygon
+       style="fill: #000000"
+       points="638,252.39 633,242.39 638,244.89 643,242.39 "
+       id="polygon7279" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="638,252.39 633,242.39 638,244.89 643,242.39 "
+       id="polygon7281" />
+  </g>
+  <g
+     id="g7283">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="638"
+       y1="283.626"
+       x2="638"
+       y2="360.764"
+       id="line7285" />
+    <polygon
+       style="fill: #000000"
+       points="638,368.264 633,358.264 638,360.764 643,358.264 "
+       id="polygon7287" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="638,368.264 633,358.264 638,360.764 643,358.264 "
+       id="polygon7289" />
+  </g>
+  <g
+     id="g7291">
+    <polyline
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="638,400.508 638,431.254 565.3,431.254 565.3,452.264 "
+       id="polyline7293" />
+    <polygon
+       style="fill: #000000"
+       points="565.3,459.764 560.3,449.764 565.3,452.264 570.3,449.764 "
+       id="polygon7295" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="565.3,459.764 560.3,449.764 565.3,452.264 570.3,449.764 "
+       id="polygon7297" />
+  </g>
+  <g
+     id="g7299">
+    <polyline
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="638,399.5 638,431.316 710.3,431.316 710.3,452.764 "
+       id="polyline7301" />
+    <polygon
+       style="fill: #000000"
+       points="710.3,460.264 705.3,450.264 710.3,452.764 715.3,450.264 "
+       id="polygon7303" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="710.3,460.264 705.3,450.264 710.3,452.764 715.3,450.264 "
+       id="polygon7305" />
+  </g>
+  <g
+     id="g7307">
+    <polyline
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="565.3,500 565.3,530.75 638,530.75 638,584.79 "
+       id="polyline7309" />
+    <polygon
+       style="fill: #000000"
+       points="638,592.29 633,582.29 638,584.79 643,582.29 "
+       id="polygon7311" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="638,592.29 633,582.29 638,584.79 643,582.29 "
+       id="polygon7313" />
+  </g>
+  <g
+     id="g7315">
+    <polyline
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="710.3,500.5 710.3,530.75 638,530.75 638,584.79 "
+       id="polyline7317" />
+    <polygon
+       style="fill: #000000"
+       points="638,592.29 633,582.29 638,584.79 643,582.29 "
+       id="polygon7319" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="638,592.29 633,582.29 638,584.79 643,582.29 "
+       id="polygon7321" />
+  </g>
+  <rect
+     id="rect7325"
+     height="29"
+     width="92.449997"
+     y="597.638"
+     x="454.57401"
+     style="fill:#ffffff" />
+  <rect
+     id="rect7327"
+     height="29"
+     width="92.449997"
+     y="597.638"
+     x="454.57401"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text7329"
+     y="615.92627"
+     x="500.79901"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan7331"
+       y="615.92627"
+       x="500.79901">git mergetool</tspan>
+  </text>
+  <g
+     id="g7333">
+    <polyline
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="500.8,682.484 500.8,705.084 638,705.084 638,725.514 "
+       id="polyline7335" />
+    <polygon
+       style="fill: #000000"
+       points="638,733.014 633,723.014 638,725.514 643,723.014 "
+       id="polygon7337" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="638,733.014 633,723.014 638,725.514 643,723.014 "
+       id="polygon7339" />
+  </g>
+  <rect
+     id="rect7343"
+     height="38"
+     width="92"
+     y="743.12402"
+     x="230.60001"
+     style="fill:#ffffff" />
+  <rect
+     id="rect7345"
+     height="38"
+     width="92"
+     y="743.12402"
+     x="230.60001"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text7347"
+     y="757.91223"
+     x="276.60001"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan7349"
+       y="757.91223"
+       x="276.60001">git checkout</tspan>
+    <tspan
+       id="tspan7351"
+       y="773.91223"
+       x="276.60001">master</tspan>
+  </text>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+     x="276.6"
+     y="762.126"
+     id="text7353">
+    <tspan
+       x="276.6"
+       y="762.126"
+       id="tspan7355" />
+  </text>
+  <g
+     id="g7357">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="576.25"
+       y1="762.25"
+       x2="332.336"
+       y2="762.131"
+       id="line7359" />
+    <polygon
+       style="fill: #000000"
+       points="324.836,762.127 334.839,757.132 332.336,762.131 334.834,767.132 "
+       id="polygon7361" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="324.836,762.127 334.839,757.132 332.336,762.131 334.834,767.132 "
+       id="polygon7363" />
+  </g>
+  <rect
+     id="rect7367"
+     height="38"
+     width="92"
+     y="622.54199"
+     x="230.60001"
+     style="fill:#ffffff" />
+  <rect
+     id="rect7369"
+     height="38"
+     width="92"
+     y="622.54199"
+     x="230.60001"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text7371"
+     y="645.33026"
+     x="276.60001"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan7373"
+       y="645.33026"
+       x="276.60001">git pull</tspan>
+  </text>
+  <rect
+     id="rect7377"
+     height="38"
+     width="92"
+     y="501.95801"
+     x="230.60001"
+     style="fill:#ffffff" />
+  <rect
+     id="rect7379"
+     height="38"
+     width="92"
+     y="501.95801"
+     x="230.60001"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text7381"
+     y="516.74622"
+     x="276.60001"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan7383"
+       y="516.74622"
+       x="276.60001">git branch</tspan>
+    <tspan
+       id="tspan7385"
+       y="532.74628"
+       x="276.60001">-d My/Branch</tspan>
+  </text>
+  <rect
+     id="rect7389"
+     height="54"
+     width="92"
+     y="365.37601"
+     x="230.60001"
+     style="fill:#ffffff" />
+  <rect
+     id="rect7391"
+     height="54"
+     width="92"
+     y="365.37601"
+     x="230.60001"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text7393"
+     y="380.16425"
+     x="276.60001"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan7395"
+       y="380.16425"
+       x="276.60001">git push</tspan>
+    <tspan
+       id="tspan7397"
+       y="396.16425"
+       x="276.60001">origin</tspan>
+    <tspan
+       id="tspan7399"
+       y="412.16425"
+       x="276.60001">:My/Branch</tspan>
+  </text>
+  <g
+     id="g7401">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="276.6"
+       y1="742.223"
+       x2="276.6"
+       y2="671.179"
+       id="line7403" />
+    <polygon
+       style="fill: #000000"
+       points="276.6,663.679 281.6,673.679 276.6,671.179 271.6,673.679 "
+       id="polygon7405" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="276.6,663.679 281.6,673.679 276.6,671.179 271.6,673.679 "
+       id="polygon7407" />
+  </g>
+  <g
+     id="g7409">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="276.6"
+       y1="621.641"
+       x2="276.6"
+       y2="550.595"
+       id="line7411" />
+    <polygon
+       style="fill: #000000"
+       points="276.6,543.095 281.6,553.095 276.6,550.595 271.6,553.095 "
+       id="polygon7413" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="276.6,543.095 281.6,553.095 276.6,550.595 271.6,553.095 "
+       id="polygon7415" />
+  </g>
+  <g
+     id="g7417">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="276.6"
+       y1="500.953"
+       x2="276.6"
+       y2="430.051"
+       id="line7419" />
+    <polygon
+       style="fill: #000000"
+       points="276.6,422.551 281.6,432.551 276.6,430.051 271.6,432.551 "
+       id="polygon7421" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="276.6,422.551 281.6,432.551 276.6,430.051 271.6,432.551 "
+       id="polygon7423" />
+  </g>
+  <line
+     style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+     x1="276.585"
+     y1="364.795"
+     x2="276.375"
+     y2="-24.8075"
+     id="line7425" />
+  <text
+     style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+     x="643.372"
+     y="458.5"
+     id="text7427">
+    <tspan
+       x="643.372"
+       y="458.5"
+       id="tspan7429" />
+  </text>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+     x="643.372"
+     y="458.5"
+     id="text7431">
+    <tspan
+       x="643.372"
+       y="458.5"
+       id="tspan7433" />
+  </text>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:14.1111;font-family:sanserif;font-style:normal;font-weight:normal"
+     x="482.372"
+     y="378.75"
+     id="text7435">
+    <tspan
+       x="482.372"
+       y="378.75"
+       id="tspan7437">    git pull</tspan>
+    <tspan
+       x="482.372"
+       y="396.389"
+       id="tspan7439">origin master</tspan>
+  </text>
+  <g
+     id="g7441">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="530.81"
+       y1="311.312"
+       x2="530.045"
+       y2="311.321"
+       id="line7443" />
+    <polygon
+       style="fill: #000000"
+       points="522.546,311.411 532.485,306.292 530.045,311.321 532.605,316.291 "
+       id="polygon7445" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="522.546,311.411 532.485,306.292 530.045,311.321 532.605,316.291 "
+       id="polygon7447" />
+  </g>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+     x="644.06"
+     y="650.032"
+     id="text7449">
+    <tspan
+       x="644.06"
+       y="650.032"
+       id="tspan7451">否</tspan>
+  </text>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+     x="570.06"
+     y="606.032"
+     id="text7453">
+    <tspan
+       x="570.06"
+       y="606.032"
+       id="tspan7455">是</tspan>
+  </text>
+  <rect
+     id="rect7459"
+     height="29"
+     width="92.449997"
+     y="653.48401"
+     x="454.57401"
+     style="fill:#ffffff" />
+  <rect
+     id="rect7461"
+     height="29"
+     width="92.449997"
+     y="653.48401"
+     x="454.57401"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text7463"
+     y="671.77228"
+     x="500.79901"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan7465"
+       y="671.77228"
+       x="500.79901">git commit</tspan>
+  </text>
+  <g
+     id="g7467">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="592.294"
+       y1="612.138"
+       x2="556.76"
+       y2="612.138"
+       id="line7469" />
+    <polygon
+       style="fill: #000000"
+       points="549.26,612.138 559.26,607.138 556.76,612.138 559.26,617.138 "
+       id="polygon7471" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="549.26,612.138 559.26,607.138 556.76,612.138 559.26,617.138 "
+       id="polygon7473" />
+  </g>
+  <g
+     id="g7475">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="500.799"
+       y1="627.64"
+       x2="500.799"
+       y2="642.746"
+       id="line7477" />
+    <polygon
+       style="fill: #000000"
+       points="500.799,650.246 495.799,640.246 500.799,642.746 505.799,640.246 "
+       id="polygon7479" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="500.799,650.246 495.799,640.246 500.799,642.746 505.799,640.246 "
+       id="polygon7481" />
+  </g>
+</svg>
