@@ -68,7 +68,7 @@
         <dia:point val="14.9096,28.6409"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="14.9096,28.2209;15.8946,28.7484"/>
+        <dia:rectangle val="14.9096,28.2209;15.8971,28.7484"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -489,7 +489,7 @@
         <dia:point val="14.549,28.1477"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="14.4896,28.0883;22.6303,29.6817"/>
+        <dia:rectangle val="14.4896,28.0883;22.6303,30.338"/>
       </dia:attribute>
       <dia:attribute name="bez_points">
         <dia:point val="14.549,28.1477"/>
@@ -579,7 +579,7 @@
         <dia:point val="22.9177,25.752"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="22.8481,24.087;24.0593,25.8215"/>
+        <dia:rectangle val="22.8482,24.087;24.0593,25.8215"/>
       </dia:attribute>
       <dia:attribute name="conn_endpoints">
         <dia:point val="22.9177,25.752"/>
@@ -610,7 +610,7 @@
         <dia:point val="22.4802,30.5537"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="22.4802,30.1205;23.4809,30.6876"/>
+        <dia:rectangle val="22.4802,30.1337;23.4677,30.6612"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -643,7 +643,7 @@
         <dia:point val="20.3552,28.6409"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="20.3552,28.2209;21.3402,28.7484"/>
+        <dia:rectangle val="20.3552,28.2209;21.3427,28.7484"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -698,7 +698,7 @@
         <dia:point val="16.7364,23.2099"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="16.7364,22.7899;17.2989,23.3174"/>
+        <dia:rectangle val="16.7364,22.7899;17.3014,23.3174"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -731,7 +731,7 @@
         <dia:point val="18.5952,23.2099"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="18.5952,22.7899;19.1577,23.3174"/>
+        <dia:rectangle val="18.5952,22.7899;19.1602,23.3174"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -764,7 +764,7 @@
         <dia:point val="21.9089,23.4099"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="21.9089,22.9899;22.4714,23.5174"/>
+        <dia:rectangle val="21.9089,22.9899;22.4739,23.5174"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -797,7 +797,7 @@
         <dia:point val="23.8614,23.4099"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="23.8614,22.9767;24.5521,23.5438"/>
+        <dia:rectangle val="23.8614,22.9899;24.5389,23.5174"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -830,7 +830,7 @@
         <dia:point val="22.6114,26.8349"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="22.6114,26.4017;23.6121,26.9688"/>
+        <dia:rectangle val="22.6114,26.4149;23.5989,26.9424"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -863,12 +863,12 @@
         <dia:point val="25.6302,24.1699"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="25.6302,23.5322;37.9429,24.4003"/>
+        <dia:rectangle val="25.6302,23.5562;38.1639,24.3598"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
-            <dia:string>#（特性B的变基分支: refs/top-bases/t/B）#</dia:string>
+            <dia:string>#（特性B的基准分支: refs/top-bases/t/B）#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
             <dia:font family="sans" style="0" name="Helvetica"/>
@@ -980,12 +980,12 @@
         <dia:point val="25.6302,26.244"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="25.6302,25.6063;37.9379,26.4744"/>
+        <dia:rectangle val="25.6302,25.6303;38.1589,26.4339"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
-            <dia:string>#（特性A的变基分支: refs/top-bases/t/A）#</dia:string>
+            <dia:string>#（特性A的基准分支: refs/top-bases/t/A）#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
             <dia:font family="sans" style="0" name="Helvetica"/>
@@ -1013,12 +1013,12 @@
         <dia:point val="25.6302,29.8865"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="25.6302,29.2488;37.9529,30.1169"/>
+        <dia:rectangle val="25.6302,29.2728;38.1789,30.0764"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
-            <dia:string>#（特性C的变基分支: refs/top-bases/t/C）#</dia:string>
+            <dia:string>#（特性C的基准分支: refs/top-bases/t/C）#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
             <dia:font family="sans" style="0" name="Helvetica"/>
@@ -1046,7 +1046,7 @@
         <dia:point val="25.6302,28.119"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="25.6302,27.5128;33.6427,29.0903"/>
+        <dia:rectangle val="25.6302,27.524;33.9652,29.0715"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -1223,7 +1223,7 @@
         <dia:point val="19.0568,22.5883"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="19.0068,22.5383;21.9216,24.0873"/>
+        <dia:rectangle val="19.0068,22.5383;21.9216,24.0874"/>
       </dia:attribute>
       <dia:attribute name="bez_points">
         <dia:point val="19.0568,22.5883"/>
