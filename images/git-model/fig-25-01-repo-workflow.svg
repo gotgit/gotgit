@@ -1,0 +1,847 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="40cm"
+   height="19cm"
+   viewBox="148 395 793 378"
+   id="svg6343"
+   version="1.1"
+   inkscape:version="0.48.0 r9654"
+   sodipodi:docname="fig-25-01-repo-workflow.dia">
+  <metadata
+     id="metadata6697">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs6695" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1280"
+     inkscape:window-height="752"
+     id="namedview6693"
+     showgrid="false"
+     inkscape:zoom="0.71825553"
+     inkscape:cx="648.41086"
+     inkscape:cy="372.81101"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg6343" />
+  <rect
+     id="rect6347"
+     height="29"
+     width="92"
+     y="420.276"
+     x="302.20001"
+     style="fill:#facca7" />
+  <rect
+     id="rect6349"
+     height="29"
+     width="92"
+     y="420.276"
+     x="302.20001"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text6351"
+     y="437.58255"
+     x="348.20001"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan6353"
+       y="437.58255"
+       x="348.20001">repo init</tspan>
+  </text>
+  <rect
+     id="rect6357"
+     height="29"
+     width="92"
+     y="476"
+     x="302.20001"
+     style="fill:#facca7" />
+  <rect
+     id="rect6359"
+     height="29"
+     width="92"
+     y="476"
+     x="302.20001"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text6361"
+     y="493.30655"
+     x="348.20001"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan6363"
+       y="493.30655"
+       x="348.20001">repo sync</tspan>
+  </text>
+  <rect
+     id="rect6367"
+     height="29"
+     width="92"
+     y="420.276"
+     x="455.20001"
+     style="fill:#facca7" />
+  <rect
+     id="rect6369"
+     height="29"
+     width="92"
+     y="420.276"
+     x="455.20001"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text6371"
+     y="437.58255"
+     x="501.20001"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan6373"
+       y="437.58255"
+       x="501.20001">repo start</tspan>
+  </text>
+  <rect
+     id="rect6377"
+     height="29"
+     width="92"
+     y="476"
+     x="455.20001"
+     style="fill:#ffffff" />
+  <rect
+     id="rect6379"
+     height="29"
+     width="92"
+     y="476"
+     x="455.20001"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text6381"
+     y="493.30655"
+     x="501.20001"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan6383"
+       y="493.30655"
+       x="501.20001">git add</tspan>
+  </text>
+  <rect
+     id="rect6387"
+     height="29"
+     width="92"
+     y="531.72601"
+     x="455.20001"
+     style="fill:#ffffff" />
+  <rect
+     id="rect6389"
+     height="29"
+     width="92"
+     y="531.72601"
+     x="455.20001"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text6391"
+     y="549.03247"
+     x="501.20001"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan6393"
+       y="549.03247"
+       x="501.20001">git status</tspan>
+  </text>
+  <rect
+     id="rect6397"
+     height="29"
+     width="92"
+     y="587.45001"
+     x="455.20001"
+     style="fill:#ffffff" />
+  <rect
+     id="rect6399"
+     height="29"
+     width="92"
+     y="587.45001"
+     x="455.20001"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text6401"
+     y="605.87927"
+     x="501.20001"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan6403"
+       y="605.87927"
+       x="501.20001">git commit</tspan>
+  </text>
+  <rect
+     id="rect6407"
+     height="29"
+     width="92"
+     y="588.45001"
+     x="610.34998"
+     style="fill:#facca7" />
+  <rect
+     id="rect6409"
+     height="29"
+     width="92"
+     y="588.45001"
+     x="610.34998"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text6411"
+     y="605.75647"
+     x="656.34998"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan6413"
+       y="605.75647"
+       x="656.34998">repo status</tspan>
+  </text>
+  <rect
+     id="rect6417"
+     height="29"
+     width="92"
+     y="648.32599"
+     x="610.34998"
+     style="fill:#facca7" />
+  <rect
+     id="rect6419"
+     height="29"
+     width="92"
+     y="648.32599"
+     x="610.34998"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text6421"
+     y="665.63245"
+     x="656.34998"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan6423"
+       y="665.63245"
+       x="656.34998">repo upload</tspan>
+  </text>
+  <rect
+     id="rect6427"
+     height="38"
+     width="92"
+     y="730.15601"
+     x="455.20001"
+     style="fill:#ffffff" />
+  <rect
+     id="rect6429"
+     height="38"
+     width="92"
+     y="730.15601"
+     x="455.20001"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text6431"
+     y="743.96246"
+     x="501.20001"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan6433"
+       y="743.96246"
+       x="501.20001">git commit</tspan>
+    <tspan
+       id="tspan6435"
+       y="759.96246"
+       x="501.20001">--amend</tspan>
+  </text>
+  <rect
+     id="rect6439"
+     height="38"
+     width="92"
+     y="730.15601"
+     x="302.20001"
+     style="fill:#facca7" />
+  <rect
+     id="rect6441"
+     height="38"
+     width="92"
+     y="730.15601"
+     x="302.20001"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text6443"
+     y="743.96246"
+     x="348.20001"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan6445"
+       y="743.96246"
+       x="348.20001">repo upload</tspan>
+    <tspan
+       id="tspan6447"
+       y="759.96246"
+       x="348.20001">--replace</tspan>
+  </text>
+  <rect
+     id="rect6451"
+     height="29"
+     width="92"
+     y="648.32599"
+     x="847.34998"
+     style="fill:#facca7" />
+  <rect
+     id="rect6453"
+     height="29"
+     width="92"
+     y="648.32599"
+     x="847.34998"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text6455"
+     y="665.63245"
+     x="893.34998"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan6457"
+       y="665.63245"
+       x="893.34998">repo prune</tspan>
+  </text>
+  <g
+     id="g6459">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="348.2"
+       y1="450.258"
+       x2="348.2"
+       y2="465.282"
+       id="line6461" />
+    <polygon
+       style="fill: #000000"
+       points="348.2,472.782 343.2,462.782 348.2,465.282 353.2,462.782 "
+       id="polygon6463" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="348.2,472.782 343.2,462.782 348.2,465.282 353.2,462.782 "
+       id="polygon6465" />
+  </g>
+  <g
+     id="g6467">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="501.2"
+       y1="450.258"
+       x2="501.2"
+       y2="465.282"
+       id="line6469" />
+    <polygon
+       style="fill: #000000"
+       points="501.2,472.782 496.2,462.782 501.2,465.282 506.2,462.782 "
+       id="polygon6471" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="501.2,472.782 496.2,462.782 501.2,465.282 506.2,462.782 "
+       id="polygon6473" />
+  </g>
+  <g
+     id="g6475">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="501.2"
+       y1="505.982"
+       x2="501.2"
+       y2="521.007"
+       id="line6477" />
+    <polygon
+       style="fill: #000000"
+       points="501.2,528.507 496.2,518.507 501.2,521.007 506.2,518.507 "
+       id="polygon6479" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="501.2,528.507 496.2,518.507 501.2,521.007 506.2,518.507 "
+       id="polygon6481" />
+  </g>
+  <g
+     id="g6483">
+    <line
+       style="fill:none;stroke:#000000;stroke-width:2"
+       x1="501.20001"
+       y1="561.70801"
+       x2="501.20001"
+       y2="576.73199"
+       id="line6485" />
+    <polygon
+       style="fill:#000000"
+       points="501.2,584.232 496.2,574.232 501.2,576.732 506.2,574.232 "
+       id="polygon6487" />
+    <polygon
+       style="fill:none;stroke:#000000;stroke-width:2"
+       points="501.2,584.232 496.2,574.232 501.2,576.732 506.2,574.232 "
+       id="polygon6489" />
+  </g>
+  <g
+     id="g6491">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="656.35"
+       y1="618.453"
+       x2="656.35"
+       y2="637.587"
+       id="line6493" />
+    <polygon
+       style="fill: #000000"
+       points="656.35,645.087 651.35,635.087 656.35,637.587 661.35,635.087 "
+       id="polygon6495" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="656.35,645.087 651.35,635.087 656.35,637.587 661.35,635.087 "
+       id="polygon6497" />
+  </g>
+  <g
+     id="g6499">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 4; stroke: #000000"
+       x1="214.524"
+       y1="434.754"
+       x2="291.483"
+       y2="434.767"
+       id="line6501" />
+    <polygon
+       style="fill: #000000"
+       points="298.983,434.768 288.982,439.766 291.483,434.767 288.984,429.766 "
+       id="polygon6503" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="298.983,434.768 288.982,439.766 291.483,434.767 288.984,429.766 "
+       id="polygon6505" />
+  </g>
+  <g
+     id="g6507">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 4; stroke: #000000"
+       x1="609.343"
+       y1="662.838"
+       x2="224.245"
+       y2="662.94"
+       id="line6509" />
+    <polygon
+       style="fill: #000000"
+       points="216.745,662.942 226.744,657.94 224.245,662.94 226.747,667.94 "
+       id="polygon6511" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="216.745,662.942 226.744,657.94 224.245,662.94 226.747,667.94 "
+       id="polygon6513" />
+  </g>
+  <polygon
+     id="polygon6517"
+     points="656.349,771.157 600.504,749.156 656.349,727.156 712.195,749.156 "
+     style="fill:#ffffff" />
+  <polygon
+     id="polygon6519"
+     points="656.349,771.157 600.504,749.156 656.349,727.156 712.195,749.156 "
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text6521"
+     y="751.96246"
+     x="656.349"
+     style="font-size:12.80000019px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan6523"
+       y="751.96246"
+       x="656.349">审核通过？</tspan>
+  </text>
+  <g
+     id="g6525">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="599.504"
+       y1="749.156"
+       x2="557.924"
+       y2="749.156"
+       id="line6527" />
+    <polygon
+       style="fill: #000000"
+       points="550.424,749.156 560.424,744.156 557.924,749.156 560.424,754.156 "
+       id="polygon6529" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="550.424,749.156 560.424,744.156 557.924,749.156 560.424,754.156 "
+       id="polygon6531" />
+  </g>
+  <g
+     id="g6533">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="454.2"
+       y1="749.156"
+       x2="404.936"
+       y2="749.156"
+       id="line6535" />
+    <polygon
+       style="fill: #000000"
+       points="397.436,749.156 407.436,744.156 404.936,749.156 407.436,754.156 "
+       id="polygon6537" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="397.436,749.156 407.436,744.156 404.936,749.156 407.436,754.156 "
+       id="polygon6539" />
+  </g>
+  <g
+     id="g6541">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="656.35"
+       y1="678.001"
+       x2="656.35"
+       y2="716.42"
+       id="line6543" />
+    <polygon
+       style="fill: #000000"
+       points="656.35,723.92 651.35,713.92 656.35,716.42 661.35,713.92 "
+       id="polygon6545" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="656.35,723.92 651.35,713.92 656.35,716.42 661.35,713.92 "
+       id="polygon6547" />
+  </g>
+  <polygon
+     id="polygon6551"
+     points="814.35,772.432 758.8,749.156 814.35,725.88 869.9,749.156 "
+     style="fill:#ffffff" />
+  <polygon
+     id="polygon6553"
+     points="814.35,772.432 758.8,749.156 814.35,725.88 869.9,749.156 "
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text6555"
+     y="753.61243"
+     x="814.34998"
+     style="font-size:10.15999985px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:sanserif">
+    <tspan
+       id="tspan6557"
+       y="753.61243"
+       x="814.34998">功能开发完毕？</tspan>
+  </text>
+  <g
+     id="g6559">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="713.195"
+       y1="749.156"
+       x2="748.064"
+       y2="749.156"
+       id="line6561" />
+    <polygon
+       style="fill: #000000"
+       points="755.564,749.156 745.564,754.156 748.064,749.156 745.564,744.156 "
+       id="polygon6563" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="755.564,749.156 745.564,754.156 748.064,749.156 745.564,744.156 "
+       id="polygon6565" />
+  </g>
+  <g
+     id="g6567">
+    <polyline
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="893.35,648.326 893.35,434.776 556.936,434.776 "
+       id="polyline6569" />
+    <polygon
+       style="fill: #000000"
+       points="549.436,434.776 559.436,429.776 556.936,434.776 559.436,439.776 "
+       id="polygon6571" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="549.436,434.776 559.436,429.776 556.936,434.776 559.436,439.776 "
+       id="polygon6573" />
+  </g>
+  <g
+     id="g6575">
+    <polyline
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="814.35,725.88 814.35,490.5 556.936,490.5 "
+       id="polyline6577" />
+    <polygon
+       style="fill: #000000"
+       points="549.436,490.5 559.436,485.5 556.936,490.5 559.436,495.5 "
+       id="polygon6579" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="549.436,490.5 559.436,485.5 556.936,490.5 559.436,495.5 "
+       id="polygon6581" />
+  </g>
+  <g
+     id="g6583">
+    <polyline
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="348.2,730.156 348.2,700.5 656.35,700.5 656.35,717.42 "
+       id="polyline6585" />
+    <polygon
+       style="fill: #000000"
+       points="656.35,724.92 651.35,714.92 656.35,717.42 661.35,714.92 "
+       id="polygon6587" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="656.35,724.92 651.35,714.92 656.35,717.42 661.35,714.92 "
+       id="polygon6589" />
+  </g>
+  <polyline
+     style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 4; stroke: #000000"
+     points="302.2,749.156 261.31,749.156 261.31,662.874 260.876,662.874 "
+     id="polyline6591" />
+  <g
+     id="g6593">
+    <rect
+       style="fill: #afc2da"
+       x="149.35"
+       y="634.638"
+       width="64.175"
+       height="56.625"
+       id="rect6595" />
+    <ellipse
+       style="fill: #afc2da"
+       cx="181.438"
+       cy="691.263"
+       rx="32.0875"
+       ry="9.4375"
+       id="ellipse6597" />
+    <ellipse
+       style="fill: #afc2da"
+       cx="181.438"
+       cy="634.638"
+       rx="32.0875"
+       ry="9.4375"
+       id="ellipse6599" />
+    <ellipse
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       cx="181.438"
+       cy="634.638"
+       rx="32.0875"
+       ry="9.4375"
+       id="ellipse6601" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       d="M 213.525 634.638 L 213.525,691.263 C 213.525,696.475 199.159,700.7 181.438,700.7 C 163.716,700.7 149.35,696.475 149.35,691.263 L 149.35,634.638"
+       id="path6603" />
+    <text
+       style="fill: #000000;text-anchor:middle;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+       x="181.438"
+       y="712.7"
+       id="text6605">
+      <tspan
+         x="181.438"
+         y="712.7"
+         id="tspan6607" />
+    </text>
+  </g>
+  <g
+     id="g6609">
+    <polyline
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 4; stroke: #000000"
+       points="257.872,434.76 260.31,434.76 260.31,490.5 292.464,490.5 "
+       id="polyline6611" />
+    <polygon
+       style="fill: #000000"
+       points="299.964,490.5 289.964,495.5 292.464,490.5 289.964,485.5 "
+       id="polygon6613" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="299.964,490.5 289.964,495.5 292.464,490.5 289.964,485.5 "
+       id="polygon6615" />
+  </g>
+  <g
+     id="g6617">
+    <rect
+       style="fill: #ffff00"
+       x="149.35"
+       y="406.438"
+       width="64.175"
+       height="56.625"
+       id="rect6619" />
+    <ellipse
+       style="fill: #ffff00"
+       cx="181.438"
+       cy="463.062"
+       rx="32.0875"
+       ry="9.4375"
+       id="ellipse6621" />
+    <ellipse
+       style="fill: #ffff00"
+       cx="181.438"
+       cy="406.438"
+       rx="32.0875"
+       ry="9.4375"
+       id="ellipse6623" />
+    <ellipse
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       cx="181.438"
+       cy="406.438"
+       rx="32.0875"
+       ry="9.4375"
+       id="ellipse6625" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       d="M 213.525 406.438 L 213.525,463.062 C 213.525,468.275 199.159,472.5 181.438,472.5 C 163.716,472.5 149.35,468.275 149.35,463.062 L 149.35,406.438"
+       id="path6627" />
+    <text
+       style="fill: #000000;text-anchor:middle;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+       x="181.438"
+       y="484.5"
+       id="text6629">
+      <tspan
+         x="181.438"
+         y="484.5"
+         id="tspan6631" />
+    </text>
+  </g>
+  <g
+     id="g6633">
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       d="M 395.149 490.5 C 430.673,490.5 419.676,434.776 445.464,434.776"
+       id="path6635" />
+    <polygon
+       style="fill: #000000"
+       points="452.964,434.776 442.964,439.776 445.464,434.776 442.964,429.776 "
+       id="polygon6637" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="452.964,434.776 442.964,439.776 445.464,434.776 442.964,429.776 "
+       id="polygon6639" />
+  </g>
+  <g
+     id="g6641">
+    <polyline
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="869.9,749.156 893.35,749.156 893.35,687.062 "
+       id="polyline6643" />
+    <polygon
+       style="fill: #000000"
+       points="893.35,679.562 898.35,689.562 893.35,687.062 888.35,689.562 "
+       id="polygon6645" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="893.35,679.562 898.35,689.562 893.35,687.062 888.35,689.562 "
+       id="polygon6647" />
+  </g>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+     x="577.75"
+     y="740.924"
+     id="text6649">
+    <tspan
+       x="577.75"
+       y="740.924"
+       id="tspan6651">否</tspan>
+  </text>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+     x="792.45"
+     y="716.924"
+     id="text6653">
+    <tspan
+       x="792.45"
+       y="716.924"
+       id="tspan6655">否</tspan>
+  </text>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+     x="875.45"
+     y="716.924"
+     id="text6657">
+    <tspan
+       x="875.45"
+       y="716.924"
+       id="tspan6659">是</tspan>
+  </text>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+     x="723.45"
+     y="740.924"
+     id="text6661">
+    <tspan
+       x="723.45"
+       y="740.924"
+       id="tspan6663">是</tspan>
+  </text>
+  <g
+     id="g6665">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="548.188"
+       y1="602.253"
+       x2="599.626"
+       y2="602.584"
+       id="line6667" />
+    <polygon
+       style="fill: #000000"
+       points="607.126,602.633 597.094,607.568 599.626,602.584 597.158,597.568 "
+       id="polygon6669" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="607.126,602.633 597.094,607.568 599.626,602.584 597.158,597.568 "
+       id="polygon6671" />
+  </g>
+  <g
+     id="g6673">
+    <rect
+       style="fill: #ffff00"
+       x="179.6"
+       y="435.05"
+       width="3"
+       height="16.7"
+       id="rect6675" />
+    <text
+       style="fill: #000000;text-anchor:middle;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:700"
+       x="181.1"
+       y="435.75"
+       id="text6677">
+      <tspan
+         x="181.1"
+         y="435.75"
+         id="tspan6679">Git</tspan>
+      <tspan
+         x="181.1"
+         y="451.75"
+         id="tspan6681">Server</tspan>
+    </text>
+  </g>
+  <g
+     id="g6683">
+    <rect
+       style="fill: #afc2da"
+       x="179.676"
+       y="666.274"
+       width="3"
+       height="16.7"
+       id="rect6685" />
+    <text
+       style="fill: #000000;text-anchor:middle;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:700"
+       x="181.176"
+       y="666.974"
+       id="text6687">
+      <tspan
+         x="181.176"
+         y="666.974"
+         id="tspan6689">Review</tspan>
+      <tspan
+         x="181.176"
+         y="682.974"
+         id="tspan6691">Server</tspan>
+    </text>
+  </g>
+</svg>

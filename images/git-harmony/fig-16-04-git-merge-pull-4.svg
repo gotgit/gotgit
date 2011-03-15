@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="33cm"
+   height="12cm"
+   viewBox="180 78 651 225"
+   id="svg5034"
+   version="1.1"
+   inkscape:version="0.48.0 r9654"
+   sodipodi:docname="fig-16-04-git-merge-pull-4.dia">
+  <metadata
+     id="metadata5206">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs5204" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1280"
+     inkscape:window-height="752"
+     id="namedview5202"
+     showgrid="false"
+     inkscape:zoom="0.43530638"
+     inkscape:cx="584.64569"
+     inkscape:cy="212.59842"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg5034" />
+  <g
+     id="g5036">
+    <g
+       id="g5038">
+      <path
+         style="fill: #ffff00"
+         d="M 633.75 101.2 L 749.25,101.2 C 807,101.2 807,101.2 807,145.65 L 807,234.55 C 807,279 807,279 749.25,279 L 633.75,279 C 576,279 576,279 576,234.55 L 576,145.65 C 576,101.2 576,101.2 633.75,101.2z"
+         id="path5040" />
+      <path
+         style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #a0a0a0"
+         d="M 633.75 101.2 L 749.25,101.2 C 807,101.2 807,101.2 807,145.65 L 807,234.55 C 807,279 807,279 749.25,279 L 633.75,279 C 576,279 576,279 576,234.55 L 576,145.65 C 576,101.2 576,101.2 633.75,101.2"
+         id="path5042" />
+      <text
+         style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+         x="597.55"
+         y="120.79"
+         id="text5044">
+        <tspan
+           x="597.55"
+           y="120.79"
+           id="tspan5046" />
+      </text>
+    </g>
+    <g
+       id="g5048">
+      <path
+         style="fill: #ffffaa"
+         d="M 260.75 101.7 L 376.25,101.7 C 434,101.7 434,101.7 434,146.15 L 434,235.05 C 434,279.5 434,279.5 376.25,279.5 L 260.75,279.5 C 203,279.5 203,279.5 203,235.05 L 203,146.15 C 203,101.7 203,101.7 260.75,101.7z"
+         id="path5050" />
+      <path
+         style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #a0a0a0"
+         d="M 260.75 101.7 L 376.25,101.7 C 434,101.7 434,101.7 434,146.15 L 434,235.05 C 434,279.5 434,279.5 376.25,279.5 L 260.75,279.5 C 203,279.5 203,279.5 203,235.05 L 203,146.15 C 203,101.7 203,101.7 260.75,101.7"
+         id="path5052" />
+      <text
+         style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+         x="224.55"
+         y="121.29"
+         id="text5054">
+        <tspan
+           x="224.55"
+           y="121.29"
+           id="tspan5056" />
+      </text>
+    </g>
+    <text
+       style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+       x="256.75"
+       y="269.5"
+       id="text5058">
+      <tspan
+         x="256.75"
+         y="269.5"
+         id="tspan5060">用户 user1 本地版本库</tspan>
+    </text>
+    <text
+       style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+       x="674.45"
+       y="269"
+       id="text5062">
+      <tspan
+         x="674.45"
+         y="269"
+         id="tspan5064">共享版本库</tspan>
+    </text>
+    <g
+       id="g5066">
+      <line
+         style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #ff0000"
+         x1="435.376"
+         y1="186.375"
+         x2="561.904"
+         y2="186.375"
+         id="line5068" />
+      <polygon
+         style="fill: #ff0000"
+         points="569.404,186.375 559.404,191.375 561.904,186.375 559.404,181.375 "
+         id="polygon5070" />
+      <polygon
+         style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #ff0000"
+         points="569.404,186.375 559.404,191.375 561.904,186.375 559.404,181.375 "
+         id="polygon5072" />
+    </g>
+    <text
+       style="fill: #000000;text-anchor:start;font-size:15.8044;font-family:sanserif;font-style:normal;font-weight:normal"
+       x="473.25"
+       y="176.75"
+       id="text5074">
+      <tspan
+         x="473.25"
+         y="176.75"
+         id="tspan5076">git push</tspan>
+    </text>
+  </g>
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="164.02699"
+     sodipodi:cx="332.67801"
+     id="ellipse5080"
+     ry="12.6265"
+     rx="13.078"
+     cy="164.02699"
+     cx="332.67801"
+     style="fill:#ffffff" />
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="164.02699"
+     sodipodi:cx="332.67801"
+     id="ellipse5082"
+     ry="12.6265"
+     rx="13.078"
+     cy="164.02699"
+     cx="332.67801"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text5084"
+     y="168.15544"
+     x="332.67801"
+     style="font-size:14.1111002px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:monospace">
+    <tspan
+       id="tspan5086"
+       y="168.15544"
+       x="332.67801">B</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="164.02699"
+     sodipodi:cx="233.67799"
+     id="ellipse5090"
+     ry="12.6265"
+     rx="13.078"
+     cy="164.02699"
+     cx="233.67799"
+     style="fill:#ffffff" />
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="164.02699"
+     sodipodi:cx="233.67799"
+     id="ellipse5092"
+     ry="12.6265"
+     rx="13.078"
+     cy="164.02699"
+     cx="233.67799"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text5094"
+     y="168.15544"
+     x="233.67799"
+     style="font-size:14.1111002px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:monospace">
+    <tspan
+       id="tspan5096"
+       y="168.15544"
+       x="233.67799">A</tspan>
+  </text>
+  <line
+     style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+     x1="246.756"
+     y1="164.027"
+     x2="319.6"
+     y2="164.027"
+     id="line5098" />
+  <line
+     style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+     x1="341.926"
+     y1="172.955"
+     x2="382.696"
+     y2="210.744"
+     id="line5100" />
+  <line
+     style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+     x1="242.926"
+     y1="172.955"
+     x2="278.696"
+     y2="210.494"
+     id="line5102" />
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="215.327"
+     sodipodi:cx="290.77802"
+     id="ellipse5106"
+     ry="12.6265"
+     rx="13.078"
+     cy="215.327"
+     cx="290.77802"
+     style="fill:#ffffff" />
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="215.327"
+     sodipodi:cx="290.77802"
+     id="ellipse5108"
+     ry="12.6265"
+     rx="13.078"
+     cy="215.327"
+     cx="290.77802"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text5110"
+     y="219.45544"
+     x="290.77802"
+     style="font-size:14.1111002px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:monospace">
+    <tspan
+       id="tspan5112"
+       y="219.45544"
+       x="290.77802">C</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="215.577"
+     sodipodi:cx="394.77802"
+     id="ellipse5116"
+     ry="12.6265"
+     rx="13.078"
+     cy="215.577"
+     cx="394.77802"
+     style="fill:#ffffff" />
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="215.577"
+     sodipodi:cx="394.77802"
+     id="ellipse5118"
+     ry="12.6265"
+     rx="13.078"
+     cy="215.577"
+     cx="394.77802"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text5120"
+     y="219.70544"
+     x="394.77802"
+     style="font-size:14.1111002px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:monospace">
+    <tspan
+       id="tspan5122"
+       y="219.70544"
+       x="394.77802">D</tspan>
+  </text>
+  <line
+     style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+     x1="303.856"
+     y1="215.326"
+     x2="381.7"
+     y2="215.576"
+     id="line5124" />
+  <g
+     id="g5126">
+    <path
+       style="fill: #ff0000"
+       d="M 388.95 120.2 L 404.75,120.2 L 404.75,134.9 L 396.85,138.575 L 388.95,134.9 L 388.95,120.2z"
+       id="path5128" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       d="M 388.95 120.2 L 404.75,120.2 L 404.75,134.9 L 396.85,138.575 L 388.95,134.9 L 388.95,120.2"
+       id="path5130" />
+    <text
+       style="fill: #000000;text-anchor:middle;font-size:10.16;font-family:monospace;font-style:normal;font-weight:700"
+       x="396.85"
+       y="130.725"
+       id="text5132">
+      <tspan
+         x="396.85"
+         y="130.725"
+         id="tspan5134" />
+    </text>
+  </g>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:9.03111;font-family:serif;font-style:normal;font-weight:normal"
+     x="382.75"
+     y="114.5"
+     id="text5136">
+    <tspan
+       x="382.75"
+       y="114.5"
+       id="tspan5138">master</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="163.52699"
+     sodipodi:cx="707.37799"
+     id="ellipse5142"
+     ry="12.6265"
+     rx="13.078"
+     cy="163.52699"
+     cx="707.37799"
+     style="fill:#ffffff" />
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="163.52699"
+     sodipodi:cx="707.37799"
+     id="ellipse5144"
+     ry="12.6265"
+     rx="13.078"
+     cy="163.52699"
+     cx="707.37799"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text5146"
+     y="166.54195"
+     x="707.37799"
+     style="font-size:14.1111002px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:monospace">
+    <tspan
+       id="tspan5148"
+       y="166.54195"
+       x="707.37799">B</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="163.52699"
+     sodipodi:cx="608.37799"
+     id="ellipse5152"
+     ry="12.6265"
+     rx="13.078"
+     cy="163.52699"
+     cx="608.37799"
+     style="fill:#ffffff" />
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="163.52699"
+     sodipodi:cx="608.37799"
+     id="ellipse5154"
+     ry="12.6265"
+     rx="13.078"
+     cy="163.52699"
+     cx="608.37799"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text5156"
+     y="166.54195"
+     x="608.37799"
+     style="font-size:14.1111002px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:monospace">
+    <tspan
+       id="tspan5158"
+       y="166.54195"
+       x="608.37799">A</tspan>
+  </text>
+  <line
+     style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+     x1="621.456"
+     y1="163.527"
+     x2="694.3"
+     y2="163.527"
+     id="line5160" />
+  <line
+     style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 4; stroke: #000000"
+     x1="716.626"
+     y1="172.455"
+     x2="757.396"
+     y2="210.244"
+     id="line5162" />
+  <line
+     style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 4; stroke: #000000"
+     x1="617.626"
+     y1="172.455"
+     x2="653.396"
+     y2="209.994"
+     id="line5164" />
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="214.827"
+     sodipodi:cx="665.47803"
+     id="ellipse5168"
+     ry="12.6265"
+     rx="13.078"
+     cy="214.827"
+     cx="665.47803"
+     style="fill:#ffffff" />
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="214.827"
+     sodipodi:cx="665.47803"
+     id="ellipse5170"
+     ry="12.6265"
+     rx="13.078"
+     cy="214.827"
+     cx="665.47803"
+     style="fill:none;stroke:#000000;stroke-width:2;stroke-dasharray:4" />
+  <text
+     id="text5172"
+     y="217.84195"
+     x="665.47803"
+     style="font-size:14.1111002px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:monospace">
+    <tspan
+       id="tspan5174"
+       y="217.84195"
+       x="665.47803">C</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="215.077"
+     sodipodi:cx="769.47803"
+     id="ellipse5178"
+     ry="12.6265"
+     rx="13.078"
+     cy="215.077"
+     cx="769.47803"
+     style="fill:#ffffff" />
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="215.077"
+     sodipodi:cx="769.47803"
+     id="ellipse5180"
+     ry="12.6265"
+     rx="13.078"
+     cy="215.077"
+     cx="769.47803"
+     style="fill:none;stroke:#000000;stroke-width:2;stroke-dasharray:4" />
+  <text
+     id="text5182"
+     y="218.09195"
+     x="769.47803"
+     style="font-size:14.1111002px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:monospace">
+    <tspan
+       id="tspan5184"
+       y="218.09195"
+       x="769.47803">D</tspan>
+  </text>
+  <line
+     style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 4; stroke: #000000"
+     x1="678.556"
+     y1="214.826"
+     x2="756.4"
+     y2="215.076"
+     id="line5186" />
+  <g
+     id="g5188">
+    <path
+       style="fill: #0000ff"
+       d="M 763.65 119.7 L 779.45,119.7 L 779.45,134.4 L 771.55,138.075 L 763.65,134.4 L 763.65,119.7z"
+       id="path5190" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 4; stroke: #000000"
+       d="M 763.65 119.7 L 779.45,119.7 L 779.45,134.4 L 771.55,138.075 L 763.65,134.4 L 763.65,119.7"
+       id="path5192" />
+    <text
+       style="fill: #000000;text-anchor:middle;font-size:10.16;font-family:monospace;font-style:normal;font-weight:700"
+       x="771.55"
+       y="130.225"
+       id="text5194">
+      <tspan
+         x="771.55"
+         y="130.225"
+         id="tspan5196" />
+    </text>
+  </g>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:9.03111;font-family:serif;font-style:normal;font-weight:normal"
+     x="757.45"
+     y="114"
+     id="text5198">
+    <tspan
+       x="757.45"
+       y="114"
+       id="tspan5200">master</tspan>
+  </text>
+</svg>

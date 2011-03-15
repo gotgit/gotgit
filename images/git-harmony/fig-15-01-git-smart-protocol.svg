@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="33cm"
+   height="12cm"
+   viewBox="289 122 651 233"
+   id="svg4494"
+   version="1.1"
+   inkscape:version="0.48.0 r9654"
+   sodipodi:docname="fig-15-01-git-smart-protocol.svg">
+  <metadata
+     id="metadata4596">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs4594" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1280"
+     inkscape:window-height="752"
+     id="namedview4592"
+     showgrid="false"
+     inkscape:zoom="0.61561619"
+     inkscape:cx="680.82231"
+     inkscape:cy="224.13452"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg4494" />
+  <g
+     id="g4496">
+    <path
+       style="fill: #e0dfde"
+       d="M 686.7 163.1 C 686.7,145 916.7,145 916.7,163.1 L 916.7,307.9 C 916.7,326 686.7,326 686.7,307.9 L 686.7,163.1z"
+       id="path4498" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       d="M 686.7 163.1 C 686.7,145 916.7,145 916.7,163.1 L 916.7,307.9 C 916.7,326 686.7,326 686.7,307.9 L 686.7,163.1"
+       id="path4500" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       d="M 686.7 163.1 C 686.7,181.2 916.7,181.2 916.7,163.1 L 916.7,307.9"
+       id="path4502" />
+    <text
+       style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+       x="696.7"
+       y="191.9"
+       id="text4504">
+      <tspan
+         x="696.7"
+         y="191.9"
+         id="tspan4506" />
+    </text>
+  </g>
+  <g
+     id="g4508">
+    <path
+       style="fill: #afc2da"
+       d="M 312 163.2 C 312,145 542,145 542,163.2 L 542,308.8 C 542,327 312,327 312,308.8 L 312,163.2z"
+       id="path4510" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       d="M 312 163.2 C 312,145 542,145 542,163.2 L 542,308.8 C 542,327 312,327 312,308.8 L 312,163.2"
+       id="path4512" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       d="M 312 163.2 C 312,181.4 542,181.4 542,163.2 L 542,308.8"
+       id="path4514" />
+    <text
+       style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+       x="322"
+       y="192.1"
+       id="text4516">
+      <tspan
+         x="322"
+         y="192.1"
+         id="tspan4518" />
+    </text>
+  </g>
+  <rect
+     id="rect4544"
+     ry="20"
+     rx="39.530464"
+     height="38.344398"
+     width="158.12186"
+     y="255.58652"
+     x="345.30688"
+     style="fill:#ffffff;stroke:#000000;stroke-width:1.67024231;stroke-miterlimit:4;stroke-dasharray:none" />
+  <text
+     id="text4546"
+     y="278.75723"
+     x="424.03461"
+     style="font-size:14.67560005px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:monospace">
+    <tspan
+       id="tspan4548"
+       y="278.75723"
+       x="424.03461">git-fetch-pack</tspan>
+  </text>
+  <g
+     id="g4560">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="507.8"
+       y1="214.172"
+       x2="711.164"
+       y2="214.172"
+       id="line4562" />
+    <polygon
+       style="fill: #000000"
+       points="718.664,214.172 708.664,219.172 711.164,214.172 708.664,209.172 "
+       id="polygon4564" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="718.664,214.172 708.664,219.172 711.164,214.172 708.664,209.172 "
+       id="polygon4566" />
+  </g>
+  <g
+     id="g4568">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       x1="720.9"
+       y1="275.872"
+       x2="517.536"
+       y2="275.872"
+       id="line4570" />
+    <polygon
+       style="fill: #000000"
+       points="510.036,275.872 520.036,270.872 517.536,275.872 520.036,280.872 "
+       id="polygon4572" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       points="510.036,275.872 520.036,270.872 517.536,275.872 520.036,280.872 "
+       id="polygon4574" />
+  </g>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:15.8044;font-family:serif;font-style:normal;font-weight:normal"
+     x="577"
+     y="205"
+     id="text4576">
+    <tspan
+       x="577"
+       y="205"
+       id="tspan4578">git push</tspan>
+  </text>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:15.8044;font-family:serif;font-style:normal;font-weight:normal"
+     x="582.1"
+     y="265.95"
+     id="text4580">
+    <tspan
+       x="582.1"
+       y="265.95"
+       id="tspan4582">git pull</tspan>
+  </text>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:16.9333;font-family:sanserif;font-style:normal;font-weight:normal"
+     x="384.626"
+     y="353.516"
+     id="text4584"
+     sodipodi:linespacing="125%">
+    <tspan
+       x="384.626"
+       y="353.516"
+       id="tspan4586"
+       style="-inkscape-font-specification:SimSun;font-family:SimSun;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;font-size:17.81591853px;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%">本地版本库</tspan>
+  </text>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:16.9333;font-family:sanserif;font-style:normal;font-weight:normal"
+     x="759.326"
+     y="354.05"
+     id="text4588"
+     sodipodi:linespacing="125%">
+    <tspan
+       x="759.326"
+       y="354.05"
+       id="tspan4590"
+       style="-inkscape-font-specification:SimSun;font-family:SimSun;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;font-size:17.81591853px;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%">远程版本库</tspan>
+  </text>
+  <rect
+     style="fill:#ffffff;stroke:#000000;stroke-width:1.67024231;stroke-miterlimit:4;stroke-dasharray:none"
+     x="725.57367"
+     y="194.40002"
+     width="158.12186"
+     height="38.344398"
+     rx="39.530464"
+     ry="20"
+     id="rect7423" />
+  <text
+     id="text4536"
+     y="217.57076"
+     x="804.30139"
+     style="font-size:14.67560005px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:monospace">
+    <tspan
+       id="tspan4538"
+       y="217.57076"
+       x="804.30139">git-receive-pack</tspan>
+  </text>
+  <rect
+     id="rect7425"
+     ry="20"
+     rx="39.530464"
+     height="38.344398"
+     width="158.12186"
+     y="255.58652"
+     x="725.57367"
+     style="fill:#ffffff;stroke:#000000;stroke-width:1.67024231;stroke-miterlimit:4;stroke-dasharray:none" />
+  <text
+     id="text4556"
+     y="278.83606"
+     x="804.30139"
+     style="font-size:14.67560005px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:monospace">
+    <tspan
+       id="tspan4558"
+       y="278.83606"
+       x="804.30139">git-upload-pack</tspan>
+  </text>
+  <rect
+     style="fill:#ffffff;stroke:#000000;stroke-width:1.67024231;stroke-miterlimit:4;stroke-dasharray:none"
+     x="345.30688"
+     y="194.40002"
+     width="158.12186"
+     height="38.344398"
+     rx="39.530464"
+     ry="20"
+     id="rect7427" />
+  <text
+     id="text4526"
+     y="217.57076"
+     x="424.03461"
+     style="font-size:14.67560005px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:monospace">
+    <tspan
+       id="tspan4528"
+       y="217.57076"
+       x="424.03461">git-send-pack</tspan>
+  </text>
+</svg>
