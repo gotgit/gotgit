@@ -207,15 +207,15 @@
     </dia:object>
     <dia:object type="Standard - Text" version="1" id="O2">
       <dia:attribute name="obj_pos">
-        <dia:point val="12.8725,13.4625"/>
+        <dia:point val="12.5225,13.4625"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="12.8725,12.845;19.565,13.6525"/>
+        <dia:rectangle val="12.5225,12.8675;20.03,13.615"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
-            <dia:string>#用户 user1 本地版本库#</dia:string>
+            <dia:string>#User1's local repository#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
             <dia:font family="sans" style="0" name="Helvetica"/>
@@ -224,7 +224,7 @@
             <dia:real val="0.80000000000000004"/>
           </dia:attribute>
           <dia:attribute name="pos">
-            <dia:point val="12.8725,13.4625"/>
+            <dia:point val="12.5225,13.4625"/>
           </dia:attribute>
           <dia:attribute name="color">
             <dia:color val="#000000"/>
@@ -240,15 +240,15 @@
     </dia:object>
     <dia:object type="Standard - Text" version="1" id="O3">
       <dia:attribute name="obj_pos">
-        <dia:point val="33.7575,13.4375"/>
+        <dia:point val="31.8075,13.4375"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="33.7575,12.82;36.9575,13.6275"/>
+        <dia:rectangle val="31.8075,12.8425;37.5025,13.59"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
-            <dia:string>#共享版本库#</dia:string>
+            <dia:string>#Shared repository#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
             <dia:font family="sans" style="0" name="Helvetica"/>
@@ -257,7 +257,7 @@
             <dia:real val="0.80000000000000004"/>
           </dia:attribute>
           <dia:attribute name="pos">
-            <dia:point val="33.7575,13.4375"/>
+            <dia:point val="31.8075,13.4375"/>
           </dia:attribute>
           <dia:attribute name="color">
             <dia:color val="#000000"/>
@@ -276,7 +276,7 @@
         <dia:point val="21.8038,9.30625"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="21.7037,8.83264;27.9924,9.77986"/>
+        <dia:rectangle val="21.7038,8.83264;27.9924,9.77986"/>
       </dia:attribute>
       <dia:attribute name="conn_endpoints">
         <dia:point val="21.8038,9.30625"/>
@@ -499,7 +499,7 @@
             <dia:real val="0.63499997556209564"/>
           </dia:attribute>
           <dia:attribute name="pos">
-            <dia:point val="14.3925,6.53625"/>
+            <dia:point val="14.3925,6.5045"/>
           </dia:attribute>
           <dia:attribute name="color">
             <dia:color val="#000000"/>
@@ -717,7 +717,7 @@
             <dia:real val="0.63499997556209564"/>
           </dia:attribute>
           <dia:attribute name="pos">
-            <dia:point val="35.3775,6.51125"/>
+            <dia:point val="35.3775,6.4795"/>
           </dia:attribute>
           <dia:attribute name="color">
             <dia:color val="#000000"/>

@@ -68,7 +68,7 @@
         <dia:point val="14.9096,28.6409"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="14.9096,28.2209;15.8946,28.7484"/>
+        <dia:rectangle val="14.9096,28.2209;15.8971,28.7484"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -335,7 +335,7 @@
         <dia:point val="20.5848,30.5537"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="20.5848,30.1337;21.1198,30.6612"/>
+        <dia:rectangle val="20.5848,30.1337;21.1223,30.6612"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -853,7 +853,7 @@
         <dia:point val="14.549,28.1477"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="14.4896,28.0883;20.6603,29.6817"/>
+        <dia:rectangle val="14.4896,28.0883;20.6603,30.338"/>
       </dia:attribute>
       <dia:attribute name="bez_points">
         <dia:point val="14.549,28.1477"/>
@@ -943,7 +943,7 @@
         <dia:point val="22.9177,25.752"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="22.8481,24.087;24.0593,25.8215"/>
+        <dia:rectangle val="22.8482,24.087;24.0593,25.8215"/>
       </dia:attribute>
       <dia:attribute name="conn_endpoints">
         <dia:point val="22.9177,25.752"/>
@@ -1007,7 +1007,7 @@
         <dia:point val="20.3552,28.6409"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="20.3552,28.2209;21.3402,28.7484"/>
+        <dia:rectangle val="20.3552,28.2209;21.3427,28.7484"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -1115,7 +1115,7 @@
         <dia:point val="16.6614,26.8349"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="16.6614,26.4149;17.2239,26.9424"/>
+        <dia:rectangle val="16.6614,26.4149;17.2264,26.9424"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -1148,7 +1148,7 @@
         <dia:point val="18.6202,26.8349"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="18.6202,26.4149;19.1827,26.9424"/>
+        <dia:rectangle val="18.6202,26.4149;19.1852,26.9424"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -1181,7 +1181,7 @@
         <dia:point val="20.5539,26.8349"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="20.5539,26.4149;21.1164,26.9424"/>
+        <dia:rectangle val="20.5539,26.4149;21.1189,26.9424"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -1214,7 +1214,7 @@
         <dia:point val="20.0114,23.4099"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="20.0114,22.9899;20.5839,23.5174"/>
+        <dia:rectangle val="20.0114,22.9899;20.5864,23.5174"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
@@ -1346,12 +1346,12 @@
         <dia:point val="25.6302,24.1699"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="25.6302,23.5524;34.7977,24.3599"/>
+        <dia:rectangle val="25.6302,23.5562;34.4989,24.3598"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
-            <dia:string>#（特性分支B: refs/heads/t/B）#</dia:string>
+            <dia:string>#( Feature B: refs/heads/t/B )#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
             <dia:font family="sans" style="0" name="Helvetica"/>
@@ -1463,12 +1463,12 @@
         <dia:point val="25.6302,26.244"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="25.6302,25.6265;34.7827,26.434"/>
+        <dia:rectangle val="25.6302,25.6303;34.2814,26.4339"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
-            <dia:string>#（特性分支A: refs/heads/t/A）#</dia:string>
+            <dia:string>#( Feature A: refs/heads/t/A)#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
             <dia:font family="sans" style="0" name="Helvetica"/>
@@ -1496,12 +1496,12 @@
         <dia:point val="25.6302,29.8865"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="25.6302,29.269;34.8077,30.0765"/>
+        <dia:rectangle val="25.6302,29.2728;34.5139,30.0764"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
-            <dia:string>#（特性分支C: refs/heads/t/C）#</dia:string>
+            <dia:string>#( Feature C: refs/heads/t/C )#</dia:string>
           </dia:attribute>
           <dia:attribute name="font">
             <dia:font family="sans" style="0" name="Helvetica"/>
@@ -1529,12 +1529,12 @@
         <dia:point val="25.6302,28.119"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="25.6302,27.5128;33.6427,29.0903"/>
+        <dia:rectangle val="25.6302,27.5053;36.3364,29.1089"/>
       </dia:attribute>
       <dia:attribute name="text">
         <dia:composite type="text">
           <dia:attribute name="string">
-            <dia:string>#（主线/卖主分支: master）
+            <dia:string>#( Master/Vendor Branch: master )
 #</dia:string>
           </dia:attribute>
           <dia:attribute name="font">

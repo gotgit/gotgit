@@ -14,8 +14,8 @@
    id="svg10191"
    version="1.1"
    inkscape:version="0.48.0 r9654"
-   sodipodi:docname="work-backup.svg"
-   inkscape:export-filename="/Users/jiangxin/gitbook/src/book/images/meet-git/work-backup.png"
+   sodipodi:docname="fig-02-01-work-backup.svg"
+   inkscape:export-filename="/Users/jiangxin/gitbook/src/book/images/en/fig-02-01-work-backup.png"
    inkscape:export-xdpi="75.285599"
    inkscape:export-ydpi="75.285599">
   <metadata
@@ -952,7 +952,7 @@
      id="namedview10427"
      showgrid="false"
      inkscape:zoom="0.53283555"
-     inkscape:cx="552.23671"
+     inkscape:cx="817.96632"
      inkscape:cy="405.88166"
      inkscape:window-x="45"
      inkscape:window-y="0"
@@ -1460,29 +1460,29 @@
   <text
      xml:space="preserve"
      style="font-size:16.42510033px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:'宋体';-inkscape-font-specification:'宋体'"
-     x="571.19196"
+     x="557.66339"
      y="186.77682"
      id="text4924"
      sodipodi:linespacing="125%"><tspan
        sodipodi:role="line"
-       x="571.19196"
+       x="557.66339"
        y="186.77682"
        id="tspan4928"><tspan
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'黑体';-inkscape-font-specification:'黑体'"
-         id="tspan4932">数据中心 </tspan></tspan></text>
+         id="tspan4932">Data Center </tspan></tspan></text>
   <text
      xml:space="preserve"
      style="font-size:16.42510033px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:'宋体';-inkscape-font-specification:'宋体'"
-     x="248.67184"
+     x="240.78029"
      y="186.91751"
      id="text4924-7"
      sodipodi:linespacing="125%"><tspan
        sodipodi:role="line"
-       x="248.67184"
+       x="240.78029"
        y="186.91751"
        id="tspan4928-1"><tspan
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'黑体';-inkscape-font-specification:'黑体'"
-         id="tspan4932-1">公司局域网 </tspan></tspan></text>
+         id="tspan4932-1">LAN of Company </tspan></tspan></text>
   <text
      xml:space="preserve"
      style="font-size:11.273633px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;stroke:none;font-family:'宋体';-inkscape-font-specification:'宋体'"
