@@ -81,4 +81,7 @@ task:part9 do
   sh 'rake html'
 end
 
-
+task:en do
+  ENV["DOC_INDEX"] = "en"
+  sh 'rake html'
+end
