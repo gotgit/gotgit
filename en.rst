@@ -7,14 +7,26 @@ part 1: Meet Git
 Chapter 1: Version Control History
 ***********************************
 
-1.1       The dark prehistory                       [1]
+1.1       The Dark Age                              [1]
 =======================================================
 
 1.2       CVS -- Leads to SCM explosion             [4]
 =======================================================
 
+.. figure:: images/en/fig-01-01-cvs-arch.png
+   :scale: 70
+
+   Fig 1-1:
+
+
 1.3       SVN -- A central SCM superior             [6]
 =======================================================
+
+.. figure:: images/en/fig-01-02-svn-arch.png
+   :scale: 70
+
+   Fig 1-2:
+
 
 1.4       Git -- Linus's second masterpiece         [9]
 =======================================================
@@ -25,8 +37,20 @@ Chapter 2: Fall in love with Git
 2.1       Everyday's works backup                  [11]
 =======================================================
 
+.. figure:: images/en/fig-02-01-work-backup.png
+   :scale: 65
+
+   Fig 2-1:
+
+
 2.2       Works with others at diff. location      [12]
 =======================================================
+
+.. figure:: images/en/fig-02-02-workflow.png
+   :scale: 65
+
+   Fig 2-2:
+
 
 2.3       On Site version control                  [13]
 =======================================================
@@ -90,6 +114,12 @@ Chapter 3: Install Git
 3.2.2        Install Xcode.                        [29]
 -------------------------------------------------------
 
+.. figure:: images/en/fig-03-03-xcode-install.png
+   :scale: 65
+
+   Fig 3-3:
+
+
 3.2.3        Install using Homebrew                [30]
 -------------------------------------------------------
 
@@ -112,8 +142,20 @@ Chapter 3: Install Git
 3.3.1        Install Cygwin.                       [34]
 -------------------------------------------------------
 
+.. figure:: images/en/fig-03-07-cygwin-5-mirror.png
+   :scale: 100
+
+   Fig 3-7:
+
+
 3.3.2        Install Git                           [40]
 -------------------------------------------------------
+
+.. figure:: images/en/fig-03-13-cygwin-8-search-git-install.png
+   :scale: 100
+
+   Fig 3-13:
+
 
 3.3.3        Cygwin configuration and usage        [42]
 -------------------------------------------------------
@@ -171,6 +213,12 @@ Chapter 4: Git Initial
 4.5       Think: change name freely, is it safe?   [73]
 =======================================================
 
+.. figure:: images/en/fig-04-01-redmine-user-config.png
+   :scale: 60
+
+   Fig 4-1:
+
+
 4.6       Think: what is command alias?            [75]
 =======================================================
 
@@ -186,8 +234,20 @@ Chapter 5: Git Stage
 5.2       Unstand Git Stage                        [83]
 =======================================================
 
+.. figure:: images/en/fig-05-01-git-stage.png
+   :scale: 90
+
+   Fig 5-1:
+
+
 5.3       Magic in Git Diff                        [86]
 =======================================================
+
+.. figure:: images/en/fig-05-02-git-diff.png
+   :scale: 90
+
+   Fig 5-2:
+
 
 5.4       Do not use git commit -a                 [90]
 =======================================================
@@ -201,6 +261,18 @@ Chapter 6: Git Objects
 6.1       Git object exploration                   [92]
 =======================================================
 
+.. figure:: images/en/fig-06-01-git-objects.png
+   :scale: 90
+
+   Fig 6-1:
+
+.. figure:: images/en/fig-06-02-git-repos-detail.png
+   :scale: 90
+
+   Fig 6-2:
+
+
+
 6.2       Think: What is SHA1, how it generate?    [98]
 =======================================================
 
@@ -213,6 +285,12 @@ Chapter 7: Git Reset
 7.1       Mystery of branch cursor                [103]
 =======================================================
 
+.. figure:: images/en/fig-07-01-git-reset.png
+   :scale: 80
+
+   Fig 7-1:
+
+
 7.2       Save bad reset using reflog             [105]
 =======================================================
 
@@ -224,6 +302,12 @@ Chapter 8: Git Checkout
 
 8.1       Checkout is HEAD reset                  [110]
 =======================================================
+
+.. figure:: images/en/fig-08-01-git-checkout.png
+   :scale: 80
+
+   Fig 8-1:
+
 
 8.2       Detached HEAD                           [113]
 =======================================================
@@ -295,11 +379,29 @@ Chapter 11: Travel in Git History
 11.4      Command line tools                      [158]
 =======================================================
 
+.. figure:: images/en/fig-11-19-gitg-demo-commit-tree.png
+   :scale: 80
+
+   Fig 11-19:
+
+.. figure:: images/en/fig-11-20-commit-tree.png
+   :scale: 100
+
+   Fig 11-20:
+
+
 11.4.1      Revision presentation：git rev-parse  [160]
 -------------------------------------------------------
 
+.. figure:: images/en/fig-11-21-commit-tree-with-id.png
+   :scale: 100
+
+   Fig 11-21:
+
+
 11.4.2      Revision list：git rev-list           [163]
 -------------------------------------------------------
+
 
 11.4.3      Log browse：git log                   [166]
 -------------------------------------------------------
@@ -312,6 +414,12 @@ Chapter 11: Travel in Git History
 
 11.4.6      git bisect                            [172]
 -------------------------------------------------------
+
+.. figure:: images/en/fig-11-22-commit-tree-bisect.png
+   :scale: 100
+
+   Fig 11-22:
+
 
 11.4.7      Get revison copy                      [177]
 -------------------------------------------------------
@@ -329,17 +437,55 @@ Chapter 12: Change History
 12.3      Back to future                          [182]
 =======================================================
 
+.. figure:: images/en/fig-12-01-back-to-future.png
+   :scale: 60
+
+   Fig 12-1:
+
+.. figure:: images/en/fig-12-02-git-rebase-orig.png
+   :scale: 100
+
+   Fig 12-2:
+
+.. figure:: images/en/fig-12-03-git-rebase-c.png
+   :scale: 100
+
+   Fig 12-3:
+
+.. figure:: images/en/fig-12-04-git-rebase-cd.png
+   :scale: 100
+
+   Fig 12-4:
+
+
 12.3.1      Time machine v1                       [184]
 -------------------------------------------------------
 
-12.3.2      Time machine v1                       [189]
+.. figure:: images/en/fig-12-05-git-rebase-graph.png
+   :scale: 90
+
+   Fig 12-5:
+
+.. figure:: images/en/fig-12-06-git-rebase-graph-gitk.png
+   :scale: 90
+
+   Fig 12-6:
+
+
+12.3.2      Time machine v2                       [189]
 -------------------------------------------------------
 
-12.3.3      Time machine v1                       [194]
+12.3.3      Time machine v3                       [194]
 -------------------------------------------------------
 
 12.4      Throw away history                      [198]
 =======================================================
+
+.. figure:: images/en/fig-12-07-git-rebase-purge-history-graph.png
+   :scale: 90
+
+   Fig 12-7:
+
 
 12.5      Revert commit                           [200]
 =======================================================
@@ -350,14 +496,38 @@ Chapter 13: Git Clone
 13.1      Eggs in different baskets               [203]
 =======================================================
 
+.. figure:: images/en/fig-13-01-git-clone-pull-push.png
+   :scale: 100
+
+   Fig 13-1:
+
+
 13.2      Neighborhood workspace                  [204]
 =======================================================
+
+.. figure:: images/en/fig-13-02-git-clone-1.png
+   :scale: 100
+
+   Fig 13-2:
+
 
 13.3      Bare repository from clone              [208]
 =======================================================
 
+.. figure:: images/en/fig-13-03-git-clone-2.png
+   :scale: 100
+
+   Fig 13-3:
+
+
 13.4      Bare repository from initial            [209]
 =======================================================
+
+.. figure:: images/en/fig-13-04-git-clone-3.png
+   :scale: 100
+
+   Fig 13-4:
+
 
 Chapter 14: You are Git Admin
 ***********************************
@@ -384,6 +554,12 @@ Part 3: Git harmoney
 Chapter 15: Git protocol and cooperation
 **********************************************
 
+.. figure:: images/en/fig-15-01-git-smart-protocol.png
+   :scale: 100
+
+   Fig 15-1:
+
+
 15.1      Git Protocol                            [225]
 =======================================================
 
@@ -404,6 +580,27 @@ Chapter 16: Resolve conflict
 
 16.1      Merge during git pull                   [236]
 =======================================================
+
+.. figure:: images/en/fig-16-01-git-merge-pull-1.png
+   :scale: 100
+
+   Fig 16-1:
+
+.. figure:: images/en/fig-16-02-git-merge-pull-2.png
+   :scale: 100
+
+   Fig 16-2:
+
+.. figure:: images/en/fig-16-03-git-merge-pull-3.png
+   :scale: 100
+
+   Fig 16-3:
+
+.. figure:: images/en/fig-16-04-git-merge-pull-4.png
+   :scale: 100
+
+   Fig 16-4:
+
 
 16.2      Merge lesson 1：merge automatically     [238]
 =======================================================
@@ -428,6 +625,32 @@ Chapter 16: Resolve conflict
 
 16.4.2      Resolve using GUI tools               [249]
 -------------------------------------------------------
+
+.. figure:: images/en/fig-16-05-kdiff3-1.png
+   :scale: 80
+
+   Fig 16-5:
+
+.. figure:: images/en/fig-16-06-kdiff3-2.png
+   :scale: 80
+
+   Fig 16-6:
+
+.. figure:: images/en/fig-16-07-kdiff3-3.png
+   :scale: 80
+
+   Fig 16-7:
+
+.. figure:: images/en/fig-16-08-kdiff3-4.png
+   :scale: 80
+
+   Fig 16-8:
+
+.. figure:: images/en/fig-16-09-kdiff3-5.png
+   :scale: 80
+
+   Fig 16-9:
+
 
 16.5      Merge lesson 4: tree conflict           [254]
 =======================================================
@@ -486,11 +709,39 @@ Chapter 18: Git Branch
 18.1.1      Release branch                        [286]
 -------------------------------------------------------
 
+.. figure:: images/en/fig-18-01-branch-release-branch-question.png
+   :scale: 70
+
+   Fig 18-1:
+
+.. figure:: images/en/fig-18-02-branch-release-branch-answer.png
+   :scale: 70
+
+   Fig 18-2:
+
+
 18.1.2      Feature branch                        [288]
 -------------------------------------------------------
 
+.. figure:: images/en/fig-18-03-branch-feature-branch-question.png
+   :scale: 70
+
+   Fig 18-1:
+
+.. figure:: images/en/fig-18-04-branch-feature-branch-answer.png
+   :scale: 70
+
+   Fig 18-4:
+
+
 18.1.3      Vendor branch                         [290]
 -------------------------------------------------------
+
+.. figure:: images/en/fig-18-05-branch-vendor-branch.png
+   :scale: 100
+
+   Fig 18-5:
+
 
 18.2      Overview of git branch command          [291]
 =======================================================
@@ -506,6 +757,12 @@ Chapter 18: Git Branch
 
 18.4.2      Create branch: user2/i18n             [295]
 -------------------------------------------------------
+
+.. figure:: images/en/fig-18-06-branch-i18n-initial.png
+   :scale: 100
+
+   Fig 18-6:
+
 
 18.4.3      Developer user1 complete              [296]
 -------------------------------------------------------
@@ -537,8 +794,25 @@ Chapter 18: Git Branch
 18.6.1      Feature branch user2/i18n complete    [309]
 -------------------------------------------------------
 
+.. figure:: images/en/fig-18-07-branch-i18n-complete.png
+   :scale: 100
+
+   Fig 18-7:
+
+
 18.6.2      Branch user2/i18n rebase              [311]
 -------------------------------------------------------
+
+.. figure:: images/en/fig-18-08-branch-i18n-merge.png
+   :scale: 100
+
+   Fig 18-8:
+
+.. figure:: images/en/fig-18-10-branch-i18n-rebase.png
+   :scale: 100
+
+   Fig 18-10:
+
 
 Chapter 19: Remote repository
 ***********************************
@@ -589,14 +863,37 @@ Chapter 21: Classic Git Model
 21.1      Central Cooperation Model               [343]
 =======================================================
 
+.. figure:: images/en/fig-21-01-central-model.png
+   :scale: 100
+
+   Fig 21-1:
+
+
 21.1.1      Work with central model               [345]
 -------------------------------------------------------
+
+.. figure:: images/en/fig-21-02-central-model-workflow-1.png
+   :scale: 80
+
+   Fig 21-2:
+
+.. figure:: images/en/fig-21-03-central-model-workflow-2.png
+   :scale: 80
+
+   Fig 21-3:
+
 
 21.1.2      Special cental model: Gerrit          [346]
 -------------------------------------------------------
 
 21.2      Pyramid Cooperation Model               [347]
 =======================================================
+
+.. figure:: images/en/fig-21-04-distrabute-model.png
+   :scale: 100
+
+   Fig 21-4:
+
 
 21.2.1      Contributer open readonly repository  [348]
 -------------------------------------------------------
@@ -610,8 +907,26 @@ Chapter 22: Topgit Model
 22.1      Three SCM Milestone of Myself           [351]
 =======================================================
 
+.. figure:: images/en/fig-22-01-topgit-branch-vendor-branch.png
+   :scale: 100
+
+   Fig 22-1:
+
+
 22.2      Mystery of Topgit                       [353]
 =======================================================
+
+.. figure:: images/en/fig-22-02-topgit-topic-branch.png
+   :scale: 100
+
+   Fig 22-2:
+
+.. figure:: images/en/fig-22-03-topgit-topic-base-branch.png
+   :scale: 100
+
+   Fig 22-3:
+
+
 
 22.3      Topgit Installation                     [354]
 =======================================================
@@ -619,8 +934,15 @@ Chapter 22: Topgit Model
 22.4      Topgit Usage                            [355]
 =======================================================
 
+
 22.5      Hack Topgit in Topgit way               [367]
 =======================================================
+
+.. figure:: images/en/fig-22-05-topgit-hacks.png
+   :scale: 80
+
+   Fig 22-5:
+
 
 22.6      Notes of Topgit                         [372]
 =======================================================
@@ -667,6 +989,12 @@ Chapter 25: Android Multiple repositories Cooperation
 25.1      About repo                              [396]
 =======================================================
 
+.. figure:: images/en/fig-25-01-repo-workflow.png
+   :scale: 90
+
+   Fig 25-1:
+
+
 25.2      Install repo                            [397]
 =======================================================
 
@@ -707,6 +1035,12 @@ Chapter 26: Git-SVN Model
 26.1      git-svn workflow                        [423]
 =======================================================
 
+.. figure:: images/en/fig-26-01-git-svn-workflow.png
+   :scale: 90
+
+   Fig 26-1:
+
+
 26.2      Mystery of git-svn                      [430]
 =======================================================
 
@@ -743,6 +1077,12 @@ Chapter 27: Using HTTP Protocol
 
 27.3      Gitweb                                  [445]
 =======================================================
+
+.. figure:: images/en/fig-27-01-gitweb-kernel-org_full.png
+   :scale: 80
+
+   Fig 27-1:
+
 
 27.3.1      Install Gitweb                        [445]
 -------------------------------------------------------
@@ -934,6 +1274,12 @@ Chapter 32: Gerrit
 32.1      Mystery of Gerrit                       [502]
 =======================================================
 
+.. figure:: images/en/fig-32-01-gerrit-workflow.png
+   :scale: 60
+
+   Fig 32-1:
+
+
 32.2      Setup Gerrit server                     [506]
 =======================================================
 
@@ -978,6 +1324,12 @@ Chapter 32: Gerrit
 
 32.10.6    New review changeset tests passed      [537]
 -------------------------------------------------------
+
+.. figure:: images/en/fig-32-28-gerrit-review-9-review-patchset-merged.png
+   :scale: 80
+
+   Fig 32-28: review task after publish
+
 
 32.10.7    Update from remote server              [539]
 -------------------------------------------------------
@@ -1147,6 +1499,12 @@ Part 8: MISC
 Chapter 40: Cross OS Git operation
 ***********************************
 
+.. figure:: images/en/fig-40-1-git-survs-os.png
+   :scale: 80
+
+   Fig 40-1:
+
+
 40.1      Character set problems                  [602]
 =======================================================
 
@@ -1209,6 +1567,12 @@ Chapter 41: Git special features
 
 41.5.3      Git notes related configuration       [638]
 -------------------------------------------------------
+
+.. figure:: images/en/fig-41-1-github-notes.png
+   :scale: 70
+
+   Fig 41-1:
+
 
 
 Part 9: Appendix
