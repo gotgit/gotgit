@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="22cm"
+   height="19cm"
+   viewBox="423 -119 427 361"
+   id="svg3786"
+   version="1.1"
+   inkscape:version="0.48.0 r9654"
+   sodipodi:docname="fig-21-04-distrabute-model.dia">
+  <metadata
+     id="metadata3950">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs3948" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="640"
+     inkscape:window-height="480"
+     id="namedview3946"
+     showgrid="false"
+     inkscape:zoom="0.3891696"
+     inkscape:cx="389.76379"
+     inkscape:cy="336.61417"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg3786" />
+  <g
+     id="g3788">
+    <path
+       style="fill: #afc2da"
+       d="M 580.725 -117.3 L 684.425,-117.3 C 698.743,-117.3 710.35,-103.869 710.35,-87.3 C 710.35,-70.7314 698.743,-57.3 684.425,-57.3 L 580.725,-57.3 C 566.407,-57.3 554.8,-70.7314 554.8,-87.3 C 554.8,-103.869 566.407,-117.3 580.725,-117.3z"
+       id="path3790" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #202020"
+       d="M 580.725 -117.3 L 684.425,-117.3 C 698.743,-117.3 710.35,-103.869 710.35,-87.3 C 710.35,-70.7314 698.743,-57.3 684.425,-57.3 L 580.725,-57.3 C 566.407,-57.3 554.8,-70.7314 554.8,-87.3 C 554.8,-103.869 566.407,-117.3 580.725,-117.3"
+       id="path3792" />
+    <text
+       style="fill: #000000;text-anchor:middle;font-size:16.9333;font-family:方正大黑_GBK;font-style:normal;font-weight:normal"
+       x="632.575"
+       y="-82.0083"
+       id="text3794">
+      <tspan
+         x="632.575"
+         y="-82.0083"
+         id="tspan3796">共享的版本库</tspan>
+    </text>
+  </g>
+  <g
+     id="g3798">
+    <path
+       style="fill: #cadaa9"
+       d="M 532.26 79.7 L 595.252,79.7 C 603.949,79.7 610.999,92.0793 610.999,107.35 C 610.999,122.621 603.949,135 595.252,135 L 532.26,135 C 523.563,135 516.512,122.621 516.512,107.35 C 516.512,92.0793 523.563,79.7 532.26,79.7z"
+       id="path3800" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #202020"
+       d="M 532.26 79.7 L 595.252,79.7 C 603.949,79.7 610.999,92.0793 610.999,107.35 C 610.999,122.621 603.949,135 595.252,135 L 532.26,135 C 523.563,135 516.512,122.621 516.512,107.35 C 516.512,92.0793 523.563,79.7 532.26,79.7"
+       id="path3802" />
+    <text
+       style="fill: #000000;text-anchor:middle;font-size:16.9333;font-family:方正大黑_GBK;font-style:normal;font-weight:normal"
+       x="563.756"
+       y="112.642"
+       id="text3804">
+      <tspan
+         x="563.756"
+         y="112.642"
+         id="tspan3806">开发者</tspan>
+    </text>
+  </g>
+  <g
+     id="g3808">
+    <path
+       style="fill: #cadaa9"
+       d="M 440.204 185.512 L 503.196,185.512 C 511.893,185.512 518.943,197.891 518.943,213.162 C 518.943,228.433 511.893,240.812 503.196,240.812 L 440.204,240.812 C 431.507,240.812 424.456,228.433 424.456,213.162 C 424.456,197.891 431.507,185.512 440.204,185.512z"
+       id="path3810" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #202020"
+       d="M 440.204 185.512 L 503.196,185.512 C 511.893,185.512 518.943,197.891 518.943,213.162 C 518.943,228.433 511.893,240.812 503.196,240.812 L 440.204,240.812 C 431.507,240.812 424.456,228.433 424.456,213.162 C 424.456,197.891 431.507,185.512 440.204,185.512"
+       id="path3812" />
+    <text
+       style="fill: #000000;text-anchor:middle;font-size:16.9333;font-family:方正大黑_GBK;font-style:normal;font-weight:normal"
+       x="471.7"
+       y="218.454"
+       id="text3814">
+      <tspan
+         x="471.7"
+         y="218.454"
+         id="tspan3816">开发者</tspan>
+    </text>
+  </g>
+  <g
+     id="g3818">
+    <path
+       style="fill: #cadaa9"
+       d="M 611.148 185.512 L 674.14,185.512 C 682.837,185.512 689.887,197.891 689.887,213.162 C 689.887,228.433 682.837,240.812 674.14,240.812 L 611.148,240.812 C 602.451,240.812 595.4,228.433 595.4,213.162 C 595.4,197.891 602.451,185.512 611.148,185.512z"
+       id="path3820" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #202020"
+       d="M 611.148 185.512 L 674.14,185.512 C 682.837,185.512 689.887,197.891 689.887,213.162 C 689.887,228.433 682.837,240.812 674.14,240.812 L 611.148,240.812 C 602.451,240.812 595.4,228.433 595.4,213.162 C 595.4,197.891 602.451,185.512 611.148,185.512"
+       id="path3822" />
+    <text
+       style="fill: #000000;text-anchor:middle;font-size:16.9333;font-family:方正大黑_GBK;font-style:normal;font-weight:normal"
+       x="642.644"
+       y="218.454"
+       id="text3824">
+      <tspan
+         x="642.644"
+         y="218.454"
+         id="tspan3826">开发者</tspan>
+    </text>
+  </g>
+  <g
+     id="g3828">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #a0a0a0"
+       x1="579.504"
+       y1="79.7"
+       x2="587.714"
+       y2="48.5398"
+       id="line3830" />
+    <polygon
+       style="fill: #a0a0a0"
+       points="589.624,41.2873 591.912,52.2311 587.714,48.5398 582.242,49.6835 "
+       id="polygon3832" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #a0a0a0"
+       points="589.624,41.2873 591.912,52.2311 587.714,48.5398 582.242,49.6835 "
+       id="polygon3834" />
+  </g>
+  <g
+     id="g3836">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #a0a0a0"
+       x1="487.448"
+       y1="185.512"
+       x2="542.896"
+       y2="143.045"
+       id="line3838" />
+    <polygon
+       style="fill: #a0a0a0"
+       points="548.851,138.485 543.952,148.535 542.896,143.045 537.872,140.595 "
+       id="polygon3840" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #a0a0a0"
+       points="548.851,138.485 543.952,148.535 542.896,143.045 537.872,140.595 "
+       id="polygon3842" />
+  </g>
+  <g
+     id="g3844">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #a0a0a0"
+       x1="586.166"
+       y1="142.1"
+       x2="626.896"
+       y2="185.512"
+       id="line3846" />
+    <polygon
+       style="fill: #a0a0a0"
+       points="581.034,136.631 591.523,140.502 586.166,142.1 584.23,147.345 "
+       id="polygon3848" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #a0a0a0"
+       points="581.034,136.631 591.523,140.502 586.166,142.1 584.23,147.345 "
+       id="polygon3850" />
+  </g>
+  <g
+     id="g3852">
+    <path
+       style="fill: #cadaa9"
+       d="M 679.074 80.825 L 742.066,80.825 C 750.763,80.825 757.813,93.2043 757.813,108.475 C 757.813,123.746 750.763,136.125 742.066,136.125 L 679.074,136.125 C 670.377,136.125 663.326,123.746 663.326,108.475 C 663.326,93.2043 670.377,80.825 679.074,80.825z"
+       id="path3854" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #202020"
+       d="M 679.074 80.825 L 742.066,80.825 C 750.763,80.825 757.813,93.2043 757.813,108.475 C 757.813,123.746 750.763,136.125 742.066,136.125 L 679.074,136.125 C 670.377,136.125 663.326,123.746 663.326,108.475 C 663.326,93.2043 670.377,80.825 679.074,80.825"
+       id="path3856" />
+    <text
+       style="fill: #000000;text-anchor:middle;font-size:16.9333;font-family:方正大黑_GBK;font-style:normal;font-weight:normal"
+       x="710.57"
+       y="113.767"
+       id="text3858">
+      <tspan
+         x="710.57"
+         y="113.767"
+         id="tspan3860">开发者</tspan>
+    </text>
+  </g>
+  <g
+     id="g3862">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #a0a0a0"
+       x1="694.822"
+       y1="80.825"
+       x2="680.78"
+       y2="48.0733"
+       id="line3864" />
+    <polygon
+       style="fill: #a0a0a0"
+       points="677.825,41.1802 686.361,48.4009 680.78,48.0733 677.17,52.3413 "
+       id="polygon3866" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #a0a0a0"
+       points="677.825,41.1802 686.361,48.4009 680.78,48.0733 677.17,52.3413 "
+       id="polygon3868" />
+  </g>
+  <g
+     id="g3870">
+    <polyline
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #a0a0a0"
+       points="606.65,-57.3 551.839,70.7494 "
+       id="polyline3872" />
+    <polygon
+       style="fill: #a0a0a0"
+       points="548.888,77.6443 548.226,66.4836 551.839,70.7494 557.42,70.4187 "
+       id="polygon3874" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #a0a0a0"
+       points="548.888,77.6443 548.226,66.4836 551.839,70.7494 557.42,70.4187 "
+       id="polygon3876" />
+  </g>
+  <g
+     id="g3878">
+    <polyline
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #a0a0a0"
+       points="658.5,-57.3 722.027,72.0855 "
+       id="polyline3880" />
+    <polygon
+       style="fill: #a0a0a0"
+       points="725.332,78.8178 716.437,72.0451 722.027,72.0855 725.413,67.6378 "
+       id="polygon3882" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #a0a0a0"
+       points="725.332,78.8178 716.437,72.0451 722.027,72.0855 725.413,67.6378 "
+       id="polygon3884" />
+  </g>
+  <g
+     id="g3886">
+    <polyline
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #a0a0a0"
+       points="580.726,-57.3 460.402,176.852 "
+       id="polyline3888" />
+    <polygon
+       style="fill: #a0a0a0"
+       points="456.974,183.523 457.097,172.343 460.402,176.852 465.992,176.914 "
+       id="polygon3890" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #a0a0a0"
+       points="456.974,183.523 457.097,172.343 460.402,176.852 465.992,176.914 "
+       id="polygon3892" />
+  </g>
+  <g
+     id="g3894">
+    <polyline
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #a0a0a0"
+       points="658.5,-57.3 658.396,175.776 "
+       id="polyline3896" />
+    <polygon
+       style="fill: #a0a0a0"
+       points="658.393,183.276 653.397,173.274 658.396,175.776 663.397,173.278 "
+       id="polygon3898" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #a0a0a0"
+       points="658.393,183.276 653.397,173.274 658.396,175.776 663.397,173.278 "
+       id="polygon3900" />
+  </g>
+  <g
+     id="g3902">
+    <path
+       style="fill: #cadaa9"
+       d="M 770.074 185.512 L 833.066,185.512 C 841.763,185.512 848.813,197.891 848.813,213.162 C 848.813,228.433 841.763,240.812 833.066,240.812 L 770.074,240.812 C 761.377,240.812 754.326,228.433 754.326,213.162 C 754.326,197.891 761.377,185.512 770.074,185.512z"
+       id="path3904" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #202020"
+       d="M 770.074 185.512 L 833.066,185.512 C 841.763,185.512 848.813,197.891 848.813,213.162 C 848.813,228.433 841.763,240.812 833.066,240.812 L 770.074,240.812 C 761.377,240.812 754.326,228.433 754.326,213.162 C 754.326,197.891 761.377,185.512 770.074,185.512"
+       id="path3906" />
+    <text
+       style="fill: #000000;text-anchor:middle;font-size:16.9333;font-family:方正大黑_GBK;font-style:normal;font-weight:normal"
+       x="801.57"
+       y="218.454"
+       id="text3908">
+      <tspan
+         x="801.57"
+         y="218.454"
+         id="tspan3910">开发者</tspan>
+    </text>
+  </g>
+  <g
+     id="g3912">
+    <polyline
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #a0a0a0"
+       points="684.426,-57.3 812.644,176.971 "
+       id="polyline3914" />
+    <polygon
+       style="fill: #a0a0a0"
+       points="816.244,183.55 807.057,177.179 812.644,176.971 815.83,172.378 "
+       id="polygon3916" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #a0a0a0"
+       points="816.244,183.55 807.057,177.179 812.644,176.971 815.83,172.378 "
+       id="polygon3918" />
+  </g>
+  <g
+     id="g3920">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #a0a0a0"
+       x1="785.822"
+       y1="185.512"
+       x2="748.522"
+       y2="143.412"
+       id="line3922" />
+    <polygon
+       style="fill: #a0a0a0"
+       points="743.549,137.799 753.923,141.968 748.522,143.412 746.438,148.599 "
+       id="polygon3924" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #a0a0a0"
+       points="743.549,137.799 753.923,141.968 748.522,143.412 746.438,148.599 "
+       id="polygon3926" />
+  </g>
+  <g
+     id="g3928">
+    <path
+       style="fill: #cadaa9"
+       d="M 590.194 -13.175 L 676.944,-13.175 C 688.921,-13.175 698.631,-1.46725 698.631,12.975 C 698.631,27.4173 688.921,39.125 676.944,39.125 L 590.194,39.125 C 578.216,39.125 568.506,27.4173 568.506,12.975 C 568.506,-1.46725 578.216,-13.175 590.194,-13.175z"
+       id="path3930" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #202020"
+       d="M 590.194 -13.175 L 676.944,-13.175 C 688.921,-13.175 698.631,-1.46725 698.631,12.975 C 698.631,27.4173 688.921,39.125 676.944,39.125 L 590.194,39.125 C 578.216,39.125 568.506,27.4173 568.506,12.975 C 568.506,-1.46725 578.216,-13.175 590.194,-13.175"
+       id="path3932" />
+    <text
+       style="fill: #000000;text-anchor:middle;font-size:16.9333;font-family:方正大黑_GBK;font-style:normal;font-weight:normal"
+       x="633.569"
+       y="18.2667"
+       id="text3934">
+      <tspan
+         x="633.569"
+         y="18.2667"
+         id="tspan3936">核心开发者</tspan>
+    </text>
+  </g>
+  <g
+     id="g3938">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #000000"
+       x1="633.568"
+       y1="-13.175"
+       x2="632.845"
+       y2="-45.3309"
+       id="line3940" />
+    <polygon
+       style="fill: #000000"
+       points="632.677,-52.829 637.9,-42.9439 632.845,-45.3309 627.903,-42.7191 "
+       id="polygon3942" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #000000"
+       points="632.677,-52.829 637.9,-42.9439 632.845,-45.3309 627.903,-42.7191 "
+       id="polygon3944" />
+  </g>
+</svg>

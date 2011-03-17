@@ -125,13 +125,13 @@
 .. include:: ./08-git-misc/030-case-insensitive.rst
 .. include:: ./08-git-misc/040-eol.rst
 .. include:: ./08-git-misc/050-git-features.rst
-.. include:: ./08-git-misc/060-hooks.rst
-.. include:: ./08-git-misc/070-attributes.rst
+.. include:: ./08-git-misc/060-attributes.rst
+.. include:: ./08-git-misc/070-hooks.rst
 .. include:: ./08-git-misc/080-templates.rst
 .. include:: ./08-git-misc/090-sparse-checkout.rst
 .. include:: ./08-git-misc/100-shallow-clone.rst
-.. include:: ./08-git-misc/110-git-notes.rst
-.. include:: ./08-git-misc/120-git-replace.rst
+.. include:: ./08-git-misc/110-graft-and-replace.rst
+.. include:: ./08-git-misc/120-git-notes.rst
 
 第 9 篇: 附录
 ##############

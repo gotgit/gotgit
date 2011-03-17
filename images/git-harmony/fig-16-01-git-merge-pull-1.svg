@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="33cm"
+   height="12cm"
+   viewBox="180 77 650 225"
+   id="svg4598"
+   version="1.1"
+   inkscape:version="0.48.0 r9654"
+   sodipodi:docname="fig-16-01-git-merge-pull-1.dia">
+  <metadata
+     id="metadata4726">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs4724" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1280"
+     inkscape:window-height="752"
+     id="namedview4722"
+     showgrid="false"
+     inkscape:zoom="0.43530638"
+     inkscape:cx="584.64569"
+     inkscape:cy="212.59842"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg4598" />
+  <g
+     id="g4600">
+    <path
+       style="fill: #ffff00"
+       d="M 634.45 100.95 L 749.95,100.95 C 807.7,100.95 807.7,100.95 807.7,145.4 L 807.7,234.3 C 807.7,278.75 807.7,278.75 749.95,278.75 L 634.45,278.75 C 576.7,278.75 576.7,278.75 576.7,234.3 L 576.7,145.4 C 576.7,100.95 576.7,100.95 634.45,100.95z"
+       id="path4602" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #a0a0a0"
+       d="M 634.45 100.95 L 749.95,100.95 C 807.7,100.95 807.7,100.95 807.7,145.4 L 807.7,234.3 C 807.7,278.75 807.7,278.75 749.95,278.75 L 634.45,278.75 C 576.7,278.75 576.7,278.75 576.7,234.3 L 576.7,145.4 C 576.7,100.95 576.7,100.95 634.45,100.95"
+       id="path4604" />
+    <text
+       style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+       x="598.25"
+       y="120.54"
+       id="text4606">
+      <tspan
+         x="598.25"
+         y="120.54"
+         id="tspan4608" />
+    </text>
+  </g>
+  <g
+     id="g4610">
+    <path
+       style="fill: #ffffaa"
+       d="M 261.45 101.45 L 376.95,101.45 C 434.7,101.45 434.7,101.45 434.7,145.9 L 434.7,234.8 C 434.7,279.25 434.7,279.25 376.95,279.25 L 261.45,279.25 C 203.7,279.25 203.7,279.25 203.7,234.8 L 203.7,145.9 C 203.7,101.45 203.7,101.45 261.45,101.45z"
+       id="path4612" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #a0a0a0"
+       d="M 261.45 101.45 L 376.95,101.45 C 434.7,101.45 434.7,101.45 434.7,145.9 L 434.7,234.8 C 434.7,279.25 434.7,279.25 376.95,279.25 L 261.45,279.25 C 203.7,279.25 203.7,279.25 203.7,234.8 L 203.7,145.9 C 203.7,101.45 203.7,101.45 261.45,101.45"
+       id="path4614" />
+    <text
+       style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+       x="225.25"
+       y="121.04"
+       id="text4616">
+      <tspan
+         x="225.25"
+         y="121.04"
+         id="tspan4618" />
+    </text>
+  </g>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+     x="257.45"
+     y="269.25"
+     id="text4620">
+    <tspan
+       x="257.45"
+       y="269.25"
+       id="tspan4622">用户 user1 本地版本库</tspan>
+  </text>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal"
+     x="675.15"
+     y="268.75"
+     id="text4624">
+    <tspan
+       x="675.15"
+       y="268.75"
+       id="tspan4626">共享版本库</tspan>
+  </text>
+  <g
+     id="g4628">
+    <line
+       style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #ff0000"
+       x1="436.076"
+       y1="186.125"
+       x2="543.404"
+       y2="186.125"
+       id="line4630" />
+    <polygon
+       style="fill: #ff0000"
+       points="550.904,186.125 540.904,191.125 543.404,186.125 540.904,181.125 "
+       id="polygon4632" />
+    <polygon
+       style="fill: none; fill-opacity:0; stroke-width: 4; stroke: #ff0000"
+       points="550.904,186.125 540.904,191.125 543.404,186.125 540.904,181.125 "
+       id="polygon4634" />
+  </g>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:15.8044;font-family:sanserif;font-style:normal;font-weight:normal"
+     x="465.45"
+     y="176.5"
+     id="text4636">
+    <tspan
+       x="465.45"
+       y="176.5"
+       id="tspan4638">git push</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="164.02699"
+     sodipodi:cx="233.67799"
+     id="ellipse4642"
+     ry="12.6265"
+     rx="13.078"
+     cy="164.02699"
+     cx="233.67799"
+     style="fill:#ffffff" />
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="164.02699"
+     sodipodi:cx="233.67799"
+     id="ellipse4644"
+     ry="12.6265"
+     rx="13.078"
+     cy="164.02699"
+     cx="233.67799"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text4646"
+     y="168.13664"
+     x="233.67799"
+     style="font-size:14.1111002px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:monospace">
+    <tspan
+       id="tspan4648"
+       y="168.13664"
+       x="233.67799">A</tspan>
+  </text>
+  <line
+     style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+     x1="242.926"
+     y1="172.955"
+     x2="278.696"
+     y2="210.494"
+     id="line4650" />
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="215.327"
+     sodipodi:cx="290.77802"
+     id="ellipse4654"
+     ry="12.6265"
+     rx="13.078"
+     cy="215.327"
+     cx="290.77802"
+     style="fill:#ffffff" />
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="215.327"
+     sodipodi:cx="290.77802"
+     id="ellipse4656"
+     ry="12.6265"
+     rx="13.078"
+     cy="215.327"
+     cx="290.77802"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text4658"
+     y="219.43665"
+     x="290.77802"
+     style="font-size:14.1111002px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:monospace">
+    <tspan
+       id="tspan4660"
+       y="219.43665"
+       x="290.77802">C</tspan>
+  </text>
+  <g
+     id="g4662">
+    <path
+       style="fill: #ff0000"
+       d="M 279.95 120.2 L 295.75,120.2 L 295.75,134.9 L 287.85,138.575 L 279.95,134.9 L 279.95,120.2z"
+       id="path4664" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       d="M 279.95 120.2 L 295.75,120.2 L 295.75,134.9 L 287.85,138.575 L 279.95,134.9 L 279.95,120.2"
+       id="path4666" />
+    <text
+       style="fill: #000000;text-anchor:middle;font-size:10.16;font-family:monospace;font-style:normal;font-weight:700"
+       x="287.85"
+       y="130.725"
+       id="text4668">
+      <tspan
+         x="287.85"
+         y="130.725"
+         id="tspan4670" />
+    </text>
+  </g>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:9.03111;font-family:serif;font-style:normal;font-weight:normal"
+     x="273.75"
+     y="114.5"
+     id="text4672">
+    <tspan
+       x="273.75"
+       y="114.5"
+       id="tspan4674">master</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="163.52699"
+     sodipodi:cx="707.37799"
+     id="ellipse4678"
+     ry="12.6265"
+     rx="13.078"
+     cy="163.52699"
+     cx="707.37799"
+     style="fill:#ffffff" />
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="163.52699"
+     sodipodi:cx="707.37799"
+     id="ellipse4680"
+     ry="12.6265"
+     rx="13.078"
+     cy="163.52699"
+     cx="707.37799"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text4682"
+     y="167.63664"
+     x="707.37799"
+     style="font-size:14.1111002px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:monospace">
+    <tspan
+       id="tspan4684"
+       y="167.63664"
+       x="707.37799">B</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="163.52699"
+     sodipodi:cx="608.37799"
+     id="ellipse4688"
+     ry="12.6265"
+     rx="13.078"
+     cy="163.52699"
+     cx="608.37799"
+     style="fill:#ffffff" />
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="163.52699"
+     sodipodi:cx="608.37799"
+     id="ellipse4690"
+     ry="12.6265"
+     rx="13.078"
+     cy="163.52699"
+     cx="608.37799"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text4692"
+     y="167.63664"
+     x="608.37799"
+     style="font-size:14.1111002px;font-style:normal;font-weight:normal;text-anchor:middle;fill:#000000;font-family:monospace">
+    <tspan
+       id="tspan4694"
+       y="167.63664"
+       x="608.37799">A</tspan>
+  </text>
+  <line
+     style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+     x1="621.456"
+     y1="163.527"
+     x2="694.3"
+     y2="163.527"
+     id="line4696" />
+  <g
+     id="g4698">
+    <path
+       style="fill: #0000ff"
+       d="M 699.65 119.7 L 715.45,119.7 L 715.45,134.4 L 707.55,138.075 L 699.65,134.4 L 699.65,119.7z"
+       id="path4700" />
+    <path
+       style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+       d="M 699.65 119.7 L 715.45,119.7 L 715.45,134.4 L 707.55,138.075 L 699.65,134.4 L 699.65,119.7"
+       id="path4702" />
+    <text
+       style="fill: #000000;text-anchor:middle;font-size:10.16;font-family:monospace;font-style:normal;font-weight:700"
+       x="707.55"
+       y="130.225"
+       id="text4704">
+      <tspan
+         x="707.55"
+         y="130.225"
+         id="tspan4706" />
+    </text>
+  </g>
+  <text
+     style="fill: #000000;text-anchor:start;font-size:9.03111;font-family:serif;font-style:normal;font-weight:normal"
+     x="693.45"
+     y="114"
+     id="text4708">
+    <tspan
+       x="693.45"
+       y="114"
+       id="tspan4710">master</tspan>
+  </text>
+  <text
+     style="fill: #ff0000;text-anchor:start;font-size:27.0933;font-family:monospace;font-style:normal;font-weight:normal"
+     x="555.75"
+     y="195.75"
+     id="text4712">
+    <tspan
+       x="555.75"
+       y="195.75"
+       id="tspan4714">X</tspan>
+  </text>
+  <line
+     style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+     x1="457.88"
+     y1="172.625"
+     x2="536.38"
+     y2="172.625"
+     id="line4716" />
+  <text
+     style="fill: #000000;text-anchor:start;font-size:10.16;font-family:sanserif;font-style:normal;font-weight:normal"
+     x="455.38"
+     y="210.376"
+     id="text4718">
+    <tspan
+       x="455.38"
+       y="210.376"
+       id="tspan4720">(non-fast-forward)</tspan>
+  </text>
+</svg>

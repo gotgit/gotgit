@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="12cm"
+   height="12cm"
+   viewBox="389 -92 223 223"
+   id="svg5739"
+   version="1.1"
+   inkscape:version="0.48.0 r9654"
+   sodipodi:docname="fig-11-21-commit-tree-with-id.dia">
+  <metadata
+     id="metadata5905">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs5903" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1280"
+     inkscape:window-height="752"
+     id="namedview5901"
+     showgrid="false"
+     inkscape:zoom="1.2323704"
+     inkscape:cx="419.35226"
+     inkscape:cy="215.19926"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg5739" />
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="-17.514299"
+     sodipodi:cx="504.25"
+     id="ellipse5743"
+     ry="12.6265"
+     rx="13.078"
+     cy="-17.514299"
+     cx="504.25"
+     style="fill:#e0dfde" />
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="-17.514299"
+     sodipodi:cx="504.25"
+     id="ellipse5745"
+     ry="12.6265"
+     rx="13.078"
+     cy="-17.514299"
+     cx="504.25"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text5747"
+     y="-14.095518"
+     x="504.25"
+     style="font-size:14.1111002px;font-style:normal;font-weight:700;text-anchor:middle;fill:#000000;font-family:monospace">
+    <tspan
+       id="tspan5749"
+       y="-14.095518"
+       x="504.25">B</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="-17.514299"
+     sodipodi:cx="587.716"
+     id="ellipse5753"
+     ry="12.6265"
+     rx="13.078"
+     cy="-17.514299"
+     cx="587.716"
+     style="fill:#e0dfde" />
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="-17.514299"
+     sodipodi:cx="587.716"
+     id="ellipse5755"
+     ry="12.6265"
+     rx="13.078"
+     cy="-17.514299"
+     cx="587.716"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text5757"
+     y="-14.095518"
+     x="587.716"
+     style="font-size:14.1111002px;font-style:normal;font-weight:700;text-anchor:middle;fill:#000000;font-family:monospace">
+    <tspan
+       id="tspan5759"
+       y="-14.095518"
+       x="587.716">C</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="44.685699"
+     sodipodi:cx="551.56598"
+     id="ellipse5763"
+     ry="12.6265"
+     rx="13.078"
+     cy="44.685699"
+     cx="551.56598"
+     style="fill:#e0dfde" />
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="44.685699"
+     sodipodi:cx="551.56598"
+     id="ellipse5765"
+     ry="12.6265"
+     rx="13.078"
+     cy="44.685699"
+     cx="551.56598"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text5767"
+     y="48.1045"
+     x="551.56598"
+     style="font-size:14.1111002px;font-style:normal;font-weight:700;text-anchor:middle;fill:#000000;font-family:monospace">
+    <tspan
+       id="tspan5769"
+       y="48.1045"
+       x="551.56598">F</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="44.685699"
+     sodipodi:cx="504.25"
+     id="ellipse5773"
+     ry="12.6265"
+     rx="13.078"
+     cy="44.685699"
+     cx="504.25"
+     style="fill:#e0dfde" />
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="44.685699"
+     sodipodi:cx="504.25"
+     id="ellipse5775"
+     ry="12.6265"
+     rx="13.078"
+     cy="44.685699"
+     cx="504.25"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text5777"
+     y="48.1045"
+     x="504.25"
+     style="font-size:14.1111002px;font-style:normal;font-weight:700;text-anchor:middle;fill:#000000;font-family:monospace">
+    <tspan
+       id="tspan5779"
+       y="48.1045"
+       x="504.25">E</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="44.685699"
+     sodipodi:cx="454.26599"
+     id="ellipse5783"
+     ry="12.6265"
+     rx="13.078"
+     cy="44.685699"
+     cx="454.26599"
+     style="fill:#e0dfde" />
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="44.685699"
+     sodipodi:cx="454.26599"
+     id="ellipse5785"
+     ry="12.6265"
+     rx="13.078"
+     cy="44.685699"
+     cx="454.26599"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text5787"
+     y="48.1045"
+     x="454.26599"
+     style="font-size:14.1111002px;font-style:normal;font-weight:700;text-anchor:middle;fill:#000000;font-family:monospace">
+    <tspan
+       id="tspan5789"
+       y="48.1045"
+       x="454.26599">D</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="98.385696"
+     sodipodi:cx="414.116"
+     id="ellipse5793"
+     ry="12.6265"
+     rx="13.078"
+     cy="98.385696"
+     cx="414.116"
+     style="fill:#e0dfde" />
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="98.385696"
+     sodipodi:cx="414.116"
+     id="ellipse5795"
+     ry="12.6265"
+     rx="13.078"
+     cy="98.385696"
+     cx="414.116"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text5797"
+     y="101.8045"
+     x="414.116"
+     style="font-size:14.1111002px;font-style:normal;font-weight:700;text-anchor:middle;fill:#000000;font-family:monospace">
+    <tspan
+       id="tspan5799"
+       y="101.8045"
+       x="414.116">G</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="98.385696"
+     sodipodi:cx="475.466"
+     id="ellipse5803"
+     ry="12.6265"
+     rx="13.078"
+     cy="98.385696"
+     cx="475.466"
+     style="fill:#e0dfde" />
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="98.385696"
+     sodipodi:cx="475.466"
+     id="ellipse5805"
+     ry="12.6265"
+     rx="13.078"
+     cy="98.385696"
+     cx="475.466"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text5807"
+     y="101.8045"
+     x="475.466"
+     style="font-size:14.1111002px;font-style:normal;font-weight:700;text-anchor:middle;fill:#000000;font-family:monospace">
+    <tspan
+       id="tspan5809"
+       y="101.8045"
+       x="475.466">H</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="98.385696"
+     sodipodi:cx="528.31598"
+     id="ellipse5813"
+     ry="12.6265"
+     rx="13.078"
+     cy="98.385696"
+     cx="528.31598"
+     style="fill:#e0dfde" />
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="98.385696"
+     sodipodi:cx="528.31598"
+     id="ellipse5815"
+     ry="12.6265"
+     rx="13.078"
+     cy="98.385696"
+     cx="528.31598"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text5817"
+     y="101.8045"
+     x="528.31598"
+     style="font-size:14.1111002px;font-style:normal;font-weight:700;text-anchor:middle;fill:#000000;font-family:monospace">
+    <tspan
+       id="tspan5819"
+       y="101.8045"
+       x="528.31598">I</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="98.385696"
+     sodipodi:cx="580.16602"
+     id="ellipse5823"
+     ry="12.6265"
+     rx="13.078"
+     cy="98.385696"
+     cx="580.16602"
+     style="fill:#e0dfde" />
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="98.385696"
+     sodipodi:cx="580.16602"
+     id="ellipse5825"
+     ry="12.6265"
+     rx="13.078"
+     cy="98.385696"
+     cx="580.16602"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text5827"
+     y="101.8045"
+     x="580.16602"
+     style="font-size:14.1111002px;font-style:normal;font-weight:700;text-anchor:middle;fill:#000000;font-family:monospace">
+    <tspan
+       id="tspan5829"
+       y="101.8045"
+       x="580.16602">J</tspan>
+  </text>
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="-78.214302"
+     sodipodi:cx="548.98199"
+     id="ellipse5833"
+     ry="12.6265"
+     rx="13.078"
+     cy="-78.214302"
+     cx="548.98199"
+     style="fill:#e0dfde" />
+  <ellipse
+     sodipodi:ry="12.6265"
+     sodipodi:rx="13.078"
+     sodipodi:cy="-78.214302"
+     sodipodi:cx="548.98199"
+     id="ellipse5835"
+     ry="12.6265"
+     rx="13.078"
+     cy="-78.214302"
+     cx="548.98199"
+     style="fill:none;stroke:#000000;stroke-width:2" />
+  <text
+     id="text5837"
+     y="-74.795502"
+     x="548.98199"
+     style="font-size:14.1111002px;font-style:normal;font-weight:700;text-anchor:middle;fill:#000000;font-family:monospace">
+    <tspan
+       id="tspan5839"
+       y="-74.795502"
+       x="548.98199">A</tspan>
+  </text>
+  <line
+     style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+     x1="543.978"
+     y1="-66.5488"
+     x2="513.496"
+     y2="-26.4426"
+     id="line5841" />
+  <line
+     style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+     x1="553.988"
+     y1="-66.5488"
+     x2="582.71"
+     y2="-29.1796"
+     id="line5843" />
+  <line
+     style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+     x1="499.244"
+     y1="-5.84888"
+     x2="463.514"
+     y2="35.7574"
+     id="line5845" />
+  <line
+     style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+     x1="509.254"
+     y1="-5.84888"
+     x2="546.56"
+     y2="33.0204"
+     id="line5847" />
+  <line
+     style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+     x1="504.25"
+     y1="32.0592"
+     x2="504.25"
+     y2="-4.88774"
+     id="line5849" />
+  <line
+     style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+     x1="449.26"
+     y1="56.3512"
+     x2="423.364"
+     y2="89.4574"
+     id="line5851" />
+  <line
+     style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+     x1="459.27"
+     y1="56.3512"
+     x2="475.466"
+     y2="85.7592"
+     id="line5853" />
+  <line
+     style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+     x1="551.566"
+     y1="57.3122"
+     x2="533.32"
+     y2="86.7204"
+     id="line5855" />
+  <line
+     style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+     x1="556.57"
+     y1="56.3512"
+     x2="580.166"
+     y2="85.7592"
+     id="line5857" />
+  <line
+     style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000"
+     x1="587.716"
+     y1="-4.88774"
+     x2="560.814"
+     y2="35.7574"
+     id="line5859" />
+  <text
+     style="fill: #0000ff;text-anchor:start;font-size:10.16;font-family:monospace;font-style:italic;font-weight:normal"
+     x="568"
+     y="-69.5"
+     id="text5861">
+    <tspan
+       x="568"
+       y="-69.5"
+       id="tspan5863">8199323 </tspan>
+  </text>
+  <text
+     style="fill: #0000ff;text-anchor:start;font-size:10.16;font-family:monospace;font-style:italic;font-weight:normal"
+     x="440.7"
+     y="-11.15"
+     id="text5865">
+    <tspan
+       x="440.7"
+       y="-11.15"
+       id="tspan5867">776c5c9 </tspan>
+  </text>
+  <text
+     style="fill: #0000ff;text-anchor:start;font-size:10.16;font-family:monospace;font-style:italic;font-weight:normal"
+     x="389.7"
+     y="51.55"
+     id="text5869">
+    <tspan
+       x="389.7"
+       y="51.55"
+       id="tspan5871">212efce </tspan>
+  </text>
+  <text
+     style="fill: #0000ff;text-anchor:start;font-size:10.16;font-family:monospace;font-style:italic;font-weight:normal"
+     x="391.4"
+     y="131.15"
+     id="text5873">
+    <tspan
+       x="391.4"
+       y="131.15"
+       id="tspan5875">e80aa74 </tspan>
+  </text>
+  <text
+     style="fill: #0000ff;text-anchor:start;font-size:10.16;font-family:monospace;font-style:italic;font-weight:normal"
+     x="452.1"
+     y="131.15"
+     id="text5877">
+    <tspan
+       x="452.1"
+       y="131.15"
+       id="tspan5879">2ab52ad </tspan>
+  </text>
+  <text
+     style="fill: #0000ff;text-anchor:start;font-size:10.16;font-family:monospace;font-style:italic;font-weight:normal"
+     x="506.5"
+     y="131.15"
+     id="text5881">
+    <tspan
+       x="506.5"
+       y="131.15"
+       id="tspan5883">634836c </tspan>
+  </text>
+  <text
+     style="fill: #0000ff;text-anchor:start;font-size:10.16;font-family:monospace;font-style:italic;font-weight:normal"
+     x="565.2"
+     y="131.15"
+     id="text5885">
+    <tspan
+       x="565.2"
+       y="131.15"
+       id="tspan5887">3252fcc </tspan>
+  </text>
+  <text
+     style="fill: #0000ff;text-anchor:start;font-size:10.16;font-family:monospace;font-style:italic;font-weight:normal"
+     x="607.9"
+     y="-11.15"
+     id="text5889">
+    <tspan
+       x="607.9"
+       y="-11.15"
+       id="tspan5891">0cd7f2e </tspan>
+  </text>
+  <text
+     style="fill: #0000ff;text-anchor:start;font-size:10.16;font-family:monospace;font-style:italic;font-weight:normal"
+     x="573.6"
+     y="51.55"
+     id="text5893">
+    <tspan
+       x="573.6"
+       y="51.55"
+       id="tspan5895">beb30ca </tspan>
+  </text>
+  <text
+     style="fill: #0000ff;text-anchor:start;font-size:10.16;font-family:monospace;font-style:italic;font-weight:normal"
+     x="485.3"
+     y="73.25"
+     id="text5897">
+    <tspan
+       x="485.3"
+       y="73.25"
+       id="tspan5899">83be369 </tspan>
+  </text>
+</svg>
