@@ -47,7 +47,7 @@ Git hightlights by examples.
 2.1       Everyday's works backup                  [11]
 =======================================================
 
-How I backup eachday's work using Git and mirroring when I work on this book.
+When I wrote this book, everyday's work pushed to the server, and the pushed commits will mirror to a outside server in the data center automatically.
 
   .. figure:: images/en/fig-02-01-work-backup.png
      :scale: 65
@@ -58,7 +58,7 @@ How I backup eachday's work using Git and mirroring when I work on this book.
 2.2       Works with others at diff. location      [12]
 =======================================================
 
-How I synchoronize works in different locations, home and office, when I work on this book.
+How I synchoronized works from different locations, home and office, when I wrote this book.
 
   .. figure:: images/en/fig-02-02-workflow.png
      :scale: 65
@@ -72,19 +72,19 @@ How I synchoronize works in different locations, home and office, when I work on
 2.4       No control dir everywhere                [15]
 =======================================================
 
-one single .git directory, comparing with SVN's .svn in each subdirs.
+One single .git directory, comparing with SVN's .svn in each subdirs.
 
-git grep.
+Git has another useful command: `git grep`.
 
 2.5       Rewrite commit log                       [16]
 =======================================================
 
-git commit --amend.
+`git commit --amend`
 
 2.6       Regrets                                  [16]
 =======================================================
 
-git reset and git rebase -i.
+`git reset` and `git rebase -i`
 
 2.7       Better change sets                       [17]
 =======================================================
@@ -94,27 +94,27 @@ Stage works like commit change set.
 2.8       Better differences                       [18]
 =======================================================
 
-git diff --cached.
+`git diff --cached`
 
 2.9       Save work progess                        [19]
 =======================================================
 
-git stash.
+`git stash`
 
 2.10      Commit while traveling with git-svn      [20]
 =======================================================
 
-git-svn, nobody knows your commit throught git.
+`git-svn`, nobody knows your commit throught git.
 
 2.11      Pager everywhere                         [20]
 =======================================================
 
-no longer need PIPE LESS ( `| less` ) after commands.
+No longer needs PIPE LESS ( `| less` ) after commands.
 
 2.12      Fast                                     [21]
 =======================================================
 
-smart protocol.
+Smart protocol.
 
 
 Chapter 3: Install Git
@@ -138,10 +138,15 @@ Chapter 3: Install Git
 3.1.5        Chinese character support             [26]
 -------------------------------------------------------
 
-Works excellently in UTF8 environment, but may failed in other locale.
+Works excellent in UTF8 environment, but may failed in other locale.
 
-* Logs works fine because there is a embed charset encoding directive in commit object.
-* Filenames with local characters failed, because tree object not encode in UTF8.
+If Linux is in other locale such as zh_CN.GBK :
+
+* Characters other then English can be in commit logs after proper settings.
+
+  There will be a embed charset encoding directive in commit object.
+
+* Filenames can not use non-English charcters, because tree object is not encoded in UTF8.
 
 3.2       Install Git under Mac OS X               [28]
 =======================================================
@@ -152,7 +157,7 @@ Works excellently in UTF8 environment, but may failed in other locale.
 3.2.2        Install Xcode.                        [29]
 -------------------------------------------------------
 
-No need to download Xcode, there is a copy in Mac OS installer DVD.
+Download Xcode is not needed, for there is a copy in Mac OS X installer DVD.
 
   .. figure:: images/en/fig-03-03-xcode-install.png
      :scale: 65
@@ -175,7 +180,7 @@ No need to download Xcode, there is a copy in Mac OS installer DVD.
 3.2.7        Chinese chacter support               [33]
 -------------------------------------------------------
 
-Works fine just like in linux with UTF8 locale.
+Works fine just like in Linux with UTF8 locale.
 
 3.3       Install Git under Windows Cygwin         [33]
 =======================================================
@@ -194,7 +199,7 @@ If has low bandwith (like me), setup a cygwin mirror using apt-cacher-ng in Debi
 3.3.2        Install Git                           [40]
 -------------------------------------------------------
 
-How to use cygwin package management progrem (setup.exe) --- find and install git.
+How to use cygwin package management program (setup.exe) --- find and install git.
 
   .. figure:: images/en/fig-03-13-cygwin-8-search-git-install.png
      :scale: 100
@@ -213,7 +218,7 @@ Works fine just like in linux with UTF8 locale.
 3.3.5        SSH access for Cygwin Git             [45]
 -------------------------------------------------------
 
-Current cygwin's ssh not works at some situation, so I introduce how to integrate pytty's plink and pagent.
+Current cygwin's ssh not works on some situation, so in this section I introduce how to integrate Cygwin Git with putty's plink or pagent.
 
 3.4       Install Git under Windows msysGit        [51]
 =======================================================
@@ -232,7 +237,7 @@ Current cygwin's ssh not works at some situation, so I introduce how to integrat
 
 Bad support.
 
-* Logs may work if setting i18n.commitEncoding, i18n.logOutputEncoding, but some other tools linke TortoiseGit can not show log properly. 
+* Logs may work if setting i18n.commitEncoding, i18n.logOutputEncoding, but some other tools like TortoiseGit can not show log properly. 
 * Filenames can not use Chinese, because characters in tree object are encode in zh_CN.GBK, not UTF-8.
 
 3.4.5        Using SSH protocol                    [58]
@@ -262,12 +267,12 @@ git init, git add, git commit...
 4.2       Think: why there is a .git directory?    [66]
 =======================================================
 
-Compare with CVS's CVS, SVN's .svn, StarTeam's server-side track implementations.
+Compare Git's .git directory with CVS's CVS directories, SVN's .svn directories, and StarTeam's server-side tracking implementations.
 
 4.3       Think: different git config level        [69]
 =======================================================
 
-Run `git config --system -e` to see where is your system config file is.
+Run `git config --system -e` to see where is your system config file.
 
 4.4       Think: who is commiting?                 [71]
 =======================================================
@@ -276,15 +281,16 @@ Run `git config --system -e` to see where is your system config file is.
 4.5       Think: change name freely, is it safe?   [73]
 =======================================================
 
-Shouldn't change user.name and user.email frequently.
-For example Redmine may break if change username which break users map between Git and remdine.
+Setup user.name and user.email once, and make it stable.
+
+For example Redmine will map the committer to one of it user accounts, if the committer username or email changed, the map is broken.
 
   .. figure:: images/en/fig-04-01-redmine-user-config.png
      :scale: 60
 
      Fig 4-1
 
-Another example is Gerrit.
+Another example is Gerrit, wrong user.name and user.email settings make commits to Gerrit denied.
 
 4.6       Think: what is command alias?            [75]
 =======================================================
@@ -351,7 +357,7 @@ Git implement detail:
 6.2       Think: What is SHA1, how it generate?    [98]
 =======================================================
 
-6.3       Think：commit ID not a series of num?   [100]
+6.3       Think: commit IDs not a series of nums? [100]
 =======================================================
 
 Chapter 7: Git Reset
@@ -460,7 +466,7 @@ Chapter 11: Travel in Git History
 11.4      Command line tools                      [158]
 =======================================================
 
-Following sections in this part using this Git repository: git://github.com/ossxp-com/gitdemo-commit-tree.git
+Following sections in this part will use this Git repository: git://github.com/ossxp-com/gitdemo-commit-tree.git
 
 View this git repository using gitg.
 
@@ -480,7 +486,7 @@ A nice commit tree of this git repository.
 11.4.1      Revision presentation：git rev-parse  [160]
 -------------------------------------------------------
 
-Mark the commit tree with shor commit ID, which is convenient for git rev-parse and git rev-list.
+Mark the commit tree with short commit ID, which is convenient for the following research on git rev-parse and git rev-list.
 
   .. figure:: images/en/fig-11-21-commit-tree-with-id.png
      :scale: 100
@@ -492,10 +498,10 @@ Mark the commit tree with shor commit ID, which is convenient for git rev-parse 
 -------------------------------------------------------
 
 
-11.4.3      Log browse：git log                   [166]
+11.4.3      git log                               [166]
 -------------------------------------------------------
 
-11.4.4      Show difference：git diff             [170]
+11.4.4      git diff                              [170]
 -------------------------------------------------------
 
 11.4.5      git blame                             [171]
@@ -562,7 +568,7 @@ This section have 3 part, and each part has 2 scene.
 12.3.1      Time machine v1                       [184]
 -------------------------------------------------------
 
-The first type of time machine is `git cherry-pick` :
+The first type of the time machine is `git cherry-pick` :
 
 * After scene 1, the history is like:
 
@@ -582,12 +588,12 @@ The first type of time machine is `git cherry-pick` :
 12.3.2      Time machine v2                       [189]
 -------------------------------------------------------
 
-The second type of time machine is `git rebase`.
+The second type of the time machine is `git rebase`.
 
 12.3.3      Time machine v3                       [194]
 -------------------------------------------------------
 
-The second type of time machine is `git rebase -i`.
+The third type of the time machine is `git rebase -i`.
 
 12.4      Throw away history                      [198]
 =======================================================
@@ -611,7 +617,7 @@ Chapter 13: Git Clone
 13.1      Eggs in different baskets               [203]
 =======================================================
 
-Don't put eggs in one basket. Multiple baskets for git are like `git clone`.
+Don't put eggs in one basket. Create multiple baskets for your repository using `git clone`.
 
   .. figure:: images/en/fig-13-01-git-clone-pull-push.png
      :scale: 100
@@ -622,7 +628,7 @@ Don't put eggs in one basket. Multiple baskets for git are like `git clone`.
 13.2      Neighborhood workspace                  [204]
 =======================================================
 
-Exchange data between neighborhook workspace.
+Exchange data between neighborhook workspace. `git pull` works but `git push` cause trouble.
 
   .. figure:: images/en/fig-13-02-git-clone-1.png
      :scale: 100
@@ -633,7 +639,7 @@ Exchange data between neighborhook workspace.
 13.3      Bare repository from clone              [208]
 =======================================================
 
-Clone as a bare repository, then exchange data with it.
+Clone as a bare repository, then exchange data with it. `git push` works for this case.
 
   .. figure:: images/en/fig-13-03-git-clone-2.png
      :scale: 100
@@ -672,10 +678,12 @@ Chapter 14: You are Git Admin
 
 When `git gc --auto` runs, git will check directory `.git/objects/17`, if there are over 27 loose objects in it.
 
-Why using subdir 17, not others? I guess the author Junio C Hamano show respect to Linux is elect as 17th important person in 21 century.
+Why using subdir 17, not others? I guess the author Junio C Hamano show respect to Linux be elected as 17th important person for the 20 century. Am I right?
 
 Part 3: Git harmoney
 ####################################
+
+This part focus on multiple users cooperation, so I call this part: Git harmoney.
 
 Chapter 15: Git protocol and cooperation
 **********************************************
@@ -709,25 +717,27 @@ Chapter 16: Resolve conflict
 16.1      Merge during git pull                   [236]
 =======================================================
 
-.. figure:: images/en/fig-16-01-git-merge-pull-1.png
-   :scale: 100
+When encounter a non-fast-forward push, one should do a fetch-merge-push operation like the following.
 
-   Fig 16-1
+  .. figure:: images/en/fig-16-01-git-merge-pull-1.png
+     :scale: 100
 
-.. figure:: images/en/fig-16-02-git-merge-pull-2.png
-   :scale: 100
+     Fig 16-1
 
-   Fig 16-2
+  .. figure:: images/en/fig-16-02-git-merge-pull-2.png
+     :scale: 100
 
-.. figure:: images/en/fig-16-03-git-merge-pull-3.png
-   :scale: 100
+     Fig 16-2
 
-   Fig 16-3
+  .. figure:: images/en/fig-16-03-git-merge-pull-3.png
+     :scale: 100
 
-.. figure:: images/en/fig-16-04-git-merge-pull-4.png
-   :scale: 100
+     Fig 16-3
 
-   Fig 16-4
+  .. figure:: images/en/fig-16-04-git-merge-pull-4.png
+     :scale: 100
+
+     Fig 16-4
 
 
 16.2      Merge lesson 1：merge automatically     [238]
@@ -745,7 +755,7 @@ Chapter 16: Resolve conflict
 16.3      Merge lesson 2: logical conflict        [244]
 =======================================================
 
-16.4      Merge lesson 3: resolve conflict        [245]
+16.4      Merge lesson 3: resolve real conflict   [245]
 =======================================================
 
 16.4.1      Merge by hands                        [248]
@@ -754,34 +764,39 @@ Chapter 16: Resolve conflict
 16.4.2      Resolve using GUI tools               [249]
 -------------------------------------------------------
 
-.. figure:: images/en/fig-16-05-kdiff3-1.png
-   :scale: 80
+How to resolve conflict with the help of kdiff3.
 
-   Fig 16-5
+  .. figure:: images/en/fig-16-05-kdiff3-1.png
+     :scale: 80
 
-.. figure:: images/en/fig-16-06-kdiff3-2.png
-   :scale: 80
+     Fig 16-5
 
-   Fig 16-6
+  .. figure:: images/en/fig-16-06-kdiff3-2.png
+     :scale: 80
 
-.. figure:: images/en/fig-16-07-kdiff3-3.png
-   :scale: 80
+     Fig 16-6
 
-   Fig 16-7
+  .. figure:: images/en/fig-16-07-kdiff3-3.png
+     :scale: 80
 
-.. figure:: images/en/fig-16-08-kdiff3-4.png
-   :scale: 80
+     Fig 16-7
 
-   Fig 16-8
+  .. figure:: images/en/fig-16-08-kdiff3-4.png
+     :scale: 80
 
-.. figure:: images/en/fig-16-09-kdiff3-5.png
-   :scale: 80
+     Fig 16-8
 
-   Fig 16-9
+  .. figure:: images/en/fig-16-09-kdiff3-5.png
+     :scale: 80
+
+     Fig 16-9
 
 
 16.5      Merge lesson 4: tree conflict           [254]
 =======================================================
+
+When two commits change the name of the same file, merge will end with a conflict.
+This section introduce how to resolve this kind of conflicts by hands or by tools.
 
 16.5.1      Resolve tree conflict by hands        [256]
 -------------------------------------------------------
@@ -837,39 +852,50 @@ Chapter 18: Git Branch
 18.1.1      Release branch                        [286]
 -------------------------------------------------------
 
-.. figure:: images/en/fig-18-01-branch-release-branch-question.png
-   :scale: 70
+Problem: bugfix without the help of release branch.
 
-   Fig 18-1
+  .. figure:: images/en/fig-18-01-branch-release-branch-question.png
+     :scale: 70
 
-.. figure:: images/en/fig-18-02-branch-release-branch-answer.png
-   :scale: 70
+     Fig 18-1
 
-   Fig 18-2
+Resolution: use release/bugfix branch.
+
+  .. figure:: images/en/fig-18-02-branch-release-branch-answer.png
+     :scale: 70
+
+     Fig 18-2
 
 
 18.1.2      Feature branch                        [288]
 -------------------------------------------------------
 
-.. figure:: images/en/fig-18-03-branch-feature-branch-question.png
-   :scale: 70
+Problem: features development mixed in one branch, cause chaos and withdraw some features also cause headache.
 
-   Fig 18-1
+  .. figure:: images/en/fig-18-03-branch-feature-branch-question.png
+     :scale: 70
 
-.. figure:: images/en/fig-18-04-branch-feature-branch-answer.png
-   :scale: 70
+     Fig 18-1
 
-   Fig 18-4
+Resolution: use feature branches to seperate each feature development.
+
+  .. figure:: images/en/fig-18-04-branch-feature-branch-answer.png
+     :scale: 70
+
+     Fig 18-4
 
 
 18.1.3      Vendor branch                         [290]
 -------------------------------------------------------
 
-.. figure:: images/en/fig-18-05-branch-vendor-branch.png
-   :scale: 100
+Problem: hacks against other project using vendor branch.
 
-   Fig 18-5
+  .. figure:: images/en/fig-18-05-branch-vendor-branch.png
+     :scale: 100
 
+     Fig 18-5
+
+Resolution: Git with the help of Topgit. Talk about it later.
 
 18.2      Overview of git branch command          [291]
 =======================================================
@@ -886,10 +912,12 @@ Chapter 18: Git Branch
 18.4.2      Create branch: user2/i18n             [295]
 -------------------------------------------------------
 
-.. figure:: images/en/fig-18-06-branch-i18n-initial.png
-   :scale: 100
+After user2 create user2/i18n branch, the repository looks like:
 
-   Fig 18-6
+  .. figure:: images/en/fig-18-06-branch-i18n-initial.png
+     :scale: 100
+
+     Fig 18-6
 
 
 18.4.3      Developer user1 complete              [296]
@@ -922,24 +950,30 @@ Chapter 18: Git Branch
 18.6.1      Feature branch user2/i18n complete    [309]
 -------------------------------------------------------
 
-.. figure:: images/en/fig-18-07-branch-i18n-complete.png
-   :scale: 100
+When user2 finished the development of the feature in branch user2/i18n, master branch also had some commits. The repository looks like:
 
-   Fig 18-7
+  .. figure:: images/en/fig-18-07-branch-i18n-complete.png
+     :scale: 100
+
+     Fig 18-7
 
 
 18.6.2      Branch user2/i18n rebase              [311]
 -------------------------------------------------------
 
-.. figure:: images/en/fig-18-08-branch-i18n-merge.png
-   :scale: 100
+If merge branch user2/i18n with master, there will be a new commit (merge commit), which add more code review tasks. The repository after merge looks like:
 
-   Fig 18-8
+  .. figure:: images/en/fig-18-08-branch-i18n-merge.png
+     :scale: 100
 
-.. figure:: images/en/fig-18-10-branch-i18n-rebase.png
-   :scale: 100
+     Fig 18-8
 
-   Fig 18-10
+Rebase before push at some situation is hightly recommended. The repository after rebase would look like:
+
+  .. figure:: images/en/fig-18-10-branch-i18n-rebase.png
+     :scale: 100
+
+     Fig 18-10
 
 
 Chapter 19: Remote repository
@@ -991,36 +1025,46 @@ Chapter 21: Classic Git Model
 21.1      Central Cooperation Model               [343]
 =======================================================
 
-.. figure:: images/en/fig-21-01-central-model.png
-   :scale: 100
+Central cooperation model: multiple users works with one shared repository.
 
-   Fig 21-1
+  .. figure:: images/en/fig-21-01-central-model.png
+     :scale: 100
+
+     Fig 21-1
 
 
 21.1.1      Work with central model               [345]
 -------------------------------------------------------
 
-.. figure:: images/en/fig-21-02-central-model-workflow-1.png
-   :scale: 80
+Work flow 1: all users work on one branch in the shared repository.
 
-   Fig 21-2
+  .. figure:: images/en/fig-21-02-central-model-workflow-1.png
+     :scale: 80
 
-.. figure:: images/en/fig-21-03-central-model-workflow-2.png
-   :scale: 80
+     Fig 21-2
 
-   Fig 21-3
+Work flow 2: each person create his/her own branch, then merge into master branch.
+
+  .. figure:: images/en/fig-21-03-central-model-workflow-2.png
+     :scale: 80
+
+     Fig 21-3
 
 
 21.1.2      Special cental model: Gerrit          [346]
 -------------------------------------------------------
 
+Discuss Gerrit later.
+
 21.2      Pyramid Cooperation Model               [347]
 =======================================================
 
-.. figure:: images/en/fig-21-04-distrabute-model.png
-   :scale: 100
+Distributed Model looks like a pyramid:
 
-   Fig 21-4
+  .. figure:: images/en/fig-21-04-distrabute-model.png
+     :scale: 100
+
+     Fig 21-4
 
 
 21.2.1      Contributer open readonly repository  [348]
@@ -1035,25 +1079,38 @@ Chapter 22: Topgit Model
 22.1      Three SCM Milestone of Myself           [351]
 =======================================================
 
-.. figure:: images/en/fig-22-01-topgit-branch-vendor-branch.png
-   :scale: 100
+Three SCM milestones of my self for the past several years:
 
-   Fig 22-1
+1. SVN + vendor branch.
+
+  works like:
+
+  .. figure:: images/en/fig-22-01-topgit-branch-vendor-branch.png
+     :scale: 100
+
+     Fig 22-1
+
+2. Hg + MQ
+
+3. Git + Topgit
 
 
 22.2      Mystery of Topgit                       [353]
 =======================================================
 
-.. figure:: images/en/fig-22-02-topgit-topic-branch.png
-   :scale: 100
+When use Git+Topgit hacks other project, the feature branches may look like:
 
-   Fig 22-2
+  .. figure:: images/en/fig-22-02-topgit-topic-branch.png
+     :scale: 100
 
-.. figure:: images/en/fig-22-03-topgit-topic-base-branch.png
-   :scale: 100
+     Fig 22-2
 
-   Fig 22-3
+And there wll be a base branch for each feature branch, all the topic base branches look like:
 
+  .. figure:: images/en/fig-22-03-topgit-topic-base-branch.png
+     :scale: 100
+
+     Fig 22-3
 
 
 22.3      Topgit Installation                     [354]
@@ -1066,10 +1123,14 @@ Chapter 22: Topgit Model
 22.5      Hack Topgit in Topgit way               [367]
 =======================================================
 
-.. figure:: images/en/fig-22-05-topgit-hacks.png
-   :scale: 80
+I hacked Topgit in Topgit way, all the topgit features look like:
 
-   Fig 22-5
+  .. figure:: images/en/fig-22-05-topgit-hacks.png
+     :scale: 80
+
+     Fig 22-5
+
+URL of my hacked topgit: http://github.com/ossxp-com/topgit
 
 
 22.6      Notes of Topgit                         [372]
@@ -1117,10 +1178,12 @@ Chapter 25: Android Multiple repositories Cooperation
 25.1      About repo                              [396]
 =======================================================
 
-.. figure:: images/en/fig-25-01-repo-workflow.png
-   :scale: 90
+Workflow of repo:
 
-   Fig 25-1
+  .. figure:: images/en/fig-25-01-repo-workflow.png
+     :scale: 90
+
+     Fig 25-1
 
 
 25.2      Install repo                            [397]
@@ -1156,6 +1219,10 @@ Chapter 25: Android Multiple repositories Cooperation
 25.9.3      Model 3: Improved Repo without Gerrit [414]
 -------------------------------------------------------
 
+I hacked repo, and the improved repo can work directly with Git repository without the control of Gerrit.
+
+URL of my hacked repo : http://github.com/ossxp-com/repo
+
 
 Chapter 26: Git-SVN Model
 ***********************************
@@ -1163,10 +1230,12 @@ Chapter 26: Git-SVN Model
 26.1      git-svn workflow                        [423]
 =======================================================
 
-.. figure:: images/en/fig-26-01-git-svn-workflow.png
-   :scale: 90
+Workflow of git-svn:
 
-   Fig 26-1
+  .. figure:: images/en/fig-26-01-git-svn-workflow.png
+     :scale: 90
+
+     Fig 26-1
 
 
 26.2      Mystery of git-svn                      [430]
@@ -1205,12 +1274,6 @@ Chapter 27: Using HTTP Protocol
 
 27.3      Gitweb                                  [445]
 =======================================================
-
-.. figure:: images/en/fig-27-01-gitweb-kernel-org_full.png
-   :scale: 80
-
-   Fig 27-1
-
 
 27.3.1      Install Gitweb                        [445]
 -------------------------------------------------------
@@ -1251,6 +1314,8 @@ Chapter 29: Using SSH Protocol
 
 Chapter 30: Gitolite
 ***********************************
+
+My hacked Gitolite is at: http://github.com/ossxp-com/gitolite
 
 30.1      Install Gitolite                        [458]
 =======================================================
@@ -1336,6 +1401,9 @@ Chapter 30: Gitolite
 30.6      Gitolite Hacks                          [483]
 =======================================================
 
+My hacked Gitolite is at: http://github.com/ossxp-com/gitolite
+
+
 30.7      Other Gitolite features                 [483]
 =======================================================
 
@@ -1350,6 +1418,8 @@ Chapter 30: Gitolite
 
 Chapter 31: Gitosis
 ***********************************
+
+My hacked Gitosis at: http://github.com/ossxp-com/gitosis
 
 31.1      Install Gitosis                         [490]
 =======================================================
@@ -1401,12 +1471,6 @@ Chapter 32: Gerrit
 
 32.1      Mystery of Gerrit                       [502]
 =======================================================
-
-.. figure:: images/en/fig-32-01-gerrit-workflow.png
-   :scale: 60
-
-   Fig 32-1
-
 
 32.2      Setup Gerrit server                     [506]
 =======================================================
@@ -1557,6 +1621,10 @@ Chapter 36: etckeeper
 Chapter 37: Gistore
 ***********************************
 
+Gistore = Git + Store.
+
+Gistore is a backup tool based on Git. I contribute the code at http://github.com/ossxp-com/gistore.
+
 37.1      Install Gistore                         [577]
 =======================================================
 
@@ -1627,20 +1695,29 @@ Part 8: MISC
 Chapter 40: Cross OS Git operation
 ***********************************
 
-.. figure:: images/en/fig-40-1-git-survs-os.png
-   :scale: 80
+This figure is from http://www.survs.com/results/33Q0OZZE/MV653KSPI2.
 
-   Fig 40-1
+  .. figure:: images/en/fig-40-1-git-survs-os.png
+     :scale: 80
+
+     Fig 40-1
 
 
 40.1      Character set problems                  [602]
 =======================================================
 
+How to use non-English character in commit log and as filename.
+
 40.2      Filename Case sensitive and insens.     [603]
 =======================================================
 
+Cross platform project, should set `core.ignorecase` to true after `git clone`.
+
 40.3      End of line problems                    [604]
 =======================================================
+
+Two type of EOL: LF and CR+LF.
+
 
 Chapter 41: Git special features
 ***********************************
@@ -1687,6 +1764,14 @@ Chapter 41: Git special features
 41.5      Git Notes                               [633]
 =======================================================
 
+Git notes used in github.com:
+
+  .. figure:: images/en/fig-41-1-github-notes.png
+     :scale: 70
+
+     Fig 41-1
+
+
 41.5.1      Mystery of git notes                  [634]
 -------------------------------------------------------
 
@@ -1695,12 +1780,6 @@ Chapter 41: Git special features
 
 41.5.3      Git notes related configuration       [638]
 -------------------------------------------------------
-
-.. figure:: images/en/fig-41-1-github-notes.png
-   :scale: 70
-
-   Fig 41-1
-
 
 
 Part 9: Appendix
