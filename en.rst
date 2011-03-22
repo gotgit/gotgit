@@ -1,5 +1,6 @@
-"Got Git"
+Got Git
 
+written by Jiang Xin, at 2011
 
 part 1: Meet Git
 ###################
