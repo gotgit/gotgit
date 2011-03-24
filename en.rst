@@ -35,7 +35,7 @@ SVN history and SVN implement model.
      Fig 1-2
 
 
-1.4       Git -- Linus second masterpiece           [9]
+1.4       Git -- Second masterpiece by Linus        [9]
 =======================================================
 
 Git history.
@@ -45,10 +45,10 @@ Chapter 2: Fall in love with Git
 
 Git hightlights by examples.
 
-2.1       Everyday's works backup                  [11]
+2.1       Backup my work on a daily basis          [11]
 =======================================================
 
-When I wrote this book, everyday's work pushed to the server, and the pushed commits will mirror to a outside server in the data center automatically.
+During the writing of the book, everyday's work at the end of a day will be pushed to the server, then the pushed commits will be mirrored to a outside server in the data center automatically.
 
   .. figure:: images/en/fig-02-01-work-backup.png
      :scale: 65
@@ -59,7 +59,7 @@ When I wrote this book, everyday's work pushed to the server, and the pushed com
 2.2       Works with others at diff. location      [12]
 =======================================================
 
-How I synchoronized works from different locations, home and office, when I wrote this book.
+How I synchoronize my work between different locations during the writing of this book, such as at home and at my office. 
 
   .. figure:: images/en/fig-02-02-workflow.png
      :scale: 65
@@ -139,15 +139,17 @@ Chapter 3: Install Git
 3.1.5        Chinese character support             [26]
 -------------------------------------------------------
 
-Works excellent in UTF8 environment, but may failed in other locale.
+Works excellent in UTF8 environment, but may fail in other locales.
 
-If Linux is in other locale such as zh_CN.GBK :
+If Linux is in other locale, such as zh_CN.GBK, in this case :
 
-* Characters other then English can be in commit logs after proper settings.
+* Commit log.
 
-  There will be a embed charset encoding directive in commit object.
+  Characters other then English CAN be used in commit log, only if do some proper settings. After add some proper settings, there will be a embed encoding directive in the commit object.
 
-* Filenames can not use non-English charcters, because tree object is not encoded in UTF8.
+* Filename.
+
+  CAN NOT use non-English characters as filename, because tree object is not encoded in UTF8.
 
 3.2       Install Git under Mac OS X               [28]
 =======================================================
@@ -158,7 +160,7 @@ If Linux is in other locale such as zh_CN.GBK :
 3.2.2        Install Xcode.                        [29]
 -------------------------------------------------------
 
-Download Xcode is not needed, for there is a copy in Mac OS X installer DVD.
+Download Xcode is not rquired, as there was a copy in Mac OS X installer DVD already.
 
   .. figure:: images/en/fig-03-03-xcode-install.png
      :scale: 65
@@ -178,7 +180,7 @@ Download Xcode is not needed, for there is a copy in Mac OS X installer DVD.
 3.2.6        Install other utils                   [32]
 -------------------------------------------------------
 
-3.2.7        Chinese chacter support               [33]
+3.2.7        Chinese character support             [33]
 -------------------------------------------------------
 
 Works fine just like in Linux with UTF8 locale.
@@ -189,7 +191,7 @@ Works fine just like in Linux with UTF8 locale.
 3.3.1        Install Cygwin.                       [34]
 -------------------------------------------------------
 
-If has low bandwith (like me), setup a cygwin mirror using apt-cacher-ng in Debian can be helpful.
+In the case of lowbandwidth (like me), setting up a cygwin mirror with the help of apt-cacher-ng in Debian could be helpful.
 
   .. figure:: images/en/fig-03-07-cygwin-5-mirror.png
      :scale: 100
@@ -200,7 +202,7 @@ If has low bandwith (like me), setup a cygwin mirror using apt-cacher-ng in Debi
 3.3.2        Install Git                           [40]
 -------------------------------------------------------
 
-How to use cygwin package management program (setup.exe) --- find and install git.
+How to use cygwin package management program (setup.exe) --- to find and install git.
 
   .. figure:: images/en/fig-03-13-cygwin-8-search-git-install.png
      :scale: 100
@@ -211,15 +213,15 @@ How to use cygwin package management program (setup.exe) --- find and install gi
 3.3.3        Cygwin configuration and usage        [42]
 -------------------------------------------------------
 
-3.3.4        Chinese support for Cygwin Git        [44]
--------------------------------------------------------
+3.3.4        Chinese characters support for Cygwin Git        [44]
+------------------------------------------------------------------
 
-Works fine just like in linux with UTF8 locale.
+Works fine, just like in linux with UTF8 locale.
 
 3.3.5        SSH access for Cygwin Git             [45]
 -------------------------------------------------------
 
-Current cygwin's ssh not works on some situation, so in this section I introduce how to integrate Cygwin Git with putty's plink or pagent.
+Current cygwin's ssh doesn't work on some situations, in this section I will introduce how to integrate Cygwin Git with putty's plink or pagent.
 
 3.4       Install Git under Windows msysGit        [51]
 =======================================================
@@ -230,16 +232,17 @@ Current cygwin's ssh not works on some situation, so in this section I introduce
 3.4.2        msysGit configuration and usage       [54]
 -------------------------------------------------------
 
-3.4.3        Chinese in msysGit shell              [55]
+3.4.3        Chinese language in msysGit shell     [55]
 -------------------------------------------------------
 
-3.4.4        Chinese support for msysGit           [57]
+3.4.4        Chinese language support for msysGit  [57]
 -------------------------------------------------------
 
-Bad support.
+Insufficient support.
 
-* Logs may work if setting i18n.commitEncoding, i18n.logOutputEncoding, but some other tools like TortoiseGit can not show log properly. 
-* Filenames can not use Chinese, because characters in tree object are encode in zh_CN.GBK, not UTF-8.
+* Logs may work if `i18n.commitEncoding` and `i18n.logOutputEncoding` are set, but meanwhile other tools like TortoiseGit cannot show logs properly. 
+* Chinese character cannot be used as filenames , because of characters in tree object are encoded in zh_CN.GBK, not UTF-8. 
+
 
 3.4.5        Using SSH protocol                    [58]
 -------------------------------------------------------
@@ -247,15 +250,15 @@ Bad support.
 3.4.6        TortoiseGit Installation and usage    [58]
 -------------------------------------------------------
 
-3.4.7        Chinese support for TortoiseGit       [62]
--------------------------------------------------------
+3.4.7        Chinese language support for TortoiseGit       [62]
+-----------------------------------------------------------------
 
-As bad as msysGit, and log process not compatible with msysGit.
+As "bad" as msysGit, and it's log process is not compatible with msysGit.
 
 Part 2: Git Solo
 ####################################
 
-Play with Git one person, so I call this part: Git solo.
+Play with Git by one self, so I call this part "Git solo".
 
 Chapter 4: Git Initial
 ***********************************
@@ -265,36 +268,36 @@ Chapter 4: Git Initial
 
 git init, git add, git commit...
 
-4.2       Think: why there is a .git directory?    [66]
-=======================================================
+4.2       Think out: why there is a .git directory?    [66]
+===========================================================
 
 Compare Git's .git directory with CVS's CVS directories, SVN's .svn directories, and StarTeam's server-side tracking implementations.
 
-4.3       Think: different git config level        [69]
-=======================================================
+4.3       Think out: different git config level        [69]
+===========================================================
 
 Run `git config --system -e` to see where is your system config file.
 
-4.4       Think: who is commiting?                 [71]
-=======================================================
+4.4       Think out: who is commiting?                 [71]
+===========================================================
 
 
-4.5       Think: change name freely, is it safe?   [73]
-=======================================================
+4.5       Think out: change name freely, is it safe?   [73]
+===========================================================
 
 Setup user.name and user.email once, and make it stable.
 
-For example Redmine will map the committer to one of it user accounts, if the committer username or email changed, the map is broken.
+For example Redmine will map the committer to one of it user accounts, if the committer username or email changed, the map will be broken.
 
   .. figure:: images/en/fig-04-01-redmine-user-config.png
      :scale: 60
 
      Fig 4-1
 
-Another example is Gerrit, wrong user.name and user.email settings make commits to Gerrit denied.
+Another example is Gerrit, wrong user.name and user.email settings will make commits to Gerrit denied.
 
-4.6       Think: what is command alias?            [75]
-=======================================================
+4.6       Think out: what is command alias?            [75]
+===========================================================
 
 4.7       Backup this chapter's work               [76]
 =======================================================
@@ -302,10 +305,10 @@ Another example is Gerrit, wrong user.name and user.email settings make commits 
 Chapter 5: Git Stage
 ***********************************
 
-5.1       Why modifications not commit directly?   [77]
-=======================================================
+5.1       Why modifications don't commit directly?   [77]
+==========================================================
 
-5.2       Unstand Git Stage                        [83]
+5.2       Understand Git Stage                     [83]
 =======================================================
 
 
@@ -346,7 +349,7 @@ Object database:
 
      Fig 6-1
 
-Git implement detail:
+Git implementation detail:
 
   .. figure:: images/en/fig-06-02-git-repos-detail.png
      :scale: 90
@@ -355,11 +358,11 @@ Git implement detail:
 
 
 
-6.2       Think: What is SHA1, how it generate?    [98]
-=======================================================
+6.2       Think out: What is SHA1, how it generate?    [98]
+===========================================================
 
-6.3       Think: commit IDs not a series of nums? [100]
-=======================================================
+6.3       Think out: commit IDs not a series of nums? [100]
+===========================================================
 
 Chapter 7: Git Reset
 ***********************************
@@ -367,7 +370,7 @@ Chapter 7: Git Reset
 7.1       Mystery of branch cursor                [103]
 =======================================================
 
-How git reset affect branch, index and working directory.
+How git reset will affect branches, index and working directory.
 
   .. figure:: images/en/fig-07-01-git-reset.png
      :scale: 80
@@ -375,7 +378,7 @@ How git reset affect branch, index and working directory.
      Fig 7-1
 
 
-7.2       Save bad reset using reflog             [105]
+7.2       Rollback incorrect reset using reflog   [105]
 =======================================================
 
 7.3       Deep into git reset                     [107]
@@ -404,56 +407,47 @@ How git checkout affect HEAD, index, and working directory.
 Chapter 9: Restore Work Progress
 ***********************************
 
-9.1       Be back                                 [117]
+9.1       I'm back                                [117]
 =======================================================
 
-9.2       Using git stash                         [120]
+9.2       Use git stash                           [120]
 =======================================================
 
 9.3       Mystery in git stash                    [121]
 =======================================================
 
-Chapter 10: Git Basic Operation
+Chapter 10: Basic Operation of Git
 ***********************************
 
-10.1      Take a photo first                      [128]
+10.1      Take a snap                             [128]
 =======================================================
 
-Take photo using git tg.
+Take a snap using `git tag`.
 
 10.2      Delete files                            [128]
 =======================================================
 
-10.2.1      Local delete is not real delete       [129]
--------------------------------------------------------
-
-10.2.2      Delete using git rm                   [130]
--------------------------------------------------------
-
-10.2.3      Mark delete using git add -u          [131]
--------------------------------------------------------
-
-10.3      Rollback deleted files                  [132]
+10.3      Recover deleted files                   [132]
 =======================================================
 
 10.4      Move files                              [133]
 =======================================================
 
-10.5      A Hello World with version              [135]
+10.5      Hello World program                     [135]
 =======================================================
 
 10.6      Add interactive: git add -i             [137]
 =======================================================
 
-10.7      Hello world new problem                 [140]
+10.7      Hello world: New problem                [140]
 =======================================================
 
-10.8      File ignore                             [141]
+10.8      Ignoring Files                          [141]
 =======================================================
 
 
-Chapter 11: Travel in Git History
-***********************************
+Chapter 11: Travel within Git History
+**************************************
 
 11.1      gitk                                    [146]
 =======================================================
@@ -467,7 +461,9 @@ Chapter 11: Travel in Git History
 11.4      Command line tools                      [158]
 =======================================================
 
-Following sections in this part will use this Git repository: git://github.com/ossxp-com/gitdemo-commit-tree.git
+The following sections will use this Git repository:
+
+  git://github.com/ossxp-com/gitdemo-commit-tree.git
 
 View this git repository using gitg.
 
@@ -476,7 +472,7 @@ View this git repository using gitg.
 
      Fig 11-19
 
-A nice commit tree of this git repository.
+A more clear commit tree of this git repository.
 
   .. figure:: images/en/fig-11-20-commit-tree.png
      :scale: 100
@@ -511,7 +507,7 @@ Mark the commit tree with short commit ID, which is convenient for the following
 11.4.6      git bisect                            [172]
 -------------------------------------------------------
 
-Mark the commit tree with color for git bisect research. Note: red is bad, blue is good.
+Mark the commit tree with color for git bisect research. Note: red represents bad, and blue represents good.
 
   .. figure:: images/en/fig-11-22-commit-tree-bisect.png
      :scale: 100
@@ -526,39 +522,39 @@ Mark the commit tree with color for git bisect research. Note: red is bad, blue 
 Chapter 12: Change History
 ***********************************
 
-12.1      One Step Regret                         [178]
+12.1      Withdraw one step                       [178]
 =======================================================
 
-12.2      Multiple steps regret                   [181]
+12.2      Withdraw multiple steps                 [181]
 =======================================================
 
 12.3      Back to future                          [182]
 =======================================================
 
-"Back to future" is my favorite movie.This section I will show side effect when change history, and how to change history using 3 different ways.
+"Back to future" is my favorite movie. In this section I will show side effect of changing history, and how to change history using 3 different ways.
 
   .. figure:: images/en/fig-12-01-back-to-future.png
      :scale: 60
 
      Fig 12-1
 
-This section have 3 part, and each part has 2 scene.
+This section contains 3 parts, and each part has 2 scenes.
 
-* The current history:
+* The current commit tree:
 
   .. figure:: images/en/fig-12-02-git-rebase-orig.png
      :scale: 100
 
      Fig 12-2
 
-* Scene 1: change history (throw awy bad commit : D) like the following using one type of time machine.
+* Scene 1: change history (throw awy "bad" commit D) like the following commit tree using one type of time machine.
 
   .. figure:: images/en/fig-12-03-git-rebase-c.png
      :scale: 100
 
      Fig 12-3
 
-* Scene 2: change history (merge commits C and D) like the following using one type of time machine.
+* Scene 2: change history (merge commits C and D) like the commit tree below using another type of time machine.
 
   .. figure:: images/en/fig-12-04-git-rebase-cd.png
      :scale: 100
@@ -571,14 +567,14 @@ This section have 3 part, and each part has 2 scene.
 
 The first type of the time machine is `git cherry-pick` :
 
-* After scene 1, the history is like:
+* After scene 1, the history looks like:
 
   .. figure:: images/en/fig-12-05-git-rebase-graph.png
      :scale: 80
 
      Fig 12-5
 
-* After scene 2, the history is like:
+* After scene 2, the history looks like:
 
   .. figure:: images/en/fig-12-06-git-rebase-graph-gitk.png
      :scale: 90
@@ -589,19 +585,19 @@ The first type of the time machine is `git cherry-pick` :
 12.3.2      Time machine v2                       [189]
 -------------------------------------------------------
 
-The second type of the time machine is `git rebase`.
+The second type of time machine is `git rebase`.
 
 12.3.3      Time machine v3                       [194]
 -------------------------------------------------------
 
-The third type of the time machine is `git rebase -i`.
+The third type of time machine is `git rebase -i`.
 
 12.4      Throw away history                      [198]
 =======================================================
 
 Throw away history using `git commit-tree` and `git rebase`.
 
-After throw away commits before commit A:
+After threw away commits before commit A:
 
   .. figure:: images/en/fig-12-07-git-rebase-purge-history-graph.png
      :scale: 90
@@ -618,7 +614,7 @@ Chapter 13: Git Clone
 13.1      Eggs in different baskets               [203]
 =======================================================
 
-Don't put eggs in one basket. Create multiple baskets for your repository using `git clone`.
+Don't put all your eggs in one basket. Create multiple baskets for your repository using `git clone`.
 
   .. figure:: images/en/fig-13-01-git-clone-pull-push.png
      :scale: 100
@@ -651,7 +647,7 @@ Clone as a bare repository, then exchange data with it. `git push` works for thi
 13.4      Bare repository from initial            [209]
 =======================================================
 
-Initial a bare repository, then exchange data with it.
+Initiate a bare repository, then exchange data with it.
 
   .. figure:: images/en/fig-13-04-git-clone-3.png
      :scale: 100
@@ -662,7 +658,7 @@ Initial a bare repository, then exchange data with it.
 Chapter 14: You are Git Admin
 ***********************************
 
-14.1      Where is objects and refs?              [213]
+14.1      Where are objects and refs?             [213]
 =======================================================
 
 14.2      Temporary objects of stage operations   [215]
@@ -674,22 +670,22 @@ Chapter 14: You are Git Admin
 14.4      Git housekeeper: git-gc                 [219]
 =======================================================
 
-14.5      Git housekeeper automatically           [223]
+14.5      Automatic Git housekeeper               [223]
 =======================================================
 
 When `git gc --auto` runs, git will check directory `.git/objects/17`, if there are over 27 loose objects in it.
 
-Why using subdir 17, not others? I guess the author Junio C Hamano show respect to Linux be elected as 17th important person for the 20 century. Am I right?
+Why using subdir "17", not others? I suppose Mr. Junio C Hamano show special respect to Linus as he's been elected as 17th most important person for the 20 century. Am I right?
 
 Part 3: Git harmoney
 ####################################
 
-This part focus on multiple users cooperation, so I call this part: Git harmoney.
+This part will focus on multiple users' cooperation, so I call this part "Git harmoney".
 
 Chapter 15: Git protocol and cooperation
 **********************************************
 
-How smart protocol works:
+How does the smart protocol work:
 
   .. figure:: images/en/fig-15-01-git-smart-protocol.png
      :scale: 100
@@ -712,13 +708,13 @@ How smart protocol works:
 15.5      Disallow non-fast-forward push          [234]
 =======================================================
 
-Chapter 16: Resolve conflict
+Chapter 16: Resolve conflicts
 ***********************************
 
 16.1      Merge during git pull                   [236]
 =======================================================
 
-When encounter a non-fast-forward push, one should do a fetch-merge-push operation like the following.
+When encounter a non-fast-forward push, a fetch-merge-push operation like the following should be done.
 
   .. figure:: images/en/fig-16-01-git-merge-pull-1.png
      :scale: 100
@@ -747,19 +743,19 @@ When encounter a non-fast-forward push, one should do a fetch-merge-push operati
 16.2.1      Modify different files                [238]
 -------------------------------------------------------
 
-16.2.2      Modify different location of one file [241]
--------------------------------------------------------
+16.2.2      Modify different locations of one file [241]
+--------------------------------------------------------
 
-16.2.3      Change both file name and contents    [242]
--------------------------------------------------------
+16.2.3      One change filename and other change contents  [242]
+----------------------------------------------------------------
 
-16.3      Merge lesson 2: logical conflict        [244]
+16.3      Merge lesson 2: logical conflicts       [244]
 =======================================================
 
-16.4      Merge lesson 3: resolve real conflict   [245]
+16.4      Merge lesson 3: resolve real conflicts  [245]
 =======================================================
 
-16.4.1      Merge by hands                        [248]
+16.4.1      Resolve by hands                      [248]
 -------------------------------------------------------
 
 16.4.2      Resolve using GUI tools               [249]
@@ -796,8 +792,8 @@ How to resolve conflict with the help of kdiff3.
 16.5      Merge lesson 4: tree conflict           [254]
 =======================================================
 
-When two commits change the name of the same file, merge will end with a conflict.
-This section introduce how to resolve this kind of conflicts by hands or by tools.
+When two commits both change the name of the same file, merge will end up with a conflict.
+This section introduces how to resolve this kind of conflicts either by hands or by tools.
 
 16.5.1      Resolve tree conflict by hands        [256]
 -------------------------------------------------------
@@ -829,16 +825,16 @@ Chapter 17: Git Milestone
 17.2.3      Tag with signature                    [270]
 -------------------------------------------------------
 
-17.3      Delete milestone                        [273]
+17.3      Delete milestones                       [273]
 =======================================================
 
-17.4      Not change tag freely                   [274]
+17.4      Do not change tags freely               [274]
 =======================================================
 
-17.5      Share milestone                         [274]
+17.5      Share milestones                        [274]
 =======================================================
 
-17.6      Delete remote milestone                 [278]
+17.6      Delete remote milestones                [278]
 =======================================================
 
 17.7      Milestone naming rules                  [278]
@@ -847,8 +843,11 @@ Chapter 17: Git Milestone
 Chapter 18: Git Branch
 ***********************************
 
-18.1      Headache of branch management           [285]
+18.1      Headache from branch management         [285]
 =======================================================
+
+The following examples are from my subversion training courses, but they also can be used for Git.
+
 
 18.1.1      Release branch                        [286]
 -------------------------------------------------------
@@ -871,7 +870,7 @@ Resolution: use release/bugfix branch.
 18.1.2      Feature branch                        [288]
 -------------------------------------------------------
 
-Problem: features development mixed in one branch, cause chaos and withdraw some features also cause headache.
+Problem: features developments mixed in one branch could cause chaos and withdraw some features also cause headache.
 
   .. figure:: images/en/fig-18-03-branch-feature-branch-question.png
      :scale: 70
@@ -962,14 +961,14 @@ When user2 finished the development of the feature in branch user2/i18n, master 
 18.6.2      Branch user2/i18n rebase              [311]
 -------------------------------------------------------
 
-If merge branch user2/i18n with master, there will be a new commit (merge commit), which add more code review tasks. The repository after merge looks like:
+If branch user2/i18n merges with master, there will be a new commit (merge commit), which adds more code review tasks. The repository after merge looks like:
 
   .. figure:: images/en/fig-18-08-branch-i18n-merge.png
      :scale: 100
 
      Fig 18-8
 
-Rebase before push at some situation is hightly recommended. The repository after rebase would look like:
+Rebase before push at some situations is hightly recommended. The repository after rebase would look like:
 
   .. figure:: images/en/fig-18-10-branch-i18n-rebase.png
      :scale: 100
@@ -1060,7 +1059,7 @@ Discuss Gerrit later.
 21.2      Pyramid Cooperation Model               [347]
 =======================================================
 
-Distributed Model looks like a pyramid:
+Distributed Model looks like a pyramid hierarchy:
 
   .. figure:: images/en/fig-21-04-distrabute-model.png
      :scale: 100
@@ -1080,7 +1079,7 @@ Chapter 22: Topgit Model
 22.1      Three SCM Milestone of Myself           [351]
 =======================================================
 
-Three SCM milestones of my self for the past several years:
+Three SCM milestones of myself for the past several years:
 
 1. SVN + vendor branch.
 
@@ -1099,7 +1098,7 @@ Three SCM milestones of my self for the past several years:
 22.2      Mystery of Topgit                       [353]
 =======================================================
 
-When use Git+Topgit hacks other project, the feature branches may look like:
+When using Git+Topgit hacks other projects, the feature branches may look like:
 
   .. figure:: images/en/fig-22-02-topgit-topic-branch.png
      :scale: 100
@@ -1420,7 +1419,7 @@ My hacked Gitolite is at: http://github.com/ossxp-com/gitolite
 Chapter 31: Gitosis
 ***********************************
 
-My hacked Gitosis at: http://github.com/ossxp-com/gitosis
+My hacked Gitosis is at: http://github.com/ossxp-com/gitosis
 
 31.1      Install Gitosis                         [490]
 =======================================================
@@ -1449,7 +1448,7 @@ My hacked Gitosis at: http://github.com/ossxp-com/gitosis
 31.3      Gitosis authorization detail            [495]
 =======================================================
 
-31.3.1      Gitosis default configrations         [495]
+31.3.1      Gitosis default configurations        [495]
 -------------------------------------------------------
 
 31.3.2      Adminstration of gitosis-admin repos  [496]
