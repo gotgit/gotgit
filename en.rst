@@ -1,6 +1,49 @@
 Got Git
+########
 
-written by Jiang Xin, at 2011
+--- written by Jiang Xin, 2011.
+
+I wrote this book in Chinese from 2010.10 till 2011.2. Parts of this book is from my works on some Git related open source projects, such as hacks on Topgit, Gitosis, Gitolite, repo (from Android project); Gistore a backup tools which I am inspired by etckeeper.
+
+I translated the preface, Table of Contents, some figures of this book from Chinese into English, to help the people in English understanding the outline of this book. Sorry for my poor English. :(
+
+
+Preface
+###########
+
+Version Control (SCM) is the art of changes management, no matter whether the changes are from the same person or from a team.
+Version control system in the first place, must faithfully record the changes, and it could help people restore any historical revision or revert any historical changes. But as the most important part, the version control system could make the team members work together. Git is one of the best version control systems in the world.
+
+My interests in version control system is from my practice on personal knowledge management. The core of my personal knowledge management is writing documents using maintainable format, and backup the documents in version control system. As to the maintainable document formats, they could be DocBook, FreeMind, reStructuredText, asciidoc and etc. I even hacked FreeMind to fit with version control system better, such as store VCS unfriendly node properties outside the .mm files into a .mmx file. This is my first open source activity, and the hacked FreeMind is hosted in as FreeMind-MMX. After chosen the proper document format, comes with the storage problem. Though a version control system can backup each historical commit, but how to avoid data loses if version control system corrupted? Git with its new design of the distributed operation model provides the best solution. Using Git, my knowledge base can be distributed by cloning it onto to different disks, or different hosts, and the synchronization between the repositories is simple, just through the push and pull operations. Data security has been greatly improved when using Git. With the care of the version control system, my mindmap (in FreeMind format) of Git becomes more and more clear over the time, and eventually becomes the prototype of the book.
+
+Version control can determine the success of the project, even life of a company. During my experiences on promoting open source project management tools and consulting, I have seen so many teams failed, because of bad version control management. such as project postpone, fixed bugs reappear, can't locate bug in codes, no matter what version control system they used, open source or commercial.
+
+Takes my company as a example, we are doing some open source projects customization services. In the begining, we use SVN (Subversion) for code management, but the vendor branch model is hard to use. More hacks we do, more difficulties it is to rebase onto new upstream version. We are confused at that time, then we meet with DVCS (distributed version control system).
+
+My first attempt on DVCS is Hg (Mercurial), with the help of MQ (a Hg plugin). It works fine for our working model, but if two or more programmers involved in one project, conflicts on MQ patches make us crazy. Latter we tried Git with the help of Topgit, all problems gone.
+
+...
+
+Organization of this book
+**************************
+
+This book is divided into nine parts with 41 chapters and appendices.
+
+Part 1 is an overview of Git, and it is divided into three chapters. In Chapter 1, is the overview of the history of version control systems. In Chapter 2, I show over 10 examples of Git, and I wish the readers could fall in love with Git for these highlights. Chapter 3 introduces the installation and configurations of Git in the three main platforms: Linux, Mac OS X and Windows. When I wrote this book, 70% of the time is under the Debian Linux operating system, so Linux users should have no obstacles for running the examples in this book. At the end of 2010, after learning that there will be a publisher give me money for the first print for this book, I asked for money from my wife AQiao and bought my first MacBook Pro, so there are the contents on Git usages on Mac and new Topgit hacks for Mac OS X. When cooperated with the editors of this book, I have to use MS Word, so part of the work is on Windows running as a VirtualBox virtual machine in Mac OS X. Even with limited resources, Git in Cygwin environment still works perfect.
+
+Part 2 and Part 3 describes the basic operation of Git, and they are the foundation and core of the book, take up about 40% of this book. Why this two parts call 'Git Solo' and 'Git harmony'? The names are from my habits from my earlier training experiences for Subversion. 'SOLO' stands for working with version control by one self. 'Harmony' refers to working with version control as a team. In part 2, I mixed the Git magic (design principles) with the operations, because only know the truth (Git principle), people can use it freely (resolve Git puzzles). In part 3, introduces milestones, branches, and how to resolve conflicts, etc.
+
+Part 4 talks about the working models of Git. In addition to the traditional centralized and distributed model, Chapter 22 introduces Topgit in detail, it will help hackers on other projects and for customization projects. In this chapter also describes some of my Topgit improvements, they are developed in Topgit way. Chapter 23-25 handle multiple repositories for one project. Chapter 25 describes an new innovate solution introduced by Android project, it named repo. I hacked to make repo works with Git server directly without the help of Gerrit. Chapter 26 introduces git-svn, with the help of git-svn, nobody knows the commit to SVN is from a Git user.
+
+Part 5 is focus on Git server. In deed, this part is the first part I've written, because my customers need details in Gitolite set up, while my training PPT only provides outline, so comes with Chapter 30. Chapter 32 introduces Gerrit, a special central model for Git.
+
+Chapter 6 describes the migration of Git repository. Chapter 34 shows details for CVS repositories migrate to Git repositories, and the chapter is also helpful for CVS to SVN. Other version control systems are also covered, such as SVN and Hg. Latter in this part, a Git to Git powerful tools is covered, it's git-filter-branch.
+
+Part 7 introduces other applications of Git, such as etckeeper, Gistore, and others. I developed Gistore for files backup with the inspiration of etckeeper.
+
+Part 8 covered miscellaneous features of Git. The first chapter in this part is helpful for cross platform team.
+
+...
 
 part 1: Meet Git
 ###################
