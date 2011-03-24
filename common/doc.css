@@ -145,6 +145,9 @@ p img{border:0;margin:0;margin-bottom:-5px;}
 hr{color:#b4aca1;background-color:#b4aca1;border-bottom:1px solid #f6f4eb;}
 small{font-size:80%;}
 
+div.figure p.caption {font-size:9pt; text-align:center;}
+div.figure {text-align:center;}
+
 /* section */
 
 /*
