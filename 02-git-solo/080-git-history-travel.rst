@@ -224,7 +224,7 @@ qgit 的右键菜单非常丰富，上图显示了鼠标右击提交时显示的
   .. figure:: images/git-solo/qgit-tree-view.png
      :scale: 75
 
-.. |QGIT-TREE-TOGGLE| image:: images/git-solo/icon-qgit-tree-toggle.png
+.. |QGIT-TREE-TOGGLE| image:: images/git-solo/icon-11-12-qgit-tree-toggle.png
 
 从上图也可以看到目录树的文件包含的右键菜单。当选择查看一个文件时，会显示此文件的追溯，即显示每一行是在哪个版本由谁修改的。追溯窗口见下图右下方窗口。
 
