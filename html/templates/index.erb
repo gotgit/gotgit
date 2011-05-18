@@ -1,0 +1,73 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Git权威指南——参考资料</title>
+<% css_files.each do |t| %>
+<LINK rel="stylesheet" href="<%= t %>" type="text/css">
+<% end %>
+</head>
+<body>
+<div class='document'>
+
+<h1 class="title">《Git权威指南》</h1>
+<h2 class="subtitle" id="id1">参考资料</h2>
+<table class="docinfo" frame="void" rules="none">
+<col class="docinfo-name" />
+<col class="docinfo-content" />
+<tbody valign="top">
+<tr class="field"><th class="docinfo-name">作者:</th><td class="field-body"><a class="reference external" href="http://weibo.com/gotgit/">@gotgit</a></td>
+
+</tr>
+<tr class="field"><th class="docinfo-name">网址:</th><td class="field-body"><a class="reference external" href="http://www.ossxp.com/GotGit">http://www.ossxp.com/GotGit/</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">版本:</th><td class="field-body">0.1</td>
+</tr>
+<tr class="field"><th class="docinfo-name">日期:</th><td class="field-body">2011-05</td>
+</tr>
+<tr class="field"><th class="docinfo-name">版权信息:</th><td class="field-body"><a class="reference external" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons" src="html/inc/cc-icon.png" /></a></td>
+</tr>
+</tbody>
+
+</table>
+
+<h2>操作回放</h2>
+<%
+parts = { 'part1' => '第1篇：初识Git',
+          'part2' => '第2篇：Git独奏',
+          'part3' => '第3篇：Git和声',
+          'part4' => '第4篇：Git协同模型',
+          'part5' => '第5篇：搭建Git服务器',
+          'part6' => '第6篇：迁移到Git',
+          'part7' => '第7篇：Git的其他应用',
+          'part8' => '第8篇：Git杂谈',
+          'part9' => '第9篇：附录',
+         }
+%>
+
+<% parts.keys.sort.each do |key| %>
+  <h3><%= parts[key] %></h3>
+  <% if ttyrec_list.member?(key) %>
+    <ul>
+    <% ttyrec_list[key].each do |t| %>
+      <li><a href="<%=   t['html'] %>"><%=   t['title'] %></a>
+    <%  end %>
+    </ul>
+  <% end %>
+<% end %>
+
+<h2>资源下载</h2>
+
+<dl>
+<dt>演示版本库1</dt>
+  <dd><a href="https://github.com/ossxp-com/gitdemo-commit-tree/">https://github.com/ossxp-com/gitdemo-commit-tree/</a></dd>
+<dt>演示版本库2 (Hello world)</dt>
+  <dd><a href="https://github.com/ossxp-com/hello-world/">https://github.com/ossxp-com/hello-world/</a></dd>
+<dt>本资料库</dt>
+  <dd><a href="https://github.com/ossxp-com/gotgit-refs/">https://github.com/ossxp-com/gotgit-refs/</a></dd>
+</dl>
+</ul>
+
+</div>
+</body>
+</html>
+
