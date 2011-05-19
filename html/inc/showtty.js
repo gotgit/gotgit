@@ -292,11 +292,9 @@ showTTYURL = function (elem, url) {
     };
 
     showText("Loading " + url);
-
-    var req = new XMLHttpRequest();
-    req.open("GET", url, true);
-    req.onreadystatechange = function () {
-        if ( req.readyState == 4 && ( req.status = 200 || req.status == 0 ) ) {
+    
+    new Ajax.Request(url, { method: 'get',
+        onSuccess: function(req) {
             var data = eval("(" + req.responseText + ")");
             if ( typeof data == "undefined" ) {
                 showText("Error: didn't get tty data from " + url);
@@ -304,12 +302,7 @@ showTTYURL = function (elem, url) {
                 return;
             }
             showTTY(elem, data);
-        } else if ( req.readyState == 4 && req.status != 200 ) {
-            showText("Error: couldn't retrieve " + url + ", got status code " + this.status);
-            req = null;
-        }
-    };
-    req.send(null);
+        }});
 };
 
 }());

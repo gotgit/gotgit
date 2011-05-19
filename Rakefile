@@ -5,15 +5,16 @@ require 'ftools'
 require 'erb'
 require 'rubygems'
 
-ABS_CSS_FILE        = File.expand_path('html/inc/tty.css')
-ABS_JS_FILE         = File.expand_path('html/inc/showtty.js')
-ABS_CSS_COMMON_FILE = File.expand_path('html/inc/common.css')
-TTYPLAY_TMPL        = File.expand_path('html/templates/ttyplay.erb')
-SCAST_TMPL          = File.expand_path('html/templates/scast.erb')
-INDEX_TMPL          = File.expand_path('html/templates/index.erb')
-SCAST_HTML          = File.expand_path('screencast.html')
-INDEX_HTML          = File.expand_path('index.html')
-ERRATA_HTML         = File.expand_path('errata.html')
+ABS_CSS_FILE          = File.expand_path('html/inc/tty.css')
+ABS_JS_PROTOTYPE_FILE = File.expand_path('html/inc/prototype.js')
+ABS_JS_SHOWTTY_FILE   = File.expand_path('html/inc/showtty.js')
+ABS_CSS_COMMON_FILE   = File.expand_path('html/inc/common.css')
+TTYPLAY_TMPL          = File.expand_path('html/templates/ttyplay.erb')
+SCAST_TMPL            = File.expand_path('html/templates/scast.erb')
+INDEX_TMPL            = File.expand_path('html/templates/index.erb')
+SCAST_HTML            = File.expand_path('screencast.html')
+INDEX_HTML            = File.expand_path('index.html')
+ERRATA_HTML           = File.expand_path('errata.html')
 
 def strip_common_dir(path1, path2)
   if path1+"\t"+path2 =~ %r{^(.*/)(.*?)\t\1(.*)$}
@@ -61,7 +62,8 @@ task :html_chunks do
     json_file = rel_path(output_file, File.expand_path(t))
     css_files = [ rel_path(output_file, ABS_CSS_FILE),
                   rel_path(output_file, ABS_CSS_COMMON_FILE) ]
-    js_file = rel_path(output_file, ABS_JS_FILE)
+    js_files  = [ rel_path(output_file, ABS_JS_PROTOTYPE_FILE),
+                  rel_path(output_file, ABS_JS_SHOWTTY_FILE) ]
     unless uptodate?(output_file, TTYPLAY_TMPL)
       File.open(output_file, "w") do |file|
         template = ERB.new(File.read(TTYPLAY_TMPL))

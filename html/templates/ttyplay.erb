@@ -4,11 +4,13 @@
 <% css_files.each do |t| %>
 <LINK rel="stylesheet" href="<%= t %>" type="text/css">
 <% end %>
+<% js_files.each do |t| %>
+<script src="<%= t %>"></script>
+<% end %>
 </head>
 <body>
 <div class="document">
 <div id="tty">Enable JavaScript to see the animation.</div>
-<script src="<%=js_file %>"></script>
 <script>
 showTTYURL( document.getElementById("tty"), "<%=json_file%>" );
 </script>

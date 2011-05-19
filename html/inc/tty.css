@@ -1,5 +1,6 @@
 div#tty
 {
   background: #000;
-  width: 80%;
+  margin: 1em 0.2em 1em 0.2em;
+  padding: 0.5em 0.2em 0.5em 0.2em;
 }
