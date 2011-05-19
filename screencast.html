@@ -1,7 +1,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Git权威指南——参考资料</title>
+<title>Git权威指南——操作回放</title>
 
 <LINK rel="stylesheet" href="html/inc/common.css" type="text/css">
 
@@ -10,7 +10,7 @@
 <div class='document'>
 
 <h1 class="title">《Git权威指南》</h1>
-<h2 class="subtitle" id="id1">参考资料</h2>
+<h2 class="subtitle" id="id1">操作回放</h2>
 <table class="docinfo" frame="void" rules="none">
 <col class="docinfo-name" />
 <col class="docinfo-content" />
@@ -18,11 +18,11 @@
 <tr class="field"><th class="docinfo-name">作者:</th><td class="field-body"><a class="reference external" href="http://weibo.com/gotgit/">@gotgit</a></td>
 
 </tr>
-<tr class="field"><th class="docinfo-name">网址:</th><td class="field-body"><a class="reference external" href="http://www.ossxp.com/GotGit">http://www.ossxp.com/GotGit/</a></td>
+<tr class="field"><th class="docinfo-name">网址:</th><td class="field-body"><a class="reference external" href="http://www.ossxp.com/doc/gotgit/">http://www.ossxp.com/doc/gotgit/</a></td>
 </tr>
 <tr class="field"><th class="docinfo-name">版本:</th><td class="field-body">0.1</td>
 </tr>
-<tr class="field"><th class="docinfo-name">日期:</th><td class="field-body">2011-05</td>
+<tr class="field"><th class="docinfo-name">日期:</th><td class="field-body">2011/05/19 18:31:20</td>
 </tr>
 <tr class="field"><th class="docinfo-name">版权信息:</th><td class="field-body"><a class="reference external" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons" src="html/inc/cc-icon.png" /></a></td>
 </tr>
@@ -30,109 +30,97 @@
 
 </table>
 
-<h2>操作回放</h2>
+<p>点击下面相应的链接通过Web网页观看操作回放。网页回放技术来自于 <a href="http://encryptio.com/code/jsttyplay">jsttyplay</a>。
+<p>如需要更好的控制回复的速度、暂停等，请使用 <a href="http://0xcc.net/ttyrec/">ttyplay (Linux)</a>, <a href="http://angband.pl/termrec.html">termrec (Windows)</a> 等软件回放扩展名为 ".ttyrec" 的文件。
+<p>您也可以使用 <a href="http://en.wikipedia.org/wiki/Ttyrec">ttyrec</a> 软件录制自己的回放，保存在 html 目录之外的任意目录下，然后执行 "rake" 命令，自动将新增回放放入本页面中。
+<p>从版本库 <a href="https://github.com/ossxp-com/gotgit-refs/">git://github.com/ossxp-com/gotgit-refs.git</a> 克隆并创建您自己的分支，与大家分享。
 
 
 
-  <h3>第1篇：初识Git</h3>
-  
-    <ul>
-    
-      <li><a href="html/part1/ch01-01-diff-patch.html">ch01-01-diff-patch</a>
-    
-    </ul>
-  
-
-  <h3>第2篇：Git独奏</h3>
-  
-    <ul>
-    
-      <li><a href="html/part2/ch04-01-first-commit.html">ch04-01-first-commit</a>
-    
-      <li><a href="html/part2/ch04-02-git-config.html">ch04-02-git-config</a>
-    
-      <li><a href="html/part2/ch04-03-who-does-commit.html">ch04-03-who-does-commit</a>
-    
-      <li><a href="html/part2/ch05-01-commit-modified.html">ch05-01-commit-modified</a>
-    
-      <li><a href="html/part2/ch05-02-index-and-diff.html">ch05-02-index-and-diff</a>
-    
-      <li><a href="html/part2/ch05-03-git-stash.html">ch05-03-git-stash</a>
-    
-      <li><a href="html/part2/ch06-01-git-objects.html">ch06-01-git-objects</a>
-    
-      <li><a href="html/part2/ch06-02-sha1-hash.html">ch06-02-sha1-hash</a>
-    
-      <li><a href="html/part2/ch07-01-git-reset.html">ch07-01-git-reset</a>
-    
-      <li><a href="html/part2/ch07-02-reflog.html">ch07-02-reflog</a>
-    
-      <li><a href="html/part2/ch08-01-checkout.html">ch08-01-checkout</a>
-    
-      <li><a href="html/part2/ch09-01-i-am-back.html">ch09-01-i-am-back</a>
-    
-      <li><a href="html/part2/ch09-02-inside-stash.html">ch09-02-inside-stash</a>
-    
-      <li><a href="html/part2/ch10-01-tag.html">ch10-01-tag</a>
-    
-      <li><a href="html/part2/ch10-02-rm1.html">ch10-02-rm1</a>
-    
-      <li><a href="html/part2/ch10-03-rm2.html">ch10-03-rm2</a>
-    
-      <li><a href="html/part2/ch10-04-undelete.html">ch10-04-undelete</a>
-    
-      <li><a href="html/part2/ch10-05-mv.html">ch10-05-mv</a>
-    
-      <li><a href="html/part2/ch10-06-hello-world.html">ch10-06-hello-world</a>
-    
-      <li><a href="html/part2/ch10-07-add-i.html">ch10-07-add-i</a>
-    
-      <li><a href="html/part2/ch10-08-ignore.html">ch10-08-ignore</a>
-    
-      <li><a href="html/part2/ch11-01-clone.html">ch11-01-clone</a>
-    
-      <li><a href="html/part2/ch11-02-rev-parse.html">ch11-02-rev-parse</a>
-    
-      <li><a href="html/part2/ch11-03-rev-list.html">ch11-03-rev-list</a>
-    
-      <li><a href="html/part2/ch12-01-back2future-1.html">ch12-01-back2future-1</a>
-    
-      <li><a href="html/part2/ch12-02-back2future-2.html">ch12-02-back2future-2</a>
-    
-      <li><a href="html/part2/ch12-03-back2future-3.html">ch12-03-back2future-3</a>
-    
-    </ul>
-  
-
-  <h3>第3篇：Git和声</h3>
-  
-    <ul>
-    
-      <li><a href="html/part3/smart-and-dump-protocol.html">smart-and-dump-protocol</a>
-    
-    </ul>
-  
-
-  <h3>第4篇：Git协同模型</h3>
-  
-
-  <h3>第5篇：搭建Git服务器</h3>
-  
-
-  <h3>第6篇：迁移到Git</h3>
-  
-
-  <h3>第7篇：Git的其他应用</h3>
-  
-
-  <h3>第8篇：Git杂谈</h3>
-  
-
-  <h3>第9篇：附录</h3>
-  
 
 
-<h2>资源下载</h2>
+<h3>第1篇：初识Git</h3>
+
+<ul>
+
+<li><a href="html/part1/ch01-01-diff-patch.html">ch01-01-diff-patch</a>
+
+</ul>
+
+
+<h3>第2篇：Git独奏</h3>
+
+<ul>
+
+<li><a href="html/part2/ch04-01-first-commit.html">ch04-01-first-commit</a>
+
+<li><a href="html/part2/ch04-02-git-config.html">ch04-02-git-config</a>
+
+<li><a href="html/part2/ch04-03-who-does-commit.html">ch04-03-who-does-commit</a>
+
+<li><a href="html/part2/ch05-01-commit-modified.html">ch05-01-commit-modified</a>
+
+<li><a href="html/part2/ch05-02-index-and-diff.html">ch05-02-index-and-diff</a>
+
+<li><a href="html/part2/ch05-03-git-stash.html">ch05-03-git-stash</a>
+
+<li><a href="html/part2/ch06-01-git-objects.html">ch06-01-git-objects</a>
+
+<li><a href="html/part2/ch06-02-sha1-hash.html">ch06-02-sha1-hash</a>
+
+<li><a href="html/part2/ch07-01-git-reset.html">ch07-01-git-reset</a>
+
+<li><a href="html/part2/ch07-02-reflog.html">ch07-02-reflog</a>
+
+<li><a href="html/part2/ch08-01-checkout.html">ch08-01-checkout</a>
+
+<li><a href="html/part2/ch09-01-i-am-back.html">ch09-01-i-am-back</a>
+
+<li><a href="html/part2/ch09-02-inside-stash.html">ch09-02-inside-stash</a>
+
+<li><a href="html/part2/ch10-01-tag.html">ch10-01-tag</a>
+
+<li><a href="html/part2/ch10-02-rm1.html">ch10-02-rm1</a>
+
+<li><a href="html/part2/ch10-03-rm2.html">ch10-03-rm2</a>
+
+<li><a href="html/part2/ch10-04-undelete.html">ch10-04-undelete</a>
+
+<li><a href="html/part2/ch10-05-mv.html">ch10-05-mv</a>
+
+<li><a href="html/part2/ch10-06-hello-world.html">ch10-06-hello-world</a>
+
+<li><a href="html/part2/ch10-07-add-i.html">ch10-07-add-i</a>
+
+<li><a href="html/part2/ch10-08-ignore.html">ch10-08-ignore</a>
+
+<li><a href="html/part2/ch11-01-clone.html">ch11-01-clone</a>
+
+<li><a href="html/part2/ch11-02-rev-parse.html">ch11-02-rev-parse</a>
+
+<li><a href="html/part2/ch11-03-rev-list.html">ch11-03-rev-list</a>
+
+<li><a href="html/part2/ch12-01-back2future-1.html">ch12-01-back2future-1</a>
+
+<li><a href="html/part2/ch12-02-back2future-2.html">ch12-02-back2future-2</a>
+
+<li><a href="html/part2/ch12-03-back2future-3.html">ch12-03-back2future-3</a>
+
+</ul>
+
+
+<h3>第3篇：Git和声</h3>
+
+<ul>
+
+<li><a href="html/part3/smart-and-dump-protocol.html">smart-and-dump-protocol</a>
+
+</ul>
+
+
+<hr>
+
+<h3>资源下载</h3>
 
 <dl>
 <dt>演示版本库1</dt>
