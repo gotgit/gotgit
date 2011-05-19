@@ -49,16 +49,18 @@ parts = { '1' => '第1篇：初识Git',
          }
 %>
 
-<% parts.keys.sort.each do |key| %>
-  <% if ttyrec_list.member?(key) %>
-    <h3><%= parts[key] %></h3>
-    <ul>
-    <% ttyrec_list[key].each do |t| %>
-      <li><a href="<%=   t['html'] %>"><%=   t['title'] %></a>
-    <%  end %>
-    </ul>
-  <% end %>
-<% end %>
+<%  ttyrec_list.keys.sort.each do |key| %>
+<%    if parts.member?(key) %>
+<h3><%= parts[key] %></h3>
+<%    else %>
+<h3><%= key %></h3>
+<%    end %>
+<ul>
+<%    ttyrec_list[key].each do |t| %>
+<li><a href="<%=   t['html'] %>"><%=   t['title'] %></a>
+<%    end %>
+</ul>
+<%  end %>
 
 <hr>
 
