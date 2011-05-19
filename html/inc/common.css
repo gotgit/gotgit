@@ -118,7 +118,7 @@ dd{}
 pre.programlisting, pre.screen, pre.literal-block {
   overflow:auto;white-space:pre;/* <- css3 */
   white-space:0;/* <- ff */
-  font-size:12px;
+  font-size:90%;
   font-family:"Courier New", Courier, "Lucida Console", Monaco, "DejaVu Sans Mono", "Nimbus Mono L", "Bitstream Vera Sans Mono";
 	background-color:#E0E0E0;
   padding:.4em;
@@ -130,7 +130,7 @@ pre code {
   display:block;
   overflow:auto;white-space:pre;/* <- css3 */
   white-space:0;/* <- ff */
-  font-size:12px;
+  font-size:90%;
   font-family:"Courier New", Courier, "Lucida Console", Monaco, "DejaVu Sans Mono", "Nimbus Mono L", "Bitstream Vera Sans Mono";
 	background-color:#E0E0E0;
   padding:.4em;
@@ -148,10 +148,10 @@ pre{word-wrap:normal;padding-top:1.2em;padding-bottom:1.6em;/* <- one line pre w
 /* Paragraph */
 p {margin:.6em 0 .3em;line-height:150%;}
 /* Chinese style: indent 2 spaces */
-p,dd {font-size:14px;text-indent: 2em }
-dt {font-size:16px;text-indent: 2em; margin:1em 0 0.5em 0; }
+p,dd {font-size:100%;text-indent: 2em }
+dt {font-size:120%;text-indent: 2em; margin:1em 0 0.5em 0; }
 /* Paragraph do not indent in li */
-li p    {font-size:14px;text-indent: 0em }
+li p    {font-size:100%;text-indent: 0em }
 
 /* other */
 img{border:0;margin:.6em 0 .3em 2em;}
