@@ -71,7 +71,8 @@ task :html => [:html_chunks] do
   css_files = [rel_path(index_file, ABS_CSS_COMMON_FILE)]
   FileList["html/**/*.json"].each do |t|
     title = File.basename(t).sub(/\.[^.]+$/, '')
-    part = t.sub(/.*\/(part[0-9]+)\/.*$/, '\1')
+    part = t.sub(/.*\/part([0-9]+)\/.*$/, '\1')
+    part = 'others' unless part =~ /^[0-9]+$/
     html_file = rel_path(index_file, File.expand_path(t.sub(/\.[^.]+$/, '.html')))
     ttyrec_list[part] = [] unless ttyrec_list.member?(part)
     ttyrec_list[part].push( { 'title' => title, 'html' => html_file } )

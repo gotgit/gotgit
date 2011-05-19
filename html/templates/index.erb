@@ -32,21 +32,22 @@
 
 <h2>操作回放</h2>
 <%
-parts = { 'part1' => '第1篇：初识Git',
-          'part2' => '第2篇：Git独奏',
-          'part3' => '第3篇：Git和声',
-          'part4' => '第4篇：Git协同模型',
-          'part5' => '第5篇：搭建Git服务器',
-          'part6' => '第6篇：迁移到Git',
-          'part7' => '第7篇：Git的其他应用',
-          'part8' => '第8篇：Git杂谈',
-          'part9' => '第9篇：附录',
+parts = { '1' => '第1篇：初识Git',
+          '2' => '第2篇：Git独奏',
+          '3' => '第3篇：Git和声',
+          '4' => '第4篇：Git协同模型',
+          '5' => '第5篇：搭建Git服务器',
+          '6' => '第6篇：迁移到Git',
+          '7' => '第7篇：Git的其他应用',
+          '8' => '第8篇：Git杂谈',
+          '9' => '第9篇：附录',
+          'others'=> '其它',
          }
 %>
 
 <% parts.keys.sort.each do |key| %>
-  <h3><%= parts[key] %></h3>
   <% if ttyrec_list.member?(key) %>
+    <h3><%= parts[key] %></h3>
     <ul>
     <% ttyrec_list[key].each do |t| %>
       <li><a href="<%=   t['html'] %>"><%=   t['title'] %></a>
