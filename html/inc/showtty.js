@@ -14,23 +14,13 @@ var makeTable = function (width, height) {
     var table = document.createElement("div");
     var arr = [];
     for (var j = 1; j <= height; j++) {
-        var row = document.createElement("div");
+        var row = Element('div');
         var arrrow = [];
-        row.style.fontFamily = '"ProFont", "Luxi Mono", "Monaco", "Courier", "Courier new", monospace';
-        row.style.margin = '0';
-        row.style.padding = '0';
-        row.style.wordSpacing = '0';
-        row.style.height = '1.2em';
+        row.addClassName('row');
         for (var i = 1; i <= width; i++) {
-            var charelem = document.createElement("pre");
-            charelem.style.backgroundColor = '#000';
-            charelem.style.color = '#FFF';
+            var charelem = Element('span');
+            charelem.addClassName('charelem');
             charelem.style.display = 'inline';
-            charelem.style.fontWeight = 'normal';
-            charelem.style.textDecoration = 'none';
-            charelem.style.letterSpacing = '0';
-            charelem.style.margin = '0';
-            charelem.style.padding = '0 0 0.2em 0';
             charelem.appendChild(document.createTextNode(" "));
             row.appendChild(charelem);
             arrrow.push(charelem);
