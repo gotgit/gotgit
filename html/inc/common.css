@@ -126,6 +126,20 @@ pre.programlisting, pre.screen, pre.literal-block {
 	margin: 1em 1em 1em 2em;
 }
 
+pre code {
+  display:block;
+  overflow:auto;white-space:pre;/* <- css3 */
+  white-space:0;/* <- ff */
+  font-size:12px;
+  font-family:"Courier New", Courier, "Lucida Console", Monaco, "DejaVu Sans Mono", "Nimbus Mono L", "Bitstream Vera Sans Mono";
+	background-color:#E0E0E0;
+  padding:.4em;
+  padding-top:0.2em;padding-bottom:0.6em;/* <- one line pre with scroll bar visible */
+	margin: 0em 1em 1em 0em;
+}
+
+
+
 pre{width:80%;overflow:auto;padding:.8em;margin:1em 0;}
 
 /* Fixed IE bug: one line pre with scrollbar, visible zone is too small */

@@ -1,0 +1,80 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Git权威指南——操作回放</title>
+<% css_files.each do |t| %>
+<LINK rel="stylesheet" href="<%= t %>" type="text/css">
+<% end %>
+</head>
+<body>
+<div class='document'>
+
+<h1 class="title">《Git权威指南》</h1>
+<h2 class="subtitle" id="id1">操作回放</h2>
+<table class="docinfo" frame="void" rules="none">
+<col class="docinfo-name" />
+<col class="docinfo-content" />
+<tbody valign="top">
+<tr class="field"><th class="docinfo-name">作者:</th><td class="field-body"><a class="reference external" href="http://weibo.com/gotgit/">@gotgit</a></td>
+
+</tr>
+<tr class="field"><th class="docinfo-name">网址:</th><td class="field-body"><a class="reference external" href="http://www.ossxp.com/GotGit">http://www.ossxp.com/GotGit/</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">版本:</th><td class="field-body">0.1</td>
+</tr>
+<tr class="field"><th class="docinfo-name">日期:</th><td class="field-body"><%= compile_time %></td>
+</tr>
+<tr class="field"><th class="docinfo-name">版权信息:</th><td class="field-body"><a class="reference external" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons" src="html/inc/cc-icon.png" /></a></td>
+</tr>
+</tbody>
+
+</table>
+
+<p>点击下面相应的链接通过Web网页观看操作回放。网页回放技术来自于 <a href="http://encryptio.com/code/jsttyplay">jsttyplay</a>。
+<p>如需要更好的控制回复的速度、暂停等，请使用 <a href="http://0xcc.net/ttyrec/">ttyplay (Linux)</a>, <a href="http://angband.pl/termrec.html">termrec (Windows)</a> 等软件回放扩展名为 ".ttyrec" 的文件。
+<p>您也可以使用 <a href="http://en.wikipedia.org/wiki/Ttyrec">ttyrec</a> 软件录制自己的回放，保存在 html 目录之外的任意目录下，然后执行 "rake" 命令，自动将新增回放放入本页面中。
+<p>从版本库 <a href="https://github.com/ossxp-com/gotgit-refs/">git://github.com/ossxp-com/gotgit-refs.git</a> 克隆并创建您自己的分支，与大家分享。
+
+<%
+parts = { '1' => '第1篇：初识Git',
+          '2' => '第2篇：Git独奏',
+          '3' => '第3篇：Git和声',
+          '4' => '第4篇：Git协同模型',
+          '5' => '第5篇：搭建Git服务器',
+          '6' => '第6篇：迁移到Git',
+          '7' => '第7篇：Git的其他应用',
+          '8' => '第8篇：Git杂谈',
+          '9' => '第9篇：附录',
+          'others'=> '其它',
+         }
+%>
+
+<% parts.keys.sort.each do |key| %>
+  <% if ttyrec_list.member?(key) %>
+    <h3><%= parts[key] %></h3>
+    <ul>
+    <% ttyrec_list[key].each do |t| %>
+      <li><a href="<%=   t['html'] %>"><%=   t['title'] %></a>
+    <%  end %>
+    </ul>
+  <% end %>
+<% end %>
+
+<hr>
+
+<h3>资源下载</h3>
+
+<dl>
+<dt>演示版本库1</dt>
+  <dd><a href="https://github.com/ossxp-com/gitdemo-commit-tree/">https://github.com/ossxp-com/gitdemo-commit-tree/</a></dd>
+<dt>演示版本库2 (Hello world)</dt>
+  <dd><a href="https://github.com/ossxp-com/hello-world/">https://github.com/ossxp-com/hello-world/</a></dd>
+<dt>本资料库</dt>
+  <dd><a href="https://github.com/ossxp-com/gotgit-refs/">https://github.com/ossxp-com/gotgit-refs/</a></dd>
+</dl>
+</ul>
+
+</div>
+</body>
+</html>
+
