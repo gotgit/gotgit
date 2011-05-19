@@ -3,6 +3,7 @@
 
 require 'ftools'
 require 'erb'
+require 'rubygems'
 
 ABS_CSS_FILE        = File.expand_path('html/inc/tty.css')
 ABS_JS_FILE         = File.expand_path('html/inc/showtty.js')
