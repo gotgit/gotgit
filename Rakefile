@@ -57,13 +57,13 @@ task :html => [:html_chunks, :html_screencast, :html_index, :html_errata]
 task :html_chunks do
   FileList["html/**/*.json"].each do |t|
     title = File.basename(t).sub(/\.[^.]+$/, '')
-    html_file = File.expand_path(t.sub(/\.[^.]+$/, '.html'))
-    json_file = rel_path(html_file, File.expand_path(t))
-    css_files = [ rel_path(html_file, ABS_CSS_FILE),
-                  rel_path(html_file, ABS_CSS_COMMON_FILE) ]
-    js_file = rel_path(html_file, ABS_JS_FILE)
-    unless uptodate?(html_file, TTYPLAY_TMPL)
-      File.open(html_file, "w") do |file|
+    output_file = File.expand_path(t.sub(/\.[^.]+$/, '.html'))
+    json_file = rel_path(output_file, File.expand_path(t))
+    css_files = [ rel_path(output_file, ABS_CSS_FILE),
+                  rel_path(output_file, ABS_CSS_COMMON_FILE) ]
+    js_file = rel_path(output_file, ABS_JS_FILE)
+    unless uptodate?(output_file, TTYPLAY_TMPL)
+      File.open(output_file, "w") do |file|
         template = ERB.new(File.read(TTYPLAY_TMPL))
         file.puts template.result(binding)
       end
@@ -72,27 +72,27 @@ task :html_chunks do
 end
 
 task :html_screencast => [:html_chunks] do
-  html_file = SCAST_HTML
+  output_file = SCAST_HTML
   ttyrec_list = {}
-  css_files = [rel_path(html_file, ABS_CSS_COMMON_FILE)]
+  css_files = [rel_path(output_file, ABS_CSS_COMMON_FILE)]
   compile_time = Time.now.strftime("%Y/%m/%d %H:%M:%S")
   FileList["html/**/*.json"].each do |t|
     title = File.basename(t).sub(/\.[^.]+$/, '')
     part = t.sub(/.*\/part([0-9]+)\/.*$/, '\1')
     part = 'others' unless part =~ /^[0-9]+$/
-    html_file = rel_path(html_file, File.expand_path(t.sub(/\.[^.]+$/, '.html')))
+    html_file = rel_path(output_file, File.expand_path(t.sub(/\.[^.]+$/, '.html')))
     ttyrec_list[part] = [] unless ttyrec_list.member?(part)
     ttyrec_list[part].push( { 'title' => title, 'html' => html_file } )
   end
-  unless uptodate?(html_file, SCAST_TMPL)
-    File.open(html_file, "w") do |file|
+  unless uptodate?(output_file, SCAST_TMPL)
+    File.open(output_file, "w") do |file|
       template = ERB.new(File.read(SCAST_TMPL))
       file.puts template.result(binding)
     end
   end
 end
 
-def mkd2html title, subtitle, mkd_file, tmpl_file, html_file
+def mkd2html title, subtitle, mkd_file, tmpl_file, output_file
   begin
     require 'redcarpet'
   rescue Exception
@@ -103,9 +103,9 @@ def mkd2html title, subtitle, mkd_file, tmpl_file, html_file
     exit 1
   end
   compile_time = Time.now.strftime("%Y/%m/%d %H:%M:%S")
-  css_files = [rel_path(html_file, ABS_CSS_COMMON_FILE)]
+  css_files = [rel_path(output_file, ABS_CSS_COMMON_FILE)]
   markdown = Redcarpet.new(File.open(mkd_file).read).to_html
-  File.open(html_file, "w") do |file|
+  File.open(output_file, "w") do |file|
     template = ERB.new(File.read(tmpl_file))
     file.puts template.result(binding)
   end
