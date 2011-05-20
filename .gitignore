@@ -1,0 +1,7 @@
+ttyrec/
+jsttyplay/
+html/inc/
+html/templates/
+.gitignore
+Rakefile
+*.mkd
