@@ -1,0 +1,27 @@
+From ec9b0159d6b09fd283b6bf603aa9a4677b041bc6 Mon Sep 17 00:00:00 2001
+From: Jiang Xin <jiangxin@ossxp.com>
+Date: Fri, 20 May 2011 11:03:02 +0800
+Subject: [PATCH 2/4] Fixed Windows IE6 compatibility issue.
+
+Use span instead of pre, because on IE6 pre element can not set
+display = inline, but is set to inline-table instead.
+---
+ html/showtty.js |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/html/showtty.js b/html/showtty.js
+index 096af2c..2431603 100644
+--- a/html/showtty.js
++++ b/html/showtty.js
+@@ -22,7 +22,7 @@ var makeTable = function (width, height) {
+         row.style.wordSpacing = '0';
+         row.style.height = '1.2em';
+         for (var i = 1; i <= width; i++) {
+-            var charelem = document.createElement("pre");
++            var charelem = document.createElement("span");
+             charelem.style.backgroundColor = '#000';
+             charelem.style.color = '#FFF';
+             charelem.style.display = 'inline';
+-- 
+1.7.5.dirty
+

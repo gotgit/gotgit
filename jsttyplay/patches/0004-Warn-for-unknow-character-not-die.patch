@@ -1,0 +1,26 @@
+From e6315ea6ff9d45082cbefd750a3bae83dc53c1d1 Mon Sep 17 00:00:00 2001
+From: Jiang Xin <jiangxin@ossxp.com>
+Date: Fri, 20 May 2011 11:11:25 +0800
+Subject: [PATCH 4/4] Warn for unknow character, not die.
+
+---
+ Term/Emulator/Parser.pm |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/Term/Emulator/Parser.pm b/Term/Emulator/Parser.pm
+index 834cf2b..9c412bf 100644
+--- a/Term/Emulator/Parser.pm
++++ b/Term/Emulator/Parser.pm
+@@ -613,7 +613,8 @@ sub parse_char {
+         # ignore
+ 
+     } else {
+-        die ord $char;
++        # die ord $char;
++        warn "Bad character ". ord $char;
+     }
+ 
+     $self->assert;
+-- 
+1.7.5.dirty
+

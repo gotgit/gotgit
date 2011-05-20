@@ -1,0 +1,94 @@
+From 75d315499ce67ad4eff72d1645266179ab5252fc Mon Sep 17 00:00:00 2001
+From: Jiang Xin <jiangxin@ossxp.com>
+Date: Fri, 20 May 2011 11:07:40 +0800
+Subject: [PATCH 3/4] Add css stylesheet support.
+
+---
+ html/showtty.js |   18 ++++--------------
+ html/test.html  |    1 +
+ html/tty.css    |   29 +++++++++++++++++++++++++++++
+ 3 files changed, 34 insertions(+), 14 deletions(-)
+ create mode 100644 html/tty.css
+
+diff --git a/html/showtty.js b/html/showtty.js
+index 2431603..dd70763 100644
+--- a/html/showtty.js
++++ b/html/showtty.js
+@@ -14,23 +14,13 @@ var makeTable = function (width, height) {
+     var table = document.createElement("div");
+     var arr = [];
+     for (var j = 1; j <= height; j++) {
+-        var row = document.createElement("div");
++        var row = Element('div');
+         var arrrow = [];
+-        row.style.fontFamily = '"ProFont", "Luxi Mono", "Monaco", "Courier", "Courier new", monospace';
+-        row.style.margin = '0';
+-        row.style.padding = '0';
+-        row.style.wordSpacing = '0';
+-        row.style.height = '1.2em';
++        row.addClassName('row');
+         for (var i = 1; i <= width; i++) {
+-            var charelem = document.createElement("span");
+-            charelem.style.backgroundColor = '#000';
+-            charelem.style.color = '#FFF';
++            var charelem = Element('span');
++            charelem.addClassName('charelem');
+             charelem.style.display = 'inline';
+-            charelem.style.fontWeight = 'normal';
+-            charelem.style.textDecoration = 'none';
+-            charelem.style.letterSpacing = '0';
+-            charelem.style.margin = '0';
+-            charelem.style.padding = '0 0 0.2em 0';
+             charelem.appendChild(document.createTextNode(" "));
+             row.appendChild(charelem);
+             arrrow.push(charelem);
+diff --git a/html/test.html b/html/test.html
+index 51eb105..6958ba3 100644
+--- a/html/test.html
++++ b/html/test.html
+@@ -2,6 +2,7 @@
+ <head>
+ <script src="prototype.js"></script>
+ <script src="showtty.js"></script>
++<LINK rel="stylesheet" href="tty.css" type="text/css">
+ </head>
+ <body>
+ <div id="tty">A TTY recording is here. Enabling javascript will allow you to view it.</div>
+diff --git a/html/tty.css b/html/tty.css
+new file mode 100644
+index 0000000..e99b261
+--- /dev/null
++++ b/html/tty.css
+@@ -0,0 +1,29 @@
++div#tty
++{
++  background: #000;
++  margin: 1em 0.2em 1em 0.2em;
++  padding: 0.5em 0.2em 0.5em 0.2em;
++}
++
++div.row
++{
++  font-family: "Lucida Console", "DejaVu Sans Mono", "Nimbus Mono L", "Bitstream Vera Sans Mono", "ProFont", "Luxi Mono", "Monaco", "Courier", "Courier new", monospace;
++  margin: 0;
++  padding: 0;
++  word-spacing: 0;
++  height: 1.2em;
++}
++
++span.charelem
++{
++  background: #000;
++  color: #FFF;
++  margin: 0;
++  padding: 0 0 0.2em 0;
++  font-weight: normal;
++  font-size: 1em;
++  text-decoration: none;
++  letter-spacing: 0;
++  display: inline;
++  overflow:auto;white-space:pre;/* <- css3 */
++}
+-- 
+1.7.5.dirty
+
