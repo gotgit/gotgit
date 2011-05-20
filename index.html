@@ -22,7 +22,7 @@
 </tr>
 <tr class="field"><th class="docinfo-name">版本:</th><td class="field-body">0.1</td>
 </tr>
-<tr class="field"><th class="docinfo-name">日期:</th><td class="field-body">2011/05/19 18:19:49</td>
+<tr class="field"><th class="docinfo-name">日期:</th><td class="field-body">2011/05/20 12:40:07</td>
 </tr>
 <tr class="field"><th class="docinfo-name">版权信息:</th><td class="field-body"><a class="reference external" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons" src="html/inc/cc-icon.png" /></a></td>
 </tr>
@@ -36,8 +36,8 @@
 <a href="http://www.ossxp.com/">北京群英汇信息技术有限公司</a> 
 高级顾问 <a href="http://weibo.com/gotgit/">蒋鑫</a>。
 注意本书是原创，不是翻译的哦。写作本书的动机：
-2010年底，公司业务比较清淡，我想：“趁着过年前的无所事事，
-写点东西吧”，结果越写越多，最终成了这本有600页的书。</p>
+2010年底，公司业务比较清淡，于是想：“趁着过年前的无所事事，
+写点东西吧”，结果越写越多，最终成了这本600页的“大砖头”。</p>
 
 <p>网上能够找到很多Git资料和电子书，包括《<a href="http://book.git-scm.com/">Git社区书</a>》，
 以及《<a href="http://progit.org/book/">ProGit</a>》等，都是非常好、非常系统的教程，
@@ -47,23 +47,23 @@
 <ul>
 <li><p>降低跨越的难度。<br>
 我曾经因为Git的古怪而放弃Git，改用Mercurial(Hg)。
-因此一本成功的Git书要兼顾拥有使用其他版本控制工具使用经验的用户，
-照顾到他们的使用习惯和需求。</p></li>
+因此一本成功的Git书要兼顾版本控制老用户的体验，
+即要照顾到那些拥有其他版本控制工具使用经验的用户的使用习惯和需求。</p></li>
 <li><p>独特的讲故事的方式。<br>
 我有着自己讲故事的方式，这是我多年来为不同公司做 Subversion 和 Git 
 培训和技术支持所积累的经验。
-（顺便说一句，书出了可以继续找我做培训哦，活人可比书有意思多了）。8)</p></li>
+（顺便说一句，书出了可以继续找我做培训哦，面对面的交流可比读书有意思多了）。8)</p></li>
 <li><p>介绍了众多实用的Git协同模型。<br>
 是什么将我由Mercurial拉回Git的呢？是Topgit，
 一个对Git特性分支管理做了封装的上层工具。
 我对这款工具感触良多，而且也透彻的研究和改造了这一工具，
 相信我们在开源软件定制开发中用到的这一独特的Git协同模式也同样适用于他人。</p></li>
 <li><p>子模组不堪大任，我找到了更好的多版本库协同模型 —— 来自于Android的Repo。<br>
-在给客户培训Git中发现客户在 Android 驱动开发中的独特开发模式：
+在给客户培训Git过程中，我发现客户在Android驱动开发中采用的独特的开发模式：
 Repo + Gerrit，于是深入其中发现别有洞天。
-我对 Repo 的改造让其有更灵活的应用模型。</p></li>
+我还对 Repo 进行了扩展，以便让其有更广阔的适用范围。</p></li>
 <li><p>改进的 Gitosis 及 Gitolite。<br>
-基于SSH的Git服务器软件，在使用中我们对其做了很多改造，以适合用户的使用习惯。</p></li>
+基于SSH的Git服务器软件，在使用中我们对其做了很多改造，更加符合用户的使用习惯。</p></li>
 <li><p>我开发的一款备份工具 Gistore。<br>
 我为这款工具起的名字来自于这两个单词的组合：Git + Store。
 是用Python开发的以Git为后端的备份工具。
@@ -119,41 +119,52 @@ Git的学习门槛较高，包括我们公司在内的很多企业都将版本�
 <p><strong>冯铃</strong>，清华大学计算机科学与技术系“长江学者”特聘教授</p>
 
 <ul>
-<li><p>Git是当前开源社区最流行的版本控制系统，代表了版本控制的未来。
+<li><p>“Git是当前开源社区最流行的版本控制系统，代表了版本控制的未来。
 每一个有志于计算机编程的学习者都应该学习和掌握这一工具，它不但
 用于追踪编程者的思考过程，还是打开开源软件世界的金钥匙，更可以
 通过版本控制掌握与他人协同工作的技能。本书是一本耐读原创之书，
 因为其涵盖的内容之广足可以让一名程序员在成长的不同阶段都可以从
-中汲取丰富营养。 </p></li>
-<li><p>八卦：冯铃老师给清华的学生开课“计算机程序设计基础”。
-能从软件开发学习的一开始接触版本控制显然是幸运的。
-本书出版正值清华百年校庆之际，这段书评带有我的一点个人色彩，请见谅。</p></li>
+中汲取丰富营养。”</p></li>
+<li><p>八卦：冯铃老师给清华大学计算机系的学生开基础课“计算机程序设计基础”，
+非常希望这本书能让未来软件行业从业者从一开始就接触到最佳版本控制实践。
+本书出版正值清华百年校庆之际，诸事繁忙，若见此书评带有本人个人色彩，
+还请诸位见谅。</p></li>
 </ul>
 
-<h2>相关网址</h2>
+<h2>在线资源</h2>
 
 <ul>
-<li><p>新浪微博<br>
-<a href="http://weibo.com/GotGit">http://weibo.com/GotGit</a></p></li>
-<li><p>本书勘误<br>
-<a href="http://www.ossxp.com/doc/gotgit/">http://www.ossxp.com/doc/gotgit/</a></p></li>
+<li>官方网站<br>
+<a href="http://www.ossxp.com/doc/gotgit/">http://www.ossxp.com/doc/gotgit/</a></li>
 </ul>
-
+<blockquote>
+<p>采用Git方式维护的官方网站，欢迎大家一起参与其中。</p>
+</blockquote>
+<ul>
+<li>新浪微博<br>
+<a href="http://weibo.com/gotgit">http://weibo.com/gotgit</a></li>
+</ul>
+<blockquote>
+<p>欢迎大家通过新浪微博与我交流，有什么意见和建议@我。</p>
+</blockquote>
 <h2>本书勘误</h2>
 
-<p>发现书中的错误了么？想帮助我修正么？在 Github 上利用fork的功能在您的名下建立本版本库的一个分支版本库，
-然后把你发现的错误写在 errata.mkd 文件中。当然不要忘了到<a href="http://weibo.com/gotgit/">新浪微博</a>上 @gotgit 。</p>
+<p>发现书中的错误了么？想在修正历史上留下你的名字么？
+通过 Github 上利用Fork功能在您的名下建立本版本库的一个分支版本库，
+然后把你发现的错误写在 errata.mkd 文件中。
+最后不要忘了到<a href="http://weibo.com/gotgit/">新浪微博</a>上@我。</p>
 
-<p>参见：<a href="errata.html">本书勘误</a>。</p>
+<p>访问：<a href="errata.html">本书勘误</a>。</p>
 
 <h2>操作回放</h2>
 
-<p>本书的部分操作，请访问：<a href="screencast.html">《Git权威指南》——操作回放</a>。
+<p>本书的部分操作用 ttyrec 录制，查看请访问：<a href="screencast.html">《Git权威指南》——操作回放</a>。
 读者除了可以看到“活”的操作外，还可以从回放当中复制操作的代码。</p>
 
-<p>如果该网页不存在、无法访问，或者您想向其中添加自己的操作回放，有两种方式：</p>
+<p>如果该网页不存在、无法访问，或是您想在本地回放，或者想在其中添加您自己的操作回放，
+有两种方式：</p>
 
-<p>方式一：你可以从 Github 上克隆本版本库，自行编译。</p>
+<p>方式一：你可以从 Github 上克隆本版本库，编译相关网页。</p>
 
 <ul>
 <li><p>克隆版本库。</p>
@@ -201,7 +212,19 @@ Git的学习门槛较高，包括我们公司在内的很多企业都将版本�
 <li><p>点击检出的页面：<a href="screencast.html">《Git权威指南》——操作回放</a>。</p></li>
 </ul>
 
+<p>如果您自己想把自己录制的操作与他人共享，可以将录制的文件以 &quot;.ttyrec&quot; 扩展名保存到 ttyrec 目录下。
+执行 rake 命令，可以自动生成新的播放页面。</p>
+
 <h2>资源下载</h2>
+
+<ul>
+<li><p>演示版本库1<br>
+<a href="https://github.com/ossxp-com/gitdemo-commit-tree/">https://github.com/ossxp-com/gitdemo-commit-tree/</a></p></li>
+<li><p>演示版本库2 (Hello world)<br>
+<a href="https://github.com/ossxp-com/hello-world/">https://github.com/ossxp-com/hello-world/</a></p></li>
+<li><p>本资料库<br>
+<a href="https://github.com/ossxp-com/gotgit-refs/">https://github.com/ossxp-com/gotgit-refs/</a></p></li>
+</ul>
 
 
 </div>
