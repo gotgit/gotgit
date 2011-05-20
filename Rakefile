@@ -41,7 +41,7 @@ rule( /\.json$/ => [
   abs_name   = File.expand_path(t.name)
   File.makedirs File.dirname abs_name
   puts "parse #{abs_source}"
-  sh "(cd jsttyplay; perl preprocess.pl --size 80x25 #{abs_source} #{abs_name})"
+  sh "(cd jsttyplay; rm -f #{abs_name}; perl preprocess.pl --size 80x25 #{abs_source} #{abs_name})"
 end
 
 FileList["ttyrec/**/*.ttyrec"].each do |t|
