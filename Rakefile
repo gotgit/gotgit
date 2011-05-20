@@ -35,7 +35,7 @@ def rel_path_dir(dir1, dir2)
 end
 
 rule( /\.json$/ => [
-  proc {|tn| tn.sub(/\.[^.]+$/, '.ttyrec').sub(/^html\//, '') }
+  proc {|tn| tn.sub(/\.[^.]+$/, '.ttyrec').sub(/^html\//, 'ttyrec/') }
 ]) do |t|
   abs_source = File.expand_path(t.source)
   abs_name   = File.expand_path(t.name)
@@ -44,8 +44,8 @@ rule( /\.json$/ => [
   sh "(cd jsttyplay; perl preprocess.pl --size 80x25 #{abs_source} #{abs_name})"
 end
 
-FileList["**/*.ttyrec"].exclude(/^html\//).each do |t|
-  json = 'html/' + t.sub(/\.[^.]+$/, '.json')
+FileList["ttyrec/**/*.ttyrec"].each do |t|
+  json = 'html/' + t.sub(/^ttyrec\//, '').sub(/\.[^.]+$/, '.json')
   task :json => json
 end
 

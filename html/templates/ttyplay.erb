@@ -1,5 +1,6 @@
 <html>
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title><%=title %></title>
 <% css_files.each do |t| %>
 <LINK rel="stylesheet" href="<%= t %>" type="text/css">
@@ -10,6 +11,7 @@
 </head>
 <body>
 <div class="document">
+<h2><%=title %></h2>
 <div id="tty">Enable JavaScript to see the animation.</div>
 <script>
 showTTYURL( document.getElementById("tty"), "<%=json_file%>" );
