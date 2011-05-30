@@ -157,7 +157,7 @@
 
 * 克隆版本库。
 
-        $ git clone git://github.com/ossxp-com/gotgit-refs.git
+        $ git clone git://github.com/ossxp-com/gotgit.git
 
 * 确认系统中安装了 ruby 和 perl，并通过 rubygems 安装 redcarpet。
 
@@ -177,7 +177,7 @@
 
 * 克隆版本库。
 
-        $ git clone git://github.com/ossxp-com/gotgit-refs.git
+        $ git clone git://github.com/ossxp-com/gotgit.git
 
 * 添加新的配置，以便获取首次克隆未获取到的远程分支。
 
@@ -223,4 +223,4 @@
     <https://github.com/ossxp-com/hello-world/>
 
   * 本资料库  
-  <https://github.com/ossxp-com/gotgit-refs/>
+  <https://github.com/ossxp-com/gotgit/>
