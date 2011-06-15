@@ -78,6 +78,7 @@ task :html_screencast => [:html_chunks] do
   ttyrec_list = {}
   css_files = [rel_path(output_file, ABS_CSS_COMMON_FILE)]
   compile_time = Time.now.strftime("%Y/%m/%d %H:%M:%S")
+  version = %x[git describe --tags --always].strip.gsub(/^v/, '')
   FileList["html/**/*.json"].each do |t|
     title = File.basename(t).sub(/\.[^.]+$/, '')
     part = t.sub(/.*\/part([0-9]+)\/.*$/, '\1')
@@ -105,6 +106,7 @@ def mkd2html title, subtitle, mkd_file, tmpl_file, output_file
     exit 1
   end
   compile_time = Time.now.strftime("%Y/%m/%d %H:%M:%S")
+  version = %x[git describe --tags --always].strip.gsub(/^v/, '')
   css_files = [rel_path(output_file, ABS_CSS_COMMON_FILE)]
   markdown = Redcarpet.new(File.open(mkd_file).read).to_html
   File.open(output_file, "w") do |file|
