@@ -72,7 +72,11 @@
 
   > 欢迎大家通过新浪微博与我交流，有什么意见和建议@我。
 
-* Github
+
+* 资源下载
+
+  * 代码示例下载  
+    [本地下载](download)
 
   * 演示版本库1  
     <https://github.com/ossxp-com/gitdemo-commit-tree/>
@@ -81,7 +85,7 @@
     <https://github.com/ossxp-com/hello-world/>
 
   * 本资料库  
-  <https://github.com/ossxp-com/gotgit/>
+    <https://github.com/ossxp-com/gotgit/>
 
 <a name="recommends"></a>
 
