@@ -3,10 +3,10 @@
 目录
 
   * <a href="#about">本书介绍</a>
+  * <a href="#resources">在线资源</a>
   * <a href="#recommends">业界评价</a>
   * <a href="#errata">本书勘误</a>
   * <a href="#playback">操作回放</a>
-  * <a href="#resources">在线资源</a>
 
 ----
 
@@ -17,9 +17,7 @@
 《Gi权威指南》一书由机工华章于 2011年6月出版，作者是
 [北京群英汇信息技术有限公司](http://www.ossxp.com/)
 高级顾问 [蒋鑫](http://weibo.com/gotgit/)。
-注意本书是原创，不是翻译的哦。写作本书的动机：
-2010年底，公司业务比较清淡，于是想：“趁着过年前的无所事事，
-写点东西吧”，结果越写越多，最终成了这本600页的“大砖头”。
+注意本书是原创，不是翻译的哦。
 
 网上能够找到很多Git资料和电子书，包括《[Git社区书](http://book.git-scm.com/)》，
 以及《[ProGit](http://progit.org/book/)》等，都是非常好、非常系统的教程，
@@ -54,6 +52,36 @@
   我为这款工具起的名字来自于这两个单词的组合：Git + Store。
   是用Python开发的以Git为后端的备份工具。
   在该工具的开发中，我获得了更多的Git使用经验。
+
+<a name="resources"></a>
+
+## 在线资源
+
+* 官方网站  
+  <http://www.ossxp.com/doc/gotgit/>
+
+  > 采用Git方式维护的官方网站，欢迎大家一起参与其中。
+
+* 新浪微群  
+  <http://q.weibo.com/567527>
+
+  > 关于本书以及相关技术的讨论，还有本书的样章提供下载。
+
+* 作者微博  
+  <http://weibo.com/gotgit>
+
+  > 欢迎大家通过新浪微博与我交流，有什么意见和建议@我。
+
+* Github
+
+  * 演示版本库1  
+    <https://github.com/ossxp-com/gitdemo-commit-tree/>
+
+  * 演示版本库2 (Hello world)  
+    <https://github.com/ossxp-com/hello-world/>
+
+  * 本资料库  
+  <https://github.com/ossxp-com/gotgit/>
 
 <a name="recommends"></a>
 
@@ -121,10 +149,7 @@
 
 **徐继哲**，[哲思社区](http://www.zeuux.org/) 创始人
 
-  * “Git是一款分布式的版本控制系统，它是版本控制系统中的佼佼者，
-  有别于CVS和SVN等集中式版本控制系统，它可以让项目管理更加便捷，
-  可以让研发团队更加高效地协同工作，从而提高软件开发的效率。
-  目前市面上关于Git的书不在少数，但迄今为止，
+  * “目前市面上关于Git的书不在少数，但迄今为止，
   国内外还没有一本书能在广度和深度上达到本书的水平，
   也许在今后相当长的一段时间内也不会有。如果你是一位软件开发者，
   强烈建议你学习并使用Git；如果你要学习Git，本书无疑是你最佳的选择。”
@@ -199,28 +224,3 @@
 
 如果您自己想把自己录制的操作与他人共享，可以将录制的文件以 ".ttyrec" 扩展名保存到 ttyrec 目录下。
 执行 rake 命令，可以自动生成新的播放页面。
-
-<a name="resources"></a>
-
-## 在线资源
-
-* 官方网站  
-  <http://www.ossxp.com/doc/gotgit/>
-
-  > 采用Git方式维护的官方网站，欢迎大家一起参与其中。
-
-* 新浪微博  
-  <http://weibo.com/gotgit>
-
-  > 欢迎大家通过新浪微博与我交流，有什么意见和建议@我。
-
-* Github
-
-  * 演示版本库1  
-    <https://github.com/ossxp-com/gitdemo-commit-tree/>
-
-  * 演示版本库2 (Hello world)  
-    <https://github.com/ossxp-com/hello-world/>
-
-  * 本资料库  
-  <https://github.com/ossxp-com/gotgit/>
