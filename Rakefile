@@ -108,7 +108,7 @@ def mkd2html title, subtitle, mkd_file, tmpl_file, output_file
   compile_time = Time.now.strftime("%Y/%m/%d %H:%M:%S")
   version = %x[git describe --tags --always].strip.gsub(/^v/, '')
   css_files = [rel_path(output_file, ABS_CSS_COMMON_FILE)]
-  markdown = Redcarpet.new(File.open(mkd_file).read).to_html
+  markdown = Redcarpet.new(File.open(mkd_file).read, :tables).to_html
   File.open(output_file, "w") do |file|
     template = ERB.new(File.read(tmpl_file))
     file.puts template.result(binding)

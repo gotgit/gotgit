@@ -78,9 +78,9 @@ p.topic-title {font-weight:bold;font-size:180%;letter-spacing:.05em;line-height:
 
 /* tables */
 table{margin:.5em 0 1em;}
-table td,table th{text-align:left;border-right:1px solid #fff;padding:.4em .8em;}
-table th{background-color:#5e5e5e;color:#fff;text-transform:uppercase;font-weight:bold;border-bottom:1px solid #e8e1c8;}
+table td,table th {border-right:1px solid #fff;padding:.4em .8em;}
 table td{background-color:#eee;}
+table th, thead td {background-color:#5e5e5e;color:#fff;text-transform:uppercase;font-weight:bold;border-bottom:1px solid #e8e1c8;}
 table th a{color:#d6f325;}
 table th a:hover{color:#fff;}
 table tr.even td{background-color:#ddd;}
