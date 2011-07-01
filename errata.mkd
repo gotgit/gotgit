@@ -13,5 +13,6 @@
 |   30 | 倒数第5行                 | 'brew --prefix'/etc/bash\_completion | $ . \`brew --prefix\`/etc/bash\_completion | [#152](http://redmine.ossxp.com/redmine/issues/152)  |
 |   61 | 倒数第11行                | 'git grep'                   | \`git grep\`                 | [#147](http://redmine.ossxp.com/redmine/issues/147)  |
 |   91 | 第8行                     | 'html\_permalink\_text'      | \`html\_permalink\_text\`    | [#149](http://redmine.ossxp.com/redmine/issues/149)  |
+|  144 | 第1行                     | \`$ git rev-parse  A^{tree}  A:      | $ git rev-parse  A^{tree}  A:              | [#153](http://redmine.ossxp.com/redmine/issues/153)  |
 |  323 | 第4行                     | 'tg update'                  | \`tg update\`                | [#150](http://redmine.ossxp.com/redmine/issues/150)  |
 |  516 | 倒数第15行                | oldtag="cat"                 | oldtag=$(cat)                | [#151](http://redmine.ossxp.com/redmine/issues/151)  |
