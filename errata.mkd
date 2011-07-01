@@ -29,3 +29,6 @@
 |    123 | 第10行                    | **What now> 4**              | What now> **4**              | [#154](http://redmine.ossxp.com/redmine/issues/154)  |
 |    123 | 第22,30,38行              | **Add untracked>> N**        | Add untracked>> **N**        | [#154](http://redmine.ossxp.com/redmine/issues/154)  |
 |    124 | 第14行                    | **What now> 1**              | What now> **1**              | [#154](http://redmine.ossxp.com/redmine/issues/154)  |
+|    229 | 第18行                    | **Use (m)odified or (d)eleted file, or (a)bort? d** | Use (m)odified or (d)eleted file, or (a)bort? **d** | [#155](http://redmine.ossxp.com/redmine/issues/155)  |
+|    229 | 第23行                    | **Use (c)reated or (d)eleted file, or (a)bort? c**  | Use (m)odified or (d)eleted file, or (a)bort? **c** | [#155](http://redmine.ossxp.com/redmine/issues/155)  |
+|    229 | 第28行                    | **Use (c)reated or (d)eleted file, or (a)bort? d**  | Use (m)odified or (d)eleted file, or (a)bort? **d** | [#155](http://redmine.ossxp.com/redmine/issues/155)  |
