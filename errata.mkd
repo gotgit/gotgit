@@ -32,3 +32,4 @@
 |    229 | 第18行                    | **Use (m)odified or (d)eleted file, or (a)bort? d** | Use (m)odified or (d)eleted file, or (a)bort? **d** | [#155](http://redmine.ossxp.com/redmine/issues/155)  |
 |    229 | 第23行                    | **Use (c)reated or (d)eleted file, or (a)bort? c**  | Use (m)odified or (d)eleted file, or (a)bort? **c** | [#155](http://redmine.ossxp.com/redmine/issues/155)  |
 |    229 | 第28行                    | **Use (c)reated or (d)eleted file, or (a)bort? d**  | Use (m)odified or (d)eleted file, or (a)bort? **d** | [#155](http://redmine.ossxp.com/redmine/issues/155)  |
+|    236 | 第15行                    | **git name-rev --tags --stdin**  | 说明：向右缩进两个空格   | [#156](http://redmine.ossxp.com/redmine/issues/156)  |
