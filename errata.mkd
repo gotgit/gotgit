@@ -9,32 +9,10 @@
 
 说明：为突出字体加粗，用红色字体显示加粗字体。
 
-### 文字错误
-
 | 页码   | 位置                      | 原文                         | 修正为                       | 缺陷追踪                                             |
 | ------:| ------------------------- | ---------------------------- | ---------------------------- | ---------------------------------------------------- |
 |     30 | 倒数第5,7,11,12行等6处    | 'brew --prefix'              | \`brew --prefix\`            | [#146](http://redmine.ossxp.com/redmine/issues/146)  |
 |     30 | 倒数第5行                 | 'brew --prefix'/etc/bash\_completion | $ **. \`brew --prefix\`/etc/bash\_completion** | [#152](http://redmine.ossxp.com/redmine/issues/152)  |
-|     61 | 倒数第11行                | 'git grep'                   | \`git grep\`                 | [#147](http://redmine.ossxp.com/redmine/issues/147)  |
-|     91 | 第8行                     | 'html\_permalink\_text'      | \`html\_permalink\_text\`    | [#149](http://redmine.ossxp.com/redmine/issues/149)  |
 |    144 | 第1行                     | \`$ git rev-parse  A^{tree}  A:      | $ git rev-parse  A^{tree}  A:                  | [#153](http://redmine.ossxp.com/redmine/issues/153)  |
-|    323 | 第4行                     | 'tg update'                  | \`tg update\`                | [#150](http://redmine.ossxp.com/redmine/issues/150)  |
 |    516 | 倒数第15行                | oldtag="cat"                 | oldtag=\`cat\`               | [#151](http://redmine.ossxp.com/redmine/issues/151)  |
-
-
-### 格式错误
-
-说明：主要是文字加粗，段落缩进等问题。
-
-| 页码   | 位置                      | 原文                         | 修正为                       | 缺陷追踪                                             |
-| ------:| ------------------------- | ---------------------------- | ---------------------------- | ---------------------------------------------------- |
-|    123 | 第10行                    | **What now> 4**              | What now> **4**              | [#154](http://redmine.ossxp.com/redmine/issues/154)  |
-|    123 | 第22,30,38行              | **Add untracked>> N**        | Add untracked>> **N**        | [#154](http://redmine.ossxp.com/redmine/issues/154)  |
-|    124 | 第14行                    | **What now> 1**              | What now> **1**              | [#154](http://redmine.ossxp.com/redmine/issues/154)  |
-|    229 | 第18行                    | **Use (m)odified or (d)eleted file, or (a)bort? d** | Use (m)odified or (d)eleted file, or (a)bort? **d** | [#155](http://redmine.ossxp.com/redmine/issues/155)  |
-|    229 | 第23行                    | **Use (c)reated or (d)eleted file, or (a)bort? c**  | Use (m)odified or (d)eleted file, or (a)bort? **c** | [#155](http://redmine.ossxp.com/redmine/issues/155)  |
-|    229 | 第28行                    | **Use (c)reated or (d)eleted file, or (a)bort? d**  | Use (m)odified or (d)eleted file, or (a)bort? **d** | [#155](http://redmine.ossxp.com/redmine/issues/155)  |
-|    236 | 第15行                    | **git name-rev --tags --stdin**  | 说明：向右缩进两个空格   | [#156](http://redmine.ossxp.com/redmine/issues/156)  |
-|    362 | 第14行                    | $ curl -L -k \\              | $ **curl -L -k \\**          | [#157](http://redmine.ossxp.com/redmine/issues/157)  |
-|    457 | 第7-11行                  | **mysql>**                   | mysql>                       | [#158](http://redmine.ossxp.com/redmine/issues/158)  |
 
