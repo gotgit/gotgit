@@ -3,6 +3,7 @@
 目录
 
   * <a href="#about">本书介绍</a>
+  * <a href="#buy">如何购买</a>
   * <a href="#resources">在线资源</a>
   * <a href="#recommends">业界评价</a>
   * <a href="#errata">本书勘误</a>
@@ -14,10 +15,11 @@
 
 ## 关于本书
 
-《Gi权威指南》一书由机工华章于 2011年6月出版，作者是
+<img src="html/images/gotgit-cover.jpg" width="200" border='1' alt="Git权威指南封面" style="float:left; margin:1em">
+
+《Gi权威指南》一书由机工华章于 2011年6月底出版，作者是
 [北京群英汇信息技术有限公司](http://www.ossxp.com/)
-高级顾问 [蒋鑫](http://weibo.com/gotgit/)。
-注意本书是原创，不是翻译的哦。
+高级顾问 [蒋鑫](http://weibo.com/gotgit/)。 注意本书是原创，不是翻译的哦。
 
 网上能够找到很多Git资料和电子书，包括《[Git社区书](http://book.git-scm.com/)》，
 以及《[ProGit](http://progit.org/book/)》等，都是非常好、非常系统的教程，
@@ -52,6 +54,20 @@
   我为这款工具起的名字来自于这两个单词的组合：Git + Store。
   是用Python开发的以Git为后端的备份工具。
   在该工具的开发中，我获得了更多的Git使用经验。
+
+<a name="buy"></a>
+
+## 如何购买
+
+* China-pub 网上书店  
+  <http://product.china-pub.com/194010>
+
+* 当当网  
+  <http://product.dangdang.com/product.aspx?product_id=21108669>
+
+* 淘宝  
+  <http://www.taobao.com/>
+
 
 <a name="resources"></a>
 
@@ -165,12 +181,16 @@
 
 ## 本书勘误
 
-发现书中的错误了么？想在修正历史上留下你的名字么？
-通过 Github 上利用Fork功能在您的名下建立本版本库的一个分支版本库，
-然后把你发现的错误写在 errata.mkd 文件中。
-最后不要忘了到[新浪微博](http://weibo.com/gotgit/)上@我。
+查看：[本书勘误](errata.html)。
 
-访问：[本书勘误](errata.html)。
+您发现了新的错误么？贡献出来吧，这厢有礼了。Orz
+
+1. 记录您发现的问题。  
+   访问：<http://redmine.ossxp.com/redmine/projects/gotgit> 。
+1. 修改本Git版本库中的勘误表。  
+   版本库地址：<https://github.com/ossxp-com/gotgit/> 。  
+   您的贡献可以使用 Github 的 pull request 方式通知我，或者上[新浪微博](http://weibo.com/gotgit/)@我。
+
 
 <a name="playback"></a>
 
