@@ -3,7 +3,7 @@
 目录
 
   * <a href="#about">本书介绍</a>
-  * <a href="#buy">如何购买</a>
+  * <a href="#bookstore">如何购买</a>
   * <a href="#resources">在线资源</a>
   * <a href="#recommends">业界评价</a>
   * <a href="#errata">本书勘误</a>
@@ -55,7 +55,7 @@
   是用Python开发的以Git为后端的备份工具。
   在该工具的开发中，我获得了更多的Git使用经验。
 
-<a name="buy"></a>
+<a name="bookstore"></a>
 
 ## 如何购买
 
