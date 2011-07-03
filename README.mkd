@@ -59,15 +59,20 @@
 
 ## 如何购买
 
-* China-pub 网上书店  
+* China-pub 互动出版网  
   <http://product.china-pub.com/194010>
 
 * 当当网  
   <http://product.dangdang.com/product.aspx?product_id=21108669>
 
-* 淘宝  
-  <http://www.taobao.com/>
+* 卓越网  
+  <http://www.amazon.cn/> 搜索: Git权威指南
 
+* 北京图书大厦网络书店  
+  <http://www.bjbb.com/bookdetail.aspx?pid=3775188>
+
+* 中关村图书大厦网上书店  
+  <http://www.zgcbb.com/> 搜索: Git权威指南
 
 <a name="resources"></a>
 
