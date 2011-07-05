@@ -68,11 +68,11 @@
 * 卓越网  
   <http://www.amazon.cn/gp/product/B0058FLC40/>
 
-* 北京图书大厦网络书店  
-  <http://www.bjbb.com/bookdetail.aspx?pid=3775188>
-
 * 中关村图书大厦网上书店  
   <http://www.zgcbb.com/detail.aspx?bid=760959>
+
+* 北京图书大厦网络书店  
+  <http://www.bjbb.com/bookdetail.aspx?pid=3775188>
 
 <a name="resources"></a>
 
