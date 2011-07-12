@@ -17,7 +17,7 @@
 
 <img src="html/images/gotgit-cover.jpg" width="200" border='1' alt="Git权威指南封面" style="float:left; margin:1em">
 
-《Gi权威指南》一书由机工华章于 2011年6月底出版，作者是
+《Git权威指南》一书由机工华章于 2011年6月底出版，作者是
 [北京群英汇信息技术有限公司](http://www.ossxp.com/)
 高级顾问 [蒋鑫](http://weibo.com/gotgit/)。 注意本书是原创，不是翻译的哦。
 
