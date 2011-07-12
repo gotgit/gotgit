@@ -16,6 +16,17 @@ SCAST_HTML            = File.expand_path('screencast.html')
 INDEX_HTML            = File.expand_path('index.html')
 ERRATA_HTML           = File.expand_path('errata.html')
 
+class ArgsBinding
+  def initialize(args)
+    args.keys.each do |key|
+      eval("@%s=%s" % [key, args[key].inspect])
+    end
+  end
+  def get_binding
+    return binding()
+  end
+end
+
 def strip_common_dir(path1, path2)
   if path1+"\t"+path2 =~ %r{^(.*/)(.*?)\t\1(.*)$}
     path1, path2 = $2, $3
@@ -95,7 +106,7 @@ task :html_screencast => [:html_chunks] do
   end
 end
 
-def mkd2html title, subtitle, mkd_file, tmpl_file, output_file
+def mkd2html args
   begin
     require 'redcarpet'
   rescue Exception
@@ -105,26 +116,35 @@ def mkd2html title, subtitle, mkd_file, tmpl_file, output_file
     $stderr.puts ""
     exit 1
   end
-  compile_time = Time.now.strftime("%Y/%m/%d %H:%M:%S")
-  version = %x[git describe --tags --always].strip.gsub(/^v/, '')
-  css_files = [rel_path(output_file, ABS_CSS_COMMON_FILE)]
-  markdown = Redcarpet.new(File.open(mkd_file).read, :tables).to_html
-  File.open(output_file, "w") do |file|
-    template = ERB.new(File.read(tmpl_file))
-    file.puts template.result(binding)
+  if not args.key? :source or not args.key? :template or not args.key? :output or not args.key? :title
+    raise "Incomplete arguments for mkd2html"
+  end
+  args[:subtitle] = '' if not args.key? :subtitle
+  args[:compile_time] = Time.now.strftime("%Y/%m/%d %H:%M:%S") if not args.key? :compile_time
+  args[:version] = %x[git describe --tags --always].strip.gsub(/^v/, '') if not args.key? :version
+  args[:css_files] = [rel_path(args[:output], ABS_CSS_COMMON_FILE)]
+  if args.key? :extra_css
+    args[:extra_css].each do |f|
+      args[:css_files] << rel_path(args[:output], File.expand_path(f))
+    end
+  end
+  args[:markdown] = Redcarpet.new(File.open(args[:source]).read, :tables).to_html
+  File.open(args[:output], "w") do |file|
+    template = ERB.new(File.read(args[:template]))
+    file.puts template.result(ArgsBinding.new(args).get_binding)
   end
 end
 
+
 file :html_index => ['README.mkd', INDEX_TMPL] do |t|
-  title = "《Git权威指南》"
-  subtitle = "参考资料"
-  mkd2html title, subtitle, t.prerequisites[0], t.prerequisites[1], INDEX_HTML
+  mkd2html :title => "《Git权威指南》", :subtitle => "参考资料",
+           :source => t.prerequisites[0], :template => t.prerequisites[1], :output => INDEX_HTML
 end
 
 file :html_errata => ['errata.mkd', INDEX_TMPL] do |t|
-  title = "《Git权威指南》"
-  subtitle = "勘误"
-  mkd2html title, subtitle, t.prerequisites[0], t.prerequisites[1], ERRATA_HTML
+  mkd2html :title => "《Git权威指南》", :subtitle => "勘误",
+           :source => t.prerequisites[0], :template => t.prerequisites[1], :output => ERRATA_HTML,
+           :extra_css => ['html/inc/errata.css']
 end
 
 desc 'clean *.json and *.html files'

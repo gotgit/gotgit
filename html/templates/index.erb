@@ -1,16 +1,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title><%= title %><% unless subtitle.empty? then %> —— <% end %><%= subtitle %></title>
-<% css_files.each do |t| %>
+<title><%= @title %><% unless @subtitle.empty? then %> —— <% end %><%= @subtitle %></title>
+<% @css_files.each do |t| %>
 <LINK rel="stylesheet" href="<%= t %>" type="text/css">
 <% end %>
 </head>
 <body>
 <div class='document'>
 
-<h1 class="title"><%= title %></h1>
-<h2 class="subtitle" id="id1"><%= subtitle %></h2>
+<h1 class="title"><%= @title %></h1>
+<h2 class="subtitle" id="id1"><%= @subtitle %></h2>
 <table class="docinfo" frame="void" rules="none">
 <col class="docinfo-name" />
 <col class="docinfo-content" />
@@ -20,9 +20,9 @@
 </tr>
 <tr class="field"><th class="docinfo-name">网址:</th><td class="field-body"><a class="reference external" href="http://www.ossxp.com/doc/gotgit/">http://www.ossxp.com/doc/gotgit/</a></td>
 </tr>
-<tr class="field"><th class="docinfo-name">版本:</th><td class="field-body"><%= version %></td>
+<tr class="field"><th class="docinfo-name">版本:</th><td class="field-body"><%= @version %></td>
 </tr>
-<tr class="field"><th class="docinfo-name">日期:</th><td class="field-body"><%= compile_time %></td>
+<tr class="field"><th class="docinfo-name">日期:</th><td class="field-body"><%= @compile_time %></td>
 </tr>
 <tr class="field"><th class="docinfo-name">版权信息:</th><td class="field-body"><a class="reference external" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons" src="html/inc/cc-icon.png" /></a></td>
 </tr>
@@ -30,7 +30,7 @@
 
 </table>
 
-<%= markdown %>
+<%= @markdown %>
 
 </div>
 </body>
