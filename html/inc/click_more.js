@@ -1,7 +1,13 @@
-/*
- * click_more.js
- * Copyright 2011, Jiang Xin
- */
+// ==UserScript==
+// @name           Click more for toggle
+// @namespace      gotgit 
+// @description    Add a toogle effect at the location where anchor with a click-more css.
+// @include        http://www.ossxp.com/doc/gotgit/demo*
+// @require        http://code.jquery.com/jquery-1.6.2.min.js
+// ==/UserScript==
+
+// Host on https://gist.github.com/1084591
+// Copyright 2011, Jiang Xin
 
 $(function(){
 

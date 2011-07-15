@@ -14,6 +14,7 @@ SCAST_TMPL            = File.expand_path('html/templates/scast.erb')
 INDEX_TMPL            = File.expand_path('html/templates/index.erb')
 SCAST_HTML            = File.expand_path('screencast.html')
 INDEX_HTML            = File.expand_path('index.html')
+DEMO_INDEX_HTML       = File.expand_path('demo_index.html')
 ERRATA_HTML           = File.expand_path('errata.html')
 
 class ArgsBinding
@@ -154,6 +155,9 @@ file :html_index => ['README.mkd', INDEX_TMPL] do |t|
   mkd2html :title => "《Git权威指南》", :subtitle => "参考资料",
            :source => t.prerequisites[0], :template => t.prerequisites[1], :output => INDEX_HTML,
            :extra_js => ['html/inc/jquery-1.6.2.min.js', 'html/inc/click_more.js']
+
+  mkd2html :title => "《Git权威指南》", :subtitle => "参考资料",
+           :source => t.prerequisites[0], :template => t.prerequisites[1], :output => DEMO_INDEX_HTML
 end
 
 file :html_errata => ['errata.mkd', INDEX_TMPL] do |t|
