@@ -159,3 +159,21 @@ td img{border:0;margin:0;}
 p img{border:0;margin:0;margin-bottom:-5px;}
 hr{color:#b4aca1;background-color:#b4aca1;border-bottom:1px solid #f6f4eb;}
 small{font-size:80%;}
+
+.click-more-button-opened, .click-more-button-closed {
+  text-align:left;
+  padding: 0.5em 1em 0.5em 1em;
+  margin: 0.5em 2em 0.5em 2em;
+}
+
+.click-more-button-opened {
+  background-color:#F5F5F5;
+  font-size:110%;
+  color:red;
+}
+
+.click-more-button-closed {
+  background-color:#FFFFCC;
+  font-size:110%;
+  color:blue;
+}

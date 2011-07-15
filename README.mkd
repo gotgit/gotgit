@@ -62,17 +62,26 @@
 * China-pub 互动出版网  
   <http://product.china-pub.com/194010>
 
-* 当当网  
-  <http://product.dangdang.com/product.aspx?product_id=21108669>
-
 * 卓越网  
   <http://www.amazon.cn/gp/product/B0058FLC40/>
+
+<a class="click-more"></a>
 
 * 中关村图书大厦网上书店  
   <http://www.zgcbb.com/detail.aspx?bid=760959>
 
+* 广购书城：广州购书中心网上书店  
+  <http://www.gg1994.com/Product.do?id=1120692>
+
 * 北京图书大厦网络书店  
   <http://www.bjbb.com/bookdetail.aspx?pid=3775188>
+
+* 当当网（暂未上架）  
+  <del><http://product.dangdang.com/product.aspx?product_id=21108669></del>
+
+* 京东商城（暂未上架）  
+  <del><http://book.360buy.com/10697183.html></del>
+
 
 <a name="resources"></a>
 
@@ -93,6 +102,7 @@
 
   > 欢迎大家通过新浪微博与我交流，有什么意见和建议@我。
 
+<a class="click-more"></a>
 
 * 资源下载
 
@@ -209,6 +219,8 @@
 
 方式一：你可以从 Github 上克隆本版本库，编译相关网页。
 
+<a class="click-more"></a>
+
 * 克隆版本库。
 
         $ git clone git://github.com/ossxp-com/gotgit.git
@@ -228,6 +240,8 @@
 > 如果您的系统上缺乏相应的工具软件而无法成功编译，
   在版本库中实际上保存了一份已经编译好的文件，可以通过Git下载，
   并检出到工作区。
+
+<a class="click-more"></a>
 
 * 克隆版本库。
 
@@ -253,3 +267,4 @@
 
 如果您自己想把自己录制的操作与他人共享，可以将录制的文件以 ".ttyrec" 扩展名保存到 ttyrec 目录下。
 执行 rake 命令，可以自动生成新的播放页面。
+

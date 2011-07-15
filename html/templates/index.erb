@@ -2,6 +2,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title><%= @title %><% unless @subtitle.empty? then %> —— <% end %><%= @subtitle %></title>
+<% @js_files.each do |t| %>
+<script src="<%= t %>"></script>
+<% end %>
 <% @css_files.each do |t| %>
 <LINK rel="stylesheet" href="<%= t %>" type="text/css">
 <% end %>

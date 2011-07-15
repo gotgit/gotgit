@@ -123,9 +123,23 @@ def mkd2html args
   args[:compile_time] = Time.now.strftime("%Y/%m/%d %H:%M:%S") if not args.key? :compile_time
   args[:version] = %x[git describe --tags --always].strip.gsub(/^v/, '') if not args.key? :version
   args[:css_files] = [rel_path(args[:output], ABS_CSS_COMMON_FILE)]
+  args[:js_files] = []
   if args.key? :extra_css
     args[:extra_css].each do |f|
-      args[:css_files] << rel_path(args[:output], File.expand_path(f))
+      if f =~ /http:\/\//
+        args[:css_files] << f
+      else
+        args[:css_files] << rel_path(args[:output], File.expand_path(f))
+      end
+    end
+  end
+  if args.key? :extra_js
+    args[:extra_js].each do |f|
+      if f =~ /http:\/\//
+        args[:js_files] << f
+      else
+        args[:js_files] << rel_path(args[:output], File.expand_path(f))
+      end
     end
   end
   args[:markdown] = Redcarpet.new(File.open(args[:source]).read, :tables).to_html
@@ -138,13 +152,15 @@ end
 
 file :html_index => ['README.mkd', INDEX_TMPL] do |t|
   mkd2html :title => "《Git权威指南》", :subtitle => "参考资料",
-           :source => t.prerequisites[0], :template => t.prerequisites[1], :output => INDEX_HTML
+           :source => t.prerequisites[0], :template => t.prerequisites[1], :output => INDEX_HTML,
+           :extra_js => ['html/inc/jquery-1.6.2.min.js', 'html/inc/click_more.js']
 end
 
 file :html_errata => ['errata.mkd', INDEX_TMPL] do |t|
   mkd2html :title => "《Git权威指南》", :subtitle => "勘误",
            :source => t.prerequisites[0], :template => t.prerequisites[1], :output => ERRATA_HTML,
-           :extra_css => ['html/inc/errata.css']
+           :extra_css => ['html/inc/errata.css'],
+           :extra_js => ['html/inc/jquery-1.6.2.min.js', 'html/inc/click_more.js']
 end
 
 desc 'clean *.json and *.html files'
