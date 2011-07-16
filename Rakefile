@@ -65,7 +65,7 @@ desc 'compile ttyrec files to json files'
 task :json
 
 desc 'create index.html and other html files for ttyplay.'
-task :html => [:html_chunks, :html_screencast, :html_index, :html_errata]
+task :html => [:html_chunks, :html_screencast, INDEX_HTML, ERRATA_HTML]
 
 task :html_chunks do
   FileList["html/**/*.json"].each do |t|
@@ -148,10 +148,11 @@ def mkd2html args
     template = ERB.new(File.read(args[:template]))
     file.puts template.result(ArgsBinding.new(args).get_binding)
   end
+  puts "built %s from %s" % [args[:output], args[:source]]
 end
 
 
-file :html_index => ['README.mkd', INDEX_TMPL] do |t|
+file INDEX_HTML => ['README.mkd', INDEX_TMPL] do |t|
   mkd2html :title => "《Git权威指南》", :subtitle => "参考资料",
            :source => t.prerequisites[0], :template => t.prerequisites[1], :output => INDEX_HTML,
            :extra_js => ['html/inc/jquery-1.6.2.min.js', 'html/inc/click_more.js']
@@ -160,7 +161,7 @@ file :html_index => ['README.mkd', INDEX_TMPL] do |t|
            :source => t.prerequisites[0], :template => t.prerequisites[1], :output => DEMO_INDEX_HTML
 end
 
-file :html_errata => ['errata.mkd', INDEX_TMPL] do |t|
+file ERRATA_HTML => ['errata.mkd', INDEX_TMPL] do |t|
   mkd2html :title => "《Git权威指南》", :subtitle => "勘误",
            :source => t.prerequisites[0], :template => t.prerequisites[1], :output => ERRATA_HTML,
            :extra_css => ['html/inc/errata.css'],
