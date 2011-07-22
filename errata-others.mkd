@@ -1,9 +1,7 @@
 
 ## 缺陷跟踪
 
-访问 [缺陷追踪系统](http://redmine.ossxp.com/redmine/projects/gotgit/issues/new) ，报告本书中的错误，会在下次印刷时纠正。地址：
-
-* <http://redmine.ossxp.com/redmine/projects/gotgit/issues/new>
+访问 [缺陷追踪系统（Github）](https://github.com/ossxp-com/gotgit/issues/new) 或 [缺陷追踪系统（Redmine）](http://redmine.ossxp.com/redmine/projects/gotgit/issues/new) ，报告本书中的错误，会在下次印刷时纠正。
 
 ## 勘误表
 

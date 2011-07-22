@@ -1,9 +1,7 @@
 
 ## 缺陷跟踪
 
-访问 [缺陷追踪系统](http://redmine.ossxp.com/redmine/projects/gotgit/issues/new) ，报告本书中的错误，会在下次印刷时纠正。地址：
-
-* <http://redmine.ossxp.com/redmine/projects/gotgit/issues/new>
+访问 [缺陷追踪系统（Github）](https://github.com/ossxp-com/gotgit/issues/new) 或 [缺陷追踪系统（Redmine）](http://redmine.ossxp.com/redmine/projects/gotgit/issues/new) ，报告本书中的错误，会在下次印刷时纠正。
 
 ## 勘误表
 
@@ -13,6 +11,7 @@
 | ------:| ------------------------- | ---------------------------- | ---------------------------- | ---------------------------------------------------- |
 |     30 | 倒数第5,7,11,12行等6处    | 'brew --prefix'              | \`brew --prefix\`            | [#146](http://redmine.ossxp.com/redmine/issues/146)  |
 |     30 | 倒数第5行                 | 'brew --prefix'/etc/bash\_completion | $ **. \`brew --prefix\`/etc/bash\_completion** | [#152](http://redmine.ossxp.com/redmine/issues/152)  |
+|     66 | 倒数第11行                | Author（提交者）             |  Author（作者）              | [Github#2](http://github.com/ossxp-com/gotgit/issues/2)    |
 |    144 | 第1行                     | \`$ git rev-parse  A^{tree}  A:      | $ git rev-parse  A^{tree}  A:                  | [#153](http://redmine.ossxp.com/redmine/issues/153)  |
 |    516 | 倒数第15行                | oldtag="cat"                 | oldtag=\`cat\`               | [#151](http://redmine.ossxp.com/redmine/issues/151)  |
 
