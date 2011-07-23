@@ -65,6 +65,9 @@
 * 卓越网  
   <http://www.amazon.cn/gp/product/B0058FLC40/>
 
+* 当当网  
+  <http://product.dangdang.com/product.aspx?product_id=21108669>
+
 * 中关村图书大厦网上书店  
   <http://www.zgcbb.com/detail.aspx?bid=760959>
 
@@ -75,9 +78,6 @@
 
 * 北京图书大厦网络书店  
   <http://www.bjbb.com/bookdetail.aspx?pid=3775188>
-
-* 当当网（暂未上架）  
-  <del><http://product.dangdang.com/product.aspx?product_id=21108669></del>
 
 * 京东商城（暂未上架）  
   <del><http://book.360buy.com/10697183.html></del>
