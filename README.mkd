@@ -3,6 +3,7 @@
 目录
 
   * <a href="#about">本书介绍</a>
+  * <a href="#ebook">样章试读</a>
   * <a href="#bookstore">如何购买</a>
   * <a href="#resources">在线资源</a>
   * <a href="#recommends">业界评价</a>
@@ -54,6 +55,22 @@
   我为这款工具起的名字来自于这两个单词的组合：Git + Store。
   是用Python开发的以Git为后端的备份工具。
   在该工具的开发中，我获得了更多的Git使用经验。
+
+<a name="ebook"></a>
+
+## 样章试读
+
+您可以从下面的网址获取本书部分章节的电子版：
+
+* China-pub 样章试读  
+  <http://www.china-pub.com/computers/common/mianfeisd.asp?id=194010>
+
+* 从新浪微群中的微盘下载  
+  <http://q.weibo.com/567527>
+
+* 作者博客  
+  <http://blog.ossxp.com/tag/gotgit/>
+
 
 <a name="bookstore"></a>
 
