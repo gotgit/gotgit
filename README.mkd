@@ -62,14 +62,11 @@
 
 您可以从下面的网址获取本书部分章节的电子版：
 
-* China-pub 样章试读  
+* 新浪微盘  
+  <http://vdisk.weibo.com/s/qMFt>
+
+* 或 China-pub 样章试读  
   <http://www.china-pub.com/computers/common/mianfeisd.asp?id=194010>
-
-* 从新浪微群中的微盘下载  
-  <http://q.weibo.com/567527>
-
-* 作者博客  
-  <http://blog.ossxp.com/tag/gotgit/>
 
 
 <a name="bookstore"></a>
