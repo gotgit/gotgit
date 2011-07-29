@@ -222,7 +222,7 @@
 您发现了新的错误么？贡献出来吧，这厢有礼了。Orz
 
 1. 记录您发现的问题。  
-   访问：<http://redmine.ossxp.com/redmine/projects/gotgit> 。
+   访问 [缺陷追踪系统（Github）](https://github.com/ossxp-com/gotgit/issues/new) 或 [缺陷追踪系统（Redmine）](http://redmine.ossxp.com/redmine/projects/gotgit/issues/new) 。
 1. 修改本Git版本库中的勘误表。  
    版本库地址：<https://github.com/ossxp-com/gotgit/> 。  
    您的贡献可以使用 Github 的 pull request 方式通知我，或者上[新浪微博](http://weibo.com/gotgit/)@我。
