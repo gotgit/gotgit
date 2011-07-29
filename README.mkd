@@ -209,8 +209,9 @@
   也许在今后相当长的一段时间内也不会有。如果你是一位软件开发者，
   强烈建议你学习并使用Git；如果你要学习Git，本书无疑是你最佳的选择。”
 
-  * 八卦：我也一样地[痛恨招商银行](http://www.zeuux.org/event/content/1/)，
-  招行一卡通专业版不能工作在Linux或者Windows虚拟机中，不思进取，侮辱国人智慧。
+  * 八卦：现在可能要为 [招商银行](http://www.zeuux.org/event/content/1/) 正一下名了，
+  招行一卡通专业版已经可以在Linux或Mac下的Windows虚拟机中通过UKey证书（非文件证书）运行啦，
+  见[招行官方在微博中的回复](http://weibo.com/1687508662/eBU5pDV6bWK)。
 
 <a name="errata"></a>
 
