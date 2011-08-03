@@ -13,5 +13,6 @@
 |     30 | 倒数第5行                 | 'brew --prefix'/etc/bash\_completion | $ **. \`brew --prefix\`/etc/bash\_completion** | [#152](http://redmine.ossxp.com/redmine/issues/152)  |
 |     66 | 倒数第11行                | Author（提交者）             |  Author（作者）              | [Github#2](http://github.com/ossxp-com/gotgit/issues/2)    |
 |    144 | 第1行                     | \`$ git rev-parse  A^{tree}  A:      | $ git rev-parse  A^{tree}  A:                  | [#153](http://redmine.ossxp.com/redmine/issues/153)  |
+|    218 | 第8行                     | 况下，Gits标识出合并冲突，           | 况下，Git标识出合并冲突，                      | [#159](http://redmine.ossxp.com/redmine/issues/159)  |
 |    516 | 倒数第15行                | oldtag="cat"                 | oldtag=\`cat\`               | [#151](http://redmine.ossxp.com/redmine/issues/151)  |
 
