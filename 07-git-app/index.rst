@@ -13,7 +13,7 @@ SpaghettiFS 项目尝试用 Git 作为数据存储后端提供了一个用户空
 目录:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    010-etckeeper
    020-gistore

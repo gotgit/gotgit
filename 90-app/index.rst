@@ -5,7 +5,7 @@
 目录:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    010-git-commands-index
    020-cvs-git-face2face

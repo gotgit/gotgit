@@ -16,7 +16,7 @@ Git和声
 目录:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    010-protocol
    020-conflict

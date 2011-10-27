@@ -10,10 +10,7 @@
 目录:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    010-cvs
-   020-svn
-   030-hg
-   040-others
-   050-git-to-git
+   020-others

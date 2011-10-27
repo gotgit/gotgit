@@ -119,7 +119,7 @@ Git 重置
 用 reflog 挽救错误的重置
 =========================
 
-如果没有记下重置前 master 分支指向的提交ID，想要重置回原来的提交真的是一件麻烦的事情（去对象库中一个一个去找）。幸好 Git 提供了一个挽救机制，通过 `.git/logs` 目录下日志文件记录了分支的变更。默认非裸版本库都提供分支日志功能，这是因为带有工作区的版本库都有如下设置：
+如果没有记下重置前 master 分支指向的提交ID，想要重置回原来的提交真的是一件麻烦的事情（去对象库中一个一个地找）。幸好 Git 提供了一个挽救机制，通过 `.git/logs` 目录下日志文件记录了分支的变更。默认非裸版本库（带有工作区）都提供分支日志功能，这是因为带有工作区的版本库都有如下设置：
 
 ::
 
@@ -212,7 +212,7 @@ Git 提供了一个 `git reflog` 命令，对这个文件进行操作。使用 s
 
 命令格式: git reset [--soft | --mixed | --hard ] [<commit>]
 
-* 使用参数 `--hard` ，如: `git reset --hard <commit>` 。
+* 使用参数 `--hard` ，如： `git reset --hard <commit>` 。
 
   会执行上图中的 1, 2, 3 全部的三个动作。即：
 
@@ -230,23 +230,23 @@ Git 提供了一个 `git reflog` 命令，对这个文件进行操作。使用 s
 
 下面通过一些示例，看一下重置命令的不同用法。
 
-* 命令: git reset
+* 命令： git reset
 
   仅用HEAD指向的目录树重置暂存区，工作区不会受到影响，相当于将之前用 `git add` 命令更新到暂存区的内容撤出暂存区。引用也未改变，因为引用重置到 HEAD 相当于没有重置。
 
-* 命令: git reset HEAD
+* 命令： git reset HEAD
 
   同上。
 
-* 命令: git reset -- filename
+* 命令： git reset -- filename
 
   仅将文件 `filename` 撤出暂存区，暂存区中其他文件不改变。相当于对命令 `git add filename` 的反向操作。
 
-* 命令: git reset HEAD filename
+* 命令： git reset HEAD filename
 
   同上。
 
-* 命令: git reset --soft HEAD^
+* 命令： git reset --soft HEAD^
 
   工作区和暂存区不改变，但是引用向前回退一次。当对最新提交的提交说明或者提交的更改不满意时，撤销最新的提交以便重新提交。
 
@@ -257,15 +257,15 @@ Git 提供了一个 `git reflog` 命令，对这个文件进行操作。使用 s
     $ git reset --soft HEAD^
     $ git commit -e -F .git/COMMIT_EDITMSG 
 
-* 命令: git reset HEAD^
+* 命令： git reset HEAD^
 
   工作区不改变，但是暂存区会回退到上一次提交之前，引用也会回退一次。
 
-* 命令: git reset --mixed HEAD^
+* 命令： git reset --mixed HEAD^
 
   同上。
 
-* 命令: git reset --hard HEAD^
+* 命令： git reset --hard HEAD^
 
   彻底撤销最近的提交。引用回退到前一次，而且工作区和暂存区都会回退到上一次提交的状态。自上一次以来的提交全部丢失。
 

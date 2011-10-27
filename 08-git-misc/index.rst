@@ -10,17 +10,7 @@ Git 有着非常庞杂的命令集和功能，到目前为止尚有一些命令�
 目录:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    010-git-cross-os
-   020-git-charset
-   030-case-insensitive
-   040-eol
    050-git-features
-   060-attributes
-   070-hooks
-   080-templates
-   090-sparse-checkout
-   100-shallow-clone
-   110-graft-and-replace
-   120-git-notes

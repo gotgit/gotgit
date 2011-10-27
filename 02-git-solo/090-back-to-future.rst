@@ -149,7 +149,7 @@ Git 能够提供悔棋的奥秘在于 Git 的重置命令。实际上上面介�
    src/hello.h |    1 +
    1 files changed, 1 insertions(+), 0 deletions(-)
 
-想要将最近的两个提交压缩为一个，并把提交说明改为 "modify hello.h"，可以使用如下方法进行操作。
+想要将最近的两个提交压缩为一个，并把提交说明改为 “modify hello.h”，可以使用如下方法进行操作。
 
 * 使用 `--soft` 参数调用重置命令，回到最近两次提交之前。
 

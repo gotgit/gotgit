@@ -11,7 +11,7 @@ Git权威指南
 目录:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
    :numbered:
 
    01-meet-git/index

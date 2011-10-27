@@ -15,7 +15,7 @@ Git协同模型
 目录:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    010-central-model
    020-distribute-model
