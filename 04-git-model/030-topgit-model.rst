@@ -9,7 +9,7 @@ Topgit 协同模型
 
 从2005年开始作者专心于开源软件的研究、定制开发和整合，在这之后的几年，一直使用 Subversion 做版本控制。对于定制开发工作，Subversion 有一种称为卖主分支（Vendor Branch）的模式。
 
-.. figure:: images/git-model/topgit-branch-vendor-branch.png
+.. figure:: /images/git-model/topgit-branch-vendor-branch.png
    :scale: 100
 
    图22-1：卖主分支工作模式图
@@ -62,7 +62,7 @@ Topgit 原理
 
 图22-2是一个近似的 Topgit 实现图（略去了重要的 top-bases 分支）。
 
-.. figure:: images/git-model/topgit-topic-branch.png
+.. figure:: /images/git-model/topgit-topic-branch.png
    :scale: 100
 
    图22-2：Topgit特性分支关系图
@@ -72,7 +72,7 @@ Topgit 原理
 上述的描述非常粗糙，因为这样的设计很难实现特性分支导出为补丁文件。例如特性分支B的补丁，实际上应该是 M3 和 M2 之间的差异，而绝不是 M3 到 a2 之间的差异。Topgit 为了能够实现分支导出为补丁，又为每个特性的开发引入了一个特殊的引用 (`refs/top-bases/*`) ，用于追踪分支依赖的“变基”。这些特性分支的基准分支也形成了复杂的分支关系图，如图22-3所示。
 
 
-.. figure:: images/git-model/topgit-topic-base-branch.png
+.. figure:: /images/git-model/topgit-topic-base-branch.png
    :scale: 100
 
    图22-3：Topgit特性分支的基准分支关系图
@@ -438,7 +438,7 @@ tg summary 命令用于显示 Topgit 管理的特性分支的列表及各个分�
 
 生成的特性分支关系图如图22-4所示。
 
-.. figure:: images/git-model/topgit-graphviz.png
+.. figure:: /images/git-model/topgit-graphviz.png
    :scale: 100
 
    图22-4：Topgit 特性分支依赖关系图
@@ -826,7 +826,7 @@ Topgit hacks
 
 生成的特性分支关系图如图22-5所示。
 
-.. figure:: images/git-model/topgit-hacks.png
+.. figure:: /images/git-model/topgit-hacks.png
    :scale: 100
 
    图22-5：Topgit 改进项目的特性分支依赖关系图

@@ -115,7 +115,7 @@ Git对象库探秘
 
 下面的图示更加清楚的显示了 Git 对象库中各个对象之间的关系。
 
-  .. figure:: images/git-solo/git-objects.png
+  .. figure:: /images/git-solo/git-objects.png
      :scale: 100
 
 从上面的图示中很明显的看出提交（Commit）对象之间相互关联，通过相互之间的关联则很容易的识别出一条跟踪链。这条跟踪链可以在运行 `git log` 命令时，通过使用 `--graph` 参数看到。下面的命令还使用了 `--pretty=raw` 参数以便显示每个提交对象的 parent 属性。
@@ -243,7 +243,7 @@ Git对象库探秘
 
 下面看一个更接近于真实的版本库结构图：
 
-  .. figure:: images/git-solo/git-repos-detail.png
+  .. figure:: /images/git-solo/git-repos-detail.png
      :scale: 100
 
 目录 `.git/refs` 是保存引用的命名空间，其中 `.git/refs/heads` 目录下的引用又称为分支。对于分支既可以使用正规的长格式的表示法，如 `refs/heads/master` ，也可以去掉前面的两级目录用 `master` 来表示。Git 有一个底层命令 `git rev-parse` 可以用于显示引用对应的提交 ID。

@@ -12,28 +12,28 @@ msysGit 的名字前面的四个字母来源于 MSYS 项目。MSYS 项目源自�
 
 点击下载的安装程序（如 `Git-1.7.3.1-preview20101002.exe` ），开始安装，如图3-18。
 
-.. figure:: images/windows/msysgit-1.png
+.. figure:: /images/windows/msysgit-1.png
    :scale: 80
 
    图3-18：启动 msysGit 安装
 
 默认安装到 `C:\\Program Files\\Git` 目录中。
 
-.. figure:: images/windows/msysgit-3.png
+.. figure:: /images/windows/msysgit-3.png
    :scale: 80
 
    图3-19：选择 msysGit 的安装目录
 
 在安装过程中会询问是否修改环境变量，如图3-20。默认选择“Use Git Bash Only”，即只在 msysGit 提供的 shell 环境（类似 Cygwin）中使用 Git，不修改环境变量。注意如果选择最后一项，会将 msysGit 所有的可执行程序全部加入 Windows 的 PATH 路径中，有的命令会覆盖 Windows 相同文件名的程序（如 find.exe 和 sort.exe）。而且如果选择最后一项，还会为 Windows 添加 HOME 环境变量，如果安装有 Cygwin，Cygwin 会受到 msysGit 引入的 HOME 环境变量的影响（参见前面 3.3.3 节的相关讨论）。
 
-.. figure:: images/windows/msysgit-6.png
+.. figure:: /images/windows/msysgit-6.png
    :scale: 80
 
    图3-20：是否修改系统的环境变量
 
 还会询问换行符的转换方式，使用默认设置就好。参见图3-21。关于换行符转换，参见本书第8篇相关章节。
 
-.. figure:: images/windows/msysgit-8.png
+.. figure:: /images/windows/msysgit-8.png
    :scale: 80
 
    图3-21：换行符转换方式
@@ -45,7 +45,7 @@ msysGit 的配置和使用
 
 完成 msysGit 的安装后，点击 Git Bash 图标，启动 msysGit，如图3-22。会发现 Git Bash 的界面和 Cygwin 的非常相像。
 
-.. figure:: images/windows/msysgit-startup.png
+.. figure:: /images/windows/msysgit-startup.png
    :scale: 80
 
    图3-22：启动 Git Bash
@@ -204,35 +204,35 @@ TortoiseGit 是对 msysGit 命令行的封装，因此需要先安装 msysGit。
 
 安装过程中会询问要使用的 SSH 客户端，如图3-23。缺省使用内置的 TortoisePLink（来自 PuTTY 项目）做为 SSH 客户端。
 
-.. figure:: images/windows/tgit-3.png
+.. figure:: /images/windows/tgit-3.png
    :scale: 80
 
    图3-23：启动 Git Bash
 
 TortoisePLink 和 TortoiseGit 的整合性更好，可以直接通过对话框设置 SSH 私钥（PuTTY格式），而无需再到字符界面去配置 SSH 私钥和其他配置文件。如果安装过程中选择了 OpenSSH，可以在安装完毕之后，通过 TortoiseGit 的设置对话框重新选择 TortoisePLink 做为缺省 SSH 客户端程序，如图3-24。
 
-.. figure:: images/windows/tgit-settings-network-plink.png
+.. figure:: /images/windows/tgit-settings-network-plink.png
    :scale: 80
 
    图3-24：配置缺省 SSH 客户端
 
 当配置使用 TortoisePLink 做为缺省 SSH 客户端时，在执行克隆操作时，在操作界面中可以选择一个 PuTTY 格式的私钥文件进行认证，如图3-25。
 
-.. figure:: images/windows/tgit-clone.png
+.. figure:: /images/windows/tgit-clone.png
    :scale: 80
 
    图3-25：克隆操作选择 PuTTY 格式私钥文件
 
 如果连接一个服务器的 SSH 私钥需要更换，可以通过 Git 远程服务器配置界面对私钥文件进行重新设置。如图3-26。
 
-.. figure:: images/windows/tgit-settings-remote.png
+.. figure:: /images/windows/tgit-settings-remote.png
    :scale: 80
 
    图3-26：更换连接远程 SSH 服务器的私钥
 
 如果安装有多个 msysGit 拷贝，也可以通过 TortoiseGit 的配置界面进行选择，如图3-27。
 
-.. figure:: images/windows/tgit-settings-general.png
+.. figure:: /images/windows/tgit-settings-general.png
    :scale: 80
 
    图3-27：配置 msysGit 的可执行程序位置

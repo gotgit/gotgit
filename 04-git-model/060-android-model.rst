@@ -670,7 +670,7 @@ Repo 命令的工作流
 
 图25-1是 repo 的工作流，每一个代码贡献都起始于 `repo start` 创建本地工作分支，最终都以 `repo upload` 命令将代码补丁发布于代码审核服务器。
 
-.. figure:: images/git-model/repo-workflow.png
+.. figure:: /images/git-model/repo-workflow.png
    :scale: 80
 
    图25-1：repo工作流

@@ -7,7 +7,7 @@
 
 分布式的开发必然带来协同的问题，如何能够让一个素不相识的开发者将他的贡献提交到项目中？如何能够最大化的发动和汇聚全球智慧？开源社区逐渐发展出金字塔模型，而这也是必然之选。
 
-  .. figure:: images/git-model/distrabute-model.png
+  .. figure:: /images/git-model/distrabute-model.png
      :scale: 100
 
      图：金字塔式协同模型

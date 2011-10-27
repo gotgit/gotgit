@@ -265,7 +265,7 @@ HEAD 可以理解为“头指针”，是当前工作区的“基础版本”，
 
 下面的版本库模型图描述了 `git checkout` 实际完成的操作。
 
-  .. figure:: images/git-solo/git-checkout.png
+  .. figure:: /images/git-solo/git-checkout.png
      :scale: 80
 
 下面通过一些示例，具体的看一下检出命令的不同用法。

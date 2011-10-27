@@ -12,7 +12,7 @@ Git 在 Mac OS X 中也有好几种安装方法。最为简单的方式是安装
 
 苹果的 `.dmg` 格式的软件包实际上是一个磁盘映像，安装起来非常方便，点击该文件就直接挂载到 Finder 中，并打开，如图3-1所示。
 
-.. figure:: images/meet-git/mac-install-1.png
+.. figure:: /images/meet-git/mac-install-1.png
    :scale: 100
 
    图3-1：在 Mac OS X 下打开 .dmg 格式磁盘镜像
@@ -21,7 +21,7 @@ Git 在 Mac OS X 中也有好几种安装方法。最为简单的方式是安装
 
 点击扩展名为 `.pkg` 的安装程序，开始 Git 的安装，根据提示按步骤完成安装，如图3-2所示。
 
-.. figure:: images/meet-git/mac-install-2.png
+.. figure:: /images/meet-git/mac-install-2.png
    :scale: 100
 
    图3-2：在 Mac OS X 下安装 Git。
@@ -33,7 +33,7 @@ Git 在 Mac OS X 中也有好几种安装方法。最为简单的方式是安装
 
 Mac OS X 基于 Unix 内核，因此也可以很方便的通过源码编译的方式进行安装，但是缺省安装的 Mac OS X 缺乏相应的开发工具，需要安装苹果提供的 Xcode 软件包。在 Mac 随机附送的光盘（Mac OS X Install DVD）的可选安装文件夹下就有 Xcode 的安装包（如图3-3所示），通过随机光盘安装 Xcode 可以省去了网络下载的麻烦，要知道 Xcode 有3GB以上。
 
-.. figure:: images/meet-git/xcode-install.png
+.. figure:: /images/meet-git/xcode-install.png
    :scale: 100
 
    图3-3：在 Mac OS X 下安装 Xcode。

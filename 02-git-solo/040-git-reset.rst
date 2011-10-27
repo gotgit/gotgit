@@ -207,7 +207,7 @@ Git 提供了一个 `git reflog` 命令，对这个文件进行操作。使用 s
 
 第二种用法（不使用路径 `<paths>` 的用法）则会 **重置引用** 。根据不同的选项，可以对暂存区或者工作区进行重置。参照下面的版本库模型图，来看一看不同的参数对第二种重置语法的影响。
 
-  .. figure:: images/git-solo/git-reset.png
+  .. figure:: /images/git-solo/git-reset.png
      :scale: 80
 
 命令格式: git reset [--soft | --mixed | --hard ] [<commit>]

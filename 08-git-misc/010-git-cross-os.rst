@@ -7,7 +7,7 @@ Git 有着非常庞杂的命令集和功能，到目前为止尚有一些命令�
 
 读者是在什么平台（操作系统）中使用 Git 呢？图40-1是网上一个 Git 调查结果的截图，从中可以看出排在前三位的是：Linux, Mac OS X 和 Windows。而 Windows 用户中又以使用 msysGit 的用户居多。
 
-.. figure:: images/git-misc/git-survs-os.png
+.. figure:: /images/git-misc/git-survs-os.png
    :scale: 80
 
    图40-1：Git 用户操作系统使用分布图（摘自：http://www.survs.com/results/33Q0OZZE/MV653KSPI2）

@@ -94,7 +94,7 @@ git-svn 作为 Git 软件包的一部分，当 Git 从源码包进行安装时�
 
 使用 git-svn 的一般流程参见图26-1。
 
-.. figure:: images/git-model/git-svn-workflow.png
+.. figure:: /images/git-model/git-svn-workflow.png
    :scale: 80
 
    图26-1：git-svn工作流

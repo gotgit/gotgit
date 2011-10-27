@@ -3,7 +3,7 @@ Git 评注
 
 从 1.6.6 版本开始，Git 提供了一个 `git notes` 命令可以为提交添加评注，实现在不改变提交对象的情况下在提交说明的后面附加评注。图41-1展示了 Github （https://github.com/ossxp-com/gitdemo-commit-tree/commit/6652a0dce6a5067732c00ef0a220810a7230655e） 利用 `git notes` 实现的在提交显示界面中显示评注（如果存在的话）和添加评注的界面。
 
-.. figure:: images/git-misc/github-notes.png
+.. figure:: /images/git-misc/github-notes.png
    :scale: 70
 
    图41-1：Github 上显示和添加评注

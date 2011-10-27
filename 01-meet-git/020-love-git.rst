@@ -8,7 +8,7 @@
 
 当我开始撰写本书时才明白了写书真的是一个辛苦活。如何让辛苦的工作不会因为笔记本硬盘的意外损坏而丢失？如何防范灾害而不让一个篮子里的鸡蛋都毁于一旦？下面就介绍一下我在写本书时，如何使用 Git 进行文稿的备份。
 
-.. figure:: images/meet-git/work-backup.png
+.. figure:: /images/meet-git/work-backup.png
    :scale: 65
 
    图2-1：利用 Git 做数据的备份
@@ -40,7 +40,7 @@
 为了能够加快写书的进度，熬夜是必须的，这就出现了公司和家两地工作同步的问题。图2-2用于说明我是如何解决两地工作同步的问题的。
 
 
-.. figure:: images/meet-git/workflow.png
+.. figure:: /images/meet-git/workflow.png
    :scale: 65
 
    图2-2：利用 Git 实现异地工作协同

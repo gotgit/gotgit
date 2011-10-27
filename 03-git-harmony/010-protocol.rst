@@ -50,7 +50,7 @@ Git 提供了丰富的协议支持，包括：SSH、GIT、HTTP、HTTPS、FTP、F
 
 在通讯时使用智能协议，会在两个通讯的版本库的各自一端分别打开两个程序进行数据交换。使用智能协议最直观的印象就是在数据传输过程中会有清晰的进度显示，而且因为是按需传输所以传输量更小，速度更快。图 15-1 显示的就是在执行 PULL 和 PUSH 两个最常用的操作时，两个版本库各自启动辅助程序的情况。
 
-.. figure:: images/git-harmony/git-smart-protocol.png
+.. figure:: /images/git-harmony/git-smart-protocol.png
    :scale: 80
 
    图 15-1：Git智能协议通讯示意图

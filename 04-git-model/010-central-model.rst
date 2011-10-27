@@ -17,7 +17,7 @@
 可以像集中式版本控制系统那样使用 Git，在一个大家都可以访问到的服务器上架设 Git 服务器，每个人从该服务器克隆代码，本地提交推送到服务器上。如图21-1所示。
 
 
-  .. figure:: images/git-model/central-model.png
+  .. figure:: /images/git-model/central-model.png
      :scale: 100
 
      图21-1：集中式协同模型
@@ -55,7 +55,7 @@
 对于简单的代码修改，可以像传统集中式版本控制系统（Subversion）中那样工作，参照图21-2所示的工作流程图。
 
 
-.. figure:: images/git-model/central-model-workflow-1.png
+.. figure:: /images/git-model/central-model-workflow-1.png
    :scale: 80
 
    图21-2：集中式协同模型工作流1
@@ -68,7 +68,7 @@
   
 解决这个问题的方法也很简单，就是在本地创建本地分支（功能分支），并且同时在服务器端（共享版本库）也创建自己独享的功能分支。本地提交推送到共享版本库的自己独享的分支上。当开发完成之后，将功能分支合并到主线上，推送到共享版本库，完成开发。当然如果该特性分支不再需要时需要作些清理工作。参见图21-3所示的工作流程图。
 
-.. figure:: images/git-model/central-model-workflow-2.png
+.. figure:: /images/git-model/central-model-workflow-2.png
    :scale: 80
 
    图21-3：集中式协同模型工作流2

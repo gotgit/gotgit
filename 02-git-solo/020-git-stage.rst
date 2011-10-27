@@ -369,7 +369,7 @@ Git 暂存区
 
 文件 `.git/index` 实际上就是一个包含文件索引的目录树，像是一个虚拟的工作区。在这个虚拟工作区的目录树中，记录了文件名、文件的状态信息（时间戳、文件长度等）。文件的内容并不存储其中，而是保存在 Git 对象库 `.git/objects` 目录中，文件索引建立了文件和对象库中对象实体之间的对应。下面这个图展示了工作区、版本库中的暂存区和版本库之间的关系。
 
-  .. figure:: images/git-solo/git-stage.png
+  .. figure:: /images/git-solo/git-stage.png
      :scale: 80
 
      工作区、版本库、暂存区原理图
@@ -489,7 +489,7 @@ Git Diff 魔法
 
 通过使用不同的参数调用 `git diff` 命令，可以对工作区、暂存区、HEAD 中的内容两两比较。下面的这个图，展示了不同的 `git diff` 命令的作用范围。
 
-  .. figure:: images/git-solo/git-diff.png
+  .. figure:: /images/git-solo/git-diff.png
      :scale: 80
 
 通过上面的图，就不难理解下面 `git diff` 命令不同的输出结果了。

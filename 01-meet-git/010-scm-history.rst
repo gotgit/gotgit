@@ -6,7 +6,7 @@ Git 是开源社区送给每一个人的宝贝，用好它可以实现个人的�
 
 |ICON-SOUND| 还有在这里有必要纠正一下Git的发音。一种错误是按照单个字母来发音，另外一种更为普遍的错误是把整个单词读作“吉他”，实际上Git中字母G的发音应该是和下列单词中的G类似：GOD GIVES GREAT GIFT。因此Git正确的发音应该听起来像是“歌易他”。在我的一再坚持下，编辑同意本书的英文名（如果有的话）为《Got Git》，当面对这样的书名时您还会把Git读错么？
 
-.. |ICON-SOUND| image:: images/meet-git/icon-01-01-sound.png
+.. |ICON-SOUND| image:: /images/meet-git/icon-01-01-sound.png
 
 版本控制的前世和今生
 ********************
@@ -166,7 +166,7 @@ CVS (Concurrent Versions System) 诞生于 1985 年，是由荷兰阿姆斯特�
 
 图1-1展示了CVS版本控制系统工作原理，可以看出做为RCS文件容器的CVS版本库和工作区目录结构的一一对应关系。
 
-.. figure:: images/meet-git/cvs-arch.png
+.. figure:: /images/meet-git/cvs-arch.png
    :scale: 80
 
    图1-1：CVS版本控制系统示意图
@@ -199,7 +199,7 @@ Subversion，因其命令行工具名为 `svn` 因此通常简称为 SVN。SVN �
 
 我开始真正关注 SVN 是在 2005 年，那时 SVN 正经历着后端存储上的变革，即从BDB 简单的关系型数据库到 FSFS 文件数据库的转变。FSFS 相对于 BDB 的稳定性、免维护性，以及实现的可视性，我马上就被 SVN 吸引了。图1-2展示了SVN版本控制系统的工作原理。
 
-.. figure:: images/meet-git/svn-arch.png
+.. figure:: /images/meet-git/svn-arch.png
    :scale: 80
 
    图1-2：SVN版本控制系统示意图

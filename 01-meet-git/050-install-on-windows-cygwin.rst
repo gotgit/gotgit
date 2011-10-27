@@ -20,56 +20,56 @@ Cygwin 还提供了一个强大易用的包管理工具（setup.exe），实现�
 安装过程会让用户选择安装模式，可以选择网络安装、仅下载，或者通过本地软件包缓存（在安装过程自动在本地目录下建立软件包缓存）进行安装。如果是第一次安装 Cygwin，因为本地尚没有软件包缓存，当然只能选择从网络安装，如图3-4所示。
 
 
-.. figure:: images/windows/cygwin-2.png
+.. figure:: /images/windows/cygwin-2.png
    :scale: 80
 
    图3-4：选择安装模式
 
 接下来，Cygwin 询问安装目录，默认为 `C:\\cygwin` ，如图3-5所示。这个目录将作为 Cygwin shell 环境的根目录（根卷），Windows 的各个盘符将挂载在根卷一个特殊目录之下。
 
-.. figure:: images/windows/cygwin-3.png
+.. figure:: /images/windows/cygwin-3.png
    :scale: 80
 
    图3-5：选择安装目录
 
 询问本地软件包缓存目录，默认是 `setup.exe` 所处的目录，如图3-6所示。
 
-.. figure:: images/windows/cygwin-4.png
+.. figure:: /images/windows/cygwin-4.png
    :scale: 80
 
    图3-6：选择本地软件包缓存目录
 
 询问网络连接方式，是否使用代理等，如图3-7所示。默认会选择第一项：“直接网络连接”。如果一个团队有很多人要使用 Cygwin，架设一个能够提供软件包缓存的 HTTP 代理服务器会节省大量的网络带宽和节省大把的时间。用 Debian 的 apt-cacher-ng 就可以非常简单的搭建一个软件包代理服务器。图3-7显示的就是我在公司内网安装 Cygwin 时使用了我们公司内网的服务器 `bj.ossxp.com` 做为 HTTP 代理的截图，端口设置为 9999，因为这是 apt-cacher-ng 的默认端口。
 
-.. figure:: images/windows/cygwin-5-mirror.png
+.. figure:: /images/windows/cygwin-5-mirror.png
    :scale: 80
 
    图3-7：是否使用代理下载 Cygwin 软件包
 
 选择一个 Cygwin 源，如图3-8所示。如果在上一个步骤选择了使用 HTTP 代理服务器，就必须选择 HTTP 协议的 Cygwin 源。
 
-.. figure:: images/windows/cygwin-6.png
+.. figure:: /images/windows/cygwin-6.png
    :scale: 80
 
    图3-8：选择 Cygwin 源
 
 接下来就会从所选的 Cygwin 源下载软件包索引文件，然后显示软件包管理器界面，如图3-9所示。
 
-.. figure:: images/windows/cygwin-8.png
+.. figure:: /images/windows/cygwin-8.png
    :scale: 80
 
    图3-9：Cygwin 软件包管理器
 
 Cygwin 的软件包管理器非常强大和易用（如果习惯了其界面）。软件包归类于各个分组中，点击分组前的加号就可以展开分组。在展开的 Admin 分组中，如图3-10所示（这个截图不是首次安装 Cygwin 的截图），有的软件包如 `libattr1` 已经安装过了，因为没有新版本而标记为“Keep”（保持）。至于没有安装过并且不准备安装的软件包则标记为 “Skip”（跳过）。
 
-.. figure:: images/windows/cygwin-8-expand-admin-group.png
+.. figure:: /images/windows/cygwin-8-expand-admin-group.png
    :scale: 80
 
    图3-10：Cygwin 软件包管理器展开分组
 
 鼠标点击分组名称后面动作名称（文字“Default”），会进行软件包安装动作的切换。例如图3-11，将 Admin 分组的安装动作由“Default”（默认）切换为“Install”（安装），会看到 Admin 分组下的所有软件包都标记为安装（显示具体要安装的软件包版本号）。也可以通过鼠标点击，单独的为软件包进行安装动作的设定，可以强制重新安装、安装旧版本、或者不安装。
 
-.. figure:: images/windows/cygwin-8-expand-admin-group-install.png
+.. figure:: /images/windows/cygwin-8-expand-admin-group-install.png
    :scale: 80
 
    图3-11：Cygwin 软件包管理器展开分组
@@ -81,14 +81,14 @@ Cygwin 的软件包管理器非常强大和易用（如果习惯了其界面）�
 
 默认安装的 Cygwin 没有安装 Git 软件包。如果在首次安装过程中忘记通过包管理器选择安装 Git 或其他相关软件包，可以在安装后再次运行 Cygwin 的安装程序 `setup.exe` 。当再次进入 Cygwin 包管理器界面时，在搜索框中输入 git。如图3-12所示。
 
-.. figure:: images/windows/cygwin-8-search-git.png
+.. figure:: /images/windows/cygwin-8-search-git.png
    :scale: 80
 
    图3-12：Cygwin 软件包管理器中搜索 git
 
 从图3-12中看出在 Cygwin 中包含了很多和 Git 相关的软件包，把这些 Git 相关的软件包都安装吧，如图3-13所示。
 
-.. figure:: images/windows/cygwin-8-search-git-install.png
+.. figure:: /images/windows/cygwin-8-search-git-install.png
    :scale: 80
 
    图3-13：Cygwin 软件包管理器中安装 git
@@ -105,7 +105,7 @@ Cygwin 的配置和使用
 
 运行 Cygwin，就会进入 shell 环境中，见到熟悉的 Linux 提示符。如图 3-14 所示。
 
-.. figure:: images/windows/cygwin-startup.png
+.. figure:: /images/windows/cygwin-startup.png
    :scale: 80
 
    图3-14：运行 Cygwin
@@ -258,14 +258,14 @@ PuTTY 使用自定义格式的私钥文件（扩展名为 `.ppk` ），而不能
 
 运行 PuTTYgen 程序，如图3-15所示。
 
-.. figure:: images/windows/putty-keygen-1.png
+.. figure:: /images/windows/putty-keygen-1.png
    :scale: 80
 
    图3-15：运行 PuTTYgen 程序
 
 PuTTYgen 既可以重新创建私钥文件，也可以通过点击加载按钮（load）读取 openssh 格式的私钥文件，从而可以将其转换为 PuTTY 格式私钥。点击加载按钮，会弹出文件选择对话框，选择 openssh 格式的私钥文件（如文件 id_rsa），如果转换成功，会显示如图3-16的界面。
 
-.. figure:: images/windows/putty-keygen-2.png
+.. figure:: /images/windows/putty-keygen-2.png
    :scale: 80
 
    图3-16：PuTTYgen 完成私钥加载
@@ -279,7 +279,7 @@ Git 在使用命令行工具 Plink（ `plink.exe` ）做为 SSH 客户端访问 
 
 运行 Pageant ，启动后显示为托盘区中的一个图标，在后台运行。当使用鼠标右键单击 Pageant 的图标，就会显示弹出菜单如图3-17所示。
 
-.. figure:: images/windows/pageant.png
+.. figure:: /images/windows/pageant.png
    :scale: 80
 
    图3-17：Pageant 的弹出菜单

@@ -37,7 +37,7 @@ gitk 是最早实现的一个图形化的 Git 版本库浏览器软件，基于 
 
 下面的图示就是在DEMO版本库中运行 `gitk --all` 的显示。
 
-.. figure:: images/git-solo/gitk.png
+.. figure:: /images/git-solo/gitk.png
    :scale: 80
 
 在上图中可见不同颜色和形状区分的引用：
@@ -97,7 +97,7 @@ gitg 是使用 GTK+ 图形库实现的一个 Git 版本库浏览器软件。Linu
 
 下图就是 gitg 的缺省界面，显示了提交分支图，以及选中提交的提交信息和变更文件列表等。
 
-  .. figure:: images/git-solo/gitg-history.png
+  .. figure:: /images/git-solo/gitg-history.png
      :scale: 75
 
 在上图中可以看见用不同颜色的标签显示的状态标识（包括引用）：
@@ -109,37 +109,37 @@ gitg 是使用 GTK+ 图形库实现的一个 Git 版本库浏览器软件。Linu
 
 点击 gitg 下方窗口的标签 “tree”，会显示此提交的目录树。
 
-  .. figure:: images/git-solo/gitg-tree.png
+  .. figure:: /images/git-solo/gitg-tree.png
      :scale: 75
 
 提交功能是 gitg 的一大特色。点击 gitg 顶部窗口的 `commit` 标签，显示下面的界面。
 
-  .. figure:: images/git-solo/gitg-commit-1-all-unstaged.png
+  .. figure:: /images/git-solo/gitg-commit-1-all-unstaged.png
      :scale: 75
 
 左下方窗口显示的是未更新到暂存区的本地改动。鼠标右击，在弹出菜单中选择“Stage”。
 
-  .. figure:: images/git-solo/gitg-commit-2-add-stage.png
+  .. figure:: /images/git-solo/gitg-commit-2-add-stage.png
      :scale: 75
 
 当把文件 `README` 添加到暂存区后，可以看到 `README` 文件出现在右下方的窗口中。
 
-  .. figure:: images/git-solo/gitg-commit-3-mixed-stage-unstage.png
+  .. figure:: /images/git-solo/gitg-commit-3-mixed-stage-unstage.png
      :scale: 75
 
 此时如果回到提交历史查看界面，可以看到在“stash”标签的下方，同时出现了“staged”和“unstaged”两个标签分别表示暂存区和工作区的状态。
 
-  .. figure:: images/git-solo/gitg-commit-4-history-stage-unstage.png
+  .. figure:: /images/git-solo/gitg-commit-4-history-stage-unstage.png
      :scale: 75
 
 当通过 gitg 的界面选择好要提交的文件（加入暂存区）之后，执行提交。
 
-  .. figure:: images/git-solo/gitg-commit-5-commit.png
+  .. figure:: /images/git-solo/gitg-commit-5-commit.png
      :scale: 75
 
 上图的提交说明对话框的下方有两个选项，当选择了“Add signed-off-by”选项后，在提交日志中会自动增加相应的说明文字。下图可以看到刚刚的提交已经显示在提交历史的最顶端，在提交说明中出现了 `Signed-off-by` 文字说明。
 
-  .. figure:: images/git-solo/gitg-commit-6-new-history.png
+  .. figure:: /images/git-solo/gitg-commit-6-new-history.png
      :scale: 75
 
 gitg 还是一个比较新的项目，在本文撰写的时候，gitg 才是 0.0.6 版本，相比下面要介绍的 qgit 还缺乏很多功能。例如 gitg 没有文件的 blame（追溯）界面，也不能直接将文件检出，但是 gitg 整体的界面风格，以及易用的提交界面给人的印象非常深刻。
@@ -197,12 +197,12 @@ qgit 和 gitg 一样不但能够浏览提交历史和文件，还能帮助执行
 
 启动 qgit ，首先弹出一个对话框，提示对显示的提交范围和分支范围进行选择。
 
-  .. figure:: images/git-solo/qgit-splash-select.png
+  .. figure:: /images/git-solo/qgit-splash-select.png
      :scale: 100
 
 对所有的选择打钩，显示下面的 qgit 的缺省界面。其中包括了提交分支图，以及选中提交的提交信息和变更文件列表等。
 
-  .. figure:: images/git-solo/qgit-history.png
+  .. figure:: /images/git-solo/qgit-history.png
      :scale: 75
 
 在上图中可以看见用不同颜色的标签显示的状态标识（包括引用）：
@@ -216,41 +216,41 @@ qgit 的右键菜单非常丰富，上图显示了鼠标右击提交时显示的
 
 点击 qgit 右下方变更文件列表窗口，可以选择将文件检出或者直接查看。
 
-  .. figure:: images/git-solo/qgit-changefiles.png
+  .. figure:: /images/git-solo/qgit-changefiles.png
      :scale: 75
 
 要想显示目录树，键入大写字母 `T` ，或者鼠标单击工具条上的图标 |QGIT-TREE-TOGGLE| ，就会在左侧显示目录树窗口，如下。
 
-  .. figure:: images/git-solo/qgit-tree-view.png
+  .. figure:: /images/git-solo/qgit-tree-view.png
      :scale: 75
 
-.. |QGIT-TREE-TOGGLE| image:: images/git-solo/icon-11-12-qgit-tree-toggle.png
+.. |QGIT-TREE-TOGGLE| image:: /images/git-solo/icon-11-12-qgit-tree-toggle.png
 
 从上图也可以看到目录树的文件包含的右键菜单。当选择查看一个文件时，会显示此文件的追溯，即显示每一行是在哪个版本由谁修改的。追溯窗口见下图右下方窗口。
 
-  .. figure:: images/git-solo/qgit-blame.png
+  .. figure:: /images/git-solo/qgit-blame.png
      :scale: 75
 
 qgit 也可以执行提交。选中 qgit 顶部窗口最上一行“Working dir changes”，鼠标右击，显示的弹出菜单包含了“Commit...”选项。
 
-  .. figure:: images/git-solo/qgit-commit-1-revlist.png
+  .. figure:: /images/git-solo/qgit-commit-1-revlist.png
      :scale: 75
 
 点击弹出菜单中的“Commit...”，显示下面的对话框。
 
-  .. figure:: images/git-solo/qgit-commit-2-dialog-unstaged.png
+  .. figure:: /images/git-solo/qgit-commit-2-dialog-unstaged.png
      :scale: 75
 
 自动选中了所有的文件。上方窗口的选中文件目前状态是“Not updated in index”，就是说尚未添加到暂存区。
 
 使用 qgit 做提交，只要选择好要提交的文件列表，即使未添加到暂存区，也可以直接提交。在下方的提交窗口写入提交日志，点击“Commit”按钮开始提交。
 
-  .. figure:: images/git-solo/qgit-commit-3-commit-unstaged.png
+  .. figure:: /images/git-solo/qgit-commit-3-commit-unstaged.png
      :scale: 75
 
 提交完毕返回 qgit 主界面，在显示的提交列表的最上方，原来显示的“Working dir changes”已经更新为“Nothing to commit”，并且可以看到刚刚的提交已经显示在提交历史的最顶端。
 
-  .. figure:: images/git-solo/qgit-commit-4-revlist.png
+  .. figure:: /images/git-solo/qgit-commit-4-revlist.png
      :scale: 75
 
 
@@ -275,12 +275,12 @@ qgit 也可以执行提交。选中 qgit 顶部窗口最上一行“Working dir 
 
 运行 gitg 命令，显示其提交关系图。
 
-.. figure:: images/git-solo/gitg-demo-commit-tree.png
+.. figure:: /images/git-solo/gitg-demo-commit-tree.png
    :scale: 100
 
 是不是有点“乱花渐欲迷人眼”的感觉。如果把提交用里程碑标识的圆圈来代表，稍加排列就会看到下面的更为直白的提交关系图。
 
-.. figure:: images/git-solo/commit-tree.png 
+.. figure:: /images/git-solo/commit-tree.png 
    :scale: 100
 
 Git 的大部分命令可以使用提交版本作为参数（如： `git diff <commit-id>` ），有的命令则使用一个版本范围作为参数（如： `git log <rev1>..<rev2>` ）。Git 的提交有着各式各样的表示法，提交范围也是一样，下面就通过两个命令 `git rev-parse` 和 `git rev-list` 分别研究一下 Git 的版本表示法和版本范围表示法。
@@ -469,7 +469,7 @@ Git 的大部分命令可以使用提交版本作为参数（如： `git diff <c
 
 有的 Git 命令可以使用一个版本范围作为参数，命令 `git rev-list` 可以帮助研究 Git 的各种版本范围语法。
 
-.. figure:: images/git-solo/commit-tree-with-id.png
+.. figure:: /images/git-solo/commit-tree-with-id.png
    :scale: 100
 
 * 一个提交ID实际上就可以代表一个版本列表。含义是：该版本开始的所有历史提交。
@@ -909,7 +909,7 @@ Git 提供的 `git bisect` 命令是基于版本库的，自动化的问题查�
 
 下面是示例版本库标记了提交ID后的示意图，在这个示例版本库中试验二分查找流程：首先标记最新提交（HEAD）是“坏的”，G 提交是好的，然后通过查找最终定位到坏提交（B）。
 
-.. figure:: images/git-solo/commit-tree-bisect.png
+.. figure:: /images/git-solo/commit-tree-bisect.png
    :scale: 100
 
 在下面的试验中定义坏提交的依据很简单，如果在 `doc/` 目录中包含文件 `B.txt` ，则此版本是“坏”的。（这个示例太简陋，不要见笑，聪明的读者可以直接通过 doc/B.txt 文件就可追溯到 B 提交。）
