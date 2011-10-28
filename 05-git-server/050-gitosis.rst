@@ -15,7 +15,7 @@ Gitosis 的出现远早于 Gitolite，作者 Tommi Virtanen 从 2007 年5月就�
 
   版本库重定向一方面在版本库路径变更后保持旧的URL仍可工作，另一方面用在客户端用简洁的地址屏蔽服务器端复杂的地址。
 
-  例如我开发的一款备份工具（Gistore），版本库位于 `/etc/gistore/tasks/system/repo.git` （符号链接），客户端使用 `system.git` 即映射到复杂的服务器端地址。
+  例如我开发的一款备份工具（Gistore），版本库位于 :file:`/etc/gistore/tasks/system/repo.git` （符号链接），客户端使用 `system.git` 即映射到复杂的服务器端地址。
 
   这个功能我已经在定制的 Gitolite 中实现。
 
@@ -45,7 +45,7 @@ Gitosis 因为是 Gitolite 的鼻祖，因此下面的 Gitosis 实现机理，�
 
       command="gitosis-serve jiangxin",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-rsa <公钥内容来自于 jiangxin.pub ...>
 
-  - 更新服务器端的授权文件 `~/.gitosis.conf` 。
+  - 更新服务器端的授权文件 :file:`~/.gitosis.conf` 。
 
 * 用户可以用 git 命令访问授权的版本库。
 
@@ -112,7 +112,7 @@ Gitosis 的官方 Git 库位于 git://eagain.net/gitosis.git。我在 Github 上
 Gitosis 服务初始化
 ------------------
 
-Gitosis 服务初始化，就是初始化一个 gitosis-admin 库，并为管理员分配权限，还要将 Gitosis 管理员的公钥添加到专用帐号的 `~/.ssh/authorized_keys` 文件中。
+Gitosis 服务初始化，就是初始化一个 gitosis-admin 库，并为管理员分配权限，还要将 Gitosis 管理员的公钥添加到专用帐号的 :file:`~/.ssh/authorized_keys` 文件中。
 
 * 如果管理员在客户端没有公钥，使用下面命令创建
 
@@ -370,7 +370,7 @@ Gitosis 缺省设置
 
 除了第4行，其他内容在前面都已经介绍过了，是 Gitosis 自身管理版本库的用户组设置。
 
-第4行，重新设置了版本库的缺省根路经，覆盖缺省的 [gitosis] 小节中的缺省根路径。实际的 gitosis-admin 版本库的路径为 `/home/git/gitosis-admin.git` 。
+第4行，重新设置了版本库的缺省根路经，覆盖缺省的 [gitosis] 小节中的缺省根路径。实际的 gitosis-admin 版本库的路径为 :file:`/home/git/gitosis-admin.git` 。
 
 
 定义用户组和授权
@@ -456,7 +456,7 @@ Gitosis 和 Gitweb 的整合，提供了两个方面的内容。一个是可以�
 
 * 第4行，用于设置版本库的描述信息，显示在 Gitweb 的版本库列表中。
 
-每一个 repo 小节所指向的版本库，如果启用了 Gitweb 选项，则版本库名称汇总到一个项目列表文件中。该项目列表文件缺省保存在 `~/gitosis/projects.list` 中。
+每一个 repo 小节所指向的版本库，如果启用了 Gitweb 选项，则版本库名称汇总到一个项目列表文件中。该项目列表文件缺省保存在 :file:`~/gitosis/projects.list` 中。
 
 
 创建新版本库
@@ -535,5 +535,5 @@ Gitosis 维护的版本库位于安装用户主目录下的 repositories 目录�
 上述配置的含义是：
 
 * 用户 gistore 才能够访问 /etc/gistore/tasks 下的 Git 库。
-* 版本库的名称要经过变换，例如 system 库会变换为实际路径 `/etc/gistore/tasks/system/repo.git` 。
+* 版本库的名称要经过变换，例如 system 库会变换为实际路径 :file:`/etc/gistore/tasks/system/repo.git` 。
 

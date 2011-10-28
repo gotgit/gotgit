@@ -48,7 +48,7 @@ Git 是一个活跃的项目，仍在不断的进化之中，不同Git 版本的
 
 Git 的所有操作，包括创建版本库等管理操作都用 `git` 一个命令即可完成，不像其他有的版本控制系统（如 Subversion），一些涉及管理的操作要使用另外的命令（如 `svnadmin` ）。创建 Git 版本库，可以直接进入到包含数据（文件和子目录）的目录下，通过执行 `git init` 完成版本库的初始化。
 
-下面就从一个空目录开始初始化版本库，这个版本库命名为“DEMO版本库”，这个DEMO版本库将贯穿本篇始终。为了方便说明，使用了名为 `/path/to/my/workspace` 的目录作为个人的工作区根目录，可以在磁盘中创建该目录并设置正确的权限。
+下面就从一个空目录开始初始化版本库，这个版本库命名为“DEMO版本库”，这个DEMO版本库将贯穿本篇始终。为了方便说明，使用了名为 :file:`/path/to/my/workspace` 的目录作为个人的工作区根目录，可以在磁盘中创建该目录并设置正确的权限。
 
 首先建立一个新的工作目录，进入该目录后，执行 `git init` 创建版本库。
 
@@ -78,7 +78,7 @@ Git 的所有操作，包括创建版本库等管理操作都用 `git` 一个命
 
 这个隐藏的 `.git` 目录就是 Git 版本库（又叫仓库，repository）。
 
-`.git` 版本库目录所在的目录，即 `/path/to/my/workspace/demo` 目录称为 **工作区** ，目前工作区除了包含一个隐藏的 `.git` 版本库目录外空无一物。
+`.git` 版本库目录所在的目录，即 :file:`/path/to/my/workspace/demo` 目录称为 **工作区** ，目前工作区除了包含一个隐藏的 `.git` 版本库目录外空无一物。
 
 下面为工作区中加点料：在工作区中创建一个文件 `welcome.txt` ，内容就是一行 "Hello."。
 
@@ -221,20 +221,20 @@ Git 克隆可以降低因为版本库和工作区混杂在一起导致的版本�
 
 在之前出现的 `git config` 命令，有的使用了 `--global` 参数，有的使用了 `--system` 参数，这两个参数有什么区别么？执行下面的命令，您就明白 `git config` 命令实际操作的文件了。
 
-* 执行下面的命令，将打开 `/path/to/my/workspace/demo/.git/config` 文件进行编辑。
+* 执行下面的命令，将打开 :file:`/path/to/my/workspace/demo/.git/config` 文件进行编辑。
 
   ::
 
     $ cd /path/to/my/workspace/demo/
     $ git config -e 
 
-* 执行下面的命令，将打开 `/home/jiangxin/.gitconfig` （用户主目录下的 .gitconfig 文件）全局配置文件进行编辑。
+* 执行下面的命令，将打开 :file:`/home/jiangxin/.gitconfig` （用户主目录下的 .gitconfig 文件）全局配置文件进行编辑。
 
   ::
 
     $ git config -e --global
 
-* 执行下面的命令，将打开 `/etc/gitconfig` 系统级配置文件进行编辑。
+* 执行下面的命令，将打开 :file:`/etc/gitconfig` 系统级配置文件进行编辑。
 
   如果 Git 安装在 /usr/local/bin 下，这个系统级的配置文件也可能是在 "/usr/local/etc/gitconfig" 。
 

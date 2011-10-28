@@ -59,7 +59,7 @@ Git的 PUSH 和 PULL 命令的用法相似，使用下面的语法：
 
 这两个工作区本质上没有区别，但是往往提交是在一个版本（A）中进行的，另外一个（B）作为备份。对于这种对等工作区模式，版本库的同步只有一种可行的操作模式，就是在备份库（B）执行 git pull 命令从源版本库（A）拉回新的提交实现版本库同步。为什么不能从版本库A向版本库B执行 git push 的推送操作呢？看看下面的操作。
 
-执行克隆命令，将版本库 `/path/to/my/workspace/demo` 克隆到 `/path/to/my/workspace/demo-backup` 。
+执行克隆命令，将版本库 :file:`/path/to/my/workspace/demo` 克隆到 :file:`/path/to/my/workspace/demo-backup` 。
 
 ::
 
@@ -182,7 +182,7 @@ Git的 PUSH 和 PULL 命令的用法相似，使用下面的语法：
 .. figure:: /images/git-solo/git-clone-2.png
    :scale: 80
 
-使用 `--bare` 参数克隆 demo 版本库到 `/path/to/repos/demo.git` ，然后就可以从 demo 版本库向克隆的裸版本库执行推送操作了。（为了说明方便，使用了 `/path/to/repos/` 作为 Git 裸版本的根路径，在后面的章节中这个目录也作为 Git 服务器端版本库的根路径。可以在磁盘中以 root 账户创建该路径并设置正确的权限。）
+使用 `--bare` 参数克隆 demo 版本库到 :file:`/path/to/repos/demo.git` ，然后就可以从 demo 版本库向克隆的裸版本库执行推送操作了。（为了说明方便，使用了 :file:`/path/to/repos/` 作为 Git 裸版本的根路径，在后面的章节中这个目录也作为 Git 服务器端版本库的根路径。可以在磁盘中以 root 账户创建该路径并设置正确的权限。）
 
 ::
 
@@ -190,9 +190,9 @@ Git的 PUSH 和 PULL 命令的用法相似，使用下面的语法：
   Cloning into bare repository /path/to/repos/demo.git...
   done.
 
-克隆出来的 `/path/to/repos/demo.git` 目录就是版本库目录，不含工作区。
+克隆出来的 :file:`/path/to/repos/demo.git` 目录就是版本库目录，不含工作区。
 
-* 看看 `/path/to/repos/demo.git` 目录的内容。
+* 看看 :file:`/path/to/repos/demo.git` 目录的内容。
 
   ::
 
@@ -225,7 +225,7 @@ Git的 PUSH 和 PULL 命令的用法相似，使用下面的语法：
     $ git push
     fatal: No destination configured to push to.
 
-* 在执行 `git push` 时使用 `/path/to/repos/demo.git` 作为参数。
+* 在执行 `git push` 时使用 :file:`/path/to/repos/demo.git` 作为参数。
 
   推送成功。
 
@@ -261,7 +261,7 @@ Git的 PUSH 和 PULL 命令的用法相似，使用下面的语法：
 
 命令 git init 在“Git初始化”一章就已经用到了，是用于初始化一个版本库的。之前执行 `git init` 命令初始化的版本库是带工作区的，如何以裸版本库的方式初始化一个版本库呢？奥秘就在于 `--bare` 参数。
 
-下面的命令会创建一个空的裸版本库于目录 `/path/to/repos/demo-init.git` 中。
+下面的命令会创建一个空的裸版本库于目录 :file:`/path/to/repos/demo-init.git` 中。
 
 ::
 
@@ -270,7 +270,7 @@ Git的 PUSH 和 PULL 命令的用法相似，使用下面的语法：
 
 创建的果真是裸版本库么？
 
-* 看看 `/path/to/repos/demo-init.git` 下的内容：
+* 看看 :file:`/path/to/repos/demo-init.git` 下的内容：
 
   ::
 
@@ -307,7 +307,7 @@ Git的 PUSH 和 PULL 命令的用法相似，使用下面的语法：
   严重错误：远程操作意外终止
   错误：部分引用推送失败，至 '/path/to/repos/demo-init.git'
 
-关于这个问题详细说明要在后面的章节介绍，这里先说一个省略版：因为 `/path/to/repos/demo-init.git` 版本库刚刚初始化完成，还没有任何提交更不要说分支了。当执行 `git push` 命令时，如果没有设定推送的分支，而且当前分支也没有注册到远程某个分支，将检查远程分支是否有和本地相同的分支名（如master），如果有，则推送，否则报错。
+关于这个问题详细说明要在后面的章节介绍，这里先说一个省略版：因为 :file:`/path/to/repos/demo-init.git` 版本库刚刚初始化完成，还没有任何提交更不要说分支了。当执行 `git push` 命令时，如果没有设定推送的分支，而且当前分支也没有注册到远程某个分支，将检查远程分支是否有和本地相同的分支名（如master），如果有，则推送，否则报错。
 
 所以需要把 `git push` 命令写的再完整一些。像下面这样操作，就可以完成向空的裸版本库的推送。
 

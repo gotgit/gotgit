@@ -30,7 +30,7 @@ Git 里程碑
           git://github.com/ossxp-com/hello-world.git \
           hello-world.git 
 
-完成上面操作后，就在本地建立了一个裸版本库 `/path/to/repos/hello-world.git` 。接下来用户 user1 和 user2 分别在各自工作区克隆这个裸版本库。使用如下命令即可：
+完成上面操作后，就在本地建立了一个裸版本库 :file:`/path/to/repos/hello-world.git` 。接下来用户 user1 和 user2 分别在各自工作区克隆这个裸版本库。使用如下命令即可：
 
 ::
 
@@ -146,7 +146,7 @@ Git 里程碑
 
 **4. 命令 git name-rev**
 
-命令 `git name-rev` 和 `git describe` 类似，会显示提交ID 及其对应的一个引用。默认优先使用分支名，除非使用 `--tags` 参数。还有一个显著的不同是，如果提交上没有相对应的引用，则会使用最新提交上的引用名称并加上向后回溯的符号 `~<num>` 。
+命令 :command:`git name-rev` 和 :command:`git describe` 类似，会显示提交ID 及其对应的一个引用。默认优先使用分支名，除非使用 :command:`--tags` 参数。还有一个显著的不同是，如果提交上没有相对应的引用，则会使用最新提交上的引用名称并加上向后回溯的符号 :command:`~<num>` 。
 
 * 默认优先显示分支名。
 
@@ -164,7 +164,7 @@ Git 里程碑
     $ git name-rev HEAD --tags
     HEAD tags/jx/v1.0^0
 
-* 如果提交上没有对应的引用名称，则会使用新提交上的引用名称并加上后缀 `~<num>` 。后缀的含义是第 `<num>` 个祖先提交。
+* 如果提交上没有对应的引用名称，则会使用新提交上的引用名称并加上后缀 :command:`~<num>` 。后缀的含义是第 <num> 个祖先提交。
 
   ::
 

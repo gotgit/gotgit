@@ -15,7 +15,7 @@ Cygwin 还提供了一个强大易用的包管理工具（setup.exe），实现�
 安装 Cygwin
 -------------
 
-安装 Cygwin 非常简单，访问其官方网站 http://www.cygwin.com/ ，下载安装程序 —— 一个只有几百KB的 `setup.exe` ，即可开始安装。
+安装 Cygwin 非常简单，访问其官方网站 http://www.cygwin.com/ ，下载安装程序 —— 一个只有几百KB的 :program:`setup.exe` ，即可开始安装。
 
 安装过程会让用户选择安装模式，可以选择网络安装、仅下载，或者通过本地软件包缓存（在安装过程自动在本地目录下建立软件包缓存）进行安装。如果是第一次安装 Cygwin，因为本地尚没有软件包缓存，当然只能选择从网络安装，如图3-4所示。
 
@@ -25,21 +25,21 @@ Cygwin 还提供了一个强大易用的包管理工具（setup.exe），实现�
 
    图3-4：选择安装模式
 
-接下来，Cygwin 询问安装目录，默认为 `C:\\cygwin` ，如图3-5所示。这个目录将作为 Cygwin shell 环境的根目录（根卷），Windows 的各个盘符将挂载在根卷一个特殊目录之下。
+接下来，Cygwin 询问安装目录，默认为 :file:`C:\\cygwin` ，如图3-5所示。这个目录将作为 Cygwin shell 环境的根目录（根卷），Windows 的各个盘符将挂载在根卷一个特殊目录之下。
 
 .. figure:: /images/windows/cygwin-3.png
    :scale: 80
 
    图3-5：选择安装目录
 
-询问本地软件包缓存目录，默认是 `setup.exe` 所处的目录，如图3-6所示。
+询问本地软件包缓存目录，默认是 :program:`setup.exe` 所处的目录，如图3-6所示。
 
 .. figure:: /images/windows/cygwin-4.png
    :scale: 80
 
    图3-6：选择本地软件包缓存目录
 
-询问网络连接方式，是否使用代理等，如图3-7所示。默认会选择第一项：“直接网络连接”。如果一个团队有很多人要使用 Cygwin，架设一个能够提供软件包缓存的 HTTP 代理服务器会节省大量的网络带宽和节省大把的时间。用 Debian 的 apt-cacher-ng 就可以非常简单的搭建一个软件包代理服务器。图3-7显示的就是我在公司内网安装 Cygwin 时使用了我们公司内网的服务器 `bj.ossxp.com` 做为 HTTP 代理的截图，端口设置为 9999，因为这是 apt-cacher-ng 的默认端口。
+询问网络连接方式，是否使用代理等，如图3-7所示。默认会选择第一项：“直接网络连接”。如果一个团队有很多人要使用 Cygwin，架设一个能够提供软件包缓存的 HTTP 代理服务器会节省大量的网络带宽和节省大把的时间。用 Debian 的 apt-cacher-ng 就可以非常简单的搭建一个软件包代理服务器。图3-7显示的就是我在公司内网安装 Cygwin 时使用了我们公司内网的服务器 :samp:`bj.ossxp.com` 做为 HTTP 代理的截图，端口设置为 9999，因为这是 apt-cacher-ng 的默认端口。
 
 .. figure:: /images/windows/cygwin-5-mirror.png
    :scale: 80
@@ -60,7 +60,7 @@ Cygwin 还提供了一个强大易用的包管理工具（setup.exe），实现�
 
    图3-9：Cygwin 软件包管理器
 
-Cygwin 的软件包管理器非常强大和易用（如果习惯了其界面）。软件包归类于各个分组中，点击分组前的加号就可以展开分组。在展开的 Admin 分组中，如图3-10所示（这个截图不是首次安装 Cygwin 的截图），有的软件包如 `libattr1` 已经安装过了，因为没有新版本而标记为“Keep”（保持）。至于没有安装过并且不准备安装的软件包则标记为 “Skip”（跳过）。
+Cygwin 的软件包管理器非常强大和易用（如果习惯了其界面）。软件包归类于各个分组中，点击分组前的加号就可以展开分组。在展开的 Admin 分组中，如图3-10所示（这个截图不是首次安装 Cygwin 的截图），有的软件包如 :program:`libattr1` 已经安装过了，因为没有新版本而标记为“Keep”（保持）。至于没有安装过并且不准备安装的软件包则标记为 “Skip”（跳过）。
 
 .. figure:: /images/windows/cygwin-8-expand-admin-group.png
    :scale: 80
@@ -79,7 +79,7 @@ Cygwin 的软件包管理器非常强大和易用（如果习惯了其界面）�
 安装 Git
 -------------
 
-默认安装的 Cygwin 没有安装 Git 软件包。如果在首次安装过程中忘记通过包管理器选择安装 Git 或其他相关软件包，可以在安装后再次运行 Cygwin 的安装程序 `setup.exe` 。当再次进入 Cygwin 包管理器界面时，在搜索框中输入 git。如图3-12所示。
+默认安装的 Cygwin 没有安装 Git 软件包。如果在首次安装过程中忘记通过包管理器选择安装 Git 或其他相关软件包，可以在安装后再次运行 Cygwin 的安装程序 :program:`setup.exe` 。当再次进入 Cygwin 包管理器界面时，在搜索框中输入 git。如图3-12所示。
 
 .. figure:: /images/windows/cygwin-8-search-git.png
    :scale: 80
@@ -110,7 +110,7 @@ Cygwin 的配置和使用
 
    图3-14：运行 Cygwin
 
-显示 Cygwin 中安装的软件包的版本，可以通过执行 `cygcheck` 命令来查看，例如查看 cygwin 软件包本身的版本：
+显示 Cygwin 中安装的软件包的版本，可以通过执行 :program:`cygcheck` 命令来查看，例如查看 cygwin 软件包本身的版本：
 
 ::
 
@@ -124,7 +124,7 @@ Cygwin 的配置和使用
 
 刚刚接触 Cygwin 的用户遇到的头一个问题就是 Cygwin 如何访问 Windows 的各个磁盘目录，以及在 Windows 平台如何访问 Cygwin 中的目录？
 
-执行 `mount` 命令，可以看到 Windows 下的盘符映射到 `/cygdrive` 特殊目录下。
+执行 :program:`mount` 命令，可以看到 Windows 下的盘符映射到 :file:`/cygdrive` 特殊目录下。
 
 ::
 
@@ -135,7 +135,7 @@ Cygwin 的配置和使用
   C: on /cygdrive/c type ntfs (binary,posix=0,user,noumount,auto)
   D: on /cygdrive/d type ntfs (binary,posix=0,user,noumount,auto)
 
-也就是说在 Windows 下的 `C:\\Windows` 目录，在 Cygwin 以路径 `/cygdrive/c/Windows` 进行访问。实际上 Cygwin 提供一个命令 `cygpath` 实现 Windows 平台和 Cygwin 之间目录名称的变换。如下：
+也就是说在 Windows 下的 :file:`C:\\Windows` 目录，在 Cygwin 以路径 :file:`/cygdrive/c/Windows` 进行访问。实际上 Cygwin 提供一个命令 :program:`cygpath` 实现 Windows 平台和 Cygwin 之间目录名称的变换。如下：
 
 ::
 
@@ -145,7 +145,7 @@ Cygwin 的配置和使用
   $ cygpath -w ~/
   C:\cygwin\home\jiangxin\
 
-从上面的示例也可以看出，Cygwin 下的用户主目录（即 `/home/jiangxin/` ）相当于 Windows 下的 `C:\\cygwin\\home\\jiangxin\\` 目录。
+从上面的示例也可以看出，Cygwin 下的用户主目录（即 :file:`/home/jiangxin/` ）相当于 Windows 下的 :file:`C:\\cygwin\\home\\jiangxin\\` 目录。
 
 用户主目录不一致的问题
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -154,7 +154,7 @@ Cygwin 的配置和使用
 
 出现这种情况，是因为 Cygwin 确定用户主目录有几个原则，依照顺序确定主目录。首先查看系统的 HOME 环境变量，其次查看 /etc/passwd 中为用户设置的主目录。有的软件遵照这个原则，而有些 Cygwin 应用如 ssh，却没有使用 HOME 环境变量而直接使用 /etc/passwd 中的的设置。要想避免在同一个 Cygwin 环境下有两个不同的用户主目录设置，可以采用下面两种方法。
 
-* 方法1：修改 Cygwin 启动的批处理文件（如： `C:\\cygwin\\Cygwin.bat` ），在批处理的开头添加如下的一行，就可以清除其他软件为 Windows 引入的 HOME 环境变量。
+* 方法1：修改 Cygwin 启动的批处理文件（如： :file:`C:\\cygwin\\Cygwin.bat` ），在批处理的开头添加如下的一行，就可以清除其他软件为 Windows 引入的 HOME 环境变量。
 
   ::
 
@@ -167,7 +167,7 @@ Cygwin 的配置和使用
 
 Windows 的文件系统忽略文件名大小写，在 Cygwin 下最好对命令行补齐进行相关设置以忽略大小写，这样使用起来更方便。
 
-编辑文件 `~/.inputrc` ，在其中添加设置 "set completion-ignore-case on" ，或者取消已有相关设置前面的井号注释符。修改完毕后，再重新进入 Cygwin，就可以实现文件名补齐对大小写的忽略。
+编辑文件 :file:`~/.inputrc` ，在其中添加设置 "set completion-ignore-case on" ，或者取消已有相关设置前面的井号注释符。修改完毕后，再重新进入 Cygwin，就可以实现文件名补齐对大小写的忽略。
 
 忽略文件权限的可执行位
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -185,9 +185,9 @@ Linux、Unix、Mac OS X 下的可执行文件在文件权限有特殊的设置�
 Cygwin 下 Git 的中文支持
 -------------------------
 
-Cygwin 当前版本 1.7.x，对中文的支持非常好。无需任何配置就可以在 Cygwin 的窗口内输入中文，以及执行 `ls` 命令显示中文文件名。这与我记忆中的6、7年前的 Cygwin 1.5.x 完全不一样了。老版本的 Cygwin 还需要做一些工作才能在控制台输入中文和显示中文，但是最新的 Cygwin 已经完全不需要了。反倒是后面要介绍的 msysGit 的 shell 环境仍然需要做出类似（老版本 Cygwin）的改动才能够正常显示和输入中文。
+Cygwin 当前版本 1.7.x，对中文的支持非常好。无需任何配置就可以在 Cygwin 的窗口内输入中文，以及执行 :program:`ls` 命令显示中文文件名。这与我记忆中的6、7年前的 Cygwin 1.5.x 完全不一样了。老版本的 Cygwin 还需要做一些工作才能在控制台输入中文和显示中文，但是最新的 Cygwin 已经完全不需要了。反倒是后面要介绍的 msysGit 的 shell 环境仍然需要做出类似（老版本 Cygwin）的改动才能够正常显示和输入中文。
 
-Cygwin 默认使用 UTF-8 字符集，并巧妙的和 Windows 系统的字符集之间进行转换。在 Cygwin 下执行 `locale` 命令查看 Cygwin 下正在使用的字符集。
+Cygwin 默认使用 UTF-8 字符集，并巧妙的和 Windows 系统的字符集之间进行转换。在 Cygwin 下执行 :program:`locale` 命令查看 Cygwin 下正在使用的字符集。
 
 ::
 
@@ -215,7 +215,7 @@ Cygwin 默认使用 UTF-8 字符集，并巧妙的和 Windows 系统的字符集
   $ git status -s
   ?? "\350\257\264\346\230\216.txt"
 
-通过设置变量 `core.quotepath` 为 `false` ，就可以解决中文文件名在这些 Git 命令输出中的显示问题。
+通过设置变量 :samp:`core.quotepath` 为 :samp:`false` ，就可以解决中文文件名在这些 Git 命令输出中的显示问题。
 
 ::
 
@@ -247,14 +247,14 @@ Cygwin 下的 openssh 软件包提供的 ssh 命令和 Linux 下的没有什么�
 
 PuTTY 是 Windows 下一个开源软件，提供 SSH 客户端服务，还包括公钥管理相关工具。访问 PuTTY 的主页（http://www.chiark.greenend.org.uk/~sgtatham/putty/），下载并安装 PuTTY。安装完毕会发现 PuTTY 软件包包含了好几个可执行程序，对于和 Git 整合，下面几个命令会用到。
 
-* Plink： 即 plink.exe，是命令行的 SSH 客户端，用于替代 ssh 命令。默认安装于 `C:\\Program Files\\PuTTY\\plink.exe` 。
+* Plink： 即 plink.exe，是命令行的 SSH 客户端，用于替代 ssh 命令。默认安装于 :file:`C:\\Program Files\\PuTTY\\plink.exe` 。
 * PuTTYgen ：用于管理 PuTTY 格式的私钥，也可以用于将 openssh 格式的私钥转换为 PuTTY 格式的私钥。
 * Pageant ：是 SSH 认证代理，运行于后台，负责为 SSH 连接提供私钥访问服务。
 
 PuTTY 格式的私钥
 ^^^^^^^^^^^^^^^^^
 
-PuTTY 使用自定义格式的私钥文件（扩展名为 `.ppk` ），而不能直接使用 openssh 格式的私钥。即用 openssh 的 ssh-keygen 命令创建的私钥不能直接被 PuTTY 拿过来使用，必需经过转换。程序 PuTTYgen 可以实现私钥格式的转换。
+PuTTY 使用自定义格式的私钥文件（扩展名为 :file:`.ppk` ），而不能直接使用 openssh 格式的私钥。即用 openssh 的 ssh-keygen 命令创建的私钥不能直接被 PuTTY 拿过来使用，必需经过转换。程序 PuTTYgen 可以实现私钥格式的转换。
 
 运行 PuTTYgen 程序，如图3-15所示。
 
@@ -270,12 +270,12 @@ PuTTYgen 既可以重新创建私钥文件，也可以通过点击加载按钮�
 
    图3-16：PuTTYgen 完成私钥加载
 
-然后点击 “Save private key”（保存私钥），就可以将私钥保存为 PuTTY 的 `.ppk` 格式的私钥。例如将私钥保存到文件 `~/.ssh/jiangxin-cygwin.ppk` 中。
+然后点击 “Save private key”（保存私钥），就可以将私钥保存为 PuTTY 的 :file:`.ppk` 格式的私钥。例如将私钥保存到文件 :file:`~/.ssh/jiangxin-cygwin.ppk` 中。
 
 Git 使用 Pageant 进行公钥认证
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Git 在使用命令行工具 Plink（ `plink.exe` ）做为 SSH 客户端访问 SSH 协议的版本库服务器时，如何选择公钥呢？使用 Pageant 是一个非常好的选择。Pageant 是 PuTTY 软件包中为各个 PuTTY 应用提供私钥请求的代理软件，当 Plink 连接 SSH 服务器需要请求公钥认证时，Pageant 就会提供给 Plink 相应的私钥。
+Git 在使用命令行工具 Plink（ :program:`plink.exe` ）做为 SSH 客户端访问 SSH 协议的版本库服务器时，如何选择公钥呢？使用 Pageant 是一个非常好的选择。Pageant 是 PuTTY 软件包中为各个 PuTTY 应用提供私钥请求的代理软件，当 Plink 连接 SSH 服务器需要请求公钥认证时，Pageant 就会提供给 Plink 相应的私钥。
 
 运行 Pageant ，启动后显示为托盘区中的一个图标，在后台运行。当使用鼠标右键单击 Pageant 的图标，就会显示弹出菜单如图3-17所示。
 
@@ -284,15 +284,15 @@ Git 在使用命令行工具 Plink（ `plink.exe` ）做为 SSH 客户端访问 
 
    图3-17：Pageant 的弹出菜单
 
-点击弹出菜单中的 “Add Key”（添加私钥）按钮，弹出文件选择框，选择扩展名为 `.ppk` 的 PuTTY 格式的公钥，即完成了 Pageant 的私钥准备工作。
+点击弹出菜单中的 “Add Key”（添加私钥）按钮，弹出文件选择框，选择扩展名为 :file:`.ppk` 的 PuTTY 格式的公钥，即完成了 Pageant 的私钥准备工作。
 
-接下来，还需要对 Git 进行设置，设置 Git 使用 `plink.exe` 做为 SSH 客户端，而不是缺省的 `ssh`  命令。通过设置 GIT_SSH 环境变量即可实现。
+接下来，还需要对 Git 进行设置，设置 Git 使用 :file:`plink.exe` 做为 SSH 客户端，而不是缺省的 :program:`ssh`  命令。通过设置 GIT_SSH 环境变量即可实现。
 
 ::
 
   $ export GIT_SSH=/cygdrive/c/Program\ Files/PuTTY/plink.exe
 
-上面在设置 GIT_SSH 环境变量的过程中，使用了 Cygwin 格式的路径，而非 Windows 格式，这是因为 Git 是在 Cygwin 的环境中调用 `plink.exe` 命令的，当然要使用 Cygwin 能够理解的路径。
+上面在设置 GIT_SSH 环境变量的过程中，使用了 Cygwin 格式的路径，而非 Windows 格式，这是因为 Git 是在 Cygwin 的环境中调用 :program:`plink.exe` 命令的，当然要使用 Cygwin 能够理解的路径。
 
 然后就可以用 Git 访问 SSH 协议的 Git 服务器了。运行在后台的 Pageant 会在需要的时候为 plink.exe 提供私钥访问服务。但在首次连接一个使用 SSH 协议的 Git 服务器的时候，很可能会因为远程SSH服务器的公钥没有经过确认导致 git 命令执行失败。如下所示。
 
@@ -308,7 +308,7 @@ Git 在使用命令行工具 Plink（ `plink.exe` ）做为 SSH 客户端访问 
   Connection abandoned.
   fatal: The remote end hung up unexpectedly
 
-这是因为首次连接一个 SSH 服务器时，要对其公钥进行确认（以防止被钓鱼），而运行于 Git 下的 `plink.exe` 没有机会从用户那里获取输入以建立对该SSH服务器公钥的信任，因此 Git 访问失败。解决办法非常简单，就是直接运行 `plink.exe` 连接一次远程 SSH 服务器，对公钥确认进行应答。如下：
+这是因为首次连接一个 SSH 服务器时，要对其公钥进行确认（以防止被钓鱼），而运行于 Git 下的 :program:`plink.exe` 没有机会从用户那里获取输入以建立对该SSH服务器公钥的信任，因此 Git 访问失败。解决办法非常简单，就是直接运行 :program:`plink.exe` 连接一次远程 SSH 服务器，对公钥确认进行应答。如下：
 
 ::
 
@@ -331,9 +331,9 @@ Git 在使用命令行工具 Plink（ `plink.exe` ）做为 SSH 客户端访问 
 使用自定义 SSH 脚本取代 Pageant
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-使用 Pageant 还要在每次启动 Pageant 时手动选择私钥文件，比较的麻烦。实际上可以创建一个脚本对 `plink.exe` 进行封装，在封装的脚本中指定私钥文件，这样就可以不必使用 Pageant 而实现公钥认证了。
+使用 Pageant 还要在每次启动 Pageant 时手动选择私钥文件，比较的麻烦。实际上可以创建一个脚本对 :program:`plink.exe` 进行封装，在封装的脚本中指定私钥文件，这样就可以不必使用 Pageant 而实现公钥认证了。
 
-例如：创建脚本 `~/bin/ssh-jiangxin` ，文件内容如下了：
+例如：创建脚本 :file:`~/bin/ssh-jiangxin` ，文件内容如下了：
 
 ::
 

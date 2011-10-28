@@ -1,17 +1,17 @@
 etckeeper
 *********
 
-Linux / Unix 的用户对 `/etc` 目录都是再熟悉不过了，在这个最重要的目录中保存了大部分软件的配置信息，借以实现软件的配置以及整个系统的启动过程控制。对于 Windows 用户来说，可以把 `/etc` 目录视为 Windows 中的注册表，只不过文件化了，可管理了。
+Linux / Unix 的用户对 :file:`/etc` 目录都是再熟悉不过了，在这个最重要的目录中保存了大部分软件的配置信息，借以实现软件的配置以及整个系统的启动过程控制。对于 Windows 用户来说，可以把 :file:`/etc` 目录视为 Windows 中的注册表，只不过文件化了，可管理了。
 
-这么重要的 `/etc` 目录，如果其中的文件被错误编辑或者删除，将会损失惨重。 `etckeeper` 这个软件可以帮助实现 `/etc` 目录的持续备份，借用分布式版本控制工具，如: git, mercurial, bazaar, darcs 。
+这么重要的 :file:`/etc` 目录，如果其中的文件被错误编辑或者删除，将会损失惨重。 `etckeeper` 这个软件可以帮助实现 :file:`/etc` 目录的持续备份，借用分布式版本控制工具，如: git, mercurial, bazaar, darcs 。
 
 那么 etckeeper 是如何实现的呢？以 git 作为 etckeeper 的后端为例进行说明，其他的分布式版本控制系统大同小异。
 
-* 将 `/etc` 目录 git 化。将会创建 Git 库于目录 `/etc/.git` 中， `/etc` 目录作为工作区。
-* 与系统的包管理器，如 Debian/Ubuntu 的 apt，Redhat 上的 yum 等整合。一旦有软件包安装或删除，对 `/etc` 目录下的改动执行提交操作。
-* 除了能够记录 `/etc` 目录中的文件内容，还可以记录文件属性等元信息。因为 `/etc` 目录下的文件的权限设置往往是非常重要和致命的。
-* 因为 `/etc` 目录已经是一个版本库了，可以用 git 命令对 `/etc` 下的文件进行操作：查看历史，回退到历史版本...
-* 也可以将 `/etc` 克隆到另外的主机中，实现双机备份。
+* 将 :file:`/etc` 目录 git 化。将会创建 Git 库于目录 :file:`/etc/.git` 中， :file:`/etc` 目录作为工作区。
+* 与系统的包管理器，如 Debian/Ubuntu 的 apt，Redhat 上的 yum 等整合。一旦有软件包安装或删除，对 :file:`/etc` 目录下的改动执行提交操作。
+* 除了能够记录 :file:`/etc` 目录中的文件内容，还可以记录文件属性等元信息。因为 :file:`/etc` 目录下的文件的权限设置往往是非常重要和致命的。
+* 因为 :file:`/etc` 目录已经是一个版本库了，可以用 git 命令对 :file:`/etc` 下的文件进行操作：查看历史，回退到历史版本...
+* 也可以将 :file:`/etc` 克隆到另外的主机中，实现双机备份。
 
 安装 etckeeper
 ===============
@@ -38,7 +38,7 @@ Linux / Unix 的用户对 `/etc` 目录都是再熟悉不过了，在这个最�
 
 配置 etckeeper 首先要选择好某一分布式版本库控制工具，如 Git，然后用相应的版本控制工具初始化 /etc 目录，并做一次提交。
 
-* 编辑配置文件 `/etc/etckeeper/etckeeper.conf` 。
+* 编辑配置文件 :file:`/etc/etckeeper/etckeeper.conf` 。
 
   只要有下面一条配置就够了。告诉 etckeeper 使用 git 作为数据管理后端。
 
@@ -46,7 +46,7 @@ Linux / Unix 的用户对 `/etc` 目录都是再熟悉不过了，在这个最�
   
     VCS="git"
 
-* 初始化 `/etc` 目录。即将其 git 化。执行下面的命令（需要以 root 用户身份），会将 `/etc` 目录 git 化。
+* 初始化 :file:`/etc` 目录。即将其 git 化。执行下面的命令（需要以 root 用户身份），会将 :file:`/etc` 目录 git 化。
 
   整个过程可能会比较慢，因为要对 /etc 下的文件执行 `git add` ，因为文件太多，会慢一些。
 
@@ -61,14 +61,14 @@ Linux / Unix 的用户对 `/etc` 目录都是再熟悉不过了，在这个最�
     $ sudo etckeeper commit "this is the first etckeeper commit..."
 
 
-  整个过程可能会比较慢，主要是因为 etckeeper 要扫描 `/etc` 下非 root 用户的文件以及特殊权限的文件并进行记录。别忘了 git 本身并不能记录文件属主以及文件权限等信息。
+  整个过程可能会比较慢，主要是因为 etckeeper 要扫描 :file:`/etc` 下非 root 用户的文件以及特殊权限的文件并进行记录。别忘了 git 本身并不能记录文件属主以及文件权限等信息。
 
 使用 etckeeper
 ===============
 
-实际上由于 etckeeper 已经和系统的包管理工具进行了整合（如 Debian/Ubuntu 的 apt，Redhat 上的 yum 等），etckeeper 可以免维护运行。即一旦有软件包安装或删除，对 `/etc` 目录下的改动会自动执行提交操作。
+实际上由于 etckeeper 已经和系统的包管理工具进行了整合（如 Debian/Ubuntu 的 apt，Redhat 上的 yum 等），etckeeper 可以免维护运行。即一旦有软件包安装或删除，对 :file:`/etc` 目录下的改动会自动执行提交操作。
 
-当然也可以随时以 `root` 用户身份调用 `etckeeper commit` 命令对 `/etc` 目录的改动手动进行提交。
+当然也可以随时以 `root` 用户身份调用 `etckeeper commit` 命令对 :file:`/etc` 目录的改动手动进行提交。
 
-剩下的工作就交给 Git 了。可以在 `/etc` 目录执行 `git log`, `git show` 等操作。但要注意以 root 用户身份运行，因为 `/etc/.git` 目录的权限不允许普通用户操作。
+剩下的工作就交给 Git 了。可以在 :file:`/etc` 目录执行 `git log`, `git show` 等操作。但要注意以 root 用户身份运行，因为 :file:`/etc/.git` 目录的权限不允许普通用户操作。
 

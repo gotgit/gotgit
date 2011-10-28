@@ -16,7 +16,7 @@ Git 协议的语法格式如下。
 说明：
 
 * 端口为可选项，默认端口为 9418。
-* 版本库路径 `/path/to/repos.git` 的根目录并不一定是系统的根目录，可以在 `git-daemon` 启动时用参数 `--base-path` 指定根目录。如果 `git-daemon` 没有设置根目录，则对应于系统的根目录。
+* 版本库路径 :file:`/path/to/repos.git` 的根目录并不一定是系统的根目录，可以在 `git-daemon` 启动时用参数 `--base-path` 指定根目录。如果 `git-daemon` 没有设置根目录，则对应于系统的根目录。
 
 Git 服务软件
 =============
@@ -28,7 +28,7 @@ Git 软件包本身提供了 git-daemon，因此只要安装了 Git，一般就�
 以 inetd 方式配置运行
 =====================
 
-最简单的方式，是以 inetd 服务方式运行 git-daemon。在配置文件 `/etc/inetd.conf` 中添加设置如下:
+最简单的方式，是以 inetd 服务方式运行 git-daemon。在配置文件 :file:`/etc/inetd.conf` 中添加设置如下:
 
 ::
 
@@ -65,7 +65,7 @@ runit 是类似于 sysvinit 的服务管理进程，但是更简单。在 Debian
 
 * 配置 `git-daemon-run` ：
 
-  缺省的服务配置文件： `/etc/sv/git-daemon/run` 。和之前的 inetd 运行方式相比，以独立的服务进程启动，相应速度更快。
+  缺省的服务配置文件： :file:`/etc/sv/git-daemon/run` 。和之前的 inetd 运行方式相比，以独立的服务进程启动，相应速度更快。
 
   ::
 

@@ -21,7 +21,7 @@ HTTP 协议是版本控制非常重要的一种协议，具有安全（HTTPS）�
       allow from all
   </Directory>
 
-当用户执行 `git clone http://server/git/myrepo.git` ，实际访问的是服务器端 `/path/to/repos/myrepo.git` 路径中的版本库。
+当用户执行 `git clone http://server/git/myrepo.git` ，实际访问的是服务器端 :file:`/path/to/repos/myrepo.git` 路径中的版本库。
 
 要求版本库目录下必须存在文件 `.git/info/refs` ，该文件中包含了版本库中所有的引用列表，且引用都指向正确的 SHA1哈希值。而且还要存在文件 `.git/objects/info/packs` ，以便对象库打包后，能够通过该文件定位到打包文件。
 
@@ -202,22 +202,22 @@ Gitweb 安装
 
 安装文件列表：
 
-* 配置文件： `/etc/gitweb.conf`
+* 配置文件： :file:`/etc/gitweb.conf`
 
-* Apache 配置文件： `/etc/apache2/conf.d/gitweb`
+* Apache 配置文件： :file:`/etc/apache2/conf.d/gitweb`
 
-  通过地址 `/gitweb` 提供 gitweb 服务器。
+  通过地址 :file:`/gitweb` 提供 gitweb 服务器。
 
-* CGI 脚本： `/usr/share/gitweb/index.cgi`
+* CGI 脚本： :file:`/usr/share/gitweb/index.cgi`
 
-* 其他附属文件： `/usr/share/gitweb/*`
+* 其他附属文件： :file:`/usr/share/gitweb/*`
 
   图片和 css 等。
 
 Gitweb 配置
 ------------
 
-编辑 `/etc/gitweb.conf` ，更改 gitweb 的缺省设置。
+编辑 :file:`/etc/gitweb.conf` ，更改 gitweb 的缺省设置。
 
 * 版本库的根目录
 

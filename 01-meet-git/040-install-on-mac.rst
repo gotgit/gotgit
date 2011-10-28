@@ -6,27 +6,27 @@ Mac OS X 被称为最人性化的操作系统，工作在 Mac 上是件非常惬
 以二进制发布包的形式安装
 -------------------------
 
-Git 在 Mac OS X 中也有好几种安装方法。最为简单的方式是安装 `.dmg` 格式的安装包。
+Git 在 Mac OS X 中也有好几种安装方法。最为简单的方式是安装 :file:`.dmg` 格式的安装包。
 
-访问 git-osx-installer 的官方网站： http://code.google.com/p/git-osx-installer/ ，下载 Git 安装包。安装包带有 `.dmg` 扩展名，是苹果磁盘镜像（Apple Disk Image）格式的软件发布包。从官方网站上下载文件名类似 git-<version>-<arch>-leopard.dmg 的安装包文件，例如：git-1.7.3.5-x86_64-leopard.dmg 是 64 位的安装包，git-1.7.3.5-i386-leopard.dmg 是 32 位的安装包。建议选择 64 位的软件包，因为 Mac OS X 10.6 雪豹完美的兼容 32 位和 64位（开机按住键盘数字3和2进入32位系统，按住6和4进入64位系统），即使在核心处于32位架构下，也可以放心的运行64位软件包。
+访问 git-osx-installer 的官方网站： http://code.google.com/p/git-osx-installer/ ，下载 Git 安装包。安装包带有 :file:`.dmg` 扩展名，是苹果磁盘镜像（Apple Disk Image）格式的软件发布包。从官方网站上下载文件名类似 git-<version>-<arch>-leopard.dmg 的安装包文件，例如：git-1.7.3.5-x86_64-leopard.dmg 是 64 位的安装包，git-1.7.3.5-i386-leopard.dmg 是 32 位的安装包。建议选择 64 位的软件包，因为 Mac OS X 10.6 雪豹完美的兼容 32 位和 64位（开机按住键盘数字3和2进入32位系统，按住6和4进入64位系统），即使在核心处于32位架构下，也可以放心的运行64位软件包。
 
-苹果的 `.dmg` 格式的软件包实际上是一个磁盘映像，安装起来非常方便，点击该文件就直接挂载到 Finder 中，并打开，如图3-1所示。
+苹果的 :file:`.dmg` 格式的软件包实际上是一个磁盘映像，安装起来非常方便，点击该文件就直接挂载到 Finder 中，并打开，如图3-1所示。
 
 .. figure:: /images/meet-git/mac-install-1.png
    :scale: 100
 
    图3-1：在 Mac OS X 下打开 .dmg 格式磁盘镜像
 
-其中带有一个正在解包图标的文件（扩展名为 `.pkg` ）是 Git 的安装程序，另外的两个脚本程序，一个用于应用的卸载（ `uninstall.sh` ），另外一个带有长长文件名的脚本可以在 Git 安装后执行的，为非终端应用注册 Git 的安装路径，因为 Git 部署在标准的系统路径之外 `/usr/local/git/bin` 。
+其中带有一个正在解包图标的文件（扩展名为 :file:`.pkg` ）是 Git 的安装程序，另外的两个脚本程序，一个用于应用的卸载（ :file:`uninstall.sh` ），另外一个带有长长文件名的脚本可以在 Git 安装后执行的，为非终端应用注册 Git 的安装路径，因为 Git 部署在标准的系统路径之外 :file:`/usr/local/git/bin` 。
 
-点击扩展名为 `.pkg` 的安装程序，开始 Git 的安装，根据提示按步骤完成安装，如图3-2所示。
+点击扩展名为 :file:`.pkg` 的安装程序，开始 Git 的安装，根据提示按步骤完成安装，如图3-2所示。
 
 .. figure:: /images/meet-git/mac-install-2.png
    :scale: 100
 
    图3-2：在 Mac OS X 下安装 Git。
 
-安装完毕，git 会被安装到 `/usr/local/git/bin/` 目录下。重启终端程序，才能让 `/etc/paths.d/git` 文件为 PATH 环境变量中添加的新路径注册生效。然后就可以在终端中直接运行 `git` 命令了。
+安装完毕，git 会被安装到 :file:`/usr/local/git/bin/` 目录下。重启终端程序，才能让 :file:`/etc/paths.d/git` 文件为 PATH 环境变量中添加的新路径注册生效。然后就可以在终端中直接运行 :program:`git` 命令了。
 
 安装 Xcode
 -------------------------
@@ -52,7 +52,7 @@ Homebrew 用 ruby 语言开发，支持千余种开源软件在 Mac OS X 中的�
   $ ruby -e \
     "$(curl -fsSL https://gist.github.com/raw/323731/install_homebrew.rb)"
 
-安装完成后，Homebrew 的主程序安装在 `/usr/local/bin/brew` ，在目录 `/usr/local/Library/Formula/` 下保存了所有 Homebrew 支持的软件的安装指引文件。
+安装完成后，Homebrew 的主程序安装在 :file:`/usr/local/bin/brew` ，在目录 :file:`/usr/local/Library/Formula/` 下保存了所有 Homebrew 支持的软件的安装指引文件。
 
 运行 `brew` 安装 Git，使用下面的命令。
 
@@ -60,9 +60,9 @@ Homebrew 用 ruby 语言开发，支持千余种开源软件在 Mac OS X 中的�
 
   $ brew install git
 
-使用 Homebrew 方式安装，Git 被安装在 `/usr/local/Cellar/git/1.7.3.5` ，可执行程序自动在 `/usr/local/bin` 目录下创建符号连接，可以直接在终端程序中访问。
+使用 Homebrew 方式安装，Git 被安装在 :file:`/usr/local/Cellar/git/1.7.3.5` ，可执行程序自动在 :file:`/usr/local/bin` 目录下创建符号连接，可以直接在终端程序中访问。
 
-通过 `brew list` 命令可以查看安装的开源软件包。
+通过 :command:`brew list` 命令可以查看安装的开源软件包。
 
 ::
 
@@ -110,17 +110,17 @@ Git 通过 bash-completion 软件包实现命令补齐，在 Mac OS X 下可以�
   $ brew install bash-completion
   ...
   Add the following lines to your ~/.bash_profile file:
-  if [ -f `brew --prefix`/etc/bash_completion ]; then
-    . `brew --prefix`/etc/bash_completion
+  if [ -f $(brew --prefix)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion
   fi
   ...
 
-根据 bash-completion 安装过程中的提示，修改文件 `~/.bash_profile` 文件，并在其中加入如下内容，以便在终端加载时自动启用命令补齐。
+根据 bash-completion 安装过程中的提示，修改文件 :file:`~/.bash_profile` 文件，并在其中加入如下内容，以便在终端加载时自动启用命令补齐。
 
 ::
 
-  if [ -f `brew --prefix`/etc/bash_completion ]; then
-    . `brew --prefix`/etc/bash_completion
+  if [ -f $(brew --prefix)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion
   fi
 
 将 Git 的命令补齐脚本拷贝到 bash-completion 对应的目录中。
@@ -128,13 +128,13 @@ Git 通过 bash-completion 软件包实现命令补齐，在 Mac OS X 下可以�
 ::
 
   $ cp contrib/completion/git-completion.bash \
-       `brew --prefix`/etc/bash_completion.d/
+       $(brew --prefix)/etc/bash_completion.d/
 
 不用重启终端程序，只需要运行下面的命令，即可立即在当前的 shell 中加载命令补齐。
 
 ::
 
-  . `brew --prefix`/etc/bash_completion
+  . $(brew --prefix)/etc/bash_completion
 
 其他辅助工具的安装
 -------------------------
@@ -147,13 +147,13 @@ Git 通过 bash-completion 软件包实现命令补齐，在 Mac OS X 下可以�
 * stgit: Git 的补丁和提交管理工具。
 * quilt: 一种补丁管理工具。在介绍 StGit 时用到。
 
-在 Mac OS X 下能够使用到的 Git 图形工具除了 Git 软件包自带的 `gitk` 和 `git gui` 之外，还可以安装 GitX。下载地址：
+在 Mac OS X 下能够使用到的 Git 图形工具除了 Git 软件包自带的 :command:`gitk` 和 :command:`git gui` 之外，还可以安装 GitX。下载地址：
 
 * GitX 的原始版本：http://gitx.frim.nl/
 * 或 GitX 的一个分支版本，提供增强的功能：
   https://github.com/brotherbard/gitx/downloads
 
-Git 的图形工具一般需要在本地克隆版本库的工作区中执行，为了能和 Mac OS X 有更好的整合，可以安装插件实现和 Finder 的整合。在 git-osx-installer 的官方网站： http://code.google.com/p/git-osx-installer/ ，有两个以 `OpenInGitGui-` 和 `OpenInGitX-` 为前缀的软件包，可以分别实现和 `git gui` 以及 `gitx` 的整合：在 Finder 中进入工作区目录，点击对应插件的图标，启动 `git gui` 或 `gitx` 。
+Git 的图形工具一般需要在本地克隆版本库的工作区中执行，为了能和 Mac OS X 有更好的整合，可以安装插件实现和 Finder 的整合。在 git-osx-installer 的官方网站： http://code.google.com/p/git-osx-installer/ ，有两个以 :file:`OpenInGitGui-` 和 :file:`OpenInGitX-` 为前缀的软件包，可以分别实现和 :command:`git gui` 以及 :command:`gitx` 的整合：在 Finder 中进入工作区目录，点击对应插件的图标，启动 :command:`git gui` 或 :command:`gitx` 。
 
 中文支持
 -------------------

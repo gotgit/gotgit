@@ -1,23 +1,23 @@
 Windows 下安装和使用 Git（msysGit篇）
 =====================================
 
-运行在 Cygwin 下的 Git 不是直接使用 Windows 的系统调用，而是通过二传手 `cygwin1.dll` 来进行，虽然 Cygwin 的 git 命令能够在 Windows 下的 `cmd.exe` 命令窗口中运行的非常好，但 Cygwin 下的 Git 并不能看作是 Windows 下的原生程序。相比 Cygwin 下的 Git，msysGit 是原生的 Windows 程序，msysGit 下运行的 Git 直接通过 Windows 的系统调用运行。
+运行在 Cygwin 下的 Git 不是直接使用 Windows 的系统调用，而是通过二传手 :file:`cygwin1.dll` 来进行，虽然 Cygwin 的 git 命令能够在 Windows 下的 :program:`cmd.exe` 命令窗口中运行的非常好，但 Cygwin 下的 Git 并不能看作是 Windows 下的原生程序。相比 Cygwin 下的 Git，msysGit 是原生的 Windows 程序，msysGit 下运行的 Git 直接通过 Windows 的系统调用运行。
 
 msysGit 的名字前面的四个字母来源于 MSYS 项目。MSYS 项目源自于 MinGW（Minimalist GNU for Windows，最简GNU工具集），通过增加了一个 bash 提供的shell 环境以及其他相关工具软件，组成了一个最简系统（Minimal SYStem），简称 MSYS。利用 MinGW 提供的工具，以及 Git 针对 MinGW 的一个分支版本，在 Windows 平台为 Git 编译出一个原生应用，接合 MSYS 就组成了 msysGit。
 
 安装 msysGit
 -------------
 
-安装 msysGit 非常简单，访问 msysGit 的项目主页（http://code.google.com/p/msysgit/），下载 msysGit。最简单的方式是下载名为 `Git-<VERSION>-preview<DATE>.exe` 的软件包，如： `Git-1.7.3.1-preview20101002.exe` 。如果有时间和耐心，喜欢观察 Git 是如何在 Windows 上是编译为原生应用的，也可以下载带 `msysGit-fullinstall-` 前缀的软件包。
+安装 msysGit 非常简单，访问 msysGit 的项目主页（http://code.google.com/p/msysgit/），下载 msysGit。最简单的方式是下载名为 :file:`Git-<VERSION>-preview<DATE>.exe` 的软件包，如： :file:`Git-1.7.3.1-preview20101002.exe` 。如果有时间和耐心，喜欢观察 Git 是如何在 Windows 上是编译为原生应用的，也可以下载带 :file:`msysGit-fullinstall-` 前缀的软件包。
 
-点击下载的安装程序（如 `Git-1.7.3.1-preview20101002.exe` ），开始安装，如图3-18。
+点击下载的安装程序（如 :file:`Git-1.7.3.1-preview20101002.exe` ），开始安装，如图3-18。
 
 .. figure:: /images/windows/msysgit-1.png
    :scale: 80
 
    图3-18：启动 msysGit 安装
 
-默认安装到 `C:\\Program Files\\Git` 目录中。
+默认安装到 :file:`C:\\Program Files\\Git` 目录中。
 
 .. figure:: /images/windows/msysgit-3.png
    :scale: 80
@@ -53,7 +53,7 @@ msysGit 的配置和使用
 如何访问 Windows 的磁符
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-在 msysGit 下访问 Windows 的各个盘符，要比 Cygwin 简单，直接通过 "`/c`" 即可访问 Windows 的 C: 盘，用 "`/d`" 访问 Windows 的 D: 盘。
+在 msysGit 下访问 Windows 的各个盘符，要比 Cygwin 简单，直接通过 ":file:`/c`" 即可访问 Windows 的 C: 盘，用 ":file:`/d`" 访问 Windows 的 D: 盘。
 
 ::
 
@@ -65,7 +65,7 @@ msysGit 的配置和使用
 命令行补齐和忽略文件大小写
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-msysGit 缺省已经安装了 Git 的命令补齐功能，并且在对文件名命令补齐时忽略大小写。这是因为 msysGit 已经在配置文件 `/etc/inputrc` 中包含了下列的设置:
+msysGit 缺省已经安装了 Git 的命令补齐功能，并且在对文件名命令补齐时忽略大小写。这是因为 msysGit 已经在配置文件 :file:`/etc/inputrc` 中包含了下列的设置:
 
 ::
 
@@ -79,7 +79,7 @@ msysGit shell 环境的中文支持
 中文录入问题
 ^^^^^^^^^^^^^
 
-缺省安装的 msysGit 的 shell 环境无法输入中文。为了能在 shell 界面中输入中文，需要修改配置文件 `/etc/inputrc` ，增加或修改相关配置如下：
+缺省安装的 msysGit 的 shell 环境无法输入中文。为了能在 shell 界面中输入中文，需要修改配置文件 :file:`/etc/inputrc` ，增加或修改相关配置如下：
 
 ::
 
@@ -99,14 +99,14 @@ msysGit shell 环境的中文支持
 分页器中文输出问题
 ^^^^^^^^^^^^^^^^^^^
 
-当对 `/etc/inputrc` 进行正确的配置之后，能够在 shell 下输入中文，但是执行下面的命令会显示乱码。这显然是 `less` 分页器命令导致的问题。
+当对 :file:`/etc/inputrc` 进行正确的配置之后，能够在 shell 下输入中文，但是执行下面的命令会显示乱码。这显然是 :program:`less` 分页器命令导致的问题。
 
 ::
 
   $ echo 您好 | less
   <C4><FA><BA><C3>
 
-通过管道符调用分页器命令 `less` 后，原本的中文输出变成了乱码显示。这将会导致 Git 很多命令的输出都会出现中文乱码问题，因为 Git 大量的使用 `less` 命令做为分页器。之所以 `less` 命令出现乱码，是因为该命令没有把中文当作正常的字符，可以通过设置 LESSCHARSET 环境变量，将 utf-8 编码字符视为正规字符显示，则中文就能正常显示了。下面的操作，可以在 `less` 分页器中正常显示中文。
+通过管道符调用分页器命令 :program:`less` 后，原本的中文输出变成了乱码显示。这将会导致 Git 很多命令的输出都会出现中文乱码问题，因为 Git 大量的使用 :program:`less` 命令做为分页器。之所以 :program:`less` 命令出现乱码，是因为该命令没有把中文当作正常的字符，可以通过设置 LESSCHARSET 环境变量，将 utf-8 编码字符视为正规字符显示，则中文就能正常显示了。下面的操作，可以在 :program:`less` 分页器中正常显示中文。
 
 ::
 
@@ -114,7 +114,7 @@ msysGit shell 环境的中文支持
   $ echo 您好 | less
   您好  
 
-编辑配置文件 `/etc/profile` ，将对环境变量 LESSCHARSET 的设置加入其中，以便 msysGit 的 shell 环境一启动即加载。
+编辑配置文件 :file:`/etc/profile` ，将对环境变量 LESSCHARSET 的设置加入其中，以便 msysGit 的 shell 环境一启动即加载。
 
 ::
 
@@ -123,7 +123,7 @@ msysGit shell 环境的中文支持
 ls 命令对中文文件名的显示
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-最常用的显示目录和文件名列表的命令 `ls` 对中文文件名的显示有问题。下面的命令创建了一个中文文件名的文件，显示文件内容中的中文没有问题，但是显示文件名本身会显示为一串问号。
+最常用的显示目录和文件名列表的命令 :program:`ls` 对中文文件名的显示有问题。下面的命令创建了一个中文文件名的文件，显示文件内容中的中文没有问题，但是显示文件名本身会显示为一串问号。
 
 ::
 
@@ -135,14 +135,14 @@ ls 命令对中文文件名的显示
   $ ls \*.txt
   ????.txt
 
-实际上只要在 `ls` 命令后添加参数 `--show-control-chars` 即可正确显示中文。
+实际上只要在 :program:`ls` 命令后添加参数 :command:`--show-control-chars` 即可正确显示中文。
 
 ::
 
   $ ls --show-control-chars *.txt
   您好.txt
 
-为方便起见，可以为 `ls` 命令设置一个别名，这样就不必在输入 `ls` 命令时输入长长的参数了。
+为方便起见，可以为 :program:`ls` 命令设置一个别名，这样就不必在输入 :program:`ls` 命令时输入长长的参数了。
 
 ::
 
@@ -151,7 +151,7 @@ ls 命令对中文文件名的显示
   $ ls \*.txt
   您好.txt
 
-将上面的 alias 命令添加到配置文件 `/etc/profile` 中，实现在每次运行 Git Bash 时自动加载。
+将上面的 alias 命令添加到配置文件 :file:`/etc/profile` 中，实现在每次运行 Git Bash 时自动加载。
 
 msysGit 中 Git 的中文支持
 --------------------------------
@@ -186,7 +186,7 @@ Git 在提交时并不会对提交说明进行从 GBK 字符集到 UTF-8 的转�
   $ git status -s
   ?? 说明.txt
 
-注意：如果同时安装了 Cygwin 和 msysGit（可能配置了相同的用户主目录），或者因为中文支持问题而需要单独为 TortoiseGit 准备一套 msysGit 时，为了保证不同的 msysGit 之间，以及和 Cygwin 之间的配置不会互相影响，而在配置 Git 环境时使用 `--system` 参数。这是因为不同的 msysGit 安装以及 Cygwin 有着不同的系统配置文件，但是用户级配置文件位置却可能重合。
+注意：如果同时安装了 Cygwin 和 msysGit（可能配置了相同的用户主目录），或者因为中文支持问题而需要单独为 TortoiseGit 准备一套 msysGit 时，为了保证不同的 msysGit 之间，以及和 Cygwin 之间的配置不会互相影响，而在配置 Git 环境时使用 :command:`--system` 参数。这是因为不同的 msysGit 安装以及 Cygwin 有着不同的系统配置文件，但是用户级配置文件位置却可能重合。
 
 使用 SSH 协议
 ------------------

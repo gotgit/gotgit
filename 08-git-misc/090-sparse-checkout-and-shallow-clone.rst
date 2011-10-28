@@ -10,7 +10,7 @@
 
 稀疏检出是如何实现的呢？实际上 Git 在 index （即暂存区）中为每个文件提供一个名为 `skip-worktree` 标志位，缺省这个标识位处于关闭状态。如果该标识位开启，则无论工作区对应的文件存在与否，或者是否被修改，Git 都认为工作区该文件的版本是最新的、无变化。Git 通过配置文件 `.git/info/sparse-checkout` 定义一个要检出的目录和/或文件列表，当前 Git 的 `git read-tree` 命令及其他基于合并的命令（ `git merge` ， `git checkout` 等等）能够根据该配置文件更新 index 中文件的 `skip-worktree` 标志位，实现版本库文件的稀疏检出。
 
-先来在工作区 `/path/to/my/workspace` 中创建一个示例版本库 sparse1 ，创建后的 sparse1 版本库中包含如下内容：
+先来在工作区 :file:`/path/to/my/workspace` 中创建一个示例版本库 sparse1 ，创建后的 sparse1 版本库中包含如下内容：
 
 ::
 

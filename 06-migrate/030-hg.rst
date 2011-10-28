@@ -14,11 +14,11 @@ Mercurial（水银）是和 Git 同时代的、与之齐名的一款著名的分
   $ cd /path/to
   $ git clone git://repo.or.cz/fast-export.git
 
-完成克隆后，会看到 `/path/to/fast-export` 目录中有一个名为 `hg-fast-import.sh` 的脚本文件，该文件封装了对相应 Python 脚本的调用。使用该脚本可以实现 Hg 版本库到 Git 版本库的迁移。
+完成克隆后，会看到 :file:`/path/to/fast-export` 目录中有一个名为 `hg-fast-import.sh` 的脚本文件，该文件封装了对相应 Python 脚本的调用。使用该脚本可以实现 Hg 版本库到 Git 版本库的迁移。
 
 下面就演示一下 Hg 版本库到 Git 版本库的转换。
 
-* 要转换的 Hg 版本库位于路径 `/path/to/hg/hello/.hg` 下。
+* 要转换的 Hg 版本库位于路径 :file:`/path/to/hg/hello/.hg` 下。
 
   Hg 不支持真正的分支，而且版本库中可能存在尚未合并的多个头指针。检查一下不要存在具有相同分支名但尚未合并的多个头指针，否则转换会失败。下面显示的该 Hg 版本库中具有两个具名分支 `r1.x` 和 `next` ，还有一个缺省未设置名称的头指针，因为分支名各不相同所以不会为转换过程造成麻烦。
 

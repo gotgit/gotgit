@@ -41,7 +41,7 @@ Git 通过属性文件为版本库中的文件或目录添加属性。设置了�
 属性文件及优先级
 -----------------
 
-属性文件可以以 `.gitattributes` 文件名保存在工作区目录中，提交到版本库后就可以和其他用户共享项目文件的属性设置。属性文件也可以保存在工作区之外，例如保存在文件 `.git/info/attributes` 中，仅对本版本库生效，若保存在 `/etc/gitattributes` 文件中则全局生效。在查询某个工作区某一文件的属性时，在不同位置的属性文件具有不同的优先级，Git 依据下列顺序依次访问属性文件。
+属性文件可以以 `.gitattributes` 文件名保存在工作区目录中，提交到版本库后就可以和其他用户共享项目文件的属性设置。属性文件也可以保存在工作区之外，例如保存在文件 `.git/info/attributes` 中，仅对本版本库生效，若保存在 :file:`/etc/gitattributes` 文件中则全局生效。在查询某个工作区某一文件的属性时，在不同位置的属性文件具有不同的优先级，Git 依据下列顺序依次访问属性文件。
 
 * 文件 `.git/info/attributes` 具有最高的优先级。
 * 接下来检查工作区同一目录下的 `.gitattributes` ，并依次向上递归查找 `.gitattributes` 文件，直到工作区的根目录。
@@ -72,14 +72,14 @@ Git 通过属性文件为版本库中的文件或目录添加属性。设置了�
 
     abc     foo bar baz
 
-* 系统文件 `/etc/gitconfig` 中包含如下配置，则每个用户主目录下的 `.gitattributes` 文件做为全局属性文件。
+* 系统文件 :file:`/etc/gitconfig` 中包含如下配置，则每个用户主目录下的 `.gitattributes` 文件做为全局属性文件。
 
   ::
 
     [core]
       attributesfile = ~/.gitattributes
 
-* 位于用户主目录下的属性文件，即文件 `~/.gitattributes` 的内容如下：
+* 位于用户主目录下的属性文件，即文件 :file:`~/.gitattributes` 的内容如下：
 
   ::
 
@@ -106,7 +106,7 @@ Git 通过属性文件为版本库中的文件或目录添加属性。设置了�
     
 3. 然后沿工作区当前目录向上遍历属性文件，找到工作区根目录下的属性文件 `.gitattributes` ，进行检查。因为该属性文件设置的属性已经由前面的属性文件提供，所以文件 `t/abc` 的属性和上面第2步的结果一样。
 
-4. 因为设置了 `core.attributesfile` 为 `~/.gitattributes` 文件，因此接下来查找用户主目录下文件即 `.gitattributes` 。该文件唯一的一行匹配所有文件，因此 `t/abc` 又被附加了新的属性值 `text=auto` 。最终文件 `t/abc` 的属性如下。
+4. 因为设置了 `core.attributesfile` 为 :file:`~/.gitattributes` 文件，因此接下来查找用户主目录下文件即 `.gitattributes` 。该文件唯一的一行匹配所有文件，因此 `t/abc` 又被附加了新的属性值 `text=auto` 。最终文件 `t/abc` 的属性如下。
 
   ::
 

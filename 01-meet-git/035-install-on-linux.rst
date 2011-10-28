@@ -19,7 +19,7 @@ Git 诞生于 Linux 平台并做为版本控制系统帅先服务于 Linux 核�
 
   软件包 git-svn、git-email、gitk 本来也是 Git 软件包的一部分，但是因为有着不一样的软件包依赖（如更多 perl 模组，tk等），所以单独作为软件包发布。
 
-  软件包 git-doc 则包含了 Git 的 HTML 格式文档，可以选择安装。如果安装了 Git 的 HTML 格式的文档，则可以通过执行 `git help -w <sub-command>` 命令，自动用 Web 浏览器打开相关子命令 <sub-command> 的 HTML 帮助。
+  软件包 git-doc 则包含了 Git 的 HTML 格式文档，可以选择安装。如果安装了 Git 的 HTML 格式的文档，则可以通过执行 :command:`git help -w <sub-command>` 命令，自动用 Web 浏览器打开相关子命令 <sub-command> 的 HTML 帮助。
   
 * Ubuntu 10.04 (lucid) 或更老版本, Debian (lenny) 或更老版本：
  
@@ -60,7 +60,7 @@ Git 诞生于 Linux 平台并做为版本控制系统帅先服务于 Linux 核�
 
 * 安装 Git 文档（可选）。
 
-  编译的文档主要是 HTML 格式文档，方便通过 `git help -w <sub-command>` 命令查看。实际上即使不安装 Git 文档，也可以使用 man 手册查看 Git 帮助，使用命令 `git help <sub-command>` 或者 `git <sub-command> --help` 。
+  编译的文档主要是 HTML 格式文档，方便通过 :command:`git help -w <sub-command>` 命令查看。实际上即使不安装 Git 文档，也可以使用 man 手册查看 Git 帮助，使用命令 :command:`git help <sub-command>` 或者 :command:`git <sub-command> --help` 。
 
   编译文档依赖 asciidoc，因此需要先安装 asciidoc（如果尚未安装的话），然后编译文档。在编译文档时要花费很多时间，要有耐心。
 
@@ -70,7 +70,7 @@ Git 诞生于 Linux 平台并做为版本控制系统帅先服务于 Linux 核�
     $ sudo make prefix=/usr/local \
       install-doc install-html install-info
 
-安装完毕之后，就可以在 `/usr/local/bin` 下找到 `git` 命令。
+安装完毕之后，就可以在 :file:`/usr/local/bin` 下找到 :program:`git` 命令。
 
 从Git版本库进行安装
 -------------------------
@@ -142,7 +142,7 @@ Git 诞生于 Linux 平台并做为版本控制系统帅先服务于 Linux 核�
 命令补齐
 -------------------------
 
-Linux 的 shell 环境（bash）通过 bash-completion 软件包提供命令补齐功能，能够实现在录入命令参数时按一下或两下 TAB 键，实现参数的自动补齐或提示。例如输入 `git com` 后按下 TAB 键，会自动补齐为 `git commit` 。
+Linux 的 shell 环境（bash）通过 bash-completion 软件包提供命令补齐功能，能够实现在录入命令参数时按一下或两下 TAB 键，实现参数的自动补齐或提示。例如输入 :command:`git com` 后按下 TAB 键，会自动补齐为 :command:`git commit` 。
 
 通过包管理器方式安装 Git，一般都已经为 Git 配置好了自动补齐，但是如果是以源码编译方式安装 Git，就需要为命令补齐多做些工作。
 
@@ -159,7 +159,7 @@ Linux 的 shell 环境（bash）通过 bash-completion 软件包提供命令补�
 
     $ . /etc/bash_completion
 
-* 为了能够在终端开启时自动加载 bash_completion 脚本，需要在本地配置文件 `~/.bash_profile` 或全局文件 `/etc/bashrc` 文件中添加下面的内容。
+* 为了能够在终端开启时自动加载 bash_completion 脚本，需要在本地配置文件 :file:`~/.bash_profile` 或全局文件 :file:`/etc/bashrc` 文件中添加下面的内容。
 
   ::
 
@@ -190,7 +190,7 @@ Linux 平台的中文用户一般会使用 utf-8 字符集，Git在 utf-8 字符
   $ git status -s
   ?? "\350\257\264\346\230\216.txt"
 
-通过设置变量 `core.quotepath` 为 `false` ，就可以解决中文文件名在这些 Git 命令输出中的显示问题。
+通过设置变量 :command:`core.quotepath` 为 :samp:`false` ，就可以解决中文文件名在这些 Git 命令输出中的显示问题。
 
 ::
 
@@ -202,7 +202,7 @@ Linux 平台的中文用户一般会使用 utf-8 字符集，Git在 utf-8 字符
 
 但如果 Linux 平台采用非 UTF-8 字符集，例如用 zh_CN.GBK 字符集编码（有人这么做么？），就要另外再做些工作了。
 
-* 设置提交说明显示所使用的字符集为 gbk，这样使用 `git log` 查看提交说明才能够正确显示其中的中文。
+* 设置提交说明显示所使用的字符集为 gbk，这样使用 :command:`git log` 查看提交说明才能够正确显示其中的中文。
 
   ::
 
