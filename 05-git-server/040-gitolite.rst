@@ -393,7 +393,7 @@ Debian等平台会在安装过程中（或运行 :command:`sudo dpkg-reconfigure
      Writing objects: 100% (4/4), 398 bytes, done.
      Total 4 (delta 1), reused 0 (delta 0)
      remote: Already on 'master'
-     To gitadmin.bj:gitolite-admin.git
+     To git@server:gitolite-admin.git
         bd81884..79b29e4  master -> master
 
 
@@ -1004,15 +1004,13 @@ Gitolite 维护的版本库默认位于安装用户主目录下的 repositories 
 
   ::
 
-     $ git remote add origin git@server:ossxp/somerepo.git
-
-  注：jiangxin-server是设置的别名主机，是以jiangxin用户的公钥访问server服务器。
+     jiangxin$ git remote add origin git@server:ossxp/somerepo.git
 
 * 运行 :command:`git push` 完成在服务器端版本库的创建。
 
   ::
 
-     $ git push origin master
+     jiangxin$ git push origin master
 
 使用该方法创建版本库后，创建者 ``jiangxin`` 的用户ID将被记录在版本库目录下的 :file:`gl-creater` 文件中。该帐号具有对该版本库最高的权限。该通配符版本库的授权指令中如果出现关键字 ``CREATOR`` 将会用创建者的用户ID替换。
 
@@ -1060,7 +1058,7 @@ Gitolite托管在GitHub上，任何人都可以基于原作者 Sitaramc 的工�
 
 * 避免通配符版本库的误判。
 
-  若将通配符版本库误判为普通版本库名称，会导致在服务器端创建错误的版本库。新的设计可以在通配符版本库的正则表达式之前添加 :samp:`^` 或之后添加 :samp:`$` 字符避免误判。
+  若将通配符版本库误判为普通版本库名称，会导致在服务器端创建错误的版本库。新的设计可以在通配符版本库的正则表达式之前添加 ``^`` 或之后添加 ``$`` 字符避免误判。
 
 * 改变默认配置。
 
@@ -1082,96 +1080,125 @@ Gitolite 功能拓展
 版本库镜像
 ----------
 
-版本库镜像的用途和原理
-^^^^^^^^^^^^^^^^^^^^^^^
-
 Git 版本库控制系统往往并不需要设计特别的容灾备份，因为每一个Git用户就是一个备份。但是下面的情况，就很有必要考虑容灾了。
 
 * Git 版本库的使用者很少（每个库可能只有一个用户）。
 * 版本库克隆只限制在办公区并且服务器也在办公区内（所有鸡蛋都在一个篮子里）。
 * Git 版本库采用集中式的应用模型，需要建立双机热备（以便在故障出现时，实现快速的服务器切换）。
 
-Gitolite 提供了服务器间版本库同步的设置。原理是：
+可以在两台或多台安装了Gitolite服务的服务器之间实现版本库的镜像。数据镜像的最小单位为版本库，对于任意一个Git版本库可以选择在其中一个服务器上建立主版本库（只能有一个主版本库），在其他服务器上建立的为镜像库。镜像库只接受来自主版本库的数据同步而不接受来自用户的推送。
 
-* 主服务器通过配置文件 :file:`~/.gitolite.rc` 中的变量 :samp:`$ENV{GL_SLAVES}` 设置镜像服务器的地址。
-* 从服务器通过配置文件 :file:`~/.gitolite.rc` 中的变量 :samp:`$GL_SLAVE_MODE` 设置为从服务器模式。
-* 从主服务器端运行脚本 :program:`gl-mirror-sync` 可以实现批量的版本库镜像。
-* 主服务器的每一个版本库都配置 :file:`post-receive` 钩子，一旦有提交，即时同步到镜像版本库。
+Gitolite服务器命名
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+首先要为每一台服务器架设Gitolite服务，并建议所有的服务器上Gitolite服务都架设在同一用户（如 ``git`` ）之下。如果Gitolite服务安装到不同的用户账号下，就必需通过文件 :file:`~/.ssh/config` 建立SSH别名，以便能够使用正确的用户名连接服务器。
 
-版本库镜像的实现方法
+接下来为每个服务器设置一个名称，服务器之间数据镜像时就使用各自的名称进行连接。假设我们要配置的两个Gitolite服务器的其中一个名为 ``server1`` ，另一个名为 ``server2`` 。
+
+打开 ``server1`` 上Gitolite的配置文件 :file:`~/.gitolite.rc` ，进行如下设置：
+
+::
+
+  $GL_HOSTNAME = 'serer1';
+  $GL_GITCONFIG_KEYS = "gitolite.mirror.*";
+
+* 设置 ``$GL_HOSTNAME`` 为本服务器的别名，如 ``serer1`` 。
+* 设量 ``$GL_GITCONFIG_KEYS`` 以便允许在Gitolite授权文件中为版本库动态设置配置变量。
+
+  例如本例设置了 ``GL_GITCONFIG_KEYS`` 为 ``gitolite.mirror.*`` 后，允许在 ``gitolite-admin`` 管理库的 :file:`conf/gitolite.conf` 中用 ``config`` 指令对版本库添加配置变量。
+
+  ::
+
+    repo testing
+          config gitolite.mirror.master       =   "server1"
+          config gitolite.mirror.slaves       =   "server2 server3"
+
+同样对 ``server2`` 进行设置，只不过将 ``$GL_HOSTNAME`` 设置为 ``serer2`` 。
+
+服务器之间的公钥认证
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-在多个服务器之间设置 Git 库镜像的方法是：
+接下来每一个服务器为Gitolite的安装用户创建公钥/私钥对。
 
-1. 每个服务器都要安装 Gitolite 软件，而且要启用 :file:`post-receive` 钩子。默认的钩子在源代码的 :file:`hooks/common` 目录下，名称为 :file:`post-receive.mirrorpush` ，要将其改名为 :file:`post-receive` 。否则版本库的 :file:`post-receive` 脚本不能生效。
+::
 
-2. 主服务器配置到从服务器的公钥认证，配置使用特殊的 shell： :program:`gl-mirror-shell` 。
+  $ sudo su - git
+  $ ssh-keygen
 
-   这是因为主服务器在向从服务器同步版本库的时候，如果从服务器上相应的版本库没有创建，需要直接通过 SSH 登录到从服务器，执行创建命令创建版本库。因此需要通过一个特殊的shell，能够同时支持 Gitolite 的授权访问及 shell 环境。这个特殊的 shell 就是 :program:`gl-mirror-shell` 。而且这个 shell可以通过特殊的环境变量绕过服务器的权限检查，避免因为授权问题而导致同步失败。
+然后把公钥拷贝到其他服务器上，并以本服务器名称命名。例如：
 
-   实际应用中，不光主服务器，每个服务器都要进行类似设置，目的是主从服务器可能相互切换。注意：在 Gitolite 不同的安装模式下， :program:`gl-mirror-shell` 的安装位置可能不同。
+* ``server1`` 上创建的公钥复制到 ``server2`` 上，命名为 :file:`server1.pub` 备用。
+* ``server2`` 上创建的公钥复制到 ``server1`` 上，命名为 :file:`server2.pub` 备用。
 
-   下面的命令用于更改服务器端Gitolite安装用户的 :file:`~/.ssh/authorized_keys` 配置文件，以便使用特定公钥的其他服务器在访问本服务器时使用这个特殊的 shell。假设在服务器 foo 上，配置服务器bar和baz使用特殊的shell，而来自这两个服务器的连接分别使用 :file:`bar.pub` 和 :file:`baz.pub` 两个公钥文件。
+再运行 :program:`gl-tool` 设置其他服务器到本服务器上的公钥认证。例如在 ``server1`` 上执行命令：
 
-   - 对于以客户端安装方式部署的 Gitolite，可以通过下面的方法确定 :program:`gl-mirror-shell` 的位置，然后修改 :file:`~/.ssh/authorized_keys` 文件。
+::
 
-     ::
+  $ gl-tool add-mirroring-peer server2.pub
 
-       # 在服务器 foo 上执行:
-       $ export GL_ADMINDIR=$(cd $HOME;perl -e 'do ".gitolite.rc"; print $GL_ADMINDIR')
-       $ cat bar.pub baz.pub |
-           sed -e 's,^,command="'$GL_ADMINDIR'/src/gl-mirror-shell" ,' >> ~/.ssh/authorized_keys
+当完成上述设置后，就可以从一个服务器发起到另外服务器的SSH连接，连接过程无需口令认证并显示相关信息。例如从 ``server1`` 发起到 ``server2`` 的连接如下：
 
-   - 对于以服务器端安装方式部署的 Gitolite，可以在路径中找到 :program:`gl-mirror-shell` ，进而设置 :file:`~/.ssh/authorized_keys` 文件。
+::
 
-     ::
+  $ ssh git@server2 info
+  Hello server1, I am server2
 
-       # 在服务器 foo 上执行:
-       $ cat bar.pub baz.pub |
-           sed -e 's,^,command="'$(which gl-mirror-shell)'" ,' >> ~/.ssh/authorized_keys
 
-3. 在 foo 服务器上设置完毕后，可以从服务器 bar 或 baz 上远程执行下列命令进行测试：
+配置版本库镜像
+^^^^^^^^^^^^^^^^^^^^^^^
 
-   - 执行命令后退出
+做了前面的准备工作后，就可以开始启用版本库镜像了。下面通过一个示例介绍如何建立版本库镜像，将服务器 ``server1`` 上的版本库 ``testing`` 要镜像到服务器 ``server2`` 上。
 
-     ::
+首先要修改 ``server1`` 和 ``server2`` 的Gitolite管理库 ``gitolite-admin`` ，为 ``testing`` 版本库添加配置变量，如下：
 
-       $ ssh git@foo pwd
+::
 
-   - 进入 shell
+  repo    testing
+          config gitolite.mirror.master = "server1"
+          config gitolite.mirror.slaves = "server2"
 
-     ::
+两个服务器 ``server1`` 和 ``server2`` 都要做出同样的修改，提交改动并推送到服务器上。当推送完成，两个服务器上的 ``testing`` 版本库的 :file:`config` 就会被更新，包含类似如下的设置：
 
-       $ ssh git@foo bash -i
+::
 
-4. 在从服务器上设置配置文件 :file:`~/.gitolite.rc` 。
+  [gitolite "mirror"]
+          master = server1
+          slaves = server2
 
-   进行如下设置后，将不允许用户直接推送到从服务器。但是主服务器仍然可以推送到从服务器，是因为主服务器版本库在推送到从服务器时，使用了特殊的环境变量，能够跳过从服务器版本库的 :file:`update` 脚本。
+当向服务器 ``server1`` 的 ``testing`` 版本库推送新的提交时，就会自动同步到 ``server2`` 上。
 
-   ::
+::
 
-     $GL_SLAVE_MODE = 1
+  $ git push git@server1:testing.git master
+  [master c0b097a] test
+  Counting objects: 1, done.
+  Writing objects: 100% (1/1), 185 bytes, done.
+  Total 1 (delta 0), reused 0 (delta 0)
+  remote: (29781&) server1 ==== (testing) ===> server2
+  To git@server1:testing.git
+     d222699..c0b097a  master -> master
 
-5. 在主服务器上设置配置文件 :file:`~/.gitolite.rc` 。
- 
-   需要配置到从服务器的 SSH 连接，可以设置多个，用空格分隔。注意使用单引号，以避免 @ 字符被 Perl 当作数组解析。
- 
-   ::
- 
-     $ENV{GL_SLAVES} = 'gitolite@bar gitolite@baz';
- 
-6. 在主服务器端执行 :program:`gl-mirror-sync` 进行一次完整的数据同步。
- 
-   需要以 Gitolite 安装的用户身份（如git）执行。例如在服务器 foo 上执行到从服务器 bar 的同步。
- 
-   ::
- 
-     $ gl-mirror-sync gitolite@bar
- 
-7. 之后，用户每次向主版本库同步，都会通过版本库的 :file:`post-receive` 钩子即时同步到从版本库。
- 
-当主版本库出现故障时，就需要把从服务器切换为主服务器模式，这就需要进行主从版本库的切换设置。切换非常简单，就是修改 :file:`~/.gitolite.rc` 配置文件，修改 :samp:`$GL_SLAVE_MODE` 设置：主服务器设置为 0，从服务器设置为 1。注意在主服务器恢复之前，要修改主服务器的配置使之降级为从服务器，否则主服务器恢复工作后会造成同时存在多个主服务器，从而导致数据的相互覆盖。
 
+如果需要将服务器 ``server1`` 上所有版本库，包括 ``gitolite-admin`` 版本库都同步到 ``server2`` 上，不必对版本库逐一设置，可以采用下面的简便方法。
+
+修改 ``server1`` 和 ``server2`` 的Gitolite管理版本库 ``gitolite-admin`` ，在配置文件 :file:`conf/gitolite.conf` 最开始插入如下设置。
+
+::
+
+  repo   @all
+      config gitolite.mirror.master = "server1"
+      config gitolite.mirror.slaves = "server2"
+
+然后分别提交并推送。要说明的是 ``gitolite-admin`` 版本库此时尚未建立同步，直到服务器 ``server1`` 的 ``gitolite-admin`` 版本库推送新的提交，才开始 ``gitolite-admin`` 版本库的同步。
+
+也可以在 ``server1`` 服务器端执行命令开始同步。例如：
+
+::
+
+  $ gl-mirror-shell request-push gitolite-admin
+
+Gitolite官方版本在版本库同步时有个局限，要求在镜像服务器上必需事先存在目标版本库并正确设置了 ``gitolite.mirror.*`` 参数，才能同步成功。例如允许用户自行创建的通配符版本库，必需在主服务器上和镜像服务器上分别创建，之后版本库同步才能正常执行。我在GitHub上的Gitolite分支项目提交了一个补丁解决了这个问题。
+
+关于Gitolite版本库镜像的更详悉资料，参见 http://sitaramc.github.com/gitolite/doc/mirroring.html 。
 
 Gitweb 和 Git daemon 支持
 --------------------------
