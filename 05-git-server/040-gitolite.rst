@@ -773,6 +773,13 @@ Gitolite 的授权非常强大也很复杂，因此从版本库授权的实际�
   READERS dev2 dev3
   WRITERS jiangxin
 
+如果在用户自定义授权中需要使用 ``READERS`` 和 ``WRITERS`` 之外的角色，管理员可以通过修改 :file:`gitolite.rc` 文件中的变量 ``$GL_WILDREPOS_PERM_CATS`` 实现。该变量的默认设置如下：
+
+::
+
+  $GL_WILDREPOS_PERM_CATS = "READERS WRITERS";
+
+
 传统模式的引用授权
 ----------------------
 
