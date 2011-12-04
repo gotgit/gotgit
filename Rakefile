@@ -11,11 +11,7 @@ ABS_JS_SHOWTTY_FILE   = File.expand_path('html/inc/showtty.js')
 ABS_CSS_COMMON_FILE   = File.expand_path('html/inc/common.css')
 TTYPLAY_TMPL          = File.expand_path('html/templates/ttyplay.erb')
 SCAST_TMPL            = File.expand_path('html/templates/scast.erb')
-INDEX_TMPL            = File.expand_path('html/templates/index.erb')
 SCAST_HTML            = File.expand_path('screencast.html')
-INDEX_HTML            = File.expand_path('index.html')
-DEMO_INDEX_HTML       = File.expand_path('demo_index.html')
-ERRATA_HTML           = File.expand_path('errata.html')
 
 class ArgsBinding
   def initialize(args)
@@ -65,7 +61,7 @@ desc 'compile ttyrec files to json files'
 task :json
 
 desc 'create index.html and other html files for ttyplay.'
-task :html => [:html_chunks, :html_screencast, INDEX_HTML, ERRATA_HTML]
+task :html => [:html_chunks, :html_screencast ]
 
 task :html_chunks do
   FileList["html/**/*.json"].each do |t|
@@ -151,23 +147,6 @@ def mkd2html args
   puts "built %s from %s" % [args[:output], args[:source]]
 end
 
-
-file INDEX_HTML => ['README.mkd', INDEX_TMPL] do |t|
-  mkd2html :title => "《Git权威指南》", :subtitle => "参考资料",
-           :source => t.prerequisites[0], :template => t.prerequisites[1], :output => INDEX_HTML,
-           :extra_js => ['html/inc/jquery-1.6.2.min.js', 'html/inc/click_more.js']
-
-  mkd2html :title => "《Git权威指南》", :subtitle => "参考资料",
-           :source => t.prerequisites[0], :template => t.prerequisites[1], :output => DEMO_INDEX_HTML
-end
-
-file ERRATA_HTML => ['errata.mkd', INDEX_TMPL] do |t|
-  mkd2html :title => "《Git权威指南》", :subtitle => "勘误",
-           :source => t.prerequisites[0], :template => t.prerequisites[1], :output => ERRATA_HTML,
-           :extra_css => ['html/inc/errata.css'],
-           :extra_js => ['html/inc/jquery-1.6.2.min.js', 'html/inc/click_more.js']
-end
-
 desc 'clean *.json and *.html files'
 task :clean => [:clean_json, :clean_html]
 
@@ -181,9 +160,6 @@ task :clean_html do
   FileList["html/**/*.html"].each do |t|
     File.unlink t
   end
-  File.unlink SCAST_HTML if File.exists?(SCAST_HTML)
-  File.unlink INDEX_HTML if File.exists?(INDEX_HTML)
-  File.unlink ERRATA_HTML if File.exists?(ERRATA_HTML)
 end
 
 task :default => [:json, :html]

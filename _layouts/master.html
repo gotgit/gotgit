@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Git权威指南 - {{ page.title }}</title>
+    {% for style in page.stylesheets %}
+    <link rel="stylesheet" href="{{ style }}" type="text/css" media="screen" charset="utf-8"/>
+    {% endfor %}
+    {% for script in page.javascripts %}
+    <script src="{{ script }}"></script>
+    {% endfor %}
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" media="screen" charset="utf-8"/>
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" media="screen" charset="utf-8"/>
+  </head>
+  <body>
+    <div id='wrapper'>
+      <div id='header'>
+        <h1><a href='/'>World Hello</a></h1>
+        
+        <div id='menu'>
+          <ul>
+            <li><a href='/' id='home_link' title='Home'>首页</a></li>
+            <li><a href='/blog.html' id='blog_link' title='Blog'>博客</a></li>
+            <li><a href='/doc/' id='docs_link' title='Docs'>文章</a></li>
+            <li><a href='/about.html' id='about_link' title='About'>关于</a></li>
+            <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github_link'>GitHub</a></li>
+            <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo_link'>微博</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="home_box" id='gotgit_left'>
+        <div id='submenu'>
+          <h2>目录</h2>
+          <ul>
+          <li><a href="index.html">关于本书</a>
+          <li><a href="bookstore.html">如何购买</a>
+          <li><a href="recommends.html">业界评价</a>
+          <li><a href="errata.html">本书勘误</a>
+          <li><a href="demo.html">操作回放</a>
+          </ul>
+        </div>
+      </div>
+
+      <div class="home_box" id='gotgit_right'>
+
+        {{ content }}
+        <div class='clearfix'></div>
+      </div>
+    </div>
+    <div id='footer'>
+      Copyright &copy; 2011 Jiang Xin. Hosted by <a href='http://github.com/gotgit/gotgit.github.com/' target='_blank'>GitHub</a> and powered by <a href='http://github.com/mojombo/jekyll'>Jekyll</a>. Templates from <a href='http://github.com/mbleigh/mbleigh.github.com/' target='_blank'>Michael Bleigh</a>.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,13 @@
+---
+layout: master
+stylesheets: [ "/gotgit/html/inc/common.css", "/gotgit/html/inc/tty.css" ]
+javascripts: [ "/gotgit/html/inc/prototype.js", "/gotgit/html/inc/showtty.js" ]
+---
+
+<div class="document">
+  <h2>{{ page.title }}</h2>
+  <div id="tty">Enable JavaScript to see the animation.</div>
+  <script>
+    showTTYURL( document.getElementById("tty"), "{{ page.json_file }}" );
+  </script>
+</div>

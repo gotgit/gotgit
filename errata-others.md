@@ -1,7 +1,21 @@
+---
+layout: master
+title: 勘误表
+---
 
-## 缺陷跟踪
+## 参与勘误
 
-访问 [缺陷追踪系统（Github）](https://github.com/gotgit/gotgit/issues/new) 或 [缺陷追踪系统（Redmine）](http://redmine.ossxp.com/redmine/projects/gotgit/issues/new) ，报告本书中的错误，会在下次印刷时纠正。
+您发现了新的错误么？贡献出来吧，这厢有礼了。Orz
+
+1. 记录您发现的问题。
+
+   访问 [缺陷追踪系统（Github）](https://github.com/gotgit/gotgit/issues/new) 报告问题。
+
+2. 修改本Git版本库中的勘误表。
+
+    * 在 GitHub 上从本版本库 <https://github.com/gotgit/gotgit/> 派生后，直接修改勘误表。
+    * 将您的修改通过 Github 的 Pull Request 工具通知我。
+    * 您还可以直接通过 [新浪微博](http://weibo.com/gotgit/) @群英汇蒋鑫。
 
 ## 勘误表
 

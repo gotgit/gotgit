@@ -1,51 +1,7 @@
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Git权威指南——操作回放</title>
-<% css_files.each do |t| %>
-<LINK rel="stylesheet" href="<%= t %>" type="text/css">
-<% end %>
-<LINK rel="stylesheet" href="/stylesheets/master.css" type="text/css" media="screen" charset="utf-8"/>
-<LINK rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" media="screen" charset="utf-8"/>
-</head>
-<body>
-<div id='header'>
-  <h1><a href='/'>World Hello</a></h1>
-
-  <div id='menu'>
-    <ul>
-      <li><a href='/' id='home_link' title='Home'>首页</a></li>
-      <li><a href='/blog.html' id='blog_link' title='Blog'>博客</a></li>
-      <li><a href='/doc/' id='docs_link' title='Docs'>文章</a></li>
-      <li><a href='/about.html' id='about_link' title='About'>关于</a></li>
-      <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github_link'>GitHub</a></li>
-      <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo_link'>微博</a></li>
-    </ul>
-  </div>
-</div>
-
-<div class='document'>
-
-<h1 class="title">《Git权威指南》</h1>
-<h2 class="subtitle" id="id1">操作回放</h2>
-<table class="docinfo" frame="void" rules="none">
-<col class="docinfo-name" />
-<col class="docinfo-content" />
-<tbody valign="top">
-<tr class="field"><th class="docinfo-name">作者:</th><td class="field-body"><a class="reference external" href="http://weibo.com/gotgit/">蒋鑫</a></td>
-
-</tr>
-<tr class="field"><th class="docinfo-name">网址:</th><td class="field-body"><a class="reference external" href="http://gotgit.github.com/gotgit/">http://gotgit.github.com/gotgit/</a></td>
-</tr>
-<tr class="field"><th class="docinfo-name">版本:</th><td class="field-body"><%= version %></td>
-</tr>
-<tr class="field"><th class="docinfo-name">日期:</th><td class="field-body"><%= compile_time %></td>
-</tr>
-<tr class="field"><th class="docinfo-name">版权信息:</th><td class="field-body"><a class="reference external" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons" src="html/inc/cc-icon.png" /></a></td>
-</tr>
-</tbody>
-
-</table>
+---
+layout: master
+title: 操作回放
+---
 
 <p>点击下面相应的链接通过Web网页观看操作回放。网页回放技术来自于 <a href="http://encryptio.com/code/jsttyplay">jsttyplay</a>。
 <p>如需要更好的控制回复的速度、暂停等，请使用 <a href="http://0xcc.net/ttyrec/">ttyplay (Linux)</a>, <a href="http://angband.pl/termrec.html">termrec (Windows)</a> 等软件回放扩展名为 ".ttyrec" 的文件。
@@ -78,8 +34,3 @@ parts = { '1' => '第1篇：初识Git',
 <%    end %>
 </ul>
 <%  end %>
-
-</div>
-</body>
-</html>
-
