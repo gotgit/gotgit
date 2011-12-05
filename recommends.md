@@ -3,8 +3,6 @@ layout: master
 title: 封底推荐
 ---
 
-<a name="recommends"></a>
-
 ## 封底推荐（以书评时间的先后为序）
 
 <a name="junio"></a>

@@ -4,8 +4,6 @@ title: 如何购买
 javascripts: [ "/javascripts/jquery.js", "html/inc/click_more.js" ]
 ---
 
-<a name="bookstore"></a>
-
 ## 如何购买
 
 * China-pub 互动出版网

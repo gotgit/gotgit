@@ -3,9 +3,9 @@ layout: master
 title: 关于本书
 ---
 
-<a name="about"></a>
-
 ## 关于本书
+
+<a name="about"></a>
 
 <img src="html/images/gotgit-cover.jpg" width="200" border='1' alt="Git权威指南封面" style="float:left; margin:1em">
 

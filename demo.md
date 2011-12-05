@@ -3,8 +3,6 @@ layout: master
 title: 如何购买
 ---
 
-<a name="bookstore"></a>
-
 ## 如何购买
 
 * China-pub 互动出版网
