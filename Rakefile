@@ -61,11 +61,11 @@ desc 'compile ttyrec files to json files'
 task :json
 
 desc 'create index.html and other html files for ttyplay.'
-task :html => [:html_chunks, :html_screencast ]
+task :html => [:html_chunks, :html_screencast, "demo.md" ]
 
 desc 'build site using jekyll.'
 task :jekyll do
-  system "jekyll"
+  sh "jekyll"
 end
 
 task :html_chunks do
@@ -106,6 +106,10 @@ task :html_screencast => [:html_chunks] do
       file.puts template.result(binding)
     end
   end
+end
+
+file "demo.md" => "bookstore.md" do |t|
+  sh "sed -e '/^javascripts/ d' < #{t.prerequisites} > #{t.name}"
 end
 
 def mkd2html args
