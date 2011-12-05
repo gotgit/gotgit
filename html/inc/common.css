@@ -1,25 +1,3 @@
-/* Stylesheet for ossxp documents at: http://www.ossxp.com/doc/ */
-
-html,body{min-height:100%;}
-body{color:#4e4e4e; padding: 0;}
-
-/* body with background color */
-body {
-  text-align:center; /* for IE */
-  margin:0 auto; /* for the rest */
-  background:#39424b;
-}
-
-/* content: align center with fixed width */
-div.document
-{
-  text-align:left;
-  width:780px; /* or a percentage, or whatever */
-  margin:0 auto 0 auto;
-  padding:1em;
-  background:#ffffff;
-}
-
 /* header and footer: align center with fixed width */
 div.header, div.footer
 {

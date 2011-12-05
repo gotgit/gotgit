@@ -51,42 +51,50 @@ title: 关于本书
 
 ## 在线资源
 
-* 官方网站  
-  <http://gotgit.github.com/gotgit/>
+* 官方网站
 
-  > 采用Git方式维护的官方网站，欢迎大家一起参与其中。
+    <http://www.worldhello.net/gotgit>
 
-* 新浪微群  
-  <http://q.weibo.com/567527>
+    采用Git方式维护的官方网站，欢迎大家一起参与其中。
 
-  > 关于本书以及相关技术的讨论，还有本书的样章提供下载。
+* 新浪微群
 
-* 作者微博  
-  <http://weibo.com/gotgit>
+    <http://q.weibo.com/567527>
 
-  > 欢迎大家通过新浪微博与我交流，有什么意见和建议@我。
+    关于本书以及相关技术的讨论，还有本书的样章提供下载。
 
-* 邮件列表  
-  <http://groups.google.com/group/gotgit>
+* 作者微博
 
-  > 社交网站140字的限制让复杂的交流显得吃力，这个邮件列表可以弥补不足。
+    <http://weibo.com/gotgit>
+
+    欢迎大家通过新浪微博与我交流，有什么意见和建议@我。
+
+* 邮件列表
+
+    <http://groups.google.com/group/gotgit>
+
+    社交网站140字的限制让复杂的交流显得吃力，这个邮件列表可以弥补不足。
 
 
 <a class="click-more"></a>
 
 * 资源下载
 
-  * 代码示例下载  
-    [本地下载](download)
+  * 代码示例下载
 
-  * 演示版本库1  
-    <https://github.com/ossxp-com/gitdemo-commit-tree/>
+      [本地下载](download)
 
-  * 演示版本库2 (Hello world)  
-    <https://github.com/ossxp-com/hello-world/>
+  * 演示版本库1
 
-  * 本资料库  
-    <https://github.com/gotgit/gotgit/>
+      <https://github.com/ossxp-com/gitdemo-commit-tree/>
+
+  * 演示版本库2 (Hello world)
+
+      <https://github.com/ossxp-com/hello-world/>
+
+  * 本资料库
+
+      <https://github.com/gotgit/gotgit/>
 
 
 <a name="ebook"></a>
@@ -95,11 +103,10 @@ title: 关于本书
 
 您可以从下面的网址获取本书部分章节的电子版：
 
-* 新浪微盘  
-  <http://vdisk.weibo.com/s/qMFt>
+* 新浪微盘
 
-* 或 China-pub 样章试读  
-  <http://www.china-pub.com/computers/common/mianfeisd.asp?id=194010>
+    <http://vdisk.weibo.com/s/qMFt>
 
+* 或 China-pub 样章试读
 
-
+    <http://www.china-pub.com/computers/common/mianfeisd.asp?id=194010>

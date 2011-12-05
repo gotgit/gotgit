@@ -1,6 +1,7 @@
 ---
 layout: master
 title: 勘误表
+stylesheets: [ "/html/inc/errata.css" ]
 ---
 
 ## 参与勘误

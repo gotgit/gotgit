@@ -1,25 +1,12 @@
 ---
 layout: master
 title: 勘误表
+stylesheets: [ "/html/inc/errata.css" ]
 ---
 
-## 参与勘误
+### 主要勘误
 
-您发现了新的错误么？贡献出来吧，这厢有礼了。Orz
-
-1. 记录您发现的问题。
-
-   访问 [缺陷追踪系统（Github）](https://github.com/gotgit/gotgit/issues/new) 报告问题。
-
-2. 修改本Git版本库中的勘误表。
-
-    * 在 GitHub 上从本版本库 <https://github.com/gotgit/gotgit/> 派生后，直接修改勘误表。
-    * 将您的修改通过 Github 的 Pull Request 工具通知我。
-    * 您还可以直接通过 [新浪微博](http://weibo.com/gotgit/) @群英汇蒋鑫。
-
-## 勘误表
-
-说明：为突出字体加粗，用棕色字体显示加粗字体。
+主要勘误参见 <errata.html> ，本文列举一般性印刷错误。编辑建议不要将两个勘误合并一起。 ;)
 
 ### 文字错误
 
