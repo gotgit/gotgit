@@ -63,6 +63,11 @@ task :json
 desc 'create index.html and other html files for ttyplay.'
 task :html => [:html_chunks, :html_screencast ]
 
+desc 'build site using jekyll.'
+task :jekyll do
+  system "jekyll"
+end
+
 task :html_chunks do
   FileList["html/**/*.json"].each do |t|
     title = File.basename(t).sub(/\.[^.]+$/, '')
@@ -162,4 +167,4 @@ task :clean_html do
   end
 end
 
-task :default => [:json, :html]
+task :default => [:json, :html, :jekyll]
