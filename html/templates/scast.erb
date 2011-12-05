@@ -24,9 +24,9 @@ parts = { '1' => '第1篇：初识Git',
 
 <%  ttyrec_list.keys.sort.each do |key| %>
 <%    if parts.member?(key) %>
-<h3><%= parts[key] %></h3>
+<h2><%= parts[key] %></h2>
 <%    else %>
-<h3><%= key %></h3>
+<h2><%= key %></h2>
 <%    end %>
 <ul>
 <%    ttyrec_list[key].each do |t| %>

@@ -32,25 +32,30 @@
         </div>
       </div>
 
-      <div class="home-box" id='gotgit-left'>
-        <div id='submenu'>
-          <h2>目录</h2>
-          <ul>
-          <li><a href="{{ page.relpath }}index.html">关于本书</a>
-          <li><a href="{{ page.relpath }}bookstore.html">如何购买</a>
-          <li><a href="{{ page.relpath }}recommends.html">封底推荐</a>
-          <li><a href="{{ page.relpath }}errata.html">本书勘误</a>
-          <li><a href="{{ page.relpath }}screencast.html">操作回放</a>
-          </ul>
+      <div id='content'>
+        <div class="home-box" id='gotgit-left'>
+          <div class='sidebar'>
+            <div class='sidebar-item' id='submenu'>
+              <h2>目录</h2>
+              <ul>
+              <li><a href="{{ page.relpath }}index.html">关于本书</a>
+              <li><a href="{{ page.relpath }}bookstore.html">如何购买</a>
+              <li><a href="{{ page.relpath }}recommends.html">封底推荐</a>
+              <li><a href="{{ page.relpath }}errata.html">本书勘误</a>
+              <li><a href="{{ page.relpath }}screencast.html">操作回放</a>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="home-box" id='gotgit-right'>
+
+          {{ content }}
+          <div class='clearfix'></div>
         </div>
       </div>
-
-      <div class="home-box" id='gotgit-right'>
-
-        {{ content }}
-        <div class='clearfix'></div>
-      </div>
     </div>
+
     <div id='footer'>
       Copyright &copy; 2011 Jiang Xin. Hosted by <a href='http://github.com/gotgit/gotgit.github.com/' target='_blank'>GitHub</a> and powered by <a href='http://github.com/mojombo/jekyll'>Jekyll</a>. Templates from <a href='http://github.com/mbleigh/mbleigh.github.com/' target='_blank'>Michael Bleigh</a>.
     </div>
