@@ -2,7 +2,8 @@
 // @name           Click more for toggle
 // @namespace      gotgit 
 // @description    Add a toogle effect at the location where anchor with a click-more css.
-// @include        http://www.ossxp.com/doc/gotgit/demo*
+// @include        http://www.worldhello.net/gotgit/demo*
+// @include        http://gotgit.github.com/gotgit/demo*
 // @require        http://code.jquery.com/jquery-1.6.2.min.js
 // ==/UserScript==
 
