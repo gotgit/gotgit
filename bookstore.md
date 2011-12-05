@@ -1,6 +1,7 @@
 ---
-layout: master_with_jquery
+layout: master
 title: 如何购买
+javascripts: [ "/javascripts/jquery.js", "html/inc/click_more.js" ]
 ---
 
 <a name="bookstore"></a>

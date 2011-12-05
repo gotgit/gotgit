@@ -1,6 +1,7 @@
 ---
 layout: master
 title: 操作回放
+javascripts: [ "/javascripts/jquery.js", "html/inc/click_more.js" ]
 ---
 
 <a name="playback"></a>
