@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name           Click more for toggle
-// @namespace      gotgit 
+// @namespace      gotgit
 // @description    Add a toogle effect at the location where anchor with a click-more css.
 // @include        http://www.worldhello.net/gotgit/demo*
 // @include        http://gotgit.github.com/gotgit/demo*
+// @include        http://www.ossxp.com/doc/gotgit/demo*
 // @require        http://code.jquery.com/jquery-1.6.2.min.js
 // ==/UserScript==
 
@@ -14,7 +15,8 @@ $(function(){
 
   $('.click-more').each(function(i) {
     contentNode = this.parentNode.nextSibling;
-    if (contentNode instanceof Text) {
+    if (contentNode.nodeType ==
+        (typeof(Node) === "undefined" ? 3: Node.TEXT_NODE)) {
       contentNode = contentNode.nextSibling;
     }
     contentNode.parentNode.removeChild(contentNode);
