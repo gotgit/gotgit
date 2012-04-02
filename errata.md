@@ -17,9 +17,31 @@ javascripts: [ "/javascripts/jquery.js", "html/inc/click_more.js" ]
     * 您的修改可以通过 Github 的 Pull Request 工具通知我。
     * 还可以直接通过 [新浪微博](http://weibo.com/gotgit/) @群英汇蒋鑫。
 
+## 第一版• 第三印
+
+### 勘误
+
+页码    | 位置                     | 错误描述            | 原文                         | 修正为                       | 缺陷追踪
+-------:| ------------------------ | ------------------- | ---------------------------- | ---------------------------- | --------
+     30 | 倒数第5行                | 命令没有加粗        | $ . \`brew --prefix\`/etc/bash\_completion | $ **. \`brew --prefix\`/etc/bash\_completion** |
+    415 | 脚注(1)第一行尾          | 漏印、丢字          | 而且是Gitolite的主要安装方式， | 且曾是Gitolite的主要安装方式， |
+    429 | 第21行                   | 代码块应向右缩进    | dev1$ **git push ...**       | -                            |
+    429 | 第22行                   | 文字前后重复，删除“拥有”两字 | 例如用户dev1拥有对其自建的版本库... | 例如用户dev1对其自建的版本库... |
+
+### 说明
+
+* 为避免对排版的破坏，下列更新已经用脚注的方式标注在书的相关章节中。具体细节还要参照如下博客中的内容。
+
+  1. [Gitolite服务架设](http://www.worldhello.net/2011/11/30/02-gitolite-install.html) ，书P415脚注(1)。
+  2. [Gitolite版本库镜像](http://www.worldhello.net/2011/11/30/03-gitolite-mirror.html) ，书P436脚注(1)。
+  3. [Gitolite通配符版本库自定义授权](http://www.worldhello.net/2011/11/30/04-gitolite-getperms-setperms.html) ，书P429第30.4.3小节已更新。
+  4. [Gitolite管理员定义命令](http://www.worldhello.net/2011/11/30/05-gitolite-adc.html) 。
+
 ## 第一版• 第二印
 
-### 勘误（进行中）
+### 勘误
+
+<a class="click-more"></a>
 
 页码    | 位置                     | 错误描述            | 原文                         | 修正为                       | 缺陷追踪
 -------:| ------------------------ | ------------------- | ---------------------------- | ---------------------------- | --------
@@ -29,9 +51,11 @@ javascripts: [ "/javascripts/jquery.js", "html/inc/click_more.js" ]
     146 | 倒数第3行                | 命令 ``$ git rev-list --oneline F^! D`` 的结果中应该有Commit G  | - | - | [GitHub#11][bug-11]
     229 | 第18,23,28行             | 用户输入字母未加粗  | Use (m)odified or (d)eleted file, or (a)bort? 用户输入 | Use (m)odified or (d)eleted file, or (a)bort? **用户输入** | [#155][bug2-155]
 
-### 更新（进行中）
+### 更新
 
-* “第30章 Gitolite 服务架设”拟更新如下：
+<a class="click-more"></a>
+
+* “第30章 Gitolite 服务架设”部分内容已经过时，为避免对排版的破坏，以脚注形式补充在书的相关章节中。具体细节还要参照如下博客中的内容。
 
   1. [Gitolite服务架设](http://www.worldhello.net/2011/11/30/02-gitolite-install.html)
   2. [Gitolite版本库镜像](http://www.worldhello.net/2011/11/30/03-gitolite-mirror.html)
