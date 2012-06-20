@@ -30,12 +30,12 @@ javascripts: [ "/javascripts/jquery.js", "html/inc/click_more.js" ]
 
 ### 说明
 
-* 为避免对排版的破坏，下列更新已经用脚注的方式标注在书的相关章节中。具体细节还要参照如下博客中的内容。
+为避免对排版的破坏，下列更新已经用脚注的方式标注在书的相关章节中。具体细节还要参照如下博客中的内容。
 
-  1. [Gitolite服务架设](http://www.worldhello.net/2011/11/30/02-gitolite-install.html) ，书P415脚注(1)。
-  2. [Gitolite版本库镜像](http://www.worldhello.net/2011/11/30/03-gitolite-mirror.html) ，书P436脚注(1)。
-  3. [Gitolite通配符版本库自定义授权](http://www.worldhello.net/2011/11/30/04-gitolite-getperms-setperms.html) ，书P429第30.4.3小节已更新。
-  4. [Gitolite管理员定义命令](http://www.worldhello.net/2011/11/30/05-gitolite-adc.html) 。
+1. [Gitolite服务架设](http://www.worldhello.net/2011/11/30/02-gitolite-install.html) ，书P415脚注(1)。
+2. [Gitolite版本库镜像](http://www.worldhello.net/2011/11/30/03-gitolite-mirror.html) ，书P436脚注(1)。
+3. [Gitolite通配符版本库自定义授权](http://www.worldhello.net/2011/11/30/04-gitolite-getperms-setperms.html) ，书P429第30.4.3小节已更新。
+4. [Gitolite管理员定义命令](http://www.worldhello.net/2011/11/30/05-gitolite-adc.html) 。
 
 ## 第一版• 第二印
 
