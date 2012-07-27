@@ -9,9 +9,9 @@ Git 初始化
 ::
 
   $ git --version
-  git version 1.7.3.3
+  git version 1.7.11.2
 
-Git 是一个活跃的项目，仍在不断的进化之中，不同Git 版本的功能不尽相同。本书对 Git 的介绍涵盖了 1.5.6 到 1.7.3 版本，这也是目前 Git 的主要版本。如果您使用的 Git 版本低于 1.5.6，那么请升级到 1.5.6 或更高的版本。本书示例使用的是 1.7.3.3 版本的 Git，我们会尽可能地指出那些低版本不兼容的命令及参数。
+Git 是一个活跃的项目，仍在不断的进化之中，不同Git 版本的功能不尽相同。本书对 Git 的介绍涵盖了 1.5.6 到 1.7.11 版本，这也是目前 Git 的主要版本。如果您使用的 Git 版本低于 1.5.6，那么请升级到 1.5.6 或更高的版本。本书示例使用的是 1.7.11.2 版本的 Git，我们会尽可能地指出那些低版本不兼容的命令及参数。
 
 在开始 Git 之旅之前，我们需要设置一下Git 的环境变量，这个设置是一次性的工作。即这些设置会在全局文件（用户主目录下的 .gitconfig）或系统文件（/etc/gitconfig）中做永久的记录。
 
@@ -58,7 +58,7 @@ Git 的所有操作，包括创建版本库等管理操作都用 `git` 一个命
   $ mkdir demo
   $ cd demo
   $ git init
-  Initialized empty Git repository in /path/to/my/workspace/demo/.git/
+  初始化空的 Git 版本库于 /path/to/my/workspace/demo/.git/
 
 实际上，如果 Git 的版本是 1.6.5 或更新的版本，可以在 `git init` 命令的后面直接输入目录名称，自动完成目录的创建。
 
@@ -66,7 +66,7 @@ Git 的所有操作，包括创建版本库等管理操作都用 `git` 一个命
 
   $ cd /path/to/my/workspace
   $ git init demo 
-  Initialized empty Git repository in /path/to/my/workspace/demo/.git/
+  初始化空的 Git 版本库于 /path/to/my/workspace/demo/.git/
   $ cd demo
 
 从上面版本库初始化后的输出中，可以看到执行 `git init` 命令在工作区创建了隐藏目录 `.git` 。
@@ -99,9 +99,10 @@ Git 的所有操作，包括创建版本库等管理操作都用 `git` 一个命
 ::
 
   $ git ci -m "initialized."
-  [master (root-commit) 78cde45] initialized.
-   1 files changed, 1 insertions(+), 0 deletions(-)
+  [master（根提交） 78cde45] initialized.
+   1 个文件被修改，插入 1 行(+)
    create mode 100644 welcome.txt
+
 
 从上面的命令及输出可以看出：
 

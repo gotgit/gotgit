@@ -430,9 +430,8 @@ Git 基本操作
       $(TARGET): $(OBJECTS)
               $(CC) -o $@ $^
 
+      main.o: | new_header
       main.o: version.h
-
-      version.h: new_header
 
       new_header:
               @sed -e "s/<version>/$$(git describe)/g" \
