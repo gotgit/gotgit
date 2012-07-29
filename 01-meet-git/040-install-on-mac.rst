@@ -49,6 +49,35 @@ Git在Mac OS X中也有好几种安装方法。最为简单的方式是安装\ :
 安装Xcode
 -------------------------
 
+App Store安装Xcode
+
+安装完毕，可以运行下面命令查看Xcode安装路径。
+
+::
+
+  $ xcode-select --print-path
+  /Applications/Xcode.app/Contents/Developer
+
+路径并不在PATH中，可以运行\ :command:`xcrun`\ 调用在Xcode路径中的Git工具。
+
+::
+
+  $ xcrun git --version
+  git version 1.7.9.6 (Apple Git-31.1)
+
+为了方便在终端命令行下运行Git，可以用
+
+::
+
+  $ cat /etc/paths.d/xcode 
+  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+  /Applications/Xcode.app/Contents/Developer/usr/bin
+
+或者打开 Xcode，Preference -> Downloads -> Components -> Command Line Tools (install)
+
+.. end new
+
+
 Mac OS X基于Unix内核，因此也可以很方便的通过源码编译的方式进行安装，但是\
 缺省安装的Mac OS X缺乏相应的开发工具，需要安装苹果提供的Xcode软件包。在\
 Mac随机附送的光盘（Mac OS X Install DVD）的可选安装文件夹下就有Xcode的\
