@@ -104,8 +104,7 @@ Homebrew项目托管在Github上，网址为：\ ``https://github.com/mxcl/homeb
 ::
 
   $ ruby -e \
-    "$(curl -fsSL https://gist.github.com/raw/323731/install_homebrew.rb
-)"
+    "$(curl -fsSL https://gist.github.com/raw/323731/install_homebrew.rb)"
 
 安装完成后，Homebrew的主程序安装在\ :file:`/usr/local/bin/brew`\ ，\
 在目录\ :file:`/usr/local/Library/Formula/`\ 下保存了所有Homebrew支持的\
