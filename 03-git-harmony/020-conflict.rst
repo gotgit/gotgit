@@ -893,8 +893,7 @@ kdiff3下方的窗口是合并后文件的编辑窗口。如图16-6所示，点�
     Unpacking objects: 100% (2/2), done.
     From file:///path/to/repos/shared
        7f7bb5e..615c1ff  master     -> origin/master
-    CONFLICT (rename/rename): Rename "doc/README.txt"->"README" in branch "HEAD" rename "doc/README.txt"->"readme.txt" in "615c1ffaa41b2798a5685
-4259caeeb1020c51721"
+    CONFLICT (rename/rename): Rename "doc/README.txt"->"README" in branch "HEAD" rename "doc/README.txt"->"readme.txt" in "615c1ffaa41b2798a56854259caeeb1020c51721"
     Automatic merge failed; fix conflicts and then commit the result.
 
 因为两个用户同时更改了同一文件的文件名并且改成了不同的名字，于是引发冲突。\

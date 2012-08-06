@@ -700,8 +700,8 @@ Hello World开发计划
 
 * 第一个问题是：帮助信息中出现文字错误。本应该写为“--help”却写成了“-help”。
 
-* 第二个问题是：当执行\ ``hello-world``\ 的程序，提供带空格的用户名时，
-问候语中显示的是不完整的用户名。
+* 第二个问题是：当执行\ ``hello-world``\ 的程序，提供带空格的用户名时，\
+  问候语中显示的是不完整的用户名。
 
   例如执行\ :command:`./hello Jiang Xin`\ ，本应该输出“\ ``Hi, Jiang Xin.``\ ”，\
   却只输出了“\ ``Hi, Jiang.``\ ”。
@@ -1156,7 +1156,7 @@ user1推送的用getopt进行命令行解析相关代码。如果基于\ ``maste
 |  49         uname = argv[optind];                              |  48         p = &argv[optind];                                 |
 |  50     }                                                      |  49     }                                                      |
 |  51                                                            |  50                                                            |
-|  52     if (uname == NULL) {                                   |  51     if (p == NULL || *p == NULL) {                        |
+|  52     if (uname == NULL) {                                   |  51     if (p == NULL || *p == NULL) {                         |
 |  53 =======                                                    |                                                                |
 |  54     char **p = NULL;                                       |                                                                |
 |  55                                                            |                                                                |
@@ -1279,15 +1279,12 @@ user1推送的用getopt进行命令行解析相关代码。如果基于\ ``maste
 
     $ git log --oneline -2 --stat jx/v1.0-i18n
     ade873c Translate for Chinese.
-     src/locale/zh_CN/LC_MESSAGES/helloworld.po |   30 +++++++++++++++++
-++++------
+     src/locale/zh_CN/LC_MESSAGES/helloworld.po |   30 +++++++++++++++++++++------
      1 files changed, 23 insertions(+), 7 deletions(-)
     0831248 Add I18N support.
      src/Makefile                               |   21 +++++++++++-
-     src/locale/helloworld.pot                  |   46 +++++++++++++++++
-+++++++++++
-     src/locale/zh_CN/LC_MESSAGES/helloworld.po |   46 +++++++++++++++++
-+++++++++++
+     src/locale/helloworld.pot                  |   46 ++++++++++++++++++++++++++++
+     src/locale/zh_CN/LC_MESSAGES/helloworld.po |   46 ++++++++++++++++++++++++++++
      src/main.c                                 |   18 ++++++++--
      4 files changed, 125 insertions(+), 6 deletions(-)
 
@@ -1623,7 +1620,7 @@ user1调用\ ``getopt``\ 对命令行参数解析进行的代码重构。图18-7
 
 现在需要将\ ``user2/i18n``\ 分支的提交合并到主线\ ``master``\ 中。实际上\
 不需要在\ ``master``\ 分支上再执行繁琐的合并操作，而是可以直接用推送操作\
- —— 用本地的\ ``user2/i18n``\ 分支直接更新远程版本库的\ ``master``\ 分支。
+——用本地的\ ``user2/i18n``\ 分支直接更新远程版本库的\ ``master``\ 分支。
 
 ::
 

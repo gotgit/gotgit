@@ -64,7 +64,8 @@ Git里程碑
 里程碑可以使用\ :command:`git tag`\ 命令来显示，里程碑还可以在其他命令的\
 输出中出现，下面分别对这些命令加以介绍。
 
-**1. 命令\ :command:`git tag`\ **
+1. 命令\ :command:`git tag`
+-----------------------------
 
 不带任何参数执行\ :command:`git tag`\ 命令，即可显示当前版本库的里程碑列表。
 
@@ -108,7 +109,8 @@ Git里程碑
   jx/v2.2
   jx/v2.3
 
-**2. 命令\ :command:`git log`\ **
+2. 命令\ :command:`git log`
+-----------------------------
 
 在查看日志时使用参数\ ``--decorate``\ 可以看到提交对应的里程碑及其他引用。
 
@@ -118,7 +120,8 @@ Git里程碑
   3e6070e (HEAD, tag: jx/v1.0, origin/master, origin/HEAD, master) Show version.
   75346b3 Hello world initialized.
 
-**3. 命令\ :command:`git describe`\ **
+3. 命令\ :command:`git describe`
+-----------------------------------
 
 使用命令\ :command:`git describe`\ 将提交显示为一个易记的名称。这个易记\
 的名称来自于建立在该提交上的里程碑，若该提交没有里程碑则使用该提交历史版\
@@ -134,7 +137,7 @@ Git里程碑
     jx/v2.2
 
 * 若提交没有对应的里程碑，但是在其祖先版本上建有里程碑，则使用类似\
-``<tag>-<num>-g<commit>``\ 的格式显示。
+  ``<tag>-<num>-g<commit>``\ 的格式显示。
 
   其中\ ``<tag>``\ 是最接近的祖先提交的里程碑名字，\ ``<num>``\ 是该里程碑\
   和提交之间的距离，\ ``<commit>``\ 是该提交的精简提交ID。
@@ -162,7 +165,8 @@ Git里程碑
 命令\ :command:`git describe`\ 是非常有用的命令，可以将该命令的输出用作\
 软件的版本号。在之前曾经演示过这个应用，马上还会看到。
 
-**4. 命令\ :command:`git name-rev`\ **
+4. 命令\ :command:`git name-rev`
+-----------------------------------
 
 命令\ :command:`git name-rev`\ 和\ :command:`git describe`\ 类似，会显示\
 提交ID及其对应的一个引用。默认优先使用分支名，除非使用\
