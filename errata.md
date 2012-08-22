@@ -27,7 +27,7 @@ javascripts: [ "/javascripts/jquery.js", "html/inc/click_more.js" ]
     415 | 脚注(1)第一行尾          | 漏印、丢字          | 而且是Gitolite的主要安装方式， | 且曾是Gitolite的主要安装方式， |
     429 | 第21行                   | 代码块应向右缩进    | dev1$ **git push ...**       | -                            |
     429 | 第22行                   | 文字前后重复，删除“拥有”两字 | 例如用户dev1拥有对其自建的版本库... | 例如用户dev1对其自建的版本库... |
-    111 | 倒数第7行                | 单词拼写错误        | Work In Progress             | Work In Progress             |
+
 ### 说明
 
 为避免对排版的破坏，下列更新已经用脚注的方式标注在书的相关章节中。具体细节还要参照如下博客中的内容。
@@ -50,6 +50,7 @@ javascripts: [ "/javascripts/jquery.js", "html/inc/click_more.js" ]
      30 | 倒数第5行                | 命令提示符和点号之间有空格 | $**. \`brew --prefix\`/etc/bash\_completion** | $ **. \`brew --prefix\`/etc/bash\_completion** | [#152][bug2-152]
     146 | 倒数第3行                | 命令 ``$ git rev-list --oneline F^! D`` 的结果中应该有Commit G  | - | - | [GitHub#11][bug-11]
     229 | 第18,23,28行             | 用户输入字母未加粗  | Use (m)odified or (d)eleted file, or (a)bort? 用户输入 | Use (m)odified or (d)eleted file, or (a)bort? **用户输入** | [#155][bug2-155]
+    111 | 倒数第7行                | 单词拼写错误        | Work In Progess              | Work In Progress             |
 
 ### 更新
 
