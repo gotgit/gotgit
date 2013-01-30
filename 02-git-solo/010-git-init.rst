@@ -33,38 +33,37 @@ Git是一个活跃的项目，仍在不断的进化之中，不同Git版本的�
 
 * 设置一些Git别名，以便可以使用更为简洁的子命令。
 
-  例如：输入\ :command:`git ci`\ 即相当于\ :command:`git commit`\ ，输入\
-  :command:`git st`\ 即相当于\ :command:`git status`\ 。
+  例如：输入\ :command:`git ci`\ 即相当于\ :command:`git commit -s`\ [#]_\ ，输入\
+  :command:`git st`\ 即相当于\ :command:`git -p status`\ [#]_\ 。
 
   - 如果拥有系统管理员权限（可以执行\ :command:`sudo`\ 命令），希望注册\
     的命令别名能够被所有用户使用，可以执行如下命令：
 
     ::
 
-      $ sudo git config --system alias.st status
-      $ sudo git config --system alias.ci commit
-      $ sudo git config --system alias.co checkout
       $ sudo git config --system alias.br branch
+      $ sudo git config --system alias.ci "commit -s"
+      $ sudo git config --system alias.co checkout
+      $ sudo git config --system alias.st "-p status"
 
   - 也可以运行下面的命令，只在本用户的全局配置中添加Git命令别名：
 
     ::
 
       $ git config --global alias.st status
-      $ git config --global alias.ci commit
+      $ git config --global alias.ci "commit -s"
       $ git config --global alias.co checkout
       $ git config --global alias.br branch
 
-Git的所有操作，包括创建版本库等管理操作都用\ :command`git`\ 一个命令即可\
-完成，不像其他有的版本控制系统（如Subversion），一些涉及管理的操作要使用\
-另外的命令（如\ :command:`svnadmin`\ ）。创建Git版本库，可以直接进入到\
-包含数据（文件和子目录）的目录下，通过执行\ :command:`git init`\ 完成\
+Git的所有操作，包括创建版本库等管理操作都用\ :command:`git`\ 一个命令即\
+可完成，不像其他有的版本控制系统（如Subversion），一些涉及管理的操作要\
+使用另外的命令（如\ :command:`svnadmin`\ ）。创建Git版本库，可以直接进入\
+到包含数据（文件和子目录）的目录下，通过执行\ :command:`git init`\ 完成\
 版本库的初始化。
 
-下面就从一个空目录开始初始化版本库，这个版本库命名为“DEMO版本库”，这个\
-DEMO版本库将贯穿本篇始终。为了方便说明，使用了名为\
-:file:`/path/to/my/workspace`\ 的目录作为个人的工作区根目录，可以在磁盘中\
-创建该目录并设置正确的权限。
+下面就从一个空目录开始初始化版本库，这个版本库命名为“demo”，这个DEMO版本库\
+将贯穿本篇始终。为了方便说明，使用了名为\ :file:`/path/to/my/workspace`\
+的目录作为个人的工作区根目录，您可以在磁盘中创建该目录并设置正确的权限。
 
 首先建立一个新的工作目录，进入该目录后，执行\ :command:`git init`\ 创建\
 版本库。
@@ -127,24 +126,24 @@ DEMO版本库将贯穿本篇始终。为了方便说明，使用了名为\
 
 ::
 
-  $ git ci -m "initialized."
-  [master（根提交） 78cde45] initialized.
+  $ git ci -m "initialized"
+  [master（根提交） 7e749cc] initialized
    1 个文件被修改，插入 1 行(+)
    create mode 100644 welcome.txt
 
-
 从上面的命令及输出可以看出：
 
-* 命令\ :command:`git ci`\ 实际上相当于使用了\ :command:`git commit`\ ，\
-  这是因为之前为Git设置了命令别名。
+* 使用了Git命令别名，即\ :command:`git ci`\ 相当于执行\ :command:`git commit`\ 。\
+  在本节的一开始就进行了Git命令别名的设置。
 
-* 通过\ ``-m``\ 参数设置提交说明为："initialized."。
+* 通过\ ``-m``\ 参数设置提交说明为："initialized"。该提交说明也显示在命\
+  令输出的第一行中。
 
-* 命令输出的第一行可以看出，此次提交是提交在名为\ ``master``\ 的分支上，
-  且是该分支的第一个提交（root-commit），提交ID为78cde45\ [#]_\ 。
+* 命令输出的第一行还显示了当前处于名为\ ``master``\ 的分支上，提交ID为\
+  7e749cc\ [#]_\ ，且该提交是该分支的第一个提交，即根提交（root-commit）。\
+  根提交和其他提交的区别在于没有关联的父提交，这会在后面的章节中加以讨论。
 
-* 命令输出的第二行可以看出，此次提交修改了一个文件，包含一行的插入。
-* 命令输出的第三行可以看出，此次提交创建了新文件\ :file:`welcome.txt`\ 。
+* 命令输出的第二行开始显示本次提交所做修改的统计：修改了一个文件，包含一行的插入。
 
 思考：为什么工作区下有一个\ :file:`.git`\ 目录？
 ==================================================
@@ -220,7 +219,7 @@ Git的这种设计，将版本库放在工作区根目录下，所有的版本�
   $ git status
   fatal: Not a git repository (or any of the parent directories): .git
 
-如果跟踪一下执行\ :command:`git status`\ 命令时的磁盘访问，\
+如果跟踪一下执行\ :command:`git status`\ 命令时的磁盘访问\ [#]_\ ，\
 会看到沿目录依次向上递归的过程。
 
 ::
@@ -228,18 +227,17 @@ Git的这种设计，将版本库放在工作区根目录下，所有的版本�
   $ strace -e 'trace=file' git status
   ...
   getcwd("/path/to/my/workspace", 4096)           = 14
-  stat(".", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
-  stat(".git", 0x7fffdf1288d0)            = -1 ENOENT (No such file or directory)
+  ...
   access(".git/objects", X_OK)            = -1 ENOENT (No such file or directory)
   access("./objects", X_OK)               = -1 ENOENT (No such file or directory)
-  stat("..", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+  ...
   chdir("..")                             = 0
-  stat(".git", 0x7fffdf1288d0)            = -1 ENOENT (No such file or directory)
+  ...
   access(".git/objects", X_OK)            = -1 ENOENT (No such file or directory)
   access("./objects", X_OK)               = -1 ENOENT (No such file or directory)
-  stat("..", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+  ...
   chdir("..")                             = 0
-  stat(".git", 0x7fffdf1288d0)            = -1 ENOENT (No such file or directory)
+  ...
   access(".git/objects", X_OK)            = -1 ENOENT (No such file or directory)
   access("./objects", X_OK)               = -1 ENOENT (No such file or directory)
   fatal: Not a git repository (or any of the parent directories): .git
@@ -624,7 +622,16 @@ Android项目为了更好的使用Git实现对代码的集中管理，开发了�
 
 ----
 
+.. [#] 命令\ :command:`git commit -s`\ 中的参数\ ``-s``\ 含义为在提交\
+   说明的最后添加“Signed-off-by:”签名。
+
+.. [#] 命令\ :command:`git -p status`\ 中的参数\ ``-p``\ 含义是为\
+   :command:`git status`\ 命令的输出添加分页器。
 
 .. [#] 大家实际操作中看到的ID肯定和这里写的不一样，具体原因会在后面的\
    “6.1 Git对象库探秘”一节中予以介绍。如果碰巧您的操作显示出了同样的ID\
    （78cde45），那么我建议您赶紧去买一张彩票。;)
+
+.. [#] 示例中使用了Linux下的\ :command:`strace`\ 命令跟踪系统调用，在\
+   Mac OS X下则可使用\ :command:`sudo dtruss git status`\ 命令跟踪相关Git\
+   操作的系统调用。
