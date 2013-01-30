@@ -128,3 +128,33 @@ doctest:
 	$(SPHINXBUILD) -b doctest $(ALLSPHINXOPTS) $(BUILDDIR)/doctest
 	@echo "Testing of doctests in the sources finished, look at the " \
 	      "results in $(BUILDDIR)/doctest/output.txt."
+
+gh-pages: clean html
+	@if ! git rev-parse refs/heads/gh-pages >/dev/null 2>&1 ; then \
+		echo "Branch gh-pages not exists, forgot check it out?" >&2; \
+		exit 1; \
+	fi
+	@echo '*' > _build/html/images/.gitignore
+	@git add -f _build/html; \
+	tree=$$(git write-tree); \
+	newhtml=$$(git ls-tree $$tree:_build | grep "html$$" | awk '{print $$3;}') ; \
+	oldhtml=$$(git rev-parse refs/heads/gh-pages^{tree}); \
+	if [ "$$oldhtml" = "$$newhtml" ]; then \
+	  echo "HTML is uptodate, branch gh-pages not changed." ; \
+	else \
+	  commit=$$(git log --format=%B -1 | git commit-tree $$newhtml -p refs/heads/gh-pages) ; \
+	  git update-ref -m "HTML compiled from $$(git rev-parse HEAD)" refs/heads/gh-pages $$commit ; \
+	  echo "Branch gh-pages changed." ; \
+	  [ -x .git/hooks/post-commit ] && .git/hooks/post-commit; \
+	fi; \
+	git rm --cached -r -q _build/html
+
+gh-pages-shift:
+	@if ! git rev-parse refs/heads/gh-pages^ >/dev/null 2>&1 ; then \
+		echo "Branch gh-pages not exists or only one commit, forgot check it out?" >&2; \
+		exit 1; \
+	fi
+	if git update-ref -m "shift from $$(git rev-parse refs/heads/gh-pages)" refs/heads/gh-pages $$(git rev-parse refs/heads/gh-pages^); then \
+		echo "gh-pages branch shift to last commit."; \
+	fi
+
