@@ -78,6 +78,7 @@ javascripts: [ "/javascripts/jquery.js", "html/inc/click_more.js" ]
     265 | 最后1行                   | 单词 'world' 少了字母 's' | 用户在使用1.0版的hello-word | 用户在使用1.0版的hello-world  | [GitHub#5][bug-5]
     369 | 第21行                    | 丢了一个项目的“目”字 | 但 `-i` 参数仅当对一个项执行时才有效。 | 但 `-i` 参数仅当对一个项目执行时才有效。     | [GitHub#3][bug-3]
     516 | 倒数第15行                | 反引号错印为双引号  | **oldtag="cat"**             | **oldtag=\`cat\`**           | [#151][bug2-151]
+    783 | 用于测试，未发现错误
 
 ### 更新
 
