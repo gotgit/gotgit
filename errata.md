@@ -4,7 +4,7 @@ title: 勘误表
 stylesheets: [ "/html/inc/errata.css" ]
 javascripts: [ "/javascripts/jquery.js", "html/inc/click_more.js" ]
 ---
-
+aaaa
 您发现了新的错误么？可以通过下面方式贡献：
 
 1. 记录您发现的问题。
