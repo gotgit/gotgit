@@ -7,7 +7,7 @@ javascripts: [ "/javascripts/jquery.js", "html/inc/click_more.js" ]
 
 您发现了新的错误么？可以通过下面方式贡献：
 
-1. 记录您发现的问题。
+1. 记录您发现的问题。haha
 
    访问 [缺陷追踪系统（Github）](https://github.com/gotgit/gotgit/issues/new) 报告问题。
 
