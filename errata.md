@@ -4,6 +4,8 @@ title: 勘误表
 stylesheets: [ "/html/inc/errata.css" ]
 javascripts: [ "/javascripts/jquery.js", "html/inc/click_more.js" ]
 ---
+dddddddddddddddddddddd
+
 test
 您发现了新的错误？可以通过下面方式贡献：
 
