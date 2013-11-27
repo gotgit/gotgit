@@ -7,3 +7,5 @@ and published by China Machine Press at Jun 2011.
 Switch to ``gh-pages`` branch and see errata for the book.
 
 add some test words,just have a try.
+
+还可以web在线二次编辑哟
