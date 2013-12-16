@@ -1,113 +1,143 @@
 使用HTTP协议
 ********************
 
-HTTP协议是版本控制非常重要的一种协议，具有安全（HTTPS），方便（跨越防火\
+HTTP协议是版本控制工具普遍采用的协议，具有安全（HTTPS），方便（跨越防火\
 墙）等优点。Git在 1.6.6版本之前对HTTP协议支持有限，是哑协议，访问效率低，\
 但是在1.6.6之后，通过一个CGI实现了智能的HTTP协议支持。
 
 哑传输协议
-===========
+===============
 
-在Git 1.6.6之前，通过HTTP协议提供Git服务，基本上把Git版本库作为Web服务器\
-的一个目录开放出来就好了。
+所谓的哑传输协议（dumb protocol）就是在Git服务器和Git客户端的会话过程中\
+只使用了相关协议提供的基本传输功能，而未针对Git的传输特点进行相关优化设计。\
+采用哑协议，Git客户端和服务器间的通讯缺乏效率，用户使用时最直观的体验之一\
+就是在操作过程没有进度提示，应用会一直停在那里直到整个通讯过程处理完毕。
 
-例如如下的Apache配置:
+但是哑传输协议配置起来却非常的简单。通过哑HTTP协议提供Git服务，\
+基本上就是把包含Git版本库的目录通过HTTP服务器共享出来。下面的Apache\
+配置片段就将整个目录\ ``/path/to/repos``\ 共享，然后就可以通过地址\
+``http://<服务器名称>/git/<版本库名称>``\ 访问该共享目录下所有的Git版本库。
 
 ::
 
   Alias /git /path/to/repos
 
-  <Directory /opt/dvcs/gitroot>
+  <Directory /path/to/repos>
       Options FollowSymLinks
       AllowOverride None
-      Order allow,deny
-      allow from all
+      Order Allow,Deny
+      Allow from all
   </Directory>
 
-当用户执行\ :command:`git clone http://server/git/myrepo.git`\ ，实际访\
-问的是服务器端\ :file:`/path/to/repos/myrepo.git`\ 路径中的版本库。
-
-要求版本库目录下必须存在文件\ :file:`.git/info/refs`\ ，该文件中包含了\
-版本库中所有的引用列表，且引用都指向正确的SHA1哈希值。而且还要存在文件\
-:file:`.git/objects/info/packs`\ ，以便对象库打包后，能够通过该文件定位\
-到打包文件。
-
-* 这是因为Git命令（相当于web客户端），无法通过其他方法获得Git库的版本库\
-  的分支列表和指向。版本库分支记录在\ :file:`.git/refs/`\ 下的单独的文件\
-  中，如果Web服务器不允许目录浏览，是看不到这些文件的。
-
-* 通过执行\ :command:`git update-server-info`\ 命令，能够创建和更新\
-  :file:`.git/info/refs`\ 和\ :file:`.git/objects/info/packs`\ 这几个专为\
-  HTTP哑协议准备的文件。可以通过版本库的\ :file:`post-update`\ 脚本，自动\
-  执行更新相关索引文件的命令。Git版本库缺省的\ :file:`post-update.sample`\
-  示例脚本内容：
-
-  ::
-
-    #!/bin/sh
-    #
-    # An example hook script to prepare a packed repository for use over
-    # dumb transports.
-    #
-    # To enable this hook, rename this file to "post-update".
-    
-    exec git update-server-info
-
-
-如果需要提供可写的Git库服务，即允许远程客户端推送，还需要在Apache中为版\
-本库一一设置WebDAV。例如Apache中的如下配置：
+如果以为直接把现存的Git版本库移动到该目录下就可以直接用HTTP协议访问，\
+可就大错特错了。因为哑协议下的Git版本库需要包含两个特殊的文件，并且\
+这两个文件要随Git版本库更新。例如将一个包含提交数据的裸版本库复制到\
+路径\ ``/path/to/repos/myrepos.git``\ 中，然后使用下面命令克隆该版本库\
+（服务器名称为\ ``server``\），可能会看到如下错误：
 
 ::
 
-  Alias /git /opt/dvcs/gitroot
+  $ git clone http://server/git/myrepos.git
+  正克隆到 'myrepos'...
+  fatal: repository 'http://server/git/myrepos.git/' not found
 
-  <Directory /opt/dvcs/gitroot>
+这时，您仅需在Git版本库目录下执行\ ``git update-server-info``\ 命令\
+即可在Git版本库中创建哑协议需要的相关文件。
+
+::
+
+  $ git update-server-info
+
+然后该Git版本库即可正常访问了。如下：
+
+::
+
+  $ git clone http://server/git/myrepos.git
+  正克隆到 'myrepos'...
+  检查连接... 完成。
+
+从上面的介绍中可以看出在使用哑HTTP协议时，服务器端运行\ ``git update-server-info``\
+的重要性。运行该命令会产生或更新两个文件：
+
+* 文件\ :file:`.git/info/refs`\ ：该文件中包含了版本库中所有的引用列表，\
+  每一个引用都指向正确的SHA1哈希值。
+
+* 文件\ :file:`.git/objects/info/packs`\ ：该文件记录Git对象库中打包文件列表。
+
+正是通过这两个文件，Git客户端才检索到版本库的引用列表和对象库的包列表，从而实现\
+对版本库的读取操作。
+
+为支持哑HTTP协议，必须在版本库更新后及时更新上述两个文件。幸好Git版本库的\
+钩子脚本\ :file:`post-update`\ 可以帮助完成这个无聊的工作。在版本库的\ ``hooks``\
+目录下创建可执行脚本文件\ :file:`post-update`\ ，内容如下：
+
+::
+
+  #!/bin/sh
+  #
+  # An example hook script to prepare a packed repository for use over
+  # dumb transports.
+  #
+  # To enable this hook, rename this file to "post-update".
+
+  exec git update-server-info
+
+哑HTTP协议也可以对版本库写操作提供支持，即允许客户端向服务器推送。这需要在Apache中\
+为版本库设置WebDAV，并配置口令认证。例如下面的Apache配置片段：
+
+::
+
+  Alias /git /path/to/repos
+
+  <Directory /path/to/repos>
       Options FollowSymLinks
       AllowOverride None
-      Order allow,deny
-      allow from all
+      Order Allow,Deny
+      Allow from all
+
+      # 启用 WebDAV
+      DAV on
+
+      # 简单口令认证
+      AuthType Basic
+      AuthName "Git Repository"
+      AuthBasicProvider file
+      # 该口令文件用 htpasswd 命令进行管理
+      AuthUserFile /path/to/git-passwd
+      Require valid-user
+
+      # 基于主机IP的认证和基于口令的认证必须同时满足
+      Satisfy All
   </Directory>
 
-  <Location /git/myrepos.git>
-      DAV on
-      AuthType Basic
-      AuthName "Git"
-      AuthBasicProvider ldap
-      AuthUserFile /opt/dvcs/conf/passwd
+配置了口令认证后，最好使用HTTPS协议访问服务器，以避免因为口令在网络中明文传输\
+造成口令泄露。还可以在URL地址中加上用户名，以免在连接过程中的重复输入。下面的示例\
+中以特定用户（如：jiangxin）身份访问版本库：
 
-      AuthGroupFile /opt/dvcs/conf/group
-      Require group git
-
-      Satisfy All
-  </Location>
-
-
-这种哑传输协议实现Git服务的缺点非常明显：
-
-* 数据传输效率低。
-
-  当版本库经过整理，各个散在的提交文件被打包后，获取某个单独的文件也需要\
-  对整个打包文件进行传输！
-
-* 传输过程无进度显示。
-
-  哑协议，在Git操作过程不能像其他协议那样显示进度，在操作大的版本库，\
-  非常不便。
-
-* 为提供版本库写操作，需要对每个版本库进行单独配置。
-
-  缺乏类似Subversion的WebDAV插件，使得需要为每个Git库一一设置。
-
-* 不能为尚不存在的版本库进行预先配置，只能在服务器端手工创建版本库，而不\
-  能通过远程push由客户端发起创建。
-
-* Git客户端不像Subversion提供口令缓存机制，如果要避免每次操作频繁输入口令，\
-  需要在URL中记录明文口令。
+* 如果版本库尚未克隆，使用如下命令克隆：
 
   ::
 
-    git clone https://username:password@server/path/to/repos/myrepo.git
+    $ git clone https://jiangxin@server/git/myrepo.git
 
+* 如果已经克隆了版本库，可以执行下面命令修改远程\ ``origin``\ 版本库的URL地址：
+
+  ::
+
+    $ cd myrepos
+    $ git remote set-url origin https://jiangxin@server/git/myrepo.git
+    $ git pull
+
+第一次连接服务器，会提示输入口令。正确输入口令后，完成克隆或版本库的更新。\
+试着在版本库中添加新的提交，然后执行\ ``git push``\ 推送到HTTP服务器。
+
+如果推送失败，可能是WebDAV配置的问题，或者是版本库的文件、目录的权限不正确\
+（需要能够被执行Apache进程的用户可以读写）。一个诊断Apache的小窍门是查看\
+和跟踪Apache的配置文件\ [#]_\ 。如下：
+
+::
+
+  $ tail -f /var/www/error.log
 
 智能HTTP协议
 ===============
@@ -142,7 +172,7 @@ Git 1.6.6之后的版本，提供了针对HTTP协议的CGI程序\ :file:`git-htt
 
 * 第三行，就是使用\ :file:`git-http-backend`\ CGI脚本来相应客户端的请求。
 
-  当用地址\ ``http://server/git/path/to/repos/myrepo.git``\ 访问时，即\
+  当用地址\ ``http://server/git/myrepo.git``\ 访问时，即\
   由此CGI提供服务。
 
 **写操作授权**
@@ -374,3 +404,6 @@ Gitweb配置
 
   - ``gitweb.url``\ 显示项目的URL列表，也可以通过\ ``cloneurl``\
     文件来提供。（文件优先）
+
+
+.. [#] Apache日志文件的位置参见Apache配置文件中\ ``ErrorLog``\ 指令的设定。
