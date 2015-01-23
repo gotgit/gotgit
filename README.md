@@ -1,3 +1,4 @@
+## 本书其他资源
 The errata, screencasting and other resources for the book [GotGit](http://gotgit.github.com/gotgit/),
 a book on Git in Chinese.
 
