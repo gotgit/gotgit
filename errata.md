@@ -50,7 +50,7 @@ javascripts: [ "/javascripts/jquery.js", "html/inc/click_more.js" ]
      30 | 倒数第5行                | 命令提示符和点号之间有空格 | $**. \`brew --prefix\`/etc/bash\_completion** | $ **. \`brew --prefix\`/etc/bash\_completion** | [#152][bug2-152]
     146 | 倒数第3行                | 命令 ``$ git rev-list --oneline F^! D`` 的结果中应该有Commit G  | - | - | [GitHub#11][bug-11]
     229 | 第18,23,28行             | 用户输入字母未加粗  | Use (m)odified or (d)eleted file, or (a)bort? 用户输入 | Use (m)odified or (d)eleted file, or (a)bort? **用户输入** | [#155][bug2-155]
-
+	111	  2222
 ### 更新
 
 <a class="click-more"></a>
