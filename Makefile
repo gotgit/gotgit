@@ -134,7 +134,7 @@ gh-pages: clean html
 		echo "Branch gh-pages not exists, forgot check it out?" >&2; \
 		exit 1; \
 	fi
-	@echo '*' > _build/html/images/.gitignore
+	#@echo '*' > _build/html/_images/.gitignore
 	@git add -f _build/html; \
 	tree=$$(git write-tree); \
 	newhtml=$$(git ls-tree $$tree:_build | grep "html$$" | awk '{print $$3;}') ; \
