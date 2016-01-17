@@ -1,0 +1,157 @@
+/* header and footer: align center with fixed width */
+div.header, div.footer
+{
+  width:780px; /* or a percentage, or whatever */
+  margin:0 auto 0 auto;
+  padding:1em;
+}
+
+div.header,div.footer {background-color:#FFFFBB;text-align:right;font-size:9pt;font-style:italic;}
+div.footer {text-align:center;}
+hr.header, hr.footer {color:#b4aca1;background-color:#b4aca1;border-bottom:1px solid #ffffff;}
+
+/* links */
+a{color:#0071bb;outline:none;}
+a:hover{color:#ed1e24;text-decoration:none;}
+div.header a, div.footer a{text-decoration:none;}
+table.docinfo a{text-decoration:none;}
+
+/* headings */
+h1, h2, h3, h4, h5, h6 {
+	color: #990000;
+  font-family: "Trebuchet MS", Verdana, Tahoma, Ariel, Helvetica, sans-serif;
+}
+h1{font-weight:normal;font-size:270%;letter-spacing:-.04em;line-height:100%;margin:.8em 0 .2em;letter-spacing:-0.04em;}
+h2{font-weight:normal;font-size:200%;letter-spacing:-.04em;line-height:110%;margin:.7em 0 .2em;letter-spacing:-0.03em;}
+h3{font-size:160%;font-weight:normal;letter-spacing:-.04em;line-height:110%;margin:.7em 0 .2em;letter-spacing:-0.02em;}
+h4{font-size:140%;font-weight:bold;margin:.7em 0 .2em;letter-spacing:-0.02em;color: #4e4e4e;}
+h5{font-size:140%;font-weight:bold;margin:.5em 0 .2em;letter-spacing:-0.02em;color: #4e4e4e;}
+h6{font-size:120%;font-weight:normal;text-transform:uppercase;margin:.5em 0 .2em;color: #4e4e4e;}
+
+/* header links */
+h1 a:link, h1 a:visited, h1 a:active, h1 a:hover { color: #990000; text-decoration: none; }
+h2 a:link, h2 a:visited, h2 a:active, h2 a:hover { color: #990000; text-decoration: none; }
+h3 a:link, h3 a:visited, h3 a:active, h3 a:hover { color: #990000; text-decoration: none; }
+h4 a:link, h4 a:visited, h4 a:active, h4 a:hover { color: #4e4e4e; text-decoration: none; }
+h5 a:link, h5 a:visited, h5 a:active, h5 a:hover { color: #4e4e4e; text-decoration: none; }
+h6 a:link, h6 a:visited, h6 a:active, h6 a:hover { color: #4e4e4e; text-decoration: none; }
+
+/* document title */
+h1.title {text-align:center;margin:1em 0 1em 0;}
+h2.subtitle {text-align:center;margin:1em 0 1em 0;}
+
+/* note and hint backgroud-color */
+div.note {background-color:#ddd}
+div.hint {background-color:#ddd}
+
+/* note and hint title font */
+p.admonition-title {font-size:150%;font-weight:bold}
+
+/* toc */
+div.topic {font-size:9pt;background-color:#E0E0E0;padding:.4em;margin: 1em;}
+p.topic-title {font-weight:bold;font-size:180%;letter-spacing:.05em;line-height:110%;margin-bottom:.7em;margin-left:0;}
+.topic a:link, .topic a:visited { text-decoration: none; }
+.topic ul li,.topic ol li {list-style: none;margin-left:.7em;}
+
+
+/* tables */
+table{margin:.5em 0 1em;}
+table td,table th {border-right:1px solid #fff;padding:.4em .8em;}
+table td{background-color:#eee;}
+table th, thead td {background-color:#5e5e5e;color:#fff;text-transform:uppercase;font-weight:bold;border-bottom:1px solid #e8e1c8;}
+table th a{color:#d6f325;}
+table th a:hover{color:#fff;}
+table tr.even td{background-color:#ddd;}
+table tr:hover td{background-color:#fff;}
+table.docinfo th {vertical-align: middle;}
+
+table.nostyle td,table.nostyle th,table.nostyle tr.even td,table.nostyle tr:hover td{border:0;background:none;background-color:transparent;}
+
+/* docinfo table: center */
+table.docinfo {
+  margin-left:auto;margin-right:auto; /* for the rest browser other then IE */
+  font-size:9pt;
+}
+
+
+/* forms */
+input,textarea,select{font-size:100%;margin:.2em 0;}
+input,textarea{padding:.2em .4em;margin:0 2px 4px 2px;}
+input.radio,input.checkbox{background-color:#fff;padding:2px;}
+textarea{width:90%;}
+form label{font-weight:normal;margin:0 2px;}
+form .row label{display:block;margin:10px 2px 0 2px;}
+fieldset{padding:.8em;border:1px solid #ddd;background-color:#fff;margin:1em 0;}
+legend{padding:2px 15px 10px;text-transform:uppercase;font-style:italic;font-size:115%;background-color:#fff;border-top:1px solid #ddd;}
+
+/* lists */
+ul,ol{margin:.4em 0 1em;line-height:150%;}
+ul li,ol li{list-style-position:outside;margin-left:2.5em;}
+dl{padding:.3em 0 .8em;}
+dt{font-weight:bold;text-decoration:none;}
+dd{}
+
+
+/* programming list */
+pre.programlisting, pre.screen, pre.literal-block {
+  overflow:auto;white-space:pre;/* <- css3 */
+  white-space:0;/* <- ff */
+  font-size:90%;
+  font-family:"Courier New", Courier, "Lucida Console", Monaco, "DejaVu Sans Mono", "Nimbus Mono L", "Bitstream Vera Sans Mono";
+	background-color:#E0E0E0;
+  padding:.4em;
+  padding-top:1.2em;padding-bottom:1.6em;/* <- one line pre with scroll bar visible */
+	margin: 1em 1em 1em 2em;
+}
+
+pre code {
+  display:block;
+  overflow:auto;white-space:pre;/* <- css3 */
+  white-space:0;/* <- ff */
+  font-size:90%;
+  font-family:"Courier New", Courier, "Lucida Console", Monaco, "DejaVu Sans Mono", "Nimbus Mono L", "Bitstream Vera Sans Mono";
+	background-color:#E0E0E0;
+  padding:.4em;
+  padding-top:0.2em;padding-bottom:0.6em;/* <- one line pre with scroll bar visible */
+	margin: 0em 1em 1em 0em;
+}
+
+
+
+pre{width:80%;overflow:auto;padding:.8em;margin:1em 0;}
+
+/* Fixed IE bug: one line pre with scrollbar, visible zone is too small */
+pre{word-wrap:normal;padding-top:1.2em;padding-bottom:1.6em;/* <- one line pre with scroll bar visible */}
+
+/* Paragraph */
+p {margin:.6em 0 .3em;line-height:150%;}
+/* Chinese style: indent 2 spaces */
+p,dd {font-size:100%;text-indent: 2em }
+dt {font-size:120%;text-indent: 2em; margin:1em 0 0.5em 0; }
+/* Paragraph do not indent in li */
+li p    {font-size:100%;text-indent: 0em }
+
+/* other */
+img{border:0;margin:.6em 0 .3em 2em;}
+td img{border:0;margin:0;}
+p img{border:0;margin:0;margin-bottom:-5px;}
+hr{color:#b4aca1;background-color:#b4aca1;border-bottom:1px solid #f6f4eb;}
+small{font-size:80%;}
+
+.click-more-button-opened, .click-more-button-closed {
+  text-align:left;
+  padding: 0.5em 1em 0.5em 1em;
+  margin: 0.5em 2em 0.5em 2em;
+}
+
+.click-more-button-opened {
+  background-color:#F5F5F5;
+  font-size:110%;
+  color:red;
+}
+
+.click-more-button-closed {
+  background-color:#FFFFCC;
+  font-size:110%;
+  color:blue;
+}
