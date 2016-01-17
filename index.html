@@ -1,0 +1,970 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Git权威指南 &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/underscore.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <script type="text/javascript" src="static/translations.js"></script>
+    <link rel="top" title="GotGit" href="#" />
+    <link rel="next" title="1. 初识Git" href="01-meet-git/index.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="01-meet-git/index.html" title="1. 初识Git"
+             accesskey="N">下一页</a> |</li>
+        <li><a href="#">GotGit</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Git权威指南</a><ul>
+<li><a class="reference internal" href="#id1">前言</a><ul>
+<li><a class="reference internal" href="#id5">本书的组织</a></li>
+<li><a class="reference internal" href="#id7">适用读者</a></li>
+<li><a class="reference internal" href="#id8">排版约定</a></li>
+<li><a class="reference internal" href="#id9">在线资源</a></li>
+<li><a class="reference internal" href="#id10">致谢</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="01-meet-git/index.html"
+                        title="下一章">1. 初识Git</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="git">
+<h1>Git权威指南<a class="headerlink" href="#git" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id1">
+<h2>前言<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>版本控制是管理数据变更的艺术，无论数据变更是来自同一个人，还是来自不同的人（一个团队）。版本控制系统不但要忠实地记录数据的每一次变更，还要能够帮助还原任何历史改动，以及实现团队的协同工作等。Git就是版本控制系统中的佼佼者。</p>
+<p>我对版本控制系统的兴趣源自于我在个人知识管理中的实践，其核心就是撰写可维护的文档，并保存于版本控制系统中。可维护文档的格式可以是DocBook、FreeMind、reStructuredText等。我甚至还对FreeMind加以改造以便让其文档格式更适合于版本控制系统，这就是我的第一个开源实践：托管于SourceForge上的FreeMind-MMX项目<a class="footnote-reference" href="#id11" id="id2">[1]</a>。文档的书写格式问题解决之后，就是文档的存储问题了。通过版本控制系统，很自然地就可以实现对文档历史版本的保存，但是如何避免因为版本控制系统瘫痪而导致数据的丢失呢？Git用其崭新的分布式的版本控制设计提供了最好的解决方案。使用Git，我的知识库不再只有唯一的版本库与之对应，而是可以通过克隆操作分发到不同的磁盘或主机上，克隆的版本库之间通过推送（PUSH）和拉回（PULL）等操作进行同步，数据安全得到了极大的提升。在版本控制系统的忠实呵护下，我的知识库中关于Git的FreeMind脑图日积月累变得越来越详实，越来越清晰，最终成为这本书的雏形。</p>
+<p>版本控制还能决定项目的成败，甚至是公司的生死，此言不虚。我在推广开源项目管理工具和为企业提供咨询服务的过程中，看到过太多的团队因为版本控制系统管理的混乱，导致项目延期、修正的Bug重现、客户的问题不能在代码中定位，无论他们使用的是什么版本控制系统，开源的或是商业的。这是因为传统的集中式版本控制系统不能有效地管理分支和进行分支间合并。集中管理的版本库只有唯一的分支命名空间，需要专人管理从而造成分支创建的不自由。分支间的合并要么因为缺乏追踪导致重复合并、引发严重冲突，要么因为蹩脚的设计导致分支合并时缺乏效率和陷阱重重。Git用其灵活的设计让项目摆脱分支管理的梦魇。</p>
+<p>我的公司也经历过代码管理的生死考验。因为公司的开发模式主要是基于开源软件的二次开发，最早在使用SVN（Subversion）做版本控制时，很自然地使用了SVN卖主分支模型来管理代码。随着增加和修改的代码越来越多，和开源软件上游的偏离也越来越远，当上游有新版本发布时，最早可能只用几个小时就可以将改动迁移过去，但是如果对上游的改动多达几十甚至上百处时，迁移的过程就会异常痛苦，基本上和重新做一遍差不多。那时似乎只有一个选择：不再和上游合并，不再追踪上游的改动，而这与公司的价值观“发动全球智慧为客户创造价值”相违背。迷茫之中，分布式版本控制系统飘然而至，原来版本控制还可以这么做。</p>
+<p>我最先尝试的分布式版本控制系统是Hg（Mercurial），尤其是当发现Hg和MQ（Hg的一个插件）这一对儿宝贝的时候，我如获至宝。逐渐地，公司的版本库都迁移到了Hg上。但随着新的开发人员的加入，问题就出现了，即一个人使用Hg和MQ都很好，但多个人使用则会出现难以协同的问题。于是我们大胆地采用了Git，并在实践中结合Topgit等工具进行代码的管理。再一次，也许是最后一次，我们的代码库迁移到了Git。</p>
+<p>最早认识分布式版本控制，源自于我们看到了众多开源项目的版本控制系统大迁移，这场迁移还在进行中。</p>
+<ul class="simple">
+<li>MoinMoin是我们关注的一个开源的维基软件，2006年，它的代码库从SVN迁移到Hg。<a class="footnote-reference" href="#id12" id="id3">[2]</a></li>
+<li>Mailman同样是我们关注的一个开源邮件列表软件。2007年，它的代码库从SVN迁移到Bazaar。<a class="footnote-reference" href="#id13" id="id4">[3]</a></li>
+<li>Linux采用Git做版本控制系统（一点都不奇怪，因为Git就是Linus Torvalds开发的）。</li>
+<li>Android是最为流行的开源项目之一，因为潜在的市场巨大，已经吸引越来越多的开发者进入这个市场，而Android就是用Git维护的。</li>
+</ul>
+<p>当开源软件纷纷倒向分布式版本控制系统大旗（尤其是Git）的时候，各个公司也在行动了，尤其是涉及异地团队协同，以及Android核心代码定制开发的公司。对于一些因保守而不敢向Git靠拢的公司，Git也可以派上用场，这是因为Git可以和现在大多数公司部署的SVN很好地协同，即公司的服务器是SVN，开发者的客户端则使用Git。相信随着Git的普及，以及公司代码管理观念上的改进，会有更多的公司拥抱Git。</p>
+<div class="section" id="id5">
+<h3>本书的组织<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>本书正文共分为8篇，一共41章，还包括附录。</p>
+<p>第1篇是Git的概览，共3章。第1章介绍了版本控制的历史。第2章用10来个小例子介绍了Git的一些闪亮特性，期待这些特性能够让您爱上Git。第3章则介绍Git在三种主要的平台上的安装和使用。本书的写作过程中，70%的时间使用的是Debian Linux操作系统，Linux用户可以毫无障碍地完成本书列举的所有相关操作。在2010年年底，当得知有出版社肯以稿酬支持本书的首印后，我向妻子阿巧预支了未来的部分稿费购买了我的第一台MacBook Pro，于是本书就有了较为详实的Mac OS X下Git的安装和使用，以及在本书第4篇第22章介绍的Topgit在Mac OS X上的部署和改进。在本书的编辑和校对过程中因为要使用Word格式的文稿，所以本书后期的很多工作是在运行于VirtualBox下的Windows虚拟机中完成的，即使是使用运行于资源受限的虚拟机中的Cygwin，Git依然完美地完成了工作。</p>
+<p>第2篇和第3篇详细介绍了Git的基本操作，是本书的基础和核心，篇幅大约占据了全书的40%。这两篇的内容架构实际上是我在进行SVN培训时就已经形成的习惯，即以“独奏”指代一个人的版本控制所要讲述的知识点，以“和声”指代团队版本控制涉及的话题。在第2篇“Git独奏”中将Git的设计原理穿插在各章之中，因为唯有了解
+真相（Git原理），才有可能自由（掌握Git）。在第3篇“Git和声”中，介绍团队版本控制必须掌握的里程碑和分支等概念，以及如何解决合并中遇到的冲突。</p>
+<p>第4篇细致地讲解了在实际的工作中Git的使用模式。除了传统的集中式和分布式使用模式之外，第22章还介绍了Topgit在定制开发中的应用，这也是我公司使用Git最主要的模式。这一章还讲解了我对Topgit所做的部分改进，对相关改进的介绍最
+早出现在我公司的博客上<a class="footnote-reference" href="#id14" id="id6">[4]</a>。第23-25章介绍了多版本库协同的不同方法，其中第25章介绍的一个独辟蹊径的解决方案是由Android项目引入的名为repo的工具实现的，我对其进行的改造可以让这个工具能够脱离Gerrit代码审核服务器，直接操作Git服务器。第26章介绍了git-svn这一工具，该工具不但可以实现SVN版本库到Git版本库的迁移，还可以实现将Git作为客户端向SVN提交。</p>
+<p>第5篇介绍Git服务器的架设。本篇是全书最早开始撰写的部分，这是因为我给客户做的Git培训讲义的相关部分不够详细，应客户要求对Gitolite等服务器架设撰写了详细的管理员手册，即本书的第30章。第32章介绍了Android项目在Git管理上的又一大创造，即Gerrit，它实现了一个独特的集中式Git版本库管理模型。</p>
+<p>第6篇讲解了Git版本库的迁移。其中第34章详细介绍了CVS版本库到Git版本库的迁移，其迁移过程也可以作为CVS到SVN迁移的借鉴。本篇还介绍了SVN和Hg版本库到Git的迁移。对于其他类型的版本库，介绍了一个通用的需要编程来实现的方法。在本篇的最后还介绍了一个Git版本库整理的利器，可以理解为一个Git库转换为另外一个Git库的方法。</p>
+<p>第7篇是关于Git的其他应用，其主要部分是介绍我在etckeeper启发下开发的一款备份工具Gistore，该工具可以运行于Linux和Mac OS X下。</p>
+<p>第8篇是Git杂谈。其中第40章的内容可供跨平台的项目组借鉴。第41章介绍了一些前面没有涉及的Git相关功能和特性，缺少这些相关内容会有损于杨福川编辑为本书所取的宏大的书名。</p>
+<p>第9篇是附录。首先介绍了完整的Git命令索引，然后分别介绍了CVS、SVN、Hg与Git之间的比较和命令对照，对于有着其他版本控制系统使用经验的用户，这一部分可供参考。</p>
+</div>
+<div class="section" id="id7">
+<h3>适用读者<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<p>这本书适合所有翻开它的人，因为我知道这本书在书店里一定被放在计算机图书专柜。</p>
+<ol class="arabic simple">
+<li>为数据同步困扰的“电脑人”</li>
+</ol>
+<p>困扰“电脑人”的一个问题是，有太多的数据需要长久保存，有太多的电脑设备需要数据同步。可能有的人会说：“像Dropbox一样的网盘可以帮助我呀”。是的，云存储就是在技术逐渐成熟之后应运而生的产品，但是依然解决不了如下几个问题：多个设备上同时修改造成的冲突；冗余数据传输造成的带宽瓶颈；没有实现真正的、完全的历史变更数据备份。具体参见本书第7篇第39章的内容。</p>
+<p>Git可以在数据同步上做得更好，甚至只须借助小小的U盘，就可以实现多台电脑数据同步，并且支持自动的冲突解决。只要阅读本书第1篇和第2篇，就能轻易掌握相关的操作，实现数据的版本控制和同步。</p>
+<ol class="arabic simple" start="2">
+<li>学习计算机课程的学生</li>
+</ol>
+<p>我非常后悔没有在学习编程的第一天就开始使用版本控制，很多还在学校时写的一些小程序和函数库都丢失了。在使用CVS和SVN对个人数据进行版本控制之后，才开始把每一天的变更历史都保留了下来。Git在这方面可以比CVS和SVN等做得更好。</p>
+<p>在阅读完本书的前3篇掌握了Git的基础之后，可以阅读第5篇第33章的内容，通过GitHub或类似的服务提供商建立自己的版本库托管，为自己的数据找一个安全的家。</p>
+<ol class="arabic simple" start="3">
+<li>程序员</li>
+</ol>
+<p>使用Git会让程序员有更多的时间休息，因为可以更快地完成工作。分布式版本控制让每一个程序员都在本地拥有一个完整的版本库，所以几乎所有操作都能够脱离网络执行而不受带宽的限制。加之使用了智能协议，让版本库间的同步不但减少了数据传输量，还能显示完成进度。</p>
+<p>Git会帮助程序员打开进入开源软件的大门，进而开阔视野，提升水平，增加择业的砝码。看看使用Git作为版本控制的开源软件吧：Linux kernel、Android、Debian、Fedora、GNOME、KDevelop、jQuery、Prototype、PostgreSQL、Ruby on Rails……不胜枚举。还有，不要忘了所有的SVN版本库都可以用Git方式更好地访问。</p>
+<p>作为一个程序员，团队协同能力必不可少，本书第3篇应该作为学习的重点。</p>
+<ol class="arabic simple" start="4">
+<li>Android程序员</li>
+</ol>
+<p>如果您是谷歌Android项目的参与者，尤其是驱动开发和核心开发的参与者，必然要接触Git、repo和Gerrit。对于只是偶尔参考一下Android核心代码的Android应用开发人员，也需要对repo有深入的理解，这样才不致于每次为同步代码而花掉一天的时间。</p>
+<p>repo是Android为了解决Git多版本库管理问题而设计的工具，在本书第4篇第25章有详细介绍。</p>
+<p>Gerrit是谷歌为了避免因分布式开发造成项目分裂而创造的工具，打造了Android独具一格的集中式管理模式，在本书第5篇第32章有详细介绍。</p>
+<p>即使是非Android项目，也可以使用这两款工具为自己的项目服务。我还为repo写了几个新的子命令以实现脱离Gerrit提交，让repo拥有更广泛的应用领域。</p>
+<ol class="arabic simple" start="5">
+<li>定制开发程序员</li>
+</ol>
+<p>当一个公司的软件产品需要针对不同的用户进行定制开发时，就需要在一个版本库中建立大量的特性分支，使用SVN的分支管理远不如用Git的分支管理那么自然和方便。还有一个领域就是对第三方代码进行维护。当使用SVN进行版本控制时，最自然的选择是卖主分支，而一旦定制开发愈加深入和上游的偏离也越大，和上游代码的合并也将越来越令人痛苦不堪。</p>
+<p>第4篇第22章会介绍Topgit这一杀手级的工具，是这个领域最佳的解决方案。</p>
+<ol class="arabic simple" start="6">
+<li>SVN用户</li>
+</ol>
+<p>商业软件的研发团队因为需要精细的代码授权不会轻易更换现有的SVN版本控制系统，这种情况下Git依然大有作为。无论是出差在外，或是在家办公，或是开发团队分处异地，都会遇到SVN版本控制服务器无法访问或速度较慢的情况。这时git-svn这一工具会将Git和SVN完美地结合在一起，既严格遵守了SVN的授权规定，又可以自如地进行本地提交，当能够连接到SVN服务器时，可以悠闲地喝着绿茶，等待一次性批量提交的完成。</p>
+<p>我有几个项目（pySvnManager、Freemind-MMX）托管在SourceForge的SVN服务器上，现在都是先通过git-svn将其转化为本地的Git库，然后再使用的。以这样的方式访问历史数据、比较代码或提交代码再也不会因为网速太慢而望眼欲穿了。</p>
+<p>本书第4篇第26章会向您详细介绍Git和SVN的互操作。</p>
+<ol class="arabic simple" start="7">
+<li>管理员</li>
+</ol>
+<p>Git很大程度上减轻了管理员的负担：分支的创建和删除不再需要管理员统一管理，因为作为分布式版本控制系统每一个克隆就是一个分支，每一个克隆都拥有独立的分支命名空间；管理员也不再需要对版本库的备份操心，因为每一个项目成员都拥有一个备份。管理员也不必担心有人在服务器上篡改版本库，因为Git版本库的每一个对象（提交、文件等）都使用SHA1哈希值进行完整性校验，任何对历史数据的篡改都会因为对后续提交产生的连锁反应而原形毕露。</p>
+<p>本书第7篇第37章介绍了一款我开发的基于Git的备份工具，让Linux系统的数据备份易如反掌。对于版本控制管理员，本书第5篇介绍的Git服务器搭建，以及第6篇介绍的版本库迁移，会为管理员的日常维护工作提供指引。</p>
+<ol class="arabic simple" start="8">
+<li>开发经理</li>
+</ol>
+<p>作为开发经理，您一定要对代码分支有深刻的理解，本书第18章中的代码管理之殇，不知是否能引起您的共鸣。为了能在各种情况下恰当地管理开发团队，第4篇
+Git协同模型是项目经理关注的重点。您的团队是否存在着跨平台开发，或者潜在着跨平台开发的可能？本书第8篇第40章也是开发经理应当关注的章节。</p>
+</div>
+<div class="section" id="id8">
+<h3>排版约定<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<p>本书使用下列排版格式约定：</p>
+<ol class="arabic">
+<li><p class="first">命令输出及示例代码</p>
+<p>执行一条Git命令及其输出的示例如下：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git --version
+git version 1.7.4
+</pre></div>
+</div>
+</li>
+<li><p class="first">提示符（$）</p>
+<p>命令前面的<tt class="docutils literal"><span class="pre">$</span></tt>符号代表命令提示符，有时为了表示命令是在不同的主机上执行的，还在提示符的前面添加用户名或主机名。例如：</p>
+<div class="highlight-python"><div class="highlight"><pre>client1$ hostname
+client1
+</pre></div>
+</div>
+</li>
+<li><p class="first">等宽字体（<tt class="docutils literal"><span class="pre">Constant</span> <span class="pre">width</span></tt>）</p>
+<p>用于表示代码、命令输出等内容。</p>
+</li>
+<li><p class="first">等宽粗体（<tt class="docutils literal"><span class="pre">**Constant</span> <span class="pre">width</span> <span class="pre">bold**</span></tt>）</p>
+<p>用于表示由用户手工输入的内容。</p>
+</li>
+<li><p class="first">等宽斜体（<tt class="docutils literal"><span class="pre">*Constant</span> <span class="pre">width</span> <span class="pre">italic*</span></tt>）</p>
+<p>用于表示正文中出现的命令、参数、文件名、函数名等。</p>
+</li>
+<li><p class="first">占位符（<tt class="docutils literal"><span class="pre">&lt;Constant</span> <span class="pre">width&gt;</span></tt>）</p>
+<p>用尖括号扩起来的内容，表示命令中或代码中的占位符。用户应当用实际值对其替换。</p>
+</li>
+</ol>
+</div>
+<div class="section" id="id9">
+<h3>在线资源<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li>官方网站：<a class="reference external" href="http://www.worldhello.net/gotgit/">http://www.worldhello.net/gotgit/</a></li>
+<li>新浪微博：<a class="reference external" href="http://weibo.com/gotgit/">http://weibo.com/gotgit/</a></li>
+</ul>
+</div>
+<div class="section" id="id10">
+<h3>致谢<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
+<p>感谢Linus Torvalds、Junio Hamano和所有Git项目的贡献者，是他们带给我们崭新的版本控制使用体验。</p>
+<p>本书能够出版要感谢华章出版社，华章对中文原创计算机图书的信任让每一个中国的计算机从业者都有可能一圆出书的梦想。做为一个新人，拿着一个新的选题，遇到同样充满激情的编辑，我无疑是幸运的，他就是华章的杨福川编辑。甚至没有向我要样章（那时本书已经过半），在看过目录之后，就冒险和我签约，他的激情让我不敢懈怠。同样要感谢华章的王晓菲编辑，她的耐心和细致让我吃惊，也正是因为她的工作能够让本书的行文更加流畅，让本书能够更快的问世。还有华章的张少波编辑，感谢她在接到我冒失的打给华章的电话后，帮我分析选题并推荐给其他编辑。</p>
+<p>本书的内容是由我的Git培训讲义发展而来，再此感谢朝歌数码的蒋宗贵，是他的鼓励和鞭策让我完善了本书服务器架设的相关章节。还要感谢王谚宁，正是通过她的团队才让我认识了Android，这才有了本书关于repo和Gerrit的相关章节。</p>
+<p>感谢我的群英汇的同事们，尤其要感谢王胜，正是因为我们在使用Topgit 0.7版本时遇到了严重的冲突，才使我下定决心研究Git。</p>
+<p>本书的技术审校得到了中国科学院软件研究所的张先轶，比蒙科技的宋伯润和杨致伟，摩博科技的熊军，以及王胜等人的帮助，感谢他们为本书提供的宝贵意见和建议。来自台湾的William Wu纠正了本书对Hg认识上的偏颇，让本书附录中的相关内容更加准确和中立，在此向他表示感谢。</p>
+<p>因为写书亏欠家人很多，直到最近才发现女儿小雪是多么的希望拥有一台儿童自行车。感谢妻子阿巧对我的耐心和对家庭的担当。感谢岳父、岳母几年来对小雪和我们整个家庭的照顾，让我没有后顾之忧。还要感谢我的父母和妹妹，他们对我事业的支持和鼓励是我前进的动力。在我写书的同时，老爸正在富春江畔代表哈尔滨电机厂监督发电机组的制造并也在写一本监造手册方面的书，抱歉老爸，我先完成了。:)</p>
+<table class="docutils footnote" frame="void" id="id11" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[1]</a></td><td><a class="reference external" href="http://sourceforge.net/projects/freemind-mmx/">http://sourceforge.net/projects/freemind-mmx/</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id12" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[2]</a></td><td><a class="reference external" href="http://moinmo.in/NewVCS">http://moinmo.in/NewVCS</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id13" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[3]</a></td><td><a class="reference external" href="http://wiki.list.org/display/DEV/Home">http://wiki.list.org/display/DEV/Home</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id14" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id6">[4]</a></td><td><a class="reference external" href="http://blog.ossxp.com/">http://blog.ossxp.com/</a></td></tr>
+</tbody>
+</table>
+<p>目录:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01-meet-git/index.html">1. 初识Git</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01-meet-git/010-scm-history.html">1.1. 版本控制的前世和今生</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01-meet-git/010-scm-history.html#id2">1.1.1. 黑暗的史前时代</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="01-meet-git/010-scm-history.html#diff">1.1.1.1. 命令<strong class="command">diff</strong>用于比较两个文本文件或目录的差异</a></li>
+<li class="toctree-l4"><a class="reference internal" href="01-meet-git/010-scm-history.html#patchdiff">1.1.1.2. 命令<strong class="command">patch</strong>相当于<strong class="command">diff</strong>的反向操作</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="01-meet-git/010-scm-history.html#cvs">1.1.2. CVS——开启版本控制大爆发</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01-meet-git/010-scm-history.html#svn">1.1.3. SVN——集中式版本控制集大成者</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01-meet-git/010-scm-history.html#gitlinus">1.1.4. Git——Linus的第二个伟大作品</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01-meet-git/020-love-git.html">1.2. 爱上Git的理由</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01-meet-git/020-love-git.html#id1">1.2.1. 每日的工作备份</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01-meet-git/020-love-git.html#id2">1.2.2. 异地协同工作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01-meet-git/020-love-git.html#id3">1.2.3. 现场版本控制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01-meet-git/020-love-git.html#id4">1.2.4. 避免引入辅助目录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01-meet-git/020-love-git.html#id5">1.2.5. 重写提交说明</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01-meet-git/020-love-git.html#id6">1.2.6. 想吃后悔药</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01-meet-git/020-love-git.html#id7">1.2.7. 更好用的提交列表</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01-meet-git/020-love-git.html#id8">1.2.8. 更好的差异比较</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01-meet-git/020-love-git.html#id9">1.2.9. 工作进度保存</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01-meet-git/020-love-git.html#svn">1.2.10. 代理SVN提交实现移动式办公</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01-meet-git/020-love-git.html#id10">1.2.11. 无处不在的分页器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01-meet-git/020-love-git.html#id11">1.2.12. 快</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01-meet-git/030-installation.html">1.3. 安装Git</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01-meet-git/035-install-on-linux.html">1.3.1. Linux下安装和使用Git</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="01-meet-git/035-install-on-linux.html#id1">1.3.1.1. 包管理器方式安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="01-meet-git/035-install-on-linux.html#id2">1.3.1.2. 从源代码开始安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="01-meet-git/035-install-on-linux.html#git">1.3.1.3. 从Git版本库进行安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="01-meet-git/035-install-on-linux.html#id3">1.3.1.4. 命令补齐</a></li>
+<li class="toctree-l4"><a class="reference internal" href="01-meet-git/035-install-on-linux.html#id4">1.3.1.5. 中文支持</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="01-meet-git/040-install-on-mac.html">1.3.2. Mac OS X下安装和使用Git</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="01-meet-git/040-install-on-mac.html#id1">1.3.2.1. 以二进制发布包的形式安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="01-meet-git/040-install-on-mac.html#xcode">1.3.2.2. 安装Xcode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="01-meet-git/040-install-on-mac.html#homebrewgit">1.3.2.3. 使用Homebrew安装Git</a></li>
+<li class="toctree-l4"><a class="reference internal" href="01-meet-git/040-install-on-mac.html#git">1.3.2.4. 从Git源码进行安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="01-meet-git/040-install-on-mac.html#id2">1.3.2.5. 命令自动补齐</a></li>
+<li class="toctree-l4"><a class="reference internal" href="01-meet-git/040-install-on-mac.html#id3">1.3.2.6. 其他辅助工具的安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="01-meet-git/040-install-on-mac.html#id4">1.3.2.7. 中文支持</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="01-meet-git/050-install-on-windows-cygwin.html">1.3.3. Windows下安装和使用Git（Cygwin篇）</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="01-meet-git/050-install-on-windows-cygwin.html#cygwin">1.3.3.1. 安装Cygwin</a></li>
+<li class="toctree-l4"><a class="reference internal" href="01-meet-git/050-install-on-windows-cygwin.html#git">1.3.3.2. 安装Git</a></li>
+<li class="toctree-l4"><a class="reference internal" href="01-meet-git/050-install-on-windows-cygwin.html#id1">1.3.3.3. Cygwin的配置和使用</a></li>
+<li class="toctree-l4"><a class="reference internal" href="01-meet-git/050-install-on-windows-cygwin.html#cygwingit">1.3.3.4. Cygwin下Git的中文支持</a></li>
+<li class="toctree-l4"><a class="reference internal" href="01-meet-git/050-install-on-windows-cygwin.html#cygwingitssh">1.3.3.5. Cygwin下Git访问SSH服务</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="01-meet-git/060-install-on-windows-msysgit.html">1.3.4. Windows下安装和使用Git（msysGit篇）</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="01-meet-git/060-install-on-windows-msysgit.html#msysgit">1.3.4.1. 安装msysGit</a></li>
+<li class="toctree-l4"><a class="reference internal" href="01-meet-git/060-install-on-windows-msysgit.html#id1">1.3.4.2. msysGit的配置和使用</a></li>
+<li class="toctree-l4"><a class="reference internal" href="01-meet-git/060-install-on-windows-msysgit.html#msysgitshell">1.3.4.3. msysGit的shell环境的中文支持</a></li>
+<li class="toctree-l4"><a class="reference internal" href="01-meet-git/060-install-on-windows-msysgit.html#msysgitgit">1.3.4.4. msysGit中Git的中文支持</a></li>
+<li class="toctree-l4"><a class="reference internal" href="01-meet-git/060-install-on-windows-msysgit.html#ssh">1.3.4.5. 使用SSH协议</a></li>
+<li class="toctree-l4"><a class="reference internal" href="01-meet-git/060-install-on-windows-msysgit.html#tortoisegit">1.3.4.6. TortoiseGit的安装和使用</a></li>
+<li class="toctree-l4"><a class="reference internal" href="01-meet-git/060-install-on-windows-msysgit.html#id5">1.3.4.7. TortoiseGit的中文支持</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="02-git-solo/index.html">2. Git独奏</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="02-git-solo/010-git-init.html">2.1. Git初始化</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/010-git-init.html#id1">2.1.1. 创建版本库及第一次提交</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/010-git-init.html#id5">2.1.2. 思考：为什么工作区下有一个<tt class="file docutils literal"><span class="pre">.git</span></tt>目录？</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/010-git-init.html#git-config">2.1.3. 思考：<strong class="command">git config</strong>命令参数的区别？</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/010-git-init.html#id7">2.1.4. 思考：是谁完成的提交？</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/010-git-init.html#id8">2.1.5. 思考：随意设置提交者姓名，是否太不安全？</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/010-git-init.html#id9">2.1.6. 思考：命令别名是干什么的？</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/010-git-init.html#id10">2.1.7. 备份本章的工作成果</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02-git-solo/020-git-stage.html">2.2. Git暂存区</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/020-git-stage.html#id1">2.2.1. 修改不能直接提交？</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/020-git-stage.html#git-stage">2.2.2. 理解 Git 暂存区（stage）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/020-git-stage.html#git-diff">2.2.3. Git Diff魔法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/020-git-stage.html#git-commit-a">2.2.4. 不要使用<strong class="command">git commit -a</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/020-git-stage.html#id2">2.2.5. 搁置问题，暂存状态</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02-git-solo/030-head-master-commit-refs.html">2.3. Git对象</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/030-head-master-commit-refs.html#id1">2.3.1. Git对象库探秘</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/030-head-master-commit-refs.html#sha1">2.3.2. 问题：SHA1哈希值到底是什么，如何生成的？</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/030-head-master-commit-refs.html#id2">2.3.3. 问题：为什么不用顺序的数字来表示提交？</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02-git-solo/040-git-reset.html">2.4. Git重置</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/040-git-reset.html#master">2.4.1. 分支游标master的探秘</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/040-git-reset.html#reflog">2.4.2. 用reflog挽救错误的重置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/040-git-reset.html#git-reset">2.4.3. 深入了解<strong class="command">git reset</strong>命令</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02-git-solo/050-git-checkout.html">2.5. Git检出</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/050-git-checkout.html#head">2.5.1. HEAD的重置即检出</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/050-git-checkout.html#id1">2.5.2. 挽救分离头指针</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/050-git-checkout.html#git-checkout">2.5.3. 深入了解<strong class="command">git checkout</strong>命令</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02-git-solo/060-git-stage-n-stash.html">2.6. 恢复进度</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/060-git-stage-n-stash.html#id2">2.6.1. 继续暂存区未完成的实践</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/060-git-stage-n-stash.html#git-stash">2.6.2. 使用<strong class="command">git stash</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/060-git-stage-n-stash.html#id3">2.6.3. 探秘<strong class="command">git stash</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02-git-solo/070-git-basic.html">2.7. Git基本操作</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/070-git-basic.html#id1">2.7.1. 先来合个影</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/070-git-basic.html#id2">2.7.2. 删除文件</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="02-git-solo/070-git-basic.html#id3">2.7.2.1. 本地删除不是真的删除</a></li>
+<li class="toctree-l4"><a class="reference internal" href="02-git-solo/070-git-basic.html#git-rm">2.7.2.2. 执行<strong class="command">git rm</strong>命令删除文件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="02-git-solo/070-git-basic.html#git-add-u">2.7.2.3. 命令<strong class="command">git add -u</strong>快速标记删除</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/070-git-basic.html#id4">2.7.3. 恢复删除的文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/070-git-basic.html#id5">2.7.4. 移动文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/070-git-basic.html#hello-world">2.7.5. 一个显示版本号的<tt class="docutils literal"><span class="pre">Hello</span> <span class="pre">World</span></tt></a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/070-git-basic.html#git-add-i">2.7.6. 使用<strong class="command">git add -i</strong>选择性添加</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/070-git-basic.html#id6">2.7.7. <tt class="docutils literal"><span class="pre">Hello</span> <span class="pre">world</span></tt>引发的新问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/070-git-basic.html#id7">2.7.8. 文件忽略</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/070-git-basic.html#id8">2.7.9. 文件归档</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02-git-solo/080-git-history-travel.html">2.8. 历史穿梭</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/080-git-history-travel.html#gitk">2.8.1. 图形工具：gitk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/080-git-history-travel.html#gitg">2.8.2. 图形工具：gitg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/080-git-history-travel.html#qgit">2.8.3. 图形工具：qgit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/080-git-history-travel.html#id2">2.8.4. 命令行工具</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="02-git-solo/080-git-history-travel.html#git-rev-parse">2.8.4.1. 版本表示法：<strong class="command">git rev-parse</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="02-git-solo/080-git-history-travel.html#git-rev-list">2.8.4.2. 版本范围表示法：git rev-list</a></li>
+<li class="toctree-l4"><a class="reference internal" href="02-git-solo/080-git-history-travel.html#git-log">2.8.4.3. 浏览日志：<strong class="command">git log</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="02-git-solo/080-git-history-travel.html#git-diff">2.8.4.4. 差异比较：<strong class="command">git diff</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="02-git-solo/080-git-history-travel.html#git-blame">2.8.4.5. 文件追溯：<strong class="command">git blame</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="02-git-solo/080-git-history-travel.html#git-bisect">2.8.4.6. 二分查找：<strong class="command">git bisect</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="02-git-solo/080-git-history-travel.html#id3">2.8.4.7. 获取历史版本</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02-git-solo/090-back-to-future.html">2.9. 改变历史</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/090-back-to-future.html#id2">2.9.1. 悔棋</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/090-back-to-future.html#id3">2.9.2. 多步悔棋</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/090-back-to-future.html#id4">2.9.3. 回到未来</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="02-git-solo/090-back-to-future.html#id5">2.9.3.1. 时间旅行一</a></li>
+<li class="toctree-l4"><a class="reference internal" href="02-git-solo/090-back-to-future.html#id6">2.9.3.2. 时间旅行二</a></li>
+<li class="toctree-l4"><a class="reference internal" href="02-git-solo/090-back-to-future.html#id7">2.9.3.3. 时间旅行三</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/090-back-to-future.html#id8">2.9.4. 丢弃历史</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/090-back-to-future.html#id9">2.9.5. 反转提交</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02-git-solo/100-git-clone.html">2.10. Git克隆</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/100-git-clone.html#id1">2.10.1. 鸡蛋不装在一个篮子里</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/100-git-clone.html#id2">2.10.2. 对等工作区</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/100-git-clone.html#id3">2.10.3. 克隆生成裸版本库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/100-git-clone.html#id4">2.10.4. 创建生成裸版本库</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02-git-solo/110-git-admin.html">2.11. Git库管理</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/110-git-admin.html#id1">2.11.1. 对象和引用哪里去了？</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/110-git-admin.html#id2">2.11.2. 暂存区操作引入的临时对象</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/110-git-admin.html#id3">2.11.3. 重置操作引入的对象</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/110-git-admin.html#git-git-gc">2.11.4. Git管家：<tt class="docutils literal"><span class="pre">git</span> <span class="pre">gc</span></tt></a></li>
+<li class="toctree-l3"><a class="reference internal" href="02-git-solo/110-git-admin.html#id4">2.11.5. Git管家的自动执行</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="03-git-harmony/index.html">3. Git和声</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="03-git-harmony/010-protocol.html">3.1. Git协议与工作协同</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/010-protocol.html#id1">3.1.1. Git支持的协议</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/010-protocol.html#id2">3.1.2. 多用户协同的本地模拟</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/010-protocol.html#id3">3.1.3. 强制非快进式推送</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/010-protocol.html#id4">3.1.4. 合并后推送</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/010-protocol.html#id5">3.1.5. 禁止非快进式推送</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03-git-harmony/020-conflict.html">3.2. 冲突解决</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/020-conflict.html#id2">3.2.1. 拉回操作中的合并</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/020-conflict.html#id3">3.2.2. 合并一：自动合并</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="03-git-harmony/020-conflict.html#id4">3.2.2.1. 修改不同的文件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="03-git-harmony/020-conflict.html#id5">3.2.2.2. 修改相同文件的不同区域</a></li>
+<li class="toctree-l4"><a class="reference internal" href="03-git-harmony/020-conflict.html#id6">3.2.2.3. 同时更改文件名和文件内容</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/020-conflict.html#id7">3.2.3. 合并二：逻辑冲突</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/020-conflict.html#id8">3.2.4. 合并三：冲突解决</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="03-git-harmony/020-conflict.html#id9">3.2.4.1. 手工编辑完成冲突解决</a></li>
+<li class="toctree-l4"><a class="reference internal" href="03-git-harmony/020-conflict.html#id10">3.2.4.2. 图形工具完成冲突解决</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/020-conflict.html#id11">3.2.5. 合并四：树冲突</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="03-git-harmony/020-conflict.html#id12">3.2.5.1. 手工操作解决树冲突</a></li>
+<li class="toctree-l4"><a class="reference internal" href="03-git-harmony/020-conflict.html#id13">3.2.5.2. 交互式解决树冲突</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/020-conflict.html#id14">3.2.6. 合并策略</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/020-conflict.html#id15">3.2.7. 合并相关的设置</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03-git-harmony/030-git-tag.html">3.3. Git里程碑</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/030-git-tag.html#id1">3.3.1. 显示里程碑</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="03-git-harmony/030-git-tag.html#git-tag">3.3.1.1. 1. 命令<strong class="command">git tag</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="03-git-harmony/030-git-tag.html#git-log">3.3.1.2. 2. 命令<strong class="command">git log</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="03-git-harmony/030-git-tag.html#git-describe">3.3.1.3. 3. 命令<strong class="command">git describe</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="03-git-harmony/030-git-tag.html#git-name-rev">3.3.1.4. 4. 命令<strong class="command">git name-rev</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/030-git-tag.html#id2">3.3.2. 创建里程碑</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="03-git-harmony/030-git-tag.html#id3">3.3.2.1. 轻量级里程碑</a></li>
+<li class="toctree-l4"><a class="reference internal" href="03-git-harmony/030-git-tag.html#id4">3.3.2.2. 带说明的里程碑</a></li>
+<li class="toctree-l4"><a class="reference internal" href="03-git-harmony/030-git-tag.html#id5">3.3.2.3. 带签名的里程碑</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/030-git-tag.html#id6">3.3.3. 删除里程碑</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/030-git-tag.html#id7">3.3.4. 不要随意更改里程碑</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/030-git-tag.html#id8">3.3.5. 共享里程碑</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/030-git-tag.html#id9">3.3.6. 删除远程版本库的里程碑</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/030-git-tag.html#id10">3.3.7. 里程碑命名规范</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03-git-harmony/040-git-branch.html">3.4. Git分支</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/040-git-branch.html#id1">3.4.1. 代码管理之殇</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="03-git-harmony/040-git-branch.html#id2">3.4.1.1. 发布分支</a></li>
+<li class="toctree-l4"><a class="reference internal" href="03-git-harmony/040-git-branch.html#id3">3.4.1.2. 特性分支</a></li>
+<li class="toctree-l4"><a class="reference internal" href="03-git-harmony/040-git-branch.html#id4">3.4.1.3. 卖主分支</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/040-git-branch.html#id5">3.4.2. 分支命令概述</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/040-git-branch.html#hello-world">3.4.3. Hello World开发计划</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/040-git-branch.html#id6">3.4.4. 基于特性分支的开发</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="03-git-harmony/040-git-branch.html#user1-getopt">3.4.4.1. 创建分支<tt class="docutils literal"><span class="pre">user1/getopt</span></tt></a></li>
+<li class="toctree-l4"><a class="reference internal" href="03-git-harmony/040-git-branch.html#user2-i18n">3.4.4.2. 创建分支<tt class="docutils literal"><span class="pre">user2/i18n</span></tt></a></li>
+<li class="toctree-l4"><a class="reference internal" href="03-git-harmony/040-git-branch.html#user1">3.4.4.3. 开发者 user1 完成功能开发</a></li>
+<li class="toctree-l4"><a class="reference internal" href="03-git-harmony/040-git-branch.html#id7">3.4.4.4. 将<tt class="docutils literal"><span class="pre">user1/getopt</span></tt>分支合并到主线</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/040-git-branch.html#id8">3.4.5. 基于发布分支的开发</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="03-git-harmony/040-git-branch.html#id9">3.4.5.1. 创建发布分支</a></li>
+<li class="toctree-l4"><a class="reference internal" href="03-git-harmony/040-git-branch.html#id10">3.4.5.2. 开发者user1工作在发布分支</a></li>
+<li class="toctree-l4"><a class="reference internal" href="03-git-harmony/040-git-branch.html#user2">3.4.5.3. 开发者user2工作在发布分支</a></li>
+<li class="toctree-l4"><a class="reference internal" href="03-git-harmony/040-git-branch.html#id11">3.4.5.4. 开发者user2合并推送</a></li>
+<li class="toctree-l4"><a class="reference internal" href="03-git-harmony/040-git-branch.html#id12">3.4.5.5. 发布分支的提交合并到主线</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/040-git-branch.html#id13">3.4.6. 分支变基</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="03-git-harmony/040-git-branch.html#id14">3.4.6.1. 完成<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>特性分支的开发</a></li>
+<li class="toctree-l4"><a class="reference internal" href="03-git-harmony/040-git-branch.html#id15">3.4.6.2. 分支<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>变基</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03-git-harmony/050-git-remote.html">3.5. 远程版本库</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/050-git-remote.html#id2">3.5.1. 远程分支</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/050-git-remote.html#id3">3.5.2. 分支追踪</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/050-git-remote.html#id4">3.5.3. 远程版本库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/050-git-remote.html#pushpull">3.5.4. PUSH和PULL操作与远程版本库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/050-git-remote.html#id5">3.5.5. 里程碑和远程版本库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/050-git-remote.html#id6">3.5.6. 分支和里程碑的安全性</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03-git-harmony/060-git-offline.html">3.6. 补丁文件交互</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/060-git-offline.html#id2">3.6.1. 创建补丁</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/060-git-offline.html#id3">3.6.2. 应用补丁</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03-git-harmony/060-git-offline.html#stgitquilt">3.6.3. StGit和Quilt</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="03-git-harmony/060-git-offline.html#stgit">3.6.3.1. StGit</a></li>
+<li class="toctree-l4"><a class="reference internal" href="03-git-harmony/060-git-offline.html#quilt">3.6.3.2. Quilt</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04-git-model/index.html">4. Git协同模型</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04-git-model/010-central-model.html">4.1. 经典Git协同模型</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/010-central-model.html#id1">4.1.1. 集中式协同模型</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/010-central-model.html#id2">4.1.1.1. 使用集中协同模型</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/010-central-model.html#gerrit">4.1.1.2. Gerrit特殊的集中协同模型</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="04-git-model/020-distribute-model.html">4.2. 金字塔式协同模型</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/020-distribute-model.html#id2">4.2.1. 贡献者开放只读版本库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/020-distribute-model.html#id3">4.2.2. 以补丁方式贡献代码</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="04-git-model/030-topgit-model.html">4.3. Topgit协同模型</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/030-topgit-model.html#id1">4.3.1. 作者版本控制系统三个里程碑</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/030-topgit-model.html#id2">4.3.2. Topgit原理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/030-topgit-model.html#id3">4.3.3. Topgit的安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/030-topgit-model.html#id4">4.3.4. Topgit的使用</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/030-topgit-model.html#tg-help">4.3.4.1. <strong class="command">tg help</strong>命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/030-topgit-model.html#tg-create">4.3.4.2. <strong class="command">tg create</strong>命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/030-topgit-model.html#tg-info">4.3.4.3. <strong class="command">tg info</strong>命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/030-topgit-model.html#tg-update">4.3.4.4. <strong class="command">tg update</strong>命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/030-topgit-model.html#tg-summary">4.3.4.5. <strong class="command">tg summary</strong>命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/030-topgit-model.html#tg-remote">4.3.4.6. <strong class="command">tg remote</strong>命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/030-topgit-model.html#tg-push">4.3.4.7. <strong class="command">tg push</strong>命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/030-topgit-model.html#tg-depend">4.3.4.8. <strong class="command">tg depend</strong>命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/030-topgit-model.html#tg-base">4.3.4.9. <strong class="command">tg base</strong>命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/030-topgit-model.html#tg-delete">4.3.4.10. <strong class="command">tg delete</strong>命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/030-topgit-model.html#tg-patch">4.3.4.11. <strong class="command">tg patch</strong>命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/030-topgit-model.html#tg-export">4.3.4.12. <strong class="command">tg export</strong>命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/030-topgit-model.html#tg-import">4.3.4.13. <strong class="command">tg import</strong>命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/030-topgit-model.html#tg-log">4.3.4.14. <strong class="command">tg log</strong>命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/030-topgit-model.html#tg-mail">4.3.4.15. <strong class="command">tg mail</strong>命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/030-topgit-model.html#tg-graph">4.3.4.16. <strong class="command">tg graph</strong>命令</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/030-topgit-model.html#topgit-hacks">4.3.5. Topgit hacks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/030-topgit-model.html#id5">4.3.6. Topgit使用中的注意事项</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="04-git-model/040-submodule-model.html">4.4. 子模组协同模型</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/040-submodule-model.html#id2">4.4.1. 创建子模组</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/040-submodule-model.html#id4">4.4.2. 克隆带子模组的版本库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/040-submodule-model.html#id5">4.4.3. 在子模组中修改和子模组的更新</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/040-submodule-model.html#id6">4.4.4. 隐性子模组</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/040-submodule-model.html#id7">4.4.5. 子模组的管理问题</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="04-git-model/050-subtree-model.html">4.5. 子树合并</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/050-subtree-model.html#id2">4.5.1. 引入外部版本库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/050-subtree-model.html#id3">4.5.2. 子目录方式合并外部版本库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/050-subtree-model.html#id4">4.5.3. 利用子树合并跟踪上游改动</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/050-subtree-model.html#id5">4.5.4. 子树拆分</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/050-subtree-model.html#git-subtree">4.5.5. <tt class="docutils literal"><span class="pre">git</span> <span class="pre">subtree</span></tt>插件</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/050-subtree-model.html#git-subtree-add">4.5.5.1. <strong class="command">git subtree add</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/050-subtree-model.html#git-subtree-merge">4.5.5.2. <strong class="command">git subtree merge</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/050-subtree-model.html#git-subtree-pull">4.5.5.3. <strong class="command">git subtree pull</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/050-subtree-model.html#git-subtree-split">4.5.5.4. <strong class="command">git subtree split</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/050-subtree-model.html#git-subtree-push">4.5.5.5. <strong class="command">git subtree push</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="04-git-model/060-android-model.html">4.6. Android式多版本库协同</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/060-android-model.html#repo">4.6.1. 关于repo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/060-android-model.html#id1">4.6.2. 安装repo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/060-android-model.html#id2">4.6.3. repo和清单库的初始化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/060-android-model.html#id3">4.6.4. 清单库和清单文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/060-android-model.html#id4">4.6.5. 同步项目</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/060-android-model.html#id5">4.6.6. 建立Android代码库本地镜像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/060-android-model.html#id6">4.6.7. Repo的命令集</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/060-android-model.html#repo-init">4.6.7.1. <strong class="command">repo init</strong>命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/060-android-model.html#repo-sync">4.6.7.2. <strong class="command">repo sync</strong>命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/060-android-model.html#repo-start">4.6.7.3. <strong class="command">repo start</strong>命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/060-android-model.html#repo-status">4.6.7.4. <strong class="command">repo status</strong>命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/060-android-model.html#repo-checkout">4.6.7.5. <strong class="command">repo checkout</strong>命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/060-android-model.html#repo-branches">4.6.7.6. <strong class="command">repo branches</strong>命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/060-android-model.html#repo-diff">4.6.7.7. <strong class="command">repo diff</strong>命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/060-android-model.html#repo-stage">4.6.7.8. <strong class="command">repo stage</strong>命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/060-android-model.html#repo-upload">4.6.7.9. <strong class="command">repo upload</strong>命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/060-android-model.html#repo-download">4.6.7.10. <strong class="command">repo download</strong>命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/060-android-model.html#repo-rebase">4.6.7.11. <strong class="command">repo rebase</strong>命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/060-android-model.html#repo-prune">4.6.7.12. <strong class="command">repo prune</strong>命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/060-android-model.html#repo-abandon">4.6.7.13. <strong class="command">repo abandon</strong>命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/060-android-model.html#id7">4.6.7.14. 其他命令</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/060-android-model.html#id8">4.6.8. Repo命令的工作流</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/060-android-model.html#id9">4.6.9. 好东西不能Android独享</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/060-android-model.html#repo-gerrit">4.6.9.1. Repo+Gerrit模式</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/060-android-model.html#id10">4.6.9.2. Repo无审核模式</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/060-android-model.html#id11">4.6.9.3. 改进的Repo无审核模式</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="04-git-model/070-git-svn.html">4.7. Git和SVN协同模型</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/070-git-svn.html#git-svn">4.7.1. 使用git-svn的一般流程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/070-git-svn.html#id1">4.7.2. git-svn的奥秘</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/070-git-svn.html#git">4.7.2.1. Git库配置文件的扩展及分支映射</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/070-git-svn.html#gitsubversion">4.7.2.2. Git工作分支和Subversion如何对应？</a></li>
+<li class="toctree-l4"><a class="reference internal" href="04-git-model/070-git-svn.html#id2">4.7.2.3. 其他辅助文件</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/070-git-svn.html#id3">4.7.3. 多样的git-svn克隆模式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/070-git-svn.html#id4">4.7.4. 共享git-svn的克隆库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04-git-model/070-git-svn.html#id5">4.7.5. git-svn的局限</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="05-git-server/index.html">5. 搭建Git服务器</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="05-git-server/010-http.html">5.1. 使用HTTP协议</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/010-http.html#id1">5.1.1. 哑传输协议</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/010-http.html#id3">5.1.2. 智能HTTP协议</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/010-http.html#gitweb">5.1.3. Gitweb服务器</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/010-http.html#id4">5.1.3.1. Gitweb安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/010-http.html#id5">5.1.3.2. Gitweb配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/010-http.html#id6">5.1.3.3. 版本库的Gitweb相关设置</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="05-git-server/020-git.html">5.2. 使用Git协议</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/020-git.html#id1">5.2.1. Git协议语法格式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/020-git.html#id2">5.2.2. Git服务软件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/020-git.html#inetd">5.2.3. 以inetd方式配置运行</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/020-git.html#runit">5.2.4. 以runit方式配置运行</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="05-git-server/030-ssh.html">5.3. 使用SSH协议</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/030-ssh.html#id1">5.3.1. SSH协议语法格式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/030-ssh.html#id2">5.3.2. 服务架设方式比较</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/030-ssh.html#id3">5.3.3. 关于SSH公钥认证</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/030-ssh.html#id4">5.3.4. 关于SSH主机别名</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="05-git-server/040-gitolite.html">5.4. Gitolite服务架设</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/040-gitolite.html#id3">5.4.1. 安装Gitolite</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/040-gitolite.html#id4">5.4.1.1. 安装之前</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/040-gitolite.html#id5">5.4.1.2. 以发布包形式安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/040-gitolite.html#id6">5.4.1.3. 从源代码开始安装</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/040-gitolite.html#id7">5.4.2. 管理Gitolite</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/040-gitolite.html#gitolite-admin">5.4.2.1. 管理员克隆gitolite-admin管理库</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/040-gitolite.html#id8">5.4.2.2. 增加新用户</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/040-gitolite.html#id9">5.4.2.3. 更改授权</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/040-gitolite.html#id10">5.4.3. Gitolite授权详解</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/040-gitolite.html#id11">5.4.3.1. 授权文件的基本语法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/040-gitolite.html#id12">5.4.3.2. 定义用户组和版本库组</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/040-gitolite.html#acl">5.4.3.3. 版本库ACL</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/040-gitolite.html#id16">5.4.3.4. Gitolite授权机制</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/040-gitolite.html#id17">5.4.4. 版本库授权案例</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/040-gitolite.html#id18">5.4.4.1. 常规版本库授权</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/040-gitolite.html#id19">5.4.4.2. 通配符版本库授权</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/040-gitolite.html#id20">5.4.4.3. 每个人创建自己的版本库</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/040-gitolite.html#id21">5.4.4.4. 传统模式的引用授权</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/040-gitolite.html#id22">5.4.4.5. 扩展模式的引用授权</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/040-gitolite.html#id23">5.4.4.6. 禁用规则的使用</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/040-gitolite.html#id24">5.4.4.7. 用户分支</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/040-gitolite.html#id25">5.4.4.8. 对路径的写授权</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/040-gitolite.html#id26">5.4.5. 创建和导入版本库</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/040-gitolite.html#id27">5.4.5.1. 在配置文件中出现的版本库，即时生成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/040-gitolite.html#id28">5.4.5.2. 通配符版本库，管理员通过推送创建</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/040-gitolite.html#id29">5.4.5.3. 向Gitolite中导入版本库</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/040-gitolite.html#id30">5.4.6. 对Gitolite的改进</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/040-gitolite.html#id31">5.4.7. Gitolite功能拓展</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/040-gitolite.html#id32">5.4.7.1. 版本库镜像</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/040-gitolite.html#gitwebgit-daemon">5.4.7.2. Gitweb和Git daemon支持</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/040-gitolite.html#id36">5.4.7.3. 其他功能拓展和参考</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="05-git-server/050-gitosis.html">5.5. Gitosis服务架设</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/050-gitosis.html#id1">5.5.1. 安装Gitosis</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/050-gitosis.html#id2">5.5.1.1. Gitosis的安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/050-gitosis.html#id3">5.5.1.2. 服务器端创建专用帐号</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/050-gitosis.html#id4">5.5.1.3. Gitosis服务初始化</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/050-gitosis.html#id5">5.5.2. 管理Gitosis</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/050-gitosis.html#gitolit-admin">5.5.2.1. 管理员克隆<tt class="docutils literal"><span class="pre">gitolit-admin</span></tt>管理库</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/050-gitosis.html#id6">5.5.2.2. 增加新用户</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/050-gitosis.html#id7">5.5.2.3. 更改授权</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/050-gitosis.html#id8">5.5.3. Gitosis授权详解</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/050-gitosis.html#id9">5.5.3.1. Gitosis缺省设置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/050-gitosis.html#gitosis-admin">5.5.3.2. 管理版本库<tt class="docutils literal"><span class="pre">gitosis-admin</span></tt></a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/050-gitosis.html#id10">5.5.3.3. 定义用户组和授权</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/050-gitosis.html#gitweb">5.5.3.4. Gitweb整合</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/050-gitosis.html#id11">5.5.4. 创建新版本库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/050-gitosis.html#git">5.5.5. 轻量级管理的Git服务</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="05-git-server/055-gerrit.html">5.6. Gerrit代码审核服务器</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/055-gerrit.html#id1">5.6.1. Gerrit的实现原理</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/055-gerrit.html#sshgit">5.6.1.1. SSH协议的Git服务器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/055-gerrit.html#refs-for-branch-name-refs-changes-nn-review-id-m">5.6.1.2. 特殊引用<tt class="docutils literal"><span class="pre">refs/for/&lt;branch-name&gt;</span></tt>和<tt class="docutils literal"><span class="pre">refs/changes/nn/&lt;review-id&gt;/m</span></tt></a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/055-gerrit.html#githooks-commit-msg">5.6.1.3. Git库的钩子脚本<tt class="file docutils literal"><span class="pre">hooks/commit-msg</span></tt></a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/055-gerrit.html#web">5.6.1.4. 其余一切交给Web</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/055-gerrit.html#id2">5.6.2. 架设Gerrit的服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/055-gerrit.html#id3">5.6.3. Gerrit的配置文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/055-gerrit.html#id4">5.6.4. Gerrit的数据库访问</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/055-gerrit.html#id5">5.6.5. 立即注册为Gerrit管理员</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/055-gerrit.html#ssh">5.6.6. 管理员访问SSH的管理接口</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/055-gerrit.html#id6">5.6.7. 创建新项目</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/055-gerrit.html#git">5.6.8. 从已有Git库创建项目</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/055-gerrit.html#id7">5.6.9. 定义评审工作流</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/055-gerrit.html#id8">5.6.10. Gerrit评审工作流实战</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/055-gerrit.html#id9">5.6.10.1. 开发者在本地版本库中工作</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/055-gerrit.html#id10">5.6.10.2. 开发者向审核服务器提交</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/055-gerrit.html#id11">5.6.10.3. 审核评审任务</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/055-gerrit.html#id12">5.6.10.4. 评审任务没有通过测试</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/055-gerrit.html#id13">5.6.10.5. 重新提交新的补丁集</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/055-gerrit.html#id14">5.6.10.6. 新修订集通过评审</a></li>
+<li class="toctree-l4"><a class="reference internal" href="05-git-server/055-gerrit.html#id15">5.6.10.7. 从远程版本库更新</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/055-gerrit.html#id16">5.6.11. 更多Gerrit参考</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="05-git-server/060-github-like.html">5.7. Git版本库托管</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/060-github-like.html#github">5.7.1. Github</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05-git-server/060-github-like.html#gitorious">5.7.2. Gitorious</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="06-migrate/index.html">6. 迁移到Git</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="06-migrate/010-cvs.html">6.1. CVS版本库到Git的迁移</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="06-migrate/010-cvs.html#cvs2svn-cvs2git">6.1.1. 安装cvs2svn（含cvs2git）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06-migrate/010-cvs.html#id1">6.1.2. 版本库转换（命令行参数模式）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06-migrate/010-cvs.html#id2">6.1.3. 版本库转换（配置文件模式）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06-migrate/010-cvs.html#id5">6.1.4. 迁移后版本库检查</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="06-migrate/010-cvs.html#id6">6.1.4.1. 文件名和日志的中文</a></li>
+<li class="toctree-l4"><a class="reference internal" href="06-migrate/010-cvs.html#id7">6.1.4.2. 图片文件被破坏</a></li>
+<li class="toctree-l4"><a class="reference internal" href="06-migrate/010-cvs.html#cvsignore">6.1.4.3. <tt class="file docutils literal"><span class="pre">.cvsignore</span></tt>文件的转换</a></li>
+<li class="toctree-l4"><a class="reference internal" href="06-migrate/010-cvs.html#id8">6.1.4.4. 迁移后的测试</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="06-migrate/020-others.html">6.2. 更多版本控制系统的迁移</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="06-migrate/025-svn.html">6.2.1. SVN版本库到Git的迁移</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06-migrate/030-hg.html">6.2.2. Hg版本库到Git的迁移</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06-migrate/040-others.html">6.2.3. 通用版本库迁移</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06-migrate/050-git-to-git.html">6.2.4. Git版本库整理</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="06-migrate/050-git-to-git.html#id1">6.2.4.1. 环境变量过滤器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="06-migrate/050-git-to-git.html#id3">6.2.4.2. 树过滤器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="06-migrate/050-git-to-git.html#id4">6.2.4.3. 暂存区过滤器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="06-migrate/050-git-to-git.html#id5">6.2.4.4. 父节点过滤器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="06-migrate/050-git-to-git.html#id6">6.2.4.5. 提交说明过滤器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="06-migrate/050-git-to-git.html#id7">6.2.4.6. 提交过滤器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="06-migrate/050-git-to-git.html#id8">6.2.4.7. 里程碑名字过滤器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="06-migrate/050-git-to-git.html#id9">6.2.4.8. 子目录过滤器</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="07-git-app/index.html">7. Git的其它应用</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="07-git-app/010-etckeeper.html">7.1. etckeeper</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="07-git-app/010-etckeeper.html#id1">7.1.1. 安装etckeeper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07-git-app/010-etckeeper.html#id2">7.1.2. 配置etckeeper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07-git-app/010-etckeeper.html#id3">7.1.3. 使用etckeeper</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="07-git-app/020-gistore.html">7.2. Gistore</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="07-git-app/020-gistore.html#id1">7.2.1. Gistore的安装</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="07-git-app/020-gistore.html#id2">7.2.1.1. 从源码安装Gistore</a></li>
+<li class="toctree-l4"><a class="reference internal" href="07-git-app/020-gistore.html#easy-install">7.2.1.2. 用<tt class="docutils literal"><span class="pre">easy_install</span></tt>安装</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="07-git-app/020-gistore.html#id3">7.2.2. Gistore的使用</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="07-git-app/020-gistore.html#id4">7.2.2.1. 创建并初始化备份库</a></li>
+<li class="toctree-l4"><a class="reference internal" href="07-git-app/020-gistore.html#id5">7.2.2.2. Gistore的配置文件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="07-git-app/020-gistore.html#id6">7.2.2.3. Gistore的备份项管理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="07-git-app/020-gistore.html#id7">7.2.2.4. 执行备份任务</a></li>
+<li class="toctree-l4"><a class="reference internal" href="07-git-app/020-gistore.html#id8">7.2.2.5. 查看备份日志及数据</a></li>
+<li class="toctree-l4"><a class="reference internal" href="07-git-app/020-gistore.html#id9">7.2.2.6. 查看及恢复备份数据</a></li>
+<li class="toctree-l4"><a class="reference internal" href="07-git-app/020-gistore.html#id10">7.2.2.7. 备份回滚及设置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="07-git-app/020-gistore.html#id11">7.2.2.8. 注册备份任务别名</a></li>
+<li class="toctree-l4"><a class="reference internal" href="07-git-app/020-gistore.html#crontab">7.2.2.9. 自动备份：crontab</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="07-git-app/020-gistore.html#id12">7.2.3. Gistore双机备份</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="07-git-app/030-binary-diff.html">7.3. 补丁中的二进制文件</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="07-git-app/030-binary-diff.html#git">7.3.1. Git版本库中二进制文件变更的支持</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07-git-app/030-binary-diff.html#id2">7.3.2. 对非Git版本库中二进制文件变更的支持</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07-git-app/030-binary-diff.html#id3">7.3.3. 其他工具对Git扩展补丁文件的支持</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="07-git-app/040-cloud-storage.html">7.4. 云存储</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="07-git-app/040-cloud-storage.html#id2">7.4.1. 现有云存储的问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07-git-app/040-cloud-storage.html#git">7.4.2. Git式云存储畅想</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="08-git-misc/index.html">8. Git杂谈</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="08-git-misc/010-git-cross-os.html">8.1. 跨平台操作Git</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="08-git-misc/020-git-charset.html">8.1.1. 字符集问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08-git-misc/030-case-insensitive.html">8.1.2. 文件名大小写问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08-git-misc/040-eol.html">8.1.3. 换行符问题</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="08-git-misc/050-git-features.html">8.2. Git 的其他特性</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="08-git-misc/060-attributes.html">8.2.1. 属性</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="08-git-misc/060-attributes.html#id2">8.2.1.1. 属性定义</a></li>
+<li class="toctree-l4"><a class="reference internal" href="08-git-misc/060-attributes.html#id3">8.2.1.2. 属性文件及优先级</a></li>
+<li class="toctree-l4"><a class="reference internal" href="08-git-misc/060-attributes.html#id4">8.2.1.3. 常用属性介绍</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="08-git-misc/070-hooks-and-templates.html">8.2.2. 钩子和模板</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="08-git-misc/070-hooks-and-templates.html#git">8.2.2.1. Git钩子</a></li>
+<li class="toctree-l4"><a class="reference internal" href="08-git-misc/070-hooks-and-templates.html#id2">8.2.2.2. Git模板</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="08-git-misc/090-sparse-checkout-and-shallow-clone.html">8.2.3. 稀疏检出和浅克隆</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="08-git-misc/090-sparse-checkout-and-shallow-clone.html#id2">8.2.3.1. 稀疏检出</a></li>
+<li class="toctree-l4"><a class="reference internal" href="08-git-misc/090-sparse-checkout-and-shallow-clone.html#id3">8.2.3.2. 浅克隆</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="08-git-misc/110-graft-and-replace.html">8.2.4. 嫁接和替换</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="08-git-misc/110-graft-and-replace.html#id2">8.2.4.1. 提交嫁接</a></li>
+<li class="toctree-l4"><a class="reference internal" href="08-git-misc/110-graft-and-replace.html#id3">8.2.4.2. 提交替换</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="08-git-misc/120-git-notes.html">8.2.5. Git评注</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="08-git-misc/120-git-notes.html#id1">8.2.5.1. 评注的奥秘</a></li>
+<li class="toctree-l4"><a class="reference internal" href="08-git-misc/120-git-notes.html#id2">8.2.5.2. 评注相关命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="08-git-misc/120-git-notes.html#id3">8.2.5.3. 评注相关配置</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="90-app/index.html">9. 附录</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="90-app/010-git-commands-index.html">9.1. A. Git命令索引</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="90-app/010-git-commands-index.html#a-1-git">9.1.1. A.1 常用的Git命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="90-app/010-git-commands-index.html#a-2">9.1.2. A.2 对象库操作相关命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="90-app/010-git-commands-index.html#a-3">9.1.3. A.3 引用操作相关命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="90-app/010-git-commands-index.html#a-4">9.1.4. A.4 版本库管理相关命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="90-app/010-git-commands-index.html#a-5">9.1.5. A.5 数据传输相关命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="90-app/010-git-commands-index.html#a-6">9.1.6. A.6 邮件相关命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="90-app/010-git-commands-index.html#a-7">9.1.7. A.7 协议相关命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="90-app/010-git-commands-index.html#a-8">9.1.8. A.8 版本库转换和交互相关命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="90-app/010-git-commands-index.html#a-9">9.1.9. A.9 合并相关的辅助命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="90-app/010-git-commands-index.html#a-10">9.1.10. A.10 杂项</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="90-app/020-cvs-git-face2face.html">9.2. Git与CVS面对面</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="90-app/020-cvs-git-face2face.html#id1">9.2.1. 面对面访谈录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="90-app/020-cvs-git-face2face.html#cvsgit">9.2.2. CVS和Git命令对照</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="90-app/030-svn-git-face2face.html">9.3. Git和SVN面对面</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="90-app/030-svn-git-face2face.html#id1">9.3.1. 面对面访谈录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="90-app/030-svn-git-face2face.html#svngit">9.3.2. SVN和Git命令对照</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="90-app/040-hg-git-face2face.html">9.4. Git和Hg面对面</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="90-app/040-hg-git-face2face.html#id1">9.4.1. 面对面访谈录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="90-app/040-hg-git-face2face.html#hggit">9.4.2. Hg和Git命令对照</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="永久链接至标题">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>索引</em></a></li>
+<li><a class="reference internal" href="search.html"><em>搜索页面</em></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="01-meet-git/index.html" title="1. 初识Git"
+             >下一页</a> |</li>
+        <li><a href="#">GotGit</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

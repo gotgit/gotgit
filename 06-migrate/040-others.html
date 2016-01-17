@@ -1,0 +1,376 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>6.2.3. 通用版本库迁移 &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="up" title="6.2. 更多版本控制系统的迁移" href="020-others.html" />
+    <link rel="next" title="6.2.4. Git版本库整理" href="050-git-to-git.html" />
+    <link rel="prev" title="6.2.2. Hg版本库到Git的迁移" href="030-hg.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="050-git-to-git.html" title="6.2.4. Git版本库整理"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="030-hg.html" title="6.2.2. Hg版本库到Git的迁移"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >6. 迁移到Git</a> &raquo;</li>
+          <li><a href="020-others.html" accesskey="U">6.2. 更多版本控制系统的迁移</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="030-hg.html"
+                        title="上一章">6.2.2. Hg版本库到Git的迁移</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="050-git-to-git.html"
+                        title="下一章">6.2.4. Git版本库整理</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/06-migrate/040-others.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>6.2.3. 通用版本库迁移<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>如果读者的版本控制工具在前面的迁移方案没有涉及到，也不要紧，因为很可能通过搜索引擎就能找到一款合适的迁移工具。如果找不到相应的工具，可能是您使用的版本控制工具太冷门，或者是一款不提供迁移接口的商业版本控制工具。这时您可以通过手工检入的方式或者针对Git提供的版本库导入接口<strong class="command">git fast-import</strong>实现版本库导入。</p>
+<p>手工检入的方式适合于只有少数几个提交或者对大部分提交历史不关心而只需要对少数里程碑版本执行导入。这种版本库迁移方式非常简单，相当于在完成Git版本库初始化后，在工作区重复执行：工作区文件清理，文件复制，执行<strong class="command">git add -A</strong>添加到暂存区，执行<strong class="command">git commit</strong>提交。</p>
+<p>但是如果需要将版本库完整的历史全部迁移到新的Git版本库中，手工检入方法就不可取了，采用针对<strong class="command">git fast-import</strong>编程是一个可以考虑的方法。Git提供了一个通用的版本库导入解决方案，即通过向命令<strong class="command">git fast-import</strong>传递特定格式的字节流，就可以实现Git版本库的创建。工具<strong class="command">git fast-import</strong>的导入文件格式设计的相对比较简单，当理解了其格式约定后，可以相对容易的开发出针对特定版本库的迁移工具。</p>
+<p>下面就是一个简单的导入文件，为说明方便前面标注了行号。将这个文件保存为<tt class="file docutils literal"><span class="pre">/path/to/file/dump1.dat</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre> 1 commit refs/heads/master
+ 2 mark :1
+ 3 committer User1 &lt;user1@ossxp.com&gt; 1295312699 +0800
+ 4 data &lt;&lt;EOF
+ 5 My initial commit.
+ 6 EOF
+ 7 M 644 inline README
+ 8 data &lt;&lt;EOF
+ 9 Hello, world.
+10 EOF
+11 M 644 inline team/user1.txt
+12 data &lt;&lt;EOF
+13 I&#39;m user1.
+14 EOF
+</pre></div>
+</div>
+<p>上面这段文字应该这样理解：</p>
+<ul class="simple">
+<li>第1行以<tt class="docutils literal"><span class="pre">commit</span></tt>开头，标记一个提交的开始。该提交会创建（或更新）引用<tt class="docutils literal"><span class="pre">refs/heads/master</span></tt>。</li>
+<li>第2行以<tt class="docutils literal"><span class="pre">mark</span></tt>开头，是一个标记指令，将这个提交用“<tt class="docutils literal"><span class="pre">:1</span></tt>”标示以方便后面的提交参照。</li>
+<li>第3行记录了这个提交的提交者是<tt class="docutils literal"><span class="pre">User1</span></tt>，邮件地址为<tt class="docutils literal"><span class="pre">&lt;user1&#64;ossxp.com&gt;</span></tt>，提交时间则采用Unix时间格式。</li>
+<li>第4-6行是该提交的提交说明，提交说明用<tt class="docutils literal"><span class="pre">data</span></tt>数据块的方式进行定义。</li>
+<li>第4行在<tt class="docutils literal"><span class="pre">data</span></tt>语句后紧接着的<tt class="docutils literal"><span class="pre">&lt;&lt;EOF</span></tt>含义为<tt class="docutils literal"><span class="pre">data</span></tt>的内容到以<tt class="docutils literal"><span class="pre">EOF</span></tt>标记的行截止。这样的表示法称为“Here Documents”表示法。</li>
+<li>第7行以字母<tt class="docutils literal"><span class="pre">M</span></tt>开头，含义是修改（或新建）了一个文件，文件名为<tt class="file docutils literal"><span class="pre">README</span></tt>，而文件的内容以<tt class="docutils literal"><span class="pre">inline</span></tt>的方式提供。</li>
+<li>第8-10行则是以内联（inline）数据块的方式提供<tt class="file docutils literal"><span class="pre">README</span></tt>文件的内容。</li>
+<li>第11行定义了该提交修改的第二个文件<tt class="file docutils literal"><span class="pre">team/user1.txt</span></tt>。该文件的内容也是以内联（inline）的方式给出。</li>
+<li>第12-14行给出文件<tt class="file docutils literal"><span class="pre">team/user1.txt</span></tt>的内容。</li>
+</ul>
+<p>下面初始化一个新的版本库，并通过导入文件<tt class="file docutils literal"><span class="pre">/path/to/file/dump1.dat</span></tt>的方式为版本库注入数据。</p>
+<ul>
+<li><p class="first">初始化版本库。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mkdir -p /path/to/my/workspace/import
+$ cd /path/to/my/workspace/import
+$ git init
+</pre></div>
+</div>
+</li>
+<li><p class="first">调用<strong class="command">git fast-import</strong>命令。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git fast-import &lt; /path/to/file/dump1.dat
+git-fast-import statistics:
+---------------------------------------------------------------------
+Alloc&#39;d objects:       5000
+Total objects:            5 (         0 duplicates                  )
+      blobs  :            2 (         0 duplicates          0 deltas)
+      trees  :            2 (         0 duplicates          0 deltas)
+      commits:            1 (         0 duplicates          0 deltas)
+      tags   :            0 (         0 duplicates          0 deltas)
+Total branches:           1 (         1 loads     )
+      marks:           1024 (         1 unique    )
+      atoms:              3
+Memory total:          2344 KiB
+       pools:          2110 KiB
+     objects:           234 KiB
+---------------------------------------------------------------------
+pack_report: getpagesize()            =       4096
+pack_report: core.packedGitWindowSize = 1073741824
+pack_report: core.packedGitLimit      = 8589934592
+pack_report: pack_used_ctr            =          1
+pack_report: pack_mmap_calls          =          1
+pack_report: pack_open_windows        =          1 /          1
+pack_report: pack_mapped              =        323 /        323
+---------------------------------------------------------------------
+</pre></div>
+</div>
+</li>
+<li><p class="first">看看提交日志。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git log --pretty=fuller --stat
+commit 18f4310580ca915d7384b116fcb2e2ca0b833714
+Author:     User1 &lt;user1@ossxp.com&gt;
+AuthorDate: Tue Jan 18 09:04:59 2011 +0800
+Commit:     User1 &lt;user1@ossxp.com&gt;
+CommitDate: Tue Jan 18 09:04:59 2011 +0800
+
+    My initial commit.
+
+ README         |    1 +
+ team/user1.txt |    1 +
+ 2 files changed, 2 insertions(+), 0 deletions(-)
+</pre></div>
+</div>
+</li>
+</ul>
+<p>再来看一个导入文件。将下面的内容保存到文件<tt class="file docutils literal"><span class="pre">/path/to/file/dump2.dat</span></tt>中。</p>
+<div class="highlight-python"><div class="highlight"><pre> 1 blob
+ 2 mark :2
+ 3 data 25
+ 4 Hello, world.
+ 5 Hi, user2.
+ 6 blob
+ 7 mark :3
+ 8 data &lt;&lt;EOF
+ 9 I&#39;m user2.
+10 EOF
+11 commit refs/heads/master
+12 mark :4
+13 committer User2 &lt;user2@ossxp.com&gt; 1295312799 +0800
+14 data &lt;&lt;EOF
+15 User2&#39;s test commit.
+16 EOF
+17 from :1
+18 M 644 :2 README
+19 M 644 :3 team/user2.txt
+</pre></div>
+</div>
+<p>上面的内容标注了行号，注意不要把行号也代入文件中。其中：</p>
+<ul class="simple">
+<li>第1-5行定义了编号为“<tt class="docutils literal"><span class="pre">:2</span></tt>”的文件内容。该文件的内容共有25字节，第3行开始的<tt class="docutils literal"><span class="pre">data</span></tt>文字块就通过在后面跟上一个表示文件长度的十进制数字界定了内容的起止。</li>
+<li>第6-10行定义了编号为“<tt class="docutils literal"><span class="pre">:3</span></tt>”的文件内容。第8行界定该文件内容使用了“Here Documents”的语法，该语法对于文本内容比较适合，使用内容长度标示内容起止对于二进制文件更为适合。</li>
+<li>第11行开始定义了一个新的提交。</li>
+<li>第12行设定该提交的编号为“<tt class="docutils literal"><span class="pre">:4</span></tt>”。</li>
+<li>第17行以<tt class="docutils literal"><span class="pre">from</span></tt>开头，定义了该提交的父提交为编号为“<tt class="docutils literal"><span class="pre">:1</span></tt>”的提交，即在<tt class="file docutils literal"><span class="pre">/path/to/file/dump1.dat</span></tt>中定义的提交。</li>
+<li>第18行和第19行设定了该提交更改的两个文件，这两个文件的内容不像之前的导出文件<tt class="docutils literal"><span class="pre">dump1.dat</span></tt>那样使用内联方式定义内容，而是采用引用方式引用前面定义的二进制数据流（blob）作为文件的内容。</li>
+</ul>
+<p>如果以增量方式导入<tt class="file docutils literal"><span class="pre">dump2.dat</span></tt>会报错，因为在第17行引用的“<tt class="docutils literal"><span class="pre">:1</span></tt>”没有定义。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git fast-import &lt; /path/to/file/dump2.dat
+fatal: mark :1 not declared
+fast-import: dumping crash report to .git/fast_import_crash_21772
+</pre></div>
+</div>
+<p>如果将文件<tt class="file docutils literal"><span class="pre">/path/to/file/dump2.dat</span></tt>的第17行的引用修改为提交ID，是可以增量导入的。不过为了说明的方便，还是通过将两个导入文件一次性传递给<strong class="command">git fast-import</strong>创建一个新版本库。</p>
+<ul>
+<li><p class="first">初始化版本库<tt class="docutils literal"><span class="pre">import2</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mkdir -p /path/to/my/workspace/import2
+$ cd /path/to/my/workspace/import2
+$ git init
+</pre></div>
+</div>
+</li>
+<li><p class="first">调用<strong class="command">git fast-import</strong>命令。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cat /path/to/file/dump1.dat \
+      /path/to/file/dump2.dat | git fast-import
+</pre></div>
+</div>
+</li>
+<li><p class="first">导入之后的日志显示：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git log --graph --stat
+* commit 73a6f2742f9da7c1b4bb8748e018a2becad39dd6
+| Author: User2 &lt;user2@ossxp.com&gt;
+| Date:   Tue Jan 18 09:06:39 2011 +0800
+|
+|     User2&#39;s test commit.
+|
+|  README         |    1 +
+|  team/user2.txt |    1 +
+|  2 files changed, 2 insertions(+), 0 deletions(-)
+|
+* commit 18f4310580ca915d7384b116fcb2e2ca0b833714
+  Author: User1 &lt;user1@ossxp.com&gt;
+  Date:   Tue Jan 18 09:04:59 2011 +0800
+
+      My initial commit.
+
+   README         |    1 +
+   team/user1.txt |    1 +
+   2 files changed, 2 insertions(+), 0 deletions(-)
+</pre></div>
+</div>
+</li>
+</ul>
+<p>下面再来看一个导入文件，在这个导入文件中，包含了合并提交以及创建里程碑。</p>
+<div class="highlight-python"><div class="highlight"><pre> 1 blob
+ 2 mark :5
+ 3 data 25
+ 4 Hello, world.
+ 5 Hi, user1.
+ 6 blob
+ 7 mark :6
+ 8 data 35
+ 9 Hello, world.
+10 Hi, user1 and user2.
+11 commit refs/heads/master
+12 mark :7
+13 committer User1 &lt;user1@ossxp.com&gt; 1295312899 +0800
+14 data &lt;&lt;EOF
+15 Say helo to user1.
+16 EOF
+17 from :1
+18 M 644 :5 README
+19 commit refs/heads/master
+20 mark :8
+21 committer User2 &lt;user2@ossxp.com&gt; 1295312900 +0800
+22 data &lt;&lt;EOF
+23 Say helo to both users.
+24 EOF
+25 from :4
+26 merge :7
+27 M 644 :6 README
+28 tag refs/tags/v1.0
+29 from :8
+30 tagger Jiang Xin &lt;jiangxin@ossxp.com&gt; 1295312901 +0800
+31 data &lt;&lt;EOF
+32 Version v1.0
+33 EOF
+</pre></div>
+</div>
+<p>将这个文件保存到<tt class="file docutils literal"><span class="pre">/path/to/file/dump3.dat</span></tt>。下面针对该文件内容进行简要的说明：</p>
+<ul>
+<li><p class="first">第1-5行和第6-10行定义了两个blob对象，代表了两个对<tt class="file docutils literal"><span class="pre">README</span></tt>文件的不同修改。</p>
+</li>
+<li><p class="first">第11行开始定义了编号为“<tt class="docutils literal"><span class="pre">:7</span></tt>”的提交。从第17行可以看出该提交的父提交也是由<tt class="file docutils literal"><span class="pre">dump1.dat</span></tt>导入的第一个提交。</p>
+</li>
+<li><p class="first">第19行开始定义了编号为“:8``”的提交。该提交为一个合并提交，除了在第25行设定了第一个父提交外，还由第26行给出了第二个父提交。</p>
+</li>
+<li><p class="first">第28行开始定义了一个里程碑。里程碑的名字为<tt class="docutils literal"><span class="pre">refs/tags/v1.0</span></tt>。第29行指定了该里程碑对应的提交。里程碑说明由第31-33行指令给出。</p>
+</li>
+<li><p class="first">初始化版本库<tt class="docutils literal"><span class="pre">import3</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mkdir -p /path/to/my/workspace/import3
+$ cd /path/to/my/workspace/import3
+$ git init
+</pre></div>
+</div>
+</li>
+<li><p class="first">调用<strong class="command">git fast-import</strong>命令。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cat /path/to/file/dump1.dat /path/to/file/dump2.dat \
+      /path/to/file/dump3.dat | git fast-import
+</pre></div>
+</div>
+</li>
+<li><p class="first">查看创建的版本库的日志。</p>
+<p>从日志中可以看出里程碑<tt class="docutils literal"><span class="pre">v1.0</span></tt>已经建立在最新的提交上了。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git log --oneline --graph --decorate
+*   a47790e (HEAD, tag: refs/tags/v1.0, master) Say helo to both users.
+|\
+| * f486a44 Say helo to user1.
+* | 73a6f27 User2&#39;s test commit.
+|/
+* 18f4310 My initial commit.
+</pre></div>
+</div>
+</li>
+</ul>
+<p>理解了<tt class="docutils literal"><span class="pre">git</span> <span class="pre">fast-import</span></tt>的导入文件格式，针对特定的版本控制系统开发一个新的迁移工具不是难事。Hg的迁移工具<strong class="command">fast-export</strong>是一个很好的参照。</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="050-git-to-git.html" title="6.2.4. Git版本库整理"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="030-hg.html" title="6.2.2. Hg版本库到Git的迁移"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >6. 迁移到Git</a> &raquo;</li>
+          <li><a href="020-others.html" >6.2. 更多版本控制系统的迁移</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

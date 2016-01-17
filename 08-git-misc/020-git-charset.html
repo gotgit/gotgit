@@ -1,0 +1,168 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>8.1.1. 字符集问题 &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="up" title="8.1. 跨平台操作Git" href="010-git-cross-os.html" />
+    <link rel="next" title="8.1.2. 文件名大小写问题" href="030-case-insensitive.html" />
+    <link rel="prev" title="8.1. 跨平台操作Git" href="010-git-cross-os.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="030-case-insensitive.html" title="8.1.2. 文件名大小写问题"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="010-git-cross-os.html" title="8.1. 跨平台操作Git"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >8. Git杂谈</a> &raquo;</li>
+          <li><a href="010-git-cross-os.html" accesskey="U">8.1. 跨平台操作Git</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="010-git-cross-os.html"
+                        title="上一章">8.1. 跨平台操作Git</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="030-case-insensitive.html"
+                        title="下一章">8.1.2. 文件名大小写问题</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/08-git-misc/020-git-charset.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>8.1.1. 字符集问题<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>在本书第1篇“第3章安装Git”中，就已经详细介绍了不同平台对本地字符集（如中文）的支持情况，本章再做以简单的概述。</p>
+<p>Linux、Mac OS X以及Windows下的Cygwin缺省使用UTF-8字符集。Git运行这这些平台下，能够使用本地语言（如中文）写提交说明、命名文件，甚至使用本地语言命名分支和里程碑。在这些平台上唯一要做的就是对Git进行如下设置，以便使用了本地语言（如中文）命名文件时，能够在状态查看、差异比较时，正确显示文件名。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git config --global core.quotepath false
+</pre></div>
+</div>
+<p>但是如果在Windows平台使用msysGit或者其他平台使用了非UTF-8字符集，要想使用本地语言撰写提交说明、命名文件名和目录名就非常具有挑战性了。例如对于使用GBK字符集的中文Windows，需要为Git进行如下设置，以便能够在提交说明中正确使用中文。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git config --system core.quotepath false
+$ git config --system i18n.commitEncoding gbk
+$ git config --system i18n.logOutputEncoding gbk
+</pre></div>
+</div>
+<p>当像上面那样对<tt class="docutils literal"><span class="pre">i18n.commitEncoding</span></tt>进行设置后，如果执行提交，就会在提交对象中嵌入编码设置的指令。例如在Windows中使用msysGit执行一次提交，在Linux上使用<strong class="command">git cat-file</strong>命令查看提交时会出现乱码，需要使用<strong class="command">iconv</strong>命令对输出进行字符集转换才能正确查看该提交对象。下面输出的倒数第三行可以看到<tt class="docutils literal"><span class="pre">encoding</span> <span class="pre">gbk</span></tt>这条对字符集设置的指令。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git cat-file -p HEAD | iconv -f gbk -t utf-8
+tree 00e814cda96ac016bcacabcf4c8a84156e304ac6
+parent 52e6454db3d99c85b1b5a00ef987f8fc6d28c020
+author Jiang Xin &lt;jiangxin@ossxp.com&gt; 1297241081 +0800
+committer Jiang Xin &lt;jiangxin@ossxp.com&gt; 1297241081 +0800
+encoding gbk
+
+添加中文说明。
+</pre></div>
+</div>
+<p>因为在提交对象中声明了正确的字符集，因此Linux下可以用<strong class="command">git log</strong>命令正确显示msysGit生成的包含中文的提交说明。</p>
+<p>但是对于非UTF-8字符集平台（如msysGit）下，使用本地字符（如中文）命名文件或目录，Git当前版本（1.7.4）的支持尚不完善。文件名和目录名实际上是写在树对象中的，Git没能在创建树对象时，将本地字符转换为UTF-8字符进行保存，因而在跨平台时造成文件名乱码。例如下面的示例显示的是在Linux平台（UTF-8字符集）下查看由msysGit提交的包含中文文件的树对象。注意要在<strong class="command">git cat-file</strong>命令的后面通过管道符号调用<strong class="command">iconv</strong>命令进行字符转换，否则不能正确地显示中文。如果直接在Linux平台检出，检出的文件名显示为乱码。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git cat-file -p HEAD^{tree} | iconv -f gbk -t utf-8
+100644 blob 8c0b112f56b3b9897007031ea38c130b0b161d5a    说明.txt
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="030-case-insensitive.html" title="8.1.2. 文件名大小写问题"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="010-git-cross-os.html" title="8.1. 跨平台操作Git"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >8. Git杂谈</a> &raquo;</li>
+          <li><a href="010-git-cross-os.html" >8.1. 跨平台操作Git</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

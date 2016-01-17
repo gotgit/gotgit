@@ -1,0 +1,182 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>7. Git的其它应用 &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="next" title="7.1. etckeeper" href="010-etckeeper.html" />
+    <link rel="prev" title="6.2.4. Git版本库整理" href="../06-migrate/050-git-to-git.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="010-etckeeper.html" title="7.1. etckeeper"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="../06-migrate/050-git-to-git.html" title="6.2.4. Git版本库整理"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="../06-migrate/050-git-to-git.html"
+                        title="上一章">6.2.4. Git版本库整理</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="010-etckeeper.html"
+                        title="下一章">7.1. etckeeper</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/07-git-app/index.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="git">
+<h1>7. Git的其它应用<a class="headerlink" href="#git" title="永久链接至标题">¶</a></h1>
+<p>Git的伟大之处，还在于它不仅仅是作为版本库控制系统。Linus Torvalds对自己最初设计的Git原型是这么评价的：Git是一系列的底层工具用于内容的追踪，基于Git可以实现一个版本控制系统。现在Git已经是一个最成功的版本控制系统了，而基于Git的其他应用才刚刚开始。</p>
+<p>维基是使用格式文本编辑网页，协同网页编辑的工具，又称为“Web的版本控制”。在<a class="reference external" href="http://www.mzlinux.org/node/116">http://www.mzlinux.org/node/116</a>可以看到一份用Git作为后端实现的维基列表（大部分是技术上的试验）。</p>
+<p>SpaghettiFS项目尝试用Git作为数据存储后端提供了一个用户空间的文件系统（FUSE、Filesystem in Userspace）。而另外的一些项目gitfs可以直接把Git版本库挂载为文件系统。</p>
+<p>下面的章节，通过几个典型应用介绍Git在版本控制领域之外的应用，可以领略到Git的神奇。</p>
+<p>目录:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="010-etckeeper.html">7.1. etckeeper</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="010-etckeeper.html#id1">7.1.1. 安装etckeeper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="010-etckeeper.html#id2">7.1.2. 配置etckeeper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="010-etckeeper.html#id3">7.1.3. 使用etckeeper</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="020-gistore.html">7.2. Gistore</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="020-gistore.html#id1">7.2.1. Gistore的安装</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="020-gistore.html#id2">7.2.1.1. 从源码安装Gistore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="020-gistore.html#easy-install">7.2.1.2. 用<tt class="docutils literal"><span class="pre">easy_install</span></tt>安装</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="020-gistore.html#id3">7.2.2. Gistore的使用</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="020-gistore.html#id4">7.2.2.1. 创建并初始化备份库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="020-gistore.html#id5">7.2.2.2. Gistore的配置文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="020-gistore.html#id6">7.2.2.3. Gistore的备份项管理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="020-gistore.html#id7">7.2.2.4. 执行备份任务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="020-gistore.html#id8">7.2.2.5. 查看备份日志及数据</a></li>
+<li class="toctree-l3"><a class="reference internal" href="020-gistore.html#id9">7.2.2.6. 查看及恢复备份数据</a></li>
+<li class="toctree-l3"><a class="reference internal" href="020-gistore.html#id10">7.2.2.7. 备份回滚及设置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="020-gistore.html#id11">7.2.2.8. 注册备份任务别名</a></li>
+<li class="toctree-l3"><a class="reference internal" href="020-gistore.html#crontab">7.2.2.9. 自动备份：crontab</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="020-gistore.html#id12">7.2.3. Gistore双机备份</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="030-binary-diff.html">7.3. 补丁中的二进制文件</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="030-binary-diff.html#git">7.3.1. Git版本库中二进制文件变更的支持</a></li>
+<li class="toctree-l2"><a class="reference internal" href="030-binary-diff.html#id2">7.3.2. 对非Git版本库中二进制文件变更的支持</a></li>
+<li class="toctree-l2"><a class="reference internal" href="030-binary-diff.html#id3">7.3.3. 其他工具对Git扩展补丁文件的支持</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="040-cloud-storage.html">7.4. 云存储</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="040-cloud-storage.html#id2">7.4.1. 现有云存储的问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="040-cloud-storage.html#git">7.4.2. Git式云存储畅想</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="010-etckeeper.html" title="7.1. etckeeper"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="../06-migrate/050-git-to-git.html" title="6.2.4. Git版本库整理"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

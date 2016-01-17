@@ -1,0 +1,877 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>2.7. Git基本操作 &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="up" title="2. Git独奏" href="index.html" />
+    <link rel="next" title="2.8. 历史穿梭" href="080-git-history-travel.html" />
+    <link rel="prev" title="2.6. 恢复进度" href="060-git-stage-n-stash.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="080-git-history-travel.html" title="2.8. 历史穿梭"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="060-git-stage-n-stash.html" title="2.6. 恢复进度"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">2. Git独奏</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">2.7. Git基本操作</a><ul>
+<li><a class="reference internal" href="#id1">2.7.1. 先来合个影</a></li>
+<li><a class="reference internal" href="#id2">2.7.2. 删除文件</a><ul>
+<li><a class="reference internal" href="#id3">2.7.2.1. 本地删除不是真的删除</a></li>
+<li><a class="reference internal" href="#git-rm">2.7.2.2. 执行<strong class="command">git rm</strong>命令删除文件</a></li>
+<li><a class="reference internal" href="#git-add-u">2.7.2.3. 命令<strong class="command">git add -u</strong>快速标记删除</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id4">2.7.3. 恢复删除的文件</a></li>
+<li><a class="reference internal" href="#id5">2.7.4. 移动文件</a></li>
+<li><a class="reference internal" href="#hello-world">2.7.5. 一个显示版本号的<tt class="docutils literal"><span class="pre">Hello</span> <span class="pre">World</span></tt></a></li>
+<li><a class="reference internal" href="#git-add-i">2.7.6. 使用<strong class="command">git add -i</strong>选择性添加</a></li>
+<li><a class="reference internal" href="#id6">2.7.7. <tt class="docutils literal"><span class="pre">Hello</span> <span class="pre">world</span></tt>引发的新问题</a></li>
+<li><a class="reference internal" href="#id7">2.7.8. 文件忽略</a></li>
+<li><a class="reference internal" href="#id8">2.7.9. 文件归档</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="060-git-stage-n-stash.html"
+                        title="上一章">2.6. 恢复进度</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="080-git-history-travel.html"
+                        title="下一章">2.8. 历史穿梭</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/02-git-solo/070-git-basic.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="git">
+<h1>2.7. Git基本操作<a class="headerlink" href="#git" title="永久链接至标题">¶</a></h1>
+<p>之前的实践选取的示例都非常简单，基本上都是增加和修改文本文件，而现实情况要复杂的多，需要应对各种情况：文件删除，文件复制，文件移动，目录的组织，二进制文件，误删文件的恢复等等。</p>
+<p>本章要用一个更为真实的例子：通过对<tt class="docutils literal"><span class="pre">Hello</span> <span class="pre">World</span></tt>程序源代码的版本控制，来介绍工作区中其他的一些常用操作。首先会删除之前历次实践在版本库中留下的“垃圾”数据，然后再在其中创建一些真实的代码，并对其进行版本控制。</p>
+<div class="section" id="id1">
+<h2>2.7.1. 先来合个影<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>马上就要和之前实践遗留的数据告别了，告别之前是不是要留个影呢？在Git里，“留影”用的命令叫做<strong class="command">tag</strong>，更加专业的术语叫做“里程碑”（打tag，或打标签）。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/my/workspace/demo
+$ git tag -m &quot;Say bye-bye to all previous practice.&quot; old_practice
+</pre></div>
+</div>
+<p>在本章还不打算详细介绍里程碑的奥秘，只要知道里程碑无非也是一个引用，通过记录提交ID（或者创建Tag对象）来为当前版本库状态进行“留影”。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ls .git/refs/tags/old_practice
+.git/refs/tags/old_practice
+
+$ git rev-parse refs/tags/old_practice
+41bd4e2cce0f8baa9bb4cdda62927b408c846cd6
+</pre></div>
+</div>
+<p>留过影之后，可以执行<strong class="command">git describe</strong>命令显示当前版本库的最新提交的版本号。显示的时候会选取离该提交最近的里程碑作为“基础版本号”，后面附加标识距离“基础版本”的数字以及该提交的SHA1哈希值缩写。因为最新的提交上恰好被打了一个“里程碑”，所以用“里程碑”的名字显示为版本号。这个技术在后面的示例代码中被使用。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git describe
+old_practice
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>2.7.2. 删除文件<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>看看版本库当前的状态，暂存区和工作区都包含修改。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status -s
+A  hack-1.txt
+ M welcome.txt
+</pre></div>
+</div>
+<p>在这个暂存区和工作区都包含文件修改的情况下，使用删除命令更具有挑战性。删除命令有多种使用方法，有的方法很巧妙，而有的方法需要更多的输入。为了分别介绍不同的删除方法，还要使用上一章介绍的进度保存（<strong class="command">git-stash</strong>）命令。</p>
+<ul>
+<li><p class="first">保存进度。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git stash
+Saved working directory and index state WIP on master: 2b31c19 Merge commit &#39;acc2f69&#39;
+HEAD is now at 2b31c19 Merge commit &#39;acc2f69&#39;
+</pre></div>
+</div>
+</li>
+<li><p class="first">再恢复进度。注意不要使用<strong class="command">git stash pop</strong>，而是使用<strong class="command">git stash apply</strong>，因为这个保存的进度要被多次用到。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git stash apply
+# On branch master
+# Changes to be committed:
+#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
+#
+#       new file:   hack-1.txt
+#
+# Changed but not updated:
+#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+#
+#       modified:   welcome.txt
+#
+</pre></div>
+</div>
+</li>
+</ul>
+<div class="section" id="id3">
+<h3>2.7.2.1. 本地删除不是真的删除<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>当前工作区的文件有：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ls
+detached-commit.txt
+hack-1.txt
+new-commit.txt
+welcome.txt
+</pre></div>
+</div>
+<p>直接在工作区删除这些文件，会如何呢？</p>
+<div class="highlight-python"><div class="highlight"><pre>$ rm *.txt
+</pre></div>
+</div>
+<p>通过下面的命令，可以看到在暂存区（版本库）中文件仍在，并未删除。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git ls-files
+detached-commit.txt
+hack-1.txt
+new-commit.txt
+welcome.txt
+</pre></div>
+</div>
+<p>通过文件的状态来看，文件只是在本地进行了删除，尚未加到暂存区（提交任务）中。也就是说：<strong>直接在工作区删除，对暂存区和版本库没有任何影响</strong>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status
+# On branch master
+# Changes to be committed:
+#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
+#
+#       new file:   hack-1.txt
+#
+# Changed but not updated:
+#   (use &quot;git add/rm &lt;file&gt;...&quot; to update what will be committed)
+#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+#
+#       deleted:    detached-commit.txt
+#       deleted:    hack-1.txt
+#       deleted:    new-commit.txt
+#       deleted:    welcome.txt
+#
+</pre></div>
+</div>
+<p>从Git状态输出可以看出，本地删除如果要反映在暂存区中应该用<strong class="command">git rm</strong>命令，对于不想删除的文件执行<strong class="command">git checkout &#8211; &lt;file&gt;</strong>可以让文件在工作区重现。</p>
+</div>
+<div class="section" id="git-rm">
+<h3>2.7.2.2. 执行<strong class="command">git rm</strong>命令删除文件<a class="headerlink" href="#git-rm" title="永久链接至标题">¶</a></h3>
+<p>好吧，按照上面状态输出的内容，将所有的文本文件删除。执行下面的命令。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rm detached-commit.txt hack-1.txt new-commit.txt welcome.txt
+rm &#39;detached-commit.txt&#39;
+rm &#39;hack-1.txt&#39;
+rm &#39;new-commit.txt&#39;
+rm &#39;welcome.txt&#39;
+</pre></div>
+</div>
+<p>再看一看状态：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status
+# On branch master
+# Changes to be committed:
+#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
+#
+#       deleted:    detached-commit.txt
+#       deleted:    new-commit.txt
+#       deleted:    welcome.txt
+#
+</pre></div>
+</div>
+<p>删除动作加入了暂存区。这时执行提交动作，就真正意义上执行了文件删除。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git commit -m &quot;delete trash files. (using: git rm)&quot;
+[master 483493a] delete trash files. (using: git rm)
+ 1 files changed, 0 insertions(+), 2 deletions(-)
+ delete mode 100644 detached-commit.txt
+ delete mode 100644 new-commit.txt
+ delete mode 100644 welcome.txt
+</pre></div>
+</div>
+<p>不过不要担心，文件只是在版本库最新提交中删除了，在历史提交中尚在。可以通过下面命令查看历史版本的文件列表。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git ls-files --with-tree=HEAD^
+detached-commit.txt
+new-commit.txt
+welcome.txt
+</pre></div>
+</div>
+<p>也可以查看在历史版本中尚在的删除文件的内容。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git cat-file -p HEAD^:welcome.txt
+Hello.
+Nice to meet you.
+</pre></div>
+</div>
+</div>
+<div class="section" id="git-add-u">
+<h3>2.7.2.3. 命令<strong class="command">git add -u</strong>快速标记删除<a class="headerlink" href="#git-add-u" title="永久链接至标题">¶</a></h3>
+<p>在前面执行<strong class="command">git rm</strong>命令时，一一写下了所有要删除的文件名，好长的命令啊！能不能简化些？实际上<strong class="command">git add</strong>可以，即使用<tt class="docutils literal"><span class="pre">-u</span></tt>参数调用<strong class="command">git add</strong>命令，含义是将本地有改动（包括添加和删除）的文件标记为删除。为了重现刚才的场景，先使用重置命令抛弃最新的提交，再使用进度恢复到之前的状态。</p>
+<ul>
+<li><p class="first">丢弃之前测试删除的试验性提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git reset --hard HEAD^
+HEAD is now at 2b31c19 Merge commit &#39;acc2f69&#39;
+</pre></div>
+</div>
+</li>
+<li><p class="first">恢复保存的进度。（参数<tt class="docutils literal"><span class="pre">-q</span></tt>使得命令进入安静模式）</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git stash apply -q
+</pre></div>
+</div>
+</li>
+</ul>
+<p>然后删除本地文件，状态依然显示只在本地删除了文件，暂存区文件仍在。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ rm *.txt
+$ git status -s
+ D detached-commit.txt
+AD hack-1.txt
+ D new-commit.txt
+ D welcome.txt
+</pre></div>
+</div>
+<p>执行<strong class="command">git add -u</strong>命令可以将（被版本库追踪的）本地文件的变更（修改、删除）全部记录到暂存区中。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git add -u
+</pre></div>
+</div>
+<p>查看状态，可以看到工作区删除的文件全部被标记为下次提交时删除。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status -s
+D  detached-commit.txt
+D  new-commit.txt
+D  welcome.txt
+</pre></div>
+</div>
+<p>执行提交，删除文件。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git commit -m &quot;delete trash files. (using: git add -u)&quot;
+[master 7161977] delete trash files. (using: git add -u)
+ 1 files changed, 0 insertions(+), 2 deletions(-)
+ delete mode 100644 detached-commit.txt
+ delete mode 100644 new-commit.txt
+ delete mode 100644 welcome.txt
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>2.7.3. 恢复删除的文件<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>经过了上面的文件删除，工作区已经没有文件了。为了说明文件移动，现在恢复一个删除的文件。前面已经说过执行了文件删除并提交，只是在最新的提交中删除了文件，历史提交中文件仍然保留，可以从历史提交中提取文件。执行下面的命令可以从历史（前一次提交）中恢复<tt class="file docutils literal"><span class="pre">welcome.txt</span></tt>文件。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git cat-file -p HEAD~1:welcome.txt &gt; welcome.txt
+</pre></div>
+</div>
+<p>上面命令中出现的<tt class="docutils literal"><span class="pre">HEAD~1</span></tt>即相当于<tt class="docutils literal"><span class="pre">HEAD^</span></tt>都指的是HEAD的上一次提交。执行<strong class="command">git add -A</strong>命令会对工作区中所有改动以及新增文件添加到暂存区，也是一个常用的技巧。执行下面的命令后，将恢复过来的<tt class="file docutils literal"><span class="pre">welcome.txt</span></tt>文件添加回暂存区。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git add -A
+$ git status -s
+A  welcome.txt
+</pre></div>
+</div>
+<p>执行提交操作，文件<tt class="file docutils literal"><span class="pre">welcome.txt</span></tt>又回来了。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git commit -m &quot;restore file: welcome.txt&quot;
+[master 63992f0] restore file: welcome.txt
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+ create mode 100644 welcome.txt
+</pre></div>
+</div>
+<p>通过再次添加的方式恢复被删除的文件是最自然的恢复的方法。其他版本控制系统如CVS也采用同样的方法恢复删除的文件，但是有的版本控制系统如Subversion如果这样操作会有严重的副作用——文件变更历史被人为的割裂而且还会造成服务器存储空间的浪费。Git通过添加方式反删除文件没有副作用，这是因为在Git的版本库中相同内容的文件保存在一个blob对象中，而且即便是内容不同的blob对象在对象库打包整理过程中也会通过差异比较优化存储。</p>
+</div>
+<div class="section" id="id5">
+<h2>2.7.4. 移动文件<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>通过将<tt class="file docutils literal"><span class="pre">welcome.txt</span></tt>改名为<tt class="file docutils literal"><span class="pre">README</span></tt>文件来测试一下在Git中如何移动文件。Git提供了<strong class="command">git mv</strong>命令完成改名操作。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git mv welcome.txt README
+</pre></div>
+</div>
+<p>可以从当前的状态中看到改名的操作。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status
+# On branch master
+# Changes to be committed:
+#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
+#
+#       renamed:    welcome.txt -&gt; README
+#
+</pre></div>
+</div>
+<p>提交改名操作，在提交输出可以看到改名前后两个文件的相似度（百分比）。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git commit -m &quot;改名测试&quot;
+[master 7aa5ac1] 改名测试
+ 1 files changed, 0 insertions(+), 0 deletions(-)
+ rename welcome.txt =&gt; README (100%)
+</pre></div>
+</div>
+<p><strong>可以不用:command:`git mv`命令实现改名</strong></p>
+<p>从提交日志中出现的文件相似度可以看出Git的改名实际上源自于Git对文件追踪的强大支持（文件内容作为blob对象保存在对象库中）。改名操作实际上相当于对旧文件执行删除，对新文件执行添加，即完全可以不使用<strong class="command">git mv</strong>操作，而是代之以<strong class="command">git rm</strong>和一个<strong class="command">git add</strong>操作。为了试验不使用<strong class="command">git mv</strong>命令是否可行，先撤销之前进行的提交。</p>
+<ul>
+<li><p class="first">撤销之前测试文件移动的提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git reset --hard HEAD^
+HEAD is now at 63992f0 restore file: welcome.txt
+</pre></div>
+</div>
+</li>
+<li><p class="first">撤销之后<tt class="file docutils literal"><span class="pre">welcome.txt</span></tt>文件又回来了。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status -s
+$ git ls-files
+welcome.txt
+</pre></div>
+</div>
+</li>
+</ul>
+<p>新的改名操作不使用<strong class="command">git mv</strong>命令，而是直接在本地改名（文件移动），将<tt class="file docutils literal"><span class="pre">welcome.txt</span></tt> 改名为<tt class="file docutils literal"><span class="pre">README</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mv welcome.txt README
+$ git status -s
+ D welcome.txt
+?? README
+</pre></div>
+</div>
+<p>为了考验一下Git的内容追踪能力，再修改一下改名后的 README 文件，即在文件末尾追加一行。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ echo &quot;Bye-Bye.&quot; &gt;&gt; README
+</pre></div>
+</div>
+<p>可以使用前面介绍的<strong class="command">git add -A</strong>命令。相当于对修改文件执行<strong class="command">git add</strong>，对删除文件执行<strong class="command">git rm</strong>，而且对本地新增文件也执行<strong class="command">git add</strong>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git add -A
+</pre></div>
+</div>
+<p>查看状态，也可以看到文件重命名。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status
+# On branch master
+# Changes to be committed:
+#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
+#
+#       renamed:    welcome.txt -&gt; README
+#
+</pre></div>
+</div>
+<p>执行提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git commit -m &quot;README is from welcome.txt.&quot;
+[master c024f34] README is from welcome.txt.
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ rename welcome.txt =&gt; README (73%)
+</pre></div>
+</div>
+<p>这次提交中也看到了重命名操作，但是重命名相似度不是 100%，而是 73%。</p>
+</div>
+<div class="section" id="hello-world">
+<h2>2.7.5. 一个显示版本号的<tt class="docutils literal"><span class="pre">Hello</span> <span class="pre">World</span></tt><a class="headerlink" href="#hello-world" title="永久链接至标题">¶</a></h2>
+<p>在本章的一开始为纪念前面的实践留了一个影，叫做<tt class="docutils literal"><span class="pre">old_practice</span></tt>。现在再次执行<strong class="command">git describe</strong>看一下现在的版本号。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git describe
+old_practice-3-gc024f34
+</pre></div>
+</div>
+<p>就是说：当前工作区的版本是“留影”后的第三个版本，提交ID是<tt class="docutils literal"><span class="pre">c024f34</span></tt>。</p>
+<p>下面的命令可以在提交日志中显示提交对应的里程碑（Tag）。其中参数<tt class="docutils literal"><span class="pre">--decorate</span></tt>可以在提交ID的旁边显示该提交关联的引用（里程碑或分支）。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git log --oneline --decorate -4
+c024f34 (HEAD, master) README is from welcome.txt.
+63992f0 restore file: welcome.txt
+7161977 delete trash files. (using: git add -u)
+2b31c19 (tag: old_practice) Merge commit &#39;acc2f69&#39;
+</pre></div>
+</div>
+<p>命令<strong class="command">git describe</strong>的输出可以作为软件版本号，这个功能非常有用。因为这样可以很容易的实现将发布的软件包版本和版本库中的代码对应在一起，当发现软件包包含Bug时，可以最快、最准确的对应到代码上。</p>
+<p>下面的<tt class="docutils literal"><span class="pre">Hello</span> <span class="pre">World</span></tt>程序就实现了这个功能。创建目录<tt class="file docutils literal"><span class="pre">src</span></tt>，并在<tt class="file docutils literal"><span class="pre">src</span></tt>目录下创建下面的三个文件：</p>
+<ul>
+<li><p class="first">文件：<tt class="file docutils literal"><span class="pre">src/main.c</span></tt></p>
+<p>没错，下面的几行就是这个程序的主代码，和输出相关代码的就两行，一行显示“Hello, world.”，另外一行显示软件版本。在显示软件版本时用到了宏<tt class="docutils literal"><span class="pre">_VERSION</span></tt>，这个宏的来源参考下一个文件。</p>
+<p>源代码：</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre>#include &quot;version.h&quot;
+#include &lt;stdio.h&gt;
+
+int
+main()
+{
+    printf( &quot;Hello, world.\n&quot; );
+    printf( &quot;version: %s.\n&quot;, _VERSION );
+    return 0;
+}
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">文件：<tt class="file docutils literal"><span class="pre">src/version.h.in</span></tt></p>
+<p>没错，这个文件名的后缀是<tt class="file docutils literal"><span class="pre">.h.in</span></tt>。这个文件其实是用于生成文件<tt class="file docutils literal"><span class="pre">version.h</span></tt>的模板文件。在由此模板文件生成的<tt class="file docutils literal"><span class="pre">version.h</span></tt>的过程中，宏<tt class="docutils literal"><span class="pre">_VERSION</span></tt>的值 “&lt;version&gt;” 会动态替换。</p>
+<p>源代码：</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span class="c">#ifndef HELLO_WORLD_VERSION_H</span>
+<span class="c">#define HELLO_WORLD_VERSION_H</span>
+
+<span class="c">#define _VERSION &quot;&lt;version&gt;&quot;</span>
+
+<span class="c">#endif</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">文件：<tt class="file docutils literal"><span class="pre">src/Makefile</span></tt></p>
+<p>这个文件看起来很复杂，而且要注意所有缩进都是使用一个<tt class="docutils literal"><span class="pre">&lt;Tab&gt;</span></tt>键完成的缩进，千万不要错误的写成空格，因为这是<tt class="file docutils literal"><span class="pre">Makefile</span></tt>。这个文件除了定义如何由代码生成可执行文件<tt class="file docutils literal"><span class="pre">hello</span></tt>之外，还定义了如何将模板文件<tt class="file docutils literal"><span class="pre">version.h.in</span></tt>转换为<tt class="file docutils literal"><span class="pre">version.h</span></tt>。在转换过程中用<strong class="command">git describe</strong>命令的输出替换模板文件中的<tt class="docutils literal"><span class="pre">&lt;version&gt;</span></tt>字符串。</p>
+<p>源代码：</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre>OBJECTS = main.o
+TARGET = hello
+
+all: $(TARGET)
+
+$(TARGET): $(OBJECTS)
+        $(CC) -o $@ $^
+
+main.o: | new_header
+main.o: version.h
+
+new_header:
+        @sed -e &quot;s/&lt;version&gt;/$$(git describe)/g&quot; \
+                &lt; version.h.in &gt; version.h.tmp
+        @if diff -q version.h.tmp version.h &gt;/dev/null 2&gt;&amp;1; \
+        then \
+                rm version.h.tmp; \
+        else \
+                echo &quot;version.h.in =&gt; version.h&quot; ; \
+                mv version.h.tmp version.h; \
+        fi
+
+clean:
+        rm -f $(TARGET) $(OBJECTS) version.h
+
+.PHONY: all clean
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+<p>上述三个文件创建完毕之后，进入到<tt class="file docutils literal"><span class="pre">src</span></tt>目录，试着运行一下。先执行<strong class="command">make</strong>编译，再运行编译后的程序<strong class="command">hello</strong>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd src
+$ make
+version.h.in =&gt; version.h
+cc    -c -o main.o main.c
+cc -o hello main.o
+$ ./hello
+Hello, world.
+version: old_practice-3-gc024f34.
+</pre></div>
+</div>
+</div>
+<div class="section" id="git-add-i">
+<h2>2.7.6. 使用<strong class="command">git add -i</strong>选择性添加<a class="headerlink" href="#git-add-i" title="永久链接至标题">¶</a></h2>
+<p>刚刚创建的<tt class="docutils literal"><span class="pre">Hello</span> <span class="pre">World</span></tt>程序还没有添加到版本库中，在<tt class="file docutils literal"><span class="pre">src</span></tt>目录下有下列文件：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/my/workspace/demo
+$ ls src
+hello  main.c  main.o  Makefile  version.h  version.h.in
+</pre></div>
+</div>
+<p>这些文件中<tt class="file docutils literal"><span class="pre">hello</span></tt>,<tt class="file docutils literal"><span class="pre">main.o</span></tt>和<tt class="file docutils literal"><span class="pre">version.h</span></tt>都是在编译时生成的程序，不应该加入到版本库中。那么选择性添加文件除了针对文件逐一使用<strong class="command">git add</strong>命令外，还有什么办法么？通过使用<tt class="docutils literal"><span class="pre">-i</span></tt>参数调用<strong class="command">git add</strong>就是一个办法，提供了一个交互式的界面。</p>
+<p>执行<strong class="command">git add -i</strong>命令，进入一个交互式界面，首先显示的是工作区状态。显然因为版本库进行了清理，所以显得很“干净”。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git add -i
+           staged     unstaged path
+
+
+*** Commands ***
+  1: status       2: update       3: revert       4: add untracked
+  5: patch        6: diff         7: quit         8: help
+What now&gt;
+</pre></div>
+</div>
+<p>在交互式界面显示了命令列表，可以使用数字或者加亮显示的命令首字母，选择相应的功能。对于此例需要将新文件加入到版本库，所以选择“4”。</p>
+<div class="highlight-python"><div class="highlight"><pre>What now&gt; 4
+  1: src/Makefile
+  2: src/hello
+  3: src/main.c
+  4: src/main.o
+  5: src/version.h
+  6: src/version.h.in
+Add untracked&gt;&gt;
+</pre></div>
+</div>
+<p>当选择了“4”之后，就进入了“Add untracked”界面，显示了本地新增（尚不再版本库中）的文件列表，而且提示符也变了，由“What now&gt;”变为“Add untracked&gt;&gt;”。依次输入1、3、6将源代码添加到版本库中。</p>
+<ul>
+<li><p class="first">输入“1”：</p>
+<div class="highlight-python"><div class="highlight"><pre>Add untracked&gt;&gt; 1
+* 1: src/Makefile
+  2: src/hello
+  3: src/main.c
+  4: src/main.o
+  5: src/version.h
+  6: src/version.h.in
+</pre></div>
+</div>
+</li>
+<li><p class="first">输入“3”：</p>
+<div class="highlight-python"><div class="highlight"><pre>Add untracked&gt;&gt; 3
+* 1: src/Makefile
+  2: src/hello
+* 3: src/main.c
+  4: src/main.o
+  5: src/version.h
+  6: src/version.h.in
+</pre></div>
+</div>
+</li>
+<li><p class="first">输入“6”：</p>
+<div class="highlight-python"><div class="highlight"><pre>Add untracked&gt;&gt; 6
+* 1: src/Makefile
+  2: src/hello
+* 3: src/main.c
+  4: src/main.o
+  5: src/version.h
+* 6: src/version.h.in
+Add untracked&gt;&gt;
+</pre></div>
+</div>
+</li>
+</ul>
+<p>每次输入文件序号，对应的文件前面都添加一个星号，代表将此文件添加到暂存区。在提示符“Add untracked&gt;&gt;”处按回车键，完成文件添加，返回主界面。</p>
+<div class="highlight-python"><div class="highlight"><pre>Add untracked&gt;&gt;
+added 3 paths
+
+*** Commands ***
+  1: status       2: update       3: revert       4: add untracked
+  5: patch        6: diff         7: quit         8: help
+What now&gt;
+</pre></div>
+</div>
+<p>此时输入“1”查看状态，可以看到三个文件添加到暂存区中。</p>
+<div class="highlight-python"><div class="highlight"><pre>What now&gt; 1
+           staged     unstaged path
+  1:       +20/-0      nothing src/Makefile
+  2:       +10/-0      nothing src/main.c
+  3:        +6/-0      nothing src/version.h.in
+
+*** Commands ***
+  1: status       2: update       3: revert       4: add untracked
+  5: patch        6: diff         7: quit         8: help
+</pre></div>
+</div>
+<p>输入“7”退出交互界面。</p>
+<p>查看文件状态，可以发现三个文件被添加到暂存区中。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status -s
+A  src/Makefile
+A  src/main.c
+A  src/version.h.in
+?? src/hello
+?? src/main.o
+?? src/version.h
+</pre></div>
+</div>
+<p>完成提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git commit -m &quot;Hello world initialized.&quot;
+[master d71ce92] Hello world initialized.
+ 3 files changed, 36 insertions(+), 0 deletions(-)
+ create mode 100644 src/Makefile
+ create mode 100644 src/main.c
+ create mode 100644 src/version.h.in
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>2.7.7. <tt class="docutils literal"><span class="pre">Hello</span> <span class="pre">world</span></tt>引发的新问题<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<p>进入<tt class="file docutils literal"><span class="pre">src</span></tt>目录中，对<tt class="docutils literal"><span class="pre">Hello</span> <span class="pre">world</span></tt>执行编译。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/my/workspace/demo/src
+$ make clean &amp;&amp; make
+rm -f hello main.o version.h
+version.h.in =&gt; version.h
+cc    -c -o main.o main.c
+cc -o hello main.o
+</pre></div>
+</div>
+<p>运行编译后的程序，是不是对版本输出不满意呢？</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ./hello
+Hello, world.
+version: old_practice-4-gd71ce92.
+</pre></div>
+</div>
+<p>之所以显示长长的版本号，是因为使用了在本章最开始留的“影”。现在为<tt class="docutils literal"><span class="pre">Hello</span> <span class="pre">world</span></tt>留下一个新的“影”（一个新的里程碑）吧。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git tag -m &quot;Set tag hello_1.0.&quot; hello_1.0
+</pre></div>
+</div>
+<p>然后清除上次编译结果后，重新编译和运行，可以看到新的输出。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ make clean &amp;&amp; make
+rm -f hello main.o version.h
+version.h.in =&gt; version.h
+cc    -c -o main.o main.c
+cc -o hello main.o
+$ ./hello
+Hello, world.
+version: hello_1.0.
+</pre></div>
+</div>
+<p>还不错，显示了新的版本号。此时在工作区查看状态，会发现工作区“不干净”。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status
+# On branch master
+# Untracked files:
+#   (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+#
+#       hello
+#       main.o
+#       version.h
+</pre></div>
+</div>
+<p>编译的目标文件和以及从模板生成的头文件出现在了Git的状态输出中，这些文件会对以后的工作造成干扰。当写了新的源代码文件需要添加到版本库中时，因为这些干扰文件的存在，不得不一一将这些干扰文件排除在外。更为严重的是，如果不小心执行<strong class="command">git add .</strong>或者<strong class="command">git add -A</strong>命令会将编译的目标文件及其他临时文件加入版本库中，浪费存储空间不说甚至还会造成冲突。</p>
+<p>Git提供了文件忽略功能，可以解决这个问题。</p>
+</div>
+<div class="section" id="id7">
+<h2>2.7.8. 文件忽略<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<p>Git提供了文件忽略功能。当对工作区某个目录或者某些文件设置了忽略后，再执行<strong class="command">git status</strong>查看状态时，被忽略的文件即使存在也不会显示为未跟踪状态，甚至根本感觉不到这些文件的存在。现在就针对<tt class="docutils literal"><span class="pre">Hello</span> <span class="pre">world</span></tt>程序目录试验一下。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/my/workspace/demo/src
+$ git status -s
+?? hello
+?? main.o
+?? version.h
+</pre></div>
+</div>
+<p>可以看到<tt class="file docutils literal"><span class="pre">src</span></tt>目录下编译的目标文件等显示为未跟踪，每一行开头的两个问号好像在向我们请求：“快把我们添加到版本库里吧”。</p>
+<p>执行下面的命令可以在这个目下创建一个名为<tt class="file docutils literal"><span class="pre">.gitignore</span></tt>的文件（注意文件的前面有个点），把这些要忽略的文件写在其中，文件名可以使用通配符。注意：第2行到第5行开头的右尖括号是<strong class="command">cat</strong>命令的提示符，不是输入。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cat &gt; .gitignore &lt;&lt; EOF
+&gt; hello
+&gt; *.o
+&gt; *.h
+&gt; EOF
+</pre></div>
+</div>
+<p>看看写好的<tt class="file docutils literal"><span class="pre">.gitignore</span></tt>文件。每个要忽略的文件显示在一行。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cat .gitignore
+hello
+*.o
+*.h
+</pre></div>
+</div>
+<p>再来看看当前工作区的状态。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status -s
+?? .gitignore
+</pre></div>
+</div>
+<p>把<tt class="file docutils literal"><span class="pre">.gitignore</span></tt>文件添加到版本库中吧。（如果不希望添加到库里，也不希望<tt class="file docutils literal"><span class="pre">.gitignore</span></tt>文件带来干扰，可以在忽略文件中忽略自己。）</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git add .gitignore
+$ git commit -m &quot;ignore object files.&quot;
+[master b3af728] ignore object files.
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+ create mode 100644 src/.gitignore
+</pre></div>
+</div>
+<p><strong>:file:`.gitignore`文件可以放在任何目录</strong></p>
+<p>文件<tt class="file docutils literal"><span class="pre">.gitignore</span></tt>的作用范围是其所处的目录及其子目录，因此如果把刚刚创建的<tt class="file docutils literal"><span class="pre">.gitignore</span></tt>移动到上一层目录（仍位于工作区内）也应该有效。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git mv .gitignore ..
+$ git status
+# On branch master
+# Changes to be committed:
+#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
+#
+#       renamed:    .gitignore -&gt; ../.gitignore
+#
+</pre></div>
+</div>
+<p>果然移动<tt class="file docutils literal"><span class="pre">.gitignore</span></tt>文件到上层目录，<tt class="docutils literal"><span class="pre">Hello</span> <span class="pre">world</span></tt>程序目录下的目标文件依然被忽略着。</p>
+<p>提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git commit -m &quot;move .gitignore outside also works.&quot;
+[master 3488f2c] move .gitignore outside also works.
+ 1 files changed, 0 insertions(+), 0 deletions(-)
+ rename src/.gitignore =&gt; .gitignore (100%)
+</pre></div>
+</div>
+<p><strong>忽略文件有错误，后果很严重</strong></p>
+<p>实际上面写的忽略文件不是非常好，为了忽略<tt class="file docutils literal"><span class="pre">version.h</span></tt>，结果使用了通配符<tt class="docutils literal"><span class="pre">*.h</span></tt>会把源码目录下的有用的头文件也给忽略掉，导致应该添加到版本库的文件忘记添加。</p>
+<p>在当前目录下创建一个新的头文件<tt class="file docutils literal"><span class="pre">hello.h</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ echo &quot;/* test */&quot; &gt; hello.h
+</pre></div>
+</div>
+<p>在工作区状态显示中看不到<tt class="file docutils literal"><span class="pre">hello.h</span></tt>文件。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status
+# On branch master
+nothing to commit (working directory clean)
+</pre></div>
+</div>
+<p>只有使用了<tt class="docutils literal"><span class="pre">--ignored</span></tt>参数，才会在状态显示中看到被忽略的文件。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status --ignored -s
+!! hello
+!! hello.h
+!! main.o
+!! version.h
+</pre></div>
+</div>
+<p>要添加<tt class="file docutils literal"><span class="pre">hello.h</span></tt>文件，使用<strong class="command">git add -A</strong>和<strong class="command">git add .</strong>都失效。无法用这两个命令将<tt class="file docutils literal"><span class="pre">hello.h</span></tt>添加到暂存区中。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git add -A
+$ git add .
+$ git st -s
+</pre></div>
+</div>
+<p>只有在添加操作的命令行中明确的写入文件名，并且提供<tt class="docutils literal"><span class="pre">-f</span></tt>参数才能真正添加。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git add -f hello.h
+$ git commit -m &quot;add hello.h&quot;
+[master 48456ab] add hello.h
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 src/hello.h
+</pre></div>
+</div>
+<p><strong>忽略只对未跟踪文件有效，对于已加入版本库的文件无效</strong></p>
+<p>文件<tt class="file docutils literal"><span class="pre">hello.h</span></tt>添加到版本库后，就不再受到<tt class="file docutils literal"><span class="pre">.gitignore</span></tt>设置的文件忽略影响了，对<tt class="file docutils literal"><span class="pre">hello.h</span></tt>的修改都会立刻被跟踪到。这是因为Git的文件忽略只是对未入库的文件起作用。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ echo &quot;/* end */&quot; &gt;&gt; hello.h
+$ git status
+# On branch master
+# Changed but not updated:
+#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+#
+#       modified:   hello.h
+#
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
+</pre></div>
+</div>
+<p>偷懒式提交。（使用了<tt class="docutils literal"><span class="pre">-a</span></tt>参数提交，不用预先执行<strong class="command">git add</strong>命令。）</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git commit -a -m &quot;偷懒了，直接用 -a 参数直接提交。&quot;
+[master 613486c] 偷懒了，直接用 -a 参数直接提交。
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+</pre></div>
+</div>
+<p><strong>本地独享式忽略文件</strong></p>
+<p>文件<tt class="file docutils literal"><span class="pre">.gitignore</span></tt>设置的文件忽略是共享式的。之所以称其为“共享式”，是因为<tt class="file docutils literal"><span class="pre">.gitignore</span></tt>被添加到版本库后成为了版本库的一部分，当版本库共享给他人（克隆）或者把版本库推送（PUSH）到集中式的服务器（或他人的版本库），这个忽略文件就会出现在他人的工作区中，文件忽略在他人的工作区中同样生效。</p>
+<p>与“共享式”忽略对应的是“独享式”忽略。独享式忽略就是不会因为版本库共享或者版本库之间的推送传递给他人的文件忽略。独享式忽略有两种方式：</p>
+<ul class="simple">
+<li>一种是针对具体版本库的“独享式”忽略。即在版本库<tt class="file docutils literal"><span class="pre">.git</span></tt>目录下的一个文件<tt class="file docutils literal"><span class="pre">.git/info/exclude</span></tt>来设置文件忽略。</li>
+<li>另外一种是全局的“独享式”忽略。即通过Git的配置变量<tt class="docutils literal"><span class="pre">core.excludesfile</span></tt>指定的一个忽略文件，其设置的忽略对所有文件均有效。</li>
+</ul>
+<p>至于哪些情况需要通过向版本库中提交<tt class="file docutils literal"><span class="pre">.gitignore</span></tt>文件设置共享式的文件忽略，哪些情况通过<tt class="file docutils literal"><span class="pre">.git/info/exclude</span></tt>设置只对本地有效的独享式文件忽略，这取决于要设置的文件忽略是否具有普遍意义。如果文件忽略对于所有使用此版本库工作的人都有益，就通过在版本库相应的目录下创建一个<tt class="file docutils literal"><span class="pre">.gitignore</span></tt>文件建立忽略，否则如果是需要忽略工作区中创建的一个试验目录或者试验性的文件，则使用本地忽略。</p>
+<p>例如我的本地就设置着一个全局的独享的文件忽略列表（这个文件名可以随意设置）：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git config --global core.excludesfile /home/jiangxin/_gitignore
+$ git config core.excludesfile
+/home/jiangxin/_gitignore
+
+$ cat /home/jiangxin/_gitignore
+*~        # vim 临时文件
+*.pyc     # python 的编译文件
+.*.mmx    # 不是正则表达式哦，因为 FreeMind-MMX 的辅助文件以点开头
+</pre></div>
+</div>
+<p><strong>Git忽略语法</strong></p>
+<p>Git的忽略文件的语法规则再多说几句。</p>
+<ul class="simple">
+<li>忽略文件中的空行或者以井号（#）开始的行被忽略。</li>
+<li>可以使用通配符，参见Linux手册：glob(7)。例如：星号（*）代表任意多字符，问号（?）代表一个字符，方括号（[abc]）代表可选字符范围等。</li>
+<li>如果名称的最前面是一个路径分隔符（/），表明要忽略的文件在此目录下，而非子目录的文件。</li>
+<li>如果名称的最后面是一个路径分隔符（/），表明要忽略的是整个目录，同名文件不忽略，否则同名的文件和目录都忽略。</li>
+<li>通过在名称的最前面添加一个感叹号（!），代表不忽略。</li>
+</ul>
+<p>下面的文件忽略示例，包含了上述要点：</p>
+<div class="highlight-python"><div class="highlight"><pre># 这是注释行 —— 被忽略
+*.a       # 忽略所有以 .a 为扩展名的文件。
+!lib.a    # 但是 lib.a 文件或者目录不要忽略，即使前面设置了对 *.a 的忽略。
+/TODO     # 只忽略根目录下的 TODO 文件，子目录的 TODO 文件不忽略。
+build/    # 忽略所有 build/ 目录下的文件。
+doc/*.txt # 忽略文件如 doc/notes.txt，但是文件如 doc/server/arch.txt 不被忽略。
+</pre></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h2>2.7.9. 文件归档<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<p>如果使用压缩工具（tar、7zip、winzip、rar等）将工作区文件归档，一不小心会把版本库（<tt class="file docutils literal"><span class="pre">.git</span></tt>目录）包含其中，甚至将工作区中的忽略文件、临时文件也包含其中。Git提供了一个归档命令：<strong class="command">git archive</strong>，可以对任意提交对应的目录树建立归档。示例如下：</p>
+<ul>
+<li><p class="first">基于最新提交建立归档文件<tt class="file docutils literal"><span class="pre">latest.zip</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git archive -o latest.zip HEAD
+</pre></div>
+</div>
+</li>
+<li><p class="first">只将目录<tt class="file docutils literal"><span class="pre">src</span></tt>和<tt class="file docutils literal"><span class="pre">doc</span></tt>建立到归档<tt class="file docutils literal"><span class="pre">partial.tar</span></tt>中。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git archive -o partial.tar  HEAD src doc
+</pre></div>
+</div>
+</li>
+<li><p class="first">基于里程碑v1.0建立归档，并且为归档中文件添加目录前缀1.0。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git archive --format=tar --prefix=1.0/ v1.0 | gzip &gt; foo-1.0.tar.gz
+</pre></div>
+</div>
+</li>
+</ul>
+<p>在建立归档时，如果使用树对象ID进行归档，则使用当前时间作为归档中文件的修改时间，而如果使用提交ID或里程碑等，则使用提交建立的时间作为归档中文件的修改时间。</p>
+<p>如果使用tar格式建立归档，并且使用提交ID或里程碑ID，还会把提交ID记录在归档文件的文件头中。记录在文件头中的提交ID可以通过<strong class="command">git tar-commit-id</strong>命令获取。</p>
+<p>如果希望在建立归档时忽略某些文件或目录，可以通过为相应文件或目录建立<tt class="docutils literal"><span class="pre">export-ignore</span></tt>属性加以实现。具体参见本书第8篇第41章“41.1 属性”一节。</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="080-git-history-travel.html" title="2.8. 历史穿梭"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="060-git-stage-n-stash.html" title="2.6. 恢复进度"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >2. Git独奏</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

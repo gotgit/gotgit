@@ -1,0 +1,454 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>5.1. 使用HTTP协议 &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="up" title="5. 搭建Git服务器" href="index.html" />
+    <link rel="next" title="5.2. 使用Git协议" href="020-git.html" />
+    <link rel="prev" title="5. 搭建Git服务器" href="index.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="020-git.html" title="5.2. 使用Git协议"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="5. 搭建Git服务器"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">5. 搭建Git服务器</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">5.1. 使用HTTP协议</a><ul>
+<li><a class="reference internal" href="#id1">5.1.1. 哑传输协议</a></li>
+<li><a class="reference internal" href="#id3">5.1.2. 智能HTTP协议</a></li>
+<li><a class="reference internal" href="#gitweb">5.1.3. Gitweb服务器</a><ul>
+<li><a class="reference internal" href="#id4">5.1.3.1. Gitweb安装</a></li>
+<li><a class="reference internal" href="#id5">5.1.3.2. Gitweb配置</a></li>
+<li><a class="reference internal" href="#id6">5.1.3.3. 版本库的Gitweb相关设置</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="index.html"
+                        title="上一章">5. 搭建Git服务器</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="020-git.html"
+                        title="下一章">5.2. 使用Git协议</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/05-git-server/010-http.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="http">
+<h1>5.1. 使用HTTP协议<a class="headerlink" href="#http" title="永久链接至标题">¶</a></h1>
+<p>HTTP协议是版本控制工具普遍采用的协议，具有安全（HTTPS），方便（跨越防火墙）等优点。Git在 1.6.6版本之前对HTTP协议支持有限，是哑协议，访问效率低，但是在1.6.6之后，通过一个CGI实现了智能的HTTP协议支持。</p>
+<div class="section" id="id1">
+<h2>5.1.1. 哑传输协议<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>所谓的哑传输协议（dumb protocol）就是在Git服务器和Git客户端的会话过程中只使用了相关协议提供的基本传输功能，而未针对Git的传输特点进行相关优化设计。采用哑协议，Git客户端和服务器间的通讯缺乏效率，用户使用时最直观的体验之一就是在操作过程没有进度提示，应用会一直停在那里直到整个通讯过程处理完毕。</p>
+<p>但是哑传输协议配置起来却非常的简单。通过哑HTTP协议提供Git服务，基本上就是把包含Git版本库的目录通过HTTP服务器共享出来。下面的Apache配置片段就将整个目录<tt class="docutils literal"><span class="pre">/path/to/repos</span></tt>共享，然后就可以通过地址<tt class="docutils literal"><span class="pre">http://&lt;服务器名称&gt;/git/&lt;版本库名称&gt;</span></tt>访问该共享目录下所有的Git版本库。</p>
+<div class="highlight-python"><div class="highlight"><pre>Alias /git /path/to/repos
+
+&lt;Directory /path/to/repos&gt;
+    Options FollowSymLinks
+    AllowOverride None
+    Order Allow,Deny
+    Allow from all
+&lt;/Directory&gt;
+</pre></div>
+</div>
+<p>如果以为直接把现存的Git版本库移动到该目录下就可以直接用HTTP协议访问，可就大错特错了。因为哑协议下的Git版本库需要包含两个特殊的文件，并且这两个文件要随Git版本库更新。例如将一个包含提交数据的裸版本库复制到路径<tt class="docutils literal"><span class="pre">/path/to/repos/myrepos.git</span></tt>中，然后使用下面命令克隆该版本库（服务器名称为<tt class="docutils literal"><span class="pre">server</span></tt>），可能会看到如下错误：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git clone http://server/git/myrepos.git
+正克隆到 &#39;myrepos&#39;...
+fatal: repository &#39;http://server/git/myrepos.git/&#39; not found
+</pre></div>
+</div>
+<p>这时，您仅需在Git版本库目录下执行<tt class="docutils literal"><span class="pre">git</span> <span class="pre">update-server-info</span></tt>命令即可在Git版本库中创建哑协议需要的相关文件。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git update-server-info
+</pre></div>
+</div>
+<p>然后该Git版本库即可正常访问了。如下：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git clone http://server/git/myrepos.git
+正克隆到 &#39;myrepos&#39;...
+检查连接... 完成。
+</pre></div>
+</div>
+<p>从上面的介绍中可以看出在使用哑HTTP协议时，服务器端运行<tt class="docutils literal"><span class="pre">git</span> <span class="pre">update-server-info</span></tt>的重要性。运行该命令会产生或更新两个文件：</p>
+<ul class="simple">
+<li>文件<tt class="file docutils literal"><span class="pre">.git/info/refs</span></tt>：该文件中包含了版本库中所有的引用列表，每一个引用都指向正确的SHA1哈希值。</li>
+<li>文件<tt class="file docutils literal"><span class="pre">.git/objects/info/packs</span></tt>：该文件记录Git对象库中打包文件列表。</li>
+</ul>
+<p>正是通过这两个文件，Git客户端才检索到版本库的引用列表和对象库的包列表，从而实现对版本库的读取操作。</p>
+<p>为支持哑HTTP协议，必须在版本库更新后及时更新上述两个文件。幸好Git版本库的钩子脚本<tt class="file docutils literal"><span class="pre">post-update</span></tt>可以帮助完成这个无聊的工作。在版本库的<tt class="docutils literal"><span class="pre">hooks</span></tt>目录下创建可执行脚本文件<tt class="file docutils literal"><span class="pre">post-update</span></tt>，内容如下：</p>
+<div class="highlight-python"><div class="highlight"><pre>#!/bin/sh
+#
+# An example hook script to prepare a packed repository for use over
+# dumb transports.
+#
+# To enable this hook, rename this file to &quot;post-update&quot;.
+
+exec git update-server-info
+</pre></div>
+</div>
+<p>哑HTTP协议也可以对版本库写操作提供支持，即允许客户端向服务器推送。这需要在Apache中为版本库设置WebDAV，并配置口令认证。例如下面的Apache配置片段：</p>
+<div class="highlight-python"><div class="highlight"><pre>Alias /git /path/to/repos
+
+&lt;Directory /path/to/repos&gt;
+    Options FollowSymLinks
+    AllowOverride None
+    Order Allow,Deny
+    Allow from all
+
+    # 启用 WebDAV
+    DAV on
+
+    # 简单口令认证
+    AuthType Basic
+    AuthName &quot;Git Repository&quot;
+    AuthBasicProvider file
+    # 该口令文件用 htpasswd 命令进行管理
+    AuthUserFile /path/to/git-passwd
+    Require valid-user
+
+    # 基于主机IP的认证和基于口令的认证必须同时满足
+    Satisfy All
+&lt;/Directory&gt;
+</pre></div>
+</div>
+<p>配置了口令认证后，最好使用HTTPS协议访问服务器，以避免因为口令在网络中明文传输造成口令泄露。还可以在URL地址中加上用户名，以免在连接过程中的重复输入。下面的示例中以特定用户（如：jiangxin）身份访问版本库：</p>
+<ul>
+<li><p class="first">如果版本库尚未克隆，使用如下命令克隆：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git clone https://jiangxin@server/git/myrepo.git
+</pre></div>
+</div>
+</li>
+<li><p class="first">如果已经克隆了版本库，可以执行下面命令修改远程<tt class="docutils literal"><span class="pre">origin</span></tt>版本库的URL地址：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd myrepos
+$ git remote set-url origin https://jiangxin@server/git/myrepo.git
+$ git pull
+</pre></div>
+</div>
+</li>
+</ul>
+<p>第一次连接服务器，会提示输入口令。正确输入口令后，完成克隆或版本库的更新。试着在版本库中添加新的提交，然后执行<tt class="docutils literal"><span class="pre">git</span> <span class="pre">push</span></tt>推送到HTTP服务器。</p>
+<p>如果推送失败，可能是WebDAV配置的问题，或者是版本库的文件、目录的权限不正确（需要能够被执行Apache进程的用户可以读写）。一个诊断Apache的小窍门是查看和跟踪Apache的配置文件<a class="footnote-reference" href="#id7" id="id2">[1]</a>。如下：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ tail -f /var/www/error.log
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>5.1.2. 智能HTTP协议<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>Git 1.6.6之后的版本，提供了针对HTTP协议的CGI程序<tt class="file docutils literal"><span class="pre">git-http-backend</span></tt>，实现了智能的HTTP协议支持。同时也要求Git客户端的版本也不低于1.6.6。</p>
+<p>查看文件<tt class="file docutils literal"><span class="pre">git-http-backend</span></tt>的安装位置，可以用如下命令。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ls $(git --exec-path)/git-http-backend
+/usr/lib/git-core/git-http-backend
+</pre></div>
+</div>
+<p>在Apache2中为Git配置智能HTTP协议如下。</p>
+<div class="highlight-python"><div class="highlight"><pre>SetEnv GIT_PROJECT_ROOT /var/www/git
+SetEnv GIT_HTTP_EXPORT_ALL
+ScriptAlias /git/ /usr/lib/git-core/git-http-backend/
+</pre></div>
+</div>
+<p>说明：</p>
+<ul>
+<li><p class="first">第一行设置版本库的根目录为<tt class="file docutils literal"><span class="pre">/var/www/git</span></tt>。</p>
+</li>
+<li><p class="first">第二行设置所有版本库均可访问，无论是否在版本库中存在<tt class="file docutils literal"><span class="pre">git-daemon-export-ok</span></tt>文件。</p>
+<p>缺省只有在版本库目录中存在文件<tt class="file docutils literal"><span class="pre">git-daemon-export-ok</span></tt>，该版本库才可以访问。这个文件是git-daemon服务的一个特性。</p>
+</li>
+<li><p class="first">第三行，就是使用<tt class="file docutils literal"><span class="pre">git-http-backend</span></tt>CGI脚本来相应客户端的请求。</p>
+<p>当用地址<tt class="docutils literal"><span class="pre">http://server/git/myrepo.git</span></tt>访问时，即由此CGI提供服务。</p>
+</li>
+</ul>
+<p><strong>写操作授权</strong></p>
+<p>上面的配置只能提供版本库的读取服务，若想提供基于HTTP协议的写操作，必须添加认证的配置指令。当用户通过认证后，才能对版本库进行写操作。</p>
+<p>下面的Apache配置，在前面配置的基础上，为Git写操作提供授权：</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;LocationMatch &quot;^/git/.*/git-receive-pack$&quot;&gt;
+  AuthType Basic
+  AuthName &quot;Git Access&quot;
+  AuthType Basic
+  AuthBasicProvider file
+  AuthUserFile /path/to/passwd/file
+  ...
+&lt;/LocationMatch&gt;
+</pre></div>
+</div>
+<p><strong>读和写均需授权</strong></p>
+<p>如果需要对读操作也进行授权，那就更简单了，一个<tt class="docutils literal"><span class="pre">Location</span></tt>语句就够了。</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;Location /git/private&gt;
+  AuthType Basic
+  AuthName &quot;Git Access&quot;
+  AuthType Basic
+  AuthBasicProvider file
+  AuthUserFile /path/to/passwd/file
+  ...
+&lt;/Location&gt;
+</pre></div>
+</div>
+<p><strong>对静态文件的直接访问</strong></p>
+<p>如果对静态文件的访问不经过CGI程序，直接由Apache提供服务，会提高访问性能。</p>
+<p>下面的设置对Git版本库中的<tt class="file docutils literal"><span class="pre">objects</span></tt>目录下文件的访问，不经过CGI。</p>
+<div class="highlight-python"><div class="highlight"><pre>SetEnv GIT_PROJECT_ROOT /var/www/git
+
+AliasMatch ^/git/(.*/objects/[0-9a-f]{2}/[0-9a-f]{38})$          /var/www/git/$1
+AliasMatch ^/git/(.*/objects/pack/pack-[0-9a-f]{40}.(pack|idx))$ /var/www/git/$1
+ScriptAlias /git/ /usr/libexec/git-core/git-http-backend/
+</pre></div>
+</div>
+<p>Git的智能HTTP服务彻底打破了以前哑传输协议给HTTP协议带来的恶劣印象，让HTTP协议成为Git服务的一个重要选项。但是在授权的管理上，智能HTTP服务仅仅依赖Apache自身的授权模型，相比后面要介绍的Gitosis和Gitolite，可管理性要弱的多。</p>
+<ul class="simple">
+<li>创建版本库只能在服务器端进行，不能通过远程客户端进行。</li>
+<li>配置认证和授权，也只能在服务器端进行，不能在客户端远程配置。</li>
+<li>版本库的写操作授权只能进行非零即壹的授权，不能针对分支甚至路径进行授权。</li>
+</ul>
+<p>需要企业级的版本库管理，还需要考虑后面介绍的基于SSH协议的Gitolite或Gitosis。</p>
+</div>
+<div class="section" id="gitweb">
+<h2>5.1.3. Gitweb服务器<a class="headerlink" href="#gitweb" title="永久链接至标题">¶</a></h2>
+<p>前面介绍的HTTP哑协议和智能HTTP协议服务架设，都可以用于提供Git版本库的读写服务，而本节介绍的Gitweb作为一个Web应用，只提供版本库的图形化浏览功能，而不能提供版本库本身的读写。</p>
+<p>Gitweb是用Perl语言开发的CGI脚本，架设比较方便。Gitweb支持多个版本库，可以对版本库进行目录浏览（包括历史版本），可以查看文件内容，查看提交历史，提供搜索以及RSS feed支持。也可以提供目录文件的打包下载等。图27-1就是kernel.org上的Gitweb示例。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/gitweb-kernel-org_full.png"><img alt="../images/gitweb-kernel-org_full.png" src="../images/gitweb-kernel-org_full.png" style="width: 695.2px; height: 426.4px;" /></a>
+<p class="caption">图27-1：Gitweb界面(kernel.org)</p>
+</div>
+<div class="section" id="id4">
+<h3>5.1.3.1. Gitweb安装<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>各个Linux平台都会提供Gitweb软件包。如在Debian/Ubuntu上安装Gitweb：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sudo aptitude install gitweb
+</pre></div>
+</div>
+<p>安装文件列表：</p>
+<ul class="simple">
+<li>配置文件：<tt class="file docutils literal"><span class="pre">/etc/gitweb.conf</span></tt>。</li>
+<li>Apache配置文件：<tt class="file docutils literal"><span class="pre">/etc/apache2/conf.d/gitweb</span></tt>。默认设置用URL地址<tt class="docutils literal"><span class="pre">/gitweb</span></tt>来访问Gitweb服务。</li>
+<li>CGI脚本：<tt class="file docutils literal"><span class="pre">/usr/share/gitweb/index.cgi</span></tt>。</li>
+<li>其他附属文件：<tt class="file docutils literal"><span class="pre">/usr/share/gitweb/*</span></tt>，如：图片和css等。</li>
+</ul>
+</div>
+<div class="section" id="id5">
+<h3>5.1.3.2. Gitweb配置<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>编辑<tt class="file docutils literal"><span class="pre">/etc/gitweb.conf</span></tt>，更改Gitweb的默认设置。</p>
+<ul>
+<li><p class="first">版本库根目录的设置。</p>
+<div class="highlight-python"><div class="highlight"><pre>$projectroot = &quot;/var/cache/git&quot;;
+</pre></div>
+</div>
+</li>
+<li><p class="first">访问版本库多种协议的地址设置。</p>
+<p>Gitweb可以为每个版本库显示访问的协议地址。可以在列表中填入多个地址。</p>
+<div class="highlight-python"><div class="highlight"><pre>@git_base_url_list = (&quot;git://bj.ossxp.com/git&quot;, &quot;ssh://git\@bj.ossxp.com&quot;, &quot;http://bj.ossxp.com/git&quot;);
+</pre></div>
+</div>
+</li>
+<li><p class="first">增加 actions 菜单</p>
+<div class="highlight-python"><div class="highlight"><pre>$feature{&#39;actions&#39;}{&#39;default&#39;} = [(&#39;git&#39;, &#39;git://bj.ossxp.com/git/%n&#39;, &#39;tree&#39;)];
+</pre></div>
+</div>
+</li>
+<li><p class="first">在首页上显示自定义信息</p>
+<p>设定自定义HTML的文件名。</p>
+<div class="highlight-python"><div class="highlight"><pre>$home_text = &quot;indextext.html&quot;;
+</pre></div>
+</div>
+<p>在CGI脚本所在的目录下，创建<tt class="file docutils literal"><span class="pre">indextext.html</span></tt>文件。下面是我们公司（北京群英汇信息技术有限公司）内部gitweb自定义首页的内容。</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;html&gt;
+&lt;head&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h2&gt;群英汇 - git 代码库&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;点击版本库，进入相应的版本库页面，有 URL 指向一个 git://... 的检出链接&lt;/li&gt;
+  &lt;li&gt;使用命令 git clone git://... 来克隆一个版本库&lt;/li&gt;
+  &lt;li&gt;对于名称中含有 &lt;i&gt;-gitsvn&lt;/i&gt; 字样的代码库, 是用 git-svn 从 svn 代码库镜像而来的。对于它们的镜像，需要做进一步的工作。
+    &lt;ul&gt;
+      &lt;li&gt;要将 git 库的远程分支(.git/ref/remotes/*) 也同步到本地！
+        &lt;pre&gt;
+        $ git config --add remote.origin.fetch &#39;+refs/remotes/*:refs/remotes/*&#39;
+        $ git fetch
+        &lt;/pre&gt;
+      &lt;/li&gt;
+      &lt;li&gt;如果需要克隆库和 Subversion 同步。用 git-svn 初始化代码库，并使得相关配置和源保持一致 &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+</div>
+</li>
+<li><p class="first">版本库列表。</p>
+<p>缺省扫描版本库根目录，查找版本库。如果版本库非常多，这个查找过程可能很耗时，可以提供一个文本文件包含版本库的列表，会加速Gitweb显示初始化。</p>
+<div class="highlight-python"><div class="highlight"><pre># $projects_list = $projectroot;
+$projects_list = &quot;/home/git/gitosis/projects.list&quot;;
+</pre></div>
+</div>
+<p>后面介绍的Gitosis和Gitolite都可以自动生成这么一个版本库列表，供Gitweb使用。</p>
+</li>
+<li><p class="first">Gitweb菜单定制。</p>
+<ul>
+<li><p class="first">在tree view文件的旁边显示追溯（blame）链接。</p>
+<div class="highlight-python"><div class="highlight"><pre>$feature{&#39;blame&#39;}{&#39;default&#39;} = [1];
+$feature{&#39;blame&#39;}{&#39;override&#39;} = 1;
+</pre></div>
+</div>
+</li>
+<li><p class="first">可以通过版本库的配置文件<tt class="file docutils literal"><span class="pre">config</span></tt>对版本库进行单独设置。</p>
+<p>下面的设置覆盖Gitweb的全局设置，不对该项目显示blame菜单。</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">gitweb</span><span class="p">]</span>
+<span class="n">blame</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">为每个tree添加快照（snapshot）下载链接。</p>
+<div class="highlight-python"><div class="highlight"><pre>$feature{&#39;pickaxe&#39;}{&#39;default&#39;} = [1];
+$feature{&#39;pickaxe&#39;}{&#39;override&#39;} = 1;
+$feature{&#39;snapshot&#39;}{&#39;default&#39;} = [&#39;zip&#39;, &#39;tgz&#39;];
+$feature{&#39;snapshot&#39;}{&#39;override&#39;} = 1;
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id6">
+<h3>5.1.3.3. 版本库的Gitweb相关设置<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>可以通过Git版本库下的配置文件，定制版本库在Gitweb下的显示。</p>
+<ul>
+<li><p class="first">文件<tt class="file docutils literal"><span class="pre">description</span></tt>。</p>
+<p>提供一行简短的git库描述。显示在版本库列表中。</p>
+<p>也可以通过<tt class="file docutils literal"><span class="pre">config</span></tt>配置文件中的<tt class="docutils literal"><span class="pre">gitweb.description</span></tt>进行设置。但是文件优先。</p>
+</li>
+<li><p class="first">文件<tt class="file docutils literal"><span class="pre">README.html</span></tt>。</p>
+<p>提供更详细的项目描述，显示在Gitweb项目页面中。</p>
+</li>
+<li><p class="first">文件<tt class="file docutils literal"><span class="pre">cloneurl</span></tt>。</p>
+<p>版本库访问的URL地址，一个一行。</p>
+</li>
+<li><p class="first">文件<tt class="file docutils literal"><span class="pre">config</span></tt>。</p>
+<p>通过<tt class="docutils literal"><span class="pre">[gitweb]</span></tt>小节的配置，覆盖Gitweb全局设置。</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">gitweb.owner</span></tt>用于显示版本库的创建者。</li>
+<li><tt class="docutils literal"><span class="pre">gitweb.description</span></tt>显示项目的简短描述，也可以通过<tt class="file docutils literal"><span class="pre">description</span></tt>文件来提供。（文件优先）</li>
+<li><tt class="docutils literal"><span class="pre">gitweb.url</span></tt>显示项目的URL列表，也可以通过<tt class="docutils literal"><span class="pre">cloneurl</span></tt>文件来提供。（文件优先）</li>
+</ul>
+</li>
+</ul>
+<table class="docutils footnote" frame="void" id="id7" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[1]</a></td><td>Apache日志文件的位置参见Apache配置文件中<tt class="docutils literal"><span class="pre">ErrorLog</span></tt>指令的设定。</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="020-git.html" title="5.2. 使用Git协议"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="5. 搭建Git服务器"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >5. 搭建Git服务器</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

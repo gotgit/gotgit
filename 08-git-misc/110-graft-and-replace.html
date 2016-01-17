@@ -1,0 +1,209 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>8.2.4. 嫁接和替换 &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="up" title="8.2. Git 的其他特性" href="050-git-features.html" />
+    <link rel="next" title="8.2.5. Git评注" href="120-git-notes.html" />
+    <link rel="prev" title="8.2.3. 稀疏检出和浅克隆" href="090-sparse-checkout-and-shallow-clone.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="120-git-notes.html" title="8.2.5. Git评注"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="090-sparse-checkout-and-shallow-clone.html" title="8.2.3. 稀疏检出和浅克隆"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >8. Git杂谈</a> &raquo;</li>
+          <li><a href="050-git-features.html" accesskey="U">8.2. Git 的其他特性</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">8.2.4. 嫁接和替换</a><ul>
+<li><a class="reference internal" href="#id2">8.2.4.1. 提交嫁接</a></li>
+<li><a class="reference internal" href="#id3">8.2.4.2. 提交替换</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="090-sparse-checkout-and-shallow-clone.html"
+                        title="上一章">8.2.3. 稀疏检出和浅克隆</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="120-git-notes.html"
+                        title="下一章">8.2.5. Git评注</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/08-git-misc/110-graft-and-replace.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>8.2.4. 嫁接和替换<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2>8.2.4.1. 提交嫁接<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>提交嫁接可以实现在本地版本库上将两条完全不同提交线（分支）嫁接（连接）到一起。对于一些项目将版本控制系统迁移到Git上，该技术会非常有帮助。例如Linux本身的源代码控制在转移到Git上时，尚没有任何工具可以将Linux的提交历史从旧的Bitkeeper版本控制系统中导出，后来Linux旧的代码通过bkcvs导入到Git中，如何将新旧两条开发线连接到一起呢？于是发明了提交嫁接，实现新旧两条开发线的合并，这样Linux开发者就可以在一个开发分支中由最新的提交追踪到原来位于Bitkeeper中的提交。（参考：<a class="reference external" href="https://git.wiki.kernel.org/index.php/GraftPoint">https://git.wiki.kernel.org/index.php/GraftPoint</a>）</p>
+<p>提交嫁接是通过在版本库中创建<tt class="file docutils literal"><span class="pre">.git/info/grafts</span></tt>文件实现的。该文件每一行的格式为：</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;commit sha1&gt; &lt;parent sha1&gt; [&lt;parent sha1&gt;]*
+</pre></div>
+</div>
+<p>用空格分开各个字段，其中第一个字段是一个提交的SHA1哈希值，而后面用空格分开的其他SHA1哈希值则作为该提交的父提交。当把一个提交线的根节点作为第一个字段，将第二个提交线顶节点作为第二个字段，就实现了两个提交线的嫁接，看起来像是一条提交线了。</p>
+<p>在本书第6篇“第35.4节Git版本库整理”中介绍的<strong class="command">git filter-branch</strong>命令在对版本库整理时，如果发现存在<tt class="file docutils literal"><span class="pre">.git/info/grafts</span></tt>则会在物理上完成提交的嫁接，实现嫁接的永久生效。</p>
+</div>
+<div class="section" id="id3">
+<h2>8.2.4.2. 提交替换<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>提交替换是在1.6.5或更新版本的Git提供的功能，和提交嫁接类似，不过提交替换不是用一个提交来伪成装另外一个提交的父提交，而是直接替换另外的提交，实现在不影响其他提交的基础上实现对历史提交的修改。</p>
+<p>提交替换是通过在特殊命名空间<tt class="file docutils literal"><span class="pre">.git/refs/replace/</span></tt>下定义引用来实现的。引用的名称是要被替换掉的提交SHA1哈希值，而引用文件的内容（引用所指向的提交）就是用于替换的（正确的）提交SHA1哈希值。由于提交替换通过引用进行定义，因此可以在不同的版本库之间传递，而不像提交嫁接只能在本地版本库中使用。</p>
+<p>Git提供<strong class="command">git replace</strong>命令来管理提交替换，用法如下：</p>
+<div class="highlight-python"><div class="highlight"><pre>用法1： git replace [-f] &lt;object&gt; &lt;replacement&gt;
+用法2： git replace -d &lt;object&gt;...
+用法3： git replace -l [&lt;pattern&gt;]
+</pre></div>
+</div>
+<p>其中：</p>
+<ul class="simple">
+<li>用法1用于创建提交替换，即在<tt class="file docutils literal"><span class="pre">.git/refs/replace</span></tt>目录下创建名为<tt class="docutils literal"><span class="pre">&lt;object&gt;</span></tt>的引用，其内容为<tt class="docutils literal"><span class="pre">&lt;replacement&gt;</span></tt>。如果使用<tt class="docutils literal"><span class="pre">-f</span></tt>参数，还允许级联替换，用于替换的提交来可以是另外一个已经在<tt class="file docutils literal"><span class="pre">.git/refs/replace</span></tt>中定义的替换。</li>
+<li>用法2用于删除已经定义的替换。</li>
+<li>用法3显示已经存在的提交替换。</li>
+</ul>
+<p>提交替换可以被大部分Git命令理解，除了一些针对被替换的提交使用<tt class="docutils literal"><span class="pre">--no-replace-objects</span></tt>参数的命令。例如：</p>
+<ul>
+<li><p class="first">当提交<tt class="docutils literal"><span class="pre">foo</span></tt>被提交<tt class="docutils literal"><span class="pre">bar</span></tt>替换后，显示未被替换前的<tt class="docutils literal"><span class="pre">foo</span></tt>提交：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git --no-replace-objects cat-file commit foo
+...foo 的内容...
+</pre></div>
+</div>
+</li>
+<li><p class="first">不使用<tt class="docutils literal"><span class="pre">--no-replace-objects</span></tt>参数，则访问<tt class="docutils literal"><span class="pre">foo</span></tt>会显示替换后的<tt class="docutils literal"><span class="pre">bar</span></tt>提交：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git cat-file commit foo
+...bar 的内容...
+</pre></div>
+</div>
+</li>
+</ul>
+<p>提交替换使用引用进行定义，因此可以通过<strong class="command">git fetch</strong>和<strong class="command">git push</strong>在版本库之间传递。但因为默认Git只同步里程碑和分支，因此需要在命令中显式的给出提交替换的引用表达式，如：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git fetch origin refs/replace/*
+$ git push  origin refs/replace/*
+</pre></div>
+</div>
+<p>提交替换也可以实现两个分支的嫁接。例如要将分支A嫁接到B上，就相当于将分支A的根提交<tt class="docutils literal"><span class="pre">&lt;BRANCH_A_ROOT&gt;</span></tt>的父提交设置为分支B的最新提交<tt class="docutils literal"><span class="pre">&lt;BRANCH_B_CURRENT&gt;</span></tt>。可以先创建一个新提交<tt class="docutils literal"><span class="pre">&lt;BRANCH_A_NEW_ROOT&gt;</span></tt>，其父提交设置为<tt class="docutils literal"><span class="pre">&lt;BRANCH_B_CURRENT&gt;</span></tt>而提交的其他字段完全和<tt class="docutils literal"><span class="pre">&lt;BRANCH_A_ROOT&gt;</span></tt>一致。然后设置提交替换，用<tt class="docutils literal"><span class="pre">&lt;BRANCH_A_NEW_ROOT&gt;</span></tt>替换<tt class="docutils literal"><span class="pre">&lt;BRANCH_A_ROOT&gt;</span></tt>即可。</p>
+<p>创建<tt class="docutils literal"><span class="pre">&lt;BRANCH_A_NEW_ROOT&gt;</span></tt>可以使用下面的命令，注意要用实际值替换下面命令中的<tt class="docutils literal"><span class="pre">&lt;BRANCH_A_ROOT&gt;</span></tt>和<tt class="docutils literal"><span class="pre">&lt;BRANCH_B_CURRENT&gt;</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git cat-file commit &lt;BRANCH_A_ROOT&gt; |
+  sed -e &quot;/^tree / a \
+          parent $(git rev-parse &lt;BRANCH_B_CURRENT&gt;)&quot; |
+  git hash-object -t commit -w --stdin
+</pre></div>
+</div>
+<p>其中<strong class="command">git cat-file commit</strong>命令用于显示提交的原始信息，<strong class="command">sed</strong>命令用于向原始提交中插入一条<tt class="docutils literal"><span class="pre">parent</span> <span class="pre">SHA1...</span></tt>的语句，而命令<strong class="command">git hash-object</strong>是一个Git底层命令，可以将来自标准输入的内容创建一个新的提交对象。</p>
+<p>上面命令的输出即是<tt class="docutils literal"><span class="pre">&lt;BRANCH_A_NEW_ROOT&gt;</span></tt>的值。执行下面的替换命令，完成两个分支的嫁接。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git replace &lt;BRANCH_A_ROOT&gt; &lt;BRANCH_A_NEW_ROOT&gt;
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="120-git-notes.html" title="8.2.5. Git评注"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="090-sparse-checkout-and-shallow-clone.html" title="8.2.3. 稀疏检出和浅克隆"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >8. Git杂谈</a> &raquo;</li>
+          <li><a href="050-git-features.html" >8.2. Git 的其他特性</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

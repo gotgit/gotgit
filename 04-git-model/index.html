@@ -1,0 +1,254 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>4. Git协同模型 &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="next" title="4.1. 经典Git协同模型" href="010-central-model.html" />
+    <link rel="prev" title="3.6. 补丁文件交互" href="../03-git-harmony/060-git-offline.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="010-central-model.html" title="4.1. 经典Git协同模型"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="../03-git-harmony/060-git-offline.html" title="3.6. 补丁文件交互"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="../03-git-harmony/060-git-offline.html"
+                        title="上一章">3.6. 补丁文件交互</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="010-central-model.html"
+                        title="下一章">4.1. 经典Git协同模型</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/04-git-model/index.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="git">
+<h1>4. Git协同模型<a class="headerlink" href="#git" title="永久链接至标题">¶</a></h1>
+<p>分布式的版本控制会不会造成开发中的无序，导致版本管理的崩溃？对于习惯了如Subversion这类的集中式版本控制系统的用户，脑子里一定会有这个疑问。</p>
+<p>作为分布式版本控制系统，每一个Git克隆都是一个完整的版本库，可以提供一个版本控制服务器所能提供的一切服务，即每个人的机器都是一台服务器。与之相反，像Subversion那样的集中式版本控制系统，只拥有唯一的版本控制服务器，所有团队成员都使用客户端与之交互，大部分操作要通过网络传输来实现。对于习惯了和唯一服务器交互的团队，转换到Git后，该如何协同团队的工作呢？在第21章“经典Git协同模型”中会介绍集中式和金字塔式两种主要的协同工作模型。</p>
+<p>基于某个项目进行二次开发，需要使用不同的工作模型。原始的项目称为上游项目，不能直接在上游项目中提交，可能是因为授权的原因或者是因为目标用户的需求不同。这种基于上游项目进行二次开发，实际上是对各个独特的功能分支进行管理，同时又能对上游项目的开发进度进行兼收并蓄式的合并。第22章“Topgit协同模型”会重点介绍这一方面的内容。</p>
+<p>多个版本库组成一个项目，在实际应用中并不罕见。一部分原因可能是版本库需要依赖第三方的版本库，这时第23章介绍的“子模组协同模型”就可以派上用场。有的时候还要对第三方的版本库进行定制，第24章“子树合并”提供了一个解决方案。有的时候，为了管理方便（授权或者项目确实太庞杂），多个版本库共同组成一个大的项目，例如Google Android项目就是由近200个版本库组成的。第25章“Android式多版本库协同”提供了一个非常有趣的解决方案，解决了“子模组协同模型”的管理上的难题。</p>
+<p>在本篇的最后（第26章），会介绍git-svn这一工具。可能因为公司对代码严格的授权要求，而不能将公司的版本控制服务器从Subversion迁移到Git（实际可以通过对Git版本库细粒度拆分实现授权管理），可是这并不能阻止个人使用git-svn作为前端工具操作Subversion版本库。git-svn可以让Git和Subversion完美的协同工作。</p>
+<p>目录:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="010-central-model.html">4.1. 经典Git协同模型</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="010-central-model.html#id1">4.1.1. 集中式协同模型</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="010-central-model.html#id2">4.1.1.1. 使用集中协同模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="010-central-model.html#gerrit">4.1.1.2. Gerrit特殊的集中协同模型</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="020-distribute-model.html">4.2. 金字塔式协同模型</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="020-distribute-model.html#id2">4.2.1. 贡献者开放只读版本库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="020-distribute-model.html#id3">4.2.2. 以补丁方式贡献代码</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="030-topgit-model.html">4.3. Topgit协同模型</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="030-topgit-model.html#id1">4.3.1. 作者版本控制系统三个里程碑</a></li>
+<li class="toctree-l2"><a class="reference internal" href="030-topgit-model.html#id2">4.3.2. Topgit原理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="030-topgit-model.html#id3">4.3.3. Topgit的安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="030-topgit-model.html#id4">4.3.4. Topgit的使用</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="030-topgit-model.html#tg-help">4.3.4.1. <strong class="command">tg help</strong>命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="030-topgit-model.html#tg-create">4.3.4.2. <strong class="command">tg create</strong>命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="030-topgit-model.html#tg-info">4.3.4.3. <strong class="command">tg info</strong>命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="030-topgit-model.html#tg-update">4.3.4.4. <strong class="command">tg update</strong>命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="030-topgit-model.html#tg-summary">4.3.4.5. <strong class="command">tg summary</strong>命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="030-topgit-model.html#tg-remote">4.3.4.6. <strong class="command">tg remote</strong>命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="030-topgit-model.html#tg-push">4.3.4.7. <strong class="command">tg push</strong>命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="030-topgit-model.html#tg-depend">4.3.4.8. <strong class="command">tg depend</strong>命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="030-topgit-model.html#tg-base">4.3.4.9. <strong class="command">tg base</strong>命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="030-topgit-model.html#tg-delete">4.3.4.10. <strong class="command">tg delete</strong>命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="030-topgit-model.html#tg-patch">4.3.4.11. <strong class="command">tg patch</strong>命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="030-topgit-model.html#tg-export">4.3.4.12. <strong class="command">tg export</strong>命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="030-topgit-model.html#tg-import">4.3.4.13. <strong class="command">tg import</strong>命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="030-topgit-model.html#tg-log">4.3.4.14. <strong class="command">tg log</strong>命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="030-topgit-model.html#tg-mail">4.3.4.15. <strong class="command">tg mail</strong>命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="030-topgit-model.html#tg-graph">4.3.4.16. <strong class="command">tg graph</strong>命令</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="030-topgit-model.html#topgit-hacks">4.3.5. Topgit hacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="030-topgit-model.html#id5">4.3.6. Topgit使用中的注意事项</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="040-submodule-model.html">4.4. 子模组协同模型</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="040-submodule-model.html#id2">4.4.1. 创建子模组</a></li>
+<li class="toctree-l2"><a class="reference internal" href="040-submodule-model.html#id4">4.4.2. 克隆带子模组的版本库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="040-submodule-model.html#id5">4.4.3. 在子模组中修改和子模组的更新</a></li>
+<li class="toctree-l2"><a class="reference internal" href="040-submodule-model.html#id6">4.4.4. 隐性子模组</a></li>
+<li class="toctree-l2"><a class="reference internal" href="040-submodule-model.html#id7">4.4.5. 子模组的管理问题</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="050-subtree-model.html">4.5. 子树合并</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="050-subtree-model.html#id2">4.5.1. 引入外部版本库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="050-subtree-model.html#id3">4.5.2. 子目录方式合并外部版本库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="050-subtree-model.html#id4">4.5.3. 利用子树合并跟踪上游改动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="050-subtree-model.html#id5">4.5.4. 子树拆分</a></li>
+<li class="toctree-l2"><a class="reference internal" href="050-subtree-model.html#git-subtree">4.5.5. <tt class="docutils literal"><span class="pre">git</span> <span class="pre">subtree</span></tt>插件</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="050-subtree-model.html#git-subtree-add">4.5.5.1. <strong class="command">git subtree add</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="050-subtree-model.html#git-subtree-merge">4.5.5.2. <strong class="command">git subtree merge</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="050-subtree-model.html#git-subtree-pull">4.5.5.3. <strong class="command">git subtree pull</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="050-subtree-model.html#git-subtree-split">4.5.5.4. <strong class="command">git subtree split</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="050-subtree-model.html#git-subtree-push">4.5.5.5. <strong class="command">git subtree push</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="060-android-model.html">4.6. Android式多版本库协同</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="060-android-model.html#repo">4.6.1. 关于repo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="060-android-model.html#id1">4.6.2. 安装repo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="060-android-model.html#id2">4.6.3. repo和清单库的初始化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="060-android-model.html#id3">4.6.4. 清单库和清单文件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="060-android-model.html#id4">4.6.5. 同步项目</a></li>
+<li class="toctree-l2"><a class="reference internal" href="060-android-model.html#id5">4.6.6. 建立Android代码库本地镜像</a></li>
+<li class="toctree-l2"><a class="reference internal" href="060-android-model.html#id6">4.6.7. Repo的命令集</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="060-android-model.html#repo-init">4.6.7.1. <strong class="command">repo init</strong>命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="060-android-model.html#repo-sync">4.6.7.2. <strong class="command">repo sync</strong>命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="060-android-model.html#repo-start">4.6.7.3. <strong class="command">repo start</strong>命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="060-android-model.html#repo-status">4.6.7.4. <strong class="command">repo status</strong>命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="060-android-model.html#repo-checkout">4.6.7.5. <strong class="command">repo checkout</strong>命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="060-android-model.html#repo-branches">4.6.7.6. <strong class="command">repo branches</strong>命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="060-android-model.html#repo-diff">4.6.7.7. <strong class="command">repo diff</strong>命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="060-android-model.html#repo-stage">4.6.7.8. <strong class="command">repo stage</strong>命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="060-android-model.html#repo-upload">4.6.7.9. <strong class="command">repo upload</strong>命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="060-android-model.html#repo-download">4.6.7.10. <strong class="command">repo download</strong>命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="060-android-model.html#repo-rebase">4.6.7.11. <strong class="command">repo rebase</strong>命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="060-android-model.html#repo-prune">4.6.7.12. <strong class="command">repo prune</strong>命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="060-android-model.html#repo-abandon">4.6.7.13. <strong class="command">repo abandon</strong>命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="060-android-model.html#id7">4.6.7.14. 其他命令</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="060-android-model.html#id8">4.6.8. Repo命令的工作流</a></li>
+<li class="toctree-l2"><a class="reference internal" href="060-android-model.html#id9">4.6.9. 好东西不能Android独享</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="060-android-model.html#repo-gerrit">4.6.9.1. Repo+Gerrit模式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="060-android-model.html#id10">4.6.9.2. Repo无审核模式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="060-android-model.html#id11">4.6.9.3. 改进的Repo无审核模式</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="070-git-svn.html">4.7. Git和SVN协同模型</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="070-git-svn.html#git-svn">4.7.1. 使用git-svn的一般流程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="070-git-svn.html#id1">4.7.2. git-svn的奥秘</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="070-git-svn.html#git">4.7.2.1. Git库配置文件的扩展及分支映射</a></li>
+<li class="toctree-l3"><a class="reference internal" href="070-git-svn.html#gitsubversion">4.7.2.2. Git工作分支和Subversion如何对应？</a></li>
+<li class="toctree-l3"><a class="reference internal" href="070-git-svn.html#id2">4.7.2.3. 其他辅助文件</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="070-git-svn.html#id3">4.7.3. 多样的git-svn克隆模式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="070-git-svn.html#id4">4.7.4. 共享git-svn的克隆库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="070-git-svn.html#id5">4.7.5. git-svn的局限</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="010-central-model.html" title="4.1. 经典Git协同模型"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="../03-git-harmony/060-git-offline.html" title="3.6. 补丁文件交互"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

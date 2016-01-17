@@ -1,0 +1,347 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.3.4. Windows下安装和使用Git（msysGit篇） &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="up" title="1.3. 安装Git" href="030-installation.html" />
+    <link rel="next" title="2. Git独奏" href="../02-git-solo/index.html" />
+    <link rel="prev" title="1.3.3. Windows下安装和使用Git（Cygwin篇）" href="050-install-on-windows-cygwin.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../02-git-solo/index.html" title="2. Git独奏"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="050-install-on-windows-cygwin.html" title="1.3.3. Windows下安装和使用Git（Cygwin篇）"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >1. 初识Git</a> &raquo;</li>
+          <li><a href="030-installation.html" accesskey="U">1.3. 安装Git</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1.3.4. Windows下安装和使用Git（msysGit篇）</a><ul>
+<li><a class="reference internal" href="#msysgit">1.3.4.1. 安装msysGit</a></li>
+<li><a class="reference internal" href="#id1">1.3.4.2. msysGit的配置和使用</a><ul>
+<li><a class="reference internal" href="#windows">1.3.4.2.1. 如何访问Windows的磁符</a></li>
+<li><a class="reference internal" href="#id2">1.3.4.2.2. 命令行补齐和忽略文件大小写</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#msysgitshell">1.3.4.3. msysGit的shell环境的中文支持</a><ul>
+<li><a class="reference internal" href="#id3">1.3.4.3.1. 中文录入问题</a></li>
+<li><a class="reference internal" href="#id4">1.3.4.3.2. 分页器中文输出问题</a></li>
+<li><a class="reference internal" href="#ls">1.3.4.3.3. ls命令对中文文件名的显示</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#msysgitgit">1.3.4.4. msysGit中Git的中文支持</a></li>
+<li><a class="reference internal" href="#ssh">1.3.4.5. 使用SSH协议</a></li>
+<li><a class="reference internal" href="#tortoisegit">1.3.4.6. TortoiseGit的安装和使用</a></li>
+<li><a class="reference internal" href="#id5">1.3.4.7. TortoiseGit的中文支持</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="050-install-on-windows-cygwin.html"
+                        title="上一章">1.3.3. Windows下安装和使用Git（Cygwin篇）</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="../02-git-solo/index.html"
+                        title="下一章">2. Git独奏</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/01-meet-git/060-install-on-windows-msysgit.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="windowsgit-msysgit">
+<h1>1.3.4. Windows下安装和使用Git（msysGit篇）<a class="headerlink" href="#windowsgit-msysgit" title="永久链接至标题">¶</a></h1>
+<p>运行在Cygwin下的Git不是直接使用Windows的系统调用，而是通过二传手<tt class="file docutils literal"><span class="pre">cygwin1.dll</span></tt>来进行，虽然Cygwin的git命令能够在Windows下的<strong class="program">cmd.exe</strong>命令窗口中运行的非常好，但Cygwin下的Git并不能看作是Windows下的原生程序。相比Cygwin下的Git，msysGit是原生的Windows程序，msysGit下运行的Git直接通过Windows的系统调用运行。</p>
+<p>msysGit的名字前面的四个字母来源于MSYS项目。MSYS项目源自于MinGW（Minimalist GNU for Windows，最简GNU工具集），通过增加了一个bash提供的shell环境以及其他相关工具软件，组成了一个最简系统（Minimal SYStem），简称MSYS。利用MinGW提供的工具，以及Git针对MinGW的一个分支版本，在Windows平台为Git编译出一个原生应用，结合MSYS就组成了msysGit。</p>
+<div class="section" id="msysgit">
+<h2>1.3.4.1. 安装msysGit<a class="headerlink" href="#msysgit" title="永久链接至标题">¶</a></h2>
+<p>安装msysGit非常简单，访问msysGit的项目主页（<a class="reference external" href="http://code.google.com/p/msysgit/">http://code.google.com/p/msysgit/</a>），下载msysGit。最简单的方式是下载名为<tt class="file docutils literal"><span class="pre">Git-&lt;VERSION&gt;-preview&lt;DATE&gt;.exe</span></tt>的软件包，如：<tt class="file docutils literal"><span class="pre">Git-1.7.3.1-preview20101002.exe</span></tt>。如果有时间和耐心，喜欢观察Git是如何在Windows上是编译为原生应用的，也可以下载带<tt class="file docutils literal"><span class="pre">msysGit-fullinstall-</span></tt>前缀的软件包。</p>
+<p>点击下载的安装程序（如<tt class="file docutils literal"><span class="pre">Git-1.7.3.1-preview20101002.exe</span></tt>），开始安装，如图3-18。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/msysgit-1.png"><img alt="../images/msysgit-1.png" src="../images/msysgit-1.png" style="width: 402.4px; height: 308.0px;" /></a>
+<p class="caption">图3-18：启动msysGit安装</p>
+</div>
+<p>默认安装到<tt class="file docutils literal"><span class="pre">C:\Program</span> <span class="pre">Files\Git</span></tt>目录中。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/msysgit-3.png"><img alt="../images/msysgit-3.png" src="../images/msysgit-3.png" style="width: 402.4px; height: 308.0px;" /></a>
+<p class="caption">图3-19：选择msysGit的安装目录</p>
+</div>
+<p>在安装过程中会询问是否修改环境变量，如图3-20。默认选择“Use Git Bash Only”，即只在msysGit提供的shell环境（类似Cygwin）中使用Git，不修改环境变量。注意如果选择最后一项，会将msysGit所有的可执行程序全部加入Windows的PATH路径中，有的命令会覆盖Windows相同文件名的程序（如<strong class="command">find.exe</strong>和<strong class="command">sort.exe</strong>）。而且如果选择最后一项，还会为Windows添加HOME环境变量，如果安装有Cygwin，Cygwin会受到msysGit引入的HOME环境变量的影响（参见前面3.3.3节的相关讨论）。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/msysgit-6.png"><img alt="../images/msysgit-6.png" src="../images/msysgit-6.png" style="width: 402.4px; height: 308.0px;" /></a>
+<p class="caption">图3-20：是否修改系统的环境变量</p>
+</div>
+<p>还会询问换行符的转换方式，使用默认设置就好。参见图3-21。关于换行符转换，参见本书第8篇相关章节。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/msysgit-8.png"><img alt="../images/msysgit-8.png" src="../images/msysgit-8.png" style="width: 402.4px; height: 308.0px;" /></a>
+<p class="caption">图3-21：换行符转换方式</p>
+</div>
+<p>根据提示，完成msysGit的安装。</p>
+</div>
+<div class="section" id="id1">
+<h2>1.3.4.2. msysGit的配置和使用<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>完成msysGit的安装后，点击Git Bash图标，启动msysGit，如图3-22。会发现Git Bash 的界面和Cygwin的非常相像。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/msysgit-startup.png"><img alt="../images/msysgit-startup.png" src="../images/msysgit-startup.png" style="width: 663.2px; height: 270.4px;" /></a>
+<p class="caption">图3-22：启动Git Bash</p>
+</div>
+<div class="section" id="windows">
+<h3>1.3.4.2.1. 如何访问Windows的磁符<a class="headerlink" href="#windows" title="永久链接至标题">¶</a></h3>
+<p>在msysGit下访问Windows的各个盘符，要比Cygwin简单，直接通过<tt class="file docutils literal"><span class="pre">/c</span></tt>即可访问Windows的C:盘，用<tt class="file docutils literal"><span class="pre">/d</span></tt>访问Windows的D:盘。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ls -ld /c/Windows
+drwxr-xr-x  233 jiangxin Administ        0 Jan 31 00:44 /c/Windows
+</pre></div>
+</div>
+<p>至于msysGit的根目录，实际上就是msysGit安装的目录，如：“C:\Program Files\Git”。</p>
+</div>
+<div class="section" id="id2">
+<h3>1.3.4.2.2. 命令行补齐和忽略文件大小写<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<p>msysGit缺省已经安装了Git的命令补齐功能，并且在对文件名命令补齐时忽略大小写。这是因为msysGit已经在配置文件<tt class="file docutils literal"><span class="pre">/etc/inputrc</span></tt>中包含了下列的设置：</p>
+<div class="highlight-python"><div class="highlight"><pre>set completion-ignore-case on
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="msysgitshell">
+<h2>1.3.4.3. msysGit的shell环境的中文支持<a class="headerlink" href="#msysgitshell" title="永久链接至标题">¶</a></h2>
+<p>在介绍Cygwin的章节中曾经提到过，msysGit的shell环境的中文支持相当于老版本的Cygwin，需要配置才能够实现录入中文和显示中文。</p>
+<div class="section" id="id3">
+<h3>1.3.4.3.1. 中文录入问题<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>缺省安装的msysGit的shell环境无法输入中文。为了能在shell界面中输入中文，需要修改配置文件<tt class="file docutils literal"><span class="pre">/etc/inputrc</span></tt>，增加或修改相关配置如下：</p>
+<div class="highlight-python"><div class="highlight"><pre># disable/enable 8bit input
+set meta-flag on
+set input-meta on
+set output-meta on
+set convert-meta off
+</pre></div>
+</div>
+<p>关闭Git Bash再重启，就可以在msysGit的shell环境中输入中文了。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ echo 您好
+您好
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h3>1.3.4.3.2. 分页器中文输出问题<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>当对<tt class="file docutils literal"><span class="pre">/etc/inputrc</span></tt>进行正确的配置之后，能够在shell下输入中文，但是执行下面的命令会显示乱码。这显然是<strong class="program">less</strong>分页器命令导致的问题。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ echo 您好 | less
+&lt;C4&gt;&lt;FA&gt;&lt;BA&gt;&lt;C3&gt;
+</pre></div>
+</div>
+<p>通过管道符调用分页器命令<strong class="program">less</strong>后，原本的中文输出变成了乱码显示。这将会导致Git很多命令的输出都会出现中文乱码问题，因为Git大量的使用<strong class="program">less</strong>命令做为分页器。之所以<strong class="program">less</strong>命令出现乱码，是因为该命令没有把中文当作正常的字符，可以通过设置LESSCHARSET环境变量，将utf-8编码字符视为正规字符显示，则中文就能正常显示了。下面的操作，可以在<strong class="program">less</strong>分页器中正常显示中文。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ export LESSCHARSET=utf-8
+$ echo 您好 | less
+您好
+</pre></div>
+</div>
+<p>编辑配置文件<tt class="file docutils literal"><span class="pre">/etc/profile</span></tt>，将对环境变量LESSCHARSET的设置加入其中，以便msysGit的shell环境一启动即加载。</p>
+<div class="highlight-python"><div class="highlight"><pre>declare -x LESSCHARSET=utf-8
+</pre></div>
+</div>
+</div>
+<div class="section" id="ls">
+<h3>1.3.4.3.3. ls命令对中文文件名的显示<a class="headerlink" href="#ls" title="永久链接至标题">¶</a></h3>
+<p>最常用的显示目录和文件名列表的命令<strong class="program">ls</strong>对中文文件名的显示有问题。下面的命令创建了一个中文文件名的文件，显示文件内容中的中文没有问题，但是显示文件名本身会显示为一串问号。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ echo 您好 &gt; 您好.txt
+
+$ cat \*.txt
+您好
+
+$ ls \*.txt
+????.txt
+</pre></div>
+</div>
+<p>实际上只要在<strong class="program">ls</strong>命令后添加参数<strong class="command">&#8211;show-control-chars</strong>即可正确显示中文。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ls --show-control-chars *.txt
+您好.txt
+</pre></div>
+</div>
+<p>为方便起见，可以为<strong class="program">ls</strong>命令设置一个别名，这样就不必在输入<strong class="program">ls</strong>命令时输入长长的参数了。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ alias ls=&quot;ls --show-control-chars&quot;
+
+$ ls \*.txt
+您好.txt
+</pre></div>
+</div>
+<p>将上面的<strong class="command">alias</strong>命令添加到配置文件<tt class="file docutils literal"><span class="pre">/etc/profile</span></tt>中，实现在每次运行Git Bash时自动加载。</p>
+</div>
+</div>
+<div class="section" id="msysgitgit">
+<h2>1.3.4.4. msysGit中Git的中文支持<a class="headerlink" href="#msysgitgit" title="永久链接至标题">¶</a></h2>
+<p>非常遗憾的是msysGit中的Git对中文支持没有Cygwin中的Git做的那么好，msysGit中的Git对中文支持的程度，就相当于前面讨论过的Linux使用了GBK字符集时Git的情况。</p>
+<ul class="simple">
+<li>未经配置的msysGit提交时，如果在提交说明中输入中文，从Linux平台或其他UTF-8字符集平台上查看提交说明显示乱码。</li>
+<li>同样从Linux平台或者其他使用UTF-8字符集平台进行的提交，若提交说明包含中文，在未经配置的msysGit中也显示乱码。</li>
+<li>如果使用msysGit向版本库中添加带有中文文件名的文件，在Linux（或其他utf-8）平台检出文件名显示为乱码。反之亦然。</li>
+<li>不能创建带有中文字符的引用（里程碑、分支等）。</li>
+</ul>
+<p>如果希望版本库中出现使用中文文件名的文件，最好不要使用msysGit，而是使用Cygwin下的Git。而如果只是想在提交说明中使用中文，经过一定的设置msysGit还是可以实现的。</p>
+<p>为了解决提交说明显示乱码问题，msysGit要为Git设置参数<tt class="docutils literal"><span class="pre">i18n.logOutputEncoding</span></tt>，将提交说明的输出编码设置为<tt class="docutils literal"><span class="pre">gbk</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git config --system i18n.logOutputEncoding gbk
+</pre></div>
+</div>
+<p>Git在提交时并不会对提交说明进行从GBK字符集到UTF-8的转换，但是可以在提交说明中标注所使用的字符集，因此在非UTF-8字符集的平台录入中文，需要用下面指令设置录入提交说明的字符集，以便在commit对象中嵌入正确的编码说明。为了使msysGit提交时输入的中文说明能够在Linux或其他使用UTF-8编码的平台中正确显示，还必须对参数<tt class="docutils literal"><span class="pre">i18n.commitEncoding</span></tt>设置。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git config --system i18n.commitEncoding gbk
+</pre></div>
+</div>
+<p>同样，为了能够让带有中文文件名的文件，在工作区状态输出、查看历史更改概要、以及在补丁文件中，能够正常显示，要为Git配置<tt class="docutils literal"><span class="pre">core.quotepath</span></tt>变量，将其设置为<tt class="docutils literal"><span class="pre">false</span></tt>。但是要注意在msysGit中添加中文文件名的文件，只能在msysGit环境中正确显示，而在其他环境（Linu、Mac OS X、Cygwin）中文件名会出现乱码。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git config --system core.quotepath false
+$ git status -s
+?? 说明.txt
+</pre></div>
+</div>
+<p>注意：如果同时安装了Cygwin和msysGit（可能配置了相同的用户主目录），或者因为中文支持问题而需要单独为TortoiseGit准备一套msysGit时，为了保证不同的msysGit之间，以及和Cygwin之间的配置不会互相影响，而在配置Git环境时使用<strong class="command">&#8211;system</strong>参数。这是因为不同的msysGit安装以及Cygwin有着不同的系统配置文件，但是用户级配置文件位置却可能重合。</p>
+</div>
+<div class="section" id="ssh">
+<h2>1.3.4.5. 使用SSH协议<a class="headerlink" href="#ssh" title="永久链接至标题">¶</a></h2>
+<p>msysGit软件包包含的ssh命令和Linux下的没有什么区别，也提供ssh-keygen命令管理SSH公钥/私钥对。在使用msysGit的ssh命令时，没有遇到Cygwin中的ssh命令（版本号：5.7p1-1）不稳定的问题，即msysGit下的ssh命令可以非常稳定的工作。</p>
+<p>如果需要和Windows有更好的整合，希望使用图形化工具管理公钥，也可以使用PuTTY提供的<tt class="docutils literal"><span class="pre">plink.exe</span></tt>做为SSH客户端。关于如何使用PuTTY可以参见3.3.5节Cygwin和PuTTY整合的相关内容。</p>
+</div>
+<div class="section" id="tortoisegit">
+<h2>1.3.4.6. TortoiseGit的安装和使用<a class="headerlink" href="#tortoisegit" title="永久链接至标题">¶</a></h2>
+<p>TortoiseGit提供了Git和Windows资源管理器的整合，提供了Git的图形化操作界面。像其他Tortoise系列产品（TortoiseCVS、TortoiseSVN）一样，Git工作区的目录和文件的图标附加了标识版本控制状态的图像，可以非常直观的看到哪些文件被更改了需要提交。通过对右键菜单的扩展，可以非常方便的在资源管理器中操作Git版本库。</p>
+<p>TortoiseGit是对msysGit命令行的封装，因此需要先安装msysGit。安装TortoiseGit非常简单，访问网站<tt class="docutils literal"><span class="pre">http://code.google.com/p/tortoisegit/</span></tt>，下载安装包，然后根据提示完成安装。</p>
+<p>安装过程中会询问要使用的SSH客户端，如图3-23。缺省使用内置的TortoisePLink（来自PuTTY项目）做为SSH客户端。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/tgit-3.png"><img alt="../images/tgit-3.png" src="../images/tgit-3.png" style="width: 399.2px; height: 308.0px;" /></a>
+<p class="caption">图3-23：启动Git Bash</p>
+</div>
+<p>TortoisePLink和TortoiseGit的整合性更好，可以直接通过对话框设置SSH私钥（PuTTY格式），而无需再到字符界面去配置SSH私钥和其他配置文件。如果安装过程中选择了OpenSSH，可以在安装完毕之后，通过TortoiseGit的设置对话框重新选择TortoisePLink做为缺省SSH客户端程序，如图3-24。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/tgit-settings-network-plink.png"><img alt="../images/tgit-settings-network-plink.png" src="../images/tgit-settings-network-plink.png" style="width: 559.2px; height: 368.8px;" /></a>
+<p class="caption">图3-24：配置缺省SSH客户端</p>
+</div>
+<p>当配置使用TortoisePLink做为缺省SSH客户端时，在执行克隆操作时，在操作界面中可以选择一个PuTTY格式的私钥文件进行认证，如图3-25。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/tgit-clone.png"><img alt="../images/tgit-clone.png" src="../images/tgit-clone.png" style="width: 428.0px; height: 288.8px;" /></a>
+<p class="caption">图3-25：克隆操作选择PuTTY格式私钥文件</p>
+</div>
+<p>如果连接一个服务器的SSH私钥需要更换，可以通过Git远程服务器配置界面对私钥文件进行重新设置。如图3-26。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/tgit-settings-remote.png"><img alt="../images/tgit-settings-remote.png" src="../images/tgit-settings-remote.png" style="width: 559.2px; height: 368.8px;" /></a>
+<p class="caption">图3-26：更换连接远程SSH服务器的私钥</p>
+</div>
+<p>如果安装有多个msysGit拷贝，也可以通过TortoiseGit的配置界面进行选择，如图3-27。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/tgit-settings-general.png"><img alt="../images/tgit-settings-general.png" src="../images/tgit-settings-general.png" style="width: 559.2px; height: 368.8px;" /></a>
+<p class="caption">图3-27：配置msysGit的可执行程序位置</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>1.3.4.7. TortoiseGit的中文支持<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>TortoiseGit虽然在底层调用了msysGit，但是TortoiseGit的中文支持和msysGit有区别，甚至前面介绍msysGit中文支持时所进行的配制会破坏TortoiseGit。</p>
+<p>TortoiseGit在提交时，会将提交说明转换为UTF-8字符集，因此无须对<strong class="command">i18n.commitEncoding</strong>变量进行设置。相反，如果设置了<strong class="command">i18n.commitEncoding</strong>为<tt class="docutils literal"><span class="pre">gbk</span></tt>或其他，则在提交对象中会包含错误的编码设置，有可能为提交说明的显示带来麻烦。</p>
+<p>TortoiseGit在显示提交说明时，认为所有的提交说明都是UTF-8编码，会转换为合适的Windows本地字符集显示，而无须设置<tt class="docutils literal"><span class="pre">i18n.logOutputEncoding</span></tt>变量。因为当前版本的TortoiseGit没有对提交对象中的encoding设置进行检查，因此使用GBK字符集的提交说明中的中文不能正常显示。</p>
+<p>因此，如果需要同时使用msysGit的文字界面Git Bash以及TortoiseGit，并需要在提交说明中使用中文，可以安装两套msysGit，并确保TortoiseGit关联的msysGit没有对<tt class="docutils literal"><span class="pre">i18n.commitEncoding</span></tt>进行设置。</p>
+<p>TortoiseGit对使用中文命名的文件和目录的支持和msysGit一样，都存在缺陷，因此应当避免在msysGit和TortoiseGit中添加用中文命名的文件和目录，如果确实需要，可以使用Cygwin。</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../02-git-solo/index.html" title="2. Git独奏"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="050-install-on-windows-cygwin.html" title="1.3.3. Windows下安装和使用Git（Cygwin篇）"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >1. 初识Git</a> &raquo;</li>
+          <li><a href="030-installation.html" >1.3. 安装Git</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

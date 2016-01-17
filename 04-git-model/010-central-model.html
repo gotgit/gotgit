@@ -1,0 +1,210 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>4.1. 经典Git协同模型 &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="up" title="4. Git协同模型" href="index.html" />
+    <link rel="next" title="4.2. 金字塔式协同模型" href="020-distribute-model.html" />
+    <link rel="prev" title="4. Git协同模型" href="index.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="020-distribute-model.html" title="4.2. 金字塔式协同模型"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="4. Git协同模型"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">4. Git协同模型</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">4.1. 经典Git协同模型</a><ul>
+<li><a class="reference internal" href="#id1">4.1.1. 集中式协同模型</a><ul>
+<li><a class="reference internal" href="#id2">4.1.1.1. 使用集中协同模型</a></li>
+<li><a class="reference internal" href="#gerrit">4.1.1.2. Gerrit特殊的集中协同模型</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="index.html"
+                        title="上一章">4. Git协同模型</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="020-distribute-model.html"
+                        title="下一章">4.2. 金字塔式协同模型</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/04-git-model/010-central-model.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="git">
+<h1>4.1. 经典Git协同模型<a class="headerlink" href="#git" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id1">
+<h2>4.1.1. 集中式协同模型<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>可以像集中式版本控制系统那样使用Git，在一个大家都可以访问到的服务器上架设Git服务器，每个人从该服务器克隆代码，本地提交推送到服务器上。如图21-1所示。</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="../images/central-model.png"><img alt="../images/central-model.png" src="../images/central-model.png" style="width: 349.0px; height: 199.0px;" /></a>
+<p class="caption">图21-1：集中式协同模型</p>
+</div>
+</div></blockquote>
+<p>回忆一下在使用Subversion等集中式版本控制系统时，对服务器管理上的要求：</p>
+<ul class="simple">
+<li>只允许拥有帐号的用户访问版本库。</li>
+<li>甚至只允许用户访问版本库中的某些路径，其他路径不能访问。</li>
+<li>特定目录只允许特定用户执行写操作。</li>
+<li>服务器可以通过钩子实现特殊功能，如对提交说明（commit log）的检查，数据镜像等。</li>
+</ul>
+<p>对于这些需求，Git大部分都能支持，甚至能够做到更多：</p>
+<ul class="simple">
+<li>能够设置谁能够访问版本库，谁不能访问版本库。</li>
+<li>具有更为丰富的写操作授权。可以限制哪些分支不允许写，哪些路径不允许写。</li>
+<li>可以设置谁可以创建新的分支。</li>
+<li>可以设置谁可以创建新的版本库。</li>
+<li>可以设置谁可以强制更新。</li>
+<li>服务器端同样支持钩子脚本。</li>
+</ul>
+<p>但是也要承认，在“读授权”上Git做不到很精细，这是分布式版本控制系统的机制使然。按模块分解Git版本库，并结合后面介绍的多版本库协同解决方案可以克服Git读授权的局限。</p>
+<ul class="simple">
+<li>Git不支持对版本库读取的精确授权，只能是非零即壹的授权。即或者能够读取一个版本库的全部，或者什么也读不到。</li>
+<li>因为Git的提交是一个整体，提交中包含了完整目录树（tree）的哈希，因此完整性不容破坏。</li>
+<li>Git是分布式版本控制系统，如果允许不完整的克隆，那么本地就是截然不同的版本库，在向服务器推送的时候，会被拒绝或者产生新的分支。</li>
+</ul>
+<p><strong>用Gitolite架设集中式的Git服务器</strong></p>
+<p>对于集中式的工作模型的核心就是架设集中式的Git服务器，而且尽量能够满足前面提到的对授权和版本库管理上的需求。在本书第5篇介绍服务器部署的时候，会介绍用Gitolite架设Git服务器，可以实现集中式协同模型对版本库授权和管理上的要求。</p>
+<div class="section" id="id2">
+<h3>4.1.1.1. 使用集中协同模型<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<p>对于简单的代码修改，可以像传统集中式版本控制系统（Subversion）中那样工作，参照图21-2所示的工作流程图。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/central-model-workflow-1.png"><img alt="../images/central-model-workflow-1.png" src="../images/central-model-workflow-1.png" style="width: 678.4px; height: 236.8px;" /></a>
+<p class="caption">图21-2：集中式协同模型工作流1</p>
+</div>
+<p>但是对于复杂的修改（代码重构/增加复杂功能），这个工作模式就有些不合适了。</p>
+<p>第一个问题是：很容易将不成熟代码带入共享的版本库，破坏共享版本库相应分支的代码稳定性。例如破坏编译、破坏每日集成。这是因为开发者克隆版本库后，直接工作在缺省的跟踪分支上，当不小心执行<strong class="command">git push</strong>命令，就会将自己的提交推送到服务器上。</p>
+<p>为了避免上面的问题，开发者可能会延迟推送，例如在新功能定制的整个过程（一个月）只在本地提交，而不向服务器推送，这样产生更严重的问题：数据丢失。开发者可能因为操作系统感染病毒，或者不小心的目录删除，或者硬盘故障导致工作成果的彻底丢失，这对个人和团队来说都是灾难。</p>
+<p>解决这个问题的方法也很简单，就是在本地创建本地分支（功能分支），并且同时在服务器端（共享版本库）也创建自己独享的功能分支。本地提交推送到共享版本库的自己独享的分支上。当开发完成之后，将功能分支合并到主线上，推送到共享版本库，完成开发。当然如果该特性分支不再需要时需要作些清理工作。参见图21-3所示的工作流程图。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/central-model-workflow-2.png"><img alt="../images/central-model-workflow-2.png" src="../images/central-model-workflow-2.png" style="width: 609.6px; height: 706.4px;" /></a>
+<p class="caption">图21-3：集中式协同模型工作流2</p>
+</div>
+</div>
+<div class="section" id="gerrit">
+<h3>4.1.1.2. Gerrit特殊的集中协同模型<a class="headerlink" href="#gerrit" title="永久链接至标题">¶</a></h3>
+<p><strong>传统集中式协同模型的缺点</strong></p>
+<p>传统集中式协同模型的主要问题是在管理上：谁能够向版本库推送？可以信赖某人向版本库推送么？</p>
+<p>对于在一个相对固定的团队内部使用集中式协同模型没有问题，因为大家彼此信赖，都熟悉项目相关领域。但是对于公开的项目（开源项目）来说，采用集中式的协同模型，必然只能有部分核心人员具有“写”权限，很多有能力的参与者被拒之门外，这不利于项目的发展。因此集中式协同模型主要应用在公司范围内和商业软件开发中，而不会成为开源项目的首选。</p>
+<p><strong>强制代码审核的集中式协同模型</strong></p>
+<p>Android项目采用了独树一帜的集中式管理模型——通过Gerrit架设的审核服务器对提交进行强制审核。Android是由大约近200个Git版本库组成的庞大的项目，为了对庞大的版本库进行管理，Android项目开发了两个工具<tt class="docutils literal"><span class="pre">repo</span></tt>和<tt class="docutils literal"><span class="pre">Gerrit</span></tt>进行版本库的管理。其中Gerrit服务器为Android项目引入了特别的集中式协同模型。</p>
+<p>Gerrit服务器通过SSH协议管理Git版本库，并实现了一个Web界面的评审工作流。任何注册用户都可以参与到项目中来，都可以推送Git提交到Gerrit管理下的Git版本库（通过Gerrit启动的特殊SSH端口）。Git推送不能直接推送到分支，而是推送到特殊的引用<tt class="docutils literal"><span class="pre">refs/for/&lt;branch-name&gt;</span></tt>，此提交会自动转换为形如<tt class="docutils literal"><span class="pre">refs/changes/&lt;nn&gt;/&lt;review-id&gt;/&lt;patch-set&gt;</span></tt>的补丁集，此补丁集在Gerrit的Web界面中显示为对应的评审任务。评审任务进入审核流程，当通过相关负责人的审核后，才被接受，被合并到正式的版本库中。</p>
+<p>在本书的第5篇第32章“Gerrit代码审核服务器”中会详细介绍Gerrit代码审核服务器的部署和使用。</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="020-distribute-model.html" title="4.2. 金字塔式协同模型"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="4. Git协同模型"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >4. Git协同模型</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

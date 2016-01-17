@@ -1,0 +1,329 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>5. 搭建Git服务器 &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="next" title="5.1. 使用HTTP协议" href="010-http.html" />
+    <link rel="prev" title="4.7. Git和SVN协同模型" href="../04-git-model/070-git-svn.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="010-http.html" title="5.1. 使用HTTP协议"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="../04-git-model/070-git-svn.html" title="4.7. Git和SVN协同模型"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="../04-git-model/070-git-svn.html"
+                        title="上一章">4.7. Git和SVN协同模型</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="010-http.html"
+                        title="下一章">5.1. 使用HTTP协议</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/05-git-server/index.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="git">
+<h1>5. 搭建Git服务器<a class="headerlink" href="#git" title="永久链接至标题">¶</a></h1>
+<p>团队协作就涉及到搭建Git服务器。</p>
+<p>搭建Git服务器可以非常简单，例如直接将Git裸版本库“扔到”Web服务器中作为一个共享目录，或者运行<tt class="docutils literal"><span class="pre">git</span> <span class="pre">daemon</span></tt>命令，甚至只需要轻点一下鼠标<a class="footnote-reference" href="#id10" id="id1">[1]</a>就可以迅速将自己的版本库设置为只读共享。利用这个技术可以在团队中创建一个基于拉拽（pull）操作的Git工作流。</p>
+<p>如果需要一个支持“写”操作的Git服务器，常用的方案包括使用Git本身提供的<tt class="docutils literal"><span class="pre">TODO</span> <span class="pre">CGI</span></tt>实现的智能HTTP服务，或者使用<tt class="docutils literal"><span class="pre">Gitolite</span></tt>提供基于SSH协议的支持精细读写授权的Git服务器。</p>
+<p>安卓（Android）项目以Git做版本控制，但其工作模式非常特殊，提交操作产生的“补丁”先要在一个Web平台上做代码审核，审核通过才合并到Git版本库中。谷歌开源了这个代码审核平台，称为Gerrit。在第 TODO 章将会介绍Gerrit服务器搭建和工作流程。</p>
+<p>不过您可能不必去亲手搭建Git服务器，因为有GitHub<a class="footnote-reference" href="#id11" id="id2">[2]</a>。GitHub是开源软件的大本营，为开源软件提供免费的版本库托管和社交编程服务，并且还提供Git版本库的商业托管服务。类似GitHub的Git版本库托管服务提供商还有很多（如Bitbucket<a class="footnote-reference" href="#id12" id="id3">[3]</a>、国内的GitCafe<a class="footnote-reference" href="#id13" id="id4">[4]</a>、GitShell<a class="footnote-reference" href="#id14" id="id5">[5]</a>、CSDN-Code<a class="footnote-reference" href="#id15" id="id6">[6]</a>、开源中国<a class="footnote-reference" href="#id16" id="id7">[7]</a>等），您可以根据需要进行选择。</p>
+<p>想在本地搭建一个GitHub克隆？至少有两个开源软件GitLab<a class="footnote-reference" href="#id17" id="id8">[8]</a> 和Gitorious<a class="footnote-reference" href="#id18" id="id9">[9]</a> 可供选择，它们都提供了GitHub相仿的功能。在第 TODO 章介绍用GitLab在本地搭建专有的GitHub服务。</p>
+<p>目录:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="010-http.html">5.1. 使用HTTP协议</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="010-http.html#id1">5.1.1. 哑传输协议</a></li>
+<li class="toctree-l2"><a class="reference internal" href="010-http.html#id3">5.1.2. 智能HTTP协议</a></li>
+<li class="toctree-l2"><a class="reference internal" href="010-http.html#gitweb">5.1.3. Gitweb服务器</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="010-http.html#id4">5.1.3.1. Gitweb安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="010-http.html#id5">5.1.3.2. Gitweb配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="010-http.html#id6">5.1.3.3. 版本库的Gitweb相关设置</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="020-git.html">5.2. 使用Git协议</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="020-git.html#id1">5.2.1. Git协议语法格式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="020-git.html#id2">5.2.2. Git服务软件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="020-git.html#inetd">5.2.3. 以inetd方式配置运行</a></li>
+<li class="toctree-l2"><a class="reference internal" href="020-git.html#runit">5.2.4. 以runit方式配置运行</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="030-ssh.html">5.3. 使用SSH协议</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="030-ssh.html#id1">5.3.1. SSH协议语法格式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="030-ssh.html#id2">5.3.2. 服务架设方式比较</a></li>
+<li class="toctree-l2"><a class="reference internal" href="030-ssh.html#id3">5.3.3. 关于SSH公钥认证</a></li>
+<li class="toctree-l2"><a class="reference internal" href="030-ssh.html#id4">5.3.4. 关于SSH主机别名</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="040-gitolite.html">5.4. Gitolite服务架设</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="040-gitolite.html#id3">5.4.1. 安装Gitolite</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="040-gitolite.html#id4">5.4.1.1. 安装之前</a></li>
+<li class="toctree-l3"><a class="reference internal" href="040-gitolite.html#id5">5.4.1.2. 以发布包形式安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="040-gitolite.html#id6">5.4.1.3. 从源代码开始安装</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="040-gitolite.html#id7">5.4.2. 管理Gitolite</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="040-gitolite.html#gitolite-admin">5.4.2.1. 管理员克隆gitolite-admin管理库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="040-gitolite.html#id8">5.4.2.2. 增加新用户</a></li>
+<li class="toctree-l3"><a class="reference internal" href="040-gitolite.html#id9">5.4.2.3. 更改授权</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="040-gitolite.html#id10">5.4.3. Gitolite授权详解</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="040-gitolite.html#id11">5.4.3.1. 授权文件的基本语法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="040-gitolite.html#id12">5.4.3.2. 定义用户组和版本库组</a></li>
+<li class="toctree-l3"><a class="reference internal" href="040-gitolite.html#acl">5.4.3.3. 版本库ACL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="040-gitolite.html#id16">5.4.3.4. Gitolite授权机制</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="040-gitolite.html#id17">5.4.4. 版本库授权案例</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="040-gitolite.html#id18">5.4.4.1. 常规版本库授权</a></li>
+<li class="toctree-l3"><a class="reference internal" href="040-gitolite.html#id19">5.4.4.2. 通配符版本库授权</a></li>
+<li class="toctree-l3"><a class="reference internal" href="040-gitolite.html#id20">5.4.4.3. 每个人创建自己的版本库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="040-gitolite.html#id21">5.4.4.4. 传统模式的引用授权</a></li>
+<li class="toctree-l3"><a class="reference internal" href="040-gitolite.html#id22">5.4.4.5. 扩展模式的引用授权</a></li>
+<li class="toctree-l3"><a class="reference internal" href="040-gitolite.html#id23">5.4.4.6. 禁用规则的使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="040-gitolite.html#id24">5.4.4.7. 用户分支</a></li>
+<li class="toctree-l3"><a class="reference internal" href="040-gitolite.html#id25">5.4.4.8. 对路径的写授权</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="040-gitolite.html#id26">5.4.5. 创建和导入版本库</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="040-gitolite.html#id27">5.4.5.1. 在配置文件中出现的版本库，即时生成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="040-gitolite.html#id28">5.4.5.2. 通配符版本库，管理员通过推送创建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="040-gitolite.html#id29">5.4.5.3. 向Gitolite中导入版本库</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="040-gitolite.html#id30">5.4.6. 对Gitolite的改进</a></li>
+<li class="toctree-l2"><a class="reference internal" href="040-gitolite.html#id31">5.4.7. Gitolite功能拓展</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="040-gitolite.html#id32">5.4.7.1. 版本库镜像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="040-gitolite.html#gitwebgit-daemon">5.4.7.2. Gitweb和Git daemon支持</a></li>
+<li class="toctree-l3"><a class="reference internal" href="040-gitolite.html#id36">5.4.7.3. 其他功能拓展和参考</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="050-gitosis.html">5.5. Gitosis服务架设</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="050-gitosis.html#id1">5.5.1. 安装Gitosis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="050-gitosis.html#id2">5.5.1.1. Gitosis的安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="050-gitosis.html#id3">5.5.1.2. 服务器端创建专用帐号</a></li>
+<li class="toctree-l3"><a class="reference internal" href="050-gitosis.html#id4">5.5.1.3. Gitosis服务初始化</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="050-gitosis.html#id5">5.5.2. 管理Gitosis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="050-gitosis.html#gitolit-admin">5.5.2.1. 管理员克隆<tt class="docutils literal"><span class="pre">gitolit-admin</span></tt>管理库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="050-gitosis.html#id6">5.5.2.2. 增加新用户</a></li>
+<li class="toctree-l3"><a class="reference internal" href="050-gitosis.html#id7">5.5.2.3. 更改授权</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="050-gitosis.html#id8">5.5.3. Gitosis授权详解</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="050-gitosis.html#id9">5.5.3.1. Gitosis缺省设置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="050-gitosis.html#gitosis-admin">5.5.3.2. 管理版本库<tt class="docutils literal"><span class="pre">gitosis-admin</span></tt></a></li>
+<li class="toctree-l3"><a class="reference internal" href="050-gitosis.html#id10">5.5.3.3. 定义用户组和授权</a></li>
+<li class="toctree-l3"><a class="reference internal" href="050-gitosis.html#gitweb">5.5.3.4. Gitweb整合</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="050-gitosis.html#id11">5.5.4. 创建新版本库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="050-gitosis.html#git">5.5.5. 轻量级管理的Git服务</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="055-gerrit.html">5.6. Gerrit代码审核服务器</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="055-gerrit.html#id1">5.6.1. Gerrit的实现原理</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="055-gerrit.html#sshgit">5.6.1.1. SSH协议的Git服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="055-gerrit.html#refs-for-branch-name-refs-changes-nn-review-id-m">5.6.1.2. 特殊引用<tt class="docutils literal"><span class="pre">refs/for/&lt;branch-name&gt;</span></tt>和<tt class="docutils literal"><span class="pre">refs/changes/nn/&lt;review-id&gt;/m</span></tt></a></li>
+<li class="toctree-l3"><a class="reference internal" href="055-gerrit.html#githooks-commit-msg">5.6.1.3. Git库的钩子脚本<tt class="file docutils literal"><span class="pre">hooks/commit-msg</span></tt></a></li>
+<li class="toctree-l3"><a class="reference internal" href="055-gerrit.html#web">5.6.1.4. 其余一切交给Web</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="055-gerrit.html#id2">5.6.2. 架设Gerrit的服务器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="055-gerrit.html#id3">5.6.3. Gerrit的配置文件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="055-gerrit.html#id4">5.6.4. Gerrit的数据库访问</a></li>
+<li class="toctree-l2"><a class="reference internal" href="055-gerrit.html#id5">5.6.5. 立即注册为Gerrit管理员</a></li>
+<li class="toctree-l2"><a class="reference internal" href="055-gerrit.html#ssh">5.6.6. 管理员访问SSH的管理接口</a></li>
+<li class="toctree-l2"><a class="reference internal" href="055-gerrit.html#id6">5.6.7. 创建新项目</a></li>
+<li class="toctree-l2"><a class="reference internal" href="055-gerrit.html#git">5.6.8. 从已有Git库创建项目</a></li>
+<li class="toctree-l2"><a class="reference internal" href="055-gerrit.html#id7">5.6.9. 定义评审工作流</a></li>
+<li class="toctree-l2"><a class="reference internal" href="055-gerrit.html#id8">5.6.10. Gerrit评审工作流实战</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="055-gerrit.html#id9">5.6.10.1. 开发者在本地版本库中工作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="055-gerrit.html#id10">5.6.10.2. 开发者向审核服务器提交</a></li>
+<li class="toctree-l3"><a class="reference internal" href="055-gerrit.html#id11">5.6.10.3. 审核评审任务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="055-gerrit.html#id12">5.6.10.4. 评审任务没有通过测试</a></li>
+<li class="toctree-l3"><a class="reference internal" href="055-gerrit.html#id13">5.6.10.5. 重新提交新的补丁集</a></li>
+<li class="toctree-l3"><a class="reference internal" href="055-gerrit.html#id14">5.6.10.6. 新修订集通过评审</a></li>
+<li class="toctree-l3"><a class="reference internal" href="055-gerrit.html#id15">5.6.10.7. 从远程版本库更新</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="055-gerrit.html#id16">5.6.11. 更多Gerrit参考</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="060-github-like.html">5.7. Git版本库托管</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="060-github-like.html#github">5.7.1. Github</a></li>
+<li class="toctree-l2"><a class="reference internal" href="060-github-like.html#gitorious">5.7.2. Gitorious</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<table class="docutils footnote" frame="void" id="id10" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>在TortoiseGit中只需要点击右键菜单中的“Git Daemon”。</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id11" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><a class="reference external" href="https://github.com">https://github.com</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id12" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td><a class="reference external" href="https://bitbucket.org">https://bitbucket.org</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id13" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td><a class="reference external" href="https://gitcafe.com">https://gitcafe.com</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id14" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td><a class="reference external" href="https://gitshell.com">https://gitshell.com</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id15" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id6">[6]</a></td><td><a class="reference external" href="https://code.csdn.net">https://code.csdn.net</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id16" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id7">[7]</a></td><td><a class="reference external" href="http://git.oschina.net">http://git.oschina.net</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id17" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id8">[8]</a></td><td><a class="reference external" href="http://gitlab.org">http://gitlab.org</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id18" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id9">[9]</a></td><td><a class="reference external" href="https://gitorious.org">https://gitorious.org</a></td></tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="010-http.html" title="5.1. 使用HTTP协议"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="../04-git-model/070-git-svn.html" title="4.7. Git和SVN协同模型"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

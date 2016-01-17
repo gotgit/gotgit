@@ -1,0 +1,247 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>2. Git独奏 &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="next" title="2.1. Git初始化" href="010-git-init.html" />
+    <link rel="prev" title="1.3.4. Windows下安装和使用Git（msysGit篇）" href="../01-meet-git/060-install-on-windows-msysgit.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="010-git-init.html" title="2.1. Git初始化"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="../01-meet-git/060-install-on-windows-msysgit.html" title="1.3.4. Windows下安装和使用Git（msysGit篇）"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="../01-meet-git/060-install-on-windows-msysgit.html"
+                        title="上一章">1.3.4. Windows下安装和使用Git（msysGit篇）</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="010-git-init.html"
+                        title="下一章">2.1. Git初始化</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/02-git-solo/index.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="git">
+<h1>2. Git独奏<a class="headerlink" href="#git" title="永久链接至标题">¶</a></h1>
+<p>通过前面的章节，我们了解了版本控制系统的历史，也学习了如何安装Git。从这一章开始，我们就真正地进入到Git的学习中。Git有着陡峭的学习曲线，即使是有着其他版本控制工具经验的老手也不例外。因为有经验的老手会按照在其他版本控制系统中遗留的习惯去想当然地操作Git，努力地在Git中寻找对应物，最终会因为Git的“别扭”而放弃使用。这也是作者的亲身经历。</p>
+<p>Git是开源社区送给每一个人的宝贝，用好它可以实现个人的知识积累、保护好自己的数据，以及和他人分享自己的成果。这在其他的很多版本控制系统中是不可想象的。试问你会花费少则几万美金去购买商业版本的控制工具么？你会去使用必须搭建额外的服务器才能使用的版本控制系统么？你会把“鸡蛋”放在具有单点故障、服务器软硬件有可能崩溃的唯一的“篮子”里么？如果你不会，那么选择Git，一定是最明智的选择。</p>
+<p>本篇还不会涉及团队如何使用Git，而是从个人的视角去研究如何用好Git，并且还会揭示Git的原理和奥秘。本篇是全书最重要的部分，是下一步进行团队协作必需的知识准备，也是理解全书其余各部分内容的基础。本篇各章节将以实践、思考、再实践的方式循序渐进地学习Git。到本篇的结尾，我们会发现通过“Git独奏”也可以演绎出美妙的“乐曲”。</p>
+<p>那么我们就开始第一个实践吧。</p>
+<p>目录:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="010-git-init.html">2.1. Git初始化</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="010-git-init.html#id1">2.1.1. 创建版本库及第一次提交</a></li>
+<li class="toctree-l2"><a class="reference internal" href="010-git-init.html#id5">2.1.2. 思考：为什么工作区下有一个<tt class="file docutils literal"><span class="pre">.git</span></tt>目录？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="010-git-init.html#git-config">2.1.3. 思考：<strong class="command">git config</strong>命令参数的区别？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="010-git-init.html#id7">2.1.4. 思考：是谁完成的提交？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="010-git-init.html#id8">2.1.5. 思考：随意设置提交者姓名，是否太不安全？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="010-git-init.html#id9">2.1.6. 思考：命令别名是干什么的？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="010-git-init.html#id10">2.1.7. 备份本章的工作成果</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="020-git-stage.html">2.2. Git暂存区</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="020-git-stage.html#id1">2.2.1. 修改不能直接提交？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="020-git-stage.html#git-stage">2.2.2. 理解 Git 暂存区（stage）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="020-git-stage.html#git-diff">2.2.3. Git Diff魔法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="020-git-stage.html#git-commit-a">2.2.4. 不要使用<strong class="command">git commit -a</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="020-git-stage.html#id2">2.2.5. 搁置问题，暂存状态</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="030-head-master-commit-refs.html">2.3. Git对象</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="030-head-master-commit-refs.html#id1">2.3.1. Git对象库探秘</a></li>
+<li class="toctree-l2"><a class="reference internal" href="030-head-master-commit-refs.html#sha1">2.3.2. 问题：SHA1哈希值到底是什么，如何生成的？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="030-head-master-commit-refs.html#id2">2.3.3. 问题：为什么不用顺序的数字来表示提交？</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="040-git-reset.html">2.4. Git重置</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="040-git-reset.html#master">2.4.1. 分支游标master的探秘</a></li>
+<li class="toctree-l2"><a class="reference internal" href="040-git-reset.html#reflog">2.4.2. 用reflog挽救错误的重置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="040-git-reset.html#git-reset">2.4.3. 深入了解<strong class="command">git reset</strong>命令</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="050-git-checkout.html">2.5. Git检出</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="050-git-checkout.html#head">2.5.1. HEAD的重置即检出</a></li>
+<li class="toctree-l2"><a class="reference internal" href="050-git-checkout.html#id1">2.5.2. 挽救分离头指针</a></li>
+<li class="toctree-l2"><a class="reference internal" href="050-git-checkout.html#git-checkout">2.5.3. 深入了解<strong class="command">git checkout</strong>命令</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="060-git-stage-n-stash.html">2.6. 恢复进度</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="060-git-stage-n-stash.html#id2">2.6.1. 继续暂存区未完成的实践</a></li>
+<li class="toctree-l2"><a class="reference internal" href="060-git-stage-n-stash.html#git-stash">2.6.2. 使用<strong class="command">git stash</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="060-git-stage-n-stash.html#id3">2.6.3. 探秘<strong class="command">git stash</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="070-git-basic.html">2.7. Git基本操作</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="070-git-basic.html#id1">2.7.1. 先来合个影</a></li>
+<li class="toctree-l2"><a class="reference internal" href="070-git-basic.html#id2">2.7.2. 删除文件</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="070-git-basic.html#id3">2.7.2.1. 本地删除不是真的删除</a></li>
+<li class="toctree-l3"><a class="reference internal" href="070-git-basic.html#git-rm">2.7.2.2. 执行<strong class="command">git rm</strong>命令删除文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="070-git-basic.html#git-add-u">2.7.2.3. 命令<strong class="command">git add -u</strong>快速标记删除</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="070-git-basic.html#id4">2.7.3. 恢复删除的文件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="070-git-basic.html#id5">2.7.4. 移动文件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="070-git-basic.html#hello-world">2.7.5. 一个显示版本号的<tt class="docutils literal"><span class="pre">Hello</span> <span class="pre">World</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="070-git-basic.html#git-add-i">2.7.6. 使用<strong class="command">git add -i</strong>选择性添加</a></li>
+<li class="toctree-l2"><a class="reference internal" href="070-git-basic.html#id6">2.7.7. <tt class="docutils literal"><span class="pre">Hello</span> <span class="pre">world</span></tt>引发的新问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="070-git-basic.html#id7">2.7.8. 文件忽略</a></li>
+<li class="toctree-l2"><a class="reference internal" href="070-git-basic.html#id8">2.7.9. 文件归档</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="080-git-history-travel.html">2.8. 历史穿梭</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="080-git-history-travel.html#gitk">2.8.1. 图形工具：gitk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="080-git-history-travel.html#gitg">2.8.2. 图形工具：gitg</a></li>
+<li class="toctree-l2"><a class="reference internal" href="080-git-history-travel.html#qgit">2.8.3. 图形工具：qgit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="080-git-history-travel.html#id2">2.8.4. 命令行工具</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="080-git-history-travel.html#git-rev-parse">2.8.4.1. 版本表示法：<strong class="command">git rev-parse</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="080-git-history-travel.html#git-rev-list">2.8.4.2. 版本范围表示法：git rev-list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="080-git-history-travel.html#git-log">2.8.4.3. 浏览日志：<strong class="command">git log</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="080-git-history-travel.html#git-diff">2.8.4.4. 差异比较：<strong class="command">git diff</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="080-git-history-travel.html#git-blame">2.8.4.5. 文件追溯：<strong class="command">git blame</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="080-git-history-travel.html#git-bisect">2.8.4.6. 二分查找：<strong class="command">git bisect</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="080-git-history-travel.html#id3">2.8.4.7. 获取历史版本</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="090-back-to-future.html">2.9. 改变历史</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="090-back-to-future.html#id2">2.9.1. 悔棋</a></li>
+<li class="toctree-l2"><a class="reference internal" href="090-back-to-future.html#id3">2.9.2. 多步悔棋</a></li>
+<li class="toctree-l2"><a class="reference internal" href="090-back-to-future.html#id4">2.9.3. 回到未来</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="090-back-to-future.html#id5">2.9.3.1. 时间旅行一</a></li>
+<li class="toctree-l3"><a class="reference internal" href="090-back-to-future.html#id6">2.9.3.2. 时间旅行二</a></li>
+<li class="toctree-l3"><a class="reference internal" href="090-back-to-future.html#id7">2.9.3.3. 时间旅行三</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="090-back-to-future.html#id8">2.9.4. 丢弃历史</a></li>
+<li class="toctree-l2"><a class="reference internal" href="090-back-to-future.html#id9">2.9.5. 反转提交</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="100-git-clone.html">2.10. Git克隆</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="100-git-clone.html#id1">2.10.1. 鸡蛋不装在一个篮子里</a></li>
+<li class="toctree-l2"><a class="reference internal" href="100-git-clone.html#id2">2.10.2. 对等工作区</a></li>
+<li class="toctree-l2"><a class="reference internal" href="100-git-clone.html#id3">2.10.3. 克隆生成裸版本库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="100-git-clone.html#id4">2.10.4. 创建生成裸版本库</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="110-git-admin.html">2.11. Git库管理</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="110-git-admin.html#id1">2.11.1. 对象和引用哪里去了？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="110-git-admin.html#id2">2.11.2. 暂存区操作引入的临时对象</a></li>
+<li class="toctree-l2"><a class="reference internal" href="110-git-admin.html#id3">2.11.3. 重置操作引入的对象</a></li>
+<li class="toctree-l2"><a class="reference internal" href="110-git-admin.html#git-git-gc">2.11.4. Git管家：<tt class="docutils literal"><span class="pre">git</span> <span class="pre">gc</span></tt></a></li>
+<li class="toctree-l2"><a class="reference internal" href="110-git-admin.html#id4">2.11.5. Git管家的自动执行</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="010-git-init.html" title="2.1. Git初始化"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="../01-meet-git/060-install-on-windows-msysgit.html" title="1.3.4. Windows下安装和使用Git（msysGit篇）"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

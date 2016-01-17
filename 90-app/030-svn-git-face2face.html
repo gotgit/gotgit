@@ -1,0 +1,399 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>9.3. Git和SVN面对面 &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="up" title="9. 附录" href="index.html" />
+    <link rel="next" title="9.4. Git和Hg面对面" href="040-hg-git-face2face.html" />
+    <link rel="prev" title="9.2. Git与CVS面对面" href="020-cvs-git-face2face.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="040-hg-git-face2face.html" title="9.4. Git和Hg面对面"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="020-cvs-git-face2face.html" title="9.2. Git与CVS面对面"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">9. 附录</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">9.3. Git和SVN面对面</a><ul>
+<li><a class="reference internal" href="#id1">9.3.1. 面对面访谈录</a></li>
+<li><a class="reference internal" href="#svngit">9.3.2. SVN和Git命令对照</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="020-cvs-git-face2face.html"
+                        title="上一章">9.2. Git与CVS面对面</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="040-hg-git-face2face.html"
+                        title="下一章">9.4. Git和Hg面对面</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/90-app/030-svn-git-face2face.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="gitsvn">
+<h1>9.3. Git和SVN面对面<a class="headerlink" href="#gitsvn" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id1">
+<h2>9.3.1. 面对面访谈录<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p><strong>Git：我的提交历史本身就是一幅美丽的图画——DAG（Directed Acylic Graph，有向非环图），可以看到各个分支之间的合并关系。而你SVN，你的提交历史怎么是一条直线呢？要是在重症监护室看到你，还以为你挂掉了呢？</strong></p>
+<p>SVN：我觉得挺好，至少我每次提交会有一个全局的版本号，而且我的版本号是递增的。你的版本号不是递增的吧！</p>
+<p><strong>Git：你说的对，我的版本号不是一个简单递增的数字，而是一个长达40位的十六进制数字（哈希值），但是可以使用短格式，只要不冲突。虽然我的提交编号看起来似乎是无序的，但实际上我每一个提交都记录了父提交甚至是双亲或多亲提交，因此可以很容易的从任意一个提交开始建立一条指向历史提交的跟踪链。</strong></p>
+<p>SVN：是啊，我的一个提交和前一个提交有时根本没有关系，例如一个提交是发生在主线<tt class="file docutils literal"><span class="pre">/trunk</span></tt>中的，下一个提交可能就发生在<tt class="file docutils literal"><span class="pre">/branches/1.3.x</span></tt>分支中。你要知道要想画出一个像你那样的分支图，我要做多少工作么？我不容易呀。</p>
+<p><strong>Git：我一直很奇怪，你的分支和里程碑怎么看起来和目录一样？我的分支和里程碑名字虽然看起来像是目录，实际上和工作区的目录完全没有关系，只是对提交ID的一个记号而已。</strong></p>
+<p>SVN：我一开始觉得我用轻量级拷贝的方式实现分支和里程碑会很酷，也很快。但是我发现很多人在使用我的时候，直接在版本库的根目录下创建文件而不是把文件创建在<tt class="file docutils literal"><span class="pre">/trunk</span></tt>目录下，这就导致这些人无法再创建分支和里程碑了，因为是无法将根目录拷贝到子目录的呀！</p>
+<p><strong>Git：那么你是如何对分支合并进行跟踪的呢？我因为有了DAG的提交关系图，是很容易看出来分支之间的合并历史，但是你是怎么做到的呢？</strong></p>
+<p>SVN：我用了一点小技巧，就是通过属性（svn:mergeinfo）记录了合并的分支名和版本范围，这样再合并的时候，我会根据相关属性确定是否要合并。但是如果经常在子目录下合并，有太多的<tt class="docutils literal"><span class="pre">svn:mergeinfo</span></tt>属性等待我检查，我会很困扰 。还有我的这个功能是在1.5以后版本才提供的，因此老版本会破坏这个机制。</p>
+<p>SVN：对了，我的属性能干很多事哦，我甚至可以把我的照片作为属性附加在文件上。</p>
+<p><strong>Git：这点我承认，你的属性非常强大。其实我也支持属性，只不过实现方式不同罢了。而且我可以通过评注的方式为任意对象（提交、文件、里程碑等）添加评注，也可以实现把照片做为评注附加在文件上，可是这个功能有什么实际用处么？</strong></p>
+<p>SVN：我有轻量级拷贝，而我的分支和里程碑就是通过拷贝实现的，很强大哦。</p>
+<p><strong>Git：我根本就不需要轻量级拷贝，因为我对文件的保存是和文件路径无关的，我只关心内容。所以相同内容的文件无论它们的文件名相差有多大，在我这里只保存一份。而你SVN，如果用户忘了用轻量级拷贝，版本库是不是负担很重啊。</strong></p>
+<p>SVN：听说你不能针对目录授权，这可是我的强项，所以公司无论大小都在用我作为版本控制系统。</p>
+<p><strong>Git：不要说你的授权了，简直是一团糟。虽然这本书的作者为你写了一个图形化的授权管理工具（http://www.ossxp.com/doc/pysvnmanager/user-guide/user-guide.html）会有所改善，但是你糟糕的分支和里程碑的实现，会导致授权在新的分支和里程碑中要一一设置，工作量其大无比。虽然泛路径授权是一个解决方案，但是官方并没有提供啊。</strong></p>
+<p><strong>Git：说说我的授权吧。如果你认真的读过本书服务器架设的相关章节，你会为我能够提供的按照分支，以及按照路径进行写操作授权而击掌叫好的。当然我的读操作授权还不能做到很精细，但是可以将版本库拆分成若干小的版本库啊，再用参照本书介绍的各种多版本库协同模式，会找到一个适合的解决方案的啊。</strong></p>
+<p><strong>Git：我的工作区很干净。只在工作区的根目录下有一个:file:`.git`目录，此外再无其他。</strong></p>
+<p>SVN：我要在工作区的每一个目录下都放置一个<tt class="file docutils literal"><span class="pre">.svn</span></tt>目录，这个目录在Linux下可是隐藏的哦。这个目录下不但有跟踪工作区文件状态的跟踪文件，而且还有每一个文件的原始拷贝呢。这样有的操作就可以脱离网络执行了，例如：差异比较，工作区文件的回滚。</p>
+<p><strong>Git：嗯，你要是像我一样再保存多一点内容（整个版本库）就更好了。像你这样在每个工作区子目录下都有一个:file:`.svn`目录，而且每个:file:`.svn`目录下都有文件原始拷贝，在进行内容搜索的时候会搜索出来两份吧，太干扰了。而且你这么做和CVS一样有安全风险，造成本地文件名的信息泄漏，千万不要在Web服务器上用SVN检出哦。</strong></p>
+<p><strong>Git：我的操作可以不需要网络。因为我在本地拥有完整的版本库，几乎所有操作都是在本地完成。</strong></p>
+<p>SVN：正如前面说到的，我有部分命令可以不需要网络，但是其他绝大多数命令还是要依赖网络的。</p>
+<p>SVN：你怎么没有更新（update）命令？还有你为什么老是要执行检出命令（checkout）？对我而言，检出命令只在工作区创建时一次完成的。</p>
+<p><strong>Git：你的这个问题怎么和CVS问的一样。你的更新（update）命令执行的很慢对么？首先你要用检出命令（checkout）建立工作区，然后你要经常的执行更新（update）命令进行更新，否则容易造成你的更改和他人更改发生冲突。</strong></p>
+<p><strong>Git：之所以你需要更新是因为你的版本库在远程啊。别忘了我的版本库是在本地，我的每一步操作工作区和版本库都是同步的，所以更新操作就没有存在的必要了。而我的检出（checkout）操作一般是用户切换分支，或者从本地版本库检出丢失的文件或覆盖本地错误改动的文件时用到。如果我没记错的话，你切换分支用的是:command:`svn switch`命令对么？</strong></p>
+<p><strong>Git：实际上我也有一个比较耗时的网络操作命令叫做:command:`git fetch`或:command:`git pull`，这两个操作是从远程版本库获取他人改动。一般使用我（Git）做团队协作的时候，会部署一个集中共享的版本库，我就从这个共享的版本库执行拉回操作。也也许你（SVN）会觉得:command:`git fetch`或:command:`git pull`和你的:command:`svn update`命令更像吧。至于你的检出命令（:command:`svn checkout`），实际上和我克隆命令（:command:`git clone`）很相似，只不过我的克隆命令不但创建了本地工作区，而且在本地还复制了和远程版本库一样的本地版本库。</strong></p>
+<p>SVN：为什么你的检入命令（commit）命令执行的那么快？</p>
+<p><strong>Git：是的，我的检入命令飞一般就执行完了，也是因为版本库就在本地。也许你（SVN）会觉得我的推送命令（:command:`git push`）和你的检入命令（:command:`svn commit`）更相像，其实这是一个误会。如果我不做本地提交，是不能通过推送命令（:command:`git push`）将我的本地的提交共享给（推送给）其他版本库的。你（SVN）每一次提交都要和版本库进行网络通讯，而我可以在本地版本库进行多次提交，直到我的主人想喝咖啡了才执行一次:command:`git push`，将我本地版本库中新的提交推送给远程版本库。</strong></p>
+<p>SVN：我能一次检出一个目录，你好像不能吧？</p>
+<p><strong>Git：所以我有子模组，以及repo等第三方工具，可以帮助我把一个大的版本库拆开多个版本库组合来使用啊。</strong></p>
+<p>SVN：我能添加空目录，你好像不能吧！</p>
+<p><strong>Git：是的，我现在还不能记录空目录，但是用户往往在空目录下创建一个隐含文件，并将该隐含文件添加到版本库中，也就实现了空目录添加的功能。</strong></p>
+</div>
+<div class="section" id="svngit">
+<h2>9.3.2. SVN和Git命令对照<a class="headerlink" href="#svngit" title="永久链接至标题">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="39%" />
+<col width="44%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">比较项目</th>
+<th class="head">SVN命令</th>
+<th class="head">Git命令</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td rowspan="5">URL</td>
+<td>svn://host/path/to/repos</td>
+<td>git://host/path/to/repos.git</td>
+</tr>
+<tr class="row-odd"><td><a class="reference external" href="https://host/path/to/repos">https://host/path/to/repos</a></td>
+<td><a class="reference external" href="ssh://user&#64;host/path/to/repos.git">ssh://user&#64;host/path/to/repos.git</a></td>
+</tr>
+<tr class="row-even"><td><a class="reference external" href="file:///path/to/repos">file:///path/to/repos</a></td>
+<td><a class="reference external" href="mailto:user&#37;&#52;&#48;host">user<span>&#64;</span>host</a>:path/to/repos.git</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><a class="reference external" href="file:///path/to/repos.git">file:///path/to/repos.git</a></td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>/path/to/repos.git</td>
+</tr>
+<tr class="row-odd"><td>版本库初始化</td>
+<td>svnadmin create &lt;path&gt;</td>
+<td>git init [&#8211;bare] &lt;path&gt;</td>
+</tr>
+<tr class="row-even"><td>导入数据</td>
+<td>svn import &lt;path&gt; &lt;url&gt; -m ...</td>
+<td>git clone; git add .; git commit</td>
+</tr>
+<tr class="row-odd"><td>版本库检出</td>
+<td>svn checkout &lt;url/of/trunk&gt; &lt;path&gt;</td>
+<td>git clone &lt;url&gt; &lt;path&gt;</td>
+</tr>
+<tr class="row-even"><td>版本库分支检出</td>
+<td>svn checkout &lt;url/of/branches/name&gt; &lt;path&gt;</td>
+<td>git clone -b &lt;branch&gt; &lt;url&gt; &lt;path&gt;</td>
+</tr>
+<tr class="row-odd"><td>工作区更新</td>
+<td>svn update</td>
+<td>git pull</td>
+</tr>
+<tr class="row-even"><td>更新至历史版本</td>
+<td>svn update -r &lt;rev&gt;</td>
+<td>git checkout &lt;commit&gt;</td>
+</tr>
+<tr class="row-odd"><td>更新到指定日期</td>
+<td>svn update -r {&lt;date&gt;}</td>
+<td>git checkout HEAD&#64;&#8217;{&lt;date&gt;}&#8217;</td>
+</tr>
+<tr class="row-even"><td>更新至最新提交</td>
+<td>svn update -r HEAD</td>
+<td>git checkout master</td>
+</tr>
+<tr class="row-odd"><td>切换至里程碑</td>
+<td>svn switch &lt;url/of/tags/name&gt;</td>
+<td>git checkout &lt;tag&gt;</td>
+</tr>
+<tr class="row-even"><td>切换至分支</td>
+<td>svn switch &lt;url/of/branches/name&gt;</td>
+<td>git checkout &lt;branch&gt;</td>
+</tr>
+<tr class="row-odd"><td>还原文件/强制覆盖</td>
+<td>svn revert &lt;path&gt;</td>
+<td>git checkout &#8211; &lt;path&gt;</td>
+</tr>
+<tr class="row-even"><td>添加文件</td>
+<td>svn add &lt;path&gt;</td>
+<td>git add &lt;path&gt;</td>
+</tr>
+<tr class="row-odd"><td>删除文件</td>
+<td>svn rm &lt;path&gt;</td>
+<td>git rm &lt;path&gt;</td>
+</tr>
+<tr class="row-even"><td>移动文件</td>
+<td>svn mv &lt;old&gt; &lt;new&gt;</td>
+<td>git mv &lt;old&gt; &lt;new&gt;</td>
+</tr>
+<tr class="row-odd"><td>清除未跟踪文件</td>
+<td>svn status | sed -e &#8220;s/^?//&#8221; | xargs rm</td>
+<td>git clean</td>
+</tr>
+<tr class="row-even"><td>清除工作锁定</td>
+<td>svn clean</td>
+<td>-</td>
+</tr>
+<tr class="row-odd"><td>获取文件历史版本</td>
+<td>svn cat -r&lt;rev&gt; &lt;url/of/file&gt;&#64;&lt;rev&gt; &gt; &lt;output&gt;</td>
+<td>git show &lt;commit&gt;:&lt;path&gt; &gt; &lt;output&gt;</td>
+</tr>
+<tr class="row-even"><td>反删除文件</td>
+<td>svn cp -r&lt;rev&gt; &lt;url/of/file&gt;&#64;&lt;rev&gt; &lt;path&gt;</td>
+<td>git add &lt;path&gt;</td>
+</tr>
+<tr class="row-odd"><td rowspan="3">工作区差异比较</td>
+<td rowspan="3">svn diff</td>
+<td>git diff</td>
+</tr>
+<tr class="row-even"><td>git diff &#8211;cached</td>
+</tr>
+<tr class="row-odd"><td>git diff HEAD</td>
+</tr>
+<tr class="row-even"><td>版本间差异比较</td>
+<td>svn diff -r &lt;rev1&gt;:&lt;rev2&gt; &lt;path&gt;</td>
+<td>git diff &lt;commit1&gt; &lt;commit2&gt; &#8211; &lt;path&gt;</td>
+</tr>
+<tr class="row-odd"><td>查看工作区状态</td>
+<td>svn status</td>
+<td>git status -s</td>
+</tr>
+<tr class="row-even"><td>提交</td>
+<td>svn commit -m &#8220;&lt;msg&gt;&#8221;</td>
+<td>git commit -a -m &#8220;&lt;msg&gt;&#8221; ; git push</td>
+</tr>
+<tr class="row-odd"><td>显示提交日志</td>
+<td>svn log | less</td>
+<td>git log</td>
+</tr>
+<tr class="row-even"><td>逐行追溯</td>
+<td>svn blame</td>
+<td>git blame</td>
+</tr>
+<tr class="row-odd"><td rowspan="3">显示里程碑/分支</td>
+<td>svn ls &lt;url/of/tags/&gt;</td>
+<td>git tag</td>
+</tr>
+<tr class="row-even"><td>svn ls &lt;url/of/branches/&gt;</td>
+<td>git branch</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td>git show-ref</td>
+</tr>
+<tr class="row-even"><td>创建里程碑</td>
+<td>svn cp &lt;url/of/trunk/&gt; &lt;url/of/tags/name&gt;</td>
+<td>git tag [-m &#8220;&lt;msg&gt;&#8221;] &lt;tagname&gt; [&lt;commit&gt;]</td>
+</tr>
+<tr class="row-odd"><td>删除里程碑</td>
+<td>svn rm &lt;url/of/tags/name&gt;</td>
+<td>git tag -d &lt;tagname&gt;</td>
+</tr>
+<tr class="row-even"><td rowspan="2">创建分支</td>
+<td rowspan="2">svn cp &lt;url/of/trunk/&gt; &lt;url/of/branches/name&gt;</td>
+<td>git branch &lt;branch&gt; &lt;commit&gt;</td>
+</tr>
+<tr class="row-odd"><td>git checkout -b &lt;branch&gt; &lt;commit&gt;</td>
+</tr>
+<tr class="row-even"><td>删除分支</td>
+<td>svn rm &lt;url/of/branches/name&gt;</td>
+<td>git branch -d &lt;branch&gt;</td>
+</tr>
+<tr class="row-odd"><td rowspan="2">导出项目文件</td>
+<td>svn export -r &lt;rev&gt; &lt;path&gt; &lt;output/path&gt;</td>
+<td>git archive -o &lt;output.tar&gt; &lt;commit&gt;</td>
+</tr>
+<tr class="row-even"><td>svn export -r &lt;rev&gt; &lt;url&gt; &lt;output/path&gt;</td>
+<td>git archive -o &lt;output.tar&gt; &#8211;remote=&lt;url&gt; &lt;commit&gt;</td>
+</tr>
+<tr class="row-odd"><td>反转提交</td>
+<td>svn merge -c -&lt;rev&gt;</td>
+<td>git revert &lt;commit&gt;</td>
+</tr>
+<tr class="row-even"><td>提交拣选</td>
+<td>svn merge -c &lt;rev&gt;</td>
+<td>git cherry-pick &lt;commit&gt;</td>
+</tr>
+<tr class="row-odd"><td>分支合并</td>
+<td>svn merge &lt;url/of/branch&gt;</td>
+<td>git merge &lt;branch&gt;</td>
+</tr>
+<tr class="row-even"><td rowspan="2">冲突解决</td>
+<td>svn resolve &#8211;accept=&lt;ARG&gt; &lt;path&gt;</td>
+<td>git mergetool</td>
+</tr>
+<tr class="row-odd"><td>svn resolved &lt;path&gt;</td>
+<td>git add &lt;path&gt;</td>
+</tr>
+<tr class="row-even"><td rowspan="2">显示文件列表</td>
+<td>svn ls</td>
+<td>git ls-files</td>
+</tr>
+<tr class="row-odd"><td>svn ls &lt;url&gt; -r &lt;rev&gt;</td>
+<td>git ls-tree &lt;commit&gt;</td>
+</tr>
+<tr class="row-even"><td>更改提交说明</td>
+<td>svn ps &#8211;revprop -r&lt;rev&gt; svn:log &#8220;&lt;msg&gt;&#8221;</td>
+<td>git commit &#8211;amend</td>
+</tr>
+<tr class="row-odd"><td>撤消提交</td>
+<td>svnadmin dump、svnadmin load 及 svndumpfilter</td>
+<td>git reset [ &#8211;soft | &#8211;hard ] HEAD^</td>
+</tr>
+<tr class="row-even"><td rowspan="5">属性</td>
+<td>svn:ignore</td>
+<td>.gitignore 文件</td>
+</tr>
+<tr class="row-odd"><td>svn:mime-type</td>
+<td>text 属性</td>
+</tr>
+<tr class="row-even"><td>svn:eol-style</td>
+<td>eol 属性</td>
+</tr>
+<tr class="row-odd"><td>svn:externals</td>
+<td>git submodule 命令</td>
+</tr>
+<tr class="row-even"><td>svn:keywords</td>
+<td>export-subst 属性</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="040-hg-git-face2face.html" title="9.4. Git和Hg面对面"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="020-cvs-git-face2face.html" title="9.2. Git与CVS面对面"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >9. 附录</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

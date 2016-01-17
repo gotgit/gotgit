@@ -1,0 +1,1212 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>2.8. 历史穿梭 &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="up" title="2. Git独奏" href="index.html" />
+    <link rel="next" title="2.9. 改变历史" href="090-back-to-future.html" />
+    <link rel="prev" title="2.7. Git基本操作" href="070-git-basic.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="090-back-to-future.html" title="2.9. 改变历史"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="070-git-basic.html" title="2.7. Git基本操作"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">2. Git独奏</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">2.8. 历史穿梭</a><ul>
+<li><a class="reference internal" href="#gitk">2.8.1. 图形工具：gitk</a></li>
+<li><a class="reference internal" href="#gitg">2.8.2. 图形工具：gitg</a></li>
+<li><a class="reference internal" href="#qgit">2.8.3. 图形工具：qgit</a></li>
+<li><a class="reference internal" href="#id2">2.8.4. 命令行工具</a><ul>
+<li><a class="reference internal" href="#git-rev-parse">2.8.4.1. 版本表示法：<strong class="command">git rev-parse</strong></a></li>
+<li><a class="reference internal" href="#git-rev-list">2.8.4.2. 版本范围表示法：git rev-list</a></li>
+<li><a class="reference internal" href="#git-log">2.8.4.3. 浏览日志：<strong class="command">git log</strong></a></li>
+<li><a class="reference internal" href="#git-diff">2.8.4.4. 差异比较：<strong class="command">git diff</strong></a></li>
+<li><a class="reference internal" href="#git-blame">2.8.4.5. 文件追溯：<strong class="command">git blame</strong></a></li>
+<li><a class="reference internal" href="#git-bisect">2.8.4.6. 二分查找：<strong class="command">git bisect</strong></a></li>
+<li><a class="reference internal" href="#id3">2.8.4.7. 获取历史版本</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="070-git-basic.html"
+                        title="上一章">2.7. Git基本操作</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="090-back-to-future.html"
+                        title="下一章">2.9. 改变历史</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/02-git-solo/080-git-history-travel.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>2.8. 历史穿梭<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>经过了之前众多的实践，版本库中已经积累了很多次提交了，从下面的命令可以看出来有14次提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-list HEAD | wc -l
+14
+</pre></div>
+</div>
+<p>有很多工具可以研究和分析Git的历史提交，在前面的实践中已经用过很多相关的Git命令进行查看历史提交、查看文件的历史版本、进行差异比较等。本章除了对之前用到的相关Git命令作以总结外，还要再介绍几款图形化的客户端。</p>
+<div class="section" id="gitk">
+<h2>2.8.1. 图形工具：gitk<a class="headerlink" href="#gitk" title="永久链接至标题">¶</a></h2>
+<p>gitk是最早实现的一个图形化的Git版本库浏览器软件，基于tcl/tk实现，因此gitk非常简洁，本身就是一个1万多行的tcl脚本写成的。gitk的代码已经和Git的代码放在同一个版本库中，gitk随Git一同发布，不用特别的安装即可运行。gitk可以显示提交的分支图，可以显示提交，文件，版本间差异等。</p>
+<p>在版本库中调用gitk，就会浏览该版本库，显示其提交分支图。gitk可以像命令行工具一样使用不同的参数进行调用。</p>
+<ul>
+<li><p class="first">显示所有的分支。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ gitk --all
+</pre></div>
+</div>
+</li>
+<li><p class="first">显示2周以来的提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ gitk --since=&quot;2 weeks ago&quot;
+</pre></div>
+</div>
+</li>
+<li><p class="first">显示某个里程碑（v2.6.12）以来，针对某些目录和文件（<tt class="file docutils literal"><span class="pre">include/scsi</span></tt>目录和<tt class="file docutils literal"><span class="pre">drivers/scsi</span></tt>目录）的提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ gitk v2.6.12.. include/scsi drivers/scsi
+</pre></div>
+</div>
+</li>
+</ul>
+<p>下面的图示就是在DEMO版本库中运行<strong class="command">gitk &#8211;all</strong>的显示。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/gitk.png"><img alt="../images/gitk.png" src="../images/gitk.png" style="width: 738.4px; height: 475.2px;" /></a>
+</div>
+<p>在上图中可见不同颜色和形状区分的引用：</p>
+<ul class="simple">
+<li>绿色的<tt class="docutils literal"><span class="pre">master</span></tt>分支。</li>
+<li>黄色的<tt class="docutils literal"><span class="pre">hello_1.0</span></tt>和<tt class="docutils literal"><span class="pre">old_practice</span></tt>里程碑。</li>
+<li>灰色的<tt class="docutils literal"><span class="pre">stash</span></tt>。</li>
+</ul>
+<p>gitk使用tcl/tk开发，在显示上没有系统中原生图形应用那么漂亮的界面，甚至可以用丑陋来形容，下面介绍的gitg和qgit在易用性上比gitk进步了不少。</p>
+</div>
+<div class="section" id="gitg">
+<h2>2.8.2. 图形工具：gitg<a class="headerlink" href="#gitg" title="永久链接至标题">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">gitg</span></tt>是使用GTK+图形库实现的一个Git版本库浏览器软件。Linux下最著名的Gnome桌面环境使用的就是GTK+，因此在Linux下<tt class="docutils literal"><span class="pre">gitg</span></tt>有着非常漂亮的原生的图形界面。<tt class="docutils literal"><span class="pre">gitg</span></tt>不但能够实现gitk的全部功能，即浏览提交历史和文件，还能帮助执行提交。</p>
+<p>在Linux上安装gitg很简单，例如在Debian或Ubuntu上，直接运行下面的命令就可以进行安装。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sudo aptitude install gitg
+</pre></div>
+</div>
+<p>安装完毕就可以在可执行路径中找到<tt class="docutils literal"><span class="pre">gitg</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ which gitg
+/usr/bin/gitg
+</pre></div>
+</div>
+<p>为了演示<tt class="docutils literal"><span class="pre">gitg</span></tt>具备提交功能，先在工作区作出一些修改。</p>
+<ul>
+<li><p class="first">删除没有用到的<tt class="file docutils literal"><span class="pre">hello.h</span></tt>文件。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/my/workspace/demo
+$ rm src/hello.h
+</pre></div>
+</div>
+</li>
+<li><p class="first">在<tt class="file docutils literal"><span class="pre">README</span></tt>文件后面追加一行。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ echo &quot;Wait...&quot; &gt;&gt; README
+</pre></div>
+</div>
+</li>
+<li><p class="first">当前工作区的状态。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status -s
+ M README
+ D src/hello.h
+</pre></div>
+</div>
+</li>
+</ul>
+<p>现在可以在工作区下执行<tt class="docutils literal"><span class="pre">gitg</span></tt>命令。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ gitg &amp;
+</pre></div>
+</div>
+<p>下图就是<tt class="docutils literal"><span class="pre">gitg</span></tt>的缺省界面，显示了提交分支图，以及选中提交的提交信息和变更文件列表等。</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="../images/gitg-history.png"><img alt="../images/gitg-history.png" src="../images/gitg-history.png" style="width: 691.5px; height: 561.0px;" /></a>
+</div>
+</div></blockquote>
+<p>在上图中可以看见用不同颜色的标签显示的状态标识（包括引用）：</p>
+<ul class="simple">
+<li>橙色的<tt class="docutils literal"><span class="pre">master</span></tt>分支。</li>
+<li>黄色的<tt class="docutils literal"><span class="pre">hello_1.0</span></tt>和<tt class="docutils literal"><span class="pre">old_practice</span></tt>里程碑。</li>
+<li>粉色的<tt class="docutils literal"><span class="pre">stash</span></tt>标签。</li>
+<li>以及白色的显示工作区非暂存状态的标签。</li>
+</ul>
+<p>点击<tt class="docutils literal"><span class="pre">gitg</span></tt>下方窗口的标签“tree”，会显示此提交的目录树。</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="../images/gitg-tree.png"><img alt="../images/gitg-tree.png" src="../images/gitg-tree.png" style="width: 691.5px; height: 271.5px;" /></a>
+</div>
+</div></blockquote>
+<p>提交功能是<tt class="docutils literal"><span class="pre">gitg</span></tt>的一大特色。点击<tt class="docutils literal"><span class="pre">gitg</span></tt>顶部窗口的<tt class="docutils literal"><span class="pre">commit</span></tt>标签，显示下面的界面。</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="../images/gitg-commit-1-all-unstaged.png"><img alt="../images/gitg-commit-1-all-unstaged.png" src="../images/gitg-commit-1-all-unstaged.png" style="width: 691.5px; height: 327.75px;" /></a>
+</div>
+</div></blockquote>
+<p>左下方窗口显示的是未更新到暂存区的本地改动。鼠标右击，在弹出菜单中选择“Stage”。</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="../images/gitg-commit-2-add-stage.png"><img alt="../images/gitg-commit-2-add-stage.png" src="../images/gitg-commit-2-add-stage.png" style="width: 691.5px; height: 327.75px;" /></a>
+</div>
+</div></blockquote>
+<p>当把文件<tt class="file docutils literal"><span class="pre">README</span></tt>添加到暂存区后，可以看到<tt class="file docutils literal"><span class="pre">README</span></tt>文件出现在右下方的窗口中。</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="../images/gitg-commit-3-mixed-stage-unstage.png"><img alt="../images/gitg-commit-3-mixed-stage-unstage.png" src="../images/gitg-commit-3-mixed-stage-unstage.png" style="width: 691.5px; height: 327.75px;" /></a>
+</div>
+</div></blockquote>
+<p>此时如果回到提交历史查看界面，可以看到在“stash”标签的下方，同时出现了“staged”和“unstaged”两个标签分别表示暂存区和工作区的状态。</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="../images/gitg-commit-4-history-stage-unstage.png"><img alt="../images/gitg-commit-4-history-stage-unstage.png" src="../images/gitg-commit-4-history-stage-unstage.png" style="width: 677.25px; height: 413.25px;" /></a>
+</div>
+</div></blockquote>
+<p>当通过<tt class="docutils literal"><span class="pre">gitg</span></tt>的界面选择好要提交的文件（加入暂存区）之后，执行提交。</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="../images/gitg-commit-5-commit.png"><img alt="../images/gitg-commit-5-commit.png" src="../images/gitg-commit-5-commit.png" style="width: 678.0px; height: 327.75px;" /></a>
+</div>
+</div></blockquote>
+<p>上图的提交说明对话框的下方有两个选项，当选择了“Add signed-off-by”选项后，在提交日志中会自动增加相应的说明文字。下图可以看到刚刚的提交已经显示在提交历史的最顶端，在提交说明中出现了<tt class="docutils literal"><span class="pre">Signed-off-by</span></tt>文字说明。</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="../images/gitg-commit-6-new-history.png"><img alt="../images/gitg-commit-6-new-history.png" src="../images/gitg-commit-6-new-history.png" style="width: 678.0px; height: 401.25px;" /></a>
+</div>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">gitg</span></tt>还是一个比较新的项目，在本文撰写的时候，<tt class="docutils literal"><span class="pre">gitg</span></tt>才是0.0.6版本，相比下面要介绍的<tt class="docutils literal"><span class="pre">qgit</span></tt>还缺乏很多功能。例如<tt class="docutils literal"><span class="pre">gitg</span></tt>没有文件的blame（追溯）界面，也不能直接将文件检出，但是<tt class="docutils literal"><span class="pre">gitg</span></tt>整体的界面风格，以及易用的提交界面给人的印象非常深刻。</p>
+</div>
+<div class="section" id="qgit">
+<h2>2.8.3. 图形工具：qgit<a class="headerlink" href="#qgit" title="永久链接至标题">¶</a></h2>
+<p>前面介绍的<tt class="docutils literal"><span class="pre">gitg</span></tt>是基于GTK+这一Linux标准的图形库，那么也许有读者已经猜到<tt class="docutils literal"><span class="pre">qgit</span></tt>是使用Linux另外一个著名的图形库QT实现的Git版本库浏览器软件。QT的知名度不亚于GTK+，是著名的KDE桌面环境用到的图形库，也是蓄势待发准备和Android一较高低的MeeGo的UI核心。<tt class="docutils literal"><span class="pre">qgit</span></tt>目前的版本是2.3，相比前面介绍的<tt class="docutils literal"><span class="pre">gitg</span></tt>其经历的开发周期要长了不少，因此也提供了更多的功能。</p>
+<p>在Linux上安装<tt class="docutils literal"><span class="pre">qgit</span></tt>很简单，例如在Debian或Ubuntu上，直接运行下面的命令就可以进行安装。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sudo aptitude install qgit
+</pre></div>
+</div>
+<p>安装完毕就可以在可执行路径中找到<tt class="docutils literal"><span class="pre">qgit</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ which qgit
+/usr/bin/qgit
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">qgit</span></tt>和<tt class="docutils literal"><span class="pre">gitg</span></tt>一样不但能够浏览提交历史和文件，还能帮助执行提交。为了测试提交，将在上一节所做的提交回滚。</p>
+<ul>
+<li><p class="first">使用重置命令回滚最后一次提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git reset HEAD^
+Unstaged changes after reset:
+M       README
+M       src/hello.h
+</pre></div>
+</div>
+</li>
+<li><p class="first">当前工作区的状态。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status
+# On branch master
+# Changed but not updated:
+#   (use &quot;git add/rm &lt;file&gt;...&quot; to update what will be committed)
+#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+#
+#       modified:   README
+#       deleted:    src/hello.h
+#
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
+</pre></div>
+</div>
+</li>
+</ul>
+<p>现在可以在工作区下执行<tt class="docutils literal"><span class="pre">qgit</span></tt>命令。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ qgit &amp;
+</pre></div>
+</div>
+<p>启动<tt class="docutils literal"><span class="pre">qgit</span></tt>，首先弹出一个对话框，提示对显示的提交范围和分支范围进行选择。</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="../images/qgit-splash-select.png"><img alt="../images/qgit-splash-select.png" src="../images/qgit-splash-select.png" style="width: 423.0px; height: 259.0px;" /></a>
+</div>
+</div></blockquote>
+<p>对所有的选择打钩，显示下面的<tt class="docutils literal"><span class="pre">qgit</span></tt>的缺省界面。其中包括了提交分支图，以及选中提交的提交信息和变更文件列表等。</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="../images/qgit-history.png"><img alt="../images/qgit-history.png" src="../images/qgit-history.png" style="width: 650.25px; height: 424.5px;" /></a>
+</div>
+</div></blockquote>
+<p>在上图中可以看见用不同颜色的标签显示的状态标识（包括引用）：</p>
+<ul class="simple">
+<li>绿色的<tt class="docutils literal"><span class="pre">master</span></tt>分支。</li>
+<li>黄色的<tt class="docutils literal"><span class="pre">hello_1.0</span></tt>和<tt class="docutils literal"><span class="pre">old_practice</span></tt>里程碑。</li>
+<li>灰色的<tt class="docutils literal"><span class="pre">stash</span></tt>标签，显示在了创建时候的位置，并其包含的针对暂存区状态的提交也显示出来。</li>
+<li>最顶端显示一行绿色背景的文件：工作区有改动。</li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">qgit</span></tt>的右键菜单非常丰富，上图显示了鼠标右击提交时显示的弹出菜单，可以创建、切换标签或分支，可以将提交导出为补丁文件。</p>
+<p>点击<tt class="docutils literal"><span class="pre">qgit</span></tt>右下方变更文件列表窗口，可以选择将文件检出或者直接查看。</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="../images/qgit-changefiles.png"><img alt="../images/qgit-changefiles.png" src="../images/qgit-changefiles.png" style="width: 650.25px; height: 141.75px;" /></a>
+</div>
+</div></blockquote>
+<p>要想显示目录树，键入大写字母<tt class="docutils literal"><span class="pre">T</span></tt>，或者鼠标单击工具条上的图标<img alt="QGIT-TREE-TOGGLE" src="../images/icon-11-12-qgit-tree-toggle.png" />，就会在左侧显示目录树窗口，如下。</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="../images/qgit-tree-view.png"><img alt="../images/qgit-tree-view.png" src="../images/qgit-tree-view.png" style="width: 650.25px; height: 424.5px;" /></a>
+</div>
+</div></blockquote>
+<p>从上图也可以看到目录树的文件包含的右键菜单。当选择查看一个文件时，会显示此文件的追溯，即显示每一行是在哪个版本由谁修改的。追溯窗口见下图右下方窗口。</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="../images/qgit-blame.png"><img alt="../images/qgit-blame.png" src="../images/qgit-blame.png" style="width: 650.25px; height: 334.5px;" /></a>
+</div>
+</div></blockquote>
+<p><tt class="docutils literal"><span class="pre">qgit</span></tt>也可以执行提交。选中<tt class="docutils literal"><span class="pre">qgit</span></tt>顶部窗口最上一行“Working dir changes”，鼠标右击，显示的弹出菜单包含了“Commit...”选项。</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="../images/qgit-commit-1-revlist.png"><img alt="../images/qgit-commit-1-revlist.png" src="../images/qgit-commit-1-revlist.png" style="width: 650.25px; height: 334.5px;" /></a>
+</div>
+</div></blockquote>
+<p>点击弹出菜单中的“Commit...”，显示下面的对话框。</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="../images/qgit-commit-2-dialog-unstaged.png"><img alt="../images/qgit-commit-2-dialog-unstaged.png" src="../images/qgit-commit-2-dialog-unstaged.png" style="width: 491.25px; height: 239.25px;" /></a>
+</div>
+</div></blockquote>
+<p>自动选中了所有的文件。上方窗口的选中文件目前状态是“Not updated in index”，就是说尚未添加到暂存区。</p>
+<p>使用<tt class="docutils literal"><span class="pre">qgit</span></tt>做提交，只要选择好要提交的文件列表，即使未添加到暂存区，也可以直接提交。在下方的提交窗口写入提交日志，点击“Commit”按钮开始提交。</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="../images/qgit-commit-3-commit-unstaged.png"><img alt="../images/qgit-commit-3-commit-unstaged.png" src="../images/qgit-commit-3-commit-unstaged.png" style="width: 491.25px; height: 239.25px;" /></a>
+</div>
+</div></blockquote>
+<p>提交完毕返回<tt class="docutils literal"><span class="pre">qgit</span></tt>主界面，在显示的提交列表的最上方，原来显示的“Working dir changes”已经更新为“Nothing to commit”，并且可以看到刚刚的提交已经显示在提交历史的最顶端。</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="../images/qgit-commit-4-revlist.png"><img alt="../images/qgit-commit-4-revlist.png" src="../images/qgit-commit-4-revlist.png" style="width: 650.25px; height: 374.25px;" /></a>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id2">
+<h2>2.8.4. 命令行工具<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>上面介绍的几款图形界面的Git版本库浏览器最大的特色就是更好看的提交关系图，还能非常方便的浏览历史提交的目录树，并从历史提交的目录树中提取文件等。这些操作对于Git命令行同样可以完成。使用Git命令行探索版本库历史对于读者来说并不新鲜，因为在前几章的实践中已经用到了相关命令，展示了对历史记录的操作。本节对这些命令的部分要点进行强调和补充。</p>
+<p>前面历次实践的提交基本上是线性的提交，研究起来没有挑战性。为了能够更加接近于实际又不失简洁，我构造了一个版本库，放在了Github上。可以通过如下操作在本地克隆这个示例版本库。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/my/workspace/
+$ git clone git://github.com/ossxp-com/gitdemo-commit-tree.git
+Cloning into gitdemo-commit-tree...
+remote: Counting objects: 63, done.
+remote: Compressing objects: 100% (51/51), done.
+remote: Total 63 (delta 8), reused 0 (delta 0)
+Receiving objects: 100% (63/63), 65.95 KiB, done.
+Resolving deltas: 100% (8/8), done.
+$ cd gitdemo-commit-tree
+</pre></div>
+</div>
+<p>运行<tt class="docutils literal"><span class="pre">gitg</span></tt>命令，显示其提交关系图。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/gitg-demo-commit-tree.png"><img alt="../images/gitg-demo-commit-tree.png" src="../images/gitg-demo-commit-tree.png" style="width: 666.0px; height: 338.0px;" /></a>
+</div>
+<p>是不是有点“乱花渐欲迷人眼”的感觉。如果把提交用里程碑标识的圆圈来代表，稍加排列就会看到下面的更为直白的提交关系图。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/commit-tree.png"><img alt="../images/commit-tree.png" src="../images/commit-tree.png" style="width: 201.0px; height: 203.0px;" /></a>
+</div>
+<p>Git的大部分命令可以使用提交版本作为参数（如：<strong class="command">git diff &lt;commit-id&gt;</strong>），有的命令则使用一个版本范围作为参数（如：<strong class="command">git log &lt;rev1&gt;..&lt;rev2&gt;</strong>）。Git的提交有着各式各样的表示法，提交范围也是一样，下面就通过两个命令<strong class="command">git rev-parse</strong>和<strong class="command">git rev-list</strong>分别研究一下Git的版本表示法和版本范围表示法。</p>
+<div class="section" id="git-rev-parse">
+<h3>2.8.4.1. 版本表示法：<strong class="command">git rev-parse</strong><a class="headerlink" href="#git-rev-parse" title="永久链接至标题">¶</a></h3>
+<p>命令<strong class="command">git rev-parse</strong>是Git的一个底层命令，其功能非常丰富（或者说杂乱），很多Git脚本或工具都会用到这条命令。</p>
+<p>此命令的部分应用在“Git初始化”章节中就已经看到。例如可以显示Git版本库的位置（<tt class="docutils literal"><span class="pre">--git-dir</span></tt>），当前工作区目录的深度（<tt class="docutils literal"><span class="pre">--show-cdup</span></tt>），甚至可以用于被Git无关应用用于解析命令行参数（<tt class="docutils literal"><span class="pre">--parseopt</span></tt>）。</p>
+<p>此命令可以显示当前版本库中的引用。</p>
+<ul>
+<li><p class="first">显示分支。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-parse --symbolic --branches
+</pre></div>
+</div>
+</li>
+<li><p class="first">显示里程碑。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-parse --symbolic --tags
+A
+B
+C
+D
+E
+F
+G
+H
+I
+J
+</pre></div>
+</div>
+</li>
+<li><p class="first">显示定义的所有引用。</p>
+<p>其中<tt class="file docutils literal"><span class="pre">refs/remotes/</span></tt>目录下的引用成为远程分支（或远程引用），在后面的章节会予以介绍。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-parse --symbolic --glob=refs/*
+refs/heads/master
+refs/remotes/origin/HEAD
+refs/remotes/origin/master
+refs/tags/A
+refs/tags/B
+refs/tags/C
+refs/tags/D
+refs/tags/E
+refs/tags/F
+refs/tags/G
+refs/tags/H
+refs/tags/I
+refs/tags/J
+</pre></div>
+</div>
+</li>
+</ul>
+<p>命令<strong class="command">git rev-parse</strong>另外一个重要的功能就是将一个Git对象表达式表示为对应的SHA1哈希值。针对本节开始克隆的版本库<tt class="docutils literal"><span class="pre">gitdemo-commit-tree</span></tt>，做如下操作。</p>
+<ul>
+<li><p class="first">显示HEAD对应的SHA1哈希值。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-parse  HEAD
+6652a0dce6a5067732c00ef0a220810a7230655e
+</pre></div>
+</div>
+</li>
+<li><p class="first">命令<strong class="command">git describe</strong>的输出也可以显示为SHA1哈希值。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git describe
+A-1-g6652a0d
+$ git rev-parse A-1-g6652a0d
+6652a0dce6a5067732c00ef0a220810a7230655e
+</pre></div>
+</div>
+</li>
+<li><p class="first">可以同时显示多个表达式的SHA1哈希值。</p>
+<p>下面的操作可以看出master和refs/heads/master都可以用于指代master分支。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-parse  master  refs/heads/master
+6652a0dce6a5067732c00ef0a220810a7230655e
+6652a0dce6a5067732c00ef0a220810a7230655e
+</pre></div>
+</div>
+</li>
+<li><p class="first">可以用哈希值的前几位指代整个哈希值。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-parse  6652  6652a0d
+6652a0dce6a5067732c00ef0a220810a7230655e
+6652a0dce6a5067732c00ef0a220810a7230655e
+</pre></div>
+</div>
+</li>
+<li><p class="first">里程碑的两种表示法均指向相同的对象。</p>
+<p>里程碑对象不一定是提交，有可能是一个Tag对象。Tag对象包含说明或者签名，还包括到对应提交的指向。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-parse  A  refs/tags/A
+c9b03a208288aebdbfe8d84aeb984952a16da3f2
+c9b03a208288aebdbfe8d84aeb984952a16da3f2
+</pre></div>
+</div>
+</li>
+<li><p class="first">里程碑A指向了一个Tag对象而非提交的时候，用下面的三个表示法都可以指向里程碑对应的提交。</p>
+<p>实际上下面的语法也可以直接作用于轻量级里程碑（直接指向提交的里程碑）或者作用于提交本身。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-parse  A^{}  A^0  A^{commit}
+81993234fc12a325d303eccea20f6fd629412712
+81993234fc12a325d303eccea20f6fd629412712
+81993234fc12a325d303eccea20f6fd629412712
+</pre></div>
+</div>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">A</span></tt>的第一个父提交就是<tt class="docutils literal"><span class="pre">B</span></tt>所指向的提交。</p>
+<p>回忆之前的介绍，<tt class="docutils literal"><span class="pre">^</span></tt>操作符代表着父提交。当一个提交有多个父提交时，可以通过在符号<tt class="docutils literal"><span class="pre">^</span></tt>后面跟上一个数字表示第几个父提交。<tt class="docutils literal"><span class="pre">A^</span></tt> 就相当于 <tt class="docutils literal"><span class="pre">A^1</span></tt>。而<tt class="docutils literal"><span class="pre">B^0</span></tt>代表了<tt class="docutils literal"><span class="pre">B</span></tt>所指向的一个Commit对象（因为<tt class="docutils literal"><span class="pre">B</span></tt>是Tag对象）。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-parse  A^  A^1  B^0
+776c5c9da9dcbb7e463c061d965ea47e73853b6e
+776c5c9da9dcbb7e463c061d965ea47e73853b6e
+776c5c9da9dcbb7e463c061d965ea47e73853b6e
+</pre></div>
+</div>
+</li>
+<li><p class="first">更为复杂的表示法。</p>
+<p>连续的<tt class="docutils literal"><span class="pre">^</span></tt>符号依次沿着父提交进行定位至某一祖先提交。<tt class="docutils literal"><span class="pre">^</span></tt>后面的数字代表该提交的第几个父提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-parse  A^^3^2  F^2  J^{}
+3252fcce40949a4a622a1ac012cb120d6b340ac8
+3252fcce40949a4a622a1ac012cb120d6b340ac8
+3252fcce40949a4a622a1ac012cb120d6b340ac8
+</pre></div>
+</div>
+</li>
+<li><p class="first">记号<tt class="docutils literal"><span class="pre">~&lt;n&gt;</span></tt>就相当于连续&lt;n&gt;个符号<tt class="docutils literal"><span class="pre">^</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-parse  A~3  A^^^  G^0
+e80aa7481beda65ae00e35afc4bc4b171f9b0ebf
+e80aa7481beda65ae00e35afc4bc4b171f9b0ebf
+e80aa7481beda65ae00e35afc4bc4b171f9b0ebf
+</pre></div>
+</div>
+</li>
+<li><p class="first">显示里程碑A对应的目录树。下面两种写法都可以。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-parse  A^{tree}  A:
+95ab9e7db14ca113d5548dc20a4872950e8e08c0
+95ab9e7db14ca113d5548dc20a4872950e8e08c0
+</pre></div>
+</div>
+</li>
+<li><p class="first">显示树里面的文件，下面两种表示法均可。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-parse  A^{tree}:src/Makefile  A:src/Makefile
+96554c5d4590dbde28183e9a6a3199d526eeb925
+96554c5d4590dbde28183e9a6a3199d526eeb925
+</pre></div>
+</div>
+</li>
+<li><p class="first">暂存区里的文件和HEAD中的文件相同。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-parse  :gitg.png  HEAD:gitg.png
+fc58966ccc1e5af24c2c9746196550241bc01c50
+fc58966ccc1e5af24c2c9746196550241bc01c50
+</pre></div>
+</div>
+</li>
+<li><p class="first">还可以通过在提交日志中查找字串的方式显示提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-parse :/&quot;Commit A&quot;
+81993234fc12a325d303eccea20f6fd629412712
+</pre></div>
+</div>
+</li>
+<li><p class="first">再有就是reflog相关的语法，参见“Git重置”章节中关于reflog的介绍。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-parse HEAD@{0} master@{0}
+6652a0dce6a5067732c00ef0a220810a7230655e
+6652a0dce6a5067732c00ef0a220810a7230655e
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="git-rev-list">
+<h3>2.8.4.2. 版本范围表示法：git rev-list<a class="headerlink" href="#git-rev-list" title="永久链接至标题">¶</a></h3>
+<p>有的Git命令可以使用一个版本范围作为参数，命令<strong class="command">git rev-list</strong>可以帮助研究Git的各种版本范围语法。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/commit-tree-with-id.png"><img alt="../images/commit-tree-with-id.png" src="../images/commit-tree-with-id.png" style="width: 266.0px; height: 225.0px;" /></a>
+</div>
+<ul>
+<li><p class="first">一个提交ID实际上就可以代表一个版本列表。含义是：该版本开始的所有历史提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-list --oneline  A
+8199323 Commit A: merge B with C.
+0cd7f2e commit C.
+776c5c9 Commit B: merge D with E and F
+beb30ca Commit F: merge I with J
+212efce Commit D: merge G with H
+634836c commit I.
+3252fcc commit J.
+83be369 commit E.
+2ab52ad commit H.
+e80aa74 commit G.
+</pre></div>
+</div>
+</li>
+<li><p class="first">两个或多个版本，相当于每个版本单独使用时指代的列表的并集。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-list --oneline  D  F
+beb30ca Commit F: merge I with J
+212efce Commit D: merge G with H
+634836c commit I.
+3252fcc commit J.
+2ab52ad commit H.
+e80aa74 commit G.
+</pre></div>
+</div>
+</li>
+<li><p class="first">在一个版本前面加上符号（<tt class="docutils literal"><span class="pre">^</span></tt>）含义是取反，即排除这个版本及其历史版本。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-list --oneline  ^G D
+212efce Commit D: merge G with H
+2ab52ad commit H.
+</pre></div>
+</div>
+</li>
+<li><p class="first">和上面等价的“点点”表示法。使用两个点连接两个版本，如<tt class="docutils literal"><span class="pre">G..D</span></tt>，就相当于<tt class="docutils literal"><span class="pre">^G</span> <span class="pre">D</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-list --oneline  G..D
+212efce Commit D: merge G with H
+2ab52ad commit H.
+</pre></div>
+</div>
+</li>
+<li><p class="first">版本取反，参数的顺序不重要，但是“点点”表示法前后的版本顺序很重要。</p>
+<ul>
+<li><p class="first">语法：<tt class="docutils literal"><span class="pre">^B</span> <span class="pre">C</span></tt></p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-list --oneline  ^B C
+0cd7f2e commit C.
+</pre></div>
+</div>
+</li>
+<li><p class="first">语法：<tt class="docutils literal"><span class="pre">C</span> <span class="pre">^B</span></tt></p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-list --oneline  C ^B
+0cd7f2e commit C.
+</pre></div>
+</div>
+</li>
+<li><p class="first">语法：<tt class="docutils literal"><span class="pre">B..C</span></tt>相当于<tt class="docutils literal"><span class="pre">^B</span> <span class="pre">C</span></tt></p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-list --oneline  B..C
+0cd7f2e commit C.
+</pre></div>
+</div>
+</li>
+<li><p class="first">语法：<tt class="docutils literal"><span class="pre">C..B</span></tt>相当于<tt class="docutils literal"><span class="pre">^C</span> <span class="pre">B</span></tt></p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-list --oneline  C..B
+776c5c9 Commit B: merge D with E and F
+212efce Commit D: merge G with H
+83be369 commit E.
+2ab52ad commit H.
+e80aa74 commit G.
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p class="first">三点表示法的含义是两个版本共同能够访问到的除外。</p>
+<p>B和C共同能够访问到的F、I、J排除在外。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-list --oneline  B...C
+0cd7f2e commit C.
+776c5c9 Commit B: merge D with E and F
+212efce Commit D: merge G with H
+83be369 commit E.
+2ab52ad commit H.
+e80aa74 commit G.
+</pre></div>
+</div>
+</li>
+<li><p class="first">三点表示法，两个版本的前后顺序没有关系。</p>
+<p>实际上<tt class="docutils literal"><span class="pre">r1...r2</span></tt>相当于<tt class="docutils literal"><span class="pre">r1</span> <span class="pre">r2</span> <span class="pre">--not</span> <span class="pre">$(git</span> <span class="pre">merge-base</span> <span class="pre">--all</span> <span class="pre">r1</span> <span class="pre">r2)</span></tt>，和顺序无关。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-list --oneline  C...B
+0cd7f2e commit C.
+776c5c9 Commit B: merge D with E and F
+212efce Commit D: merge G with H
+83be369 commit E.
+2ab52ad commit H.
+e80aa74 commit G.
+</pre></div>
+</div>
+</li>
+<li><p class="first">某提交的历史提交，自身除外，用语法<tt class="docutils literal"><span class="pre">r1^&#64;</span></tt>表示。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-list --oneline  B^@
+beb30ca Commit F: merge I with J
+212efce Commit D: merge G with H
+634836c commit I.
+3252fcc commit J.
+83be369 commit E.
+2ab52ad commit H.
+e80aa74 commit G.
+</pre></div>
+</div>
+</li>
+<li><p class="first">提交本身不包括其历史提交，用语法<tt class="docutils literal"><span class="pre">r1^!</span></tt>表示。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-list --oneline  B^!
+776c5c9 Commit B: merge D with E and F
+
+$ git rev-list --oneline  F^! D
+beb30ca Commit F: merge I with J
+212efce Commit D: merge G with H
+2ab52ad commit H.
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="git-log">
+<h3>2.8.4.3. 浏览日志：<strong class="command">git log</strong><a class="headerlink" href="#git-log" title="永久链接至标题">¶</a></h3>
+<p>命令<strong class="command">git log</strong>是老朋友了，在前面的章节中曾经大量的出现，用于显示提交历史。</p>
+<p><strong>参数代表版本范围</strong></p>
+<p>当不使用任何参数调用，相当于使用了缺省的参数HEAD，即显示当前HEAD能够访问到的所有历史提交。还可以使用上面介绍的版本范围表示法，例如：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git log --oneline F^! D
+beb30ca Commit F: merge I with J
+212efce Commit D: merge G with H
+2ab52ad commit H.
+e80aa74 commit G.
+</pre></div>
+</div>
+<p><strong>分支图显示</strong></p>
+<p>通过<tt class="docutils literal"><span class="pre">--graph</span></tt>参数调用<strong class="command">git log</strong>可以显示字符界面的提交关系图，而且不同的分支还可以用不同的颜色来表示。如果希望每次查看日志的时候都看到提交关系图，可以设置一个别名，用别名来调用。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git config --global alias.glog &quot;log --graph&quot;
+</pre></div>
+</div>
+<p>定义别名之后，每次希望自动显示提交关系图，就可以使用别名命令：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git glog --oneline
+* 6652a0d Add Images for git treeview.
+*   8199323 Commit A: merge B with C.
+|\
+| * 0cd7f2e commit C.
+| |
+|  \
+*-. \   776c5c9 Commit B: merge D with E and F
+|\ \ \
+| | |/
+| | *   beb30ca Commit F: merge I with J
+| | |\
+| | | * 3252fcc commit J.
+| | * 634836c commit I.
+| * 83be369 commit E.
+*   212efce Commit D: merge G with H
+|\
+| * 2ab52ad commit H.
+* e80aa74 commit G.
+</pre></div>
+</div>
+<p><strong>显示最近的几条日志</strong></p>
+<p>可以使用参数<tt class="docutils literal"><span class="pre">-&lt;n&gt;</span></tt>（&lt;n&gt;为数字），显示最近的&lt;n&gt;条日志。例如下面的命令显示最近的3条日志。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git log -3 --pretty=oneline
+6652a0dce6a5067732c00ef0a220810a7230655e Add Images for git treeview.
+81993234fc12a325d303eccea20f6fd629412712 Commit A: merge B with C.
+0cd7f2ea245d90d414e502467ac749f36aa32cc4 commit C.
+</pre></div>
+</div>
+<p><strong>显示每次提交的具体改动</strong></p>
+<p>使用参数<tt class="docutils literal"><span class="pre">-p</span></tt>可以在显示日志的时候同时显示改动。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git log -p -1
+commit 6652a0dce6a5067732c00ef0a220810a7230655e
+Author: Jiang Xin &lt;jiangxin@ossxp.com&gt;
+Date:   Thu Dec 9 16:07:11 2010 +0800
+
+    Add Images for git treeview.
+
+    Signed-off-by: Jiang Xin &lt;jiangxin@ossxp.com&gt;
+
+diff --git a/gitg.png b/gitg.png
+new file mode 100644
+index 0000000..fc58966
+Binary files /dev/null and b/gitg.png differ
+diff --git a/treeview.png b/treeview.png
+new file mode 100644
+index 0000000..a756d12
+Binary files /dev/null and b/treeview.png differ
+</pre></div>
+</div>
+<p>因为是二进制文件改动，缺省不显示改动的内容。实际上Git的差异文件提供对二进制文件的支持，在后面“Git应用”章节予以专题介绍。</p>
+<p><strong>显示每次提交的变更概要</strong></p>
+<p>使用<tt class="docutils literal"><span class="pre">-p</span></tt>参数会让日志输出显得非常冗余，当不需要知道具体的改动而只想知道改动在哪些文件上，可以使用<tt class="docutils literal"><span class="pre">--stat</span></tt>参数。输出的变更概要像极了Linux的<strong class="command">diffstat</strong>命令的输出。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git log --stat --oneline  I..C
+0cd7f2e commit C.
+ README    |    1 +
+ doc/C.txt |    1 +
+ 2 files changed, 2 insertions(+), 0 deletions(-)
+beb30ca Commit F: merge I with J
+3252fcc commit J.
+ README           |    7 +++++++
+ doc/J.txt        |    1 +
+ src/.gitignore   |    3 +++
+ src/Makefile     |   27 +++++++++++++++++++++++++++
+ src/main.c       |   10 ++++++++++
+ src/version.h.in |    6 ++++++
+ 6 files changed, 54 insertions(+), 0 deletions(-)
+</pre></div>
+</div>
+<p><strong>定制输出</strong></p>
+<p>Git的差异输出命令提供了很多输出模板提供选择，可以根据需要选择冗余显示或者精简显示。</p>
+<ul>
+<li><p class="first">参数<tt class="docutils literal"><span class="pre">--pretty=raw</span></tt>显示提交的原始数据。可以显示提交对应的树ID。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git log --pretty=raw -1
+commit 6652a0dce6a5067732c00ef0a220810a7230655e
+tree e33be9e8e7ca5f887c7d5601054f2f510e6744b8
+parent 81993234fc12a325d303eccea20f6fd629412712
+author Jiang Xin &lt;jiangxin@ossxp.com&gt; 1291882031 +0800
+committer Jiang Xin &lt;jiangxin@ossxp.com&gt; 1291882892 +0800
+
+    Add Images for git treeview.
+
+    Signed-off-by: Jiang Xin &lt;jiangxin@ossxp.com&gt;
+</pre></div>
+</div>
+</li>
+<li><p class="first">参数<tt class="docutils literal"><span class="pre">--pretty=fuller</span></tt>会同时显示作者和提交者，两者可以不同。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git log --pretty=fuller -1
+commit 6652a0dce6a5067732c00ef0a220810a7230655e
+Author:     Jiang Xin &lt;jiangxin@ossxp.com&gt;
+AuthorDate: Thu Dec 9 16:07:11 2010 +0800
+Commit:     Jiang Xin &lt;jiangxin@ossxp.com&gt;
+CommitDate: Thu Dec 9 16:21:32 2010 +0800
+
+    Add Images for git treeview.
+
+    Signed-off-by: Jiang Xin &lt;jiangxin@ossxp.com&gt;
+</pre></div>
+</div>
+</li>
+<li><p class="first">参数<tt class="docutils literal"><span class="pre">--pretty=oneline</span></tt>显然会提供最精简的日志输出。也可以使用<tt class="docutils literal"><span class="pre">--oneline</span></tt>参数，效果近似。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git log --pretty=oneline -1
+6652a0dce6a5067732c00ef0a220810a7230655e Add Images for git treeview.
+</pre></div>
+</div>
+</li>
+</ul>
+<p>如果只想查看、分析某一个提交，也可以使用<strong class="command">git show</strong>或者<strong class="command">git cat-file</strong>命令。</p>
+<ul>
+<li><p class="first">使用<strong class="command">git show</strong>显示里程碑D及其提交：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git show D --stat
+tag D
+Tagger: Jiang Xin &lt;jiangxin@ossxp.com&gt;
+Date:   Thu Dec 9 14:24:52 2010 +0800
+
+create node D
+
+commit 212efce1548795a1edb08e3708a50989fcd73cce
+Merge: e80aa74 2ab52ad
+Author: Jiang Xin &lt;jiangxin@ossxp.com&gt;
+Date:   Thu Dec 9 14:06:34 2010 +0800
+
+    Commit D: merge G with H
+
+    Signed-off-by: Jiang Xin &lt;jiangxin@ossxp.com&gt;
+
+ README    |    2 ++
+ doc/D.txt |    1 +
+ doc/H.txt |    1 +
+ 3 files changed, 4 insertions(+), 0 deletions(-)
+</pre></div>
+</div>
+</li>
+<li><p class="first">使用<strong class="command">git cat-file</strong>显示里程碑D及其提交。</p>
+<p>参数<tt class="docutils literal"><span class="pre">-p</span></tt>的含义是美观的输出（pretty）。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git cat-file -p D^0
+tree 1c22e90c6bf150ee1cde6cefb476abbb921f491f
+parent e80aa7481beda65ae00e35afc4bc4b171f9b0ebf
+parent 2ab52ad2a30570109e71b56fa1780f0442059b3c
+author Jiang Xin &lt;jiangxin@ossxp.com&gt; 1291874794 +0800
+committer Jiang Xin &lt;jiangxin@ossxp.com&gt; 1291875877 +0800
+
+Commit D: merge G with H
+
+Signed-off-by: Jiang Xin &lt;jiangxin@ossxp.com&gt;
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="git-diff">
+<h3>2.8.4.4. 差异比较：<strong class="command">git diff</strong><a class="headerlink" href="#git-diff" title="永久链接至标题">¶</a></h3>
+<p>Git差异比较功能在前面的实践中也反复的接触过了，尤其是在介绍暂存区的相关章节重点介绍了<strong class="command">git diff</strong>命令如何对工作区、暂存区、版本库进行比较。</p>
+<ul class="simple">
+<li>比较里程碑B和里程碑A，用命令：<strong class="command">git diff B A</strong></li>
+<li>比较工作区和里程碑A，用命令：<strong class="command">git diff A</strong></li>
+<li>比较暂存区和里程碑A，用命令：<strong class="command">git diff &#8211;cached A</strong></li>
+<li>比较工作区和暂存区，用命令：<strong class="command">git diff</strong></li>
+<li>比较暂存区和HEAD，用命令：<strong class="command">git diff &#8211;cached</strong></li>
+<li>比较工作区和HEAD，用命令：<strong class="command">git diff HEAD</strong></li>
+</ul>
+<p><strong>Git中文件在版本间的差异比较</strong></p>
+<p>差异比较还可以使用路径参数，只显示不同版本间该路径下文件的差异。语法格式：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git diff &lt;commit1&gt; &lt;commit2&gt; -- &lt;paths&gt;
+</pre></div>
+</div>
+<p><strong>非Git目录/文件的差异比较</strong></p>
+<p>命令<strong class="command">git diff</strong>还可以在Git版本库之外执行，对非Git目录进行比较，就像GNU的<strong class="command">diff</strong>命令一样。之所以提供这个功能是因为Git差异比较命令更为强大，提供了对GNU差异比较的扩展支持。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git diff &lt;path1&gt; &lt;path2&gt;
+</pre></div>
+</div>
+<p><strong>扩展的差异语法</strong></p>
+<p>Git扩展了GNU的差异比较语法，提供了对重命名、二进制文件、文件权限变更的支持。在后面的“Git应用”辟专题介绍二进制文件的差异比较和补丁的应用。</p>
+<p><strong>逐词比较，而非缺省的逐行比较</strong></p>
+<p>Git的差异比较缺省是逐行比较，分别显示改动前的行和改动后的行，到底改动哪里还需要仔细辨别。Git还提供一种逐词比较的输出，有的人会更喜欢。使用<tt class="docutils literal"><span class="pre">--word-diff</span></tt>参数可以显示逐词比较。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git diff --word-diff
+diff --git a/src/book/02-use-git/080-git-history-travel.rst b/src/book/02-use-git/080-git-history-travel.rst
+index f740203..2dd3e6f 100644
+--- a/src/book/02-use-git/080-git-history-travel.rst
++++ b/src/book/02-use-git/080-git-history-travel.rst
+@@ -681,7 +681,7 @@ Git的大部分命令可以使用提交版本作为参数（如：git diff），
+
+::
+
+  [-18:23:48 jiangxin@hp:~/gitwork/gitbook/src/book$-]{+$+} git log --stat --oneline  I..C
+  0cd7f2e commit C.
+   README    |    1 +
+   doc/C.txt |    1 +
+</pre></div>
+</div>
+<p>上面的逐词差异显示是有颜色显示的：删除内容<tt class="docutils literal"><span class="pre">[-...-]</span></tt>用红色表示，添加的内容<tt class="docutils literal"><span class="pre">{+...+}</span></tt>用绿色表示。</p>
+</div>
+<div class="section" id="git-blame">
+<h3>2.8.4.5. 文件追溯：<strong class="command">git blame</strong><a class="headerlink" href="#git-blame" title="永久链接至标题">¶</a></h3>
+<p>在软件开发过程中当发现Bug并定位到具体的代码时，Git的文件追溯命令可以指出是谁在什么时候，什么版本引入的此Bug。</p>
+<p>当针对文件执行<strong class="command">git blame</strong>命令，就会逐行显示文件，在每一行的行首显示此行最早是在什么版本引入的，由谁引入。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/my/workspace/gitdemo-commit-tree
+$ git blame README
+^e80aa74 (Jiang Xin 2010-12-09 14:00:33 +0800  1) DEMO program for git-scm-book.
+^e80aa74 (Jiang Xin 2010-12-09 14:00:33 +0800  2)
+^e80aa74 (Jiang Xin 2010-12-09 14:00:33 +0800  3) Changes
+^e80aa74 (Jiang Xin 2010-12-09 14:00:33 +0800  4) =======
+^e80aa74 (Jiang Xin 2010-12-09 14:00:33 +0800  5)
+81993234 (Jiang Xin 2010-12-09 14:30:15 +0800  6) * create node A.
+0cd7f2ea (Jiang Xin 2010-12-09 14:29:09 +0800  7) * create node C.
+776c5c9d (Jiang Xin 2010-12-09 14:27:31 +0800  8) * create node B.
+beb30ca7 (Jiang Xin 2010-12-09 14:11:01 +0800  9) * create node F.
+^3252fcc (Jiang Xin 2010-12-09 14:00:33 +0800 10) * create node J.
+^634836c (Jiang Xin 2010-12-09 14:00:33 +0800 11) * create node I.
+^83be369 (Jiang Xin 2010-12-09 14:00:33 +0800 12) * create node E.
+212efce1 (Jiang Xin 2010-12-09 14:06:34 +0800 13) * create node D.
+^2ab52ad (Jiang Xin 2010-12-09 14:00:33 +0800 14) * create node H.
+^e80aa74 (Jiang Xin 2010-12-09 14:00:33 +0800 15) * create node G.
+^e80aa74 (Jiang Xin 2010-12-09 14:00:33 +0800 16) * initialized.
+</pre></div>
+</div>
+<p>只想查看某几行，使用<tt class="docutils literal"><span class="pre">-L</span> <span class="pre">n,m</span></tt>参数，如下：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git blame -L 6,+5 README
+81993234 (Jiang Xin 2010-12-09 14:30:15 +0800  6) * create node A.
+0cd7f2ea (Jiang Xin 2010-12-09 14:29:09 +0800  7) * create node C.
+776c5c9d (Jiang Xin 2010-12-09 14:27:31 +0800  8) * create node B.
+beb30ca7 (Jiang Xin 2010-12-09 14:11:01 +0800  9) * create node F.
+^3252fcc (Jiang Xin 2010-12-09 14:00:33 +0800 10) * create node J.
+</pre></div>
+</div>
+</div>
+<div class="section" id="git-bisect">
+<h3>2.8.4.6. 二分查找：<strong class="command">git bisect</strong><a class="headerlink" href="#git-bisect" title="永久链接至标题">¶</a></h3>
+<p>前面的文件追溯是建立在问题（Bug）已经定位（到代码上）的基础之上，然后才能通过错误的行（代码）找到人（提交者），打板子（教育或惩罚）。那么如何定位问题呢？Git的二分查找命令可以提供帮助。</p>
+<p>二分查找并不神秘，也不是万灵药，是建立在测试的基础之上的。实际上每个进行过软件测试的人都曾经使用过：“最新的版本出现Bug了，但是在给某某客户的版本却没有这个问题，所以问题肯定出在两者之间的某次代码提交上”。</p>
+<p>Git提供的<strong class="command">git bisect</strong>命令是基于版本库的，自动化的问题查找和定位工作流程。取代传统软件测试中粗放式的、针对软件发布版本的、无法定位到代码的测试。</p>
+<p>执行二分查找，在发现问题后，首先要找到一个正确的版本，如果所发现的问题从软件最早的版本就是错的，那么就没有必要执行二分查找了，还是老老实实的Debug吧。但是如果能够找到一个正确的版本，即在这个正确的版本上问题没有发生，那么就可以开始使用<strong class="command">git bisect</strong>命令在版本库中进行二分查找了：</p>
+<ol class="arabic simple">
+<li>工作区切换到已知的“好版本”和“坏版本”的中间的一个版本。</li>
+<li>执行测试，问题重现，将版本库当前版本库为“坏版本”，如果问题没有重现，将当前版本标记为“好版本”。</li>
+<li>重复1-2，直至最终找到第一个导致问题出现的版本。</li>
+</ol>
+<p>下面是示例版本库标记了提交ID后的示意图，在这个示例版本库中试验二分查找流程：首先标记最新提交（HEAD）是“坏的”，G提交是好的，然后通过查找最终定位到坏提交（B）。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/commit-tree-bisect.png"><img alt="../images/commit-tree-bisect.png" src="../images/commit-tree-bisect.png" style="width: 267.0px; height: 279.0px;" /></a>
+</div>
+<p>在下面的试验中定义坏提交的依据很简单，如果在<tt class="file docutils literal"><span class="pre">doc/</span></tt>目录中包含文件<tt class="file docutils literal"><span class="pre">B.txt</span></tt>，则此版本是“坏”的。（这个示例太简陋，不要见笑，聪明的读者可以直接通过<tt class="file docutils literal"><span class="pre">doc/B.txt</span></tt>文件就可追溯到B提交。）</p>
+<p>下面开始通过手动测试（查找<tt class="file docutils literal"><span class="pre">doc/B.txt</span></tt>存在与否），借助Git二分查找定位“问题”版本。</p>
+<ul>
+<li><p class="first">首先确认工作在master分支。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/my/workspace/gitdemo-commit-tree/
+$ git checkout master
+Already on &#39;master&#39;
+</pre></div>
+</div>
+</li>
+<li><p class="first">开始二分查找。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git bisect start
+</pre></div>
+</div>
+</li>
+<li><p class="first">已经当前版本是“坏提交”，因为存在文件<tt class="file docutils literal"><span class="pre">doc/B.txt</span></tt>。而G版本是“好提交”，因为不存在文件<tt class="file docutils literal"><span class="pre">doc/B.txt</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git cat-file -t master:doc/B.txt
+blob
+$ git cat-file -t G:doc/B.txt
+fatal: Not a valid object name G:doc/B.txt
+</pre></div>
+</div>
+</li>
+<li><p class="first">将当前版本（HEAD）标记为“坏提交”，将G版本标记为“好提交”。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git bisect bad
+$ git bisect good G
+Bisecting: 5 revisions left to test after this (roughly 2 steps)
+[0cd7f2ea245d90d414e502467ac749f36aa32cc4] commit C.
+</pre></div>
+</div>
+</li>
+<li><p class="first">自动定位到C提交。没有文件<tt class="file docutils literal"><span class="pre">doc/B.txt</span></tt>，也是一个好提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git describe
+C
+$ ls doc/B.txt
+ls: 无法访问doc/B.txt: 没有那个文件或目录
+</pre></div>
+</div>
+</li>
+<li><p class="first">标记当前版本（C提交）为“好提交”。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git bisect good
+Bisecting: 3 revisions left to test after this (roughly 2 steps)
+[212efce1548795a1edb08e3708a50989fcd73cce] Commit D: merge G with H
+</pre></div>
+</div>
+</li>
+<li><p class="first">现在定位到D版本，这也是一个“好提交”。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git describe
+D
+$ ls doc/B.txt
+ls: 无法访问doc/B.txt: 没有那个文件或目录
+</pre></div>
+</div>
+</li>
+<li><p class="first">标记当前版本（D提交）为“好提交”。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git bisect good
+Bisecting: 1 revision left to test after this (roughly 1 step)
+[776c5c9da9dcbb7e463c061d965ea47e73853b6e] Commit B: merge D with E and F
+</pre></div>
+</div>
+</li>
+<li><p class="first">现在定位到B版本，这是一个“坏提交”。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git bisect bad
+Bisecting: 0 revisions left to test after this (roughly 0 steps)
+[83be36956c007d7bfffe13805dd2081839fd3603] commit E.
+</pre></div>
+</div>
+</li>
+<li><p class="first">现在定位到E版本，这是一个“好提交”。当标记E为好提交之后，输出显示已经成功定位到引入坏提交的最接近的版本。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git bisect good
+776c5c9da9dcbb7e463c061d965ea47e73853b6e is the first bad commit
+</pre></div>
+</div>
+</li>
+<li><p class="first">最终定位的坏提交用引用<tt class="file docutils literal"><span class="pre">refs/bisect/bad</span></tt>标识。可以如下方法切换到该版本。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git checkout bisect/bad
+Previous HEAD position was 83be369... commit E.
+HEAD is now at 776c5c9... Commit B: merge D with E and F
+</pre></div>
+</div>
+</li>
+<li><p class="first">当对“Bug”定位和修复后，撤销二分查找在版本库中遗留的临时文件和引用。</p>
+<p>撤销二分查找后，版本库切换回执行二分查找之前所在的分支。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git bisect reset
+Previous HEAD position was 776c5c9... Commit B: merge D with E and F
+Switched to branch &#39;master&#39;
+</pre></div>
+</div>
+</li>
+</ul>
+<p><strong>把“好提交”标记成了“坏提交”该怎么办？</strong></p>
+<p>在执行二分查找的过程中，一不小心就有可能犯错，将“好提交”标记为“坏提交”，或者相反。这将导致前面的查找过程也前功尽弃。Git的二分查找提供一个恢复查找进度的办法。</p>
+<ul>
+<li><p class="first">例如对E提交，本来是一个“好版本”却被错误的标记为“坏版本”。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git bisect bad
+83be36956c007d7bfffe13805dd2081839fd3603 is the first bad commit
+</pre></div>
+</div>
+</li>
+<li><p class="first">用<strong class="command">git bisect log</strong>命令查看二分查找的日志记录。</p>
+<p>把二分查找的日志保存在一个文件中。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git bisect log &gt; logfile
+</pre></div>
+</div>
+</li>
+<li><p class="first">编辑这个文件，删除记录了错误动作的行。</p>
+<p>以井号（#）开始的行是注释。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cat logfile
+# bad: [6652a0dce6a5067732c00ef0a220810a7230655e] Add Images for git treeview.
+# good: [e80aa7481beda65ae00e35afc4bc4b171f9b0ebf] commit G.
+git bisect start &#39;master&#39; &#39;G&#39;
+# good: [0cd7f2ea245d90d414e502467ac749f36aa32cc4] commit C.
+git bisect good 0cd7f2ea245d90d414e502467ac749f36aa32cc4
+# good: [212efce1548795a1edb08e3708a50989fcd73cce] Commit D: merge G with H
+git bisect good 212efce1548795a1edb08e3708a50989fcd73cce
+# bad: [776c5c9da9dcbb7e463c061d965ea47e73853b6e] Commit B: merge D with E and F
+git bisect bad 776c5c9da9dcbb7e463c061d965ea47e73853b6e
+</pre></div>
+</div>
+</li>
+<li><p class="first">结束上一次出错的二分查找。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git bisect reset
+Previous HEAD position was 83be369... commit E.
+Switched to branch &#39;master&#39;
+</pre></div>
+</div>
+</li>
+<li><p class="first">通过日志文件恢复进度。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git bisect replay logfile
+We are not bisecting.
+Bisecting: 5 revisions left to test after this (roughly 2 steps)
+[0cd7f2ea245d90d414e502467ac749f36aa32cc4] commit C.
+Bisecting: 0 revisions left to test after this (roughly 0 steps)
+[83be36956c007d7bfffe13805dd2081839fd3603] commit E.
+</pre></div>
+</div>
+</li>
+<li><p class="first">再一次回到了提交E，这一次不要标记错了。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git describe
+E
+$ git bisect good
+776c5c9da9dcbb7e463c061d965ea47e73853b6e is the first bad commit
+</pre></div>
+</div>
+</li>
+</ul>
+<p><strong>二分查找使用自动化测试</strong></p>
+<p>Git的二分查找命令支持<tt class="docutils literal"><span class="pre">run</span></tt>子命令，可以运行一个自动化测试脚本。</p>
+<ul class="simple">
+<li>如果脚本的退出码是0，正在测试的版本是一个“好版本”。</li>
+<li>如果脚本的退出码是125，正在测试的版本被跳过。</li>
+<li>如果脚本的退出码是1到127（125除外），正在测试的版本是一个“坏版本”。</li>
+</ul>
+<p>对于本例写一个自动化测试太简单了，无非就是判断文件是否存在，存在返回错误码1，不存在返回错误码0。</p>
+<p>测试脚本<tt class="file docutils literal"><span class="pre">good-or-bad.sh</span></tt>如下：</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre>#!/bin/sh
+
+[ -f doc/B.txt ] &amp;&amp; exit 1
+exit 0
+</pre></div>
+</div>
+</div></blockquote>
+<p>用此自动化脚本执行二分查找就非常简单了。</p>
+<ul>
+<li><p class="first">从已知的坏版本master和好版本G，开始新一轮的二分查找。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git bisect start master G
+Bisecting: 5 revisions left to test after this (roughly 2 steps)
+[0cd7f2ea245d90d414e502467ac749f36aa32cc4] commit C.
+</pre></div>
+</div>
+</li>
+<li><p class="first">自动化测试，使用脚本<tt class="file docutils literal"><span class="pre">good-or-bad.sh</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git bisect run sh good-or-bad.sh
+running sh good-or-bad.sh
+Bisecting: 3 revisions left to test after this (roughly 2 steps)
+[212efce1548795a1edb08e3708a50989fcd73cce] Commit D: merge G with H
+running sh good-or-bad.sh
+Bisecting: 1 revision left to test after this (roughly 1 step)
+[776c5c9da9dcbb7e463c061d965ea47e73853b6e] Commit B: merge D with E and F
+running sh good-or-bad.sh
+Bisecting: 0 revisions left to test after this (roughly 0 steps)
+[83be36956c007d7bfffe13805dd2081839fd3603] commit E.
+running sh good-or-bad.sh
+776c5c9da9dcbb7e463c061d965ea47e73853b6e is the first bad commit
+bisect run success
+</pre></div>
+</div>
+</li>
+<li><p class="first">定位到的“坏版本”是B。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git describe refs/bisect/bad
+B
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h3>2.8.4.7. 获取历史版本<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>提取历史提交中的文件无非就是下面表格中的操作，在之前的实践中多次用到，不再赘述。</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="29%" />
+<col width="34%" />
+<col width="37%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">动作</th>
+<th class="head">命令格式</th>
+<th class="head">示例</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>查看历史提交的目录树</td>
+<td>git ls-tree &lt;tree-ish&gt; &lt;paths&gt;</td>
+<td><ul class="first last simple">
+<li>git ls-tree 776c5c9 README</li>
+<li>git ls-tree -r refs/tags/D doc</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>整个工作区切换到历史版本</td>
+<td>git checkout &lt;commit&gt;</td>
+<td><ul class="first last simple">
+<li>git checkout HEAD^^</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>检出某文件的历史版本</td>
+<td>git checkout &lt;commit&gt; &#8211; &lt;paths&gt;</td>
+<td><ul class="first last simple">
+<li>git checkout refs/tags/D &#8211; README</li>
+<li>git checkout 776c5c9 &#8211; doc</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>检出某文件的历史版本到其他文件名</td>
+<td>git show &lt;commit&gt;:&lt;file&gt; &gt; new_name</td>
+<td><ul class="first last simple">
+<li>git show 887113d:README &gt; README.OLD</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="090-back-to-future.html" title="2.9. 改变历史"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="070-git-basic.html" title="2.7. Git基本操作"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >2. Git独奏</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

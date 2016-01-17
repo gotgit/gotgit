@@ -1,0 +1,558 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>6.1. CVS版本库到Git的迁移 &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="up" title="6. 迁移到Git" href="index.html" />
+    <link rel="next" title="6.2. 更多版本控制系统的迁移" href="020-others.html" />
+    <link rel="prev" title="6. 迁移到Git" href="index.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="020-others.html" title="6.2. 更多版本控制系统的迁移"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="6. 迁移到Git"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">6. 迁移到Git</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">6.1. CVS版本库到Git的迁移</a><ul>
+<li><a class="reference internal" href="#cvs2svn-cvs2git">6.1.1. 安装cvs2svn（含cvs2git）</a></li>
+<li><a class="reference internal" href="#id1">6.1.2. 版本库转换（命令行参数模式）</a></li>
+<li><a class="reference internal" href="#id2">6.1.3. 版本库转换（配置文件模式）</a></li>
+<li><a class="reference internal" href="#id5">6.1.4. 迁移后版本库检查</a><ul>
+<li><a class="reference internal" href="#id6">6.1.4.1. 文件名和日志的中文</a></li>
+<li><a class="reference internal" href="#id7">6.1.4.2. 图片文件被破坏</a></li>
+<li><a class="reference internal" href="#cvsignore">6.1.4.3. <tt class="file docutils literal"><span class="pre">.cvsignore</span></tt>文件的转换</a></li>
+<li><a class="reference internal" href="#id8">6.1.4.4. 迁移后的测试</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="index.html"
+                        title="上一章">6. 迁移到Git</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="020-others.html"
+                        title="下一章">6.2. 更多版本控制系统的迁移</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/06-migrate/010-cvs.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="cvsgit">
+<h1>6.1. CVS版本库到Git的迁移<a class="headerlink" href="#cvsgit" title="永久链接至标题">¶</a></h1>
+<p>CVS是最早广泛使用的版本控制系统，因为其服务器端存储结构的简单直白，至今仍受到不少粉丝的钟爱。但是毕竟是几十年前的产物，因为设计上的原因导致缺乏现代版本控制系统的一些必须功能，如：没有原子提交，分支管理不便（慢），分支合并困难因为合并过程缺乏跟踪，不支持文件名/目录名的修改等等。很多CVS的用户都已经转换到Subversion这一更好的集中式版本控制系统了。如果还在使用CVS，那么可以考虑直接迁移到Git。</p>
+<p>CVS到Git迁移可以使用cvs2svn软件包中的<strong class="command">cvs2git</strong>命令。为什么该项目叫做cvs2svn而非cvs2git呢？这是因为该项目最早是为CVS版本库迁移到Subversion版本库服务的，只是最近才增加了CVS版本转换为Git版本库的功能。cvs2svn将CVS转换为Subversion版本库的过程一直以稳定著称，在cvs2svn 2.1版开始，增加了将CVS版本库转换为Git版本库的功能，无疑让这个工具更具生命力，也减少了之前CVS到Git库的转换环节。在推出cvs2git功能之前，通常的CVS到Git迁移路径是用cvs2svn将CVS版本库迁移到Subversion版本库，再用git-svn将Subversion版本库迁移到Git。</p>
+<p>关于cvs2svn及cvs2git可以参考下面的链接：</p>
+<ul class="simple">
+<li><a class="reference external" href="http://cvs2svn.tigris.org/cvs2svn.html">http://cvs2svn.tigris.org/cvs2svn.html</a></li>
+<li><a class="reference external" href="http://cvs2svn.tigris.org/cvs2git.html">http://cvs2svn.tigris.org/cvs2git.html</a></li>
+</ul>
+<div class="section" id="cvs2svn-cvs2git">
+<h2>6.1.1. 安装cvs2svn（含cvs2git）<a class="headerlink" href="#cvs2svn-cvs2git" title="永久链接至标题">¶</a></h2>
+<p><strong>Linux下cvs2svn的安装</strong></p>
+<p>大部分Linux发行版都提供cvs2svn的发布包，可以直接用平台自带的cvs2svn软件包。cvs2svn在2.1版本之后开始引入了到Git库的转换，2.3.0版本有了独立的cvs2git转换脚本，cvs2git正在逐渐完善当中，因此尽量选择最新版本的cvs2svn。</p>
+<p>例如在Debian或Ubuntu下，可以通过下面命令查看源里面的cvs2svn版本。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ aptitude versions cvs2svn
+p   2.1.1-1               stable                     990
+pi  2.3.0-2               testing,unstable           1001
+</pre></div>
+</div>
+<p>可以看出Debian的Testing和Sid的仓库中才有2.3.0版本的cvs2svn。于是执行下面的命令安装在Testing版本才有的2.3.0-2版本的cvs2svn：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sudo aptitude cvs2svn/testing
+</pre></div>
+</div>
+<p>如果对应的Linux发行版没有对应的版本也可以从源码开始安装。cvs2svn的官方版本库在<a class="reference external" href="http://cvs2svn.tigris.org/svn/cvs2svn/trunk">http://cvs2svn.tigris.org/svn/cvs2svn/trunk</a>，已经有人将cvs2svn项目转换为Git库。可以从Git库下载源码，安装cvs2svn。</p>
+<ul>
+<li><p class="first">下载cvs2svn源代码</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git clone git://repo.or.cz/cvs2svn.git
+</pre></div>
+</div>
+</li>
+<li><p class="first">进入cvs2svn源码目录，安装cvs2svn。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd cvs2svn
+$ sudo make install
+</pre></div>
+</div>
+</li>
+<li><p class="first">安装用户手册。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sudo make man
+</pre></div>
+</div>
+</li>
+</ul>
+<p>cvs2svn对其他软件包的依赖：</p>
+<ul class="simple">
+<li>Python 2.4或以上版本（Python 3.x暂不支持）。</li>
+<li>RCS：如果在转换中使用了<tt class="docutils literal"><span class="pre">--use-rcs</span></tt>，就需要安装RCS软件包。参见：<a class="reference external" href="http://www.cs.purdue.edu/homes/trinkle/RCS/">http://www.cs.purdue.edu/homes/trinkle/RCS/</a>。</li>
+<li>CVS：如果在转换中使用了<tt class="docutils literal"><span class="pre">--use-cvs</span></tt>，就需要安装CVS软件包。参见：<a class="reference external" href="http://ccvs.cvshome.org/">http://ccvs.cvshome.org/</a>。</li>
+<li>Git：1.5.4.4或以上的版本。之前版本的Git的<tt class="docutils literal"><span class="pre">git</span> <span class="pre">fast-import</span></tt> 命令有Bug，加载cvs2git导出文件有问题。</li>
+</ul>
+<p><strong>Mac OS X下cvs2svn的安装</strong></p>
+<p>Mac OS X下可以使用Homebrew安装cvs2svn。</p>
+<ul>
+<li><p class="first">Mac OS X缺省安装的Python缺少cvs2svn依赖的gdbm模组，先用Homebrew来重新安装python。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ brew install python
+</pre></div>
+</div>
+</li>
+<li><p class="first">安装cvs2svn</p>
+<div class="highlight-python"><div class="highlight"><pre>$ export PATH=/usr/local/bin:$PATH
+$ brew install cvs2svn
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="id1">
+<h2>6.1.2. 版本库转换（命令行参数模式）<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>转换CVS版本库的注意事项：</p>
+<ul>
+<li><p class="first">使用cvs2git对CVS版本库转换，必须在CVS的服务器端执行，即cvs2git必须能够通过文件系统直接访问CVS版本库中的<tt class="file docutils literal"><span class="pre">,v</span></tt>文件。</p>
+</li>
+<li><p class="first">在转换前，确保所有人的修改都已经提交到CVS版本库中。</p>
+</li>
+<li><p class="first">在转换前，停止CVS版本库的访问，以免在转换过程中有新提交写入。</p>
+</li>
+<li><p class="first">在转换前，对原始版本库进行备份，以免误操作对版本库造成永久的破坏。</p>
+</li>
+<li><p class="first">在转换完成后，永久停止CVS版本库的写入服务，可以仅开放只读服务。</p>
+<p>这是由于cvs2git是一次性操作，不能对CVS后续提交执行增量式的到Git库转换，因此当CVS版本库转换完毕后，须停止CVS服务。</p>
+</li>
+<li><p class="first">先做小规模的试验性转换。</p>
+<p>转换CVS版本库切忌一上来就对整个版本库进行转换，等到发现日志乱码、文件名乱码、提交者ID不完全后重新转换会浪费大量时间。</p>
+<p>应该先选择CVS版本库中的部分文件和目录作为样本，进行小规模的转换测试。</p>
+</li>
+<li><p class="first">不要对包含<tt class="file docutils literal"><span class="pre">CVSROOT</span></tt>目录的版本库的根进行操作，可以先对服务器目录布局进行调整。</p>
+<p>如果转换直接针对包含<tt class="file docutils literal"><span class="pre">CVSROOT</span></tt>目录的版本库根目录进行操作，会导致<tt class="file docutils literal"><span class="pre">CVSROOT</span></tt>目录下的文件及更改历史也被纳入到Git版本库，这是不需要的。</p>
+</li>
+</ul>
+<p><strong>检查CVS版本库中的文件名乱码</strong></p>
+<p>CVS中保存的数据在服务器端直接和同名文件（文件多了一个“<tt class="docutils literal"><span class="pre">,v</span></tt>”后缀）相对应，当转换的CVS版本库是从其他平台（如Windows）拷贝过来的，就可能因为平台本身字符集不一致导致中文文件名包含乱码，在CVS版本库转换过程造成乱码。可以先对有问题的目录名和文件名进行重命名，转换为当前平台正确的编码。</p>
+<p><strong>小规模的转换试验</strong></p>
+<p>前面提到过，最好先进行小规模的转换试验，然后再对整个版本库进行转换。例如版本库是如下方式部署：<tt class="file docutils literal"><span class="pre">CVSROOT</span></tt>为<tt class="docutils literal"><span class="pre">/cvshome/user</span></tt>，需要将之下的<tt class="file docutils literal"><span class="pre">jiangxin/homepage/worldhello</span></tt>转换为一个Git版本库。先检查一下版本库中的数据，找出典型的目录用于转换。</p>
+<p>典型的数据是这样的：包含中文文件名，并且日志中包含中文。例如在版本库中，执行CVS查看日志命令，看到类似下面的输出。</p>
+<div class="highlight-python"><div class="highlight"><pre>RCS file: /cvshome/user/jiangxin/homepage/worldhello/archive/2003/.mhonarc.db,v
+Working file: archive/2003/.mhonarc.db
+head: 1.16
+branch:
+locks: strict
+access list:
+symbolic names:
+keyword substitution: kv
+total revisions: 16;    selected revisions: 16
+description:
+----------------------------
+revision 1.16
+date: 2004-09-21 15:56:30 +0800;  author: jiangxin;  state: Exp;  lines: +3 -3;  commitid: c2c414fdea20000;
+&lt;D0&gt;&lt;U+07B8&gt;&lt;C4&gt;&lt;D3&gt;ʼ&lt;FE&gt;&lt;B5&gt;&lt;D8&gt;&lt;A3&gt;&lt;BB&gt;
+&lt;D0&gt;&lt;U+07B8&gt;&lt;C4&gt;&lt;CB&gt;&lt;D1&gt;&lt;CB&gt;&lt;F7&gt;&lt;D2&gt;&lt;FD&gt;&lt;C7&gt;棻
+----------------------------
+</pre></div>
+</div>
+<p>日志乱码是因为CVS并没有对日志的字符转换为统一的UTF-8字符集。此版本库之前用CVSNT维护，缺省字符集为GBK。那么就先对有乱码的这一个目录进行一下试验性的转换。</p>
+<ul>
+<li><p class="first">调用cvs2git执行转换，产生两个导出文件。这两个导出文件将作为Git版本库创建时的导入文件。</p>
+<p>命令行用了两个<tt class="docutils literal"><span class="pre">--encoding</span></tt>参数设置编码，会依次进行尝试将日志中的非Ascii字符转换为UTF-8。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cvs2git --blobfile git-blob.dat --dumpfile git-dump.dat \
+  --encoding utf8 --encoding gbk --username cvs2git \
+  /cvshome/user/jiangxin/homepage/worldhello/archive/2003/
+</pre></div>
+</div>
+</li>
+<li><p class="first">成功导出后，产生两个导出文件，一个保存各个文件的各个不同版本的数据内容，即在命令行指定的输出文件<tt class="file docutils literal"><span class="pre">git-blob.dat</span></tt>。另外一个文件是上面命令行指定的<tt class="file docutils literal"><span class="pre">git-dump.dat</span></tt>用于保存各个提交相关信息（提交者、提交时间、提交日志等）。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ du -sh git*dat
+9.8M    git-blob.dat
+24K     git-dump.dat
+</pre></div>
+</div>
+<p>可以看出保存文件内容的导出文件（<tt class="file docutils literal"><span class="pre">git-blob.dat</span></tt>）相对更大一些。</p>
+</li>
+<li><p class="first">创建空的Git库，使用Git通用的数据迁移命令<strong class="command">git fast-import</strong>将cvs2git的导出文件导入版本库中。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mkdir test
+$ cd test
+$ git init
+$ cat ../git-blob.dat ../git-dump.dat | git fast-import
+</pre></div>
+</div>
+</li>
+<li><p class="first">检查导出结果。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git reset HEAD
+$ git checkout .
+$ git log -1
+commit 8334587cb241076bcd2e710b321e8e16b5e46bba
+Author: jiangxin &lt;&gt;
+Date:   Tue Sep 21 07:56:31 2004 +0000
+
+    修改邮件地址；
+    修改搜索引擎；
+</pre></div>
+</div>
+</li>
+</ul>
+<p>很好，导出的Git库的日志，中文乱码问题已经解决。但是会发现提交日志中的作者（Author）字段信息不完整：缺乏邮件地址。这是因为CVS的提交者仅为用户登录ID，而Git的提交者信息还要包含邮件地址。cvs2git提供参数实现两种提交者ID的转换，不过需要通过配置文件予以指定，这就需要采用下面介绍的转换方法。</p>
+</div>
+<div class="section" id="id2">
+<h2>6.1.3. 版本库转换（配置文件模式）<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>使用命令行参数调用cvs2git麻烦、可重用性差，而且可配置项有限。采用cvs2git配置文件模式运行不但能够简化cvs2git的命令行参数，而且能够提供更多的命令行无法提供的配置项，可以更精确的对CVS到Git版本库转换进行定制。</p>
+<p>cvs2svn软件包提供了一个cvs2git的配置示例文件，见源码中的<tt class="docutils literal"><span class="pre">cvs2git-example.options</span></tt><a class="footnote-reference" href="#id9" id="id3">[1]</a>。将该示例文件在本地复制一份，对其进行更改。该文件是Python代码格式，以“#”（井号）开始的行是注释，文件缩进不要随意更改，因为缩进也是Python语法的一部分。可以考虑针对下列选项进行定制。</p>
+<ul>
+<li><p class="first">设置CVS版本库位置。</p>
+<p>使用配置文件方式运行cvs2git，只能在配置文件中设置要转换的CVS版本库位置，而不能在命令行进行设置。具体说是在配置文件的最后面<tt class="docutils literal"><span class="pre">run_options</span></tt>的<tt class="docutils literal"><span class="pre">set_project</span></tt>方法中指定。</p>
+<div class="highlight-python"><div class="highlight"><pre>run_options.set_project(
+    # CVS 版本库的位置（不是工作区，而是包含,v 文件的版本库）
+    # 可以是版本库下的子目录。
+    r&#39;/cvshome/user/jiangxin/homepage/worldhello/archive/2003/&#39;,
+</pre></div>
+</div>
+</li>
+<li><p class="first">导出文件的位置也在配置文件中预先设置好了，也不能再在命令行中设置。</p>
+<ul>
+<li><p class="first">导出CVS版本文件的内容至文件<tt class="file docutils literal"><span class="pre">cvs2svn-tmp/git-blob.dat</span></tt>。</p>
+<p>缺省使用<strong class="command">cvs</strong>命令做导出，最稳定。</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ctx</span><span class="o">.</span><span class="n">revision_collector</span> <span class="o">=</span> <span class="n">GitRevisionCollector</span><span class="p">(</span>
+    <span class="s">&#39;cvs2svn-tmp/git-blob.dat&#39;</span><span class="p">,</span>
+
+    <span class="c">#RCSRevisionReader(co_executable=r&#39;co&#39;),</span>
+    <span class="n">CVSRevisionReader</span><span class="p">(</span><span class="n">cvs_executable</span><span class="o">=</span><span class="s">r&#39;cvs&#39;</span><span class="p">),</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">另外一个导出文件的缺省位置：<tt class="file docutils literal"><span class="pre">cvs2svn-tmp/git-dump.dat</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ctx</span><span class="o">.</span><span class="n">output_option</span> <span class="o">=</span> <span class="n">GitOutputOption</span><span class="p">(</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">tmpdir</span><span class="p">,</span> <span class="s">&#39;git-dump.dat&#39;</span><span class="p">),</span>
+
+    <span class="c"># The blobs will be written via the revision recorder, so in</span>
+    <span class="c"># OutputPass we only have to emit references to the blob marks:</span>
+    <span class="n">GitRevisionMarkWriter</span><span class="p">(),</span>
+
+    <span class="c"># Optional map from CVS author names to git author names:</span>
+    <span class="n">author_transforms</span><span class="o">=</span><span class="n">author_transforms</span><span class="p">,</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p class="first">设置无提交用户信息时使用的用户名。这个用户名可以用接下来的用户映射转换为Git用户名。</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ctx</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="s">&#39;cvs2svn&#39;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">建立CVS用户和Git用户之间的映射。Git用户名可以用Python的tuple语法<tt class="docutils literal"><span class="pre">(name,</span> <span class="pre">email)</span></tt>或者用字符串<tt class="docutils literal"><span class="pre">name</span> <span class="pre">&lt;email&gt;</span></tt>来表示。</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">author_transforms</span><span class="o">=</span><span class="p">{</span>
+    <span class="s">&#39;jiangxin&#39;</span>  <span class="p">:</span> <span class="p">(</span><span class="s">&#39;Jiang Xin&#39;</span><span class="p">,</span> <span class="s">&#39;jiangxin@ossxp.com&#39;</span><span class="p">),</span>
+    <span class="s">&#39;dev1&#39;</span>      <span class="p">:</span> <span class="s">u&#39;开发者1 &lt;dev1@ossxp.com&gt;&#39;</span><span class="p">,</span>
+
+    <span class="s">&#39;cvs2svn&#39;</span>   <span class="p">:</span> <span class="s">&#39;cvs2svn &lt;admin@example.com&gt;&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">字符集编码。即如何转换日志中的用户名、提交说明以及文件名的编码。</p>
+<p>对于可能在日志中出现中，必须做出下面类似设置。编码的顺序对输出也会有影响，一般将utf8放在gbk之前能保证当日志中同时出现两种编码时都能正常转换<a class="footnote-reference" href="#id10" id="id4">[2]</a>。</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ctx</span><span class="o">.</span><span class="n">cvs_author_decoder</span> <span class="o">=</span> <span class="n">CVSTextDecoder</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="s">&#39;utf8&#39;</span><span class="p">,</span>
+        <span class="s">&#39;gbk&#39;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="n">fallback_encoding</span><span class="o">=</span><span class="s">&#39;gbk&#39;</span>
+    <span class="p">)</span>
+
+<span class="n">ctx</span><span class="o">.</span><span class="n">cvs_log_decoder</span> <span class="o">=</span> <span class="n">CVSTextDecoder</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="s">&#39;utf8&#39;</span><span class="p">,</span>
+        <span class="s">&#39;gbk&#39;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="n">fallback_encoding</span><span class="o">=</span><span class="s">&#39;gbk&#39;</span>
+    <span class="p">)</span>
+
+<span class="n">ctx</span><span class="o">.</span><span class="n">cvs_filename_decoder</span> <span class="o">=</span> <span class="n">CVSTextDecoder</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="s">&#39;utf8&#39;</span><span class="p">,</span>
+        <span class="s">&#39;gbk&#39;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="c">#fallback_encoding=&#39;ascii&#39;</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">是否忽略<tt class="file docutils literal"><span class="pre">.cvsignore</span></tt>文件？缺省保留<tt class="file docutils literal"><span class="pre">.cvsignore</span></tt>文件。</p>
+<p>无论选择保留或是不保留，最好在转换后手工进行<tt class="file docutils literal"><span class="pre">.cvsignore</span></tt>到<tt class="file docutils literal"><span class="pre">.gitignore</span></tt>的转换。因为 cvs2git不能自动将<tt class="file docutils literal"><span class="pre">.cvsignore</span></tt>文件转换为<tt class="file docutils literal"><span class="pre">.gitignore</span></tt>文件。</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ctx</span><span class="o">.</span><span class="n">keep_cvsignore</span> <span class="o">=</span> <span class="bp">True</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">对文件换行符等的处理。下面的配置原本是针对CVS到Subversion的属性转换，但是也会影响到Git转换时的换行符设置。</p>
+<p>维持默认值比较安全。</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ctx</span><span class="o">.</span><span class="n">file_property_setters</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span>
+    <span class="c"># 基于配置文件设置文件的 mime 类型</span>
+    <span class="c">#MimeMapper(r&#39;/etc/mime.types&#39;, ignore_case=False),</span>
+
+    <span class="c"># 对于二进制文件（-kb模式）不设置 svn:eol-style 属性（对于 Subverson 来说）</span>
+    <span class="n">CVSBinaryFileEOLStyleSetter</span><span class="p">(),</span>
+
+    <span class="c"># 如果文件是二进制，并且 svn:mime-type 没有设置，将其设置为 &#39;application/octet-stream&#39;。</span>
+    <span class="n">CVSBinaryFileDefaultMimeTypeSetter</span><span class="p">(),</span>
+
+    <span class="c"># 如果希望根据文件的 mime 类型来判断文件的换行符，打开下面注释</span>
+    <span class="c">#EOLStyleFromMimeTypeSetter(),</span>
+
+    <span class="c"># 如果上面的规则没有为文件设置换行符类型，则为 svn:eol-style 设置缺省类型。</span>
+    <span class="c"># （二进制文件除外）</span>
+    <span class="c"># 缺省把文件视为二进制，不为其设置换行符类型，这样最安全。</span>
+    <span class="c"># 如果确认 CVS 的二进制文件都已经设置了 -kb 参数，或者使用上面的规则能够对</span>
+    <span class="c"># 文件类型做出正确判断，也可以使用下面参数为非二进制文件设置缺省换行符号。</span>
+    <span class="c">## &#39;native&#39;: 服务器端文件的换行符保存为 LF，客户端根据需要自动转换。</span>
+    <span class="c">## &#39;CRLF&#39;:   服务器端文件的换行符保存为 CRLF，客户端亦为 CRLF。</span>
+    <span class="c">## &#39;CR&#39;:     服务器端文件的换行符保存为 CR，客户端亦为 CR。</span>
+    <span class="c">## &#39;LF&#39;:     服务器端文件的换行符保存为 LF，客户端亦为 LF。</span>
+    <span class="n">DefaultEOLStyleSetter</span><span class="p">(</span><span class="bp">None</span><span class="p">),</span>
+
+    <span class="c"># 如果文件没有设置 svn:eol-style ，也不为其设置 svn:keywords 属性</span>
+    <span class="n">SVNBinaryFileKeywordsPropertySetter</span><span class="p">(),</span>
+
+    <span class="c"># 如果 svn:keywords 未色环只，基于文件的 CVS 模式进行设置。</span>
+    <span class="n">KeywordsPropertySetter</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">SVN_KEYWORDS_VALUE</span><span class="p">),</span>
+
+    <span class="c"># 设置文件的 svn:executable 属性，如果文件在 CVS 中标记为可执行文件。</span>
+    <span class="n">ExecutablePropertySetter</span><span class="p">(),</span>
+    <span class="p">])</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">是否只迁移主线，忽略分支和里程碑？</p>
+<p>缺省对所有分支和里程碑都进行转换。如果选择忽略分支和里程碑，将<tt class="docutils literal"><span class="pre">False</span></tt>修改为<tt class="docutils literal"><span class="pre">True</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ctx</span><span class="o">.</span><span class="n">trunk_only</span> <span class="o">=</span> <span class="bp">False</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">分支和里程碑迁移及转换。</p>
+<div class="highlight-python"><div class="highlight"><pre>global_symbol_strategy_rules = [
+
+    # 和正则表达式匹配的 CVS 标识，转换为 Git 的分支。
+    #ForceBranchRegexpStrategyRule(r&#39;branch.*&#39;),
+
+    # 和正则表达式匹配的 CVS 标识，转换为 Git 的里程碑。
+    #ForceTagRegexpStrategyRule(r&#39;tag.*&#39;),
+
+    # 忽略和正则表达式匹配的 CVS 标识，不进行（到Git分支/里程碑）转换。
+    #ExcludeRegexpStrategyRule(r&#39;unknown-.*&#39;),
+
+    # 岐义的CVS标识的处理选项。
+    # 缺省根据使用频率自动确定转换为分支或里程碑。
+    HeuristicStrategyRule(),
+    # 或者全部转换为分支。
+    #AllBranchRule(),
+    # 或者全部转换为里程碑。
+    #AllTagRule(),
+
+    ...
+
+run_options.set_project(
+
+    ...
+
+    # A list of symbol transformations that can be used to rename
+    # symbols in this project.
+    symbol_transforms=[
+        # 是否需要重新命名里程碑？第一个参数用于匹配，第二个参数用于替换。
+        #RegexpSymbolTransform(r&#39;release-(\d+)_(\d+)&#39;,
+        #                      r&#39;release-\1.\2&#39;),
+        #RegexpSymbolTransform(r&#39;release-(\d+)_(\d+)_(\d+)&#39;,
+        #                      r&#39;release-\1.\2.\3&#39;),
+</pre></div>
+</div>
+</li>
+</ul>
+<p><strong>使用配置文件的 cvs2git转换过程</strong></p>
+<p>参照上面的方法，从缺省的cvs2git配置文件定制，在本地创建一个文件，例如名为<tt class="docutils literal"><span class="pre">cvs2git.options</span></tt>文件。</p>
+<ul>
+<li><p class="first">使用cvs2git配置文件，命令行大大简化了。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cvs2git --options cvs2git.options
+</pre></div>
+</div>
+</li>
+<li><p class="first">成功导出后，产生两个导出文件，都保存在<tt class="file docutils literal"><span class="pre">cvs2git-tmp</span></tt>目录中。</p>
+<p>一个保存各个文件的各个不同版本的数据内容，即在命令行指定的输出文件<tt class="file docutils literal"><span class="pre">git-blob.dat</span></tt>。另外一个文件是上面命令行指定的<tt class="file docutils literal"><span class="pre">git-dump.dat</span></tt>用于保存各个提交相关信息（提交者、提交时间、提交日志等）。</p>
+<p>可以看出保存文件内容的导出文件相对更大一些。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ du -sh cvs2svn-tmp/*
+9.8M    cvs2svn-tmp/git-blob.dat
+24K     cvs2svn-tmp/git-dump.dat
+</pre></div>
+</div>
+</li>
+<li><p class="first">创建空的Git库，使用Git通用的数据迁移命令<strong class="command">git fast-import</strong>将cvs2git的导出文件导入版本库中。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mkdir test
+$ cd test
+$ git init
+$ cat ../cvs2svn-tmp/git-blob.dat \
+      ../cvs2svn-tmp/git-dump.dat | git fast-import
+</pre></div>
+</div>
+</li>
+<li><p class="first">检查导出结果。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git reset HEAD
+$ git checkout .
+$ git log -1
+commit e3f12f57a77cbffcf62e19012507d041f1c9b03d
+Author: Jiang Xin &lt;jiangxin@ossxp.com&gt;
+Date:   Tue Sep 21 07:56:31 2004 +0000
+
+    修改邮件地址；
+    修改搜索引擎；
+</pre></div>
+</div>
+</li>
+</ul>
+<p>可以看到，这一次的转换结果不但日志中的中文可以显示，而且提交者ID也转换成了Git的风格。</p>
+<p>修改<tt class="docutils literal"><span class="pre">cvs2git.optoins</span></tt>中的CVS版本库地址，开始正式的转换过程。</p>
+</div>
+<div class="section" id="id5">
+<h2>6.1.4. 迁移后版本库检查<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>完成迁移还不能算是大功告成，还需要进行细致的检验。</p>
+<div class="section" id="id6">
+<h3>6.1.4.1. 文件名和日志的中文<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>如果转换过程参考了前面的步骤和注意事项，文件名和版本库提交日志中的中文不应该出现乱码。</p>
+</div>
+<div class="section" id="id7">
+<h3>6.1.4.2. 图片文件被破坏<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<p>最典型的错误就是转换后部分图片被破坏导致无法显示。这是怎么造成的呢？</p>
+<p>CVS缺省将提交的文件以文本方式添加，除非用户在添加文件时使用了<tt class="docutils literal"><span class="pre">-kb</span></tt>参数。用命令行提交的用户经常会忘记，这就导致一些二进制文件（如图片文件）被以文本文件的方式添加到其中。文本文件在CVS检入和检出时会进行换行符转换 ，在服务器端换行符保存为LF，在Windows上检出时为CRLF。如果误做文本文件方式添加的图片中恰好出现<tt class="docutils literal"><span class="pre">CRLF</span></tt>，则在Windows上似乎没有问题（仍然是<tt class="docutils literal"><span class="pre">CRLF</span></tt>），但是CVS库转换成 Git库后，图片文件在Windows上再检出时文件数据中原来CRLF被换成了LF，导致文件被破坏。</p>
+<p>出现这种情况是CVS版本库使用和管理上出现了问题，应该在CVS版本库中对有问题的文件重新设置属性，标记为二进制文件。然后再进行CVS版本库到Git库的转换。</p>
+</div>
+<div class="section" id="cvsignore">
+<h3>6.1.4.3. <tt class="file docutils literal"><span class="pre">.cvsignore</span></tt>文件的转换<a class="headerlink" href="#cvsignore" title="永久链接至标题">¶</a></h3>
+<p>CVS版本库中可能存在<tt class="file docutils literal"><span class="pre">.cvsignore</span></tt>文件用于设置文件忽略，相当于Git版本库中的<tt class="file docutils literal"><span class="pre">.gitignore</span></tt>。因为当前版本的 cvs2git不能自动将<tt class="file docutils literal"><span class="pre">.cvsignore</span></tt>转换为<tt class="file docutils literal"><span class="pre">.gitignore</span></tt>，需要在版本库迁移后手工完成。CVS的<tt class="file docutils literal"><span class="pre">.cvsignore</span></tt>文件只对目录内文件有效，不会向下作用到子目录上，这一点和Git的<tt class="file docutils literal"><span class="pre">.gitignore</span></tt>相区别。还有不同就是<tt class="file docutils literal"><span class="pre">.cvsignore</span></tt>文件每一行用空格分割多个忽略，而Git每个忽略为单独的一行。</p>
+</div>
+<div class="section" id="id8">
+<h3>6.1.4.4. 迁移后的测试<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<p>一个简单的检查方法是，在同一台机器上分别用CVS和Git检出（或克隆），然后比较本地的差异。要在不同的系统上（Windows，Linux）分别进行测试。</p>
+<hr class="docutils" />
+<table class="docutils footnote" frame="void" id="id9" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[1]</a></td><td><a class="reference external" href="http://repo.or.cz/w/cvs2svn.git/blob/HEAD:/cvs2git-example.options">http://repo.or.cz/w/cvs2svn.git/blob/HEAD:/cvs2git-example.options</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id10" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[2]</a></td><td>部分中文的UTF8编码在GBK中存在古怪的对应</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="020-others.html" title="6.2. 更多版本控制系统的迁移"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="6. 迁移到Git"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >6. 迁移到Git</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

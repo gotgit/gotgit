@@ -1,0 +1,213 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>6.2.2. Hg版本库到Git的迁移 &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="up" title="6.2. 更多版本控制系统的迁移" href="020-others.html" />
+    <link rel="next" title="6.2.3. 通用版本库迁移" href="040-others.html" />
+    <link rel="prev" title="6.2.1. SVN版本库到Git的迁移" href="025-svn.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="040-others.html" title="6.2.3. 通用版本库迁移"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="025-svn.html" title="6.2.1. SVN版本库到Git的迁移"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >6. 迁移到Git</a> &raquo;</li>
+          <li><a href="020-others.html" accesskey="U">6.2. 更多版本控制系统的迁移</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="025-svn.html"
+                        title="上一章">6.2.1. SVN版本库到Git的迁移</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="040-others.html"
+                        title="下一章">6.2.3. 通用版本库迁移</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/06-migrate/030-hg.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="hggit">
+<h1>6.2.2. Hg版本库到Git的迁移<a class="headerlink" href="#hggit" title="永久链接至标题">¶</a></h1>
+<p>Mercurial（水银）是和Git同时代的、与之齐名的一款著名的分布式版本控制系统，也有相当多的使用者。就像水银又名汞，作为版本控制系统的Mercurial又称作Hg（水银元素符号）。Hg具有简单易用的优点，至少Hg提交的顺序递增的数字编号让Subversion用户感到更为亲切。Hg的开发语言除少部分因性能原因使用C语言外，大部分用Python语言开发完成，因而更易扩展，最终形成了Hg最具特色的插件系统。例如MQ就是Hg一个很有用的插件，通过Quilt式的补丁集实现对定制开发的特性分支的版本控制，当然StGit和Topgit也可以实现类似的功能。</p>
+<p>但是Hg存在一些不足。例如服务器的存储效率不能和Git相比，服务器存储空间占用更大。Hg还不支持真正的分支，只能通过版本库克隆来进行分支开发。因为Hg不支持真正的分支，所以不能向git-svn那样完整的将Subversion版本库转换和互操作。Hg的速度相比Git要慢，尤其是网络操作没有像Git一样精确的进度显示。Hg提交只能回退一次，要想多次回退和整理版本库需要用到MQ插件。作为定制开发的利器“Hg+MQ”不适合多人协作开发而“Git+Topgit”更为适合。</p>
+<p>不论是何原因想从Hg迁移到Git，用一个名为fast-export的转换工具可以很方便的实现。fast-export是一个用Python开发的命令行工具，可以将本地的Hg版本库迁移为Git版本库。其原理和CVS版本库迁移至Git时使用的cvs2git相仿，都是先从源版本库生成导出文件，再用Git的通用版本库转换工具<strong class="command">git fast-import</strong>导入到新建的Git版本库中。</p>
+<p>安装fast-export非常简单，只要用Git克隆fast-export的版本库即可。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to
+$ git clone git://repo.or.cz/fast-export.git
+</pre></div>
+</div>
+<p>完成克隆后，会看到<tt class="file docutils literal"><span class="pre">/path/to/fast-export</span></tt>目录中有一个名为<tt class="file docutils literal"><span class="pre">hg-fast-import.sh</span></tt>的脚本文件，该文件封装了对相应Python脚本的调用。使用该脚本可以实现Hg版本库到Git版本库的迁移。</p>
+<p>下面就演示一下Hg版本库到Git版本库的转换。</p>
+<ul>
+<li><p class="first">要转换的Hg版本库位于路径<tt class="file docutils literal"><span class="pre">/path/to/hg/hello/.hg</span></tt>下。</p>
+<p>Hg不支持真正的分支，而且版本库中可能存在尚未合并的多个头指针。检查一下不要存在具有相同分支名但尚未合并的多个头指针，否则转换会失败。下面显示的该Hg版本库中具有两个具名分支<tt class="docutils literal"><span class="pre">r1.x</span></tt>和<tt class="docutils literal"><span class="pre">next</span></tt>，还有一个缺省未设置名称的头指针，因为分支名各不相同所以不会为转换过程造成麻烦。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ hg heads
+修改集:      7:afdd475caeee
+分支:        r1.x
+标签:        tip
+父亲:        0:798a9568e10e
+用户:        Jiang Xin &lt;jiangxin@ossxp.com&gt;
+日期:        Fri Jan 14 17:01:47 2011 +0800
+描述:
+start new branch: r1.x
+
+
+修改集:      6:7f5a46201dda
+分支:        next
+用户:        Jiang Xin &lt;jiangxin@ossxp.com&gt;
+日期:        Fri Jan 14 17:01:04 2011 +0800
+文件:        src/locale/zh_CN/LC_MESSAGES/helloworld.po
+描述:
+imported patch 100_locale_zh_cn.patch
+
+
+修改集:      1:97f0a21021c6
+用户:        Jiang Xin &lt;worldhello.net AT gmail DOT com&gt;
+日期:        Sun Aug 23 23:53:05 2009 +0800
+文件:        src/COPYRIGHT src/main.bak src/main.c
+描述:
+Fixed #6: import new upstream version hello-2.0.0
+</pre></div>
+</div>
+</li>
+<li><p class="first">初始化一个Git版本库，该版本库就是迁移的目标版本库。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mkdir -p /path/to/my/workspace/hello
+$ cd /path/to/my/workspace/hello
+$ git init
+Initialized empty Git repository in /path/to/my/workspace/hello/.git/
+</pre></div>
+</div>
+</li>
+<li><p class="first">在刚刚完成初始化的Git工作区中调用<tt class="file docutils literal"><span class="pre">hg-fast-export.sh</span></tt>脚本完成版本库转换。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ /path/to/fast-export/hg-fast-export.sh -r /path/to/hg/hello
+</pre></div>
+</div>
+</li>
+<li><p class="first">转换完毕，执行<strong class="command">git branch</strong>会看到Hg版本库中的具名分支都转换为相应的分支，没有命名的缺省头指针转换为master分支。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git branch
+* master
+  next
+  r1.x
+</pre></div>
+</div>
+</li>
+</ul>
+<p>在转换后的Git版本库目录中，保存了几个用于记录版本库转换进度的状态文件（<tt class="file docutils literal"><span class="pre">.git/hg2git-*</span></tt>），当在Git工作区不带任何参数执行<tt class="file docutils literal"><span class="pre">hg-fast-export.sh</span></tt>命令时，会继续增量式的进行转换，将Hg版本库中的新提交迁移到Git版本库中。</p>
+<p>如果使用了多个不同的Hg克隆版本库进行分支管理，就需要一一对Hg版本库进行转换，然后在对转换后的Git版本库进行合并。在合并Git版本库的时候可以参考下面的命令。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git remote add &lt;name1&gt; &lt;path/to/repos/1&gt;
+$ git remote add &lt;name2&gt; &lt;path/to/repos/2&gt;
+$ git remote update
+$ git checkout -b &lt;branch1&gt; origin/&lt;name1&gt;/master
+$ git checkout -b &lt;branch2&gt; origin/&lt;name2&gt;/master
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="040-others.html" title="6.2.3. 通用版本库迁移"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="025-svn.html" title="6.2.1. SVN版本库到Git的迁移"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >6. 迁移到Git</a> &raquo;</li>
+          <li><a href="020-others.html" >6.2. 更多版本控制系统的迁移</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

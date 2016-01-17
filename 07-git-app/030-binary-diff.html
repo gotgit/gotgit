@@ -1,0 +1,419 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>7.3. 补丁中的二进制文件 &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="up" title="7. Git的其它应用" href="index.html" />
+    <link rel="next" title="7.4. 云存储" href="040-cloud-storage.html" />
+    <link rel="prev" title="7.2. Gistore" href="020-gistore.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="040-cloud-storage.html" title="7.4. 云存储"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="020-gistore.html" title="7.2. Gistore"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">7. Git的其它应用</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.3. 补丁中的二进制文件</a><ul>
+<li><a class="reference internal" href="#git">7.3.1. Git版本库中二进制文件变更的支持</a></li>
+<li><a class="reference internal" href="#id2">7.3.2. 对非Git版本库中二进制文件变更的支持</a></li>
+<li><a class="reference internal" href="#id3">7.3.3. 其他工具对Git扩展补丁文件的支持</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="020-gistore.html"
+                        title="上一章">7.2. Gistore</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="040-cloud-storage.html"
+                        title="下一章">7.4. 云存储</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/07-git-app/030-binary-diff.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>7.3. 补丁中的二进制文件<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>有的时候，需要将对代码的改动以补丁文件的方式进行传递，最终合并入版本库。例如直接在软件部署目录内进行改动，再将改动传送到开发平台。或者是因为在某个开源软件的官方版本库中没有提交权限，需要将自己的改动以补丁文件的方式提供给官方。</p>
+<p>关于补丁文件的格式，补丁的生成和应用在第3篇第20章“补丁文件交互”当中已经进行了介绍，使用的是<strong class="command">git format-patch</strong>和<strong class="command">git am</strong>命令，但这两个命令仅对Git库有效。如果没有使用Git对改动进行版本控制，而仅仅是两个目录：一个改动前的目录和一个改动后的目录，大部分人会选择使用GNU的<strong class="command">diff</strong>命令及<strong class="command">patch</strong>命令实现补丁文件的生成和补丁的应用。</p>
+<p>但是GNU的<strong class="command">diff</strong>命令（包括很多版本控制系统，如SVN的<strong class="command">svn diff</strong>命令）生成的差异输出有一个非常大的不足或者说漏洞。就是差异输出不支持二进制文件。如果生成了新的二进制文件（如图片），或者二进制文件发生了变化，在差异输出中无法体现，当这样的差异文件被导出，应用到代码树中，会发现二进制文件或二进制文件的改动丢失了！</p>
+<p>Git突破了传统差异格式的限制，通过引入新的差异格式，实现了对二进制文件的支持。并且更为神奇的是，不必使用Git版本库对数据进行维护，可以直接对两个普通目录进行Git方式的差异比较和输出。</p>
+<div class="section" id="git">
+<h2>7.3.1. Git版本库中二进制文件变更的支持<a class="headerlink" href="#git" title="永久链接至标题">¶</a></h2>
+<p>对Git工作区的修改进行差异比较（<strong class="command">git diff &#8211;binary</strong>），可以输出二进制的补丁文件。包含二进制文件差异的补丁文件可以通过<strong class="command">git apply</strong>命令应用到版本库中。可以通过下面的示例，看看Git的补丁文件是如何对二进制文件提供支持的。</p>
+<ul>
+<li><p class="first">首先建立一个空的Git版本库。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mkdir /tmp/test
+$ cd /tmp/test
+$ git init
+initialized empty Git repository in /tmp/test/.git/
+
+$ git ci --allow-empty -m initialized
+[master (root-commit) 2ca650c] initialized
+</pre></div>
+</div>
+</li>
+<li><p class="first">然后在工作区创建一个文本文件<tt class="file docutils literal"><span class="pre">readme.txt</span></tt>，以及一个二进制文件<tt class="file docutils literal"><span class="pre">binary.data</span></tt>。</p>
+<p>二进制的数据读取自系统中的二进制文件<tt class="file docutils literal"><span class="pre">/bin/ls</span></tt>，当然可以用任何其他二进制文件代替。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ echo hello &gt; readme.txt
+$ dd if=/bin/ls of=binary.data count=1 bs=32
+记录了1+0 的读入
+记录了1+0 的写出
+32字节(32 B)已复制，0.0001062 秒，301 kB/秒
+</pre></div>
+</div>
+<p>注：拷贝<tt class="file docutils literal"><span class="pre">/bin/ls</span></tt>可执行文件（二进制）的前32个字节作为<tt class="file docutils literal"><span class="pre">binary.data</span></tt>文件。</p>
+</li>
+<li><p class="first">如果执行<strong class="command">git diff &#8211;cached</strong>看到的是未扩展的差异格式。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git add .
+$ git diff --cached
+diff --git a/binary.data b/binary.data
+new file mode 100644
+index 0000000..dc2e37f
+Binary files /dev/null and b/binary.data differ
+diff --git a/readme.txt b/readme.txt
+new file mode 100644
+index 0000000..ce01362
+--- /dev/null
++++ b/readme.txt
+@@ -0,0 +1 @@
++hello
+</pre></div>
+</div>
+<p>可以看到对于<tt class="file docutils literal"><span class="pre">binary.data</span></tt>，此差异文件没有给出差异内容，而只是一行“<tt class="docutils literal"><span class="pre">Binary</span> <span class="pre">files</span> <span class="pre">...</span> <span class="pre">and</span> <span class="pre">...</span> <span class="pre">differ</span></tt>”。</p>
+</li>
+<li><p class="first">再用<strong class="command">git diff &#8211;cached &#8211;binary</strong>即增加了<tt class="docutils literal"><span class="pre">--binary</span></tt>参数试试。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git diff --cached --binary
+diff --git a/binary.data b/binary.data
+new file mode 100644
+index 0000000000000000000000000000000000000000..dc2e37f81e0fa88308bec48cd5195b6542e61a20
+GIT binary patch
+literal 32
+bcmb&lt;-^&gt;JfjWMqH=CI&amp;kO5HCR00W1UnGBE;C
+
+literal 0
+HcmV?d00001
+
+diff --git a/readme.txt b/readme.txt
+new file mode 100644
+index 0000000..ce01362
+--- /dev/null
++++ b/readme.txt
+@@ -0,0 +1 @@
++hello
+</pre></div>
+</div>
+<p>看到了么，此差异文件给出了二进制文件<tt class="file docutils literal"><span class="pre">binary.data</span></tt>差异的内容，并且差异内容经过<tt class="docutils literal"><span class="pre">base85</span></tt>文本化了。</p>
+</li>
+<li><p class="first">提交后，并用新的内容覆盖<tt class="file docutils literal"><span class="pre">binary.data</span></tt>文件。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git commit -m &quot;new text file and binary file&quot;
+[master 7ab2d01] new text file and binary file
+ 2 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 binary.data
+ create mode 100644 readme.txt
+
+$ dd if=/bin/ls of=binary.data count=1 bs=64
+记录了1+0 的读入
+记录了1+0 的写出
+64字节(64 B)已复制，0.00011264 秒，568 kB/秒
+
+$ git commit -a -m &quot;change binary.data.&quot;
+[master a79bcbe] change binary.data.
+ 1 files changed, 0 insertions(+), 0 deletions(-)
+</pre></div>
+</div>
+</li>
+<li><p class="first">看看更改二进制文件的新差异格式。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git show HEAD --binary
+commit a79bcbe50c1d278db9c9db8e42d9bc5bc72bf031
+Author: Jiang Xin &lt;jiangxin@ossxp.com&gt;
+Date:   Sun Oct 10 19:22:30 2010 +0800
+
+    change binary.data.
+
+diff --git a/binary.data b/binary.data
+index dc2e37f81e0fa88308bec48cd5195b6542e61a20..bf948689934caf2d874ff8168cb716fbc2a127c3 100644
+GIT binary patch
+delta 37
+hcmY#zn4qBGzyJX+&lt;}pH93=9qo77QFfQiegA0RUZd1MdI;
+
+delta 4
+LcmZ=zn4kav0;B;E
+</pre></div>
+</div>
+</li>
+<li><p class="first">更简单的，使用<strong class="command">git format-patch</strong>命令，直接将最近的两次提交导出为补丁文件。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git format-patch HEAD^^
+0001-new-text-file-and-binary-file.patch
+0002-change-binary.data.patch
+</pre></div>
+</div>
+<p>毫无疑问，这两个补丁文件都包含了对二进制文件的支持。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cat 0002-change-binary.data.patch
+From a79bcbe50c1d278db9c9db8e42d9bc5bc72bf031 Mon Sep 17 00:00:00 2001
+From: Jiang Xin &lt;jiangxin@ossxp.com&gt;
+Date: Sun, 10 Oct 2010 19:22:30 +0800
+Subject: [PATCH 2/2] change binary.data.
+
+---
+ binary.data |  Bin 32 -&gt; 64 bytes
+ 1 files changed, 0 insertions(+), 0 deletions(-)
+
+diff --git a/binary.data b/binary.data
+index dc2e37f81e0fa88308bec48cd5195b6542e61a20..bf948689934caf2d874ff8168cb716fbc2a127c3 100644
+GIT binary patch
+delta 37
+hcmY#zn4qBGzyJX+&lt;}pH93=9qo77QFfQiegA0RUZd1MdI;
+
+delta 4
+LcmZ=zn4kav0;B;E
+
+--
+1.7.1
+</pre></div>
+</div>
+</li>
+</ul>
+<p><strong>那么如何将补丁合并入代码树呢？</strong></p>
+<p>不能使用GNU<strong class="command">patch</strong>命令，因为前面曾经说过GNU的<strong class="command">diff</strong>和<strong class="command">patch</strong>不支持二进制文件的补丁。当然也不支持Git的新的补丁格式。将Git格式的补丁应用到代码树，只能使用git命令，即<strong class="command">git apply</strong>命令。</p>
+<p>接着前面的例子。首先将版本库重置到最近两次提交之前的状态，即丢弃最近的两次提交，然后将两个补丁都合并到代码树中。</p>
+<ul>
+<li><p class="first">重置版本库到两次提交之前。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git reset --hard HEAD^^
+HEAD is now at 2ca650c initialized
+
+$ ls
+0001-new-text-file-and-binary-file.patch  0002-change-binary.data.patch
+</pre></div>
+</div>
+</li>
+<li><p class="first">使用<strong class="command">git apply</strong>应用补丁。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git apply 0001-new-text-file-and-binary-file.patch 0002-change-binary.data.patch
+</pre></div>
+</div>
+</li>
+<li><p class="first">可以看到64字节长度的<tt class="file docutils literal"><span class="pre">binary.data</span></tt>又回来了。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ls -l
+总用量 16
+-rw-r--r-- 1 jiangxin jiangxin 754 10月 10 19:28 0001-new-text-file-and-binary-file.patch
+-rw-r--r-- 1 jiangxin jiangxin 524 10月 10 19:28 0002-change-binary.data.patch
+-rw-r--r-- 1 jiangxin jiangxin  64 10月 10 19:34 binary.data
+-rw-r--r-- 1 jiangxin jiangxin   6 10月 10 19:34 readme.txt
+</pre></div>
+</div>
+</li>
+<li><p class="first">最后不要忘了提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git add readme.txt binary.data
+$ git commit -m &quot;new text file and binary file from patch files.&quot;
+[master 7c1389f] new text file and binary file from patch files.
+ 2 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 binary.data
+ create mode 100644 readme.txt
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Git对补丁文件的扩展，实际上不只是增加了二进制文件的支持，还提供了对文件重命名（<tt class="docutils literal"><span class="pre">rename</span> <span class="pre">from</span></tt>和<tt class="docutils literal"><span class="pre">rename</span> <span class="pre">to</span></tt>指令），文件拷贝（<tt class="docutils literal"><span class="pre">copy</span> <span class="pre">from</span></tt>和<tt class="docutils literal"><span class="pre">copy</span> <span class="pre">to</span></tt>指令），文件删除（<tt class="docutils literal"><span class="pre">deleted</span> <span class="pre">file</span></tt>指令）以及文件权限（<tt class="docutils literal"><span class="pre">new</span> <span class="pre">file</span> <span class="pre">mode</span></tt>和<tt class="docutils literal"><span class="pre">new</span> <span class="pre">mode</span></tt>指令）的支持。</p>
+</div>
+<div class="section" id="id2">
+<h2>7.3.2. 对非Git版本库中二进制文件变更的支持<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>不在Git版本库中的文件和目录可以比较生成Git格式的补丁文件么，以及可以执行应用补丁（apply patch）的操作么？</p>
+<p>是的，Git的diff命令和apply命令支持对非Git版本库/工作区进行操作。但是当前Git最新版本(1.7.3)的<strong class="command">git apply</strong>命令有一个bug，这个bug导致目前的<strong class="command">git apply</strong>命令只能应用patch level（补丁文件前缀级别）为1的补丁。我已经将改正这个Bug的补丁文件提交到Git开发列表中，但有其他人先于我修正了这个Bug。不管最终是谁修正的，在新版本的Git中，这个问题应该已经解决。参见我发给Git邮件列表的相关讨论。</p>
+<ul class="simple">
+<li><a class="reference external" href="http://marc.info/?l=git&amp;m=129058163119515&amp;w=2">http://marc.info/?l=git&amp;m=129058163119515&amp;w=2</a></li>
+</ul>
+<p>下面的示例演示一下如何对非Git版本库使用<strong class="command">git diff</strong>和<strong class="command">git patch</strong>命令。首先准备两个目录，一个为<tt class="docutils literal"><span class="pre">hello-1.0</span></tt>目录，在其中创建一个文本文件以及一个二进制文件。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mkdir hello-1.0
+$ echo hello &gt; hello-1.0/readme.txt
+$ dd if=/bin/ls of=hello-1.0/binary.dat count=1 bs=32
+记录了1+0 的读入
+记录了1+0 的写出
+32字节(32 B)已复制，0.0001026 秒，312 kB/秒
+</pre></div>
+</div>
+<p>另外一个<tt class="file docutils literal"><span class="pre">hello-2.0</span></tt>目录，其中的文本文件和二进制文件都有所更改。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mkdir hello-2.0
+$ printf &quot;hello\nworld\n&quot; &gt; hello-2.0/readme.txt
+$ dd if=/bin/ls of=hello-2.0/binary.dat count=1 bs=64
+记录了1+0 的读入
+记录了1+0 的写出
+64字节(64 B)已复制，0.0001022 秒，626 kB/秒
+</pre></div>
+</div>
+<p>然后执行<strong class="command">git diff</strong>命令。命令中的<tt class="docutils literal"><span class="pre">--no-index</span></tt>参数对于不在版本库中的目录/文件进行比较时可以省略。其中还用了<tt class="docutils literal"><span class="pre">--no-prefix</span></tt>参数，这样就可以生成前缀级别（patch level）为1的补丁文件。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git diff --no-index --binary --no-prefix \
+      hello-1.0 hello-2.0 &gt; patch.txt
+$ cat patch.txt
+diff --git hello-1.0/binary.dat hello-2.0/binary.dat
+index dc2e37f81e0fa88308bec48cd5195b6542e61a20..bf948689934caf2d874ff8168cb716fbc2a127c3 100644
+GIT binary patch
+delta 37
+hcmY#zn4qBGzyJX+&lt;}pH93=9qo77QFfQiegA0RUZd1MdI;
+
+delta 4
+LcmZ=zn4kav0;B;E
+
+diff --git hello-1.0/readme.txt hello-2.0/readme.txt
+index ce01362..94954ab 100644
+--- hello-1.0/readme.txt
++++ hello-2.0/readme.txt
+@@ -1 +1,2 @@
+ hello
++world
+</pre></div>
+</div>
+<p>进入到<tt class="file docutils literal"><span class="pre">hello-1.0</span></tt>目录，执行<strong class="command">git apply</strong>应用补丁，即使<tt class="file docutils literal"><span class="pre">hello-1.0</span></tt>不是一个Git库。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd hello-1.0
+$ git apply ../patch.txt
+</pre></div>
+</div>
+<p>会惊喜的发现<tt class="file docutils literal"><span class="pre">hello-1.0</span></tt>应用补丁后，已经变得和<tt class="file docutils literal"><span class="pre">hello-2.0</span></tt>一样了。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git diff --stat . ../hello-2.0
+</pre></div>
+</div>
+<p>命令<strong class="command">git apply</strong>也支持反向应用补丁。反向应用补丁后，<tt class="file docutils literal"><span class="pre">hello-1.0</span></tt>中文件被还原，和<tt class="file docutils literal"><span class="pre">hello-2.0</span></tt>比较又可以看到差异了。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git apply -R ../patch.txt
+$ git diff --stat . ../hello-2.0
+ {. =&gt; ../hello-2.0}/binary.dat |  Bin 32 -&gt; 64 bytes
+ {. =&gt; ../hello-2.0}/readme.txt |    1 +
+ 2 files changed, 1 insertions(+), 0 deletions(-)
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>7.3.3. 其他工具对Git扩展补丁文件的支持<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>Git对二进制提供支持的扩展的补丁文件格式，已经成为补丁文件格式的新标准被其他一些应用软件所接受。例如Mercual/Hg就提供了对Git扩展补丁格式的支持。</p>
+<p>为<strong class="command">hg diff</strong>命令增加<tt class="docutils literal"><span class="pre">--git</span></tt>参数，实现Git扩展diff格式输出。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ hg diff --git
+</pre></div>
+</div>
+<p>Hg的MQ插件提供对Git补丁的支持。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cat .hg/patches/1.diff
+# HG changeset patch
+# User Jiang Xin &lt;worldhello.net AT gmail DOT com&gt;
+# Date 1286711219 -28800
+# Node ID ba66b7bca4baec41a7d29c5cae6bea6d868e2c4b
+# Parent  0b44094c755e181446c65c16a8b602034e65efd7
+new data
+
+diff --git a/binary.data b/binary.data
+new file mode 100644
+index 0000000000000000000000000000000000000000..dc2e37f81e0fa88308bec48cd5195b6542e61a20
+GIT binary patch
+literal 32
+bc$}+u^&gt;JfjWMqH=CI&amp;kO5HCR00n7&amp;gGBE;C
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="040-cloud-storage.html" title="7.4. 云存储"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="020-gistore.html" title="7.2. Gistore"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >7. Git的其它应用</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

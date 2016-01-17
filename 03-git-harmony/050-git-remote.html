@@ -1,0 +1,585 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>3.5. 远程版本库 &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="up" title="3. Git和声" href="index.html" />
+    <link rel="next" title="3.6. 补丁文件交互" href="060-git-offline.html" />
+    <link rel="prev" title="3.4. Git分支" href="040-git-branch.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="060-git-offline.html" title="3.6. 补丁文件交互"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="040-git-branch.html" title="3.4. Git分支"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">3. Git和声</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3.5. 远程版本库</a><ul>
+<li><a class="reference internal" href="#id2">3.5.1. 远程分支</a></li>
+<li><a class="reference internal" href="#id3">3.5.2. 分支追踪</a></li>
+<li><a class="reference internal" href="#id4">3.5.3. 远程版本库</a></li>
+<li><a class="reference internal" href="#pushpull">3.5.4. PUSH和PULL操作与远程版本库</a></li>
+<li><a class="reference internal" href="#id5">3.5.5. 里程碑和远程版本库</a></li>
+<li><a class="reference internal" href="#id6">3.5.6. 分支和里程碑的安全性</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="040-git-branch.html"
+                        title="上一章">3.4. Git分支</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="060-git-offline.html"
+                        title="下一章">3.6. 补丁文件交互</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/03-git-harmony/050-git-remote.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>3.5. 远程版本库<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>Git作为分布式版本库控制系统，每个人都是本地版本库的主人，可以在本地的版本库中随心所欲地创建分支和里程碑。当需要多人协作时，问题就出现了：</p>
+<ul class="simple">
+<li>如何避免因为用户把所有的本地分支都推送到共享版本库，从而造成共享版本库上分支的混乱？</li>
+<li>如何避免不同用户针对不同特性开发创建了相同名字的分支而造成分支名称的冲突？</li>
+<li>如何避免用户随意在共享版本库中创建里程碑而导致里程碑名称上的混乱和冲突？</li>
+<li>当用户向共享版本库及其他版本库推送时，每次都需要输入长长的版本库URL，太不方便了。</li>
+<li>当用户需要经常从多个不同的他人版本库中获取提交时，有没有办法不要总是输入长长的版本库URL？</li>
+<li>如果不带任何其他参数执行<strong class="command">git fetch</strong>、<strong class="command">git pull</strong>和<strong class="command">git push</strong>到底是和哪个远程版本库及哪个分支进行交互？</li>
+</ul>
+<p>本章介绍的<strong class="command">git remote</strong>命令就是用于实现远程版本库的便捷访问，建立远程分支和本地分支的对应，使得<strong class="command">git fetch</strong>、<strong class="command">git pull</strong>和<strong class="command">git push</strong>能够更为便捷地进行操作。</p>
+<div class="section" id="id2">
+<h2>3.5.1. 远程分支<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>上一章介绍Git分支的时候，每一个版本库最多只和一个上游版本库（远程共享版本库）进行交互，实际上Git允许一个版本库和任意多的版本库进行交互。首先执行下面的命令，基于<tt class="docutils literal"><span class="pre">hello-world.git</span></tt>版本库再创建几个新的版本库。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/repos/
+$ git clone --bare hello-world.git hello-user1.git
+Cloning into bare repository hello-user1.git...
+done.
+$ git clone --bare hello-world.git hello-user2.git
+Cloning into bare repository hello-user2.git...
+done.
+</pre></div>
+</div>
+<p>现在有了三个共享版本库：<tt class="docutils literal"><span class="pre">hello-world.git</span></tt>、<tt class="docutils literal"><span class="pre">hello-user1.git</span></tt>和<tt class="docutils literal"><span class="pre">hello-user2.git</span></tt>。现在有一个疑问，如果一个本地版本库需要和上面三个版本库进行互操作，三个共享版本库都存在一个<tt class="docutils literal"><span class="pre">master</span></tt>分支，会不会互相干扰、冲突或覆盖呢？</p>
+<p>先来看看<tt class="docutils literal"><span class="pre">hello-world</span></tt>远程共享版本库中包含的分支有哪些：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git ls-remote --heads file:///path/to/repos/hello-world.git
+8cffe5f135821e716117ee59bdd53139473bd1d8        refs/heads/hello-1.x
+bb4fef88fee435bfac04b8389cf193d9c04105a6        refs/heads/helper/master
+cf71ae3515e36a59c7f98b9db825fd0f2a318350        refs/heads/helper/v1.x
+c4acab26ff1c1125f5e585ffa8284d27f8ceea55        refs/heads/master
+</pre></div>
+</div>
+<p>原来远程共享版本库中有四个分支，其中<tt class="docutils literal"><span class="pre">hello-1.x</span></tt>分支是开发者user1创建的。现在重新克隆该版本库，如下：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/my/workspace/
+$ git clone file:///path/to/repos/hello-world.git
+...
+$ cd /path/to/my/workspace/hello-world
+</pre></div>
+</div>
+<p>执行<strong class="command">git branch</strong>命令检查分支，会吃惊地看到只有一个分支<tt class="docutils literal"><span class="pre">master</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git branch
+* master
+</pre></div>
+</div>
+<p>那么远程版本库中的其他分支哪里去了？为什么本地只有一个分支呢？执行<strong class="command">git show-ref</strong>命令可以看到全部的本地引用。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git show-ref
+c4acab26ff1c1125f5e585ffa8284d27f8ceea55 refs/heads/master
+c4acab26ff1c1125f5e585ffa8284d27f8ceea55 refs/remotes/origin/HEAD
+8cffe5f135821e716117ee59bdd53139473bd1d8 refs/remotes/origin/hello-1.x
+bb4fef88fee435bfac04b8389cf193d9c04105a6 refs/remotes/origin/helper/master
+cf71ae3515e36a59c7f98b9db825fd0f2a318350 refs/remotes/origin/helper/v1.x
+c4acab26ff1c1125f5e585ffa8284d27f8ceea55 refs/remotes/origin/master
+3171561b2c9c57024f7d748a1a5cfd755a26054a refs/tags/jx/v1.0
+aaff5676a7c3ae7712af61dfb9ba05618c74bbab refs/tags/jx/v1.0-i18n
+e153f83ee75d25408f7e2fd8236ab18c0abf0ec4 refs/tags/jx/v1.1
+83f59c7a88c04ceb703e490a86dde9af41de8bcb refs/tags/jx/v1.2
+1581768ec71166d540e662d90290cb6f82a43bb0 refs/tags/jx/v1.3
+ccca267c98380ea7fffb241f103d1e6f34d8bc01 refs/tags/jx/v2.0
+8a5b9934aacdebb72341dcadbb2650cf626d83da refs/tags/jx/v2.1
+89b74222363e8cbdf91aab30d005e697196bd964 refs/tags/jx/v2.2
+0b4ec63aea44b96d498528dcf3e72e1255d79440 refs/tags/jx/v2.3
+60a2f4f31e5dddd777c6ad37388fe6e5520734cb refs/tags/mytag
+5dc2fc52f2dcb84987f511481cc6b71ec1b381f7 refs/tags/mytag3
+51713af444266d56821fe3302ab44352b8c3eb71 refs/tags/v1.0
+</pre></div>
+</div>
+<p>从<strong class="command">git show-ref</strong>的输出中发现了几个不寻常的引用，这些引用以<tt class="docutils literal"><span class="pre">refs/remotes/origin/</span></tt>为前缀，并且名称和远程版本库的分支名一一对应。这些引用实际上就是从远程版本库的分支拷贝过来的，称为远程分支。</p>
+<p>Git 的<strong class="command">git branch</strong>命令也能够查看这些远程分支，不过要加上<tt class="docutils literal"><span class="pre">-r</span></tt>参数：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git branch -r
+  origin/HEAD -&gt; origin/master
+  origin/hello-1.x
+  origin/helper/master
+  origin/helper/v1.x
+  origin/master
+</pre></div>
+</div>
+<p>Git这样的设计是非常巧妙的，在向远程版本库执行获取操作时，不是把远程版本库的分支原封不动地复制到本地版本库的分支中，而是复制到另外的命名空间。如在克隆一个版本库时，会将远程分支都复制到目录<tt class="file docutils literal"><span class="pre">.git/refs/remotes/origin/</span></tt>下。这样向不同的远程版本库执行获取操作，因为远程分支相互隔离，所以就避免了相互的覆盖。</p>
+<p>那么克隆操作产生的远程分支为什么都有一个名为“origin/”的前缀呢？奥秘就在配置文件<tt class="file docutils literal"><span class="pre">.git/config</span></tt>中。下面的几行内容出自该配置文件，为了说明方便显示了行号。</p>
+<div class="highlight-python"><div class="highlight"><pre>6 [remote &quot;origin&quot;]
+7   fetch = +refs/heads/*:refs/remotes/origin/*
+8   url = file:///path/to/repos/hello-world.git
+</pre></div>
+</div>
+<p>这个小节可以称为<tt class="docutils literal"><span class="pre">[remote]</span></tt>小节，该小节以origin为名注册了一个远程版本库。该版本库的URL地址由第8行给出，会发现这个URL地址就是执行<strong class="command">git clone</strong>命令时所用的地址。最具魔法的配置是第7行，这一行设置了执行<strong class="command">git fetch origin</strong>操作时使用的默认引用表达式。</p>
+<ul class="simple">
+<li>该引用表达式以加号（+）开头，含义是强制进行引用的替换，即使即将进行的替换是非快进式的。</li>
+<li>引用表达式中使用了通配符，冒号前面的含有通配符的引用指的是远程版本库的所有分支，冒号后面的引用含义是复制到本地的远程分支目录中。</li>
+</ul>
+<p>正因为有了上面的<tt class="docutils literal"><span class="pre">[remote]</span></tt>配置小节，当执行<strong class="command">git fetch origin</strong>操作时，就相当于执行了下面的命令，将远程版本库的所有分支复制为本地的远程分支。</p>
+<div class="highlight-python"><div class="highlight"><pre>git fetch origin +refs/heads/*:refs/remotes/origin/*
+</pre></div>
+</div>
+<p>远程分支不是真正意义上的分支，是类似于里程碑一样的引用。如果针对远程分支执行检出命令，会看到大段的错误警告。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git checkout origin/hello-1.x
+Note: checking out &#39;origin/hello-1.x&#39;.
+
+You are in &#39;detached HEAD&#39; state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b new_branch_name
+
+HEAD is now at 8cffe5f... Merge branch &#39;hello-1.x&#39; of file:///path/to/repos/hello-world into hello-1.x
+</pre></div>
+</div>
+<p>上面的大段的错误信息实际上告诉我们一件事，远程分支类似于里程碑，如果检出就会使得头指针<tt class="docutils literal"><span class="pre">HEAD</span></tt>处于分离头指针状态。实际上除了以<tt class="docutils literal"><span class="pre">refs/heads</span></tt>为前缀的引用之外，如果检出任何其他引用，都将使工作区处于分离头指针状态。如果对远程分支进行修改就需要创建新的本地分支。</p>
+</div>
+<div class="section" id="id3">
+<h2>3.5.2. 分支追踪<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>为了能够在远程分支<tt class="docutils literal"><span class="pre">refs/remotes/origin/hello-1.x</span></tt>上进行工作，需要基于该远程分支创建本地分支。远程分支可以使用简写<tt class="docutils literal"><span class="pre">origin/hello-1.x</span></tt>。如果Git的版本是1.6.6或者更新的版本，可以使用下面的命令同时完成分支的创建和切换。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git checkout hello-1.x
+Branch hello-1.x set up to track remote branch hello-1.x from origin.
+Switched to a new branch &#39;hello-1.x&#39;
+</pre></div>
+</div>
+<p>如果Git的版本比较老，或注册了多个远程版本库，因此存在多个名为<tt class="docutils literal"><span class="pre">hello-1.x</span></tt>的远程分支，就不能使用上面简洁的分支创建和切换命令，而需要使用在上一章中学习到的分支创建命令，显式地从远程分支中创建本地分支。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git checkout -b hello-1.x origin/hello-1.x
+Branch hello-1.x set up to track remote branch hello-1.x from origin.
+Switched to a new branch &#39;hello-1.x&#39;
+</pre></div>
+</div>
+<p>在上面基于远程分支创建本地分支的过程中，命令输出的第一行说的是建立了本地分支和远程分支的跟踪。和远程分支建立跟踪后，本地分支就具有下列特征：</p>
+<ul class="simple">
+<li>检查工作区状态时，会显示本地分支和被跟踪远程分支提交之间的关系。</li>
+<li>当执行<strong class="command">git pull</strong>命令时，会和被跟踪的远程分支进行合并（或者变基），如果两者出现版本偏离的话。</li>
+<li>当执行<strong class="command">git push</strong>命令时，会推送到远程版本库的同名分支中。</li>
+</ul>
+<p>下面就在基于远程分支创建的本地跟踪分支中进行操作，看看本地分支是如何与远程分支建立关联的。</p>
+<ul>
+<li><p class="first">先将本地<tt class="docutils literal"><span class="pre">hello-1.x</span></tt>分支向后重置两个版本。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git reset --hard HEAD^^
+HEAD is now at ebcf6d6 blank commit for GnuPG-signed tag test.
+</pre></div>
+</div>
+</li>
+<li><p class="first">然后查看状态，显示当前分支相比跟踪分支落后了3个版本。</p>
+<p>之所以落后三个版本而非两个版本是因为<tt class="docutils literal"><span class="pre">hello-1.x</span></tt>的最新提交是一个合并提交，包含两个父提交，因此上面的重置命令丢弃掉三个提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status
+# On branch hello-1.x
+# Your branch is behind &#39;origin/hello-1.x&#39; by 3 commits, and can be fast-forwarded.
+#
+nothing to commit (working directory clean)
+</pre></div>
+</div>
+</li>
+<li><p class="first">执行<strong class="command">git pull</strong>命令，会自动与跟踪的远程分支进行合并，相当于找回最新的3个提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git pull
+Updating ebcf6d6..8cffe5f
+Fast-forward
+ src/main.c |   11 +++++++++--
+ 1 files changed, 9 insertions(+), 2 deletions(-)
+</pre></div>
+</div>
+</li>
+</ul>
+<p>但是如果基于本地分支创建另外一个本地分支则没有分支跟踪的功能。下面就从本地的<tt class="docutils literal"><span class="pre">hello-1.x</span></tt>分支中创建<tt class="docutils literal"><span class="pre">hello-jx</span></tt>分支。</p>
+<ul>
+<li><p class="first">从<tt class="docutils literal"><span class="pre">hello-1.x</span></tt>分支中创建新的本地分支<tt class="docutils literal"><span class="pre">hello-jx</span></tt>。</p>
+<p>下面的创建分支操作只有一行输出，看不到分支间建立跟踪的提示。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git checkout -b hello-jx hello-1.x
+Switched to a new branch &#39;hello-jx&#39;
+</pre></div>
+</div>
+</li>
+<li><p class="first">将<tt class="docutils literal"><span class="pre">hello-jx</span></tt>分支重置。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git reset --hard HEAD^^
+HEAD is now at ebcf6d6 blank commit for GnuPG-signed tag test.
+</pre></div>
+</div>
+</li>
+<li><p class="first">检查状态看不到分支间的跟踪信息。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status
+# On branch hello-jx
+nothing to commit (working directory clean)
+</pre></div>
+</div>
+</li>
+<li><p class="first">执行<strong class="command">git pull</strong>命令会报错。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git pull
+You asked me to pull without telling me which branch you
+want to merge with, and &#39;branch.hello-jx.merge&#39; in
+your configuration file does not tell me, either. Please
+specify which branch you want to use on the command line and
+try again (e.g. &#39;git pull &lt;repository&gt; &lt;refspec&gt;&#39;).
+See git-pull(1) for details.
+
+If you often merge with the same branch, you may want to
+use something like the following in your configuration file:
+
+    [branch &quot;hello-jx&quot;]
+    remote = &lt;nickname&gt;
+    merge = &lt;remote-ref&gt;
+
+    [remote &quot;&lt;nickname&gt;&quot;]
+    url = &lt;url&gt;
+    fetch = &lt;refspec&gt;
+
+See git-config(1) for details.
+</pre></div>
+</div>
+</li>
+<li><p class="first">将上面命令执行中的错误信息翻译过来，就是：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git pull
+您让我执行拉回操作，但是没有告诉我您希望与哪个远程分支进行合并，
+而且也没有通过配置 &#39;branch.hello-jx.merge&#39; 来告诉我。
+
+请在命令行提供足够的参数，如 &#39;git pull &lt;repository&gt; &lt;refspec&gt;&#39; 。
+或者如果您经常与同一个分支进行合并，可以和该分支建立跟踪。在配置
+中添加如下配置信息：
+
+    [branch &quot;hello-jx&quot;]
+    remote = &lt;nickname&gt;
+    merge = &lt;remote-ref&gt;
+
+    [remote &quot;&lt;nickname&gt;&quot;]
+    url = &lt;url&gt;
+    fetch = &lt;refspec&gt;
+</pre></div>
+</div>
+</li>
+</ul>
+<p>为什么用同样方法建立的分支<tt class="docutils literal"><span class="pre">hello-1.x</span></tt>和<tt class="docutils literal"><span class="pre">hello-jx</span></tt>，差距咋就那么大呢？奥秘就在于从远程分支创建本地分支，自动建立了分支间的跟踪，而从一个本地分支创建另外一个本地分支则没有。看看配置文件<tt class="file docutils literal"><span class="pre">.git/config</span></tt>中是不是专门为分支<tt class="docutils literal"><span class="pre">hello-1.x</span></tt>创建了相应的配置信息？</p>
+<div class="highlight-python"><div class="highlight"><pre> 9 [branch &quot;master&quot;]
+10   remote = origin
+11   merge = refs/heads/master
+12 [branch &quot;hello-1.x&quot;]
+13   remote = origin
+14   merge = refs/heads/hello-1.x
+</pre></div>
+</div>
+<p>其中第9-11行是针对<tt class="docutils literal"><span class="pre">master</span></tt>分支设置的分支间跟踪，是在版本库克隆的时候自动建立的。而第12-14行是前面基于远程分支创建本地分支时建立的。至于分支<tt class="docutils literal"><span class="pre">hello-jx</span></tt>则没有建立相关配置。</p>
+<p>如果希望在基于一个本地分支创建另外一个本地分支时也能够使用分支间的跟踪功能，就要在创建分支时提供<tt class="docutils literal"><span class="pre">--track</span></tt>参数。下面实践一下。</p>
+<ul>
+<li><p class="first">删除之前创建的<tt class="docutils literal"><span class="pre">hello-jx</span></tt>分支。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git checkout master
+Switched to branch &#39;master&#39;
+$ git branch -d hello-jx
+Deleted branch hello-jx (was ebcf6d6).
+</pre></div>
+</div>
+</li>
+<li><p class="first">使用参数<tt class="docutils literal"><span class="pre">--track</span></tt>重新基于<tt class="docutils literal"><span class="pre">hello-1.x</span></tt>创建<tt class="docutils literal"><span class="pre">hello-jx</span></tt>分支。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git checkout --track -b hello-jx hello-1.x
+Branch hello-jx set up to track local branch hello-1.x.
+Switched to a new branch &#39;hello-jx&#39;
+</pre></div>
+</div>
+</li>
+<li><p class="first">从Git库的配置文件中会看到为<tt class="docutils literal"><span class="pre">hello-jx</span></tt>分支设置的跟踪。</p>
+<p>因为跟踪的是本版本库的本地分支，所以第16行设置的远程版本库的名字为一个点。</p>
+<div class="highlight-python"><div class="highlight"><pre>15 [branch &quot;hello-jx&quot;]
+16   remote = .
+17   merge = refs/heads/hello-1.x
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h2>3.5.3. 远程版本库<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>名为<tt class="docutils literal"><span class="pre">origin</span></tt>的远程版本库是在版本库克隆时注册的，那么如何注册新的远程版本库呢？下面将版本库<tt class="docutils literal"><span class="pre">file:///path/to/repos/hello-user1.git</span></tt>以<tt class="docutils literal"><span class="pre">new-remote</span></tt>为名进行注册。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git remote add new-remote file:///path/to/repos/hello-user1.git
+</pre></div>
+</div>
+<p>如果再打开版本库的配置文件<tt class="file docutils literal"><span class="pre">.git/config</span></tt>会看到新的配置。</p>
+<div class="highlight-python"><div class="highlight"><pre>12 [remote &quot;new-remote&quot;]
+13   url = file:///path/to/repos/hello-user1.git
+14   fetch = +refs/heads/*:refs/remotes/new-remote/*
+</pre></div>
+</div>
+<p>执行<strong class="command">git remote</strong>命令，可以更为方便地显示已经注册的远程版本库。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git remote -v
+new-remote      file:///path/to/repos/hello-user1.git (fetch)
+new-remote      file:///path/to/repos/hello-user1.git (push)
+origin  file:///path/to/repos/hello-world.git (fetch)
+origin  file:///path/to/repos/hello-world.git (push)
+</pre></div>
+</div>
+<p>现在执行<strong class="command">git fetch</strong>并不会从新注册的 new-remote 远程版本库获取，因为当前分支设置的默认远程版本库为 origin。要想从 new-remote 远程版本库中获取，需要为<strong class="command">git fetch</strong>命令增加一个参数<tt class="docutils literal"><span class="pre">new-remote</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git fetch new-remote
+From file:///path/to/repos/hello-user1
+ * [new branch]      hello-1.x  -&gt; new-remote/hello-1.x
+ * [new branch]      helper/master -&gt; new-remote/helper/master
+ * [new branch]      helper/v1.x -&gt; new-remote/helper/v1.x
+ * [new branch]      master     -&gt; new-remote/master
+</pre></div>
+</div>
+<p>从上面的命令输出中可以看出，远程版本库的分支复制到本地版本库前缀为<tt class="docutils literal"><span class="pre">new-remote</span></tt>的远程分支中去了。用<strong class="command">git branch -r</strong>命令可以看到新增了几个远程分支。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git branch -r
+  new-remote/hello-1.x
+  new-remote/helper/master
+  new-remote/helper/v1.x
+  new-remote/master
+  origin/HEAD -&gt; origin/master
+  origin/hello-1.x
+  origin/helper/master
+  origin/helper/v1.x
+  origin/master
+</pre></div>
+</div>
+<p><strong>更改远程版本库的地址</strong></p>
+<p>如果远程版本库的URL地址改变，需要更换，该如何处理呢？手工修改<tt class="file docutils literal"><span class="pre">.git/config</span></tt>文件是一种方法，用<strong class="command">git config</strong>命令进行更改是第二种方法，还有一种方法是用<strong class="command">git remote</strong>命令，如下：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git remote set-url new-remote file:///path/to/repos/hello-user2.git
+</pre></div>
+</div>
+<p>可以看到注册的远程版本库的URL地址已经更改。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git remote -v
+new-remote      file:///path/to/repos/hello-user2.git (fetch)
+new-remote      file:///path/to/repos/hello-user2.git (push)
+origin  file:///path/to/repos/hello-world.git (fetch)
+origin  file:///path/to/repos/hello-world.git (push)
+</pre></div>
+</div>
+<p>从上面的输出中可以发现每一个远程版本库都有两个URL地址，分别是执行<strong class="command">git fetch</strong>和<strong class="command">git push</strong>命令时用到的URL地址。既然有两个地址，就意味着这两个地址可以不同，用下面的命令可以为推送操作设置单独的URL地址。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git remote set-url --push new-remote /path/to/repos/hello-user2.git
+$ git remote -v
+new-remote      file:///path/to/repos/hello-user2.git (fetch)
+new-remote      /path/to/repos/hello-user2.git (push)
+origin  file:///path/to/repos/hello-world.git (fetch)
+origin  file:///path/to/repos/hello-world.git (push)
+</pre></div>
+</div>
+<p>当单独为推送设置了URL后，配置文件<tt class="file docutils literal"><span class="pre">.git/config</span></tt>的对应<tt class="docutils literal"><span class="pre">[remote]</span></tt>小节也会增加一条新的名为<tt class="docutils literal"><span class="pre">pushurl</span></tt>的配置。如下：</p>
+<div class="highlight-python"><div class="highlight"><pre>12 [remote &quot;new-remote&quot;]
+13   url = file:///path/to/repos/hello-user2.git
+14   fetch = +refs/heads/*:refs/remotes/new-remote/*
+15   pushurl = /path/to/repos/hello-user2.git
+</pre></div>
+</div>
+<p><strong>更改远程版本库的名称</strong></p>
+<p>如果对远程版本库的注册名称不满意，也可以进行修改。例如将new-remote名称修改为user2，使用下面的命令：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git remote rename new-remote user2
+</pre></div>
+</div>
+<p>完成改名后，不但远程版本库的注册名称更改过来了，就连远程分支名称都会自动进行相应的更改。可以通过执行<strong class="command">git remote</strong>和<strong class="command">git branch -r</strong>命令查看。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git remote
+origin
+user2
+$ git branch -r
+  origin/HEAD -&gt; origin/master
+  origin/hello-1.x
+  origin/helper/master
+  origin/helper/v1.x
+  origin/master
+  user2/hello-1.x
+  user2/helper/master
+  user2/helper/v1.x
+  user2/master
+</pre></div>
+</div>
+<p><strong>远程版本库更新</strong></p>
+<p>当注册了多个远程版本库并希望获取所有远程版本库的更新时，Git提供了一个简单的命令。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git remote update
+Fetching origin
+Fetching user2
+</pre></div>
+</div>
+<p>如果某个远程版本库不想在执行<strong class="command">git remote update</strong>时获得更新，可以通过参数关闭自动更新。例如下面的命令关闭远程版本库user2的自动更新。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git config remote.user2.skipDefaultUpdate true
+$ git remote update
+Fetching origin
+</pre></div>
+</div>
+<p><strong>删除远程版本库</strong></p>
+<p>如果想要删除注册的远程版本库，用<strong class="command">git remote</strong>的<strong class="command">rm</strong>子命令可以实现。例如删除注册的user2版本库。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git remote rm user2
+</pre></div>
+</div>
+</div>
+<div class="section" id="pushpull">
+<h2>3.5.4. PUSH和PULL操作与远程版本库<a class="headerlink" href="#pushpull" title="永久链接至标题">¶</a></h2>
+<p>在Git分支一章，已经介绍过对于新建立的本地分支（没有建立和远程分支的追踪），执行<strong class="command">git push</strong>命令是不会被推送到远程版本库中，这样的设置是非常安全的，避免了因为误操作将本地分支创建到远程版本库中。当不带任何参数执行<strong class="command">git push</strong>命令，实际的执行过程是：</p>
+<ul>
+<li><p class="first">如果为当前分支设置了<tt class="docutils literal"><span class="pre">&lt;remote&gt;</span></tt>，即由配置<tt class="docutils literal"><span class="pre">branch.&lt;branchname&gt;.remote</span></tt>给出了远程版本库代号，则不带参数执行<strong class="command">git push</strong>相当于执行了<strong class="command">git push &lt;remote&gt;</strong>。</p>
+</li>
+<li><p class="first">如果没有为当前分支设置<tt class="docutils literal"><span class="pre">&lt;remote&gt;</span></tt>，则不带参数执行<strong class="command">git push</strong>相当于执行了<strong class="command">git push origin</strong>。</p>
+</li>
+<li><p class="first">要推送的远程版本库的URL地址由<tt class="docutils literal"><span class="pre">remote.&lt;remote&gt;.pushurl</span></tt>给出。如果没有配置，则使用<tt class="docutils literal"><span class="pre">remote.&lt;remote&gt;.url</span></tt>配置的URL地址。</p>
+</li>
+<li><p class="first">如果为注册的远程版本库设置了<tt class="docutils literal"><span class="pre">push</span></tt>参数，即通过<tt class="docutils literal"><span class="pre">remote.&lt;remote&gt;.push</span></tt>配置了一个引用表达式，则使用该引用表达式执行推送。</p>
+</li>
+<li><p class="first">否则使用“:”作为引用表达式。该表达式的含义是同名分支推送，即对所有在远程版本库有同名分支的本地分支执行推送。</p>
+<p>这也就是为什么在一个本地新建分支中执行<strong class="command">git push</strong>推送操作不会推送也不会报错的原因，因为远程不存在同名分支，所以根本就没有对该分支执行推送，而推送的是其他分支（如果远程版本库有同名分支的话）。</p>
+</li>
+</ul>
+<p>在Git分支一章中就已经知道，如果需要在远程版本库中创建分支，则执行命令：<strong class="command">git push &lt;remote&gt; &lt;new_branch&gt;</strong>。即通过将本地分支推送到远程版本库的方式在远程版本库中创建分支。但是在接下来的使用中会遇到麻烦：不能执行<strong class="command">git pull</strong>操作（不带参数）将远程版本库中其他人推送的提交获取到本地。这是因为没有建立本地分支和远程分支的追踪，即没有设置<tt class="docutils literal"><span class="pre">branch.&lt;branchname&gt;.remote</span></tt>的值和<tt class="docutils literal"><span class="pre">branch.&lt;branchname&gt;.merge</span></tt>的值。</p>
+<p>关于不带参数执行<strong class="command">git pull</strong>命令解释如下：</p>
+<ul class="simple">
+<li>如果为当前分支设置了<tt class="docutils literal"><span class="pre">&lt;remote&gt;</span></tt>，即由配置<tt class="docutils literal"><span class="pre">branch.&lt;branchname&gt;.remote</span></tt>给出了远程版本库代号，则不带参数执行<strong class="command">git pull</strong>相当于执行了<strong class="command">git pull &lt;remote&gt;</strong>。</li>
+<li>如果没有为当前分支设置<tt class="docutils literal"><span class="pre">&lt;remote&gt;</span></tt>，则不带参数执行<strong class="command">git pull</strong>相当于执行了<strong class="command">git pull origin</strong>。</li>
+<li>要获取的远程版本库的URL地址由<tt class="docutils literal"><span class="pre">remote.&lt;remote&gt;.url</span></tt>给出。</li>
+<li>如果为注册的远程版本库设置了<tt class="docutils literal"><span class="pre">fetch</span></tt>参数，即通过<tt class="docutils literal"><span class="pre">remote.&lt;remote&gt;.fetch</span></tt>配置了一个引用表达式，则使用该引用表达式执行获取操作。</li>
+<li>接下来要确定合并的分支。如果设定了<tt class="docutils literal"><span class="pre">branch.&lt;branchname&gt;.merge</span></tt>，则对其设定的分支执行合并，否则报错退出。</li>
+</ul>
+<p>在执行<strong class="command">git pull</strong>操作的时候可以通过参数<tt class="docutils literal"><span class="pre">--rebase</span></tt>设置使用变基而非合并操作，将本地分支的改动变基到跟踪分支上。为了避免因为忘记使用<tt class="docutils literal"><span class="pre">--rebase</span></tt>参数导致分支的合并，可以执行如下命令进行设置。注意将<tt class="docutils literal"><span class="pre">&lt;branchname&gt;</span></tt>替换为对应的分支名称。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git config branch.&lt;branchname&gt;.rebase true
+</pre></div>
+</div>
+<p>有了这个设置之后，如果是在<tt class="docutils literal"><span class="pre">&lt;branchname&gt;</span></tt>工作分支中执行<strong class="command">git pull</strong>命令，在遇到冲突（本地和远程分支出现偏离）的情况下，会采用变基操作，而不是默认的合并操作。</p>
+<p>如果为本地版本库设置参数<tt class="docutils literal"><span class="pre">branch.autosetuprebase</span></tt>，值为<tt class="docutils literal"><span class="pre">true</span></tt>，则在基于远程分支建立本地追踪分支时，会自动配置<tt class="docutils literal"><span class="pre">branch.&lt;branchname&gt;.rebase</span></tt>参数，在执行<strong class="command">git pull</strong>命令时使用变基操作取代默认的合并操作。</p>
+</div>
+<div class="section" id="id5">
+<h2>3.5.5. 里程碑和远程版本库<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>远程版本库中的里程碑同步到本地版本库，会使用同样的名称，而不会像分支那样移动到另外的命名空间（远程分支）中，这可能会给本地版本库中的里程碑带来混乱。当和多个远程版本库交互时，这个问题就更为严重。</p>
+<p>前面的Git里程碑一章已经介绍了当执行<strong class="command">git push</strong>命令推送时，默认不会将本地创建的里程碑带入远程版本库，这样可以避免远程版本库上里程碑的泛滥。但是执行<strong class="command">git fetch</strong>命令从远程版本库获取分支的最新提交时，如果获取的提交上建有里程碑，这些里程碑会被获取到本地版本库。当删除注册的远程版本库时，远程分支会被删除，但是该远程版本库引入的里程碑不会被删除，日积月累本地版本库中的里程碑可能会变得愈加混乱。</p>
+<p>可以在执行<strong class="command">git fetch</strong>命令的时候，设置不获取里程碑只获取分支及提交。通过提供<tt class="docutils literal"><span class="pre">-n</span></tt>或<tt class="docutils literal"><span class="pre">--no-tags</span></tt>参数可以实现。示例如下：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git fetch --no-tags file:///path/to/repos/hello-world.git \
+      refs/heads/*:refs/remotes/hello-world/*
+</pre></div>
+</div>
+<p>在注册远程版本库的时候，也可以使用<tt class="docutils literal"><span class="pre">--no-tags</span></tt>参数，避免将远程版本库的里程碑引入本地版本库。例如：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git remote add --no-tags hell-world \
+      file:///path/to/repos/hello-world.git
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>3.5.6. 分支和里程碑的安全性<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<p>通过前面章节的探讨，会感觉到Git的使用真的是太方便、太灵活了，但是需要掌握的知识点和窍门也太多了。为了避免没有经验的用户在团队共享的Git版本库中误操作，就需要对版本库进行一些安全上的设置。本书第5篇Git服务器搭建的相关章节会具体介绍如何配置用户授权等版本库安全性设置。</p>
+<p>实际上Git版本库本身也提供了一些安全机制避免对版本库的破坏。</p>
+<ul>
+<li><p class="first">用reflog记录对分支的操作历史。</p>
+<p>默认创建的带工作区的版本库都会包含<tt class="docutils literal"><span class="pre">core.logallrefupdates</span></tt>为<tt class="docutils literal"><span class="pre">true</span></tt>的配置，这样在版本库中建立的每个分支都会创建对应的 reflog。但是创建的裸版本库默认不包含这个设置，也就不会为每个分支设置 reflog。如果团队的规模较小，可能因为分支误操作导致数据丢失，可以考虑为裸版本库添加<tt class="docutils literal"><span class="pre">core.logallrefupdates</span></tt>的相关配置。</p>
+</li>
+<li><p class="first">关闭非快进式提交。</p>
+<p>如果将配置<tt class="docutils literal"><span class="pre">receive.denyNonFastForwards</span></tt>设置为<tt class="docutils literal"><span class="pre">true</span></tt>，则禁止一切非快进式推送。但这个配置有些矫枉过正，更好的方法是搭建基于SSH协议的Git服务器，通过钩子脚本更灵活的进行配置。例如：允许来自某些用户的强制提交，而其他用户不能执行非快进式推送。</p>
+</li>
+<li><p class="first">关闭分支删除功能。</p>
+<p>如果将配置<tt class="docutils literal"><span class="pre">receive.denyDeletes</span></tt>设置为<tt class="docutils literal"><span class="pre">true</span></tt>，则禁止删除分支。同样更好的方法是通过架设基于SSH协议的Git服务器，配置分支删除的用户权限。</p>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="060-git-offline.html" title="3.6. 补丁文件交互"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="040-git-branch.html" title="3.4. Git分支"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >3. Git和声</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

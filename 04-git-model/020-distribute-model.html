@@ -1,0 +1,197 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>4.2. 金字塔式协同模型 &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="up" title="4. Git协同模型" href="index.html" />
+    <link rel="next" title="4.3. Topgit协同模型" href="030-topgit-model.html" />
+    <link rel="prev" title="4.1. 经典Git协同模型" href="010-central-model.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="030-topgit-model.html" title="4.3. Topgit协同模型"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="010-central-model.html" title="4.1. 经典Git协同模型"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">4. Git协同模型</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">4.2. 金字塔式协同模型</a><ul>
+<li><a class="reference internal" href="#id2">4.2.1. 贡献者开放只读版本库</a></li>
+<li><a class="reference internal" href="#id3">4.2.2. 以补丁方式贡献代码</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="010-central-model.html"
+                        title="上一章">4.1. 经典Git协同模型</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="030-topgit-model.html"
+                        title="下一章">4.3. Topgit协同模型</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/04-git-model/020-distribute-model.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>4.2. 金字塔式协同模型<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>自从分布式版本库控制系统（Mercurial/Hg、Bazaar、Git等）诞生之后，有越来越多的开源项目迁移了版本控制系统，例如从Subversion或CVS迁移到分布式版本控制系统。因为众多的开源项目逐渐认识到，集中式的版本控制管理方式阻止了更多的人参与项目的开发，对项目的发展不利。</p>
+<p>集中式版本控制系统的最大问题是，如果没有在服务器端授权，就无法提交，也就无法保存自己的更改。开源项目虽然允许所有人访问代码库，但是不可能开放“写操作”授权给所有的人，否则代码质量无法控制（Gerrit审核服务器是例外）。于此相对照的是，在使用了分布式版本控制系统之后，任何人都可以在本地克隆一个和远程版本库一模一样的版本库，本地的版本库允许任何操作，这就极大的调动了开发者投入项目研究的积极性。</p>
+<p>分布式的开发必然带来协同的问题，如何能够让一个素不相识的开发者将他的贡献提交到项目中？如何能够最大化的发动和汇聚全球智慧？开源社区逐渐发展出金字塔模型，而这也是必然之选。</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="../images/distrabute-model.png"><img alt="../images/distrabute-model.png" src="../images/distrabute-model.png" style="width: 426.0px; height: 360.0px;" /></a>
+<p class="caption">图：金字塔式协同模型</p>
+</div>
+</div></blockquote>
+<p>金字塔模型的含义是，虽然理论上每个开发者的版本库都是平等的，但是会有一个公认的权威的版本库，这个版本库由一个或者多个核心开发者负责维护（具有推送的权限）。核心的开发人员负责审核其他贡献者的提交，审核可以通过邮件传递的补丁或者访问（PULL）贡献者开放的代码库进行。由此构成了由核心开发团队为顶层的所有贡献者共同参与的开发者金字塔。</p>
+<p>Linux社区就是典型的金字塔结构。Linus Torvalds的版本库被公认为是官方的版本库，允许核心成员的提交。其他贡献者的提交必须经过一个或多个核心成员的审核后，才能经由核心成员代为推送的到官方版本库。</p>
+<p>采用这种金字塔式协同模型不需要复杂的Git服务器设置，只需要项目管理者提供一个让其他人只读访问的版本库。当然管理者要能够通过某种方法向该版本库推送，以便其他人能够通过该版本库获得更新。</p>
+<div class="section" id="id2">
+<h2>4.2.1. 贡献者开放只读版本库<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>因为不能直接向项目只读共享的版本库提交，为了能让项目的管理者获取自己的提交，贡献者需要提供项目管理者访问自己版本库的方法。建立一个自己所有的只读共享版本库是一个简单易行的方法。在第5篇搭建Git服务器的相关章节，会介绍几种快速搭建只读Git版本库的方法，包括：用HTTP智能协议搭建Git服务器，用Git协议搭建Git服务器。</p>
+<p>贡献者在自己的只读共享版本库建立后，需要对自己贡献的提交进行一下检查和整理。</p>
+<ul>
+<li><p class="first">贡献的提交要处于一个单独的特性分支中，并且要为该特性分支取一个有意义的名字。</p>
+<p>使用贡献者的名字以及简单的概括性文字是非常好的特性分支名。例如为自己的特性分支命名为<tt class="docutils literal"><span class="pre">jiangxin/fix-bug-xxx</span></tt>。</p>
+</li>
+<li><p class="first">贡献的提交是否是基于上游对应分支的最新提交？如果不是需要变基到上游最新提交，以免产生合并。</p>
+<p>项目的管理者会尽量避免不必要的合并，因此会要求贡献者的提交尽量基于项目的最新提交。使用下面的方式建立跟踪远程分支的本地分支，可以很简单的实现在执行<strong class="command">git pull</strong>操作时使用变基操作取代合并操作。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git checkout -b jiangxin/fix-bug-xxx origin/master
+$ git config branch.jiangxin/fix-bug-xxx.rebase true
+hack, hack, hack
+$ git pull
+</pre></div>
+</div>
+</li>
+</ul>
+<p>然后贡献者就可以向项目管理者发送通知邮件，告诉项目管理者有贡献的代码等待他/她的审核。邮件中大致包括以下内容：</p>
+<ul class="simple">
+<li>为什么要修改项目的代码。</li>
+<li>相应的修改是否经过了测试，或者提交中是否包含了单元测试。</li>
+<li>自己版本库的访问地址。</li>
+<li>特性分支名称。</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2>4.2.2. 以补丁方式贡献代码<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>使用补丁文件方式贡献代码也是开源项目常用的协同方式。Git项目本身就是采用该方式运作的。</p>
+<ul class="simple">
+<li>每个用户先在本地版本库修改代码。</li>
+<li>修改完成后，通过执行<strong class="command">git format-patch</strong>命令将提交转换为补丁。</li>
+<li>如果提交很多且比较杂乱，可以考虑使用StGit对提交进行重整。</li>
+<li>调用<strong class="command">git send-email</strong>命令或者通过图形界面的邮件客户端软件将补丁发到邮件列表以及项目维护者。</li>
+<li>项目维护者认可贡献者提交的补丁后，执行<strong class="command">git am</strong>命令应用补丁。</li>
+</ul>
+<p>在第3篇第20章“补丁文件交互”已经详细介绍了该模式的工作流程，请参考相关章节。</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="030-topgit-model.html" title="4.3. Topgit协同模型"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="010-central-model.html" title="4.1. 经典Git协同模型"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >4. Git协同模型</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

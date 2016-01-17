@@ -1,0 +1,376 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>6.2.4. Git版本库整理 &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="up" title="6.2. 更多版本控制系统的迁移" href="020-others.html" />
+    <link rel="next" title="7. Git的其它应用" href="../07-git-app/index.html" />
+    <link rel="prev" title="6.2.3. 通用版本库迁移" href="040-others.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../07-git-app/index.html" title="7. Git的其它应用"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="040-others.html" title="6.2.3. 通用版本库迁移"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >6. 迁移到Git</a> &raquo;</li>
+          <li><a href="020-others.html" accesskey="U">6.2. 更多版本控制系统的迁移</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">6.2.4. Git版本库整理</a><ul>
+<li><a class="reference internal" href="#id1">6.2.4.1. 环境变量过滤器</a></li>
+<li><a class="reference internal" href="#id3">6.2.4.2. 树过滤器</a></li>
+<li><a class="reference internal" href="#id4">6.2.4.3. 暂存区过滤器</a></li>
+<li><a class="reference internal" href="#id5">6.2.4.4. 父节点过滤器</a></li>
+<li><a class="reference internal" href="#id6">6.2.4.5. 提交说明过滤器</a></li>
+<li><a class="reference internal" href="#id7">6.2.4.6. 提交过滤器</a></li>
+<li><a class="reference internal" href="#id8">6.2.4.7. 里程碑名字过滤器</a></li>
+<li><a class="reference internal" href="#id9">6.2.4.8. 子目录过滤器</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="040-others.html"
+                        title="上一章">6.2.3. 通用版本库迁移</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="../07-git-app/index.html"
+                        title="下一章">7. Git的其它应用</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/06-migrate/050-git-to-git.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="git">
+<h1>6.2.4. Git版本库整理<a class="headerlink" href="#git" title="永久链接至标题">¶</a></h1>
+<p>Git提供了太多武器进行版本库的整理，可以将一个Git版本库改动换面成为另外的一个Git版本库。</p>
+<ul class="simple">
+<li>使用交互式变基操作，将多个提交合并为一个。</li>
+<li>使用StGit，合并提交以及更改提交。</li>
+<li>借助变基操作，抛弃部分历史提交。</li>
+<li>使用子树合并，将多个版本库整合在一起。</li>
+<li>使用<tt class="docutils literal"><span class="pre">git-subtree</span></tt>插件，将版本库的一个目录拆分出来成为独立版本库的根目录。</li>
+</ul>
+<p>但是有些版本库重整工作如果使用上面的工具会非常困难，而采用另外一个还没有用到的Git命令<strong class="command">git filter-branch</strong>却可以做到事半功倍。看看使用这个新工具来实现下面的这几个任务是多么的简单和优美。</p>
+<ul>
+<li><p class="first">将版本库中某个文件彻底删除。即凡是有该文件的提交都一一作出修改，撤出该文件。</p>
+<p>下面的命令并非最优实现，后面会介绍一个运行更快的命令。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git filter-branch --tree-filter &#39;rm -f filename&#39; -- --all
+</pre></div>
+</div>
+</li>
+<li><p class="first">更改历史提交中某一提交者的姓名及邮件地址。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git filter-branch --commit-filter &#39;
+      if [ &quot;$GIT_AUTHOR_NAME&quot; = &quot;Xin Jiang&quot; ]; then
+          GIT_AUTHOR_NAME=&quot;Jiang Xin&quot;
+          GIT_AUTHOR_EMAIL=&quot;jiangxin@ossxp.com&quot;
+          GIT_COMMITTER_NAME=&quot;$GIT_AUTHOR_NAME&quot;
+          GIT_COMMITTER_EMAIL=&quot;$GIT_AUTHOR_EMAIL&quot;
+      fi
+      git commit-tree &quot;$@&quot;;
+      &#39; HEAD
+</pre></div>
+</div>
+</li>
+<li><p class="first">为没有包含签名的历史提交添加签名。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git filter-branch -f --msg-filter &#39;
+      signed=false
+      while read line; do
+          if echo $line | grep -q Signed-off-by; then
+              signed=true
+          fi
+          echo $line
+      done
+      if ! $signed; then
+          echo &quot;&quot;
+          echo &quot;Signed-off-by: YourName &lt;your@email.address&gt;&quot;
+      fi
+      &#39; HEAD
+</pre></div>
+</div>
+</li>
+</ul>
+<p>通过上面的例子，可以看出命令<strong class="command">git filter-branch</strong>通过针对不同的过滤器提供可执行脚本，从不同的角度对Git版本库进行重构。该命令的用法：</p>
+<div class="highlight-python"><div class="highlight"><pre>git filter-branch [--env-filter &lt;command&gt;] [--tree-filter &lt;command&gt;]
+        [--index-filter &lt;command&gt;] [--parent-filter &lt;command&gt;]
+        [--msg-filter &lt;command&gt;] [--commit-filter &lt;command&gt;]
+        [--tag-name-filter &lt;command&gt;] [--subdirectory-filter &lt;directory&gt;]
+        [--prune-empty]
+        [--original &lt;namespace&gt;] [-d &lt;directory&gt;] [-f | --force]
+        [--] [&lt;rev-list options&gt;...]
+</pre></div>
+</div>
+<p>这条命令异常复杂，但是大部分参数是用于提供不同的接口，因此还是比较好理解的。</p>
+<ul class="simple">
+<li>该命令最后的<tt class="docutils literal"><span class="pre">&lt;rev-list&gt;</span></tt>参数提供要修改的版本范围，如果省略则相当于<tt class="docutils literal"><span class="pre">HEAD</span></tt>指向的当前分支。也可以使用<tt class="docutils literal"><span class="pre">--all</span></tt>来指代所有引用，但是要在<tt class="docutils literal"><span class="pre">--all</span></tt>和前面的参数间使用分隔符<tt class="docutils literal"><span class="pre">--</span></tt>。</li>
+<li>运行<strong class="command">git filter-branch</strong>命令改写分支之后，被改写的分支会在<tt class="docutils literal"><span class="pre">refs/original</span></tt>中对原始引用做备份。对于在<tt class="docutils literal"><span class="pre">refs/original</span></tt>中已有备份的情况下，该命令拒绝执行，除非使用<tt class="docutils literal"><span class="pre">-f</span></tt>或<tt class="docutils literal"><span class="pre">--force</span></tt>参数。</li>
+<li>其他需要接以<tt class="docutils literal"><span class="pre">&lt;command&gt;</span></tt>的参数都为<strong class="command">git filter-branch</strong>提供相应的接口进行过虑，在下面会针对各个过滤器进行介绍。</li>
+</ul>
+<div class="section" id="id1">
+<h2>6.2.4.1. 环境变量过滤器<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>参数<tt class="docutils literal"><span class="pre">--env-filter</span></tt>用于设置一个环境过滤器。该过滤器用于修改环境变量，对特定的环境变量的修改会改变提交。下面的示例<a class="footnote-reference" href="#id10" id="id2">[1]</a>可以用于修改作者/提交者的邮件地址。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git filter-branch --env-filter &#39;
+    an=&quot;$GIT_AUTHOR_NAME&quot;
+    am=&quot;$GIT_AUTHOR_EMAIL&quot;
+    cn=&quot;$GIT_COMMITTER_NAME&quot;
+    cm=&quot;$GIT_COMMITTER_EMAIL&quot;
+
+    if [ &quot;$cn&quot; = &quot;Kanwei Li&quot; ]; then
+      cm=&quot;kanwei@gmail.com&quot;
+    fi
+    if [ &quot;$an&quot; = &quot;Kanwei Li&quot; ]; then
+      am=&quot;kanwei@gmail.com&quot;
+    fi
+
+    export GIT_AUTHOR_EMAIL=$am
+    export GIT_COMMITTER_EMAIL=$cm
+    &#39;
+</pre></div>
+</div>
+<p>这个示例和本节一开始介绍的更改作者/提交者信息的示例功能相同，但是使用了不同的过滤器，读者可以根据喜好选择。</p>
+</div>
+<div class="section" id="id3">
+<h2>6.2.4.2. 树过滤器<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>参数<tt class="docutils literal"><span class="pre">--tree-filter</span></tt>用于设置树过滤器。树过滤器会将每个提交检出到特定目录中（<tt class="file docutils literal"><span class="pre">.git-rewrite/</span></tt>目录或者用<tt class="docutils literal"><span class="pre">-d</span></tt>参数指定的目录），针对检出目录中文件的修改、添加、删除会改变提交。注意此过滤器忽略<tt class="file docutils literal"><span class="pre">.gitignore</span></tt>，因此任何对检出目录的修改都会记录在新的提交中。之前介绍的文件删除就是一例。再比如对文件名的修改：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git filter-branch --tree-filter &#39;
+      [ -f oldfile ] &amp;&amp; mv oldfile newfile || true
+      &#39; -- --all
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>6.2.4.3. 暂存区过滤器<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>树过滤器因为要将每个提交检出，因此非常费时，而参数<tt class="docutils literal"><span class="pre">--index-filter</span></tt>给出的暂存区过滤器则没有这个缺点。之前使用树过滤器删除文件的的操作如果换做用暂存区过滤器实现运行的会更快。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git filter-branch --index-filter &#39;
+      git rm --cached --ignore-unmatch filename
+      &#39; -- --all
+</pre></div>
+</div>
+<p>其中参数<tt class="docutils literal"><span class="pre">--ignore-unmatch</span></tt>让<strong class="command">git rm</strong>命令不至于因为暂存区中不存在<tt class="file docutils literal"><span class="pre">filename</span></tt>文件而失败。</p>
+</div>
+<div class="section" id="id5">
+<h2>6.2.4.4. 父节点过滤器<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>参数<tt class="docutils literal"><span class="pre">--parent-filter</span></tt>用于设置父节点过滤器。该过滤器用于修改提交的父节点。提交原始的父节点通过标准输入传入脚本，而脚本的输出将作为提交新的父节点。父节点参数的格式为：如果没有父节点（初始提交）则为空。如果有一个父节点，参数为<tt class="docutils literal"><span class="pre">-p</span> <span class="pre">parent</span></tt>。如果是合并提交则有多个父节点，参数为<tt class="docutils literal"><span class="pre">-p</span> <span class="pre">parent1</span> <span class="pre">-p</span> <span class="pre">parent2</span> <span class="pre">-p</span> <span class="pre">parent3</span> <span class="pre">...</span></tt>。</p>
+<p>下面的命令将当前分支的初始提交嫁接到<tt class="docutils literal"><span class="pre">&lt;graft-id&gt;</span></tt>所指向的提交上。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git filter-branch --parent-filter &#39;sed &quot;s/^\$/-p &lt;graft-id&gt;/&quot;&#39; HEAD
+</pre></div>
+</div>
+<p>如果不是将初始提交（没有父提交）而是任意的一个提交嫁接到另外的提交上，可以通过<tt class="docutils literal"><span class="pre">GIT_COMMIT</span></tt>环境变量对提交进行判断，更改其父节点以实现嫁接。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git filter-branch --parent-filter \
+          &#39;test $GIT_COMMIT = &lt;commit-id&gt; &amp;&amp; \
+           echo &quot;-p &lt;graft-id&gt;&quot; || cat
+          &#39; HEAD
+</pre></div>
+</div>
+<p>关于嫁接，Git可以通过配置文件<tt class="file docutils literal"><span class="pre">.git/info/grafts</span></tt>实现，而<strong class="command">git filter-branch</strong>命令可以基于该配置文件对版本库实现永久性的更改。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ echo &quot;$commit-id $graft-id&quot; &gt;&gt; .git/info/grafts
+$ git filter-branch $graft-id..HEAD
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>6.2.4.5. 提交说明过滤器<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<p>参数<tt class="docutils literal"><span class="pre">--msg-filter</span></tt>用于设置提交说明过滤器。该过滤器用于改写提交说明。原始的提交说明作为标准输入传入脚本，而脚本的输出作为新的提交说明。</p>
+<p>例如将使用git-svn从Subversion迁移过来的Git版本库，缺省情况下在提交说明中饱含<tt class="docutils literal"><span class="pre">git-svn-id:</span></tt>字样的说明，如果需要将其清除可以不必重新迁移，而是使用下面的命令重写提交说明。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git filter-branch --msg-filter &#39;sed -e &quot;/^git-svn-id:/d&quot;&#39; -- --all
+</pre></div>
+</div>
+<p>再如将最新的10个提交添加“<tt class="docutils literal"><span class="pre">Acked-by:</span></tt>”格式的签名。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git filter-branch --msg-filter &#39;
+      cat &amp;&amp;
+      echo &quot;Acked-by: Bugs Bunny &lt;bunny@bugzilla.org&gt;&quot;
+      &#39; HEAD~10..HEAD
+</pre></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h2>6.2.4.6. 提交过滤器<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<p>参数<tt class="docutils literal"><span class="pre">--commit-filter</span></tt>用于设置树过滤器。提交过滤器所给出的脚本，在版本库重整过程的每次提交时运行，取代缺省要执行的<strong class="command">git commit-tree</strong>命令。不过一般情况会在脚本中调用<strong class="command">git commit-tree</strong>命令。传递给脚本的参数格式为<tt class="docutils literal"><span class="pre">&lt;TREE_ID&gt;</span> <span class="pre">[(-p</span> <span class="pre">&lt;PARENT_COMMIT_ID&gt;)...]</span></tt>，提交日志以标准输入的方式传递给脚本。脚本的输出是新提交的提交ID。作为扩展，如果脚本输出了多个提交ID，则这些提交ID作为子提交的多个父节点。</p>
+<p>使用下面的命令，可以过滤掉空提交（合并提交除外）。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git filter-branch --commit-filter &#39;git_commit_non_empty_tree &quot;$@&quot;&#39;
+</pre></div>
+</div>
+<p>函数<tt class="docutils literal"><span class="pre">git_commit_non_empty_tree</span></tt>函数是在脚本<strong class="command">git-filter-branch</strong>中已经定义过的函数。可以打开文件<tt class="file docutils literal"><span class="pre">$(git</span> <span class="pre">--exec-path)/git-filter-branch</span></tt>查看。</p>
+<div class="highlight-python"><div class="highlight"><pre># if you run &#39;git_commit_non_empty_tree &quot;$@&quot;&#39; in a commit filter,
+# it will skip commits that leave the tree untouched, commit the other.
+git_commit_non_empty_tree()
+{
+  if test $# = 3 &amp;&amp; test &quot;$1&quot; = $(git rev-parse &quot;$3^{tree}&quot;); then
+    map &quot;$3&quot;
+  else
+    git commit-tree &quot;$@&quot;
+  fi
+}
+</pre></div>
+</div>
+<p>如果想某个用户的提价非空但是也想跳过，可以使用下面的命令：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git filter-branch --commit-filter &#39;
+      if [ &quot;$GIT_AUTHOR_NAME&quot; = &quot;badboy&quot; ];
+      then
+              skip_commit &quot;$@&quot;;
+      else
+              git commit-tree &quot;$@&quot;;
+      fi&#39; HEAD
+</pre></div>
+</div>
+<p>其中函数<tt class="docutils literal"><span class="pre">skip_commit</span></tt>也是在<tt class="file docutils literal"><span class="pre">git-filter-branch</span></tt>脚本中已经定义好的。该函数的作用就是将传递给提交过滤器脚本的参数<tt class="docutils literal"><span class="pre">&lt;tree_id&gt;</span> <span class="pre">-p</span> <span class="pre">parent1</span> <span class="pre">-p</span> <span class="pre">parent2</span> <span class="pre">...</span></tt>进行处理，形成<tt class="docutils literal"><span class="pre">parent1</span> <span class="pre">parent2</span></tt>的输出。参见Git命令脚本<tt class="file docutils literal"><span class="pre">$(git</span> <span class="pre">--exec-path)/git-filter-branch</span></tt>中相关函数。</p>
+<div class="highlight-python"><div class="highlight"><pre># if you run &#39;skip_commit &quot;$@&quot;&#39; in a commit filter, it will print
+# the (mapped) parents, effectively skipping the commit.
+skip_commit()
+{
+  shift;
+  while [ -n &quot;$1&quot; ];
+  do
+    shift;
+    map &quot;$1&quot;;
+    shift;
+  done;
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h2>6.2.4.7. 里程碑名字过滤器<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<p>参数<tt class="docutils literal"><span class="pre">--tag-name-filter</span></tt>用于设置里程碑名字过滤器。该过滤器也是经常要用到的过滤器。上面介绍的各个过滤器都有可能改变提交ID，如果在原有的提交ID上建有里程碑，可能会随之更新但是会产生大量的警告日志，提示使用里程碑过滤器。里程碑过滤器脚本以原始里程碑名称作为标准输入，并把新里程碑名称作为标准输出。如果不打算变更里程碑名称，而只是希望里程碑随提交而更新，可以在脚本中使用<strong class="command">cat</strong>命令。例如下面的命令中里程碑名字过滤器和目录树过滤器同时使用。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git filter-branch --tree-filter &#39;
+      [ -f oldfile ] &amp;&amp; mv oldfile newfile || true
+      &#39; -- tag-name-filter &#39;cat&#39; -- --all
+</pre></div>
+</div>
+<p>在前面的里程碑一章曾经提到过<strong class="command">git branch</strong>命令没有提供里程碑重名名的功能，而使用里程碑名字过滤器可以实现里程碑的重命名。下面的的示例会修改里程碑的名字，将前缀为<tt class="docutils literal"><span class="pre">old-prefix</span></tt>的里程碑改名为前缀为<tt class="docutils literal"><span class="pre">new-prefix</span></tt>的里程碑。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git filter-branch --tag-name-filter &#39;
+      oldtag=`cat`
+      newtag=${oldtag#old-prefix}
+      if [ &quot;$oldtag&quot; != &quot;$newtag&quot; ]; then
+          newtag=&quot;new-prefix$newtag&quot;
+      fi
+      echo $newtag
+      &#39;
+</pre></div>
+</div>
+<p>注意因为签名里程碑重建后，因为签名不可能保持所以新里程碑会丢弃签名，成为一个普通的包含说明的里程碑。</p>
+</div>
+<div class="section" id="id9">
+<h2>6.2.4.8. 子目录过滤器<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h2>
+<p>参数<tt class="docutils literal"><span class="pre">--subdirectory-filter</span></tt>用于设置子目录过滤器。子目录过滤器可以将版本库的一个子目录提取为一个新版本库，并将该子目录作为版本库的根目录。例如从Subversion转换到Git版本库因为参数使用不当，将原Subversion的主线转换为Git版本库的一个目录<tt class="file docutils literal"><span class="pre">trunk</span></tt>。可以使用<strong class="command">git filter-branch</strong>命令的子目录过滤器将<tt class="file docutils literal"><span class="pre">trunk</span></tt>提取为版本库的根。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git filter-branch --subdirectory-filter trunk HEAD
+</pre></div>
+</div>
+<hr class="docutils" />
+<table class="docutils footnote" frame="void" id="id10" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[1]</a></td><td>摘自<a class="reference external" href="http://kanwei.com/code/2009/03/29/fixing-git-email.html">http://kanwei.com/code/2009/03/29/fixing-git-email.html</a>。</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../07-git-app/index.html" title="7. Git的其它应用"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="040-others.html" title="6.2.3. 通用版本库迁移"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >6. 迁移到Git</a> &raquo;</li>
+          <li><a href="020-others.html" >6.2. 更多版本控制系统的迁移</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

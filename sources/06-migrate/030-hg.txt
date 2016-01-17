@@ -1,0 +1,115 @@
+Hg版本库到Git的迁移
+=====================
+
+Mercurial（水银）是和Git同时代的、与之齐名的一款著名的分布式版本控制系统，\
+也有相当多的使用者。就像水银又名汞，作为版本控制系统的Mercurial又称作Hg\
+（水银元素符号）。Hg具有简单易用的优点，至少Hg提交的顺序递增的数字编号让\
+Subversion用户感到更为亲切。Hg的开发语言除少部分因性能原因使用C语言外，\
+大部分用Python语言开发完成，因而更易扩展，最终形成了Hg最具特色的插件系\
+统。例如MQ就是Hg一个很有用的插件，通过Quilt式的补丁集实现对定制开发的特\
+性分支的版本控制，当然StGit和Topgit也可以实现类似的功能。
+
+但是Hg存在一些不足。例如服务器的存储效率不能和Git相比，服务器存储空间占\
+用更大。Hg还不支持真正的分支，只能通过版本库克隆来进行分支开发。因为Hg不\
+支持真正的分支，所以不能向git-svn那样完整的将Subversion版本库转换和互操\
+作。Hg的速度相比Git要慢，尤其是网络操作没有像Git一样精确的进度显示。Hg提\
+交只能回退一次，要想多次回退和整理版本库需要用到MQ插件。作为定制开发的利\
+器“Hg+MQ”不适合多人协作开发而“Git+Topgit”更为适合。
+
+不论是何原因想从Hg迁移到Git，用一个名为fast-export的转换工具可以很方便的\
+实现。fast-export是一个用Python开发的命令行工具，可以将本地的Hg版本库迁\
+移为Git版本库。其原理和CVS版本库迁移至Git时使用的cvs2git相仿，都是先从源\
+版本库生成导出文件，再用Git的通用版本库转换工具\
+:command:`git fast-import`\ 导入到新建的Git版本库中。
+
+安装fast-export非常简单，只要用Git克隆fast-export的版本库即可。
+
+::
+
+  $ cd /path/to
+  $ git clone git://repo.or.cz/fast-export.git
+
+完成克隆后，会看到\ :file:`/path/to/fast-export`\ 目录中有一个名为\
+:file:`hg-fast-import.sh`\ 的脚本文件，该文件封装了对相应Python脚本的调用。\
+使用该脚本可以实现Hg版本库到Git版本库的迁移。
+
+下面就演示一下Hg版本库到Git版本库的转换。
+
+* 要转换的Hg版本库位于路径\ :file:`/path/to/hg/hello/.hg`\ 下。
+
+  Hg不支持真正的分支，而且版本库中可能存在尚未合并的多个头指针。检查一下\
+  不要存在具有相同分支名但尚未合并的多个头指针，否则转换会失败。下面显示\
+  的该Hg版本库中具有两个具名分支\ ``r1.x``\ 和\ ``next``\ ，还有一个缺省\
+  未设置名称的头指针，因为分支名各不相同所以不会为转换过程造成麻烦。
+
+  ::
+
+    $ hg heads
+    修改集:      7:afdd475caeee
+    分支:        r1.x
+    标签:        tip
+    父亲:        0:798a9568e10e
+    用户:        Jiang Xin <jiangxin@ossxp.com>
+    日期:        Fri Jan 14 17:01:47 2011 +0800
+    描述:
+    start new branch: r1.x
+
+
+    修改集:      6:7f5a46201dda
+    分支:        next
+    用户:        Jiang Xin <jiangxin@ossxp.com>
+    日期:        Fri Jan 14 17:01:04 2011 +0800
+    文件:        src/locale/zh_CN/LC_MESSAGES/helloworld.po
+    描述:
+    imported patch 100_locale_zh_cn.patch
+
+
+    修改集:      1:97f0a21021c6
+    用户:        Jiang Xin <worldhello.net AT gmail DOT com>
+    日期:        Sun Aug 23 23:53:05 2009 +0800
+    文件:        src/COPYRIGHT src/main.bak src/main.c
+    描述:
+    Fixed #6: import new upstream version hello-2.0.0
+
+* 初始化一个Git版本库，该版本库就是迁移的目标版本库。
+
+  ::
+
+    $ mkdir -p /path/to/my/workspace/hello
+    $ cd /path/to/my/workspace/hello
+    $ git init
+    Initialized empty Git repository in /path/to/my/workspace/hello/.git/
+
+* 在刚刚完成初始化的Git工作区中调用\ :file:`hg-fast-export.sh`\ 脚本完成\
+  版本库转换。
+
+  ::
+
+    $ /path/to/fast-export/hg-fast-export.sh -r /path/to/hg/hello
+
+* 转换完毕，执行\ :command:`git branch`\ 会看到Hg版本库中的具名分支都转\
+  换为相应的分支，没有命名的缺省头指针转换为master分支。
+
+  ::
+
+    $ git branch
+    * master
+      next
+      r1.x
+
+在转换后的Git版本库目录中，保存了几个用于记录版本库转换进度的状态文件\
+（\ :file:`.git/hg2git-\*`\ ），当在Git工作区不带任何参数执行\
+:file:`hg-fast-export.sh`\ 命令时，会继续增量式的进行转换，将Hg版本库\
+中的新提交迁移到Git版本库中。
+
+如果使用了多个不同的Hg克隆版本库进行分支管理，就需要一一对Hg版本库进行转\
+换，然后在对转换后的Git版本库进行合并。在合并Git版本库的时候可以参考下面\
+的命令。
+
+::
+
+  $ git remote add <name1> <path/to/repos/1>
+  $ git remote add <name2> <path/to/repos/2>
+  $ git remote update
+  $ git checkout -b <branch1> origin/<name1>/master
+  $ git checkout -b <branch2> origin/<name2>/master

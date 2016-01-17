@@ -1,0 +1,1292 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>5.4. Gitolite服务架设 &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="up" title="5. 搭建Git服务器" href="index.html" />
+    <link rel="next" title="5.5. Gitosis服务架设" href="050-gitosis.html" />
+    <link rel="prev" title="5.3. 使用SSH协议" href="030-ssh.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="050-gitosis.html" title="5.5. Gitosis服务架设"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="030-ssh.html" title="5.3. 使用SSH协议"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">5. 搭建Git服务器</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">5.4. Gitolite服务架设</a><ul>
+<li><a class="reference internal" href="#id3">5.4.1. 安装Gitolite</a><ul>
+<li><a class="reference internal" href="#id4">5.4.1.1. 安装之前</a></li>
+<li><a class="reference internal" href="#id5">5.4.1.2. 以发布包形式安装</a></li>
+<li><a class="reference internal" href="#id6">5.4.1.3. 从源代码开始安装</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id7">5.4.2. 管理Gitolite</a><ul>
+<li><a class="reference internal" href="#gitolite-admin">5.4.2.1. 管理员克隆gitolite-admin管理库</a></li>
+<li><a class="reference internal" href="#id8">5.4.2.2. 增加新用户</a></li>
+<li><a class="reference internal" href="#id9">5.4.2.3. 更改授权</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id10">5.4.3. Gitolite授权详解</a><ul>
+<li><a class="reference internal" href="#id11">5.4.3.1. 授权文件的基本语法</a></li>
+<li><a class="reference internal" href="#id12">5.4.3.2. 定义用户组和版本库组</a></li>
+<li><a class="reference internal" href="#acl">5.4.3.3. 版本库ACL</a><ul>
+<li><a class="reference internal" href="#id13">5.4.3.3.1. 版本库</a></li>
+<li><a class="reference internal" href="#id14">5.4.3.3.2. 授权指令</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id16">5.4.3.4. Gitolite授权机制</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id17">5.4.4. 版本库授权案例</a><ul>
+<li><a class="reference internal" href="#id18">5.4.4.1. 常规版本库授权</a></li>
+<li><a class="reference internal" href="#id19">5.4.4.2. 通配符版本库授权</a></li>
+<li><a class="reference internal" href="#id20">5.4.4.3. 每个人创建自己的版本库</a></li>
+<li><a class="reference internal" href="#id21">5.4.4.4. 传统模式的引用授权</a></li>
+<li><a class="reference internal" href="#id22">5.4.4.5. 扩展模式的引用授权</a></li>
+<li><a class="reference internal" href="#id23">5.4.4.6. 禁用规则的使用</a></li>
+<li><a class="reference internal" href="#id24">5.4.4.7. 用户分支</a></li>
+<li><a class="reference internal" href="#id25">5.4.4.8. 对路径的写授权</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id26">5.4.5. 创建和导入版本库</a><ul>
+<li><a class="reference internal" href="#id27">5.4.5.1. 在配置文件中出现的版本库，即时生成</a></li>
+<li><a class="reference internal" href="#id28">5.4.5.2. 通配符版本库，管理员通过推送创建</a></li>
+<li><a class="reference internal" href="#id29">5.4.5.3. 向Gitolite中导入版本库</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id30">5.4.6. 对Gitolite的改进</a></li>
+<li><a class="reference internal" href="#id31">5.4.7. Gitolite功能拓展</a><ul>
+<li><a class="reference internal" href="#id32">5.4.7.1. 版本库镜像</a><ul>
+<li><a class="reference internal" href="#id33">5.4.7.1.1. Gitolite服务器命名</a></li>
+<li><a class="reference internal" href="#id34">5.4.7.1.2. 服务器之间的公钥认证</a></li>
+<li><a class="reference internal" href="#id35">5.4.7.1.3. 配置版本库镜像</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#gitwebgit-daemon">5.4.7.2. Gitweb和Git daemon支持</a></li>
+<li><a class="reference internal" href="#id36">5.4.7.3. 其他功能拓展和参考</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="030-ssh.html"
+                        title="上一章">5.3. 使用SSH协议</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="050-gitosis.html"
+                        title="下一章">5.5. Gitosis服务架设</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/05-git-server/040-gitolite.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="gitolite">
+<h1>5.4. Gitolite服务架设<a class="headerlink" href="#gitolite" title="永久链接至标题">¶</a></h1>
+<p>Gitolite是一款Perl语言开发的Git服务管理工具，通过公钥对用户进行认证，并能够通过配置文件对写操作进行基于分支和路径的精细授权。Gitolite采用的是SSH协议并且使用SSH公钥认证，因此无论是管理员还是普通用户，都需要对SSH非常熟悉。在开始之前，请确认您已经通读过第29章“使用SSH协议”。</p>
+<p>Gitolite的官方网址是：<a class="reference external" href="http://github.com/sitaramc/gitolite">http://github.com/sitaramc/gitolite</a>。从提交日志里可以看出作者是Sitaram Chamarty，最早的提交开始于 2009年8月。作者是受到了Gitosis的启发，开发了这款功能更为强大和易于安装的软件。Gitolite的命名，作者的原意是Gitosis和lite的组合，不过因为Gitolite的功能越来越强大，已经超越了Gitosis，因此作者笑称Gitolite可以看作是Github-lite——轻量级的Github。</p>
+<p>我是在2010年8月才发现Gitolite这个项目的，并尝试将公司基于Gitosis的管理系统迁移至Gitolite。在迁移和使用过程中，增加和改进了一些实现，如：通配符版本库的创建过程，对创建者的授权，版本库名称映射等。本文关于Gitolite的介绍也是基于我改进的版本<a class="footnote-reference" href="#id37" id="id1">[1]</a>。</p>
+<ul>
+<li><p class="first">原作者的版本库地址：</p>
+<p><a class="reference external" href="http://github.com/sitaramc/gitolite">http://github.com/sitaramc/gitolite</a></p>
+</li>
+<li><p class="first">笔者改进后的Gitolite分支：</p>
+<p><a class="reference external" href="http://github.com/ossxp-com/gitolite">http://github.com/ossxp-com/gitolite</a></p>
+</li>
+</ul>
+<p>Gitolite的实现机制和使用特点概述如下：</p>
+<ul>
+<li><p class="first">Gitolite安装在服务器（<cite>server</cite>）某个帐号之下，例如<tt class="docutils literal"><span class="pre">git</span></tt>帐号。</p>
+</li>
+<li><p class="first">管理员通过<strong class="command">git</strong>命令检出名为<tt class="docutils literal"><span class="pre">gitolite-admin</span></tt>的版本库。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git clone git@server:gitolite-admin.git
+</pre></div>
+</div>
+</li>
+<li><p class="first">管理员将所有Git用户的公钥保存在gitolite-admin库的<tt class="file docutils literal"><span class="pre">keydir</span></tt>目录下，并编辑<tt class="file docutils literal"><span class="pre">conf/gitolite.conf</span></tt>文件为用户授权。</p>
+</li>
+<li><p class="first">当管理员提交对gitolite-admin库的修改并推送到服务器之后，服务器上<tt class="docutils literal"><span class="pre">gitolite-admin</span></tt>版本库的钩子脚本将执行相应的设置工作。</p>
+<ul>
+<li><p class="first">新用户的公钥自动追加到服务器端安装帐号主目录下的<tt class="file docutils literal"><span class="pre">.ssh/authorized_keys</span></tt>文件中，并设置该用户的shell为gitolite的一条命令<strong class="command">gl-auth-command</strong>。在<tt class="file docutils literal"><span class="pre">.ssh/authorized_keys</span></tt>文件中增加的内容示例如下： <a class="footnote-reference" href="#id38" id="id2">[2]</a></p>
+<div class="highlight-python"><div class="highlight"><pre>command=&quot;/home/git/bin/gl-auth-command jiangxin&quot;,no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-rsa AAAAB3NzaC1yc2...(公钥内容来自于 jiangxin.pub)...
+</pre></div>
+</div>
+</li>
+<li><p class="first">更新服务器端的授权文件<tt class="file docutils literal"><span class="pre">~/.gitolite/conf/gitolite.conf</span></tt>。</p>
+</li>
+<li><p class="first">编译授权文件为<tt class="file docutils literal"><span class="pre">~/.gitolite/conf/gitolite.conf-compiled.pm</span></tt>。</p>
+</li>
+</ul>
+</li>
+<li><p class="first">若用ssh命令登录服务器（以git用户登录）时，因为公钥认证的相关设置（使用<strong class="command">gl-auth-command</strong>作为shell），不能进入shell环境，而是打印服务器端git库授权信息后马上退出。即用户不会通过git用户进入服务器的shell，也不会对系统的安全造成威胁。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ssh git@bj
+hello jiangxin, the gitolite version here is v1.5.5-9-g4c11bd8
+the gitolite config gives you the following access:
+     R          gistore-bj.ossxp.com/.*$
+  C  R  W       ossxp/.*$
+ @C @R  W       users/jiangxin/.+$
+Connection to bj closed.
+</pre></div>
+</div>
+</li>
+<li><p class="first">用户可以用git命令访问授权的版本库。</p>
+</li>
+<li><p class="first">若管理员授权，用户可以远程在服务器上创建新版本库。</p>
+</li>
+</ul>
+<p>下面介绍Gitolite的部署和使用。</p>
+<div class="section" id="id3">
+<h2>5.4.1. 安装Gitolite<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>安装Gitolite（2.1版本）对服务器的要求是：</p>
+<ul class="simple">
+<li>Git版本为1.6.6或以上。</li>
+<li>Unix或类Unix（Linux、MacOS等）操作系统。</li>
+<li>服务器开启SSH服务。</li>
+</ul>
+<p>和其他Unix上软件包一样Gitolite既可通过操作系统本身提供的二进制发布包方式安装，也可通过克隆Gitolite源码库从源代码安装Gitolite。</p>
+<div class="admonition note">
+<p class="first admonition-title">注解</p>
+<p class="last">老版本的Gitolite提供了一种从客户端发起安装的模式，但该安装模式需要管理员维护两套不同公钥/私钥对（一个公钥用于无口令登录服务器以安装和更新软件，另外一个公钥用于克隆和推送gitolite-admin版本库），稍嫌复杂，在2.1之后的Gitolite取消了这种安装模式。</p>
+</div>
+<div class="section" id="id4">
+<h3>5.4.1.1. 安装之前<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>Gitolite搭建的Git服务器是以SSH公钥认证为基础的，无论是普通Git用户还是Gitolite的管理员都通过公钥认证访问Gitolite服务器。在Gitolite的安装过程中需要提供管理员公钥，以便在Gitolite安装完毕后管理员能够远程克隆<tt class="docutils literal"><span class="pre">gitolite-admin</span></tt>版本库（仅对管理员授权），对Gitolite服务器进行管理——添加新用户和为用户添加授权。</p>
+<p>为此在安装Gitolite之前，管理员需要在客户端（用于远程管理Gitolite服务器的客户端）创建用于连接Gitolite服务器的SSH公钥（如果尚不存在的话），并把公钥文件拷贝到服务器上。</p>
+<ol class="arabic">
+<li><p class="first">在客户端创建SSH公钥/私钥对。</p>
+<p>如果管理员在客户端尚未创建公钥/私钥对，使用下面的命令会在用户主目录下创建名为<tt class="file docutils literal"><span class="pre">~/.ssh/id_rsa</span></tt>的SSH私钥和名为<tt class="file docutils literal"><span class="pre">~/.ssh/id_rsa.pub</span></tt>的公钥文件：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ssh-keygen
+</pre></div>
+</div>
+</li>
+<li><p class="first">将公钥文件从客户端复制到服务器端，以便安装Gitolite时备用。</p>
+<p>可以使用<strong class="command">ftp</strong>或U盘拷贝等方式从客户端向服务器端传送文件，不过用<strong class="command">scp</strong>命令是非常方便的，例如服务器地址为<tt class="docutils literal"><span class="pre">server</span></tt>，相应的拷贝命令为：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ scp ~/.ssh/id_rsa.pub server:/tmp/admin.pub
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="id5">
+<h3>5.4.1.2. 以发布包形式安装<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>常见的Linux发行版都包含了Gitolite软件包，安装Gitolite使用如下命令：</p>
+<ul>
+<li><p class="first">Debian/Ubuntu：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sudo aptitude install gitolite
+</pre></div>
+</div>
+</li>
+<li><p class="first">RedHat：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sudo yum install gitolite
+</pre></div>
+</div>
+</li>
+</ul>
+<p>安装完毕后会自动创建一个专用系统账号如<tt class="docutils literal"><span class="pre">gitolite</span></tt>。在Debian平台上创建的<tt class="docutils literal"><span class="pre">gitolite</span></tt>账号使用<tt class="file docutils literal"><span class="pre">/var/lib/gitolite</span></tt>作为用户主目录，而非<tt class="file docutils literal"><span class="pre">/home/gitolite</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ getent passwd gitolite
+gitolite:x:114:121:git repository hosting,,,:/var/lib/gitolite:/bin/bash
+</pre></div>
+</div>
+<p>安装完毕，运行如下命令完成对Gitolite的配置：</p>
+<ol class="arabic">
+<li><p class="first">切换至新创建的<tt class="docutils literal"><span class="pre">gitolite</span></tt>用户账号。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sudo su - gitolite
+</pre></div>
+</div>
+</li>
+<li><p class="first">运行<tt class="docutils literal"><span class="pre">gl-setup</span></tt>命令，并以客户端复制过来的公钥文件路径作为参数。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ gl-setup /tmp/admin.pub
+</pre></div>
+</div>
+</li>
+</ol>
+<p>Debian等平台会在安装过程中（或运行<strong class="command">sudo dpkg-reconfigure gitolite</strong>命令时），开启配置界面要求用户输入Gitolite专用账号、Git版本库根目录、管理员公钥文件名，然后自动执行<strong class="command">gl-setup</strong>完成设置。</p>
+</div>
+<div class="section" id="id6">
+<h3>5.4.1.3. 从源代码开始安装<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>如果想在系统中部署多个Gitolite实例，希望部署最新的Gitolite版本，或者希望安装自己或他人对Gitolite的定制版本，就要采用从源代码进行Gitolite部署。</p>
+<ol class="arabic">
+<li><p class="first">创建专用系统账号。</p>
+<p>首先需要在服务器上创建Gitolite专用帐号。因为所有用户都要通过此帐号访问Git版本库，为方便易记一般选择更为简练的<tt class="docutils literal"><span class="pre">git</span></tt>作为专用帐号名称。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sudo adduser --system --group --shell /bin/bash git
+</pre></div>
+</div>
+<p>注意添加的用户要能够远程登录，若系统只允许特定用户组（如<tt class="docutils literal"><span class="pre">ssh</span></tt>用户组）的用户才可以通过SSH协议登录，就需要将新建的<tt class="docutils literal"><span class="pre">git</span></tt>用户添加到该特定的用户组中。执行下面的命令可以将<tt class="docutils literal"><span class="pre">git</span></tt>用户添加到<tt class="docutils literal"><span class="pre">ssh</span></tt>用户组。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sudo adduser git ssh
+</pre></div>
+</div>
+<p>取消<tt class="docutils literal"><span class="pre">git</span></tt>用户的口令，以便只能通过公钥对<tt class="docutils literal"><span class="pre">git</span></tt>账号进行认证，增加系统安全性。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sudo passwd --delete git
+</pre></div>
+</div>
+</li>
+<li><p class="first">切换到新创建的用户账号，后续的安装都以该用户身份执行。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sudo su - git
+</pre></div>
+</div>
+</li>
+<li><p class="first">在服务器端下载Gitolite源码。一个更加“Git”的方式就是克隆Gitolite的版本库。</p>
+<ul>
+<li><p class="first">克隆官方的Gitolite版本库如下：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git clone git://github.com/sitaramc/gitolite.git
+</pre></div>
+</div>
+</li>
+<li><p class="first">也可以克隆定制后的Gitolite版本库，如我在GitHub上基于Gitolite官方版本库建立的分支版本：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git clone git://github.com/ossxp-com/gitolite.git
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p class="first">安装Gitolite。</p>
+<p>运行源码目录中的<strong class="command">src/gl-system-install</strong>执行安装。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd gitolite
+$ src/gl-system-install
+</pre></div>
+</div>
+<p>如果像上面那样不带参数的执行安装程序，会将Gitolite相关命令安装到<tt class="file docutils literal"><span class="pre">~/bin</span></tt>目录中，相当于执行：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ src/gl-system-install $HOME/bin $HOME/share/gitolite/conf $HOME/share/gitolite/hooks
+</pre></div>
+</div>
+</li>
+<li><p class="first">运行<strong class="command">gl-setup</strong>完成设置。</p>
+<p>若Gitolite安装到<tt class="file docutils literal"><span class="pre">~/bin</span></tt>目录下（即没有安装到系统目录下），需要设置<tt class="docutils literal"><span class="pre">PATH</span></tt>环境变量以便<strong class="command">gl-setup</strong>能够正常运行。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ export PATH=~/bin:$PATH
+</pre></div>
+</div>
+<p>然后运行<strong class="command">gl-setup</strong>命令，并以客户端复制过来的公钥文件路径作为参数。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ~/bin/gl-setup /tmp/admin.pub
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="id7">
+<h2>5.4.2. 管理Gitolite<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<div class="section" id="gitolite-admin">
+<h3>5.4.2.1. 管理员克隆gitolite-admin管理库<a class="headerlink" href="#gitolite-admin" title="永久链接至标题">¶</a></h3>
+<p>当Gitolite安装完成后，就会在服务器端版本库根目录下创建一个用于管理Gitolite的版本库。若以<tt class="docutils literal"><span class="pre">git</span></tt>用户安装，则该Git版本库的路径为：<tt class="file docutils literal"><span class="pre">~git/repositories/gitolite-admin.git</span></tt>。</p>
+<p>在客户端用<strong class="command">ssh</strong>命令连接服务器<tt class="docutils literal"><span class="pre">server</span></tt>的<tt class="docutils literal"><span class="pre">git</span></tt>用户，如果公钥认证验证正确的话，Gitolite将此SSH会话的用户认证为<tt class="docutils literal"><span class="pre">admin</span></tt>用户，显示<tt class="docutils literal"><span class="pre">admin</span></tt>用户的权限。如下：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ssh -T git@server
+hello admin, this is gitolite v2.1-7-ge5c49b7 running on git 1.7.7.1
+the gitolite config gives you the following access:
+     R   W      gitolite-admin
+    @R_ @W_     testing
+</pre></div>
+</div>
+<p>从上面命令的倒数第二行输出可以看出用户<tt class="docutils literal"><span class="pre">admin</span></tt>对版本库<tt class="docutils literal"><span class="pre">gitolite-admin</span></tt>拥有读写权限。</p>
+<p>为了对Gitolite服务器进行管理，需要在客户端克隆<tt class="docutils literal"><span class="pre">gitolite-admin</span></tt>版本库，使用如下命令：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git clone git@server:gitolite-admin.git
+$ cd gitolite-admin/
+</pre></div>
+</div>
+<p>在客户端克隆的<tt class="file docutils literal"><span class="pre">gitolite-admin</span></tt>目录下有两个子目录<tt class="file docutils literal"><span class="pre">conf/</span></tt>和<tt class="file docutils literal"><span class="pre">keydir/</span></tt>，包含如下文件：</p>
+<ul>
+<li><p class="first">文件：<tt class="file docutils literal"><span class="pre">keydir/admin.pub</span></tt>。</p>
+<p>目录<tt class="file docutils literal"><span class="pre">keydir</span></tt>下初始时只有一个用户公钥，即管理员<tt class="docutils literal"><span class="pre">admin</span></tt>的公钥。</p>
+</li>
+<li><p class="first">文件：<tt class="file docutils literal"><span class="pre">conf/gitolite.conf</span></tt>。</p>
+<p>该文件为授权文件。初始内容为：</p>
+<div class="highlight-python"><div class="highlight"><pre>repo    gitolite-admin
+        RW+     =   admin
+
+repo    testing
+        RW+     =   @all
+</pre></div>
+</div>
+<p>默认授权文件中只设置了两个版本库的授权：</p>
+<ul>
+<li><p class="first">gitolite-admin</p>
+<p>即本版本库。此版本库用于Gitolite管理，只有<tt class="docutils literal"><span class="pre">admin</span></tt>用户有读写和强制更新的权限。</p>
+</li>
+<li><p class="first">testing</p>
+<p>默认设置的测试版本库。设置为任何人都可以读写及强制更新。</p>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id8">
+<h3>5.4.2.2. 增加新用户<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<p>增加新用户，就是允许新用户能够通过其公钥访问Git服务。只要将新用户的公钥添加到<tt class="docutils literal"><span class="pre">gitolite-admin</span></tt>版本库的<tt class="file docutils literal"><span class="pre">keydir</span></tt>目录下，即完成新用户的添加，具体操作过程如下。</p>
+<ol class="arabic">
+<li><p class="first">管理员从用户获取公钥，并将公钥按照<tt class="file docutils literal"><span class="pre">username.pub</span></tt>格式进行重命名。</p>
+<ul class="simple">
+<li>用户可以通过邮件或其他方式将公钥传递给管理员，切记不要将私钥误传给管理员。如果发生私钥泄漏，马上重新生成新的公钥/私钥对，并将新的公钥传递给管理员，并申请将旧的公钥作废。</li>
+<li>用户从不同的客户端主机访问有着不同的公钥，如果希望使用同一个用户名进行授权，可以按照<tt class="file docutils literal"><span class="pre">username&#64;host.pub</span></tt>的方式命名公钥文件，和名为<tt class="file docutils literal"><span class="pre">username.pub</span></tt>的公钥指向同一个用户<tt class="docutils literal"><span class="pre">username</span></tt>。</li>
+<li>Gitolite也支持邮件地址格式的公钥，即形如<tt class="file docutils literal"><span class="pre">username&#64;gmail.com.pub</span></tt>的公钥。Gitolite能够很智能地区分是以邮件地址命名的公钥还是相同用户在不同主机上的公钥。如果是邮件地址命名的公钥，将以整个邮件地址作为用户名。</li>
+<li>还可以在<tt class="file docutils literal"><span class="pre">keydir</span></tt>目录下创建子目录来管理用户公钥，同一用户的不同公钥可以用同一名称保存在不同子目录中。</li>
+</ul>
+</li>
+<li><p class="first">管理员进入<tt class="docutils literal"><span class="pre">gitolite-admin</span></tt>本地克隆版本库中，复制新用户公钥到<tt class="file docutils literal"><span class="pre">keydir</span></tt>目录。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cp /path/to/dev1.pub keydir/
+$ cp /path/to/dev2.pub keydir/
+$ cp /path/to/jiangxin.pub keydir/
+</pre></div>
+</div>
+</li>
+<li><p class="first">执行<strong class="command">git add</strong>命令，将公钥添加到版本库。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git add keydir
+</pre></div>
+</div>
+</li>
+<li><p class="first">执行<strong class="command">git commit</strong>，完成提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git commit -m &quot;add user: jiangxin, dev1, dev2&quot;
+</pre></div>
+</div>
+</li>
+<li><p class="first">执行<strong class="command">git push</strong>，同步到服务器，才真正完成新用户的添加。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git push
+Counting objects: 8, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (6/6), 1.38 KiB, done.
+Total 6 (delta 0), reused 0 (delta 0)
+remote: Already on &#39;master&#39;
+remote:
+remote:                 ***** WARNING *****
+remote:         the following users (pubkey files in parens) do not appear in the config file:
+remote: dev1(dev1.pub),dev2(dev2.pub),jiangxin(jiangxin.pub)
+</pre></div>
+</div>
+<p>在<strong class="command">git push</strong>的输出中，以<tt class="docutils literal"><span class="pre">remote</span></tt>标识的输出是服务器端执行<tt class="file docutils literal"><span class="pre">post-update</span></tt>钩子脚本的错误输出，用于提示新增的三个用户（公钥）在授权文件中没有被引用。接下来会介绍如何修改授权文件，以及如何为用户添加授权。</p>
+</li>
+</ol>
+<p>服务器端的<tt class="docutils literal"><span class="pre">git</span></tt>主目录下的<tt class="file docutils literal"><span class="pre">.ssh/authorized_keys</span></tt>文件会随着新增用户公钥而更新，即添加三条新的记录。如下：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cat ~git/.ssh/authorized_keys
+# gitolite start
+command=&quot;/home/git/bin/gl-auth-command admin&quot;,no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty    &lt;用户admin的公钥...&gt;
+command=&quot;/home/git/bin/gl-auth-command dev1&quot;,no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty     &lt;用户dev1的公钥...&gt;
+command=&quot;/home/git/bin/gl-auth-command dev2&quot;,no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty     &lt;用户dev2的公钥...&gt;
+command=&quot;/home/git/bin/gl-auth-command jiangxin&quot;,no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty &lt;用户jiangxin的公钥...&gt;
+# gitolite end
+</pre></div>
+</div>
+</div>
+<div class="section" id="id9">
+<h3>5.4.2.3. 更改授权<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<p>新用户添加完毕，接下来需要为新用户添加授权，这个过程也比较简单，只需修改<tt class="file docutils literal"><span class="pre">conf/gitolite.conf</span></tt>配置文件，提交并推送。具体操作过程如下：</p>
+<ol class="arabic">
+<li><p class="first">管理员进入<tt class="file docutils literal"><span class="pre">gitolite-admin</span></tt>本地克隆版本库中，编辑<tt class="file docutils literal"><span class="pre">conf/gitolite.conf</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ vi conf/gitolite.conf
+</pre></div>
+</div>
+</li>
+<li><p class="first">授权指令比较复杂，先通过建立新用户组尝试一下更改授权文件。</p>
+<p>考虑到之前增加了三个用户公钥，服务器端发出了用户尚未在授权文件中出现的警告。现在就在这个示例中解决这个问题。</p>
+<ul>
+<li><p class="first">可以在其中加入用户组<tt class="docutils literal"><span class="pre">&#64;team1</span></tt>，将新添加的用户jiangxin、dev1、dev2都归属到这个组中。</p>
+<p>只需要在<tt class="file docutils literal"><span class="pre">conf/gitolite.conf</span></tt>文件的文件头加入如下指令即可。用户名之间用空格分隔。</p>
+<div class="highlight-python"><div class="highlight"><pre>@team1 = dev1 dev2 jiangxin
+</pre></div>
+</div>
+</li>
+<li><p class="first">编辑完毕退出。可以用<strong class="command">git diff</strong>命令查看改动：</p>
+<p>还修改了版本库<tt class="docutils literal"><span class="pre">testing</span></tt>的授权，将<tt class="docutils literal"><span class="pre">&#64;all</span></tt>用户组改为新建立的<tt class="docutils literal"><span class="pre">&#64;team1</span></tt>用户组。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git diff
+diff --git a/conf/gitolite.conf b/conf/gitolite.conf
+index 6c5fdf8..f983a84 100644
+--- a/conf/gitolite.conf
++++ b/conf/gitolite.conf
+@@ -1,5 +1,7 @@
++@team1 = dev1 dev2 jiangxin
++
+ repo    gitolite-admin
+         RW+     =   admin
+
+ repo    testing
+-        RW+     =   @all
++        RW+     =   @team1
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p class="first">编辑结束，提交改动。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git add conf/gitolite.conf
+$ git commit -q -m &quot;new team @team1 auth for repo testing.&quot;
+</pre></div>
+</div>
+</li>
+<li><p class="first">执行<strong class="command">git push</strong>，同步到服务器，授权文件的更改才真正生效。</p>
+<p>可以注意到，推送后的输出中没有了警告。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git push
+Counting objects: 7, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (4/4), 398 bytes, done.
+Total 4 (delta 1), reused 0 (delta 0)
+remote: Already on &#39;master&#39;
+To git@server:gitolite-admin.git
+   bd81884..79b29e4  master -&gt; master
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="id10">
+<h2>5.4.3. Gitolite授权详解<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id11">
+<h3>5.4.3.1. 授权文件的基本语法<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
+<p>下面看一个不那么简单的授权文件。为方便描述添加了行号。</p>
+<div class="highlight-python"><div class="highlight"><pre> 1  @manager = jiangxin wangsheng
+ 2  @dev   = dev1 dev2 dev3
+ 3
+ 4  repo    gitolite-admin
+ 5          RW+                         = jiangxin
+ 6
+ 7  repo    ossxp/[a-z].+
+ 8          C                           = @manager
+ 9          RW+                         = CREATOR
+10          RW                          = WRITERS
+11          R                           = READERS @dev
+12
+13  repo    testing
+14          RW+                         =   @manager
+15          RW      master              =   @dev
+16          RW      refs/tags/v[0-9]    =   dev1
+17          -       refs/tags/          =   @all
+</pre></div>
+</div>
+<p>在上面的示例中，演示了很多授权指令：</p>
+<ul class="simple">
+<li>第1行，定义了用户组<tt class="docutils literal"><span class="pre">&#64;manager</span></tt>，包含两个用户<tt class="docutils literal"><span class="pre">jiangxin</span></tt>和<tt class="docutils literal"><span class="pre">wangsheng</span></tt>。</li>
+<li>第2行，定义了用户组<tt class="docutils literal"><span class="pre">&#64;dev</span></tt>，包含三个用户<tt class="docutils literal"><span class="pre">dev1</span></tt>、<tt class="docutils literal"><span class="pre">dev2</span></tt>和<tt class="docutils literal"><span class="pre">dev3</span></tt>。</li>
+<li>第4-5行，定义了版本库<tt class="docutils literal"><span class="pre">gitolite-admin</span></tt>。指定只有超级用户<tt class="docutils literal"><span class="pre">jiangxin</span></tt>才能够访问，并拥有读（R）写（W）和强制更新（+）的权限。</li>
+<li>第7行，通过正则表达式为一组版本库进行批量授权。即针对<tt class="file docutils literal"><span class="pre">ossxp</span></tt>目录下以小写字母开头的所有版本库进行授权。</li>
+<li>第8行，用户组<tt class="docutils literal"><span class="pre">&#64;manager</span></tt>中的用户可以创建版本库。即可以在<tt class="file docutils literal"><span class="pre">ossxp</span></tt>目录下创建以小写字母开头的版本库。</li>
+<li>第9行，版本库的创建者拥有对所创建版本库的完全权限。版本库的创建者是通过<strong class="command">git push</strong>命令创建版本库的那一个人。</li>
+<li>第10-11行，出现了两个特殊角色<tt class="docutils literal"><span class="pre">WRITERS</span></tt>和<tt class="docutils literal"><span class="pre">READERS</span></tt>，这两个角色不在本配置文件中定义，而是由版本库创建者使用Gitolite支持的<tt class="docutils literal"><span class="pre">setperms</span></tt>命令进行设置。</li>
+<li>第11行，还设置了<tt class="docutils literal"><span class="pre">&#64;dev</span></tt>用户组的用户对<tt class="file docutils literal"><span class="pre">ossxp</span></tt>目录下的版本库具有读取权限。</li>
+<li>第13行开始，对<tt class="file docutils literal"><span class="pre">testing</span></tt>版本库进行授权。其中使用了对引用授权的语法。</li>
+<li>第14行，用户组<tt class="docutils literal"><span class="pre">&#64;manager</span></tt>对所有引用包括分支拥有读写、重置、添加和删除的授权，但里程碑除外，因为第17行定义了一条禁用规则。</li>
+<li>第15行，用户组<tt class="docutils literal"><span class="pre">&#64;dev</span></tt>可以读写<tt class="docutils literal"><span class="pre">master</span></tt>分支。（还包括名字以<tt class="docutils literal"><span class="pre">master</span></tt>开头的其他分支，如果有的话。）</li>
+<li>第16行，用户<tt class="docutils literal"><span class="pre">dev1</span></tt>可以创建里程碑（即以<tt class="docutils literal"><span class="pre">refs/tags/v[0-9]</span></tt>开始的引用）。</li>
+<li>第17行，禁止所有人（<tt class="docutils literal"><span class="pre">&#64;all</span></tt>）对以<tt class="docutils literal"><span class="pre">refs/tags/</span></tt>开头的引用进行写操作。实际上由于之前第14行和第16行建立的授权，用户组<tt class="docutils literal"><span class="pre">&#64;manager</span></tt>的用户和用户<tt class="docutils literal"><span class="pre">dev1</span></tt>能够创建里程碑，而且用户组<tt class="docutils literal"><span class="pre">&#64;manager</span></tt>还能删除里程碑。</li>
+</ul>
+<p>下面针对授权指令进行详细的讲解。</p>
+</div>
+<div class="section" id="id12">
+<h3>5.4.3.2. 定义用户组和版本库组<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h3>
+<p>在<tt class="file docutils literal"><span class="pre">conf/gitolite.conf</span></tt>授权文件中，可以定义用户组或版本库组。组名称以<tt class="docutils literal"><span class="pre">&#64;</span></tt>字符开头，可以包含一个或多个成员。成员之间用空格分开。</p>
+<ul>
+<li><p class="first">例如定义管理员组：</p>
+<div class="highlight-python"><div class="highlight"><pre>@admin = jiangxin wangsheng
+</pre></div>
+</div>
+</li>
+<li><p class="first">组可以嵌套：</p>
+<div class="highlight-python"><div class="highlight"><pre>@staff = @admin @engineers tester1
+</pre></div>
+</div>
+</li>
+</ul>
+<p>除了作为用户组外，同样的语法也适用于版本库组。版本库组和用户组的定义没有任何区别，只是在版本库授权指令中处于不同的位置。即位于授权指令中的版本库位置代表版本库组，位于授权指令中的用户位置代表用户组。</p>
+</div>
+<div class="section" id="acl">
+<h3>5.4.3.3. 版本库ACL<a class="headerlink" href="#acl" title="永久链接至标题">¶</a></h3>
+<p>一个版本库可以包含多条授权指令，这些授权指令组成了一个版本库的权限控制列表（ACL）。例如：</p>
+<div class="highlight-python"><div class="highlight"><pre>repo testing
+    RW+                 = jiangxin @admin
+    RW                  = @dev @test
+    R                   = @all
+</pre></div>
+</div>
+<div class="section" id="id13">
+<h4>5.4.3.3.1. 版本库<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h4>
+<p>每一个版本库授权都以一条<tt class="docutils literal"><span class="pre">repo</span></tt>指令开始。指令<tt class="docutils literal"><span class="pre">repo</span></tt>后面是版本库列表，版本之间用空格分开，还可以包括版本库组。示例如下：</p>
+<div class="highlight-python"><div class="highlight"><pre>repo sandbox/test1 sandbox/test2 @test_repos
+</pre></div>
+</div>
+<p>注意版本库名称不要添加<tt class="docutils literal"><span class="pre">.git</span></tt>后缀，在版本库创建或权限匹配过程中会自动添加<tt class="docutils literal"><span class="pre">.git</span></tt>后缀。用<tt class="docutils literal"><span class="pre">repo</span></tt>指令定义的版本库会自动在服务器上创建，但使用正则表达式定义的通配符版本库除外。</p>
+<p>通配符版本库就是在<tt class="docutils literal"><span class="pre">repo</span></tt>指令定义的版本库名称中使用了正则表达式。通配符版本库针对的不是某一个版本库，而是匹配一组版本库，这些版本库可能已经存在或尚未创建。例如下面的<tt class="docutils literal"><span class="pre">repo</span></tt>指令定义了一组通配符版本库。</p>
+<div class="highlight-python"><div class="highlight"><pre>repo redmine/[a-zA-Z].+
+</pre></div>
+</div>
+<p>通配符版本库匹配时会自动在版本库名称前面加上前缀<tt class="docutils literal"><span class="pre">^</span></tt>，在后面添加后缀<tt class="docutils literal"><span class="pre">$</span></tt>。即通配符版本库对版本库名称进行完整匹配而非部分匹配，这一点和后面将要介绍的正则引用（refex）大不一样。</p>
+<p>有时<tt class="docutils literal"><span class="pre">repo</span></tt>指令定义普通版本库和通配符版本库的界限并不是那么清晰，像下面这条<tt class="docutils literal"><span class="pre">repo</span></tt>指令：</p>
+<div class="highlight-python"><div class="highlight"><pre>repo ossxp/.+
+</pre></div>
+</div>
+<p>因为点号（<tt class="docutils literal"><span class="pre">.</span></tt>）和加号（<tt class="docutils literal"><span class="pre">+</span></tt>）也可以作为普通字符出现在版本库名称中，这条指令会导致Gitolite创建<tt class="file docutils literal"><span class="pre">ossxp</span></tt>目录，并在目录下创建名为<tt class="file docutils literal"><span class="pre">.+.git</span></tt>的版本库。因此在定义通配符版本库时要尽量写得“复杂点”以免造成误判。</p>
+<div class="admonition tip">
+<p class="first admonition-title">小技巧</p>
+<p class="last">我对Gitolite进行了一点改进，能够减少对诸如<tt class="docutils literal"><span class="pre">ossxp/.+</span></tt>通配符版本库误判的可能。并提供在定义通配符版本库时使用<tt class="docutils literal"><span class="pre">^</span></tt>前缀和<tt class="docutils literal"><span class="pre">$</span></tt>后缀，以减少误判。如使用如下方式定义通配符版本库：<tt class="docutils literal"><span class="pre">repo</span> <span class="pre">^myrepo</span></tt>。</p>
+</div>
+</div>
+<div class="section" id="id14">
+<h4>5.4.3.3.2. 授权指令<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h4>
+<p>在<tt class="docutils literal"><span class="pre">repo</span></tt>指令之后是缩进的一条或多条授权指令。授权指令的语法如下：</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;权限&gt;  [零个或多个正则表达式匹配的引用] = &lt;user&gt; [&lt;user&gt; ...]
+</pre></div>
+</div>
+<p>每条指令必须指定一个权限，称为授权关键字。包括传统的授权关键字：<tt class="docutils literal"><span class="pre">C</span></tt>、<tt class="docutils literal"><span class="pre">R</span></tt>、<tt class="docutils literal"><span class="pre">RW</span></tt>和<tt class="docutils literal"><span class="pre">RW+</span></tt>，以及将分支创建和分支删除分离出来的扩展授权关键字：<tt class="docutils literal"><span class="pre">RWC</span></tt>、<tt class="docutils literal"><span class="pre">RW+C</span></tt>、<tt class="docutils literal"><span class="pre">RWD</span></tt>、<tt class="docutils literal"><span class="pre">RW+D</span></tt>、<tt class="docutils literal"><span class="pre">RWCD</span></tt>、<tt class="docutils literal"><span class="pre">RW+CD</span></tt>。</p>
+<p>传统的授权关键字包括：</p>
+<ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">C</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">C</span></tt>代表创建版本库，仅在对通配符版本库进行授权时方可使用。用于设定谁可以创建名称与通配符匹配的版本库。</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">R</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">R</span></tt>代表只读权限。</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">RW</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">RW</span></tt>代表读写权限。如果在同一组（针对同一版本库）授权指令中没有出现代表创建分支的扩展授权关键字，则<tt class="docutils literal"><span class="pre">RW</span></tt>还包括创建分支的权限，而不仅是在分支中的读写。</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">RW+</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">RW+</span></tt>除了具有读写权限外，还可以强制推送（执行非快进式推送）。如果在同一组授权指令中没有出现代表分支删除的扩展授权关键字，则<tt class="docutils literal"><span class="pre">RW+</span></tt>还同时包含了创建分支和删除分支的授权。</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">-</span></tt></p>
+</li>
+</ul>
+<blockquote>
+<div><tt class="docutils literal"><span class="pre">-</span></tt>含义为禁用。因为禁用规则只在第二阶段授权生效<a class="footnote-reference" href="#id39" id="id15">[3]</a>，所以一般只用于撤销特定用户对特定分支或整个版本库的写操作授权。</div></blockquote>
+<p>扩展的授权关键字将创建分支和删除分支的权限从传统授权关键字中分离出来，从而新增了六个授权关键字。在一个版本库的授权指令中一旦发现创建分支和/或删除分支的授权使用了下列新的扩展授权关键字后，原有的<tt class="docutils literal"><span class="pre">RW</span></tt>和<tt class="docutils literal"><span class="pre">RW+</span></tt>不再行使对创建分支和/或删除分支的授权。</p>
+<ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">RWC</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">RWC</span></tt>代表读写授权、创建新引用（分支、里程碑等）的授权。</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">RW+C</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">RW+C</span></tt>代表读写授权、强制推送和创建新引用的授权。</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">RWD</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">RWD</span></tt>代表读写授权、删除引用的授权。</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">RW+D</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">RW+D</span></tt>代表读写授权、强制推送和删除引用的授权。</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">RWCD</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">RWCD</span></tt>代表读写授权、创建新引用和删除引用的授权。</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">RW+CD</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">RW+CD</span></tt>代表读写授权、强制推送、创建新引用和删除引用的授权。</p>
+</li>
+</ul>
+<p>授权关键字后面（等号前面）是一个可选的正则引用（refex）或正则引用列表（用空格分隔）。</p>
+<ul class="simple">
+<li>正则表达式格式的引用，简称正则引用（refex），在授权检查时对Git版本库的引用进行匹配。</li>
+<li>如果在授权指令中省略正则引用，则意味着该授权指令对全部的引用都有效。</li>
+<li>正则引用如果不以<tt class="docutils literal"><span class="pre">refs/</span></tt>开头，会自动添加<tt class="docutils literal"><span class="pre">refs/heads/</span></tt>作为前缀。</li>
+<li>正则引用默认采用部分匹配策略，即如果不以<tt class="docutils literal"><span class="pre">$</span></tt>结尾，则后面可以匹配任意字符，相当于添加<tt class="docutils literal"><span class="pre">.*$</span></tt>作为后缀。</li>
+</ul>
+<p>授权关键字后面（等号前面）也可以包含一个以<tt class="docutils literal"><span class="pre">NAME/</span></tt>为前缀的表达式，但这个表达式并非引用，而是路径。支持基于路径的写操作授权。</p>
+<p>授权指令以等号（=）为标记分为前后两段，等号后面的是用户列表。用户之间用空格分隔，并且可以使用用户组。</p>
+</div>
+</div>
+<div class="section" id="id16">
+<h3>5.4.3.4. Gitolite授权机制<a class="headerlink" href="#id16" title="永久链接至标题">¶</a></h3>
+<p>Gitolite的授权实际分为两个阶段。第一个阶段称为前Git阶段，即在Git命令执行前，由SSH连接触发的<strong class="command">gl-auth-command</strong>命令执行的授权检查。包括：</p>
+<ul>
+<li><p class="first">版本库的读。</p>
+<p>如果用户拥有版本库或版本库的任意分支具有下列权限之一：<tt class="docutils literal"><span class="pre">R</span></tt>、<tt class="docutils literal"><span class="pre">RW</span></tt>、<tt class="docutils literal"><span class="pre">RW+</span></tt>（或其他扩展关键字），则整个版本库（包含所有分支）对用户均可读，否则版本库不可读取。</p>
+<p>最让人迷惑的就是只为某用户分配了对某个分支的读授权（<tt class="docutils literal"><span class="pre">R</span></tt>），而该用户实际上能够读取版本库的任意分支。之所以Gitolite对读授权不能细化到分支甚至目录，只能针对版本库进行粗放的非零即壹的读操作授权，是因为读授权只在版本库授权的第一个阶段进行检查，而在此阶段还获取不到版本库的分支。</p>
+</li>
+<li><p class="first">版本库的写。</p>
+<p>版本库的写授权实际上要在两个阶段分别进行检查。本阶段，即第一阶段仅检查用户是否拥有下列权限之一：<tt class="docutils literal"><span class="pre">RW</span></tt>、<tt class="docutils literal"><span class="pre">RW+</span></tt>或<tt class="docutils literal"><span class="pre">C</span></tt>授权，具有这些授权则通过第一阶段的写权限检查。第二个阶段的授权检查由Git版本库的钩子脚本触发，能够实现基于分支和路径的写操作授权，以及对分支创建、删除和是否可强制更新进行授权检查，具体见第二阶段授权过程描述。</p>
+</li>
+<li><p class="first">版本库的创建。</p>
+<p>仅对正则表达式定义的通配符版本库有效。即拥有<tt class="docutils literal"><span class="pre">C</span></tt>授权的用户可以创建和相应的正则表达式匹配的版本库。创建版本库（尤其是通过执行<strong class="command">git push</strong>命令创建版本库）不免要涉及到执行新创建的版本库的钩子脚本，所以需要为版本库设置一条创建者可读写的授权。如：</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">RW</span> <span class="o">=</span> <span class="n">CREATOR</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Gitolite对授权的第二个阶段的检查，实际上是通过<tt class="file docutils literal"><span class="pre">update</span></tt>钩子脚本进行的。因为版本库的读操作不执行<tt class="file docutils literal"><span class="pre">update</span></tt>钩子，所以读操作只在授权的第一个阶段（前Git阶段）就完成了检查，授权的第二个阶段仅对写操作进行更为精细的授权检查。</p>
+<ul class="simple">
+<li>钩子脚本<tt class="file docutils literal"><span class="pre">update</span></tt>针对推送操作的各个分支进行逐一检查，因此第二个阶段可以进行针对分支写操作的精细授权。</li>
+<li>在这个阶段可以获取到要更新的新、老引用的SHA1哈希值，因此可以判断出是否发生了非快进式推送、是否有新分支创建，以及是否发生了分支的删除，因此可以针对这些操作进行精细的授权。</li>
+<li>基于路径的写授权也是在这个阶段进行的。</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id17">
+<h2>5.4.4. 版本库授权案例<a class="headerlink" href="#id17" title="永久链接至标题">¶</a></h2>
+<p>Gitolite的授权非常强大也很复杂，因此从版本库授权的实际案例来学习是非常行之有效的方式。</p>
+<div class="section" id="id18">
+<h3>5.4.4.1. 常规版本库授权<a class="headerlink" href="#id18" title="永久链接至标题">¶</a></h3>
+<p>授权文件如下：</p>
+<div class="highlight-python"><div class="highlight"><pre>1  @admin = jiangxin
+2  @dev   = dev1 dev2 badboy jiangxin
+3  @test  = test1 test2
+4
+5  repo testing
+6      RW+ = @admin
+7      R = @test
+8      - = badboy
+9      RW = @dev test1
+</pre></div>
+</div>
+<p>关于授权的说明：</p>
+<ul>
+<li><p class="first">用户<tt class="docutils literal"><span class="pre">jiangxin</span></tt>对版本库具有写的权限，并能够强制推送。</p>
+<p>由于用户<tt class="docutils literal"><span class="pre">jiangxin</span></tt>属于用户组<tt class="docutils literal"><span class="pre">&#64;admin</span></tt>，通过第6行授权指令而具有读写权限，以及强制推送、创建和删除引用的权限。</p>
+</li>
+<li><p class="first">用户<tt class="docutils literal"><span class="pre">test1</span></tt>对版本库具有写的权限。</p>
+<p>第7行定义了<tt class="docutils literal"><span class="pre">test1</span></tt>所属的用户组<tt class="docutils literal"><span class="pre">&#64;test</span></tt>具有只读权限。第9行定义了<tt class="docutils literal"><span class="pre">test1</span></tt>用户具有读写权限。Gitolite的实现是对读权限和写权限分别进行判断并汇总（并集），从而<tt class="docutils literal"><span class="pre">test1</span></tt>用户具有读写权限。</p>
+</li>
+<li><p class="first">用户<tt class="docutils literal"><span class="pre">badboy</span></tt>对版本库只具有读操作的权限，没有写操作权限。</p>
+<p>第8行的指令以减号（-）开始，是一条禁用指令。禁用指令只在授权的第二阶段起作用，即只对写操作起作用，不会对<tt class="docutils literal"><span class="pre">badboy</span></tt>用户的读权限施加影响。在第9行的指令中，<tt class="docutils literal"><span class="pre">badboy</span></tt>所在的<tt class="docutils literal"><span class="pre">&#64;dev</span></tt>组拥有读写权限。但禁用规则会对写操作起作用，导致<tt class="docutils literal"><span class="pre">badboy</span></tt>只有读操作权限，而没有写操作。</p>
+</li>
+</ul>
+<p>上面在Gitolite配置文件中对<tt class="docutils literal"><span class="pre">testing</span></tt>版本库进行的授权，当通过推送更新至Gitolite服务器上时，如果服务器端尚不存在一个名为<tt class="docutils literal"><span class="pre">testing</span></tt>的版本库，Gitolite会自动初始化一个空白的<tt class="docutils literal"><span class="pre">testing</span></tt>版本库。</p>
+</div>
+<div class="section" id="id19">
+<h3>5.4.4.2. 通配符版本库授权<a class="headerlink" href="#id19" title="永久链接至标题">¶</a></h3>
+<p>授权文件如下：</p>
+<div class="highlight-python"><div class="highlight"><pre> 1   @administrators = jiangxin admin
+ 2   @dev            = dev1 dev2 badboy
+ 3   @test           = test1 test2
+ 4
+ 5   repo    sandbox/[a-z].+
+ 6           C       = @administrators
+ 7           RW+     = CREATOR
+ 8           R       = @test
+ 9           -       = badboy
+10           RW      = @dev test1
+</pre></div>
+</div>
+<p>这个授权文件的版本库名称中使用了正则表达式，匹配在<tt class="file docutils literal"><span class="pre">sandbox</span></tt>目录下的任意以小写字母开头的版本库。因为通配符版本库并非指代一个具体版本库，因而不会在服务器端自动创建，而是需要管理员手动创建。</p>
+<p>创建和通配符匹配的版本库，Gitolite的原始实现是克隆即创建。例如管理员<tt class="docutils literal"><span class="pre">jiangxin</span></tt>创建名为<tt class="docutils literal"><span class="pre">sandbox/repos1.git</span></tt>版本库，执行下面命令：</p>
+<div class="highlight-python"><div class="highlight"><pre>jiangxin$ git clone git@server:sandbox/repos1.git
+</pre></div>
+</div>
+<p>这种克隆即创建的方式很容易因为录入错误而导致意外创建错误的版本库。我改进的Gitolite需要通过推送来创建版本库。下面的示例通过推送操作（以<tt class="docutils literal"><span class="pre">jiangxin</span></tt>用户身份），远程创建版本库<tt class="docutils literal"><span class="pre">sandbox/repos1.git</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre>jiangxin$ git remote add origin git@server:sandbox/repos1.git
+jiangxin$ git push origin master
+</pre></div>
+</div>
+<p>对创建完成的<tt class="docutils literal"><span class="pre">sandbox/repo1.git</span></tt>版本库进行授权检查，会发现：</p>
+<ul>
+<li><p class="first">用户<tt class="docutils literal"><span class="pre">jiangxin</span></tt>对版本库具有读写权限，而用户<tt class="docutils literal"><span class="pre">admin</span></tt>则不能读取<tt class="docutils literal"><span class="pre">sandbox/repo1.git</span></tt>版本库。</p>
+<p>第6行的授权指令同时为用户<tt class="docutils literal"><span class="pre">jiangxin</span></tt>和<tt class="docutils literal"><span class="pre">admin</span></tt>赋予了创建与通配符相符的版本库的权限。但因为版本库<tt class="docutils literal"><span class="pre">sandbox/repo1.git</span></tt>是由<tt class="docutils literal"><span class="pre">jiangxin</span></tt>而非<tt class="docutils literal"><span class="pre">admin</span></tt>创建的，所以第7条的授权指令只为版本库的创建者<tt class="docutils literal"><span class="pre">jiangxin</span></tt>赋予了读写权限。</p>
+<p>Gitolite通过在服务器端该版本库目录下创建一个名为<tt class="file docutils literal"><span class="pre">gl-creater</span></tt>的文件记录了版本库的创建者。</p>
+</li>
+<li><p class="first">和之前的例子相同的是：</p>
+<ul class="simple">
+<li>用户<tt class="docutils literal"><span class="pre">test1</span></tt>对版本库具有写的权限。</li>
+<li>禁用指令让用户<tt class="docutils literal"><span class="pre">badboy</span></tt>对版本库仅具有只读权限。</li>
+</ul>
+</li>
+</ul>
+<p>如果采用接下来的示例中的版本库权限设置，版本库<tt class="docutils literal"><span class="pre">sandbox/repo1.git</span></tt>的创建者<tt class="docutils literal"><span class="pre">jiangxin</span></tt>还可以使用<strong class="command">setperms</strong>命令为版本库添加授权。具体用法参见下面的示例。</p>
+</div>
+<div class="section" id="id20">
+<h3>5.4.4.3. 每个人创建自己的版本库<a class="headerlink" href="#id20" title="永久链接至标题">¶</a></h3>
+<p>授权文件如下：</p>
+<div class="highlight-python"><div class="highlight"><pre>1  @administrators = jiangxin admin
+2
+3  repo    users/CREATOR/[a-zA-Z].*
+4          C   =  @all
+5          RW+ =  CREATOR
+6          RW  =  WRITERS
+7          R   =  READERS @administrators
+</pre></div>
+</div>
+<p>关于授权的说明：</p>
+<ul>
+<li><p class="first">第4条指令，设置用户可以在自己的名字空间（<tt class="file docutils literal"><span class="pre">/usrs/&lt;userid&gt;/</span></tt>）下，自己创建版本库。例如下面就是用户<tt class="docutils literal"><span class="pre">dev1</span></tt>执行<strong class="command">git push</strong>命令在Gitolite服务器上自己的名字空间下创建版本库。</p>
+<div class="highlight-python"><div class="highlight"><pre>dev1$ git push git@server:users/dev1/repos1.git master
+</pre></div>
+</div>
+</li>
+<li><p class="first">第5条指令，设置版本库创建者对版本库具有完全权限。</p>
+<p>即用户<tt class="docutils literal"><span class="pre">dev1</span></tt>拥有对其自建的<tt class="docutils literal"><span class="pre">users/dev1/repos1.git</span></tt>拥有最高权限。</p>
+</li>
+<li><p class="first">第7条指令，让管理员组<tt class="docutils literal"><span class="pre">&#64;administrators</span></tt>的用户对于<tt class="file docutils literal"><span class="pre">users/</span></tt>下用户自建的版本库拥有读取权限。</p>
+</li>
+</ul>
+<p>那么第6、7条授权指令中出现的<tt class="docutils literal"><span class="pre">WRITERS</span></tt>和<tt class="docutils literal"><span class="pre">READERS</span></tt>是如何定义的呢？实际上这两个变量可以看做是两个用户组，不过这两个用户组不是在Gitolite授权文件中设置，而是由版本库创建者执行<strong class="command">ssh</strong>命令创建的。</p>
+<p>版本库<tt class="docutils literal"><span class="pre">users/dev1/repos1.git</span></tt>的创建者<tt class="docutils literal"><span class="pre">dev1</span></tt>可以通过<strong class="command">ssh</strong>命令连接服务器，使用<strong class="command">setperms</strong>命令为自己的版本库设置角色。命令<tt class="docutils literal"><span class="pre">setperms</span></tt>的唯一一个参数就是版本库名称。当执行命令时，会自动进入一个编辑界面，手动输入角色定义后，按下<tt class="docutils literal"><span class="pre">^D</span></tt>（Ctrl+D）结束编辑。如下所示：</p>
+<div class="highlight-python"><div class="highlight"><pre>dev1$ ssh git@server setperms users/dev1/repos1.git
+READERS dev2 dev3
+WRITERS jiangxin
+^D
+</pre></div>
+</div>
+<p>即在输入<tt class="docutils literal"><span class="pre">setperms</span></tt>指令后，进入一个编辑界面，输入<tt class="docutils literal"><span class="pre">^D</span></tt>（Ctrl+D）结束编辑。也可以将角色定义文件保存到文件中，用<strong class="command">setperms</strong>指令加载。如下：</p>
+<div class="highlight-python"><div class="highlight"><pre>dev1$ cat &gt; perms &lt;&lt; EOF
+READERS dev2 dev3
+WRITERS jiangxin
+EOF
+
+dev1$ ssh git@server setperms users/dev1/repos1.git &lt; perms
+New perms are:
+READERS dev2 dev3
+WRITERS jiangxin
+</pre></div>
+</div>
+<p>当版本库创建者<tt class="docutils literal"><span class="pre">dev1</span></tt>对版本库<tt class="docutils literal"><span class="pre">users/dev1/repos1.git</span></tt>进行了如上设置后，Gitolite在进行授权检查时会将<tt class="docutils literal"><span class="pre">setperms</span></tt>设置的角色定义应用到授权文件中。故此版本库<tt class="docutils literal"><span class="pre">users/dev1/repos1.git</span></tt>中又补充了新的授权：</p>
+<ul class="simple">
+<li>用户<tt class="docutils literal"><span class="pre">dev2</span></tt>和<tt class="docutils literal"><span class="pre">dev3</span></tt>具有读取权限。</li>
+<li>用户<tt class="docutils literal"><span class="pre">jiangxin</span></tt>具有读写权限。</li>
+</ul>
+<p>版本库<tt class="docutils literal"><span class="pre">users/dev1/repos1.git</span></tt>的建立者<tt class="docutils literal"><span class="pre">dev1</span></tt>可以使用<strong class="command">getperms</strong>查看自己版本库的角色设置。如下：</p>
+<div class="highlight-python"><div class="highlight"><pre>dev1$ ssh git@server getperms users/dev1/repos1.git
+READERS dev2 dev3
+WRITERS jiangxin
+</pre></div>
+</div>
+<p>如果在用户自定义授权中需要使用<tt class="docutils literal"><span class="pre">READERS</span></tt>和<tt class="docutils literal"><span class="pre">WRITERS</span></tt>之外的角色，管理员可以通过修改<tt class="file docutils literal"><span class="pre">gitolite.rc</span></tt>文件中的变量<tt class="docutils literal"><span class="pre">$GL_WILDREPOS_PERM_CATS</span></tt>实现。该变量的默认设置如下：</p>
+<div class="highlight-python"><div class="highlight"><pre>$GL_WILDREPOS_PERM_CATS = &quot;READERS WRITERS&quot;;
+</pre></div>
+</div>
+</div>
+<div class="section" id="id21">
+<h3>5.4.4.4. 传统模式的引用授权<a class="headerlink" href="#id21" title="永久链接至标题">¶</a></h3>
+<p>传统模式的引用授权指的是在授权指令中只采用<tt class="docutils literal"><span class="pre">R</span></tt>、<tt class="docutils literal"><span class="pre">RW</span></tt>和<tt class="docutils literal"><span class="pre">RW+</span></tt>的传统授权关键字，而不包括后面介绍的扩展授权指令。传统的授权指令没有把分支的创建和分支删除权限细分，而是和写操作及强制推送操作混杂在一起。</p>
+<ul class="simple">
+<li>非快进式推送必须拥有上述关键字中的<tt class="docutils literal"><span class="pre">+</span></tt>方可授权。</li>
+<li>创建引用必须拥有上述关键字中的<tt class="docutils literal"><span class="pre">W</span></tt>方可授权。</li>
+<li>删除引用必须拥有上述关键字中的<tt class="docutils literal"><span class="pre">+</span></tt>方可授权。</li>
+<li>如果没有在授权指令中提供引用相关的参数，相当于提供<tt class="docutils literal"><span class="pre">refs/.*</span></tt>作为引用的参数，意味着对所有引用均有效。</li>
+</ul>
+<p>授权文件：</p>
+<div class="highlight-python"><div class="highlight"><pre>1  @administrators = jiangxin admin
+2  @dev            = dev1 dev2 badboy
+3  @test           = test1 test2
+4
+5  repo    test/repo1
+6          RW+                           = @administrators
+7          RW master refs/heads/feature/ = @dev
+8          R                             = @test
+</pre></div>
+</div>
+<p>关于授权的说明：</p>
+<ul class="simple">
+<li>第6行，对于版本库<tt class="docutils literal"><span class="pre">test/repo1</span></tt>，管理员组用户<tt class="docutils literal"><span class="pre">jiangxin</span></tt>和<tt class="docutils literal"><span class="pre">admin</span></tt>可以读写任意分支、强制推送，以及创建和删除引用。</li>
+<li>第7行，用户组<tt class="docutils literal"><span class="pre">&#64;dev</span></tt>除了对<tt class="docutils literal"><span class="pre">master</span></tt>和<tt class="docutils literal"><span class="pre">refs/heads/feature/</span></tt>开头的引用具有读写权限外，实际上可以读取所有引用。这是因为读取操作授权阶段无法获知引用。</li>
+<li>第8行，用户组<tt class="docutils literal"><span class="pre">&#64;test</span></tt>对版本库拥有只读授权。</li>
+</ul>
+</div>
+<div class="section" id="id22">
+<h3>5.4.4.5. 扩展模式的引用授权<a class="headerlink" href="#id22" title="永久链接至标题">¶</a></h3>
+<p>扩展模式的引用授权，指的是该版本库的授权指令出现了下列授权关键字中的一个或多个：<tt class="docutils literal"><span class="pre">RWC</span></tt>、<tt class="docutils literal"><span class="pre">RWD</span></tt>、<tt class="docutils literal"><span class="pre">RWCD</span></tt>、<tt class="docutils literal"><span class="pre">RW+C</span></tt>、<tt class="docutils literal"><span class="pre">RW+D</span></tt>、<tt class="docutils literal"><span class="pre">RW+CD</span></tt>，将分支的创建权限和删除权限从读写权限中分离出来，从而可对分支进行更为精细的权限控制。</p>
+<ul class="simple">
+<li>非快进式推送必须拥有上述关键字中的<tt class="docutils literal"><span class="pre">+</span></tt>方可授权。</li>
+<li>创建引用必须拥有上述关键字中的<tt class="docutils literal"><span class="pre">C</span></tt>方可授权。</li>
+<li>删除引用必须拥有上述关键字中的<tt class="docutils literal"><span class="pre">D</span></tt>方可授权。</li>
+</ul>
+<p>即引用的创建和删除使用了单独的授权关键字，和写权限和强制推送权限分开。</p>
+<p>下面是一个采用扩展授权关键字的授权文件：</p>
+<div class="highlight-python"><div class="highlight"><pre>1   repo    test/repo2
+2           RW+C = @administrators
+3           RW+  = @dev
+4           RW   = @test
+5
+6   repo    test/repo3
+7           RW+CD = @administrators
+8           RW+C  = @dev
+9           RW    = @test
+</pre></div>
+</div>
+<p>通过上面的配置文件，对于版本库<tt class="docutils literal"><span class="pre">test/repo2.git</span></tt>具有如下的授权：</p>
+<ul>
+<li><p class="first">第2行，用户组<tt class="docutils literal"><span class="pre">&#64;administrators</span></tt>中的用户，具有创建和删除引用的权限，并且能强制推送。</p>
+<p>其中创建引用来自授权关键字中的<tt class="docutils literal"><span class="pre">C</span></tt>，删除引用来自授权关键中的<tt class="docutils literal"><span class="pre">+</span></tt>，因为该版本库授权指令中没有出现<tt class="docutils literal"><span class="pre">D</span></tt>，因而删除应用授权沿用传统授权关键字。</p>
+</li>
+<li><p class="first">第3行，用户组<tt class="docutils literal"><span class="pre">&#64;dev</span></tt>中的用户，不能创建引用，但可以删除引用，并且可以强制推送。</p>
+<p>因为第2行授权关键字中字符<tt class="docutils literal"><span class="pre">C</span></tt>的出现，使得创建引用采用扩展授权关键字，因而用户组<tt class="docutils literal"><span class="pre">&#64;dev</span></tt>不具有创建引用的权限。</p>
+</li>
+<li><p class="first">第4行，用户组<tt class="docutils literal"><span class="pre">&#64;test</span></tt>中的用户，拥有读写权限，但是不能创建引用，不能删除引用，也不能强制推送。</p>
+</li>
+</ul>
+<p>通过上面的配置文件，对于版本库<tt class="docutils literal"><span class="pre">test/repo3.git</span></tt>具有如下的授权：</p>
+<ul>
+<li><p class="first">第7行，用户组<tt class="docutils literal"><span class="pre">&#64;administrators</span></tt>中的用户，具有创建和删除引用的权限，并且能强制推送。</p>
+<p>其中创建引用来自授权关键字中的<tt class="docutils literal"><span class="pre">C</span></tt>，删除引用来自授权关键中的<tt class="docutils literal"><span class="pre">D</span></tt>。</p>
+</li>
+<li><p class="first">第8行，用户组<tt class="docutils literal"><span class="pre">&#64;dev</span></tt>中的用户，可以创建引用，并能够强制推送，但不能删除引用。</p>
+<p>因为第7行授权关键字中字符<tt class="docutils literal"><span class="pre">C</span></tt>和<tt class="docutils literal"><span class="pre">D</span></tt>的出现，使得创建和删除引用都采用扩展授权关键字，因而用户组<tt class="docutils literal"><span class="pre">&#64;dev</span></tt>不具有删除引用的权限。</p>
+</li>
+<li><p class="first">第9行，用户组<tt class="docutils literal"><span class="pre">&#64;test</span></tt>中的用户，可以推送到任何引用，但是不能创建引用，不能删除引用，也不能强制推送。</p>
+</li>
+</ul>
+</div>
+<div class="section" id="id23">
+<h3>5.4.4.6. 禁用规则的使用<a class="headerlink" href="#id23" title="永久链接至标题">¶</a></h3>
+<p>授权文件片段：</p>
+<div class="highlight-python"><div class="highlight"><pre>1     RW      refs/tags/v[0-9]        =   jiangxin
+2     -       refs/tags/v[0-9]        =   @dev
+3     RW      refs/tags/              =   @dev
+</pre></div>
+</div>
+<p>关于授权的说明：</p>
+<ul class="simple">
+<li>用户<tt class="docutils literal"><span class="pre">jiangxin</span></tt>可以创建任何里程碑，包括以<tt class="docutils literal"><span class="pre">v</span></tt>加上数字开头的版本里程碑。</li>
+<li>用户组<tt class="docutils literal"><span class="pre">&#64;dev</span></tt>，只能创建除了版本里程碑（以<tt class="docutils literal"><span class="pre">v</span></tt>加上数字开头）之外的其他里程碑。</li>
+<li>其中以<tt class="docutils literal"><span class="pre">-</span></tt>开头的授权指令建立禁用规则。禁用规则只在授权的第二阶段有效，因此不能限制用户的读取权限。</li>
+</ul>
+</div>
+<div class="section" id="id24">
+<h3>5.4.4.7. 用户分支<a class="headerlink" href="#id24" title="永久链接至标题">¶</a></h3>
+<p>前面我们介绍过通过<tt class="docutils literal"><span class="pre">CREATOR</span></tt>特殊关键字实现用户自建版本库的功能。与之类似，Gitolite还支持在一个版本库中用户自建分支的功能。</p>
+<p>用户在版本库中自建分支用到的关键字是<tt class="docutils literal"><span class="pre">USER</span></tt>而非<tt class="docutils literal"><span class="pre">CREATOR</span></tt>。即当授权指令的引用表达式中出现的<tt class="docutils literal"><span class="pre">USER</span></tt>关键字时，在授权检查时会动态替换为用户ID。例如授权文件片段：</p>
+<div class="highlight-python"><div class="highlight"><pre>1   repo    test/repo4
+2           RW+CD                      = @administrators
+3           RW+CD refs/heads/u/USER/   = @all
+4           RW+   master               = @dev
+</pre></div>
+</div>
+<p>关于授权的说明：</p>
+<ul class="simple">
+<li>第2行，用户组<tt class="docutils literal"><span class="pre">&#64;administrators</span></tt>中的用户，对所有引用具有读写、创建和删除的权限，并且能强制推送。</li>
+<li>第3行，所有用户都可以创建以<tt class="docutils literal"><span class="pre">u/&lt;userid&gt;/</span></tt>（含自己用户ID）开头的分支。对自己名字空间下的引用具有完全权限。对于他人名字空间的引用只有读取权限，不能修改。</li>
+<li>第4行，用户组<tt class="docutils literal"><span class="pre">&#64;dev</span></tt>对<tt class="docutils literal"><span class="pre">master</span></tt>分支具有读写和强制更新的权限，但是不能删除。</li>
+</ul>
+</div>
+<div class="section" id="id25">
+<h3>5.4.4.8. 对路径的写授权<a class="headerlink" href="#id25" title="永久链接至标题">¶</a></h3>
+<p>Gitolite也实现了对路径的写操作的精细授权，并且非常巧妙的是实现此功能所增加的代码可以忽略不计。这是因为Gitolite把路径当作是特殊格式的引用的授权。</p>
+<p>在授权文件中，如果一个版本库的授权指令中的正则引用字段出现了以<tt class="docutils literal"><span class="pre">NAME/</span></tt>开头的引用，则表明该授权指令是针对路径进行的写授权，并且该版本库要进行基于路径的写授权判断。</p>
+<p>示例：</p>
+<div class="highlight-python"><div class="highlight"><pre>1  repo foo
+2      RW                  =   @junior_devs @senior_devs
+3
+4      RW  NAME/           =   @senior_devs
+5      -   NAME/Makefile   =   @junior_devs
+6      RW  NAME/           =   @junior_devs
+</pre></div>
+</div>
+<p>关于授权的说明：</p>
+<ul class="simple">
+<li>第2行，初级程序员<tt class="docutils literal"><span class="pre">&#64;junior_devs</span></tt>和高级程序员<tt class="docutils literal"><span class="pre">&#64;senior_devs</span></tt>可以对版本库<tt class="docutils literal"><span class="pre">foo</span></tt>进行读写操作。</li>
+<li>第4行，设定高级程序员<tt class="docutils literal"><span class="pre">&#64;senior_devs</span></tt>对所有文件（<tt class="docutils literal"><span class="pre">NAME/</span></tt>）进行写操作。</li>
+<li>第5行和第6行，设定初级程序员<tt class="docutils literal"><span class="pre">&#64;junior_devs</span></tt>对除了根目录的<tt class="file docutils literal"><span class="pre">Makefile</span></tt>文件外的其他文件具有写权限。</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id26">
+<h2>5.4.5. 创建和导入版本库<a class="headerlink" href="#id26" title="永久链接至标题">¶</a></h2>
+<p>Gitolite维护的版本库默认位于安装用户主目录下的<tt class="docutils literal"><span class="pre">repositories</span></tt>目录中 ，即如果安装用户为<tt class="docutils literal"><span class="pre">git</span></tt>，则版本库都创建在<tt class="file docutils literal"><span class="pre">/home/git/repositories</span></tt>目录之下。可以通过配置文件<tt class="file docutils literal"><span class="pre">.gitolite.rc</span></tt>修改默认的版本库的根路径。</p>
+<div class="highlight-python"><div class="highlight"><pre>$REPO_BASE=&quot;repositories&quot;;
+</pre></div>
+</div>
+<p>有多种创建版本库的方式。一种是在授权文件中用<tt class="docutils literal"><span class="pre">repo</span></tt>指令设置版本库（未使用正则表达式的版本库）的授权，当对<tt class="docutils literal"><span class="pre">gitolite-admin</span></tt>版本库执行<strong class="command">git push</strong>操作时，自动在服务端创建新的版本库。另外一种方式是在授权文件中用正则表达式定义的通配符版本库，不会即时创建（也不可能被创建），而是被授权的用户在远程创建后推送到服务器上完成创建。</p>
+<div class="section" id="id27">
+<h3>5.4.5.1. 在配置文件中出现的版本库，即时生成<a class="headerlink" href="#id27" title="永久链接至标题">¶</a></h3>
+<p>尝试在授权文件<tt class="file docutils literal"><span class="pre">conf/gitolite.conf</span></tt>中加入一段新的版本库授权指令，而这个版本库尚不存在。新添加到授权文件中的内容为：</p>
+<div class="highlight-python"><div class="highlight"><pre>repo testing2
+    RW+                 = @all
+</pre></div>
+</div>
+<p>然后将授权文件的修改提交并推送到服务器，会看到授权文件中添加新授权的版本库<tt class="docutils literal"><span class="pre">testing2</span></tt>被自动创建。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git push
+Counting objects: 7, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (4/4), 375 bytes, done.
+Total 4 (delta 1), reused 0 (delta 0)
+remote: Already on &#39;master&#39;
+remote: creating testing2...
+remote: Initialized empty Git repository in /home/git/repositories/testing2.git/
+To gitadmin.bj:gitolite-admin.git
+   278e54b..b6f05c1  master -&gt; master
+</pre></div>
+</div>
+<p>注意其中带<tt class="docutils literal"><span class="pre">remote</span></tt>标识的输出，可以看到版本库<tt class="docutils literal"><span class="pre">testing2.git</span></tt>被自动初始化了。</p>
+<p>此外使用版本库组的语法（即用<tt class="docutils literal"><span class="pre">&#64;</span></tt>创建的组，用作版本库），也会被自动创建。例如下面的授权文件片段设定了一个包含两个版本库的组<tt class="docutils literal"><span class="pre">&#64;testing</span></tt>，当将新配置文件推送到服务器上时，会自动创建<tt class="file docutils literal"><span class="pre">testing3.git</span></tt>和<tt class="file docutils literal"><span class="pre">testing4.git</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre>@testing = testing3 testing4
+
+repo @testing
+    RW+                 = @all
+</pre></div>
+</div>
+</div>
+<div class="section" id="id28">
+<h3>5.4.5.2. 通配符版本库，管理员通过推送创建<a class="headerlink" href="#id28" title="永久链接至标题">¶</a></h3>
+<p>通配符版本库是用正则表达式语法定义的版本库，所指的并非某一个版本库而是和正则表达式相匹配的一组版本库。要想使用通配符版本库，需要在服务器端Gitolite的安装用户（如<tt class="docutils literal"><span class="pre">git</span></tt>）主目录下，修改配置文件<tt class="file docutils literal"><span class="pre">.gitolite.rc</span></tt>，使其包含如下配置：</p>
+<div class="highlight-python"><div class="highlight"><pre>$GL_WILDREPOS = 1;
+</pre></div>
+</div>
+<p>使用通配符版本库，可以对一组版本库进行授权，非常有效。但是版本库的创建则不像前面介绍的那样，不会在授权文件推送到服务器时创建，而是由拥有版本库创建授权（C）的用户手工进行创建。</p>
+<p>对于用通配符设置的版本库，用<tt class="docutils literal"><span class="pre">C</span></tt>指令指定能够创建此版本库的管理员（拥有创建版本库的授权）。例如：</p>
+<div class="highlight-python"><div class="highlight"><pre>repo ossxp/[a-z].+
+    C                   = jiangxin
+    RW                  = dev1 dev2
+</pre></div>
+</div>
+<p>用户<tt class="docutils literal"><span class="pre">jinagxin</span></tt>可以创建路径符合正则表达式<tt class="docutils literal"><span class="pre">ossxp/[a-z].+</span></tt>的版本库，用户<tt class="docutils literal"><span class="pre">dev1</span></tt>和<tt class="docutils literal"><span class="pre">dev2</span></tt>对版本库具有读写（但是没有强制更新）权限。</p>
+<ul>
+<li><p class="first">本地建库。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mkdir somerepo
+$ cd somerepo
+$ git init
+$ git commit --allow-empty
+</pre></div>
+</div>
+</li>
+<li><p class="first">使用<strong class="command">git remote</strong>指令设置远程版本库。</p>
+<div class="highlight-python"><div class="highlight"><pre>jiangxin$ git remote add origin git@server:ossxp/somerepo.git
+</pre></div>
+</div>
+</li>
+<li><p class="first">运行<strong class="command">git push</strong>完成在服务器端版本库的创建。</p>
+<div class="highlight-python"><div class="highlight"><pre>jiangxin$ git push origin master
+</pre></div>
+</div>
+</li>
+</ul>
+<p>使用该方法创建版本库后，创建者<tt class="docutils literal"><span class="pre">jiangxin</span></tt>的用户ID将被记录在版本库目录下的<tt class="file docutils literal"><span class="pre">gl-creater</span></tt>文件中。该帐号具有对该版本库最高的权限。该通配符版本库的授权指令中如果出现关键字<tt class="docutils literal"><span class="pre">CREATOR</span></tt>将会用创建者的用户ID替换。</p>
+<p>实际上Gitolite的原始实现是通过克隆即可创建版本库。即当克隆一个不存在的、名称匹配通配符版本库的、且拥有创建权限（<tt class="docutils literal"><span class="pre">C</span></tt>），Gitolite会自动在服务器端创建该版本库。但是我认为这不是一个好的实践，会经常因为在克隆时把URL写错，从而导致在服务器端创建垃圾版本库。因此我重新改造了Gitolite通配符版本库创建的实现方法，使用推送操作实现版本库的创建，而克隆一个不存在的版本库会报错、退出。</p>
+</div>
+<div class="section" id="id29">
+<h3>5.4.5.3. 向Gitolite中导入版本库<a class="headerlink" href="#id29" title="永久链接至标题">¶</a></h3>
+<p>在Gitolite搭建时，已经存在并使用的版本库需要导入到Gitolite中。如果只是简单地把这些裸版本库（以<tt class="docutils literal"><span class="pre">.git</span></tt>为后缀不带工作区的版本库）复制到Gitolite的版本库根目录下，针对这些版本库的授权可能不能正常工作。这是因为Gitolite管理的版本库都配置了特定的钩子脚本，以实现基于分支和/或路径的授权，直接拷贝到Gitolite中的版本库没有正确地设置钩子脚本。而且Gitolite还利用版本库中的<tt class="file docutils literal"><span class="pre">gl-creater</span></tt>记录版本库创建者，用<tt class="file docutils literal"><span class="pre">gl-perms</span></tt>记录版本库的自定义授权，而这些也是拷贝过来的版本库不具备的。</p>
+<p>对于少量的版本库，直接修修改<tt class="file docutils literal"><span class="pre">gitolite-admin</span></tt>的授权文件、添加同名的版本库授权、提交并推送，就会在Gitolite服务器端完成同名版本库的初始化。然后在客户端进入到相应版本库的工作区，执行<strong class="command">git push</strong>命令将原有版本库的各个分支和里程碑导入到Gitolite新建的版本库中。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git remote add origin git@server:&lt;repo-name&gt;.git
+$ git push --all  origin
+$ git push --tags origin
+</pre></div>
+</div>
+<p>如果要导入的版本库较多，逐一在客户端执行<strong class="command">git push</strong>操作很繁琐。可以采用下面的方法。</p>
+<ul class="simple">
+<li>确认要导入所有版本库都以裸版本库形式存在（以<tt class="docutils literal"><span class="pre">.git</span></tt>为后缀，无工作区）。</li>
+<li>将要导入的裸版本库复制到Gitolite服务器的版本库根目录中。</li>
+<li>在客户端修改<tt class="docutils literal"><span class="pre">gitolite-admin</span></tt>授权文件，为每个导入的版本库添加授权。</li>
+<li>推送对<tt class="docutils literal"><span class="pre">gitolite-admin</span></tt>版本库的修改，相应版本库的钩子脚本会自动进行设置。</li>
+</ul>
+<p>如果版本库非常多，就连在<tt class="docutils literal"><span class="pre">gitolite-admin</span></tt>的授权文件中添加版本库授权也是难事，还可以采用下面的办法：</p>
+<ul class="simple">
+<li>确认要导入所有版本库都以裸版本库形式存在（以<tt class="docutils literal"><span class="pre">.git</span></tt>为后缀，无工作区）。</li>
+<li>将要导入的裸版本库复制到Gitolite服务器的版本库根目录中。</li>
+<li>在服务器端，为每个导入的裸版本库下添加文件<tt class="file docutils literal"><span class="pre">gl-creater</span></tt>，内容为版本库创建者ID。</li>
+<li>在服务器端运行<strong class="command">gl-setup</strong>程序（无需提供公钥参数），参见Gitolite安装相应章节。</li>
+<li>在客户端修改<tt class="docutils literal"><span class="pre">gitolite-admin</span></tt>授权文件，以通配符版本库形式为导入的版本库进行授权。</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id30">
+<h2>5.4.6. 对Gitolite的改进<a class="headerlink" href="#id30" title="永久链接至标题">¶</a></h2>
+<p>Gitolite托管在GitHub上，任何人都可以基于原作者Sitaramc的工作进行定制。我对Gitolite的定制版本在<a class="reference external" href="http://github.com/ossxp-com/gitolite">http://github.com/ossxp-com/gitolite</a>， 包含的扩展和改进有：</p>
+<ul>
+<li><p class="first">通配符版本库的创建方式和授权。</p>
+<p>原来的实现是克隆即创建（克隆者需要被授予<tt class="docutils literal"><span class="pre">C</span></tt>的权限）。同时还要通过另外的授权语句为用户设置<tt class="docutils literal"><span class="pre">RW</span></tt>权限，否则创建者没有读和写权限。</p>
+<p>新的实现是通过推送创建版本库（推送者需要被授予<tt class="docutils literal"><span class="pre">C</span></tt>权限）。不必再为创建者赋予<tt class="docutils literal"><span class="pre">RW</span></tt>等权限，创建者自动具有对版本库最高的授权。</p>
+</li>
+<li><p class="first">避免通配符版本库的误判。</p>
+<p>若将通配符版本库误判为普通版本库名称，会导致在服务器端创建错误的版本库。新的设计可以在通配符版本库的正则表达式之前添加<tt class="docutils literal"><span class="pre">^</span></tt>或之后添加<tt class="docutils literal"><span class="pre">$</span></tt>字符避免误判。</p>
+</li>
+<li><p class="first">改变默认配置。</p>
+<p>默认安装即支持通配符版本库。</p>
+</li>
+<li><p class="first">版本库重定向。</p>
+<p>Gitosis的一个很重要的功能——版本库名称重定向，没有在Gitolite中实现。我为Gitolite增加了这个功能。</p>
+<p>在Git服务器架设的初期，版本库的命名可能非常随意，例如redmine的版本库直接放在根下：<tt class="file docutils literal"><span class="pre">redmine-0.9.x.git</span></tt>、<tt class="file docutils literal"><span class="pre">redmine-1.0.x.git</span></tt>，...随着redmine项目越来越复杂，可能就需要将其放在子目录下进行管理，例如放到<tt class="file docutils literal"><span class="pre">ossxp/redmine/</span></tt>目录下。只需要在Gitolite的授权文件中添加下面一行<tt class="docutils literal"><span class="pre">map</span></tt>语句，就可以实现版本库名称的重定向。使用旧地址的用户不必重新检出，可以继续使用。</p>
+<div class="highlight-python"><div class="highlight"><pre>map (redmine.*) = ossxp/redmine/$1
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="id31">
+<h2>5.4.7. Gitolite功能拓展<a class="headerlink" href="#id31" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id32">
+<h3>5.4.7.1. 版本库镜像<a class="headerlink" href="#id32" title="永久链接至标题">¶</a></h3>
+<p>Git版本库控制系统往往并不需要设计特别的容灾备份，因为每一个Git用户就是一个备份。但是下面的情况，就很有必要考虑容灾了。</p>
+<ul class="simple">
+<li>Git版本库的使用者很少（每个库可能只有一个用户）。</li>
+<li>版本库克隆只限制在办公区并且服务器也在办公区内（所有鸡蛋都在一个篮子里）。</li>
+<li>Git版本库采用集中式的应用模型，需要建立双机热备（以便在故障出现时，实现快速的服务器切换）。</li>
+</ul>
+<p>可以在两台或多台安装了Gitolite服务的服务器之间实现版本库的镜像。数据镜像的最小单位为版本库，对于任意一个Git版本库可以选择在其中一个服务器上建立主版本库（只能有一个主版本库），在其他服务器上建立的为镜像库。镜像库只接受来自主版本库的数据同步而不接受来自用户的推送。</p>
+<div class="section" id="id33">
+<h4>5.4.7.1.1. Gitolite服务器命名<a class="headerlink" href="#id33" title="永久链接至标题">¶</a></h4>
+<p>首先要为每一台服务器架设Gitolite服务，并建议所有的服务器上Gitolite服务都架设在同一用户（如<tt class="docutils literal"><span class="pre">git</span></tt>）之下。如果Gitolite服务安装到不同的用户账号下，就必需通过文件<tt class="file docutils literal"><span class="pre">~/.ssh/config</span></tt>建立SSH别名，以便能够使用正确的用户名连接服务器。</p>
+<p>接下来为每个服务器设置一个名称，服务器之间数据镜像时就使用各自的名称进行连接。假设我们要配置的两个Gitolite服务器的其中一个名为<tt class="docutils literal"><span class="pre">server1</span></tt>，另一个名为<tt class="docutils literal"><span class="pre">server2</span></tt>。</p>
+<p>打开<tt class="docutils literal"><span class="pre">server1</span></tt>上Gitolite的配置文件<tt class="file docutils literal"><span class="pre">~/.gitolite.rc</span></tt>，进行如下设置：</p>
+<div class="highlight-python"><div class="highlight"><pre>$GL_HOSTNAME = &#39;serer1&#39;;
+$GL_GITCONFIG_KEYS = &quot;gitolite.mirror.*&quot;;
+</pre></div>
+</div>
+<ul>
+<li><p class="first">设置<tt class="docutils literal"><span class="pre">$GL_HOSTNAME</span></tt>为本服务器的别名，如<tt class="docutils literal"><span class="pre">serer1</span></tt>。</p>
+</li>
+<li><p class="first">设量<tt class="docutils literal"><span class="pre">$GL_GITCONFIG_KEYS</span></tt>以便允许在Gitolite授权文件中为版本库动态设置配置变量。</p>
+<p>例如本例设置了<tt class="docutils literal"><span class="pre">GL_GITCONFIG_KEYS</span></tt>为<tt class="docutils literal"><span class="pre">gitolite.mirror.*</span></tt>后，允许在<tt class="docutils literal"><span class="pre">gitolite-admin</span></tt>管理库的<tt class="file docutils literal"><span class="pre">conf/gitolite.conf</span></tt>中用<tt class="docutils literal"><span class="pre">config</span></tt>指令对版本库添加配置变量。</p>
+<div class="highlight-python"><div class="highlight"><pre>repo testing
+      config gitolite.mirror.master       =   &quot;server1&quot;
+      config gitolite.mirror.slaves       =   &quot;server2 server3&quot;
+</pre></div>
+</div>
+</li>
+</ul>
+<p>同样对<tt class="docutils literal"><span class="pre">server2</span></tt>进行设置，只不过将<tt class="docutils literal"><span class="pre">$GL_HOSTNAME</span></tt>设置为<tt class="docutils literal"><span class="pre">serer2</span></tt>。</p>
+</div>
+<div class="section" id="id34">
+<h4>5.4.7.1.2. 服务器之间的公钥认证<a class="headerlink" href="#id34" title="永久链接至标题">¶</a></h4>
+<p>接下来每一个服务器为Gitolite的安装用户创建公钥/私钥对。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sudo su - git
+$ ssh-keygen
+</pre></div>
+</div>
+<p>然后把公钥拷贝到其他服务器上，并以本服务器名称命名。例如：</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">server1</span></tt>上创建的公钥复制到<tt class="docutils literal"><span class="pre">server2</span></tt>上，命名为<tt class="file docutils literal"><span class="pre">server1.pub</span></tt>备用。</li>
+<li><tt class="docutils literal"><span class="pre">server2</span></tt>上创建的公钥复制到<tt class="docutils literal"><span class="pre">server1</span></tt>上，命名为<tt class="file docutils literal"><span class="pre">server2.pub</span></tt>备用。</li>
+</ul>
+<p>再运行<strong class="command">gl-tool</strong>设置其他服务器到本服务器上的公钥认证。例如在<tt class="docutils literal"><span class="pre">server1</span></tt>上执行命令：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ gl-tool add-mirroring-peer server2.pub
+</pre></div>
+</div>
+<p>当完成上述设置后，就可以从一个服务器发起到另外服务器的SSH连接，连接过程无需口令认证并显示相关信息。例如从<tt class="docutils literal"><span class="pre">server1</span></tt>发起到<tt class="docutils literal"><span class="pre">server2</span></tt>的连接如下：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ssh git@server2 info
+Hello server1, I am server2
+</pre></div>
+</div>
+</div>
+<div class="section" id="id35">
+<h4>5.4.7.1.3. 配置版本库镜像<a class="headerlink" href="#id35" title="永久链接至标题">¶</a></h4>
+<p>做了前面的准备工作后，就可以开始启用版本库镜像了。下面通过一个示例介绍如何建立版本库镜像，将服务器<tt class="docutils literal"><span class="pre">server1</span></tt>上的版本库<tt class="docutils literal"><span class="pre">testing</span></tt>要镜像到服务器<tt class="docutils literal"><span class="pre">server2</span></tt>上。</p>
+<p>首先要修改<tt class="docutils literal"><span class="pre">server1</span></tt>和<tt class="docutils literal"><span class="pre">server2</span></tt>的Gitolite管理库<tt class="docutils literal"><span class="pre">gitolite-admin</span></tt>，为<tt class="docutils literal"><span class="pre">testing</span></tt>版本库添加配置变量，如下：</p>
+<div class="highlight-python"><div class="highlight"><pre>repo    testing
+        config gitolite.mirror.master = &quot;server1&quot;
+        config gitolite.mirror.slaves = &quot;server2&quot;
+</pre></div>
+</div>
+<p>两个服务器<tt class="docutils literal"><span class="pre">server1</span></tt>和<tt class="docutils literal"><span class="pre">server2</span></tt>都要做出同样的修改，提交改动并推送到服务器上。当推送完成，两个服务器上的<tt class="docutils literal"><span class="pre">testing</span></tt>版本库的<tt class="file docutils literal"><span class="pre">config</span></tt>就会被更新，包含类似如下的设置：</p>
+<div class="highlight-python"><div class="highlight"><pre>[gitolite &quot;mirror&quot;]
+        master = server1
+        slaves = server2
+</pre></div>
+</div>
+<p>当向服务器<tt class="docutils literal"><span class="pre">server1</span></tt>的<tt class="docutils literal"><span class="pre">testing</span></tt>版本库推送新的提交时，就会自动同步到<tt class="docutils literal"><span class="pre">server2</span></tt>上。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git push git@server1:testing.git master
+[master c0b097a] test
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 185 bytes, done.
+Total 1 (delta 0), reused 0 (delta 0)
+remote: (29781&amp;) server1 ==== (testing) ===&gt; server2
+To git@server1:testing.git
+   d222699..c0b097a  master -&gt; master
+</pre></div>
+</div>
+<p>如果需要将服务器<tt class="docutils literal"><span class="pre">server1</span></tt>上所有版本库，包括<tt class="docutils literal"><span class="pre">gitolite-admin</span></tt>版本库都同步到<tt class="docutils literal"><span class="pre">server2</span></tt>上，不必对版本库逐一设置，可以采用下面的简便方法。</p>
+<p>修改<tt class="docutils literal"><span class="pre">server1</span></tt>和<tt class="docutils literal"><span class="pre">server2</span></tt>的Gitolite管理版本库<tt class="docutils literal"><span class="pre">gitolite-admin</span></tt>，在配置文件<tt class="file docutils literal"><span class="pre">conf/gitolite.conf</span></tt>最开始插入如下设置。</p>
+<div class="highlight-python"><div class="highlight"><pre>repo   @all
+    config gitolite.mirror.master = &quot;server1&quot;
+    config gitolite.mirror.slaves = &quot;server2&quot;
+</pre></div>
+</div>
+<p>然后分别提交并推送。要说明的是<tt class="docutils literal"><span class="pre">gitolite-admin</span></tt>版本库此时尚未建立同步，直到服务器<tt class="docutils literal"><span class="pre">server1</span></tt>的<tt class="docutils literal"><span class="pre">gitolite-admin</span></tt>版本库推送新的提交，才开始<tt class="docutils literal"><span class="pre">gitolite-admin</span></tt>版本库的同步。</p>
+<p>也可以在<tt class="docutils literal"><span class="pre">server1</span></tt>服务器端执行命令开始同步。例如：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ gl-mirror-shell request-push gitolite-admin
+</pre></div>
+</div>
+<p>Gitolite官方版本在版本库同步时有个局限，要求在镜像服务器上必需事先存在目标版本库并正确设置了<tt class="docutils literal"><span class="pre">gitolite.mirror.*</span></tt>参数，才能同步成功。例如允许用户自行创建的通配符版本库，必需在主服务器上和镜像服务器上分别创建，之后版本库同步才能正常执行。我在GitHub上的Gitolite分支项目提交了一个补丁解决了这个问题。</p>
+<p>关于Gitolite版本库镜像的更详悉资料，参见<a class="reference external" href="http://sitaramc.github.com/git">http://sitaramc.github.com/git</a>
+olite/doc/mirroring.html。</p>
+</div>
+</div>
+<div class="section" id="gitwebgit-daemon">
+<h3>5.4.7.2. Gitweb和Git daemon支持<a class="headerlink" href="#gitwebgit-daemon" title="永久链接至标题">¶</a></h3>
+<p>Gitolite和git-daemon的整合很简单，就是由Gitolite创建的版本库会在版本库目录中创建一个空文件<tt class="file docutils literal"><span class="pre">git-daemon-export-ok</span></tt>。</p>
+<p>Gitolite和Gitweb的整合则提供了两个方面的内容。一个是可以设置版本库的描述信息，用于在Gitweb的项目列表页面中显示。另外一个是自动生成项目的列表文件供Gitweb参考，避免Gitweb使用低效率的目录递归搜索查找Git版本库列表。</p>
+<p>可以在授权文件中设定版本库的描述信息，并在gitolite-admin管理库更新时创建到版本库的<tt class="file docutils literal"><span class="pre">description</span></tt>文件中。</p>
+<div class="highlight-python"><div class="highlight"><pre>reponame = &quot;one line of description&quot;
+reponame &quot;owner name&quot; = &quot;one line of description&quot;
+</pre></div>
+</div>
+<ul class="simple">
+<li>第1行，为名为<tt class="docutils literal"><span class="pre">reponame</span></tt>的版本库设定描述。</li>
+<li>第2行，同时设定版本库的属主名称，以及一行版本库描述。</li>
+</ul>
+<p>对于通配符版本库，使用这种方法则很不现实。Gitolite提供了SSH子命令供版本库的创建者使用。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ssh git@server setdesc path/to/repos.git
+$ ssh git@server getdesc path/to/repos.git
+</pre></div>
+</div>
+<ul class="simple">
+<li>第一条指令用于设置版本库的描述信息。</li>
+<li>第二条指令显示版本库的描述信息。</li>
+</ul>
+<p>至于生成Gitweb所用的项目列表文件，默认创建在用户主目录下的<tt class="file docutils literal"><span class="pre">projects.list</span></tt>文件中。对于所有启用Gitweb的<tt class="docutils literal"><span class="pre">[repo]</span></tt>小节所设定的版本库，以及通过版本库描述隐式声明的版本库都会加入到版本库列表中。</p>
+</div>
+<div class="section" id="id36">
+<h3>5.4.7.3. 其他功能拓展和参考<a class="headerlink" href="#id36" title="永久链接至标题">¶</a></h3>
+<p>Gitolite源码的<tt class="file docutils literal"><span class="pre">doc</span></tt>目录包含用markdown标记语言编写的手册，可以直接在Github上查看。也可以使用markdown的文档编辑工具将<tt class="file docutils literal"><span class="pre">.mkd</span></tt>文档转换为 html 文档。转换工具很多，有<strong class="command">rdiscount</strong>、<strong class="command">Bluefeather</strong>、<strong class="command">Maruku</strong>、<strong class="command">BlueCloth2</strong>，等等。</p>
+<p>在这些参考文档中，用户可以发现Gitolite包含的更多的小功能或秘籍，包括：</p>
+<ul>
+<li><p class="first">版本库设置。</p>
+<p>授权文件通过<strong class="command">git config</strong>指令为版本库进行附加的设置。例如：</p>
+<div class="highlight-python"><div class="highlight"><pre>repo gitolite
+    config hooks.mailinglist = gitolite-commits@example.tld
+    config hooks.emailprefix = &quot;[gitolite] &quot;
+    config foo.bar = &quot;&quot;
+    config foo.baz =
+</pre></div>
+</div>
+</li>
+<li><p class="first">多级管理员授权。</p>
+<p>可以为不同的版本库设定管理员，操作<tt class="docutils literal"><span class="pre">gitolite-admin</span></tt>库的部分授权文件。具体参考：<tt class="file docutils literal"><span class="pre">doc/5-delegation.mkd</span></tt>。</p>
+</li>
+<li><p class="first">自定义钩子脚本。</p>
+<p>因为Gitolite占用了几个钩子脚本，如果需要对同名钩子进行扩展，Gitolite提供了级联的钩子脚本，将定制放在级联的钩子脚本里。</p>
+<p>例如：通过自定义<tt class="docutils literal"><span class="pre">gitolite-admin</span></tt>的<tt class="file docutils literal"><span class="pre">post-update.secondary</span></tt>脚本，以实现无须登录服务器即可更改<tt class="file docutils literal"><span class="pre">.gitolite.rc</span></tt>文件。具体参考：<tt class="file docutils literal"><span class="pre">doc/shell-games.mkd</span></tt>。</p>
+<p>关于钩子脚本的创建和维护，具体参考：<tt class="file docutils literal"><span class="pre">doc/hook-propagation.mkd</span></tt>。</p>
+</li>
+<li><p class="first">管理员自定义命令。</p>
+<p>通过设置配置文件中的<tt class="docutils literal"><span class="pre">$GL_ADC_PATH</span></tt>变量，在远程执行该目录下的可执行脚本，如：<strong class="command">rmrepo</strong>。</p>
+<p>具体参考：<tt class="file docutils literal"><span class="pre">doc/admin-defined-commands.mkd</span></tt>。</p>
+</li>
+<li><p class="first">创建匿名的SSH认证。</p>
+<p>允许匿名用户访问Gitolite提供的Git服务。即建立一个和Gitolite服务器端帐号同ID同主目录的用户，设置其的特定shell，并且允许口令为空。</p>
+<p>具体参考：<tt class="file docutils literal"><span class="pre">doc/mob-branches.mkd</span></tt>。</p>
+</li>
+<li><p class="first">可以通过名为<tt class="docutils literal"><span class="pre">&#64;all</span></tt>的版本库进行全局的授权。</p>
+<p>但是不能在<tt class="docutils literal"><span class="pre">&#64;all</span></tt>版本库中对<tt class="docutils literal"><span class="pre">&#64;all</span></tt>用户组进行授权。</p>
+</li>
+<li><p class="first">版本库或用户非常之多（几千个）的时候，需要使用<strong>大配置文件</strong>模式。</p>
+<p>因为Gitolite的授权文件要先编译才能生效，而编译文件的大小是和用户及版本库数量的乘积成正比的。选择大配置文件模式则不对用户组和版本库组进行扩展。</p>
+<p>具体参考：<tt class="file docutils literal"><span class="pre">doc/big-config.mkd</span></tt>。</p>
+</li>
+<li><p class="first">授权文件支持包含语句，可以将授权文件分成多个独立的单元。</p>
+</li>
+<li><p class="first">执行外部命令，如<strong class="command">rsync</strong>。</p>
+</li>
+<li><p class="first">Subversion版本库支持。</p>
+<p>如果在同一个服务器上以<tt class="docutils literal"><span class="pre">svn+ssh</span></tt>方式运行Subversion服务器，可以使用同一套公钥，同时为用户提供Git和Subversion服务。</p>
+</li>
+<li><p class="first">HTTP口令文件维护。通过名为<tt class="docutils literal"><span class="pre">htpasswd</span></tt>的SSH子命令实现。</p>
+</li>
+</ul>
+<hr class="docutils" />
+<table class="docutils footnote" frame="void" id="id37" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>对Gitolite的各项改动采用了Topgit特性分支进行维护，以便和上游最新代码同步更新。还要注意如果在Gitolite使用中发现问题，要区分是由上游软件引发的还是我的改动引起的，而不要把我的错误算在Sitaram头上。</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id38" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>公钥的内容为一整行，因排版需要做了换行处理。</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id39" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id15">[3]</a></td><td>可以为版本库设置配置变量<tt class="docutils literal"><span class="pre">gitolite-options.deny-repo</span></tt>在第一个授权阶段启用禁用规则检查。</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id40" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[4]</td><td>参见第8部分41.2.2“Git模板”相关内容。</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="050-gitosis.html" title="5.5. Gitosis服务架设"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="030-ssh.html" title="5.3. 使用SSH协议"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >5. 搭建Git服务器</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

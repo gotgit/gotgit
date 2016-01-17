@@ -1,0 +1,163 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>8.1.2. 文件名大小写问题 &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="up" title="8.1. 跨平台操作Git" href="010-git-cross-os.html" />
+    <link rel="next" title="8.1.3. 换行符问题" href="040-eol.html" />
+    <link rel="prev" title="8.1.1. 字符集问题" href="020-git-charset.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="040-eol.html" title="8.1.3. 换行符问题"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="020-git-charset.html" title="8.1.1. 字符集问题"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >8. Git杂谈</a> &raquo;</li>
+          <li><a href="010-git-cross-os.html" accesskey="U">8.1. 跨平台操作Git</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="020-git-charset.html"
+                        title="上一章">8.1.1. 字符集问题</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="040-eol.html"
+                        title="下一章">8.1.3. 换行符问题</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/08-git-misc/030-case-insensitive.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>8.1.2. 文件名大小写问题<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>Linux、Solaris、BSD及其他类Unix操作系统使用的是大小写敏感的文件系统，而Windows和Mac OS X（默认安装）的文件系统则是大小写不敏感的文件系统。即用文件名<tt class="file docutils literal"><span class="pre">README</span></tt>、<tt class="file docutils literal"><span class="pre">readme</span></tt>以及<tt class="file docutils literal"><span class="pre">Readme</span></tt>（混合大小写）进行访问，在Linux等操作系统上访问的是不同的文件，而在Windows和Mac OS X上则指向同一个文件。换句话说，两个不同文件<tt class="file docutils literal"><span class="pre">README</span></tt>和<tt class="file docutils literal"><span class="pre">readme</span></tt>在Linux等操作系统上可以共存，而在Windows和Mac OS X上，这两个文件只能同时存在一个，另一个会被覆盖，因为在大小写不敏感的操作系统看来，这两个文件是同一个文件。</p>
+<p>如果在Linux上为Git版本库添加了两个文件名仅大小写不同的文件（文件内容各不相同），如<tt class="file docutils literal"><span class="pre">README</span></tt>和<tt class="file docutils literal"><span class="pre">readme</span></tt>。当推送到服务器的共享版本库上，并在文件名大小写不敏感的操作系统中克隆或同步时，就会出现问题。例如在Windows和Mac OS X平台上执行<strong class="command">git clone</strong>后，在本地工作区中出现两个同名文件中的一个，而另外一个文件被覆盖，这就会导致Git对工作区中文件造成误判，在提交时会导致文件内容被破坏。</p>
+<p>当一个项目存在跨平台开发的情况时，为了避免这类问题的发生，在一个文件名大小写敏感的操作系统（如Linux）中克隆版本库后，应立即对版本库进行如下设置，让版本库的行为好似对文件大小写不敏感。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git config core.ignorecase true
+</pre></div>
+</div>
+<p>Windows和Mac OS X在初始化版本库或者克隆一个版本库时，会自动在版本库中包含配置变量<tt class="docutils literal"><span class="pre">core.ignorecase</span></tt>为<tt class="docutils literal"><span class="pre">true</span></tt>的设置，除非版本库不是通过克隆而是直接从Linux上拷贝而来。</p>
+<p>当版本库包含了<tt class="docutils literal"><span class="pre">core.ignorecase</span></tt>为<tt class="docutils literal"><span class="pre">true</span></tt>的配置后，文件名在添加时便被唯一确定。如果之后修改文件内容及修改文件名中字母的大小写，再提交亦不会改变文件名。如果对添加文件时设置的文件名的大小写不满意，需要对文件重命名，对于Linux来说非常简单。例如执行下面的命令就可以将<tt class="file docutils literal"><span class="pre">changelog</span></tt>文件的文件名修改为<tt class="file docutils literal"><span class="pre">ChangeLog</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git mv changelog ChangeLog
+$ git commit
+</pre></div>
+</div>
+<p>但是对于Windows和Mac OS X，却不能这么操作，因为会拒绝这样的重命名操作：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git mv changelog ChangeLog
+fatal: destination exists, source=changelog, destination=ChangeLog
+</pre></div>
+</div>
+<p>而需要像下面这样，先将文件重命名为另外的一个名称，再执行一次重命名改回正确的文件名，如下：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git mv changelog non-exist-filename
+$ git mv non-exist-filename ChangeLog
+$ git commit
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="040-eol.html" title="8.1.3. 换行符问题"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="020-git-charset.html" title="8.1.1. 字符集问题"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >8. Git杂谈</a> &raquo;</li>
+          <li><a href="010-git-cross-os.html" >8.1. 跨平台操作Git</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

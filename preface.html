@@ -1,0 +1,274 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>前言 &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/underscore.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <script type="text/javascript" src="static/translations.js"></script>
+    <link rel="top" title="GotGit" href="index.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li><a href="index.html">GotGit</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">前言</a><ul>
+<li><a class="reference internal" href="#id5">本书的组织</a></li>
+<li><a class="reference internal" href="#id7">适用读者</a></li>
+<li><a class="reference internal" href="#id8">排版约定</a></li>
+<li><a class="reference internal" href="#id9">在线资源</a></li>
+<li><a class="reference internal" href="#id10">致谢</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/preface.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>前言<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>版本控制是管理数据变更的艺术，无论数据变更是来自同一个人，还是来自不同的人（一个团队）。版本控制系统不但要忠实地记录数据的每一次变更，还要能够帮助还原任何历史改动，以及实现团队的协同工作等。Git就是版本控制系统中的佼佼者。</p>
+<p>我对版本控制系统的兴趣源自于我在个人知识管理中的实践，其核心就是撰写可维护的文档，并保存于版本控制系统中。可维护文档的格式可以是DocBook、FreeMind、reStructuredText等。我甚至还对FreeMind加以改造以便让其文档格式更适合于版本控制系统，这就是我的第一个开源实践：托管于SourceForge上的FreeMind-MMX项目<a class="footnote-reference" href="#id11" id="id2">[1]</a>。文档的书写格式问题解决之后，就是文档的存储问题了。通过版本控制系统，很自然地就可以实现对文档历史版本的保存，但是如何避免因为版本控制系统瘫痪而导致数据的丢失呢？Git用其崭新的分布式的版本控制设计提供了最好的解决方案。使用Git，我的知识库不再只有唯一的版本库与之对应，而是可以通过克隆操作分发到不同的磁盘或主机上，克隆的版本库之间通过推送（PUSH）和拉回（PULL）等操作进行同步，数据安全得到了极大的提升。在版本控制系统的忠实呵护下，我的知识库中关于Git的FreeMind脑图日积月累变得越来越详实，越来越清晰，最终成为这本书的雏形。</p>
+<p>版本控制还能决定项目的成败，甚至是公司的生死，此言不虚。我在推广开源项目管理工具和为企业提供咨询服务的过程中，看到过太多的团队因为版本控制系统管理的混乱，导致项目延期、修正的Bug重现、客户的问题不能在代码中定位，无论他们使用的是什么版本控制系统，开源的或是商业的。这是因为传统的集中式版本控制系统不能有效地管理分支和进行分支间合并。集中管理的版本库只有唯一的分支命名空间，需要专人管理从而造成分支创建的不自由。分支间的合并要么因为缺乏追踪导致重复合并、引发严重冲突，要么因为蹩脚的设计导致分支合并时缺乏效率和陷阱重重。Git用其灵活的设计让项目摆脱分支管理的梦魇。</p>
+<p>我的公司也经历过代码管理的生死考验。因为公司的开发模式主要是基于开源软件的二次开发，最早在使用SVN（Subversion）做版本控制时，很自然地使用了SVN卖主分支模型来管理代码。随着增加和修改的代码越来越多，和开源软件上游的偏离也越来越远，当上游有新版本发布时，最早可能只用几个小时就可以将改动迁移过去，但是如果对上游的改动多达几十甚至上百处时，迁移的过程就会异常痛苦，基本上和重新做一遍差不多。那时似乎只有一个选择：不再和上游合并，不再追踪上游的改动，而这与公司的价值观“发动全球智慧为客户创造价值”相违背。迷茫之中，分布式版本控制系统飘然而至，原来版本控制还可以这么做。</p>
+<p>我最先尝试的分布式版本控制系统是Hg（Mercurial），尤其是当发现Hg和MQ（Hg的一个插件）这一对儿宝贝的时候，我如获至宝。逐渐地，公司的版本库都迁移到了Hg上。但随着新的开发人员的加入，问题就出现了，即一个人使用Hg和MQ都很好，但多个人使用则会出现难以协同的问题。于是我们大胆地采用了Git，并在实践中结合Topgit等工具进行代码的管理。再一次，也许是最后一次，我们的代码库迁移到了Git。</p>
+<p>最早认识分布式版本控制，源自于我们看到了众多开源项目的版本控制系统大迁移，这场迁移还在进行中。</p>
+<ul class="simple">
+<li>MoinMoin是我们关注的一个开源的维基软件，2006年，它的代码库从SVN迁移到Hg。<a class="footnote-reference" href="#id12" id="id3">[2]</a></li>
+<li>Mailman同样是我们关注的一个开源邮件列表软件。2007年，它的代码库从SVN迁移到Bazaar。<a class="footnote-reference" href="#id13" id="id4">[3]</a></li>
+<li>Linux采用Git做版本控制系统（一点都不奇怪，因为Git就是Linus Torvalds开发的）。</li>
+<li>Android是最为流行的开源项目之一，因为潜在的市场巨大，已经吸引越来越多的开发者进入这个市场，而Android就是用Git维护的。</li>
+</ul>
+<p>当开源软件纷纷倒向分布式版本控制系统大旗（尤其是Git）的时候，各个公司也在行动了，尤其是涉及异地团队协同，以及Android核心代码定制开发的公司。对于一些因保守而不敢向Git靠拢的公司，Git也可以派上用场，这是因为Git可以和现在大多数公司部署的SVN很好地协同，即公司的服务器是SVN，开发者的客户端则使用Git。相信随着Git的普及，以及公司代码管理观念上的改进，会有更多的公司拥抱Git。</p>
+<div class="section" id="id5">
+<h2>本书的组织<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>本书正文共分为8篇，一共41章，还包括附录。</p>
+<p>第1篇是Git的概览，共3章。第1章介绍了版本控制的历史。第2章用10来个小例子介绍了Git的一些闪亮特性，期待这些特性能够让您爱上Git。第3章则介绍Git在三种主要的平台上的安装和使用。本书的写作过程中，70%的时间使用的是Debian Linux操作系统，Linux用户可以毫无障碍地完成本书列举的所有相关操作。在2010年年底，当得知有出版社肯以稿酬支持本书的首印后，我向妻子阿巧预支了未来的部分稿费购买了我的第一台MacBook Pro，于是本书就有了较为详实的Mac OS X下Git的安装和使用，以及在本书第4篇第22章介绍的Topgit在Mac OS X上的部署和改进。在本书的编辑和校对过程中因为要使用Word格式的文稿，所以本书后期的很多工作是在运行于VirtualBox下的Windows虚拟机中完成的，即使是使用运行于资源受限的虚拟机中的Cygwin，Git依然完美地完成了工作。</p>
+<p>第2篇和第3篇详细介绍了Git的基本操作，是本书的基础和核心，篇幅大约占据了全书的40%。这两篇的内容架构实际上是我在进行SVN培训时就已经形成的习惯，即以“独奏”指代一个人的版本控制所要讲述的知识点，以“和声”指代团队版本控制涉及的话题。在第2篇“Git独奏”中将Git的设计原理穿插在各章之中，因为唯有了解
+真相（Git原理），才有可能自由（掌握Git）。在第3篇“Git和声”中，介绍团队版本控制必须掌握的里程碑和分支等概念，以及如何解决合并中遇到的冲突。</p>
+<p>第4篇细致地讲解了在实际的工作中Git的使用模式。除了传统的集中式和分布式使用模式之外，第22章还介绍了Topgit在定制开发中的应用，这也是我公司使用Git最主要的模式。这一章还讲解了我对Topgit所做的部分改进，对相关改进的介绍最
+早出现在我公司的博客上<a class="footnote-reference" href="#id14" id="id6">[4]</a>。第23-25章介绍了多版本库协同的不同方法，其中第25章介绍的一个独辟蹊径的解决方案是由Android项目引入的名为repo的工具实现的，我对其进行的改造可以让这个工具能够脱离Gerrit代码审核服务器，直接操作Git服务器。第26章介绍了git-svn这一工具，该工具不但可以实现SVN版本库到Git版本库的迁移，还可以实现将Git作为客户端向SVN提交。</p>
+<p>第5篇介绍Git服务器的架设。本篇是全书最早开始撰写的部分，这是因为我给客户做的Git培训讲义的相关部分不够详细，应客户要求对Gitolite等服务器架设撰写了详细的管理员手册，即本书的第30章。第32章介绍了Android项目在Git管理上的又一大创造，即Gerrit，它实现了一个独特的集中式Git版本库管理模型。</p>
+<p>第6篇讲解了Git版本库的迁移。其中第34章详细介绍了CVS版本库到Git版本库的迁移，其迁移过程也可以作为CVS到SVN迁移的借鉴。本篇还介绍了SVN和Hg版本库到Git的迁移。对于其他类型的版本库，介绍了一个通用的需要编程来实现的方法。在本篇的最后还介绍了一个Git版本库整理的利器，可以理解为一个Git库转换为另外一个Git库的方法。</p>
+<p>第7篇是关于Git的其他应用，其主要部分是介绍我在etckeeper启发下开发的一款备份工具Gistore，该工具可以运行于Linux和Mac OS X下。</p>
+<p>第8篇是Git杂谈。其中第40章的内容可供跨平台的项目组借鉴。第41章介绍了一些前面没有涉及的Git相关功能和特性，缺少这些相关内容会有损于杨福川编辑为本书所取的宏大的书名。</p>
+<p>第9篇是附录。首先介绍了完整的Git命令索引，然后分别介绍了CVS、SVN、Hg与Git之间的比较和命令对照，对于有着其他版本控制系统使用经验的用户，这一部分可供参考。</p>
+</div>
+<div class="section" id="id7">
+<h2>适用读者<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<p>这本书适合所有翻开它的人，因为我知道这本书在书店里一定被放在计算机图书专柜。</p>
+<ol class="arabic simple">
+<li>为数据同步困扰的“电脑人”</li>
+</ol>
+<p>困扰“电脑人”的一个问题是，有太多的数据需要长久保存，有太多的电脑设备需要数据同步。可能有的人会说：“像Dropbox一样的网盘可以帮助我呀”。是的，云存储就是在技术逐渐成熟之后应运而生的产品，但是依然解决不了如下几个问题：多个设备上同时修改造成的冲突；冗余数据传输造成的带宽瓶颈；没有实现真正的、完全的历史变更数据备份。具体参见本书第7篇第39章的内容。</p>
+<p>Git可以在数据同步上做得更好，甚至只须借助小小的U盘，就可以实现多台电脑数据同步，并且支持自动的冲突解决。只要阅读本书第1篇和第2篇，就能轻易掌握相关的操作，实现数据的版本控制和同步。</p>
+<ol class="arabic simple" start="2">
+<li>学习计算机课程的学生</li>
+</ol>
+<p>我非常后悔没有在学习编程的第一天就开始使用版本控制，很多还在学校时写的一些小程序和函数库都丢失了。在使用CVS和SVN对个人数据进行版本控制之后，才开始把每一天的变更历史都保留了下来。Git在这方面可以比CVS和SVN等做得更好。</p>
+<p>在阅读完本书的前3篇掌握了Git的基础之后，可以阅读第5篇第33章的内容，通过GitHub或类似的服务提供商建立自己的版本库托管，为自己的数据找一个安全的家。</p>
+<ol class="arabic simple" start="3">
+<li>程序员</li>
+</ol>
+<p>使用Git会让程序员有更多的时间休息，因为可以更快地完成工作。分布式版本控制让每一个程序员都在本地拥有一个完整的版本库，所以几乎所有操作都能够脱离网络执行而不受带宽的限制。加之使用了智能协议，让版本库间的同步不但减少了数据传输量，还能显示完成进度。</p>
+<p>Git会帮助程序员打开进入开源软件的大门，进而开阔视野，提升水平，增加择业的砝码。看看使用Git作为版本控制的开源软件吧：Linux kernel、Android、Debian、Fedora、GNOME、KDevelop、jQuery、Prototype、PostgreSQL、Ruby on Rails……不胜枚举。还有，不要忘了所有的SVN版本库都可以用Git方式更好地访问。</p>
+<p>作为一个程序员，团队协同能力必不可少，本书第3篇应该作为学习的重点。</p>
+<ol class="arabic simple" start="4">
+<li>Android程序员</li>
+</ol>
+<p>如果您是谷歌Android项目的参与者，尤其是驱动开发和核心开发的参与者，必然要接触Git、repo和Gerrit。对于只是偶尔参考一下Android核心代码的Android应用开发人员，也需要对repo有深入的理解，这样才不致于每次为同步代码而花掉一天的时间。</p>
+<p>repo是Android为了解决Git多版本库管理问题而设计的工具，在本书第4篇第25章有详细介绍。</p>
+<p>Gerrit是谷歌为了避免因分布式开发造成项目分裂而创造的工具，打造了Android独具一格的集中式管理模式，在本书第5篇第32章有详细介绍。</p>
+<p>即使是非Android项目，也可以使用这两款工具为自己的项目服务。我还为repo写了几个新的子命令以实现脱离Gerrit提交，让repo拥有更广泛的应用领域。</p>
+<ol class="arabic simple" start="5">
+<li>定制开发程序员</li>
+</ol>
+<p>当一个公司的软件产品需要针对不同的用户进行定制开发时，就需要在一个版本库中建立大量的特性分支，使用SVN的分支管理远不如用Git的分支管理那么自然和方便。还有一个领域就是对第三方代码进行维护。当使用SVN进行版本控制时，最自然的选择是卖主分支，而一旦定制开发愈加深入和上游的偏离也越大，和上游代码的合并也将越来越令人痛苦不堪。</p>
+<p>第4篇第22章会介绍Topgit这一杀手级的工具，是这个领域最佳的解决方案。</p>
+<ol class="arabic simple" start="6">
+<li>SVN用户</li>
+</ol>
+<p>商业软件的研发团队因为需要精细的代码授权不会轻易更换现有的SVN版本控制系统，这种情况下Git依然大有作为。无论是出差在外，或是在家办公，或是开发团队分处异地，都会遇到SVN版本控制服务器无法访问或速度较慢的情况。这时git-svn这一工具会将Git和SVN完美地结合在一起，既严格遵守了SVN的授权规定，又可以自如地进行本地提交，当能够连接到SVN服务器时，可以悠闲地喝着绿茶，等待一次性批量提交的完成。</p>
+<p>我有几个项目（pySvnManager、Freemind-MMX）托管在SourceForge的SVN服务器上，现在都是先通过git-svn将其转化为本地的Git库，然后再使用的。以这样的方式访问历史数据、比较代码或提交代码再也不会因为网速太慢而望眼欲穿了。</p>
+<p>本书第4篇第26章会向您详细介绍Git和SVN的互操作。</p>
+<ol class="arabic simple" start="7">
+<li>管理员</li>
+</ol>
+<p>Git很大程度上减轻了管理员的负担：分支的创建和删除不再需要管理员统一管理，因为作为分布式版本控制系统每一个克隆就是一个分支，每一个克隆都拥有独立的分支命名空间；管理员也不再需要对版本库的备份操心，因为每一个项目成员都拥有一个备份。管理员也不必担心有人在服务器上篡改版本库，因为Git版本库的每一个对象（提交、文件等）都使用SHA1哈希值进行完整性校验，任何对历史数据的篡改都会因为对后续提交产生的连锁反应而原形毕露。</p>
+<p>本书第7篇第37章介绍了一款我开发的基于Git的备份工具，让Linux系统的数据备份易如反掌。对于版本控制管理员，本书第5篇介绍的Git服务器搭建，以及第6篇介绍的版本库迁移，会为管理员的日常维护工作提供指引。</p>
+<ol class="arabic simple" start="8">
+<li>开发经理</li>
+</ol>
+<p>作为开发经理，您一定要对代码分支有深刻的理解，本书第18章中的代码管理之殇，不知是否能引起您的共鸣。为了能在各种情况下恰当地管理开发团队，第4篇
+Git协同模型是项目经理关注的重点。您的团队是否存在着跨平台开发，或者潜在着跨平台开发的可能？本书第8篇第40章也是开发经理应当关注的章节。</p>
+</div>
+<div class="section" id="id8">
+<h2>排版约定<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<p>本书使用下列排版格式约定：</p>
+<ol class="arabic">
+<li><p class="first">命令输出及示例代码</p>
+<p>执行一条Git命令及其输出的示例如下：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git --version
+git version 1.7.4
+</pre></div>
+</div>
+</li>
+<li><p class="first">提示符（$）</p>
+<p>命令前面的<tt class="docutils literal"><span class="pre">$</span></tt>符号代表命令提示符，有时为了表示命令是在不同的主机上执行的，还在提示符的前面添加用户名或主机名。例如：</p>
+<div class="highlight-python"><div class="highlight"><pre>client1$ hostname
+client1
+</pre></div>
+</div>
+</li>
+<li><p class="first">等宽字体（<tt class="docutils literal"><span class="pre">Constant</span> <span class="pre">width</span></tt>）</p>
+<p>用于表示代码、命令输出等内容。</p>
+</li>
+<li><p class="first">等宽粗体（<tt class="docutils literal"><span class="pre">**Constant</span> <span class="pre">width</span> <span class="pre">bold**</span></tt>）</p>
+<p>用于表示由用户手工输入的内容。</p>
+</li>
+<li><p class="first">等宽斜体（<tt class="docutils literal"><span class="pre">*Constant</span> <span class="pre">width</span> <span class="pre">italic*</span></tt>）</p>
+<p>用于表示正文中出现的命令、参数、文件名、函数名等。</p>
+</li>
+<li><p class="first">占位符（<tt class="docutils literal"><span class="pre">&lt;Constant</span> <span class="pre">width&gt;</span></tt>）</p>
+<p>用尖括号扩起来的内容，表示命令中或代码中的占位符。用户应当用实际值对其替换。</p>
+</li>
+</ol>
+</div>
+<div class="section" id="id9">
+<h2>在线资源<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li>官方网站：<a class="reference external" href="http://www.worldhello.net/gotgit/">http://www.worldhello.net/gotgit/</a></li>
+<li>新浪微博：<a class="reference external" href="http://weibo.com/gotgit/">http://weibo.com/gotgit/</a></li>
+</ul>
+</div>
+<div class="section" id="id10">
+<h2>致谢<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h2>
+<p>感谢Linus Torvalds、Junio Hamano和所有Git项目的贡献者，是他们带给我们崭新的版本控制使用体验。</p>
+<p>本书能够出版要感谢华章出版社，华章对中文原创计算机图书的信任让每一个中国的计算机从业者都有可能一圆出书的梦想。做为一个新人，拿着一个新的选题，遇到同样充满激情的编辑，我无疑是幸运的，他就是华章的杨福川编辑。甚至没有向我要样章（那时本书已经过半），在看过目录之后，就冒险和我签约，他的激情让我不敢懈怠。同样要感谢华章的王晓菲编辑，她的耐心和细致让我吃惊，也正是因为她的工作能够让本书的行文更加流畅，让本书能够更快的问世。还有华章的张少波编辑，感谢她在接到我冒失的打给华章的电话后，帮我分析选题并推荐给其他编辑。</p>
+<p>本书的内容是由我的Git培训讲义发展而来，再此感谢朝歌数码的蒋宗贵，是他的鼓励和鞭策让我完善了本书服务器架设的相关章节。还要感谢王谚宁，正是通过她的团队才让我认识了Android，这才有了本书关于repo和Gerrit的相关章节。</p>
+<p>感谢我的群英汇的同事们，尤其要感谢王胜，正是因为我们在使用Topgit 0.7版本时遇到了严重的冲突，才使我下定决心研究Git。</p>
+<p>本书的技术审校得到了中国科学院软件研究所的张先轶，比蒙科技的宋伯润和杨致伟，摩博科技的熊军，以及王胜等人的帮助，感谢他们为本书提供的宝贵意见和建议。来自台湾的William Wu纠正了本书对Hg认识上的偏颇，让本书附录中的相关内容更加准确和中立，在此向他表示感谢。</p>
+<p>因为写书亏欠家人很多，直到最近才发现女儿小雪是多么的希望拥有一台儿童自行车。感谢妻子阿巧对我的耐心和对家庭的担当。感谢岳父、岳母几年来对小雪和我们整个家庭的照顾，让我没有后顾之忧。还要感谢我的父母和妹妹，他们对我事业的支持和鼓励是我前进的动力。在我写书的同时，老爸正在富春江畔代表哈尔滨电机厂监督发电机组的制造并也在写一本监造手册方面的书，抱歉老爸，我先完成了。:)</p>
+<table class="docutils footnote" frame="void" id="id11" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[1]</a></td><td><a class="reference external" href="http://sourceforge.net/projects/freemind-mmx/">http://sourceforge.net/projects/freemind-mmx/</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id12" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[2]</a></td><td><a class="reference external" href="http://moinmo.in/NewVCS">http://moinmo.in/NewVCS</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id13" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[3]</a></td><td><a class="reference external" href="http://wiki.list.org/display/DEV/Home">http://wiki.list.org/display/DEV/Home</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id14" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id6">[4]</a></td><td><a class="reference external" href="http://blog.ossxp.com/">http://blog.ossxp.com/</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="总目录"
+             >索引</a></li>
+        <li><a href="index.html">GotGit</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

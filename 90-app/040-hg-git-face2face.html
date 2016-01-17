@@ -1,0 +1,426 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>9.4. Git和Hg面对面 &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="up" title="9. 附录" href="index.html" />
+    <link rel="prev" title="9.3. Git和SVN面对面" href="030-svn-git-face2face.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="030-svn-git-face2face.html" title="9.3. Git和SVN面对面"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">9. 附录</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">9.4. Git和Hg面对面</a><ul>
+<li><a class="reference internal" href="#id1">9.4.1. 面对面访谈录</a></li>
+<li><a class="reference internal" href="#hggit">9.4.2. Hg和Git命令对照</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="030-svn-git-face2face.html"
+                        title="上一章">9.3. Git和SVN面对面</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/90-app/040-hg-git-face2face.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="githg">
+<h1>9.4. Git和Hg面对面<a class="headerlink" href="#githg" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id1">
+<h2>9.4.1. 面对面访谈录<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p><strong>Git：你好Hg，我发现我们真的很像。</strong></p>
+<p>Hg：是啊，人们把我们都归类为分布式版本控制工具，所以我们之间的相似度，要比和CVS、SVN的相似度高的多了。</p>
+<p>Hg：我是用Python和少部分的C语言实现的，你呢？</p>
+<p><strong>Git：我的核心当然使用C语言了，因为Linus Torvalds最爱用C语言了。我的很多命令还使用了Shell脚本和Perl语言开发，Python用的很少。</strong></p>
+<p>Hg：大量的使用C语言，是你的性能比我高的原因么？</p>
+<p><strong>Git：当然不是了，你不也在核心模块使用C语言了么？问题的关键在于我的对象库设计的非常优秀。你不要忘了我是谁发明的，可是大名鼎鼎的Linux之父Linus Tolvars，他对Linux文件系统可是再熟悉不过的了，所以他能够以文件系统开发者的视角实现我的核心。</strong></p>
+<p><strong>Git：还有我在网络传输过程中非常的直观，可以看到实时的进度显示，这也是你所没有的。</strong></p>
+<p>Hg：是啊，非常的惭愧。当克隆一个比较大的Hg版本库时，会出现假死状态，用户不知道克隆操作的进展。对了，你为什么能够实现实时的进度显示呢？</p>
+<p><strong>Git：之所以我能够有这样的实现，是因为我使用了“智能协议”。在网络传输的各自一端都启用了相应的辅助程序，实现差异传输及传输进度的计算和显示。</strong></p>
+<p>Hg：我有一个特点是SVN用户非常喜欢的，就是我的顺序数字版本号。</p>
+<p><strong>Git：你的顺序数字版本号只是在本地版本库中有效的。也就是说，你不能像SVN那样将顺序数字版本号作为项目本身的版本号，因为换做另外的一个版本库克隆，那个数字版本号就会不一样了。</strong></p>
+<p>Hg：我觉得你的暂存区（stage）的概念太古怪了。我提交的时候，改动的文件会直接提交而不需要什么注册到暂存区的操作。</p>
+<p><strong>Git：让读者来作评判吧。如果读者读过本书的第2篇，一定会说Git的暂存区帅呆了。</strong></p>
+<p>Hg：我只允许用户对最近的一次提交进行回滚撤销，而你（Git）怎么能允许用户撤销任意多次历史提交呢？那样安全么？</p>
+<p><strong>Git：这就是的我对象库和引用设计的强大之处，我可以使用:command:`git reset`命令将工作分支进行任意的重置，丢弃任意多的历史。至于安全性，我的重置命令有一个保险，就是reflog，我随时可以参照reflog的记录来弥补错误的重置。</strong></p>
+<p>Hg：我们的<strong class="command">revert</strong>命令好像不同？</p>
+<p><strong>Git：你Hg的:command:`hg revert`命令和SVN的:command:`svn revert`命令相似，是取消本地修改，用原始拷贝覆盖。你的这个操作在我这里是用:command:`git checkout`命令实现的。我也有一个:command:`git revert`命令，但是这个命令是针对某个历史提交进行反向操作，以取消该历史提交的改动的。</strong></p>
+<p>Hg：我执行日志查看能够看到文本显示的分支图，你呢？</p>
+<p><strong>Git：我需要在日志显示时添加参数，即用命令:command:`git log &#8211;graph`。我支持通过建立别名实现简洁的调用，例如建立一个名为glog的别名。</strong></p>
+<p><strong>Git：我听说你Hg不支持分支？</strong></p>
+<p>Hg：坦白的说，是的。我虽然也有分支命令，但是分支不是一个独立显示的提交空间，而是各个分支都显示在一起，相当于在版本库中同时拥有多个头，选择哪个分支就相当于把帽子戴在哪个头上面而已。所以我尽量要求我的用户使用克隆来当做分支。</p>
+<p><strong>Git：这也就是为什么使用Hg作为项目的版本控制工具，要为每一个分支创建一个单独的版本库的原因吧。实际上我的每一个克隆的版本库也相当于独立的分支，但是因为我有强大的分支功能，因此很多用户还没有意识到。使用Topgit的用户就应该使用版本库克隆做为Topgit本身的分支管理。</strong></p>
+<p><strong>Git：还有，因为我对分支的完整支持，使得我可以和SVN很好的协同工作。我可以将整个SVN转换为本地的Git库，但是你Hg，显然只能每次转换一个分支。</strong></p>
+<p>Hg：是的，我要向你多学习。</p>
+</div>
+<div class="section" id="hggit">
+<h2>9.4.2. Hg和Git命令对照<a class="headerlink" href="#hggit" title="永久链接至标题">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="39%" />
+<col width="44%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">比较项目</th>
+<th class="head">Hg命令</th>
+<th class="head">Git命令</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td rowspan="5">URL</td>
+<td><a class="reference external" href="http://host/path/to/repos">http://host/path/to/repos</a></td>
+<td>git://host/path/to/repos.git</td>
+</tr>
+<tr class="row-odd"><td><a class="reference external" href="ssh://user&#64;host/path/to/repos">ssh://user&#64;host/path/to/repos</a></td>
+<td><a class="reference external" href="ssh://user&#64;host/path/to/repos.git">ssh://user&#64;host/path/to/repos.git</a></td>
+</tr>
+<tr class="row-even"><td><a class="reference external" href="file:///path/to/repos">file:///path/to/repos</a></td>
+<td><a class="reference external" href="mailto:user&#37;&#52;&#48;host">user<span>&#64;</span>host</a>:path/to/repos.git</td>
+</tr>
+<tr class="row-odd"><td>/path/to/repos</td>
+<td><a class="reference external" href="file:///path/to/repos.git">file:///path/to/repos.git</a></td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td>/path/to/repos.git</td>
+</tr>
+<tr class="row-odd"><td>配置</td>
+<td><div class="first last highlight-python"><div class="highlight"><pre>[ui]
+username = Firstname Lastname &lt;mail@addr&gt;
+</pre></div>
+</div>
+</td>
+<td><div class="first last highlight-python"><div class="highlight"><pre>[user]
+    name = Firstname Lastname
+    email = mail@addr
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td>版本库初始化</td>
+<td>hg init &lt;path&gt;</td>
+<td>git init [&#8211;bare] &lt;path&gt;</td>
+</tr>
+<tr class="row-odd"><td>版本库克隆</td>
+<td>hg clone &lt;url&gt; &lt;path&gt;</td>
+<td>git clone &lt;url&gt; &lt;path&gt;</td>
+</tr>
+<tr class="row-even"><td>获取版本库更新</td>
+<td>hg pull &#8211;update</td>
+<td>git pull</td>
+</tr>
+<tr class="row-odd"><td>更新至历史版本</td>
+<td>hg update -r &lt;rev&gt;</td>
+<td>git checkout &lt;commit&gt;</td>
+</tr>
+<tr class="row-even"><td>更新到指定日期</td>
+<td>hg update -d &lt;date&gt;</td>
+<td>git checkout HEAD&#64;&#8217;{&lt;date&gt;}&#8217;</td>
+</tr>
+<tr class="row-odd"><td>更新至最新提交</td>
+<td>hg update</td>
+<td>git checkout master</td>
+</tr>
+<tr class="row-even"><td>切换至里程碑</td>
+<td>hg update -r &lt;tag&gt;</td>
+<td>git checkout &lt;tag&gt;</td>
+</tr>
+<tr class="row-odd"><td>切换至分支</td>
+<td>hg update -r &lt;branch&gt;</td>
+<td>git checkout &lt;branch&gt;</td>
+</tr>
+<tr class="row-even"><td>还原文件/强制覆盖</td>
+<td>hg update -C &lt;path&gt;</td>
+<td>git checkout &#8211; &lt;path&gt;</td>
+</tr>
+<tr class="row-odd"><td>添加文件</td>
+<td>hg add &lt;path&gt;</td>
+<td>git add &lt;path&gt;</td>
+</tr>
+<tr class="row-even"><td>删除文件</td>
+<td>hg rm &lt;path&gt;</td>
+<td>git rm &lt;path&gt;</td>
+</tr>
+<tr class="row-odd"><td>添加及删除文件</td>
+<td>hg addremove</td>
+<td>git add -A</td>
+</tr>
+<tr class="row-even"><td>移动文件</td>
+<td>hg mv &lt;old&gt; &lt;new&gt;</td>
+<td>git mv &lt;old&gt; &lt;new&gt;</td>
+</tr>
+<tr class="row-odd"><td>撤消添加、删除等操作</td>
+<td>hg revert &lt;path&gt;</td>
+<td>git reset &#8211; &lt;path&gt;</td>
+</tr>
+<tr class="row-even"><td>清除未跟踪文件</td>
+<td>hg clean</td>
+<td>git clean -fd</td>
+</tr>
+<tr class="row-odd"><td>获取文件历史版本</td>
+<td>hg cat -r&lt;rev&gt; &lt;path&gt; &gt; &lt;output&gt;</td>
+<td>git show &lt;commit&gt;:&lt;path&gt; &gt; &lt;output&gt;</td>
+</tr>
+<tr class="row-even"><td>反删除文件</td>
+<td>hg add &lt;path&gt;</td>
+<td>git add &lt;path&gt;</td>
+</tr>
+<tr class="row-odd"><td rowspan="3">工作区差异比较</td>
+<td rowspan="3">hg diff</td>
+<td>git diff</td>
+</tr>
+<tr class="row-even"><td>git diff &#8211;cached</td>
+</tr>
+<tr class="row-odd"><td>git diff HEAD</td>
+</tr>
+<tr class="row-even"><td>版本间差异比较</td>
+<td>hg diff -r &lt;rev1&gt; -r &lt;rev2&gt; &lt;path&gt;</td>
+<td>git diff &lt;commit1&gt; &lt;commit2&gt; &#8211; &lt;path&gt;</td>
+</tr>
+<tr class="row-odd"><td>查看工作区状态</td>
+<td>hg status</td>
+<td>git status -s</td>
+</tr>
+<tr class="row-even"><td>提交</td>
+<td>hg commit -m &#8220;&lt;msg&gt;&#8221;</td>
+<td>git commit -a -m &#8220;&lt;msg&gt;&#8221;</td>
+</tr>
+<tr class="row-odd"><td>推送提交</td>
+<td>hg push</td>
+<td>git push</td>
+</tr>
+<tr class="row-even"><td rowspan="2">显示提交日志</td>
+<td>hg log | less</td>
+<td>git log</td>
+</tr>
+<tr class="row-odd"><td>hg glog | less</td>
+<td>git log &#8211;graph</td>
+</tr>
+<tr class="row-even"><td>逐行追溯</td>
+<td>hg annotate</td>
+<td>git annotate, git blame</td>
+</tr>
+<tr class="row-odd"><td rowspan="3">显示里程碑/分支</td>
+<td>hg tags</td>
+<td>git tag</td>
+</tr>
+<tr class="row-even"><td>hg branches</td>
+<td>git branch</td>
+</tr>
+<tr class="row-odd"><td>hg heads</td>
+<td>git show-ref</td>
+</tr>
+<tr class="row-even"><td>创建里程碑</td>
+<td>hg tag [-m &#8220;&lt;msg&gt;&#8221;] [-r &lt;rev&gt;] &lt;tagname&gt;</td>
+<td>git tag [-m &#8220;&lt;msg&gt;&#8221;] &lt;tagname&gt; [&lt;commit&gt;]</td>
+</tr>
+<tr class="row-odd"><td>删除里程碑</td>
+<td>hg tag &#8211;remove &lt;tagname&gt;</td>
+<td>git tag -d &lt;tagname&gt;</td>
+</tr>
+<tr class="row-even"><td rowspan="2">创建分支</td>
+<td rowspan="2">hg branch &lt;branch&gt;</td>
+<td>git branch &lt;branch&gt; &lt;commit&gt;</td>
+</tr>
+<tr class="row-odd"><td>git checkout -b &lt;branch&gt; &lt;commit&gt;</td>
+</tr>
+<tr class="row-even"><td>删除分支</td>
+<td>hg commit &#8211;close-branch</td>
+<td>git branch -d &lt;branch&gt;</td>
+</tr>
+<tr class="row-odd"><td rowspan="2">导出项目文件</td>
+<td rowspan="2">hg archive -r &lt;rev&gt; &lt;output.tar.gz&gt;</td>
+<td>git archive -o &lt;output.tar&gt; &lt;commit&gt;</td>
+</tr>
+<tr class="row-even"><td>git archive -o &lt;output.tar&gt; &#8211;remote=&lt;url&gt; &lt;commit&gt;</td>
+</tr>
+<tr class="row-odd"><td>反转提交</td>
+<td>hg backout &lt;rev&gt;</td>
+<td>git revert &lt;commit&gt;</td>
+</tr>
+<tr class="row-even"><td>提交拣选</td>
+<td>-</td>
+<td>git cherry-pick &lt;commit&gt;</td>
+</tr>
+<tr class="row-odd"><td>分支合并</td>
+<td>hg merge &lt;rev&gt;</td>
+<td>git merge &lt;commit&gt;</td>
+</tr>
+<tr class="row-even"><td>变基</td>
+<td>hg rebase</td>
+<td>git rebase</td>
+</tr>
+<tr class="row-odd"><td rowspan="2">冲突解决</td>
+<td>hg resolve &#8211;tool=&lt;tool&gt;</td>
+<td>git mergetool</td>
+</tr>
+<tr class="row-even"><td>hg resolve -m &lt;path&gt;</td>
+<td>git add &lt;path&gt;</td>
+</tr>
+<tr class="row-odd"><td>更改提交说明</td>
+<td>Hg + MQ</td>
+<td>git commit &#8211;amend</td>
+</tr>
+<tr class="row-even"><td>撤消最后一次提交</td>
+<td>hg rollback</td>
+<td>git reset [ &#8211;soft | &#8211;hard ] HEAD^</td>
+</tr>
+<tr class="row-odd"><td>撤消多次提交</td>
+<td>Hg + MQ</td>
+<td>git reset [ &#8211;soft | &#8211;hard ] HEAD~&lt;n&gt;</td>
+</tr>
+<tr class="row-even"><td>撤消历史提交</td>
+<td>Hg + MQ</td>
+<td>git rebase -i &lt;commit&gt;^</td>
+</tr>
+<tr class="row-odd"><td>启动Web浏览</td>
+<td>hg serve</td>
+<td>git instaweb</td>
+</tr>
+<tr class="row-even"><td>二分查找</td>
+<td>hg bisect</td>
+<td>git bisect</td>
+</tr>
+<tr class="row-odd"><td>内容搜索</td>
+<td>hg grep</td>
+<td>git grep</td>
+</tr>
+<tr class="row-even"><td>提交导出补丁文件</td>
+<td>hg export</td>
+<td>git format-patch</td>
+</tr>
+<tr class="row-odd"><td>工作区根目录</td>
+<td>hg root</td>
+<td>git rev-parse &#8211;show-toplevel</td>
+</tr>
+<tr class="row-even"><td rowspan="6">杂项</td>
+<td>.hgignore 文件</td>
+<td>.gitignore 文件</td>
+</tr>
+<tr class="row-odd"><td>pager 扩展</td>
+<td>内置分页器</td>
+</tr>
+<tr class="row-even"><td>color 扩展</td>
+<td>color.* 配置变量</td>
+</tr>
+<tr class="row-odd"><td>mq 扩展</td>
+<td>StGit, Topgit</td>
+</tr>
+<tr class="row-even"><td>graphlog 扩展</td>
+<td>git log &#8211;graph</td>
+</tr>
+<tr class="row-odd"><td>hgk 扩展</td>
+<td>gitk</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="030-svn-git-face2face.html" title="9.3. Git和SVN面对面"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >9. 附录</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

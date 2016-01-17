@@ -1,0 +1,1632 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>3.4. Git分支 &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="up" title="3. Git和声" href="index.html" />
+    <link rel="next" title="3.5. 远程版本库" href="050-git-remote.html" />
+    <link rel="prev" title="3.3. Git里程碑" href="030-git-tag.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="050-git-remote.html" title="3.5. 远程版本库"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="030-git-tag.html" title="3.3. Git里程碑"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">3. Git和声</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3.4. Git分支</a><ul>
+<li><a class="reference internal" href="#id1">3.4.1. 代码管理之殇</a><ul>
+<li><a class="reference internal" href="#id2">3.4.1.1. 发布分支</a></li>
+<li><a class="reference internal" href="#id3">3.4.1.2. 特性分支</a></li>
+<li><a class="reference internal" href="#id4">3.4.1.3. 卖主分支</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5">3.4.2. 分支命令概述</a></li>
+<li><a class="reference internal" href="#hello-world">3.4.3. Hello World开发计划</a></li>
+<li><a class="reference internal" href="#id6">3.4.4. 基于特性分支的开发</a><ul>
+<li><a class="reference internal" href="#user1-getopt">3.4.4.1. 创建分支<tt class="docutils literal"><span class="pre">user1/getopt</span></tt></a></li>
+<li><a class="reference internal" href="#user2-i18n">3.4.4.2. 创建分支<tt class="docutils literal"><span class="pre">user2/i18n</span></tt></a></li>
+<li><a class="reference internal" href="#user1">3.4.4.3. 开发者 user1 完成功能开发</a></li>
+<li><a class="reference internal" href="#id7">3.4.4.4. 将<tt class="docutils literal"><span class="pre">user1/getopt</span></tt>分支合并到主线</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id8">3.4.5. 基于发布分支的开发</a><ul>
+<li><a class="reference internal" href="#id9">3.4.5.1. 创建发布分支</a></li>
+<li><a class="reference internal" href="#id10">3.4.5.2. 开发者user1工作在发布分支</a></li>
+<li><a class="reference internal" href="#user2">3.4.5.3. 开发者user2工作在发布分支</a></li>
+<li><a class="reference internal" href="#id11">3.4.5.4. 开发者user2合并推送</a></li>
+<li><a class="reference internal" href="#id12">3.4.5.5. 发布分支的提交合并到主线</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id13">3.4.6. 分支变基</a><ul>
+<li><a class="reference internal" href="#id14">3.4.6.1. 完成<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>特性分支的开发</a></li>
+<li><a class="reference internal" href="#id15">3.4.6.2. 分支<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>变基</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="030-git-tag.html"
+                        title="上一章">3.3. Git里程碑</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="050-git-remote.html"
+                        title="下一章">3.5. 远程版本库</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/03-git-harmony/040-git-branch.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="git">
+<h1>3.4. Git分支<a class="headerlink" href="#git" title="永久链接至标题">¶</a></h1>
+<p>分支是我们的老朋友了，第2篇中的“第6章 Git对象库”、“第7章 Git重置”和“第8章 Git检出”等章节中，就已经从实现原理上理解了分支。您想必已经知道了分支<tt class="docutils literal"><span class="pre">master</span></tt>的存在方式无非就是在目录<tt class="file docutils literal"><span class="pre">.git/refs/heads</span></tt>下的文件（或称引用）而已。也看到了分支<tt class="docutils literal"><span class="pre">master</span></tt>的指向如何随着提交而变化，如何通过<strong class="command">git reset</strong>命令而重置，以及如何使用<strong class="command">git checkout</strong>命令而检出。</p>
+<p>之前的章节都只用到了一个分支：<tt class="docutils literal"><span class="pre">master</span></tt>分支，而在本章会接触到多个分支。会从应用的角度上介绍分支的几种不同类型：发布分支、特性分支和卖主分支。在本章可以学习到如何对多分支进行操作，如何创建分支，如何切换到其他分支，以及分支之间的合并、变基等。</p>
+<div class="section" id="id1">
+<h2>3.4.1. 代码管理之殇<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>分支是代码管理的利器。如果没有有效的分支管理，代码管理就适应不了复杂的开发过程和项目的需要。在实际的项目实践中，单一分支的单线开发模式还远远不够，因为：</p>
+<ul class="simple">
+<li>成功的软件项目大多要经过多个开发周期，发布多个软件版本。每个已经发布的版本都可能发现bug，这就需要对历史版本进行更改。</li>
+<li>有前瞻性的项目管理，新版本的开发往往是和当前版本同步进行的。如果两个版本的开发都混杂在master分支中，肯定会是一场灾难。</li>
+<li>如果产品要针对不同的客户定制，肯定是希望客户越多越好。如果所有的客户定制都混杂在一个分支中，必定会带来混乱。如果使用多个分支管理不同的定制，但如果管理不善，分支之间定制功能的迁移就会成为头痛的问题。</li>
+<li>即便是所有成员都在为同一个项目的同一个版本进行工作，每个人领受任务却不尽相同，有的任务开发周期会很长，有的任务需要对软件架构进行较大的修改，如果所有人都工作在同一分支中，就会因为过多过频的冲突导致效率低下。</li>
+<li>敏捷开发（不管是极限编程XP还是Scrum或其他）是最有效的项目管理模式，其最有效的一个实践就是快速迭代、每晚编译。如果不能将项目的各个功能模块的开发通过分支进行隔离，在软件集成上就会遭遇困难。</li>
+</ul>
+<div class="section" id="id2">
+<h3>3.4.1.1. 发布分支<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<p><strong>为什么bug没完没了？</strong></p>
+<p>在2006年我接触到一个项目团队，使用Subversion做版本控制。最为困扰项目经理的是刚刚修正产品的一个bug，马上又会接二连三地发现新的bug。在访谈开发人员，询问开发人员是如何修正bug的时候，开发人员的回答让我大吃一惊：“当发现产品出现bug的时候，我要中断当前的工作，把我正在开发的新功能的代码注释掉，然后再去修改bug，修改好就生成一个war包（Java开发网站项目）给运维部门，扔到网站上去。”</p>
+<p>于是我就画了下面的一个图（图18-1），大致描述了这个团队进行bug修正的过程，从中可以很容易地看出问题的端倪。这个图对于Git甚至其他版本库控制系统同样适用。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/branch-release-branch-question.png"><img alt="../images/branch-release-branch-question.png" src="../images/branch-release-branch-question.png" style="width: 668.0px; height: 439.2px;" /></a>
+<p class="caption">图 18-1：没有使用分支导致越改越多的bug</p>
+</div>
+<p>说明：</p>
+<ul class="simple">
+<li>图18-1中的图示①，开发者针对功能1做了一个提交，编号“F1.1”。这时客户报告产品出现了bug。</li>
+<li>于是开发者匆忙地干了起来，图示②显示了该开发者修正bug的过程：将已经提交的针对功能1的代码“F1.1”注释掉，然后提交一个修正bug的提交（编号：fix1）。</li>
+<li>开发者编译出新的产品交给客户，接着开始功能1的开发。图示③显示了开发者针对功能1做出了一个新的提交“F1.2”。</li>
+<li>客户再次发现一个bug。开发者再次开始bug修正工作。</li>
+<li>图示④和图示⑤显示了此工作模式下非常容易在修复一个bug的时候引入新的bug。</li>
+<li>图示④的问题在于开发者注释功能1的代码时，不小心将“fix1”的代码也注释掉了，导致曾经修复的bug在新版本中重现。</li>
+<li>图示⑤的问题在于开发者没有将功能1的代码剔出干净，导致在产品的新版本中引入了不完整和不需要的功能代码。用户可能看到一个新的但是不能使用的菜单项，甚至更糟。</li>
+</ul>
+<p>使用版本控制系统的分支功能，可以避免对已发布的软件版本进行bug修正时引入新功能的代码，或者因误删其他bug修正代码导致已修复问题重现。在这种情况下创建的分支有一个专有的名称：bugfix分支或发布分支（Release Branch）。之所以称为发布分支，是因为在软件新版本发布后经常使用此技术进行软件维护，发布升级版本。</p>
+<p>图18-2演示了如何使用发布分支应对bug修正的问题。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/branch-release-branch-answer.png"><img alt="../images/branch-release-branch-answer.png" src="../images/branch-release-branch-answer.png" style="width: 597.6px; height: 580.8px;" /></a>
+<p class="caption">图 18-2：使用发布分支的bug修正过程</p>
+</div>
+<p>说明：</p>
+<ul class="simple">
+<li>图18-2中的图示②，可以看到开发者创建了一个发布分支（bugfix分支），在分支中提交修正代码“fix1”。注意此分支是自上次软件发布时最后一次提交进行创建的，因此分支中没有包含开发者为新功能所做的提交“F1.1”，是一个“干净”的分支。</li>
+<li>图示③可以看出从发布分支向主线做了一次合并，这是因为在主线上也同样存在该bug，需要在主线上也做出相应的更改。</li>
+<li>图示④，开发者继续开发，针对功能1执行了一个新的提交，编号“F1.2”。这时，客户报告有新的bug。</li>
+<li>继续在发布分支上进行bug修正，参考图示⑤。当修正完成（提交“fix2”）时，基于发布分支创建一个新的软件版本发给客户。不要忘了向主线合并，因为同样的bug可能在主线上也存在。</li>
+</ul>
+<p>关于如何基于一个历史提交创建分支，以及如何在分支之间进行合并，在本章后面的内容中会详细介绍。</p>
+</div>
+<div class="section" id="id3">
+<h3>3.4.1.2. 特性分支<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p><strong>为什么项目一再的拖延？</strong></p>
+<p>有这么一个软件项目，项目已经延期了可是还是看不到一点要完成的样子。最终老板变得有些不耐烦了，说道：“那么就砍掉一些功能吧”。项目经理听闻，一阵眩晕，因为项目经理知道自己负责的这个项目采用的是单一主线开发，要将一个功能从中撤销，工作量非常大，而且可能会牵涉到其他相关模块的变更。</p>
+<p>图18-3就是这个项目的版本库示意图，显然这个项目的代码管理没有使用分支。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/branch-feature-branch-question.png"><img alt="../images/branch-feature-branch-question.png" src="../images/branch-feature-branch-question.png" style="width: 826.0px; height: 284.0px;" /></a>
+<p class="caption">图 18-3：没有使用分支导致项目拖延</p>
+</div>
+<p>说明：</p>
+<ul class="simple">
+<li>图18-3中的图示①，用圆圈代表功能1的历次提交，用三角代替功能2的历次提交。因为所有开发者都在主线上工作，所以提交混杂在一起。</li>
+<li>当老板决定功能2不在这一版本的产品中发布，延期到下一个版本时，功能2的开发者做了一个（或者若干个）反向提交，即图示②中的倒三角（代号为“F2.X”）标识的反向提交，将功能2的所有历史提交全部撤销。</li>
+<li>图示③表示除了功能2外的其他开发继续进行。</li>
+</ul>
+<p>那么负责开发功能2的开发者干什么呢？或者放一个长假，或者在本地开发，与版本库隔离，即不向版本库提交，直到延期的项目终于发布之后再将代码提交。这两种方法都是不可取的，尤其是后一种隔离开发最危险，如果因为病毒感染、文件误删、磁盘损坏，就会导致全部工作损失殆尽。我的项目组就曾经遇到过这样的情况。</p>
+<p>采用分支将某个功能或模块的开发与开发主线独立出来，是解决类似问题的办法，这种用途的分支被称为特性分支（Feature Branch）或主题分支（Topic Branch）。图18-4就展示了如何使用特性分支帮助纠正要延期的项目，协同多用户的开发。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/branch-feature-branch-answer.png"><img alt="../images/branch-feature-branch-answer.png" src="../images/branch-feature-branch-answer.png" style="width: 885.0px; height: 375.0px;" /></a>
+<p class="caption">图 18-4：使用特性分支协同多功能开发</p>
+</div>
+<p>说明：</p>
+<ul class="simple">
+<li>图18-4中的图示①和前面的一样，都是多个开发者的提交混杂在开发主线中。</li>
+<li>图示②是当得知功能2不在此次产品发布中后，功能2的开发者所做的操作。</li>
+<li>首先，功能2的开发者提交一个（或若干个）反向提交，将功能2的相关代码全部撤销。图中倒三角（代号为“F2.X”）的提交就是一个反向提交。</li>
+<li>接着，功能2的开发者从反向提交开始创建一个特性分支。</li>
+<li>最后，功能2的开发者将功能2的历史提交拣选到特性分支上。对于Git可以使用拣选命令<strong class="command">git cherry-pick</strong>。</li>
+<li>图示③中可以看出包括功能2在内的所有功能和模块都继续提交，但是提交的分支各不相同。功能2的开发者将代码提交到特性分支上，其他开发者还提交到主线上。</li>
+</ul>
+<p>那么在什么情况下使用特性分支呢？试验性、探索性的功能开发应该为其建立特性分支。功能复杂、开发周期长（有可能在本次发布中取消）的模块应该为其建立特性分支。会更改软件体系架构，破坏软件集成，或者容易导致冲突、影响他人开发进度的模块，应该为其建立特性分支。</p>
+<p>在使用CVS或Subversion等版本控制系统建立分支时，或者因为太慢（CVS）或者因为授权原因需要找管理员进行操作，非常的不方便。Git的分支管理就方便多了，一是开发者可以在本地版本库中随心所欲地创建分支，二是管理员可以对共享版本库进行设置允许开发者创建特定名称的分支，这样开发者的本地分支可以推送到服务器实现数据的备份。关于Git服务器的分支授权参照本书第5篇的Gitolite服务器架设的相关章节。</p>
+</div>
+<div class="section" id="id4">
+<h3>3.4.1.3. 卖主分支<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>有的项目要引用到第三方的代码模块并且需要对其进行定制，有的项目甚至整个就是基于某个开源项目进行的定制。如何有效地管理本地定制和第三方（上游）代码的变更就成为了一个难题。卖主分支（Vendor Branch）可以部分解决这个难题。</p>
+<p>所谓卖主分支，就是在版本库中创建一个专门和上游代码进行同步的分支，一旦有上游代码发布就检入到卖主分支中。图18-5就是一个典型的卖主分支工作流程。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/branch-vendor-branch.png"><img alt="../images/branch-vendor-branch.png" src="../images/branch-vendor-branch.png" style="width: 417.0px; height: 93.0px;" /></a>
+<p class="caption">图 18-5：卖主分支工作流程</p>
+</div>
+<p>说明：</p>
+<ul class="simple">
+<li>在主线检入上游软件版本1.0的代码。在图中标记为<tt class="docutils literal"><span class="pre">v1.0</span></tt>的提交即是。</li>
+<li>然后在主线上进行定制开发，c1、c2分别代表历次定制提交。</li>
+<li>当上游有了新版本发布，例如2.0版本，就将上游新版本的源代码提交到卖主分支中。图中标记为<tt class="docutils literal"><span class="pre">v2.0</span></tt>的提交即是。</li>
+<li>然后在主线上合并卖主分支上的新提交，合并后的提交显示为<tt class="docutils literal"><span class="pre">M1</span></tt>。</li>
+</ul>
+<p>如果定制较少，使用卖主分支可以工作得很好，但是如果定制的内容非常多，在合并的时候就会遇到非常多的冲突。定制的代码越多，混杂的越厉害，冲突解决就越困难。</p>
+<p>本章的内容尚不能针对复杂的定制开发给出满意的版本控制解决方案，本书第4篇的“第22章 Topgit协同模型”会介绍一个针对复杂定制开发的更好的解决方案。</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>3.4.2. 分支命令概述<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>在Git中分支管理使用命令<strong class="command">git branch</strong>。该命令的主要用法如下：</p>
+<div class="highlight-python"><div class="highlight"><pre>用法1： git branch
+用法2： git branch &lt;branchname&gt;
+用法3： git branch &lt;branchname&gt; &lt;start-point&gt;
+用法4： git branch -d &lt;branchname&gt;
+用法5： git branch -D &lt;branchname&gt;
+用法6： git branch -m &lt;oldbranch&gt; &lt;newbranch&gt;
+用法7： git branch -M &lt;oldbranch&gt; &lt;newbranch&gt;
+</pre></div>
+</div>
+<p>说明：</p>
+<ul>
+<li><p class="first">用法1用于显示本地分支列表。当前分支在输出中会显示为特别的颜色，并用星号 “*” 标识出来。</p>
+</li>
+<li><p class="first">用法2和用法3用于创建分支。</p>
+<p>用法2基于当前头指针（HEAD）指向的提交创建分支，新分支的分支名为<tt class="docutils literal"><span class="pre">&lt;branchname&gt;</span></tt>。</p>
+<p>用法3基于提交<tt class="docutils literal"><span class="pre">&lt;start-point&gt;</span></tt>创建新分支，新分支的分支名为<tt class="docutils literal"><span class="pre">&lt;branchname&gt;</span></tt>。</p>
+</li>
+<li><p class="first">用法4和用法5用于删除分支。</p>
+<p>用法4在删除分支<tt class="docutils literal"><span class="pre">&lt;branchname&gt;</span></tt>时会检查所要删除的分支是否已经合并到其他分支中，否则拒绝删除。</p>
+<p>用法5会强制删除分支<tt class="docutils literal"><span class="pre">&lt;branchname&gt;</span></tt>，即使该分支没有合并到任何一个分支中。</p>
+</li>
+<li><p class="first">用法6和用法7用于重命名分支。</p>
+<p>如果版本库中已经存在名为<tt class="docutils literal"><span class="pre">&lt;newbranch&gt;</span></tt>的分支，用法6拒绝执行重命名，而用法7会强制执行。</p>
+</li>
+</ul>
+<p>下面就通过<tt class="docutils literal"><span class="pre">hello-world</span></tt>项目演示Git的分支管理。</p>
+</div>
+<div class="section" id="hello-world">
+<h2>3.4.3. Hello World开发计划<a class="headerlink" href="#hello-world" title="永久链接至标题">¶</a></h2>
+<p>上一章从Github上检出的<tt class="docutils literal"><span class="pre">hello-world</span></tt>包含了一个C语言开发的应用，现在假设项目<tt class="docutils literal"><span class="pre">hello-world</span></tt>做产品发布，版本号定为1.0，则进行下面的里程碑操作。</p>
+<ul>
+<li><p class="first">为<tt class="docutils literal"><span class="pre">hello-world</span></tt>创建里程碑<tt class="docutils literal"><span class="pre">v1.0</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/user1/workspace/hello-world/
+$ git tag -m &quot;Release 1.0&quot; v1.0
+</pre></div>
+</div>
+</li>
+<li><p class="first">将新建的里程碑推送到远程共享版本库。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git push origin refs/tags/v1.0
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 158 bytes, done.
+Total 1 (delta 0), reused 0 (delta 0)
+Unpacking objects: 100% (1/1), done.
+To file:///path/to/repos/hello-world.git
+ * [new tag]         v1.0 -&gt; v1.0
+</pre></div>
+</div>
+</li>
+</ul>
+<p>到现在为止还没有运行<tt class="docutils literal"><span class="pre">hello-world</span></tt>程序呢，现在就在开发者user1的工作区中运行一下。</p>
+<ul>
+<li><p class="first">进入<tt class="file docutils literal"><span class="pre">src</span></tt>目录，编译程序。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd src
+$ make
+version.h.in =&gt; version.h
+cc    -c -o main.o main.c
+cc -o hello main.o
+</pre></div>
+</div>
+</li>
+<li><p class="first">使用参数<tt class="docutils literal"><span class="pre">--help</span></tt>运行<tt class="docutils literal"><span class="pre">hello</span></tt>程序，可以查看帮助信息。</p>
+<p>说明：hello程序的帮助输出中有一个拼写错误，本应该是<tt class="docutils literal"><span class="pre">--help</span></tt>的地方写成了<tt class="docutils literal"><span class="pre">-help</span></tt>。这是有意为之。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ./hello --help
+Hello world example v1.0
+Copyright Jiang Xin &lt;jiangxin AT ossxp DOT com&gt;, 2009.
+
+Usage:
+    hello
+            say hello to the world.
+
+    hello &lt;username&gt;
+            say hi to the user.
+
+    hello -h, -help
+            this help screen.
+</pre></div>
+</div>
+</li>
+<li><p class="first">不带参数运行，向全世界问候。</p>
+<p>说明：最后一行显示版本为“v1.0”，这显然是来自于新建立的里程碑“v1.0”。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ./hello
+Hello world.
+(version: v1.0)
+</pre></div>
+</div>
+</li>
+<li><p class="first">执行命令的时候，后面添加用户名作为参数，则向该用户问候。</p>
+<p>说明：下面在运行<tt class="docutils literal"><span class="pre">hello</span></tt>的时候，显然出现了一个bug，即用户名中间如果出现了空格，输出的欢迎信息只包含了部分的用户名。这个bug也是有意为之。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ./hello Jiang Xin
+Hi, Jiang.
+(version: v1.0)
+</pre></div>
+</div>
+</li>
+</ul>
+<p><strong>新版本开发计划</strong></p>
+<p>既然1.0版本已经发布了，现在是时候制订下一个版本2.0的开发计划了。计划如下：</p>
+<ul>
+<li><p class="first">多语种支持。</p>
+<p>为<tt class="docutils literal"><span class="pre">hello-world</span></tt>添加多语种支持，使得软件运行的时候能够使用中文或其他本地化语言进行问候。</p>
+</li>
+<li><p class="first">用getopt进行命令行解析。</p>
+<p>对命令行参数解析框架进行改造，以便实现更灵活、更易扩展的命令行处理。在1.0版本中，程序内部解析命令行参数使用了简单的字符串比较，非常不灵活。从源文件<tt class="file docutils literal"><span class="pre">src/main.c</span></tt>中可以看到当前实现的简陋和局限。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git grep -n argv
+main.c:20:main(int argc, char **argv)
+main.c:24:    } else if ( strcmp(argv[1],&quot;-h&quot;) == 0 ||
+main.c:25:                strcmp(argv[1],&quot;--help&quot;) == 0 ) {
+main.c:28:        printf (&quot;Hi, %s.\n&quot;, argv[1]);
+</pre></div>
+</div>
+</li>
+</ul>
+<p>最终决定由开发者user2负责多语种支持的功能，由开发者user1负责用getopt进行命令行解析的功能。</p>
+</div>
+<div class="section" id="id6">
+<h2>3.4.4. 基于特性分支的开发<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<p>有了前面“代码管理之殇”的铺垫，在领受任务之后，开发者user1和user2应该为自己负责的功能创建特性分支。</p>
+<div class="section" id="user1-getopt">
+<h3>3.4.4.1. 创建分支<tt class="docutils literal"><span class="pre">user1/getopt</span></tt><a class="headerlink" href="#user1-getopt" title="永久链接至标题">¶</a></h3>
+<p>开发者user1负责用getopt进行命令行解析的功能，因为这个功能用到<tt class="docutils literal"><span class="pre">getopt</span></tt>函数，于是将这个分支命名为<tt class="docutils literal"><span class="pre">user1/getopt</span></tt>。开发者 user1 使用<strong class="command">git branch</strong>命令创建该特性分支。</p>
+<ul>
+<li><p class="first">确保是在开发者user1的工作区中。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/user1/workspace/hello-world/
+</pre></div>
+</div>
+</li>
+<li><p class="first">开发者user1基于当前HEAD创建分支<tt class="docutils literal"><span class="pre">user1/getopt</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git branch user1/getopt
+</pre></div>
+</div>
+</li>
+<li><p class="first">使用<strong class="command">git branch</strong>创建分支，并不会自动切换。查看当前分支可以看到仍然工作在<tt class="docutils literal"><span class="pre">master</span></tt>分支（用星号 “*” 标识）中。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git branch
+* master
+  user1/getopt
+</pre></div>
+</div>
+</li>
+<li><p class="first">执行<strong class="command">git checkout</strong>命令切换到新分支上。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git checkout user1/getopt
+Switched to branch &#39;user1/getopt&#39;
+</pre></div>
+</div>
+</li>
+<li><p class="first">再次查看分支列表，当前工作分支的标记符（星号）已经落在<tt class="docutils literal"><span class="pre">user1/getopt</span></tt>分支上。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git branch
+  master
+* user1/getopt
+</pre></div>
+</div>
+</li>
+</ul>
+<p><strong>分支的奥秘</strong></p>
+<p>分支实际上是创建在目录<tt class="file docutils literal"><span class="pre">.git/refs/heads</span></tt>下的引用，版本库初始时创建的<tt class="docutils literal"><span class="pre">master</span></tt>分支就是在该目录下。在第2篇“Git重置”的章节中，已经介绍过master分支的实现，实际上这也是所有分支的实现方式。</p>
+<ul>
+<li><p class="first">查看一下目录<tt class="file docutils literal"><span class="pre">.git/refs/heads</span></tt>目录下的引用。</p>
+<p>可以在该目录下看到<tt class="file docutils literal"><span class="pre">master</span></tt>文件，和一个<tt class="file docutils literal"><span class="pre">user1</span></tt>目录。而在<tt class="file docutils literal"><span class="pre">user1</span></tt>目录下是文件<tt class="file docutils literal"><span class="pre">getopt</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ls -F .git/refs/heads/
+master  user1/
+$ ls -F .git/refs/heads/user1/
+getopt
+</pre></div>
+</div>
+</li>
+<li><p class="first">引用文件<tt class="file docutils literal"><span class="pre">.git/refs/heads/user1/getopt</span></tt>记录的是一个提交ID。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cat .git/refs/heads/user1/getopt
+ebcf6d6b06545331df156687ca2940800a3c599d
+</pre></div>
+</div>
+</li>
+<li><p class="first">因为分支<tt class="docutils literal"><span class="pre">user1/getopt</span></tt>是基于头指针HEAD创建的，因此当前该分支和<tt class="docutils literal"><span class="pre">master</span></tt>分支指向是一致的。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cat .git/refs/heads/master
+ebcf6d6b06545331df156687ca2940800a3c599d
+</pre></div>
+</div>
+</li>
+<li><p class="first">当前的工作分支为<tt class="docutils literal"><span class="pre">user1/getopt</span></tt>，记录在头指针文件<tt class="file docutils literal"><span class="pre">.git/HEAD</span></tt>中。</p>
+<p>切换分支命令<strong class="command">git checkout</strong>对文件<tt class="file docutils literal"><span class="pre">.git/HEAD</span></tt>的内容进行更新。可以参照第2篇“第8章 Git检出”的相关章节。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cat .git/HEAD
+ref: refs/heads/user1/getopt
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="user2-i18n">
+<h3>3.4.4.2. 创建分支<tt class="docutils literal"><span class="pre">user2/i18n</span></tt><a class="headerlink" href="#user2-i18n" title="永久链接至标题">¶</a></h3>
+<p>开发者user2要完成多语种支持的工作任务，于是决定将分支定名为<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>。每一次创建分支通常都需要完成以下两个工作：</p>
+<ol class="arabic simple">
+<li>创建分支：执行<strong class="command">git branch &lt;branchname&gt;</strong>命令创建新分支。</li>
+<li>切换分支：执行<strong class="command">git checkout &lt;branchname&gt;</strong>命令切换到新分支。</li>
+</ol>
+<p>有没有简单的操作，在创建分支后立即切换到新分支上呢？有的，Git提供了这样一个命令，能够将上述两条命令所执行的操作一次性完成。用法如下：</p>
+<div class="highlight-python"><div class="highlight"><pre>用法： git checkout -b &lt;new_branch&gt; [&lt;start_point&gt;]
+</pre></div>
+</div>
+<p>即检出命令<strong class="command">git checkout</strong>通过参数<tt class="docutils literal"><span class="pre">-b</span> <span class="pre">&lt;new_branch&gt;</span></tt>实现了创建分支和切换分支两个动作的合二为一。下面开发者user2就使用<strong class="command">git checkout</strong>命令来创建分支。</p>
+<ul>
+<li><p class="first">进入到开发者user2的工作目录，并和上游同步一次。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/user2/workspace/hello-world/
+$ git pull
+remote: Counting objects: 1, done.
+remote: Total 1 (delta 0), reused 0 (delta 0)
+Unpacking objects: 100% (1/1), done.
+From file:///path/to/repos/hello-world
+ * [new tag]         v1.0       -&gt; v1.0
+Already up-to-date.
+</pre></div>
+</div>
+</li>
+<li><p class="first">执行<strong class="command">git checkout -b</strong>命令，创建并切换到新分支<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>上。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git checkout -b user2/i18n
+Switched to a new branch &#39;user2/i18n&#39;
+</pre></div>
+</div>
+</li>
+<li><p class="first">查看本地分支列表，会看到已经切换到<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>分支上了。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git branch
+  master
+* user2/i18n
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="user1">
+<h3>3.4.4.3. 开发者 user1 完成功能开发<a class="headerlink" href="#user1" title="永久链接至标题">¶</a></h3>
+<p>开发者user1开始在<tt class="docutils literal"><span class="pre">user1/getopt</span></tt>分支中工作，重构<tt class="docutils literal"><span class="pre">hello-world</span></tt>中的命令行参数解析的代码。重构时采用<tt class="docutils literal"><span class="pre">getopt_long</span></tt>函数。</p>
+<p>您可以试着更改，不过在<tt class="docutils literal"><span class="pre">hello-world</span></tt>中已经保存了一份改好的代码，可以直接检出。</p>
+<ul>
+<li><p class="first">确保是在user1的工作区中。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/user1/workspace/hello-world/
+</pre></div>
+</div>
+</li>
+<li><p class="first">执行下面的命令，用里程碑<tt class="docutils literal"><span class="pre">jx/v2.0</span></tt>标记的内容（已实现用getopt进行命令行解析的功能）替换暂存区和工作区。</p>
+<p>下面的<strong class="command">git checkout</strong>命令的最后是一个点“.”，因此检出只更改了暂存区和工作区，而没有修改头指针。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/user1/workspace/hello-world/
+$ git checkout jx/v2.0 -- .
+</pre></div>
+</div>
+</li>
+<li><p class="first">查看状态，会看到分支仍保持为<tt class="docutils literal"><span class="pre">user1/getopt</span></tt>，但文件<tt class="file docutils literal"><span class="pre">src/main.c</span></tt>被修改了。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status
+# On branch user1/getopt
+# Changes to be committed:
+#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
+#
+#       modified:   src/main.c
+#
+</pre></div>
+</div>
+</li>
+<li><p class="first">比较暂存区和HEAD的文件差异，可以看到为实现用getopt进行命令行解析功能而对代码的改动。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git diff --cached
+diff --git a/src/main.c b/src/main.c
+index 6ee936f..fa5244a 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -1,4 +1,6 @@
+ #include &lt;stdio.h&gt;
++#include &lt;getopt.h&gt;
++
+ #include &quot;version.h&quot;
+
+ int usage(int code)
+@@ -19,15 +21,44 @@ int usage(int code)
+ int
+ main(int argc, char **argv)
+ {
+-    if (argc == 1) {
++    int c;
++    char *uname = NULL;
++
++    while (1) {
++        int option_index = 0;
++        static struct option long_options[] = {
++            {&quot;help&quot;, 0, 0, &#39;h&#39;},
++            {0, 0, 0, 0}
++        };
+...
+</pre></div>
+</div>
+</li>
+<li><p class="first">开发者user1提交代码，完成开发任务。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git commit -m &quot;Refactor: use getopt_long for arguments parsing.&quot;
+[user1/getopt 0881ca3] Refactor: use getopt_long for arguments parsing.
+ 1 files changed, 36 insertions(+), 5 deletions(-)
+</pre></div>
+</div>
+</li>
+<li><p class="first">提交完成之后，可以看到这时<tt class="docutils literal"><span class="pre">user1/getopt</span></tt>分支和<tt class="docutils literal"><span class="pre">master</span></tt>分支的指向不同了。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-parse user1/getopt master
+0881ca3f62ddadcddec08bd9f2f529a44d17cfbf
+ebcf6d6b06545331df156687ca2940800a3c599d
+</pre></div>
+</div>
+</li>
+<li><p class="first">编译运行<tt class="docutils literal"><span class="pre">hello-world</span></tt>。</p>
+<p>注意输出中的版本号显示。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd src
+$ make clean
+rm -f hello main.o version.h
+$ make
+version.h.in =&gt; version.h
+cc    -c -o main.o main.c
+cc -o hello main.o
+$ ./hello
+Hello world.
+(version: v1.0-1-g0881ca3)
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="id7">
+<h3>3.4.4.4. 将<tt class="docutils literal"><span class="pre">user1/getopt</span></tt>分支合并到主线<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<p>既然开发者user1负责的功能开发完成了，那就合并到开发主线<tt class="docutils literal"><span class="pre">master</span></tt>上吧，这样测试团队（如果有的话）就可以基于开发主线<tt class="docutils literal"><span class="pre">master</span></tt>进行软件集成和测试了。</p>
+<ul>
+<li><p class="first">为将分支合并到主线，首先user1将工作区切换到主线，即<tt class="docutils literal"><span class="pre">master</span></tt>分支。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git checkout master
+Switched to branch &#39;master&#39;
+</pre></div>
+</div>
+</li>
+<li><p class="first">然后执行<strong class="command">git merge</strong>命令以合并<tt class="docutils literal"><span class="pre">user1/getopt</span></tt>分支。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git merge user1/getopt
+Updating ebcf6d6..0881ca3
+Fast-forward
+ src/main.c |   41 ++++++++++++++++++++++++++++++++++++-----
+ 1 files changed, 36 insertions(+), 5 deletions(-)
+</pre></div>
+</div>
+</li>
+<li><p class="first">本次合并非常的顺利，实际上合并后<tt class="docutils literal"><span class="pre">master</span></tt>分支和<tt class="docutils literal"><span class="pre">user1/getopt</span></tt>指向同一个提交。</p>
+<p>这是因为合并前的<tt class="docutils literal"><span class="pre">master</span></tt>分支的提交就是<tt class="docutils literal"><span class="pre">usr1/getopt</span></tt>分支的父提交，所以此次合并相当于分支<tt class="docutils literal"><span class="pre">master</span></tt>重置到<tt class="docutils literal"><span class="pre">user1/getopt</span></tt>分支。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-parse user1/getopt master
+0881ca3f62ddadcddec08bd9f2f529a44d17cfbf
+0881ca3f62ddadcddec08bd9f2f529a44d17cfbf
+</pre></div>
+</div>
+</li>
+<li><p class="first">当前本地<tt class="docutils literal"><span class="pre">master</span></tt>分支比远程共享版本库的<tt class="docutils literal"><span class="pre">master</span></tt>分支领先一个提交。</p>
+<p>可以从状态信息中看到本地分支和远程分支的跟踪关系。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status
+# On branch master
+# Your branch is ahead of &#39;origin/master&#39; by 1 commit.
+#
+nothing to commit (working directory clean)
+</pre></div>
+</div>
+</li>
+<li><p class="first">执行推送操作，完成本地分支向远程分支的同步。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git push
+Counting objects: 7, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 689 bytes, done.
+Total 4 (delta 3), reused 0 (delta 0)
+Unpacking objects: 100% (4/4), done.
+To file:///path/to/repos/hello-world.git
+   ebcf6d6..0881ca3  master -&gt; master
+</pre></div>
+</div>
+</li>
+<li><p class="first">删除<tt class="docutils literal"><span class="pre">user1/getopt</span></tt>分支。</p>
+<p>既然特性分支<tt class="docutils literal"><span class="pre">user1/getopt</span></tt>已经合并到主线上了，那么该分支已经完成了历史使命，可以放心地将其删除。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git branch -d user1/getopt
+Deleted branch user1/getopt (was 0881ca3).
+</pre></div>
+</div>
+</li>
+</ul>
+<p>开发者user2对多语种支持功能有些犯愁，需要多花些时间，那么就先不等他了。</p>
+</div>
+</div>
+<div class="section" id="id8">
+<h2>3.4.5. 基于发布分支的开发<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<p>用户在使用1.0版的<tt class="docutils literal"><span class="pre">hello-word</span></tt>过程中发现了两个错误，报告给项目组。</p>
+<ul>
+<li><p class="first">第一个问题是：帮助信息中出现文字错误。本应该写为“&#8211;help”却写成了“-help”。</p>
+</li>
+<li><p class="first">第二个问题是：当执行<tt class="docutils literal"><span class="pre">hello-world</span></tt>的程序，提供带空格的用户名时，问候语中显示的是不完整的用户名。</p>
+<p>例如执行<strong class="command">./hello Jiang Xin</strong>，本应该输出“<tt class="docutils literal"><span class="pre">Hi,</span> <span class="pre">Jiang</span> <span class="pre">Xin.</span></tt>”，却只输出了“<tt class="docutils literal"><span class="pre">Hi,</span> <span class="pre">Jiang.</span></tt>”。</p>
+</li>
+</ul>
+<p>为了能够及时修正1.0版本中存在的这两个bug，将这两个bug的修正工作分别交给两个开发者user1和user2完成。</p>
+<ul class="simple">
+<li>开发者user1负责修改文字错误的bug。</li>
+<li>开发者user2负责修改显示用户名不完整的bug。</li>
+</ul>
+<p>现在版本库中<tt class="docutils literal"><span class="pre">master</span></tt>分支相比1.0发布时添加了新功能代码，即开发者user1推送的用getopt进行命令行解析相关代码。如果基于<tt class="docutils literal"><span class="pre">master</span></tt>分支对用户报告的两个bug进行修改，就会引入尚未经过测试、可能不稳定的新功能的代码。在之前“代码管理之殇”中介绍的发布分支，恰恰适用于此场景。</p>
+<div class="section" id="id9">
+<h3>3.4.5.1. 创建发布分支<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<p>要想解决在1.0版本中发现的bug，就需要基于1.0发行版的代码创建发布分支。</p>
+<ul>
+<li><p class="first">软件<tt class="docutils literal"><span class="pre">hello-world</span></tt>的1.0发布版在版本库中有一个里程碑相对应。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/user1/workspace/hello-world/
+$ git tag -n1 -l v*
+v1.0            Release 1.0
+</pre></div>
+</div>
+</li>
+<li><p class="first">基于里程碑<tt class="docutils literal"><span class="pre">v1.0</span></tt>创建发布分支<tt class="docutils literal"><span class="pre">hello-1.x</span></tt>。</p>
+<p>注：使用了<strong class="command">git checkout</strong>命令创建分支，最后一个参数<tt class="docutils literal"><span class="pre">v1.0</span></tt>是新分支<tt class="docutils literal"><span class="pre">hello-1.x</span></tt>创建的基准点。如果没有里程碑，使用提交ID也是一样。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git checkout -b hello-1.x v1.0
+Switched to a new branch &#39;hello-1.x&#39;
+</pre></div>
+</div>
+</li>
+<li><p class="first">用<strong class="command">git rev-parse</strong>命令可以看到<tt class="docutils literal"><span class="pre">hello-1.x</span></tt>分支对应的提交ID和里程碑<tt class="docutils literal"><span class="pre">v1.0</span></tt>指向的提交一致，但是和<tt class="docutils literal"><span class="pre">master</span></tt>不一样。</p>
+<p>提示：因为里程碑v1.0是一个包含提交说明的里程碑，因此为了显示其对应的提交ID，使用了特别的记法“<tt class="docutils literal"><span class="pre">v1.0^{}</span></tt>”。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-parse hello-1.x v1.0^{} master
+ebcf6d6b06545331df156687ca2940800a3c599d
+ebcf6d6b06545331df156687ca2940800a3c599d
+0881ca3f62ddadcddec08bd9f2f529a44d17cfbf
+</pre></div>
+</div>
+</li>
+<li><p class="first">开发者user1将分支<tt class="docutils literal"><span class="pre">hello-1.x</span></tt>推送到远程共享版本库，因为开发者user2修改bug时也要用到该分支。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git push origin hello-1.x
+Total 0 (delta 0), reused 0 (delta 0)
+To file:///path/to/repos/hello-world.git
+ * [new branch]      hello-1.x -&gt; hello-1.x
+</pre></div>
+</div>
+</li>
+<li><p class="first">开发者user2从远程共享版本库获取新的分支。</p>
+<p>开发者user2执行<strong class="command">git fetch</strong>命令，将远程共享版本库的新分支<tt class="docutils literal"><span class="pre">hello-1.x</span></tt>复制到本地引用<tt class="docutils literal"><span class="pre">origin/hello-1.x</span></tt>上。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/user2/workspace/hello-world/
+$ git fetch
+From file:///path/to/repos/hello-world
+ * [new branch]      hello-1.x  -&gt; origin/hello-1.x
+</pre></div>
+</div>
+</li>
+<li><p class="first">开发者user2切换到<tt class="docutils literal"><span class="pre">hello-1.x</span></tt>分支。</p>
+<p>本地引用<tt class="docutils literal"><span class="pre">origin/hello-1.x</span></tt>称为远程分支，第19章将专题介绍。该远程分支不能直接检出，而是需要基于该远程分支创建本地分支。第19章会介绍一个更为简单的基于远程分支建立本地分支的方法，本例先用标准的方法建立分支。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git checkout -b hello-1.x origin/hello-1.x
+Branch hello-1.x set up to track remote branch hello-1.x from origin.
+Switched to a new branch &#39;hello-1.x&#39;
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="id10">
+<h3>3.4.5.2. 开发者user1工作在发布分支<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
+<p>开发者user1修改帮助信息中的文字错误。</p>
+<ul>
+<li><p class="first">编辑文件<tt class="file docutils literal"><span class="pre">src/main.c</span></tt>，将“-help”字符串修改为“&#8211;help”。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/user1/workspace/hello-world/
+$ vi src/main.c
+...
+</pre></div>
+</div>
+</li>
+<li><p class="first">开发者user1的改动可以从下面的差异比较中看到。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git diff
+diff --git a/src/main.c b/src/main.c
+index 6ee936f..e76f05e 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -11,7 +11,7 @@ int usage(int code)
+            &quot;            say hello to the world.\n\n&quot;
+            &quot;    hello &lt;username&gt;\n&quot;
+            &quot;            say hi to the user.\n\n&quot;
+-           &quot;    hello -h, -help\n&quot;
++           &quot;    hello -h, --help\n&quot;
+            &quot;            this help screen.\n\n&quot;, _VERSION);
+     return code;
+ }
+</pre></div>
+</div>
+</li>
+<li><p class="first">执行提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git add -u
+$ git commit -m &quot;Fix typo: -help to --help.&quot;
+[hello-1.x b56bb51] Fix typo: -help to --help.
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+</pre></div>
+</div>
+</li>
+<li><p class="first">推送到远程共享版本库。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git push
+Counting objects: 7, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 349 bytes, done.
+Total 4 (delta 3), reused 0 (delta 0)
+Unpacking objects: 100% (4/4), done.
+To file:///path/to/repos/hello-world.git
+   ebcf6d6..b56bb51  hello-1.x -&gt; hello-1.x
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="user2">
+<h3>3.4.5.3. 开发者user2工作在发布分支<a class="headerlink" href="#user2" title="永久链接至标题">¶</a></h3>
+<p>开发者user2针对问候时用户名显示不全的bug进行更改。</p>
+<ul>
+<li><p class="first">进入开发者user2的工作区，并确保工作在<tt class="docutils literal"><span class="pre">hello-1.x</span></tt>分支中。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/user2/workspace/hello-world/
+$ git checkout hello-1.x
+</pre></div>
+</div>
+</li>
+<li><p class="first">编辑文件<tt class="file docutils literal"><span class="pre">src/main.c</span></tt>，修改代码中的bug。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ vi src/main.c
+</pre></div>
+</div>
+</li>
+<li><p class="first">实际上在<tt class="docutils literal"><span class="pre">hello-world</span></tt>版本库中包含了我的一份修改，可以看看和您的更改是否一致。</p>
+<p>下面的命令将我对此bug的修改保存为一个补丁文件。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git format-patch jx/v1.1..jx/v1.2
+0001-Bugfix-allow-spaces-in-username.patch
+</pre></div>
+</div>
+</li>
+<li><p class="first">应用我对此bug的改动补丁。</p>
+<p>如果您已经自己完成了修改，可以先执行<strong class="command">git stash</strong>保存自己的修改进度，然后执行下面的命令应用补丁文件。当应用完补丁后，再执行<strong class="command">git stash pop</strong>将您的改动合并到工作区。如果我们的改动一致（英雄所见略同），将不会有冲突。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ patch -p1 &lt; 0001-Bugfix-allow-spaces-in-username.patch
+patching file src/main.c
+</pre></div>
+</div>
+</li>
+<li><p class="first">看看代码的改动吧。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git diff
+diff --git a/src/main.c b/src/main.c
+index 6ee936f..f0f404b 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -19,13 +19,20 @@ int usage(int code)
+ int
+ main(int argc, char **argv)
+ {
++    char **p = NULL;
++
+     if (argc == 1) {
+         printf (&quot;Hello world.\n&quot;);
+     } else if ( strcmp(argv[1],&quot;-h&quot;) == 0 ||
+                 strcmp(argv[1],&quot;--help&quot;) == 0 ) {
+                 return usage(0);
+     } else {
+-        printf (&quot;Hi, %s.\n&quot;, argv[1]);
++        p = &amp;argv[1];
++        printf (&quot;Hi,&quot;);
++        do {
++            printf (&quot; %s&quot;, *p);
++        } while (*(++p));
++        printf (&quot;.\n&quot;);
+     }
+
+     printf( &quot;(version: %s)\n&quot;, _VERSION );
+</pre></div>
+</div>
+</li>
+<li><p class="first">本地测试一下改进后的软件，看看bug是否已经被改正。如果运行结果能显示出完整的用户名，则bug成功修正。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd src/
+$ make
+version.h.in =&gt; version.h
+cc    -c -o main.o main.c
+cc -o hello main.o
+$ ./hello Jiang Xin
+Hi, Jiang Xin.
+(version: v1.0-dirty)
+</pre></div>
+</div>
+</li>
+<li><p class="first">提交代码。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git add -u
+$ git commit -m &quot;Bugfix: allow spaces in username.&quot;
+[hello-1.x e64f3a2] Bugfix: allow spaces in username.
+ 1 files changed, 8 insertions(+), 1 deletions(-)
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="id11">
+<h3>3.4.5.4. 开发者user2合并推送<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
+<p>开发者user2在本地版本库完成提交后，不要忘记向远程共享版本库进行推送。但在推送分支<tt class="docutils literal"><span class="pre">hello-1.x</span></tt>时开发者user2没有开发者user1那么幸运，因为此时远程共享版本库的<tt class="docutils literal"><span class="pre">hello-1.x</span></tt>分支已经被开发者user1推送过一次，因此开发者user2在推送过程中会遇到非快进式推送问题。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git push
+To file:///path/to/repos/hello-world.git
+ ! [rejected]        hello-1.x -&gt; hello-1.x (non-fast-forward)
+error: failed to push some refs to &#39;file:///path/to/repos/hello-world.git&#39;
+To prevent you from losing history, non-fast-forward updates were rejected
+Merge the remote changes (e.g. &#39;git pull&#39;) before pushing again.  See the
+&#39;Note about fast-forwards&#39; section of &#39;git push --help&#39; for details.
+</pre></div>
+</div>
+<p>就像在“第15章 Git协议和工作协同”一章中介绍的那样，开发者user2需要执行一个拉回操作，将远程共享服务器的改动获取到本地并和本地提交进行合并。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git pull
+remote: Counting objects: 7, done.
+remote: Compressing objects: 100% (4/4), done.
+remote: Total 4 (delta 3), reused 0 (delta 0)
+Unpacking objects: 100% (4/4), done.
+From file:///path/to/repos/hello-world
+   ebcf6d6..b56bb51  hello-1.x  -&gt; origin/hello-1.x
+Auto-merging src/main.c
+Merge made by recursive.
+ src/main.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+</pre></div>
+</div>
+<p>通过显示分支图的方式查看日志，可以看到在执行<strong class="command">git pull</strong>操作后发生了合并。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git log --graph --oneline
+*   8cffe5f Merge branch &#39;hello-1.x&#39; of file:///path/to/repos/hello-world into hello-1.x
+|\
+| * b56bb51 Fix typo: -help to --help.
+* | e64f3a2 Bugfix: allow spaces in username.
+|/
+* ebcf6d6 blank commit for GnuPG-signed tag test.
+* 8a9f3d1 blank commit for annotated tag test.
+* 60a2f4f blank commit.
+* 3e6070e Show version.
+* 75346b3 Hello world initialized.
+</pre></div>
+</div>
+<p>现在开发者user2可以将合并后的本地版本库中的提交推送给远程共享版本库了。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git push
+Counting objects: 14, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (8/8), done.
+Writing objects: 100% (8/8), 814 bytes, done.
+Total 8 (delta 6), reused 0 (delta 0)
+Unpacking objects: 100% (8/8), done.
+To file:///path/to/repos/hello-world.git
+   b56bb51..8cffe5f  hello-1.x -&gt; hello-1.x
+</pre></div>
+</div>
+</div>
+<div class="section" id="id12">
+<h3>3.4.5.5. 发布分支的提交合并到主线<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h3>
+<p>当开发者user1和user2都相继在<tt class="docutils literal"><span class="pre">hello-1.x</span></tt>分支将相应的bug修改完后，就可以从<tt class="docutils literal"><span class="pre">hello-1.x</span></tt>分支中编译新的软件产品交给客户使用了。接下来别忘了在主线<tt class="docutils literal"><span class="pre">master</span></tt>分支也做出同样的更改，因为在<tt class="docutils literal"><span class="pre">hello-1.x</span></tt>分支修改的bug同样也存在于主线<tt class="docutils literal"><span class="pre">master</span></tt>分支中。</p>
+<p>使用Git提供的拣选命令，就可以直接将发布分支上进行的bug修正合并到主线上。下面就以开发者user2的身份进行操作。</p>
+<ul>
+<li><p class="first">进入user2工作区并切换到master分支。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/user2/workspace/hello-world/
+$ git checkout master
+</pre></div>
+</div>
+</li>
+<li><p class="first">从远程共享版本库同步master分支。</p>
+<p>同步后本地<tt class="docutils literal"><span class="pre">master</span></tt>分支包含了开发者user1提交的命令行参数解析重构的代码。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git pull
+remote: Counting objects: 7, done.
+remote: Compressing objects: 100% (4/4), done.
+remote: Total 4 (delta 3), reused 0 (delta 0)
+Unpacking objects: 100% (4/4), done.
+From file:///path/to/repos/hello-world
+   ebcf6d6..0881ca3  master     -&gt; origin/master
+Updating ebcf6d6..0881ca3
+Fast-forward
+ src/main.c |   41 ++++++++++++++++++++++++++++++++++++-----
+ 1 files changed, 36 insertions(+), 5 deletions(-)
+</pre></div>
+</div>
+</li>
+<li><p class="first">查看分支<tt class="docutils literal"><span class="pre">hello-1.x</span></tt>的日志，确认要拣选的提交ID。</p>
+<p>从下面的日志可以看出分支<tt class="docutils literal"><span class="pre">hello-1.x</span></tt>的最新提交是一个合并提交，而要拣选的提交分别是其第一个父提交和第二个父提交，可以分别用<tt class="docutils literal"><span class="pre">hello-1.x^1</span></tt>和<tt class="docutils literal"><span class="pre">hello-1.x^2</span></tt>表示。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git log -3 --graph --oneline hello-1.x
+*   8cffe5f Merge branch &#39;hello-1.x&#39; of file:///path/to/repos/hello-world into hello-1.x
+|\
+| * b56bb51 Fix typo: -help to --help.
+* | e64f3a2 Bugfix: allow spaces in username.
+|/
+</pre></div>
+</div>
+</li>
+<li><p class="first">执行拣选操作。先将开发者user2提交的修正代码拣选到当前分支（即主线）。</p>
+<p>拣选操作遇到了冲突，见下面的命令输出。</p>
+<div class="highlight-python"><div class="highlight"><pre>$  git cherry-pick hello-1.x^1
+Automatic cherry-pick failed.  After resolving the conflicts,
+mark the corrected paths with &#39;git add &lt;paths&gt;&#39; or &#39;git rm &lt;paths&gt;&#39;
+and commit the result with:
+
+        git commit -c e64f3a216d346669b85807ffcfb23a21f9c5c187
+</pre></div>
+</div>
+</li>
+<li><p class="first">拣选操作发生冲突，通过查看状态可以看到是在文件<tt class="file docutils literal"><span class="pre">src/main.c</span></tt>上发生了冲突。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status
+# On branch master
+# Unmerged paths:
+#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
+#   (use &quot;git add/rm &lt;file&gt;...&quot; as appropriate to mark resolution)
+#
+#       both modified:      src/main.c
+#
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
+</pre></div>
+</div>
+</li>
+</ul>
+<p><strong>冲突发生的原因</strong></p>
+<p>为什么发生了冲突呢？这是因为拣选<tt class="docutils literal"><span class="pre">hello-1.x</span></tt>分支上的一个提交到<tt class="docutils literal"><span class="pre">master</span></tt>分支时，因为两个甚至多个提交在重叠的位置更改代码所致。通过下面的命令可以看到到底是哪些提交引起的冲突。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git log master...hello-1.x^1
+commit e64f3a216d346669b85807ffcfb23a21f9c5c187
+Author: user2 &lt;user2@moon.ossxp.com&gt;
+Date:   Sun Jan 9 13:11:19 2011 +0800
+
+    Bugfix: allow spaces in username.
+
+commit 0881ca3f62ddadcddec08bd9f2f529a44d17cfbf
+Author: user1 &lt;user1@sun.ossxp.com&gt;
+Date:   Mon Jan 3 22:44:52 2011 +0800
+
+    Refactor: use getopt_long for arguments parsing.
+</pre></div>
+</div>
+<p>可以看出引发冲突的提交一个是当前工作分支<tt class="docutils literal"><span class="pre">master</span></tt>上的最新提交，即开发者user1的重构命令行参数解析的提交，而另外一个引发冲突的是要拣选的提交，即开发者user2针对用户名显示不全所做的错误修正提交。一定是因为这两个提交的更改发生了重叠导致了冲突的发生。下面就来解决冲突。</p>
+<p><strong>冲突解决</strong></p>
+<p>冲突解决可以使用图形界面工具，不过对于本例直接编辑冲突文件，手工进行冲突解决也很方便。打开文件<tt class="file docutils literal"><span class="pre">src/main.c</span></tt>就可以看到发生冲突的区域都用特有的标记符标识出来，参见表18-1中左侧一列中的内容。</p>
+<p>表 18-1：冲突解决前后对照</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">冲突文件 src/main.c 标识出的冲突内容</th>
+<th class="head">冲突解决后的内容对照</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last highlight-python"><div class="highlight"><pre>21 int
+22 main(int argc, char **argv)
+23 {
+24 &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+25     int c;
+26     char *uname = NULL;
+27
+28     while (1) {
+29         int option_index = 0;
+30         static struct option long_options[] = {
+31             {&quot;help&quot;, 0, 0, &#39;h&#39;},
+32             {0, 0, 0, 0}
+33         };
+34
+35         c = getopt_long(argc, argv, &quot;h&quot;,
+36                         long_options, &amp;option_index);
+37         if (c == -1)
+38            break;
+39
+40         switch (c) {
+41         case &#39;h&#39;:
+42             return usage(0);
+43         default:
+44             return usage(1);
+45         }
+46     }
+47
+48     if (optind &lt; argc) {
+49         uname = argv[optind];
+50     }
+51
+52     if (uname == NULL) {
+53 =======
+54     char **p = NULL;
+55
+56     if (argc == 1) {
+57 &gt;&gt;&gt;&gt;&gt;&gt;&gt; e64f3a2... Bugfix: allow spaces in username.
+58         printf (&quot;Hello world.\n&quot;);
+59     } else {
+60 &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+61         printf (&quot;Hi, %s.\n&quot;, uname);
+62 =======
+63         p = &amp;argv[1];
+64         printf (&quot;Hi,&quot;);
+65         do {
+66             printf (&quot; %s&quot;, *p);
+67         } while (*(++p));
+68         printf (&quot;.\n&quot;);
+69 &gt;&gt;&gt;&gt;&gt;&gt;&gt; e64f3a2... Bugfix: allow spaces in username.
+70     }
+71
+72     printf( &quot;(version: %s)\n&quot;, _VERSION );
+73     return 0;
+74 }
+</pre></div>
+</div>
+</td>
+<td><div class="first last highlight-python"><div class="highlight"><pre>21 int
+22 main(int argc, char **argv)
+23 {
+
+24     int c;
+25     char **p = NULL;
+26
+27     while (1) {
+28         int option_index = 0;
+29         static struct option long_options[] = {
+30             {&quot;help&quot;, 0, 0, &#39;h&#39;},
+31             {0, 0, 0, 0}
+32         };
+33
+34         c = getopt_long(argc, argv, &quot;h&quot;,
+35                         long_options, &amp;option_index);
+36         if (c == -1)
+37            break;
+38
+39         switch (c) {
+40         case &#39;h&#39;:
+41             return usage(0);
+42         default:
+43             return usage(1);
+44         }
+45     }
+46
+47     if (optind &lt; argc) {
+48         p = &amp;argv[optind];
+49     }
+50
+51     if (p == NULL || *p == NULL) {
+
+
+
+
+
+52         printf (&quot;Hello world.\n&quot;);
+53     } else {
+
+
+
+
+54         printf (&quot;Hi,&quot;);
+55         do {
+56             printf (&quot; %s&quot;, *p);
+57         } while (*(++p));
+58         printf (&quot;.\n&quot;);
+
+59     }
+60
+61     printf( &quot;(version: %s)\n&quot;, _VERSION );
+62     return 0;
+63 }
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>在文件<tt class="file docutils literal"><span class="pre">src/main.c</span></tt>冲突内容中，第25-52行及第61行是<tt class="docutils literal"><span class="pre">master</span></tt>分支中由开发者user1重构命令行解析时提交的内容，而第54-56行及第63-68行则是分支<tt class="docutils literal"><span class="pre">hello-1.x</span></tt>中由开发者user2提交的修正用户名显示不全的bug的相应代码。</p>
+<p>表18-1右侧的一列则是冲突解决后的内容。为了和冲突前的内容相对照，重新进行了排版，并对差异内容进行加粗显示。您可以参照完成冲突解决。</p>
+<p>将手动编辑完成的文件<tt class="file docutils literal"><span class="pre">src/main.c</span></tt>添加到暂存区才真正地完成了冲突解决。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git add src/main.c
+</pre></div>
+</div>
+<p>因为是拣选操作，提交时最好重用所拣选提交的提交说明和作者信息，而且也省下了自己写提交说明的麻烦。使用下面的命令完成提交操作。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git commit -C hello-1.x^1
+[master 10765a7] Bugfix: allow spaces in username.
+ 1 files changed, 8 insertions(+), 4 deletions(-)
+</pre></div>
+</div>
+<p>接下来再将开发者 user1 在分支<tt class="docutils literal"><span class="pre">hello-1.x</span></tt>中的提交也拣选到当前分支。所拣选的提交非常简单，不过是修改了提交说明中的文字错误而已，拣选操作也不会引发异常，直接完成。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git cherry-pick hello-1.x^2
+Finished one cherry-pick.
+[master d81896e] Fix typo: -help to --help.
+ Author: user1 &lt;user1@sun.ossxp.com&gt;
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+</pre></div>
+</div>
+<p>现在通过日志可以看到<tt class="docutils literal"><span class="pre">master</span></tt>分支已经完成了对已知bug的修复。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git log -3 --graph --oneline
+* d81896e Fix typo: -help to --help.
+* 10765a7 Bugfix: allow spaces in username.
+* 0881ca3 Refactor: use getopt_long for arguments parsing.
+</pre></div>
+</div>
+<p>查看状态可以看到当前的工作分支相对于远程服务器有两个新提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status
+# On branch master
+# Your branch is ahead of &#39;origin/master&#39; by 2 commits.
+#
+nothing to commit (working directory clean)
+</pre></div>
+</div>
+<p>执行推送命令将本地<tt class="docutils literal"><span class="pre">master</span></tt>分支同步到远程共享版本库。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git push
+Counting objects: 11, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (8/8), done.
+Writing objects: 100% (8/8), 802 bytes, done.
+Total 8 (delta 6), reused 0 (delta 0)
+Unpacking objects: 100% (8/8), done.
+To file:///path/to/repos/hello-world.git
+   0881ca3..d81896e  master -&gt; master
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id13">
+<h2>3.4.6. 分支变基<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id14">
+<h3>3.4.6.1. 完成<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>特性分支的开发<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h3>
+<p>开发者user2针对多语种开发的工作任务还没有介绍呢，在最后就借着“实现”这个稍微复杂的功能来学习一下Git分支的变基操作。</p>
+<ul>
+<li><p class="first">进入user2的工作区，并切换到<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>分支。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/user2/workspace/hello-world/
+$ git checkout user2/i18n
+Switched to branch &#39;user2/i18n&#39;
+</pre></div>
+</div>
+</li>
+<li><p class="first">使用<tt class="docutils literal"><span class="pre">gettext</span></tt>为软件添加多语言支持。您可以尝试实现该功能。不过在<tt class="docutils literal"><span class="pre">hello-world</span></tt>中已经保存了一份实现该功能的代码（见里程碑<tt class="docutils literal"><span class="pre">jx/v1.0-i18n</span></tt>），可以直接拿过来用。</p>
+</li>
+<li><p class="first">里程碑<tt class="docutils literal"><span class="pre">jx/v1.0-i18n</span></tt>最后的两个提交实现了多语言支持功能。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git log --oneline -2 --stat jx/v1.0-i18n
+ade873c Translate for Chinese.
+ src/locale/zh_CN/LC_MESSAGES/helloworld.po |   30 +++++++++++++++++++++------
+ 1 files changed, 23 insertions(+), 7 deletions(-)
+0831248 Add I18N support.
+ src/Makefile                               |   21 +++++++++++-
+ src/locale/helloworld.pot                  |   46 ++++++++++++++++++++++++++++
+ src/locale/zh_CN/LC_MESSAGES/helloworld.po |   46 ++++++++++++++++++++++++++++
+ src/main.c                                 |   18 ++++++++--
+ 4 files changed, 125 insertions(+), 6 deletions(-)
+</pre></div>
+</div>
+</li>
+<li><p class="first">可以通过拣选命令将这两个提交拣选到<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>分支中，相当于在分支<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>中实现了多语言支持的开发。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git cherry-pick jx/v1.0-i18n~1
+...
+$ git cherry-pick jx/v1.0-i18n
+...
+</pre></div>
+</div>
+</li>
+<li><p class="first">看看当前分拣选后的日志。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git log --oneline -2
+7acb3e8 Translate for Chinese.
+90d873b Add I18N support.
+</pre></div>
+</div>
+</li>
+<li><p class="first">为了测试刚刚“开发”完成的多语言支持功能，先对源码执行编译。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd src
+$ make
+version.h.in =&gt; version.h
+cc    -c -o main.o main.c
+msgfmt -o locale/zh_CN/LC_MESSAGES/helloworld.mo locale/zh_CN/LC_MESSAGES/helloworld.po
+cc -o hello main.o
+</pre></div>
+</div>
+</li>
+<li><p class="first">查看帮助信息，会发现帮助信息已经本地化。</p>
+<p>注意：帮助信息中仍然有文字错误，<tt class="docutils literal"><span class="pre">--help</span></tt>误写为<tt class="docutils literal"><span class="pre">-help</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ./hello --help
+Hello world 示例 v1.0-2-g7acb3e8
+版权所有 蒋鑫 &lt;jiangxin AT ossxp DOT com&gt;, 2009
+
+用法:
+    hello
+            世界你好。
+
+    hello &lt;username&gt;
+            向用户问您好。
+
+    hello -h, -help
+            显示本帮助页。
+</pre></div>
+</div>
+</li>
+<li><p class="first">不带用户名运行<tt class="docutils literal"><span class="pre">hello</span></tt>，也会输出中文。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ./hello
+世界你好。
+(version: v1.0-2-g7acb3e8)
+</pre></div>
+</div>
+</li>
+<li><p class="first">带用户名运行<tt class="docutils literal"><span class="pre">hello</span></tt>，会向用户问候。</p>
+<p>注意：程序仍然存在只显示部分用户名的问题。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ./hello Jiang Xin
+您好, Jiang.
+(version: v1.0-2-g7acb3e8)
+</pre></div>
+</div>
+</li>
+<li><p class="first">推送分支<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>到远程共享服务器。</p>
+<p>推送该特性分支的目的并非是与他人在此分支上协同工作，主要只是为了进行数据备份。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git push origin user2/i18n
+Counting objects: 21, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (13/13), done.
+Writing objects: 100% (17/17), 2.91 KiB, done.
+Total 17 (delta 6), reused 1 (delta 0)
+Unpacking objects: 100% (17/17), done.
+To file:///path/to/repos/hello-world.git
+ * [new branch]      user2/i18n -&gt; user2/i18n
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="id15">
+<h3>3.4.6.2. 分支<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>变基<a class="headerlink" href="#id15" title="永久链接至标题">¶</a></h3>
+<p>在测试刚刚完成的具有多语种支持功能的<tt class="docutils literal"><span class="pre">hello-world</span></tt>时，之前改正的两个bug又重现了。这并不奇怪，因为分支<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>基于<tt class="docutils literal"><span class="pre">master</span></tt>分支创建的时候，这两个bug还没有发现呢，更不要说改正了。</p>
+<p>在最早刚刚创建<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>分支时，版本库的结构非常简单，如图18-6所示。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/branch-i18n-initial.png"><img alt="../images/branch-i18n-initial.png" src="../images/branch-i18n-initial.png" style="width: 136.0px; height: 157.0px;" /></a>
+<p class="caption">图 18-6：分支 user2/i18n 创建初始版本库分支状态</p>
+</div>
+<p>但是当前<tt class="docutils literal"><span class="pre">master</span></tt>分支中不但包含了对两个bug的修正，还包含了开发者user1调用<tt class="docutils literal"><span class="pre">getopt</span></tt>对命令行参数解析进行的代码重构。图18-7显示的是当前版本库<tt class="docutils literal"><span class="pre">master</span></tt>分支和<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>分支的关系图。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/branch-i18n-complete.png"><img alt="../images/branch-i18n-complete.png" src="../images/branch-i18n-complete.png" style="width: 390.0px; height: 292.0px;" /></a>
+<p class="caption">图 18-7：当前版本库分支示意图</p>
+</div>
+<p>开发者user2要将分支<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>中的提交合并到主线<tt class="docutils literal"><span class="pre">master</span></tt>中，可以采用上一节介绍的分支合并操作。如果执行分支合并操作，版本库的状态将会如图18-8所示：</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/branch-i18n-merge.png"><img alt="../images/branch-i18n-merge.png" src="../images/branch-i18n-merge.png" style="width: 488.0px; height: 292.0px;" /></a>
+<p class="caption">图 18-8：使用分支合并时版本库分支状态</p>
+</div>
+<p>这样操作有利有弊。有利的一面是开发者在<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>分支中的提交不会发生改变，这一点对于提交已经被他人共享时很重要。再有因为<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>分支是基于<tt class="docutils literal"><span class="pre">v1.0</span></tt>创建的，这样可以很容易将多语言支持功能添加到1.0版本的<tt class="docutils literal"><span class="pre">hello-world</span></tt>中。不过这些对于本项目来说都不重要。至于不利的一面，就是这样的合并操作会产生三个提交（包括一个合并提交），对于要对提交进行审核的项目团队来说增加了代码审核的负担。因此很多项目在特性分支合并到开发主线的时候，都不推荐使用合并操作，而是使用变基操作。如果执行变基操作，版本库相关分支的关系图如图18-9所示。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/branch-i18n-rebase-complete.png"><img alt="../images/branch-i18n-rebase-complete.png" src="../images/branch-i18n-rebase-complete.png" style="width: 570.0px; height: 292.0px;" /></a>
+<p class="caption">图 18-9：使用变基操作版本库分支状态</p>
+</div>
+<p>很显然，采用变基操作的分支关系图要比采用合并操作的简单多了，看起来更像是集中式版本控制系统特有的顺序提交。因为减少了一个提交，也会减轻代码审核的负担。</p>
+<p>下面开发者user2就通过变基操作将特性分支<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>合并到主线。</p>
+<ul>
+<li><p class="first">首先确保开发者user2的工作区位于分支<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>上。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/user2/workspace/hello-world/
+$ git checkout user2/i18n
+</pre></div>
+</div>
+</li>
+<li><p class="first">执行变基操作。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rebase master
+First, rewinding head to replay your work on top of it...
+Applying: Add I18N support.
+Using index info to reconstruct a base tree...
+Falling back to patching base and 3-way merge...
+Auto-merging src/main.c
+CONFLICT (content): Merge conflict in src/main.c
+Failed to merge in the changes.
+Patch failed at 0001 Add I18N support.
+
+When you have resolved this problem run &quot;git rebase --continue&quot;.
+If you would prefer to skip this patch, instead run &quot;git rebase --skip&quot;.
+To restore the original branch and stop rebasing run &quot;git rebase --abort&quot;.
+</pre></div>
+</div>
+</li>
+</ul>
+<p>变基遇到了冲突，看来这回的麻烦可不小。冲突是在合并<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>分支中的提交“Add I18N support”时遇到的。首先回顾一下变基的原理，参见第2篇“第12章 改变历史”相关章节。对于本例，在进行变基操作时会先切换到<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>分支，并强制重置到<tt class="docutils literal"><span class="pre">master</span></tt>分支所指向的提交。然后再将原<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>分支的提交一一拣选到新的<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>分支上。运行下面的命令可以查看可能导致冲突的提交列表。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-list --pretty=oneline user2/i18n^...master
+d81896e60673771ef1873b27a33f52df75f70515 Fix typo: -help to --help.
+10765a7ef46981a73d578466669f6e17b73ac7e3 Bugfix: allow spaces in username.
+90d873bb93cd7577b7638f1f391bd2ece3141b7a Add I18N support.
+0881ca3f62ddadcddec08bd9f2f529a44d17cfbf Refactor: use getopt_long for arguments parsing
+</pre></div>
+</div>
+<p>刚刚发生的冲突是在拣选提交“Add I18N suppport”时出现的，所以在冲突文件中标识为他人版本的是user2添加多语种支持功能的提交，而冲突文件中标识为自己版本的是修正两个bug的提交及开发者user1提交的重构命令行参数解析的提交。下面的两个表格（表18-2和表18-3）是文件<tt class="docutils literal"><span class="pre">src/main.c</span></tt>发生冲突的两个主要区域，表格的左侧一列是冲突文件中的内容，右侧一列则是冲突解决后的内容。为了方便参照进行了适当排版。</p>
+<p>表 18-2：变基冲突区域一解决前后对照</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">变基冲突区域一内容（文件 src/main.c）</th>
+<th class="head">冲突解决后的内容对照</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last highlight-python"><div class="highlight"><pre>12 int usage(int code)
+13 {
+14     printf(_(&quot;Hello world example %s\n&quot;
+15            &quot;Copyright Jiang Xin &lt;jiangxin AT ossxp ...\n&quot;
+16            &quot;\n&quot;
+17            &quot;Usage:\n&quot;
+18            &quot;    hello\n&quot;
+19            &quot;            say hello to the world.\n\n&quot;
+20            &quot;    hello &lt;username&gt;\n&quot;
+21            &quot;            say hi to the user.\n\n&quot;
+22 &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+23            &quot;    hello -h, --help\n&quot;
+24            &quot;            this help screen.\n\n&quot;, _VERSION);
+25 ||||||| merged common ancestors
+26            &quot;    hello -h, -help\n&quot;
+27            &quot;            this help screen.\n\n&quot;, _VERSION);
+28 =======
+29            &quot;    hello -h, -help\n&quot;
+30            &quot;            this help screen.\n\n&quot;), _VERSION);
+31 &gt;&gt;&gt;&gt;&gt;&gt;&gt; Add I18N support.
+32     return code;
+33 }
+</pre></div>
+</div>
+</td>
+<td><div class="first last highlight-python"><div class="highlight"><pre>12 int usage(int code)
+13 {
+14     printf(_(&quot;Hello world example %s\n&quot;
+15            &quot;Copyright Jiang Xin &lt;jiangxin AT ossxp ...\n&quot;
+16            &quot;\n&quot;
+17            &quot;Usage:\n&quot;
+18            &quot;    hello\n&quot;
+19            &quot;            say hello to the world.\n\n&quot;
+20            &quot;    hello &lt;username&gt;\n&quot;
+21            &quot;            say hi to the user.\n\n&quot;
+
+22            &quot;    hello -h, --help\n&quot;
+23            &quot;            this help screen.\n\n&quot;), _VERSION);
+
+
+
+
+
+
+
+24     return code;
+25 }
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>表 18-3：变基冲突区域二解决前后对照</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">变基冲突区域二内容（文件 src/main.c）</th>
+<th class="head">冲突解决后的内容对照</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last highlight-python"><div class="highlight"><pre>38 &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+39     int c;
+40     char **p = NULL;
+41
+
+
+
+
+42     while (1) {
+43         int option_index = 0;
+44         static struct option long_options[] = {
+45             {&quot;help&quot;, 0, 0, &#39;h&#39;},
+46             {0, 0, 0, 0}
+47         };
+48
+49         c = getopt_long(argc, argv, &quot;h&quot;,
+50                         long_options, &amp;option_index);
+51         if (c == -1)
+52            break;
+53
+54         switch (c) {
+55         case &#39;h&#39;:
+56             return usage(0);
+57         default:
+58             return usage(1);
+59         }
+60     }
+61
+62     if (optind &lt; argc) {
+63         p = &amp;argv[optind];
+64     }
+65
+66     if (p == NULL || *p == NULL) {
+67         printf (&quot;Hello world.\n&quot;);
+68 ||||||| merged common ancestors
+69     if (argc == 1) {
+70         printf (&quot;Hello world.\n&quot;);
+71     } else if ( strcmp(argv[1],&quot;-h&quot;) == 0 ||
+72                 strcmp(argv[1],&quot;--help&quot;) == 0 ) {
+73                 return usage(0);
+74 =======
+75     setlocale( LC_ALL, &quot;&quot; );
+76     bindtextdomain(&quot;helloworld&quot;,&quot;locale&quot;);
+77     textdomain(&quot;helloworld&quot;);
+78
+79     if (argc == 1) {
+80         printf ( _(&quot;Hello world.\n&quot;) );
+81     } else if ( strcmp(argv[1],&quot;-h&quot;) == 0 ||
+82                 strcmp(argv[1],&quot;--help&quot;) == 0 ) {
+83                 return usage(0);
+84 &gt;&gt;&gt;&gt;&gt;&gt;&gt; Add I18N support.
+85     } else {
+86 &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+87         printf (&quot;Hi,&quot;);
+88         do {
+89             printf (&quot; %s&quot;, *p);
+90         } while (*(++p));
+91         printf (&quot;.\n&quot;);
+92 ||||||| merged common ancestors
+93         printf (&quot;Hi, %s.\n&quot;, argv[1]);
+94 =======
+95         printf (_(&quot;Hi, %s.\n&quot;), argv[1]);
+96 &gt;&gt;&gt;&gt;&gt;&gt;&gt; Add I18N support.
+97     }
+</pre></div>
+</div>
+</td>
+<td><div class="first last highlight-python"><div class="highlight"><pre>30     int c;
+31     char **p = NULL;
+32
+33     setlocale( LC_ALL, &quot;&quot; );
+34     bindtextdomain(&quot;helloworld&quot;,&quot;locale&quot;);
+35     textdomain(&quot;helloworld&quot;);
+36
+37     while (1) {
+38         int option_index = 0;
+39         static struct option long_options[] = {
+40             {&quot;help&quot;, 0, 0, &#39;h&#39;},
+41             {0, 0, 0, 0}
+42         };
+43
+44         c = getopt_long(argc, argv, &quot;h&quot;,
+45                         long_options, &amp;option_index);
+46         if (c == -1)
+47            break;
+48
+49         switch (c) {
+50         case &#39;h&#39;:
+51             return usage(0);
+52         default:
+53             return usage(1);
+54         }
+55     }
+56
+57     if (optind &lt; argc) {
+58         p = &amp;argv[optind];
+59     }
+60
+61     if (p == NULL || *p == NULL) {
+62         printf ( _(&quot;Hello world.\n&quot;) );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+63     } else {
+64         printf (_(&quot;Hi,&quot;));
+65         do {
+66             printf (&quot; %s&quot;, *p);
+67         } while (*(++p));
+68         printf (&quot;.\n&quot;);
+
+
+
+
+
+69     }
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>将完成冲突解决的文件<tt class="docutils literal"><span class="pre">src/main.c</span></tt>加入暂存区。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git add -u
+</pre></div>
+</div>
+<p>查看工作区状态。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status
+# Not currently on any branch.
+# Changes to be committed:
+#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
+#
+#       modified:   src/Makefile
+#       new file:   src/locale/helloworld.pot
+#       new file:   src/locale/zh_CN/LC_MESSAGES/helloworld.po
+#       modified:   src/main.c
+#
+</pre></div>
+</div>
+<p>现在不要执行提交，而是继续变基操作。变基操作会自动完成对冲突解决的提交，并对分支中的其他提交继续执行变基，直至全部完成。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rebase --continue
+Applying: Add I18N support.
+Applying: Translate for Chinese.
+</pre></div>
+</div>
+<p>图18-10显示了版本库执行完变基后的状态。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/branch-i18n-rebase.png"><img alt="../images/branch-i18n-rebase.png" src="../images/branch-i18n-rebase.png" style="width: 570.0px; height: 292.0px;" /></a>
+<p class="caption">图 18-10：变基操作完成后版本库分支状态</p>
+</div>
+<p>现在需要将<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>分支的提交合并到主线<tt class="docutils literal"><span class="pre">master</span></tt>中。实际上不需要在<tt class="docutils literal"><span class="pre">master</span></tt>分支上再执行繁琐的合并操作，而是可以直接用推送操作——用本地的<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>分支直接更新远程版本库的<tt class="docutils literal"><span class="pre">master</span></tt>分支。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git push origin user2/i18n:master
+Counting objects: 21, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (13/13), done.
+Writing objects: 100% (17/17), 2.91 KiB, done.
+Total 17 (delta 6), reused 1 (delta 0)
+Unpacking objects: 100% (17/17), done.
+To file:///path/to/repos/hello-world.git
+</pre></div>
+</div>
+<p>仔细看看上面运行的<strong class="command">git push</strong>命令，终于看到了引用表达式中引号前后使用了不同名字的引用。含义是用本地的<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>引用的内容（提交ID）更新远程共享版本库的<tt class="docutils literal"><span class="pre">master</span></tt>引用内容（提交ID）。</p>
+<p>执行拉回操作，可以发现远程共享版本库的<tt class="docutils literal"><span class="pre">master</span></tt>分支的确被更新了。通过拉回操作本地的<tt class="docutils literal"><span class="pre">master</span></tt>分支也随之更新。</p>
+<ul>
+<li><p class="first">切换到<tt class="docutils literal"><span class="pre">master</span></tt>分支，会从提示信息中看到本地<tt class="docutils literal"><span class="pre">master</span></tt>分支落后远程共享版本库<tt class="docutils literal"><span class="pre">master</span></tt>分支两个提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git checkout master
+Switched to branch &#39;master&#39;
+Your branch is behind &#39;origin/master&#39; by 2 commits, and can be fast-forwarded.
+</pre></div>
+</div>
+</li>
+<li><p class="first">执行拉回操作，将本地<tt class="docutils literal"><span class="pre">master</span></tt>分支同步到和远程共享版本库相同的状态。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git pull
+Updating d81896e..c4acab2
+Fast-forward
+ src/Makefile                               |   21 ++++++++-
+ src/locale/helloworld.pot                  |   46 ++++++++++++++++++++
+ src/locale/zh_CN/LC_MESSAGES/helloworld.po |   62 ++++++++++++++++++++++++++++
+ src/main.c                                 |   18 ++++++--
+ 4 files changed, 141 insertions(+), 6 deletions(-)
+ create mode 100644 src/locale/helloworld.pot
+ create mode 100644 src/locale/zh_CN/LC_MESSAGES/helloworld.po
+</pre></div>
+</div>
+</li>
+</ul>
+<p>特性分支<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>也完成了历史使命，可以删除了。因为之前<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>已经推送到远程共享版本库，如果想要删除分支不要忘了也将远程分支同时删除。</p>
+<ul>
+<li><p class="first">删除本地版本库的<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>分支。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git branch -d user2/i18n
+Deleted branch user2/i18n (was c4acab2).
+</pre></div>
+</div>
+</li>
+<li><p class="first">删除远程共享版本库的<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>分支。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git push origin :user2/i18n
+To file:///path/to/repos/hello-world.git
+ - [deleted]         user2/i18n
+</pre></div>
+</div>
+</li>
+</ul>
+<hr class="docutils" />
+<p>补充：实际上变基之后<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>分支的本地化模板文件（helloworld.pot）和汉化文件（helloworld.po）都需要做出相应更新，否则<tt class="docutils literal"><span class="pre">hello-world</span></tt>的一些输出不能进行本地化。</p>
+<ul class="simple">
+<li>更新模板需要删除文件<tt class="file docutils literal"><span class="pre">helloworld.pot</span></tt>，再执行命令<strong class="command">make po</strong>。</li>
+<li>重新翻译中文本地化文件，可以使用工具<strong class="command">lokalize</strong>或者<strong class="command">kbabel</strong>。</li>
+</ul>
+<p>具体的操作过程就不再赘述了。</p>
+<hr class="docutils" />
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="050-git-remote.html" title="3.5. 远程版本库"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="030-git-tag.html" title="3.3. Git里程碑"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >3. Git和声</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

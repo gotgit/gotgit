@@ -1,0 +1,179 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>6.2.1. SVN版本库到Git的迁移 &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="up" title="6.2. 更多版本控制系统的迁移" href="020-others.html" />
+    <link rel="next" title="6.2.2. Hg版本库到Git的迁移" href="030-hg.html" />
+    <link rel="prev" title="6.2. 更多版本控制系统的迁移" href="020-others.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="030-hg.html" title="6.2.2. Hg版本库到Git的迁移"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="020-others.html" title="6.2. 更多版本控制系统的迁移"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >6. 迁移到Git</a> &raquo;</li>
+          <li><a href="020-others.html" accesskey="U">6.2. 更多版本控制系统的迁移</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="020-others.html"
+                        title="上一章">6.2. 更多版本控制系统的迁移</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="030-hg.html"
+                        title="下一章">6.2.2. Hg版本库到Git的迁移</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/06-migrate/025-svn.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="svngit">
+<h1>6.2.1. SVN版本库到Git的迁移<a class="headerlink" href="#svngit" title="永久链接至标题">¶</a></h1>
+<p>Subversion版本库到Git版本库的转换，最好的方法就是git-svn。而git-svn的使用方法在前面“Git和SVN协同模型”一章已经详细介绍过。本章的内容将不再对git-svn的用法做过多的重复，只在这里强调一下版本库迁移时的注意事项，相关git-svn内容还请参照前面的内容。</p>
+<p>在迁移之前要确认一个问题，Subversion转换到Git库之后，Subversion还继续使用么？意思是说还允许向Subversion提交么？</p>
+<p>如果回答是，那么直接查看“Git和SVN协同模型”一章，用Git作为前端工具来操作Subversion版本库，而不要理会下面的内容。因为下面描述的迁移步骤针对的是一次性的Subversion到Git版本库的迁移。</p>
+<p><strong>需要提交中出现git-svn-id标识么？</strong></p>
+<p>如果一次性、永久性的将Subverison迁移到Git库，可以选择<tt class="docutils literal"><span class="pre">git-svn-id:</span></tt>标识不在转换后Git的提交日志中出现，这样转换后的Git库根本看不出来曾经用Subversion版本库维护过。</p>
+<p>在git-svn的<tt class="docutils literal"><span class="pre">clone</span></tt>或者<tt class="docutils literal"><span class="pre">init</span></tt>子命令行中使用参数：<tt class="docutils literal"><span class="pre">--no-metadata</span></tt>。Git库的配置会自动配置<tt class="docutils literal"><span class="pre">svn-remote.noMetadata</span></tt>为1。之后执行<strong class="command">git svn fetch</strong>时就不会在日志中产生<tt class="docutils literal"><span class="pre">git-svn-id:</span></tt>的标识。</p>
+<p><strong>Subversion用户名到Git用户名的映射</strong></p>
+<p>缺省转换后Git库的提交者ID为如下格式：<tt class="docutils literal"><span class="pre">userid</span> <span class="pre">&lt;userid&#64;SVN-REPOS-UUID&gt;</span></tt>。即在邮件地址域名处以SVN版本库的UUID代替。可以在执行<strong class="command">git svn fetch</strong>时通过下面的参数提供一个映射文件完成SVN用户名到Git用户名的转换。</p>
+<div class="highlight-python"><div class="highlight"><pre>-A&lt;filename&gt;, --authors-file=&lt;filename&gt;
+</pre></div>
+</div>
+<p>即用<tt class="docutils literal"><span class="pre">-A</span></tt>或者<tt class="docutils literal"><span class="pre">--authors-file</span></tt>参数给出一个映射文件，这个文件帮助git-svn将Subversion用户名映射为Git用户名。此文件的每一行定义一个用户名映射，每一行的格式为：</p>
+<div class="highlight-python"><div class="highlight"><pre>loginname = User Name &lt;user@example.com&gt;
+</pre></div>
+</div>
+<p>也可以通过下面的命令在Git库的<tt class="file docutils literal"><span class="pre">config</span></tt>文件中设置，这样就不必在每次执行<strong class="command">git svn fetch</strong>都带上这个参数。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git config svn.authorsfile /path/to/authersfile
+</pre></div>
+</div>
+<p>当设定了用户映射文件后，如果在执行<strong class="command">git svn fetch</strong>是发现SVN的用户在该映射文件中没有定义，转换过程被中断。需要重新编辑用户映射文件，补充新的用户映射后，再重新执行git-svn命令。</p>
+<p><strong>将Subversion分支和里程碑直接转换为Git分支和里程碑，不要放在``refs/remotes``下</strong></p>
+<p>使用缺省参数执行SVN到Git的转换时，SVN的里程碑和分支转换到Git库的<tt class="docutils literal"><span class="pre">refs/remotes</span></tt>引用下。这会导致其他人从转换后的Git库克隆时，看不到Subversion原有的分支和里程碑。</p>
+<p>当以缺省参数执行<strong class="command">git svn init</strong>时，Git的配置文件中会生成下面的配置：</p>
+<div class="highlight-python"><div class="highlight"><pre>[svn-remote &quot;svn&quot;]
+        fetch = trunk:refs/remotes/trunk
+        branches = branches/*:refs/remotes/*
+        tags = tags/*:refs/remotes/tags/*
+</pre></div>
+</div>
+<p>可以直接编辑Git配置文件，将其内容调整如下：</p>
+<div class="highlight-python"><div class="highlight"><pre>[svn-remote &quot;svn&quot;]
+        fetch = trunk:refs/heads/master
+        branches = branches/*:refs/heads/*
+        tags = tags/*:refs/tags/*
+</pre></div>
+</div>
+<p>之后再执行<strong class="command">git svn fetch</strong>后，就可以实现SVN的分支和里程碑正确的转换为Git库的里程碑。否则就需要将<tt class="file docutils literal"><span class="pre">.git/refs/remots/</span></tt>下的引用移动到<tt class="file docutils literal"><span class="pre">.git/refs/heads</span></tt>以及<tt class="file docutils literal"><span class="pre">.git/refs/tags</span></tt>下。</p>
+<p><strong>清除git-svn的中间文件</strong></p>
+<p>git-svn的中间文件位于目录<tt class="file docutils literal"><span class="pre">.git/svn</span></tt>下，删除此目录完成对git-svn转换数据库文件的清理。</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="030-hg.html" title="6.2.2. Hg版本库到Git的迁移"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="020-others.html" title="6.2. 更多版本控制系统的迁移"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >6. 迁移到Git</a> &raquo;</li>
+          <li><a href="020-others.html" >6.2. 更多版本控制系统的迁移</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

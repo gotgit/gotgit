@@ -1,0 +1,104 @@
+使用Git协议
+**************
+
+Git协议是提供Git版本库只读服务的最为常用的协议，也是非常易用和易于配置的\
+协议。该协议的缺点就是不能提供身份认证，而且一般也不提供写入服务。
+
+Git协议语法格式
+================
+
+Git协议的语法格式如下。
+
+::
+
+  语法： git://<server>[:<port>]/path/to/repos.git/
+
+
+说明：
+
+* 端口为可选项，默认端口为9418。
+* 版本库路径\ :file:`/path/to/repos.git`\ 的根目录并不一定是系统的根目录，\
+  可以在\ :command:`git-daemon`\ 启动时用参数\ ``--base-path``\ 指定根目录。\
+  如果\ :command:`git-daemon`\ 没有设置根目录，则对应于系统的根目录。
+
+Git服务软件
+=============
+
+Git服务由名为git-daemon的服务软件提供。虽然git-daemon也可以支持写操作，\
+但因为git-daemon没有提供认证支持，因此没有人胆敢配置git-daemon提供匿名的\
+写服务。使用git-daemon提供的Git版本库的只读服务，效率很高，而且是一种智\
+能协议，在操作过程有进度显示，远比HTTP哑通讯协议方便（Git 1.6.6之后的版\
+本已经支持智能HTTP通讯协议）。因此git-daemon很久一来，一直是Git版本库只\
+读服务的首选。
+
+Git软件包本身提供了git-daemon，因此只要安装了Git，一般就已经安装了\
+git-daemon。默认git-daemon并没有运行，需要对其进行配置以服务方式运行。\
+下面介绍两种不同的配置运行方式。
+
+以inetd方式配置运行
+=====================
+
+最简单的方式，是以inetd服务方式运行git-daemon。在配置文件\
+:file:`/etc/inetd.conf`\ 中添加设置如下:
+
+::
+
+  git stream tcp nowait nobody  /usr/bin/git
+      git daemon --inetd --verbose --export-all
+      /gitroot/foo /gitroot/bar
+
+说明：
+
+* 以nobody用户身份执行\ :command:`git daemon`\ 服务。
+
+* 缺省\ :command:`git daemon`\ 只对包含文件\ :file:`git-daemon-export-ok`\
+  的版本库提供服务。使用参数\ ``--export-all``\ 后，无论版本库是否存在\
+  标识文件\ :file:`git-daemon-export-ok`\ ，都对版本库提供Git协议支持。
+
+* 后面的两个参数是版本库。
+
+  也可以通过\ ``--base-path=<path>``\ 参数，设置版本库的根，对于这个目录\
+  下的所有版本库提供访问服务。例如下面的inetd配置：
+
+  ::
+
+    git stream tcp nowait nobody  /usr/bin/git
+        git daemon --inetd --verbose --export-all
+        --base-path=/var/cache /var/cache/git
+
+以runit方式配置运行
+======================
+
+runit是类似于sysvinit的服务管理进程，但是更简单。在Debian/Ubuntu上的软件包\
+:command:`git-daemon-run`\ 就是基于runit启动git-daemon服务。
+
+* 安装\ :command:`git-daemon-run`\ ：
+
+  ::
+
+    $ sudo aptitude install git-daemon-run
+
+* 配置\ :command:`git-daemon-run`\ ：
+
+  缺省的服务配置文件：\ :file:`/etc/sv/git-daemon/run`\ 。和之前的inetd\
+  运行方式相比，以独立的服务进程启动，相应速度更快。
+
+  ::
+
+    #!/bin/sh
+    exec 2>&1
+    echo 'git-daemon starting.'
+    exec chpst -ugitdaemon \
+      "$(git --exec-path)"/git-daemon --verbose --export-all --base-path=/var/cache /var/cache/git
+
+
+缺省版本库中需要存在文件\ :file:`git-daemon-export-ok`\ ，git-daemon才对\
+此版本库提供服务。不过可以通过启动git-daemon时提供的参数\ ``--export-all``\ ，\
+无论版本库是否存在标识文件\ :file:`git-daemon-export-ok`\ ，都对版本库\
+提供Git协议支持。
+
+通过git-daemon提供的Git访问协议存在着局限性：
+
+* 不支持认证。管理员大概可以做的只是配置防火墙，限制某个网段用户的使用。
+* 只能提供匿名的版本库读取服务。因为写操作没有授权控制，因此一般不用来\
+  提供写操作。

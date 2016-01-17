@@ -1,0 +1,186 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>5.7. Git版本库托管 &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="up" title="5. 搭建Git服务器" href="index.html" />
+    <link rel="next" title="6. 迁移到Git" href="../06-migrate/index.html" />
+    <link rel="prev" title="5.6. Gerrit代码审核服务器" href="055-gerrit.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../06-migrate/index.html" title="6. 迁移到Git"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="055-gerrit.html" title="5.6. Gerrit代码审核服务器"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">5. 搭建Git服务器</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">5.7. Git版本库托管</a><ul>
+<li><a class="reference internal" href="#github">5.7.1. Github</a></li>
+<li><a class="reference internal" href="#gitorious">5.7.2. Gitorious</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="055-gerrit.html"
+                        title="上一章">5.6. Gerrit代码审核服务器</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="../06-migrate/index.html"
+                        title="下一章">6. 迁移到Git</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/05-git-server/060-github-like.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="git">
+<h1>5.7. Git版本库托管<a class="headerlink" href="#git" title="永久链接至标题">¶</a></h1>
+<p>想不想在互联网上为自己的Git版本库建立一个克隆？这样再也不必为数据的安全担忧（异地备份），还可以和他人数据共享、协同工作？但是这样做会不会很贵呢？比如要购买域名、虚拟主机、搭建Git服务器什么的？</p>
+<p>实际上这种服务（Git版本库托管服务）可以免费获得！GitHub、Gitorious、Bitbucket等都可以免费提供这些服务。</p>
+<div class="section" id="github">
+<h2>5.7.1. Github<a class="headerlink" href="#github" title="永久链接至标题">¶</a></h2>
+<p>如果读者是按部就班式的阅读本书，那么可能早就注意到本书的很多示例版本库都是放在GitHub上的。GitHub提供了Git版本库托管服务，即包括收费商业支持，也提供免费的服务，很多开源项目把版本库直接放在了GitHub上，如：jQuery、curl、Ruby on Rails等。</p>
+<p>注册一个GitHub帐号非常简单，访问GitHub网站：<tt class="docutils literal"><span class="pre">https://github.com/</span></tt>，点击菜单中的“Pricing and Signup”就可以看到GitHub的服务列表（如图33-1）。会看到其中有一个免费的服务：“Free for open source” ，并且版本库托管的数量不受限制。当然免费的午餐是不管饱的，托管的空间只有300MB，而且不能创建私有版本库。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/github-plans.png"><img alt="../images/github-plans.png" src="../images/github-plans.png" style="width: 679.0px; height: 339.5px;" /></a>
+<p class="caption">图33-1：GitHub服务价目表</p>
+</div>
+<p>点击按钮“Create a free account”，就可以创建一个免费的帐号。GitHub的用法和前面介绍的Gerrit Web界面的用法很类似，一旦帐号创建，应该马上为新建立的帐号设置公钥，以便能够用SSH协议读写自己帐号下创建的版本库，如图33-2。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/github-whoru.png"><img alt="../images/github-whoru.png" src="../images/github-whoru.png" style="width: 676.9px; height: 417.2px;" /></a>
+<p class="caption">图33-2：GitHub上配置公钥</p>
+</div>
+<p>创建仓库的操作非常简单，首先点击菜单上的“主页”（Dashboard），再点击右侧边栏上的“新建仓库”按钮就可以创建新的版本库了，如图33-3。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/github-create-repo.png"><img alt="../images/github-create-repo.png" src="../images/github-create-repo.png" style="width: 678.3px; height: 259.0px;" /></a>
+<p class="caption">图33-3：GitHub页面上的新建版本库按钮</p>
+</div>
+<p>新建版本库会浪费本来就不多的托管空间，从GitHub上已有版本库派生（fork）一个克隆是一个好办法。首先通过GitHub搜索版本库名称，找到后点击“派生”按钮，就可以在自己的托管空间内建立相应版本库的克隆，如图33-4。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/github-fork-repo.png"><img alt="../images/github-fork-repo.png" src="../images/github-fork-repo.png" style="width: 678.3px; height: 228.9px;" /></a>
+<p class="caption">图33-4：自GitHub上的版本库派生</p>
+</div>
+<p>版本库建立后就可以用Git命令访问GitHub上托管的版本库了。GitHub提供三种协议可供访问，如图33-5。其中SSH协议和HTTP协议支持读写，Git-daemon提供只读访问。对于自己的版本库当然选择支持读写的服务方式了，其中SSH协议是首选。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/github-repo-url.png"><img alt="../images/github-repo-url.png" src="../images/github-repo-url.png" style="width: 678.3px; height: 299.6px;" /></a>
+<p class="caption">图33-5：版本库访问URL</p>
+</div>
+</div>
+<div class="section" id="gitorious">
+<h2>5.7.2. Gitorious<a class="headerlink" href="#gitorious" title="永久链接至标题">¶</a></h2>
+<p>Gitorious是另外一个Git版本库托管提供商，网址为<tt class="docutils literal"><span class="pre">http://gitorious.org/</span></tt>。最酷的是Gitorious本身的架站软件也是开源的，可以通过Gitorious上的Gitorious项目访问。如果读者熟悉Ruby on Rails，可以架设一个本地的Gitorious服务。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/gitorious_full.png"><img alt="../images/gitorious_full.png" src="../images/gitorious_full.png" style="width: 696.5px; height: 449.4px;" /></a>
+<p class="caption">图33-6：Gitorious上的Gitorious项目</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../06-migrate/index.html" title="6. 迁移到Git"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="055-gerrit.html" title="5.6. Gerrit代码审核服务器"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >5. 搭建Git服务器</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

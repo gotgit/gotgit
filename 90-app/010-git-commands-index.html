@@ -1,0 +1,1126 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>9.1. A. Git命令索引 &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="up" title="9. 附录" href="index.html" />
+    <link rel="next" title="9.2. Git与CVS面对面" href="020-cvs-git-face2face.html" />
+    <link rel="prev" title="9. 附录" href="index.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="020-cvs-git-face2face.html" title="9.2. Git与CVS面对面"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="9. 附录"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">9. 附录</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">9.1. A. Git命令索引</a><ul>
+<li><a class="reference internal" href="#a-1-git">9.1.1. A.1 常用的Git命令</a></li>
+<li><a class="reference internal" href="#a-2">9.1.2. A.2 对象库操作相关命令</a></li>
+<li><a class="reference internal" href="#a-3">9.1.3. A.3 引用操作相关命令</a></li>
+<li><a class="reference internal" href="#a-4">9.1.4. A.4 版本库管理相关命令</a></li>
+<li><a class="reference internal" href="#a-5">9.1.5. A.5 数据传输相关命令</a></li>
+<li><a class="reference internal" href="#a-6">9.1.6. A.6 邮件相关命令</a></li>
+<li><a class="reference internal" href="#a-7">9.1.7. A.7 协议相关命令</a></li>
+<li><a class="reference internal" href="#a-8">9.1.8. A.8 版本库转换和交互相关命令</a></li>
+<li><a class="reference internal" href="#a-9">9.1.9. A.9 合并相关的辅助命令</a></li>
+<li><a class="reference internal" href="#a-10">9.1.10. A.10 杂项</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="index.html"
+                        title="上一章">9. 附录</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="020-cvs-git-face2face.html"
+                        title="下一章">9.2. Git与CVS面对面</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/90-app/010-git-commands-index.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="a-git">
+<h1>9.1. A. Git命令索引<a class="headerlink" href="#a-git" title="永久链接至标题">¶</a></h1>
+<p>每一个Git子命令都和特定目录下的一个名为<tt class="file docutils literal"><span class="pre">git-&lt;cmd&gt;</span></tt>的文件相对应，也就是在这个特定目录下存在的名为<tt class="file docutils literal"><span class="pre">git-&lt;cmd&gt;</span></tt>的可执行文件（有几个脚本文件被其他脚本包含提供相应的函数库，不能单独运行。如<tt class="file docutils literal"><span class="pre">git-sh-setup</span></tt>）可以用命令<strong class="command">git &lt;cmd&gt;</strong>执行。这个特定的目录的位置可以用下面的命令查看：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git --exec-path
+/usr/lib/git-core/
+</pre></div>
+</div>
+<p>在这个目录下有150多个可执行文件，也就是说Git有非常多的子命令。在如此众多的子命令中，实际上常用的只有三分之一不到，其余的命令或者做为底层命令供其他命令及脚本调用，或者用于某些生僻场合，或者已经过时但出于兼容性的考虑而仍然健在。下面的表格分门别类的对所有Git命令做一概要性介绍，凡是在本书出现过的命令标以章节号和页码。</p>
+<div class="section" id="a-1-git">
+<h2>9.1.1. A.1 常用的Git命令<a class="headerlink" href="#a-1-git" title="永久链接至标题">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="24%" />
+<col width="19%" />
+<col width="18%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">命令</th>
+<th class="head">相关章节</th>
+<th class="head">页数</th>
+<th class="head">简要说明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>git add</td>
+<td>4.1; 10.2.3; 10.6</td>
+<td>xxx; xxx; xxx</td>
+<td>添加至暂存区</td>
+</tr>
+<tr class="row-odd"><td>git add&#8211;interactive</td>
+<td>10.6</td>
+<td>&nbsp;</td>
+<td>交互式添加</td>
+</tr>
+<tr class="row-even"><td>git apply</td>
+<td>20.2</td>
+<td>&nbsp;</td>
+<td>应用补丁</td>
+</tr>
+<tr class="row-odd"><td>git am</td>
+<td>20.2</td>
+<td>&nbsp;</td>
+<td>应用邮件格式补丁</td>
+</tr>
+<tr class="row-even"><td>git annotate</td>
+<td>-</td>
+<td>-</td>
+<td>同义词，等同于 git blame</td>
+</tr>
+<tr class="row-odd"><td>git archive</td>
+<td>10.9</td>
+<td>&nbsp;</td>
+<td>文件归档打包</td>
+</tr>
+<tr class="row-even"><td>git bisect</td>
+<td>11.4.6</td>
+<td>&nbsp;</td>
+<td>二分查找</td>
+</tr>
+<tr class="row-odd"><td>git blame</td>
+<td>11.4.5</td>
+<td>&nbsp;</td>
+<td>文件逐行追溯</td>
+</tr>
+<tr class="row-even"><td>git branch</td>
+<td>18.2</td>
+<td>&nbsp;</td>
+<td>分支管理</td>
+</tr>
+<tr class="row-odd"><td>git cat-file</td>
+<td>6.1</td>
+<td>&nbsp;</td>
+<td>版本库对象研究工具</td>
+</tr>
+<tr class="row-even"><td>git checkout</td>
+<td>8.1; 18.4.2</td>
+<td>&nbsp;</td>
+<td>检出到工作区、切换或创建分支</td>
+</tr>
+<tr class="row-odd"><td>git cherry-pick</td>
+<td>12.3.1</td>
+<td>&nbsp;</td>
+<td>提交拣选</td>
+</tr>
+<tr class="row-even"><td>git citool</td>
+<td>11.1</td>
+<td>&nbsp;</td>
+<td>图形化提交，相当于 git gui 命令</td>
+</tr>
+<tr class="row-odd"><td>git clean</td>
+<td>5.3</td>
+<td>&nbsp;</td>
+<td>清除工作区未跟踪文件</td>
+</tr>
+<tr class="row-even"><td>git clone</td>
+<td>13.1; 41.3.2</td>
+<td>&nbsp;</td>
+<td>克隆版本库</td>
+</tr>
+<tr class="row-odd"><td>git commit</td>
+<td>4.1; 4.4; 5.4</td>
+<td>&nbsp;</td>
+<td>提交</td>
+</tr>
+<tr class="row-even"><td>git config</td>
+<td>4.3</td>
+<td>&nbsp;</td>
+<td>查询和修改配置</td>
+</tr>
+<tr class="row-odd"><td>git describe</td>
+<td>17.1</td>
+<td>&nbsp;</td>
+<td>通过里程碑直观地显示提交ID</td>
+</tr>
+<tr class="row-even"><td>git diff</td>
+<td>5.3</td>
+<td>&nbsp;</td>
+<td>差异比较</td>
+</tr>
+<tr class="row-odd"><td>git difftool</td>
+<td>-</td>
+<td>-</td>
+<td>调用图形化差异比较工具</td>
+</tr>
+<tr class="row-even"><td>git fetch</td>
+<td>19.1</td>
+<td>&nbsp;</td>
+<td>获取远程版本库的提交</td>
+</tr>
+<tr class="row-odd"><td>git format-patch</td>
+<td>20.1</td>
+<td>&nbsp;</td>
+<td>创建邮件格式的补丁文件。参见 git am 命令</td>
+</tr>
+<tr class="row-even"><td>git grep</td>
+<td>4.2</td>
+<td>&nbsp;</td>
+<td>文件内容搜索定位工具</td>
+</tr>
+<tr class="row-odd"><td>git gui</td>
+<td>11.1</td>
+<td>&nbsp;</td>
+<td>基于Tcl/Tk的图形化工具，侧重提交等操作</td>
+</tr>
+<tr class="row-even"><td>git help</td>
+<td>3.1.2</td>
+<td>&nbsp;</td>
+<td>帮助</td>
+</tr>
+<tr class="row-odd"><td>git init</td>
+<td>4.1; 13.4</td>
+<td>&nbsp;</td>
+<td>版本库初始化</td>
+</tr>
+<tr class="row-even"><td>git init-db*</td>
+<td>-</td>
+<td>-</td>
+<td>同义词，等同于 git init</td>
+</tr>
+<tr class="row-odd"><td>git log</td>
+<td>11.4.3</td>
+<td>&nbsp;</td>
+<td>显示提交日志</td>
+</tr>
+<tr class="row-even"><td>git merge</td>
+<td>16.1</td>
+<td>&nbsp;</td>
+<td>分支合并</td>
+</tr>
+<tr class="row-odd"><td>git mergetool</td>
+<td>16.4.2</td>
+<td>&nbsp;</td>
+<td>图形化冲突解决</td>
+</tr>
+<tr class="row-even"><td>git mv</td>
+<td>10.4</td>
+<td>&nbsp;</td>
+<td>重命名</td>
+</tr>
+<tr class="row-odd"><td>git pull</td>
+<td>13.1</td>
+<td>&nbsp;</td>
+<td>拉回远程版本库的提交</td>
+</tr>
+<tr class="row-even"><td>git push</td>
+<td>13.1</td>
+<td>&nbsp;</td>
+<td>推送至远程版本库</td>
+</tr>
+<tr class="row-odd"><td>git rebase</td>
+<td>12.3.2</td>
+<td>&nbsp;</td>
+<td>分支变基</td>
+</tr>
+<tr class="row-even"><td>git rebase&#8211;interactive</td>
+<td>12.3.3</td>
+<td>&nbsp;</td>
+<td>交互式分支变基</td>
+</tr>
+<tr class="row-odd"><td>git reflog</td>
+<td>7.2</td>
+<td>&nbsp;</td>
+<td>分支等引用变更记录管理</td>
+</tr>
+<tr class="row-even"><td>git remote</td>
+<td>19.3</td>
+<td>&nbsp;</td>
+<td>远程版本库管理</td>
+</tr>
+<tr class="row-odd"><td>git repo-config*</td>
+<td>-</td>
+<td>-</td>
+<td>同义词，等同于 git config</td>
+</tr>
+<tr class="row-even"><td>git reset</td>
+<td>7.1</td>
+<td>&nbsp;</td>
+<td>重置改变分支“游标”指向</td>
+</tr>
+<tr class="row-odd"><td>git rev-parse</td>
+<td>4.2; 11.4.1</td>
+<td>&nbsp;</td>
+<td>将各种引用表示法转换为哈希值等</td>
+</tr>
+<tr class="row-even"><td>git revert</td>
+<td>12.5</td>
+<td>&nbsp;</td>
+<td>反转提交</td>
+</tr>
+<tr class="row-odd"><td>git rm</td>
+<td>10.2.2</td>
+<td>&nbsp;</td>
+<td>删除文件</td>
+</tr>
+<tr class="row-even"><td>git show</td>
+<td>11.4.3</td>
+<td>&nbsp;</td>
+<td>显示各种类型的对象</td>
+</tr>
+<tr class="row-odd"><td>git stage*</td>
+<td>-</td>
+<td>-</td>
+<td>同义词，等同于 git add</td>
+</tr>
+<tr class="row-even"><td>git stash</td>
+<td>9.2</td>
+<td>&nbsp;</td>
+<td>保存和恢复进度</td>
+</tr>
+<tr class="row-odd"><td>git status</td>
+<td>5.1</td>
+<td>&nbsp;</td>
+<td>显示工作区文件状态</td>
+</tr>
+<tr class="row-even"><td>git tag</td>
+<td>17.1</td>
+<td>&nbsp;</td>
+<td>里程碑管理</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="a-2">
+<h2>9.1.2. A.2 对象库操作相关命令<a class="headerlink" href="#a-2" title="永久链接至标题">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="29%" />
+<col width="16%" />
+<col width="11%" />
+<col width="44%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">命令</th>
+<th class="head">相关章节</th>
+<th class="head">页数</th>
+<th class="head">简要说明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>git commit-tree</td>
+<td>12.4</td>
+<td>&nbsp;</td>
+<td>从树对象创建提交</td>
+</tr>
+<tr class="row-odd"><td>git hash-object</td>
+<td>41.4.2</td>
+<td>&nbsp;</td>
+<td>从标准输入或文件计算哈希值或创建对象</td>
+</tr>
+<tr class="row-even"><td>git ls-files</td>
+<td>5.3; 18.4.2</td>
+<td>&nbsp;</td>
+<td>显示工作区和暂存区文件</td>
+</tr>
+<tr class="row-odd"><td>git ls-tree</td>
+<td>5.3</td>
+<td>&nbsp;</td>
+<td>显示树对象包含的文件</td>
+</tr>
+<tr class="row-even"><td>git mktag</td>
+<td>-</td>
+<td>-</td>
+<td>读取标准输入创建一个里程碑对象</td>
+</tr>
+<tr class="row-odd"><td>git mktree</td>
+<td>-</td>
+<td>-</td>
+<td>读取标准输入创建一个树对象</td>
+</tr>
+<tr class="row-even"><td>git read-tree</td>
+<td>24.2</td>
+<td>&nbsp;</td>
+<td>读取树对象到暂存区</td>
+</tr>
+<tr class="row-odd"><td>git update-index</td>
+<td>41.3.1</td>
+<td>&nbsp;</td>
+<td>工作区内容注册到暂存区及暂存区管理</td>
+</tr>
+<tr class="row-even"><td>git unpack-file</td>
+<td>-</td>
+<td>-</td>
+<td>创建临时文件包含指定 blob 的内容</td>
+</tr>
+<tr class="row-odd"><td>git write-tree</td>
+<td>5.3</td>
+<td>&nbsp;</td>
+<td>从暂存区创建一个树对象</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="a-3">
+<h2>9.1.3. A.3 引用操作相关命令<a class="headerlink" href="#a-3" title="永久链接至标题">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="29%" />
+<col width="16%" />
+<col width="11%" />
+<col width="44%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">命令</th>
+<th class="head">相关章节</th>
+<th class="head">页数</th>
+<th class="head">简要说明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>git check-ref-format</td>
+<td>17.7</td>
+<td>&nbsp;</td>
+<td>检查引用名称是否符合规范</td>
+</tr>
+<tr class="row-odd"><td>git for-each-ref</td>
+<td>-</td>
+<td>-</td>
+<td>引用迭代器，用于shell编程</td>
+</tr>
+<tr class="row-even"><td>git ls-remote</td>
+<td>13.4</td>
+<td>&nbsp;</td>
+<td>显示远程版本库的引用</td>
+</tr>
+<tr class="row-odd"><td>git name-rev</td>
+<td>17.1</td>
+<td>&nbsp;</td>
+<td>将提交ID显示为友好名称</td>
+</tr>
+<tr class="row-even"><td>git peek-remote*</td>
+<td>-</td>
+<td>-</td>
+<td>过时命令，请使用 git ls-remote</td>
+</tr>
+<tr class="row-odd"><td>git rev-list</td>
+<td>11.4.2</td>
+<td>&nbsp;</td>
+<td>显示版本范围</td>
+</tr>
+<tr class="row-even"><td>git show-branch</td>
+<td>-</td>
+<td>-</td>
+<td>显示分支列表及拓扑关系</td>
+</tr>
+<tr class="row-odd"><td>git show-ref</td>
+<td>14.1</td>
+<td>&nbsp;</td>
+<td>显示本地引用</td>
+</tr>
+<tr class="row-even"><td>git symbolic-ref</td>
+<td>-</td>
+<td>-</td>
+<td>显示或者设置符号引用</td>
+</tr>
+<tr class="row-odd"><td>git update-ref</td>
+<td>-</td>
+<td>-</td>
+<td>更新引用的指向</td>
+</tr>
+<tr class="row-even"><td>git verify-tag</td>
+<td>-</td>
+<td>-</td>
+<td>校验 GPG 签名的Tag</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="a-4">
+<h2>9.1.4. A.4 版本库管理相关命令<a class="headerlink" href="#a-4" title="永久链接至标题">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="29%" />
+<col width="16%" />
+<col width="11%" />
+<col width="44%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">命令</th>
+<th class="head">相关章节</th>
+<th class="head">页数</th>
+<th class="head">简要说明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>git count-objects</td>
+<td>-</td>
+<td>-</td>
+<td>显示松散对象的数量和磁盘占用</td>
+</tr>
+<tr class="row-odd"><td>git filter-branch</td>
+<td>35.4</td>
+<td>&nbsp;</td>
+<td>版本库重构</td>
+</tr>
+<tr class="row-even"><td>git fsck</td>
+<td>14.2</td>
+<td>&nbsp;</td>
+<td>对象库完整性检查</td>
+</tr>
+<tr class="row-odd"><td>git fsck-objects*</td>
+<td>-</td>
+<td>-</td>
+<td>同义词，等同于 git fsck</td>
+</tr>
+<tr class="row-even"><td>git gc</td>
+<td>14.4</td>
+<td>&nbsp;</td>
+<td>版本库存储优化</td>
+</tr>
+<tr class="row-odd"><td>git index-pack</td>
+<td>-</td>
+<td>-</td>
+<td>从打包文件创建对应的索引文件</td>
+</tr>
+<tr class="row-even"><td>git lost-found*</td>
+<td>-</td>
+<td>-</td>
+<td>过时，请使用 git fsck &#8211;lost-found 命令</td>
+</tr>
+<tr class="row-odd"><td>git pack-objects</td>
+<td>-</td>
+<td>-</td>
+<td>从标准输入读入对象ID，打包到文件</td>
+</tr>
+<tr class="row-even"><td>git pack-redundant</td>
+<td>-</td>
+<td>-</td>
+<td>查找多余的 pack 文件</td>
+</tr>
+<tr class="row-odd"><td>git pack-refs</td>
+<td>14.1</td>
+<td>&nbsp;</td>
+<td>将引用打包到 .git/packed-refs 文件中</td>
+</tr>
+<tr class="row-even"><td>git prune</td>
+<td>14.2</td>
+<td>&nbsp;</td>
+<td>从对象库删除过期对象</td>
+</tr>
+<tr class="row-odd"><td>git prune-packed</td>
+<td>-</td>
+<td>-</td>
+<td>将已经打包的松散对象删除</td>
+</tr>
+<tr class="row-even"><td>git relink</td>
+<td>-</td>
+<td>-</td>
+<td>为本地版本库中相同的对象建立硬连接</td>
+</tr>
+<tr class="row-odd"><td>git repack</td>
+<td>14.4</td>
+<td>&nbsp;</td>
+<td>将版本库未打包的松散对象打包</td>
+</tr>
+<tr class="row-even"><td>git show-index</td>
+<td>14.1</td>
+<td>&nbsp;</td>
+<td>读取包的索引文件，显示打包文件中的内容</td>
+</tr>
+<tr class="row-odd"><td>git unpack-objects</td>
+<td>-</td>
+<td>-</td>
+<td>从打包文件释放文件</td>
+</tr>
+<tr class="row-even"><td>git verify-pack</td>
+<td>-</td>
+<td>-</td>
+<td>校验对象库打包文件</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="a-5">
+<h2>9.1.5. A.5 数据传输相关命令<a class="headerlink" href="#a-5" title="永久链接至标题">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="8%" />
+<col width="8%" />
+<col width="67%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">命令</th>
+<th class="head">相关章节</th>
+<th class="head">页数</th>
+<th class="head">简要说明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>git fetch-pack</td>
+<td>15.1</td>
+<td>&nbsp;</td>
+<td>执行 git fetch 或 git pull 命令时在本地执行此命令，用于从其他版本库获取缺失的对象</td>
+</tr>
+<tr class="row-odd"><td>git receive-pack</td>
+<td>15.1</td>
+<td>&nbsp;</td>
+<td>执行 git push 命令时在远程执行的命令，用于接受推送的数据</td>
+</tr>
+<tr class="row-even"><td>git send-pack</td>
+<td>15.1</td>
+<td>&nbsp;</td>
+<td>执行 git push 命令时在本地执行的命令，用于向其他版本库推送数据</td>
+</tr>
+<tr class="row-odd"><td>git upload-archive</td>
+<td>-</td>
+<td>-</td>
+<td>执行 git archive &#8211;remote 命令基于远程版本库创建归档时，远程版本库执行此命令传送归档</td>
+</tr>
+<tr class="row-even"><td>git upload-pack</td>
+<td>15.1</td>
+<td>&nbsp;</td>
+<td>执行 git fetch 或 git pull 命令时在远程执行此命令，将对象打包、上传</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="a-6">
+<h2>9.1.6. A.6 邮件相关命令<a class="headerlink" href="#a-6" title="永久链接至标题">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="15%" />
+<col width="10%" />
+<col width="48%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">命令</th>
+<th class="head">相关章节</th>
+<th class="head">页数</th>
+<th class="head">简要说明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>git imap-send</td>
+<td>-</td>
+<td>-</td>
+<td>将补丁通过 IMAP 发送</td>
+</tr>
+<tr class="row-odd"><td>git mailinfo</td>
+<td>-</td>
+<td>-</td>
+<td>从邮件导出提交说明和补丁</td>
+</tr>
+<tr class="row-even"><td>git mailsplit</td>
+<td>-</td>
+<td>-</td>
+<td>将 mbox 或 Maildir 格式邮箱中邮件逐一提取为文件</td>
+</tr>
+<tr class="row-odd"><td>git request-pull</td>
+<td>21.2.1</td>
+<td>&nbsp;</td>
+<td>创建包含提交间差异和执行PULL操作地址的信息</td>
+</tr>
+<tr class="row-even"><td>git send-email</td>
+<td>20.1</td>
+<td>&nbsp;</td>
+<td>发送邮件</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="a-7">
+<h2>9.1.7. A.7 协议相关命令<a class="headerlink" href="#a-7" title="永久链接至标题">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="27%" />
+<col width="15%" />
+<col width="10%" />
+<col width="48%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">命令</th>
+<th class="head">相关章节</th>
+<th class="head">页数</th>
+<th class="head">简要说明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>git daemon</td>
+<td>28.2</td>
+<td>&nbsp;</td>
+<td>实现Git协议</td>
+</tr>
+<tr class="row-odd"><td>git http-backend</td>
+<td>27.2</td>
+<td>&nbsp;</td>
+<td>实现HTTP协议的CGI程序，支持智能HTTP协议</td>
+</tr>
+<tr class="row-even"><td>git instaweb</td>
+<td>27.3.4</td>
+<td>&nbsp;</td>
+<td>即时启动浏览器通过 gitweb 浏览当前版本库</td>
+</tr>
+<tr class="row-odd"><td>git shell</td>
+<td>-</td>
+<td>-</td>
+<td>受限制的shell，提供仅执行Git命令的SSH访问</td>
+</tr>
+<tr class="row-even"><td>git update-server-info</td>
+<td>15.1</td>
+<td>&nbsp;</td>
+<td>更新哑协议需要的辅助文件</td>
+</tr>
+<tr class="row-odd"><td>git http-fetch</td>
+<td>-</td>
+<td>-</td>
+<td>通过HTTP协议获取版本库</td>
+</tr>
+<tr class="row-even"><td>git http-push</td>
+<td>-</td>
+<td>-</td>
+<td>通过HTTP/DAV协议推送</td>
+</tr>
+<tr class="row-odd"><td>git remote-ext</td>
+<td>-</td>
+<td>-</td>
+<td>由Git命令调用，通过外部命令提供扩展协议支持</td>
+</tr>
+<tr class="row-even"><td>git remote-fd</td>
+<td>-</td>
+<td>-</td>
+<td>由Git命令调用，使用文件描述符作为协议接口</td>
+</tr>
+<tr class="row-odd"><td>git remote-ftp</td>
+<td>-</td>
+<td>-</td>
+<td>由Git命令调用，提供对FTP协议的支持</td>
+</tr>
+<tr class="row-even"><td>git remote-ftps</td>
+<td>-</td>
+<td>-</td>
+<td>由Git命令调用，提供对FTPS协议的支持</td>
+</tr>
+<tr class="row-odd"><td>git remote-http</td>
+<td>-</td>
+<td>-</td>
+<td>由Git命令调用，提供对HTTP协议的支持</td>
+</tr>
+<tr class="row-even"><td>git remote-https</td>
+<td>-</td>
+<td>-</td>
+<td>由Git命令调用，提供对HTTPS协议的支持</td>
+</tr>
+<tr class="row-odd"><td>git remote-testgit</td>
+<td>-</td>
+<td>-</td>
+<td>协议扩展示例脚本</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="a-8">
+<h2>9.1.8. A.8 版本库转换和交互相关命令<a class="headerlink" href="#a-8" title="永久链接至标题">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="27%" />
+<col width="16%" />
+<col width="11%" />
+<col width="46%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">命令</th>
+<th class="head">相关章节</th>
+<th class="head">页数</th>
+<th class="head">简要说明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>git archimport</td>
+<td>-</td>
+<td>-</td>
+<td>导入Arch版本库到Git</td>
+</tr>
+<tr class="row-odd"><td>git bundle</td>
+<td>-</td>
+<td>-</td>
+<td>提交打包和解包，以便在不同版本库间传递</td>
+</tr>
+<tr class="row-even"><td>git cvsexportcommit</td>
+<td>-</td>
+<td>-</td>
+<td>将Git的一个提交作为一个CVS检出</td>
+</tr>
+<tr class="row-odd"><td>git cvsimport</td>
+<td>-</td>
+<td>-</td>
+<td>导入CVS版本库到Git。或者使用 cvs2git</td>
+</tr>
+<tr class="row-even"><td>git cvsserver</td>
+<td>-</td>
+<td>-</td>
+<td>Git的CVS协议模拟器，可供CVS命令访问Git版本库</td>
+</tr>
+<tr class="row-odd"><td>git fast-export</td>
+<td>-</td>
+<td>-</td>
+<td>将提交导出为 git-fast-import 格式</td>
+</tr>
+<tr class="row-even"><td>git fast-import</td>
+<td>35.3</td>
+<td>&nbsp;</td>
+<td>其他版本库迁移至Git的通用工具</td>
+</tr>
+<tr class="row-odd"><td>git svn</td>
+<td>26.1</td>
+<td>&nbsp;</td>
+<td>Git 作为前端操作 Subversion</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="a-9">
+<h2>9.1.9. A.9 合并相关的辅助命令<a class="headerlink" href="#a-9" title="永久链接至标题">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="24%" />
+<col width="14%" />
+<col width="9%" />
+<col width="53%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">命令</th>
+<th class="head">相关章节</th>
+<th class="head">页数</th>
+<th class="head">简要说明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>git merge-base</td>
+<td>11.4.2</td>
+<td>&nbsp;</td>
+<td>供其他脚本调用，找到两个或多个提交最近的共同祖先</td>
+</tr>
+<tr class="row-odd"><td>git merge-file</td>
+<td>-</td>
+<td>-</td>
+<td>针对文件的两个不同版本执行三向文件合并</td>
+</tr>
+<tr class="row-even"><td>git merge-index</td>
+<td>-</td>
+<td>-</td>
+<td>对index中的冲突文件调用指定的冲突解决工具</td>
+</tr>
+<tr class="row-odd"><td>git merge-octopus</td>
+<td>-</td>
+<td>-</td>
+<td>合并两个以上分支。参见 git merge 的octopus合并策略</td>
+</tr>
+<tr class="row-even"><td>git merge-one-file</td>
+<td>-</td>
+<td>-</td>
+<td>由 git merge-index 调用的标准辅助程序</td>
+</tr>
+<tr class="row-odd"><td>git merge-ours</td>
+<td>-</td>
+<td>-</td>
+<td>合并使用本地版本，抛弃他人版本。参见 git merge 的ours合并策略</td>
+</tr>
+<tr class="row-even"><td>git merge-recursive</td>
+<td>-</td>
+<td>-</td>
+<td>针对两个分支的三向合并。参见 git merge 的recursive合并策略</td>
+</tr>
+<tr class="row-odd"><td>git merge-resolve</td>
+<td>-</td>
+<td>-</td>
+<td>针对两个分支的三向合并。参见 git merge 的resolve合并策略</td>
+</tr>
+<tr class="row-even"><td>git merge-subtree</td>
+<td>-</td>
+<td>-</td>
+<td>子树合并。参见 git merge 的 subtree 合并策略</td>
+</tr>
+<tr class="row-odd"><td>git merge-tree</td>
+<td>-</td>
+<td>-</td>
+<td>显式三向合并结果，不改变暂存区</td>
+</tr>
+<tr class="row-even"><td>git fmt-merge-msg</td>
+<td>-</td>
+<td>-</td>
+<td>供执行合并操作的脚本调用，用于创建一个合并提交说明</td>
+</tr>
+<tr class="row-odd"><td>git rerere</td>
+<td>-</td>
+<td>-</td>
+<td>重用所记录的冲突解决方案</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="a-10">
+<h2>9.1.10. A.10 杂项<a class="headerlink" href="#a-10" title="永久链接至标题">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="24%" />
+<col width="14%" />
+<col width="9%" />
+<col width="53%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">命令</th>
+<th class="head">相关章节</th>
+<th class="head">页数</th>
+<th class="head">简要说明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>git bisect&#8211;helper</td>
+<td>-</td>
+<td>-</td>
+<td>由 git bisect 命令调用，确认二分查找进度</td>
+</tr>
+<tr class="row-odd"><td>git check-attr</td>
+<td>41.1.2</td>
+<td>&nbsp;</td>
+<td>显示某个文件是否设置了某个属性</td>
+</tr>
+<tr class="row-even"><td>git checkout-index</td>
+<td>-</td>
+<td>-</td>
+<td>从暂存区拷贝文件至工作区</td>
+</tr>
+<tr class="row-odd"><td>git cherry</td>
+<td>-</td>
+<td>-</td>
+<td>查找没有合并到上游的提交</td>
+</tr>
+<tr class="row-even"><td>git diff-files</td>
+<td>-</td>
+<td>-</td>
+<td>比较暂存区和工作区，相当于 git diff &#8211;raw</td>
+</tr>
+<tr class="row-odd"><td>git diff-index</td>
+<td>-</td>
+<td>-</td>
+<td>比较暂存区和版本库，相当于 git diff &#8211;cached &#8211;raw</td>
+</tr>
+<tr class="row-even"><td>git diff-tree</td>
+<td>-</td>
+<td>-</td>
+<td>比较两个树对象，相当于 git diff &#8211;raw A B</td>
+</tr>
+<tr class="row-odd"><td>git difftool&#8211;helper</td>
+<td>-</td>
+<td>-</td>
+<td>由 git difftool 命令调用，默认要使用的差异比较工具</td>
+</tr>
+<tr class="row-even"><td>git get-tar-commit-id</td>
+<td>10.9</td>
+<td>&nbsp;</td>
+<td>从 git archive 创建的 tar 包中提取提交ID</td>
+</tr>
+<tr class="row-odd"><td>git gui&#8211;askpass</td>
+<td>-</td>
+<td>-</td>
+<td>命令 git gui 的获取用户口令输入界面</td>
+</tr>
+<tr class="row-even"><td>git notes</td>
+<td>41.5</td>
+<td>&nbsp;</td>
+<td>提交评论管理</td>
+</tr>
+<tr class="row-odd"><td>git patch-id</td>
+<td>-</td>
+<td>-</td>
+<td>补丁过滤行号和空白字符后生成补丁唯一ID</td>
+</tr>
+<tr class="row-even"><td>git quiltimport</td>
+<td>20.3.2</td>
+<td>&nbsp;</td>
+<td>将Quilt补丁列表应用到当前分支</td>
+</tr>
+<tr class="row-odd"><td>git replace</td>
+<td>41.4.2</td>
+<td>&nbsp;</td>
+<td>提交替换</td>
+</tr>
+<tr class="row-even"><td>git shortlog</td>
+<td>-</td>
+<td>-</td>
+<td>对 git log 的汇总输出，适合于产品发布说明</td>
+</tr>
+<tr class="row-odd"><td>git stripspace</td>
+<td>-</td>
+<td>-</td>
+<td>删除空行，供其他脚本调用</td>
+</tr>
+<tr class="row-even"><td>git submodule</td>
+<td>23.1</td>
+<td>&nbsp;</td>
+<td>子模组管理</td>
+</tr>
+<tr class="row-odd"><td>git tar-tree</td>
+<td>-</td>
+<td>-</td>
+<td>过时命令，请使用 git archive</td>
+</tr>
+<tr class="row-even"><td>git var</td>
+<td>-</td>
+<td>-</td>
+<td>显示 Git 环境变量</td>
+</tr>
+<tr class="row-odd"><td>git web&#8211;browse</td>
+<td>-</td>
+<td>-</td>
+<td>启动浏览器以查看目录或文件</td>
+</tr>
+<tr class="row-even"><td>git whatchanged</td>
+<td>-</td>
+<td>-</td>
+<td>显示提交历史及每次提交的改动</td>
+</tr>
+<tr class="row-odd"><td>git-mergetool&#8211;lib</td>
+<td>-</td>
+<td>-</td>
+<td>包含于其他脚本中，提供合并/差异比较工具的选择和执行</td>
+</tr>
+<tr class="row-even"><td>git-parse-remote</td>
+<td>-</td>
+<td>-</td>
+<td>包含于其他脚本中，提供操作远程版本库的函数</td>
+</tr>
+<tr class="row-odd"><td>git-sh-setup</td>
+<td>-</td>
+<td>-</td>
+<td>包含于其他脚本中，提供 shell 编程的函数库</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="020-cvs-git-face2face.html" title="9.2. Git与CVS面对面"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="9. 附录"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >9. 附录</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

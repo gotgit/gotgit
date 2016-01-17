@@ -1,0 +1,539 @@
+CVS版本库到Git的迁移
+********************
+
+CVS是最早广泛使用的版本控制系统，因为其服务器端存储结构的简单直白，至今\
+仍受到不少粉丝的钟爱。但是毕竟是几十年前的产物，因为设计上的原因导致缺乏\
+现代版本控制系统的一些必须功能，如：没有原子提交，分支管理不便（慢），分\
+支合并困难因为合并过程缺乏跟踪，不支持文件名/目录名的修改等等。很多CVS的\
+用户都已经转换到Subversion这一更好的集中式版本控制系统了。如果还在使用\
+CVS，那么可以考虑直接迁移到Git。
+
+CVS到Git迁移可以使用cvs2svn软件包中的\ :command:`cvs2git`\ 命令。为什么\
+该项目叫做cvs2svn而非cvs2git呢？这是因为该项目最早是为CVS版本库迁移到\
+Subversion版本库服务的，只是最近才增加了CVS版本转换为Git版本库的功能。\
+cvs2svn将CVS转换为Subversion版本库的过程一直以稳定著称，在cvs2svn 2.1版\
+开始，增加了将CVS版本库转换为Git版本库的功能，无疑让这个工具更具生命力，\
+也减少了之前CVS到Git库的转换环节。在推出cvs2git功能之前，通常的CVS到Git\
+迁移路径是用cvs2svn将CVS版本库迁移到Subversion版本库，再用git-svn将\
+Subversion版本库迁移到Git。
+
+关于cvs2svn及cvs2git可以参考下面的链接：
+
+* http://cvs2svn.tigris.org/cvs2svn.html
+* http://cvs2svn.tigris.org/cvs2git.html
+
+安装cvs2svn（含cvs2git）
+==========================
+
+**Linux下cvs2svn的安装**
+
+大部分Linux发行版都提供cvs2svn的发布包，可以直接用平台自带的cvs2svn软件\
+包。cvs2svn在2.1版本之后开始引入了到Git库的转换，2.3.0版本有了独立的\
+cvs2git转换脚本，cvs2git正在逐渐完善当中，因此尽量选择最新版本的cvs2svn。
+
+例如在Debian或Ubuntu下，可以通过下面命令查看源里面的cvs2svn版本。
+
+::
+
+  $ aptitude versions cvs2svn
+  p   2.1.1-1               stable                     990 
+  pi  2.3.0-2               testing,unstable           1001
+
+
+可以看出Debian的Testing和Sid的仓库中才有2.3.0版本的cvs2svn。于是执行下面\
+的命令安装在Testing版本才有的2.3.0-2版本的cvs2svn：
+
+::
+
+  $ sudo aptitude cvs2svn/testing
+
+如果对应的Linux发行版没有对应的版本也可以从源码开始安装。cvs2svn的官方版\
+本库在\ http://cvs2svn.tigris.org/svn/cvs2svn/trunk\ ，已经有人将cvs2svn\
+项目转换为Git库。可以从Git库下载源码，安装cvs2svn。
+
+* 下载cvs2svn源代码
+
+  ::
+
+    $ git clone git://repo.or.cz/cvs2svn.git
+
+* 进入cvs2svn源码目录，安装cvs2svn。
+
+  ::
+
+    $ cd cvs2svn
+    $ sudo make install
+
+* 安装用户手册。
+
+  ::
+
+    $ sudo make man
+
+cvs2svn对其他软件包的依赖：
+
+* Python 2.4或以上版本（Python 3.x暂不支持）。
+
+* RCS：如果在转换中使用了\ ``--use-rcs``\ ，就需要安装RCS软件包。参见：\
+  http://www.cs.purdue.edu/homes/trinkle/RCS/\ 。
+
+* CVS：如果在转换中使用了\ ``--use-cvs``\ ，就需要安装CVS软件包。参见：\
+  http://ccvs.cvshome.org/\ 。
+
+* Git：1.5.4.4或以上的版本。之前版本的Git的\ ``git fast-import`` 命令有\
+  Bug，加载cvs2git导出文件有问题。
+
+**Mac OS X下cvs2svn的安装**
+
+Mac OS X下可以使用Homebrew安装cvs2svn。
+
+* Mac OS X缺省安装的Python缺少cvs2svn依赖的gdbm模组，先用Homebrew来重新\
+  安装python。
+
+  ::
+
+    $ brew install python
+
+* 安装cvs2svn
+
+  ::
+
+    $ export PATH=/usr/local/bin:$PATH
+    $ brew install cvs2svn
+
+版本库转换（命令行参数模式）
+=============================
+
+转换CVS版本库的注意事项：
+
+* 使用cvs2git对CVS版本库转换，必须在CVS的服务器端执行，即cvs2git必须能够\
+  通过文件系统直接访问CVS版本库中的\ :file:`,v`\ 文件。
+
+* 在转换前，确保所有人的修改都已经提交到CVS版本库中。
+
+* 在转换前，停止CVS版本库的访问，以免在转换过程中有新提交写入。
+
+* 在转换前，对原始版本库进行备份，以免误操作对版本库造成永久的破坏。
+
+* 在转换完成后，永久停止CVS版本库的写入服务，可以仅开放只读服务。
+
+  这是由于cvs2git是一次性操作，不能对CVS后续提交执行增量式的到Git库转换，\
+  因此当CVS版本库转换完毕后，须停止CVS服务。
+
+* 先做小规模的试验性转换。
+
+  转换CVS版本库切忌一上来就对整个版本库进行转换，等到发现日志乱码、文件\
+  名乱码、提交者ID不完全后重新转换会浪费大量时间。
+
+  应该先选择CVS版本库中的部分文件和目录作为样本，进行小规模的转换测试。
+
+* 不要对包含\ :file:`CVSROOT`\ 目录的版本库的根进行操作，可以先对服务器\
+  目录布局进行调整。
+
+  如果转换直接针对包含\ :file:`CVSROOT`\ 目录的版本库根目录进行操作，会\
+  导致\ :file:`CVSROOT`\ 目录下的文件及更改历史也被纳入到Git版本库，这是\
+  不需要的。
+
+**检查CVS版本库中的文件名乱码**
+
+CVS中保存的数据在服务器端直接和同名文件（文件多了一个“\ ``,v``\ ”后缀）\
+相对应，当转换的CVS版本库是从其他平台（如Windows）拷贝过来的，就可能因为\
+平台本身字符集不一致导致中文文件名包含乱码，在CVS版本库转换过程造成乱码。\
+可以先对有问题的目录名和文件名进行重命名，转换为当前平台正确的编码。
+
+**小规模的转换试验**
+
+前面提到过，最好先进行小规模的转换试验，然后再对整个版本库进行转换。例如\
+版本库是如下方式部署：\ :file:`CVSROOT`\ 为\ ``/cvshome/user``\ ，需要将\
+之下的\ :file:`jiangxin/homepage/worldhello`\ 转换为一个Git版本库。先检\
+查一下版本库中的数据，找出典型的目录用于转换。
+
+典型的数据是这样的：包含中文文件名，并且日志中包含中文。例如在版本库中，\
+执行CVS查看日志命令，看到类似下面的输出。
+
+::
+
+  RCS file: /cvshome/user/jiangxin/homepage/worldhello/archive/2003/.mhonarc.db,v
+  Working file: archive/2003/.mhonarc.db
+  head: 1.16
+  branch:
+  locks: strict
+  access list:
+  symbolic names:
+  keyword substitution: kv
+  total revisions: 16;    selected revisions: 16
+  description:
+  ----------------------------
+  revision 1.16
+  date: 2004-09-21 15:56:30 +0800;  author: jiangxin;  state: Exp;  lines: +3 -3;  commitid: c2c414fdea20000;
+  <D0><U+07B8><C4><D3>ʼ<FE><B5><D8><A3><BB>
+  <D0><U+07B8><C4><CB><D1><CB><F7><D2><FD><C7>棻
+  ----------------------------
+
+日志乱码是因为CVS并没有对日志的字符转换为统一的UTF-8字符集。此版本库之前\
+用CVSNT维护，缺省字符集为GBK。那么就先对有乱码的这一个目录进行一下试验性\
+的转换。
+
+* 调用cvs2git执行转换，产生两个导出文件。这两个导出文件将作为Git版本库创\
+  建时的导入文件。
+
+  命令行用了两个\ ``--encoding``\ 参数设置编码，会依次进行尝试将日志中的\
+  非Ascii字符转换为UTF-8。
+
+  ::
+
+    $ cvs2git --blobfile git-blob.dat --dumpfile git-dump.dat \
+      --encoding utf8 --encoding gbk --username cvs2git \
+      /cvshome/user/jiangxin/homepage/worldhello/archive/2003/
+
+* 成功导出后，产生两个导出文件，一个保存各个文件的各个不同版本的数据内容，\
+  即在命令行指定的输出文件\ :file:`git-blob.dat`\ 。另外一个文件是上面命令\
+  行指定的\ :file:`git-dump.dat`\ 用于保存各个提交相关信息（提交者、提交\
+  时间、提交日志等）。
+
+  ::
+
+    $ du -sh git*dat
+    9.8M    git-blob.dat
+    24K     git-dump.dat
+
+  可以看出保存文件内容的导出文件（\ :file:`git-blob.dat`\ ）相对更大一些。
+
+* 创建空的Git库，使用Git通用的数据迁移命令\ :command:`git fast-import`\
+  将cvs2git的导出文件导入版本库中。
+
+  ::
+
+    $ mkdir test
+    $ cd test
+    $ git init
+    $ cat ../git-blob.dat ../git-dump.dat | git fast-import
+
+* 检查导出结果。
+
+  ::
+
+    $ git reset HEAD
+    $ git checkout .
+    $ git log -1
+    commit 8334587cb241076bcd2e710b321e8e16b5e46bba
+    Author: jiangxin <>
+    Date:   Tue Sep 21 07:56:31 2004 +0000
+
+        修改邮件地址；
+        修改搜索引擎；
+
+很好，导出的Git库的日志，中文乱码问题已经解决。但是会发现提交日志中的作\
+者（Author）字段信息不完整：缺乏邮件地址。这是因为CVS的提交者仅为用户登\
+录ID，而Git的提交者信息还要包含邮件地址。cvs2git提供参数实现两种提交者ID\
+的转换，不过需要通过配置文件予以指定，这就需要采用下面介绍的转换方法。
+
+版本库转换（配置文件模式）
+==========================
+
+使用命令行参数调用cvs2git麻烦、可重用性差，而且可配置项有限。采用cvs2git\
+配置文件模式运行不但能够简化cvs2git的命令行参数，而且能够提供更多的命令\
+行无法提供的配置项，可以更精确的对CVS到Git版本库转换进行定制。
+
+cvs2svn软件包提供了一个cvs2git的配置示例文件，见源码中的\
+``cvs2git-example.options``\ [#]_\ 。将该示例文件在本地复制一份，对其\
+进行更改。该文件是Python代码格式，以“#”（井号）开始的行是注释，文件缩进\
+不要随意更改，因为缩进也是Python语法的一部分。可以考虑针对下列选项进行定制。
+
+* 设置CVS版本库位置。
+
+  使用配置文件方式运行cvs2git，只能在配置文件中设置要转换的CVS版本库位置，\
+  而不能在命令行进行设置。具体说是在配置文件的最后面\ ``run_options``\
+  的\ ``set_project``\ 方法中指定。
+
+  ::
+
+    run_options.set_project(
+        # CVS 版本库的位置（不是工作区，而是包含,v 文件的版本库）
+        # 可以是版本库下的子目录。
+        r'/cvshome/user/jiangxin/homepage/worldhello/archive/2003/',
+
+* 导出文件的位置也在配置文件中预先设置好了，也不能再在命令行中设置。
+
+  - 导出CVS版本文件的内容至文件\ :file:`cvs2svn-tmp/git-blob.dat`\ 。
+
+    缺省使用\ :command:`cvs`\ 命令做导出，最稳定。
+
+    ::
+
+      ctx.revision_collector = GitRevisionCollector(
+          'cvs2svn-tmp/git-blob.dat',
+
+          #RCSRevisionReader(co_executable=r'co'),
+          CVSRevisionReader(cvs_executable=r'cvs'),
+          )
+
+  - 另外一个导出文件的缺省位置：\ :file:`cvs2svn-tmp/git-dump.dat`\ 。
+
+    ::
+
+      ctx.output_option = GitOutputOption(
+          os.path.join(ctx.tmpdir, 'git-dump.dat'),
+
+          # The blobs will be written via the revision recorder, so in
+          # OutputPass we only have to emit references to the blob marks:
+          GitRevisionMarkWriter(),
+
+          # Optional map from CVS author names to git author names:
+          author_transforms=author_transforms,
+          )
+
+* 设置无提交用户信息时使用的用户名。这个用户名可以用接下来的用户映射转换\
+  为Git用户名。
+
+  ::
+
+    ctx.username = 'cvs2svn'
+
+* 建立CVS用户和Git用户之间的映射。Git用户名可以用Python的tuple语法\
+  ``(name, email)``\ 或者用字符串\ ``name <email>``\ 来表示。
+
+  ::
+
+    author_transforms={
+        'jiangxin'  : ('Jiang Xin', 'jiangxin@ossxp.com'),
+        'dev1'      : u'开发者1 <dev1@ossxp.com>',
+
+        'cvs2svn'   : 'cvs2svn <admin@example.com>',
+        }
+
+* 字符集编码。即如何转换日志中的用户名、提交说明以及文件名的编码。
+
+  对于可能在日志中出现中，必须做出下面类似设置。编码的顺序对输出也会有\
+  影响，一般将utf8放在gbk之前能保证当日志中同时出现两种编码时都能正常转换\
+  [#]_\ 。
+
+  ::
+
+    ctx.cvs_author_decoder = CVSTextDecoder(
+        [
+            'utf8',
+            'gbk',
+            ],
+        fallback_encoding='gbk'
+        )
+
+    ctx.cvs_log_decoder = CVSTextDecoder(
+        [
+            'utf8',
+            'gbk',
+            ],
+        fallback_encoding='gbk'
+        )
+
+    ctx.cvs_filename_decoder = CVSTextDecoder(
+        [
+            'utf8',
+            'gbk',
+            ],
+        #fallback_encoding='ascii'
+        )
+
+* 是否忽略\ :file:`.cvsignore`\ 文件？缺省保留\ :file:`.cvsignore`\ 文件。
+
+  无论选择保留或是不保留，最好在转换后手工进行\ :file:`.cvsignore`\ 到\
+  :file:`.gitignore`\ 的转换。因为 cvs2git不能自动将\ :file:`.cvsignore`\
+  文件转换为\ :file:`.gitignore`\ 文件。
+
+  ::
+
+    ctx.keep_cvsignore = True
+
+* 对文件换行符等的处理。下面的配置原本是针对CVS到Subversion的属性转换，\
+  但是也会影响到Git转换时的换行符设置。
+
+  维持默认值比较安全。
+
+  ::
+
+    ctx.file_property_setters.extend([
+        # 基于配置文件设置文件的 mime 类型
+        #MimeMapper(r'/etc/mime.types', ignore_case=False),
+
+        # 对于二进制文件（-kb模式）不设置 svn:eol-style 属性（对于 Subverson 来说）
+        CVSBinaryFileEOLStyleSetter(),
+
+        # 如果文件是二进制，并且 svn:mime-type 没有设置，将其设置为 'application/octet-stream'。
+        CVSBinaryFileDefaultMimeTypeSetter(),
+
+        # 如果希望根据文件的 mime 类型来判断文件的换行符，打开下面注释
+        #EOLStyleFromMimeTypeSetter(),
+
+        # 如果上面的规则没有为文件设置换行符类型，则为 svn:eol-style 设置缺省类型。
+        # （二进制文件除外）
+        # 缺省把文件视为二进制，不为其设置换行符类型，这样最安全。
+        # 如果确认 CVS 的二进制文件都已经设置了 -kb 参数，或者使用上面的规则能够对
+        # 文件类型做出正确判断，也可以使用下面参数为非二进制文件设置缺省换行符号。
+        ## 'native': 服务器端文件的换行符保存为 LF，客户端根据需要自动转换。
+        ## 'CRLF':   服务器端文件的换行符保存为 CRLF，客户端亦为 CRLF。
+        ## 'CR':     服务器端文件的换行符保存为 CR，客户端亦为 CR。
+        ## 'LF':     服务器端文件的换行符保存为 LF，客户端亦为 LF。
+        DefaultEOLStyleSetter(None),
+
+        # 如果文件没有设置 svn:eol-style ，也不为其设置 svn:keywords 属性
+        SVNBinaryFileKeywordsPropertySetter(),
+
+        # 如果 svn:keywords 未色环只，基于文件的 CVS 模式进行设置。
+        KeywordsPropertySetter(config.SVN_KEYWORDS_VALUE),
+
+        # 设置文件的 svn:executable 属性，如果文件在 CVS 中标记为可执行文件。
+        ExecutablePropertySetter(),
+        ])
+
+* 是否只迁移主线，忽略分支和里程碑？
+
+  缺省对所有分支和里程碑都进行转换。如果选择忽略分支和里程碑，将\
+  ``False``\ 修改为\ ``True``\ 。
+
+  ::
+
+    ctx.trunk_only = False
+
+* 分支和里程碑迁移及转换。
+
+  ::
+
+    global_symbol_strategy_rules = [
+
+        # 和正则表达式匹配的 CVS 标识，转换为 Git 的分支。
+        #ForceBranchRegexpStrategyRule(r'branch.*'),
+
+        # 和正则表达式匹配的 CVS 标识，转换为 Git 的里程碑。
+        #ForceTagRegexpStrategyRule(r'tag.*'),
+
+        # 忽略和正则表达式匹配的 CVS 标识，不进行（到Git分支/里程碑）转换。
+        #ExcludeRegexpStrategyRule(r'unknown-.*'),
+
+        # 岐义的CVS标识的处理选项。
+        # 缺省根据使用频率自动确定转换为分支或里程碑。
+        HeuristicStrategyRule(),
+        # 或者全部转换为分支。
+        #AllBranchRule(),
+        # 或者全部转换为里程碑。
+        #AllTagRule(),
+
+        ...
+
+    run_options.set_project(
+
+        ...
+
+        # A list of symbol transformations that can be used to rename
+        # symbols in this project.
+        symbol_transforms=[
+            # 是否需要重新命名里程碑？第一个参数用于匹配，第二个参数用于替换。
+            #RegexpSymbolTransform(r'release-(\d+)_(\d+)',
+            #                      r'release-\1.\2'),
+            #RegexpSymbolTransform(r'release-(\d+)_(\d+)_(\d+)',
+            #                      r'release-\1.\2.\3'),
+
+
+**使用配置文件的 cvs2git转换过程**
+
+参照上面的方法，从缺省的cvs2git配置文件定制，在本地创建一个文件，例如名为\
+``cvs2git.options``\ 文件。
+
+* 使用cvs2git配置文件，命令行大大简化了。
+
+  ::
+
+    $ cvs2git --options cvs2git.options
+
+* 成功导出后，产生两个导出文件，都保存在\ :file:`cvs2git-tmp`\ 目录中。
+
+  一个保存各个文件的各个不同版本的数据内容，即在命令行指定的输出文件\
+  :file:`git-blob.dat`\ 。另外一个文件是上面命令行指定的\
+  :file:`git-dump.dat`\ 用于保存各个提交相关信息（提交者、提交时间、\
+  提交日志等）。
+
+  可以看出保存文件内容的导出文件相对更大一些。
+
+  ::
+
+    $ du -sh cvs2svn-tmp/*
+    9.8M    cvs2svn-tmp/git-blob.dat
+    24K     cvs2svn-tmp/git-dump.dat
+
+* 创建空的Git库，使用Git通用的数据迁移命令\ :command:`git fast-import`\
+  将cvs2git的导出文件导入版本库中。
+
+  ::
+
+    $ mkdir test
+    $ cd test
+    $ git init
+    $ cat ../cvs2svn-tmp/git-blob.dat \
+          ../cvs2svn-tmp/git-dump.dat | git fast-import
+
+* 检查导出结果。
+
+  ::
+
+    $ git reset HEAD
+    $ git checkout .
+    $ git log -1
+    commit e3f12f57a77cbffcf62e19012507d041f1c9b03d
+    Author: Jiang Xin <jiangxin@ossxp.com>
+    Date:   Tue Sep 21 07:56:31 2004 +0000
+
+        修改邮件地址；
+        修改搜索引擎；
+
+可以看到，这一次的转换结果不但日志中的中文可以显示，而且提交者ID也转换成\
+了Git的风格。
+
+修改\ ``cvs2git.optoins``\ 中的CVS版本库地址，开始正式的转换过程。
+
+迁移后版本库检查
+=================
+
+完成迁移还不能算是大功告成，还需要进行细致的检验。
+
+文件名和日志的中文
+---------------------------------
+
+如果转换过程参考了前面的步骤和注意事项，文件名和版本库提交日志中的中文不\
+应该出现乱码。
+
+图片文件被破坏
+---------------------------------
+
+最典型的错误就是转换后部分图片被破坏导致无法显示。这是怎么造成的呢？
+
+CVS缺省将提交的文件以文本方式添加，除非用户在添加文件时使用了\ ``-kb``\
+参数。用命令行提交的用户经常会忘记，这就导致一些二进制文件（如图片文件）\
+被以文本文件的方式添加到其中。文本文件在CVS检入和检出时会进行换行符转换 ，\
+在服务器端换行符保存为LF，在Windows上检出时为CRLF。如果误做文本文件方式\
+添加的图片中恰好出现\ ``CRLF``\ ，则在Windows上似乎没有问题（仍然是\
+``CRLF``\ ），但是CVS库转换成 Git库后，图片文件在Windows上再检出时文件数\
+据中原来CRLF被换成了LF，导致文件被破坏。
+
+出现这种情况是CVS版本库使用和管理上出现了问题，应该在CVS版本库中对有问题\
+的文件重新设置属性，标记为二进制文件。然后再进行CVS版本库到Git库的转换。
+
+:file:`.cvsignore`\ 文件的转换
+---------------------------------
+
+CVS版本库中可能存在\ :file:`.cvsignore`\ 文件用于设置文件忽略，相当于Git\
+版本库中的\ :file:`.gitignore`\ 。因为当前版本的 cvs2git不能自动将\
+:file:`.cvsignore`\ 转换为\ :file:`.gitignore`\ ，需要在版本库迁移后手工完成。\
+CVS的\ :file:`.cvsignore`\ 文件只对目录内文件有效，不会向下作用到子目录上，\
+这一点和Git的\ :file:`.gitignore`\ 相区别。还有不同就是\ :file:`.cvsignore`\
+文件每一行用空格分割多个忽略，而Git每个忽略为单独的一行。
+
+迁移后的测试
+---------------------------------
+
+一个简单的检查方法是，在同一台机器上分别用CVS和Git检出（或克隆），然后比\
+较本地的差异。要在不同的系统上（Windows，Linux）分别进行测试。
+
+
+----
+
+.. [#] http://repo.or.cz/w/cvs2svn.git/blob/HEAD:/cvs2git-example.options
+.. [#] 部分中文的UTF8编码在GBK中存在古怪的对应

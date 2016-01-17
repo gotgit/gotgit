@@ -1,0 +1,202 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>7.1. etckeeper &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="up" title="7. Git的其它应用" href="index.html" />
+    <link rel="next" title="7.2. Gistore" href="020-gistore.html" />
+    <link rel="prev" title="7. Git的其它应用" href="index.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="020-gistore.html" title="7.2. Gistore"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="7. Git的其它应用"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">7. Git的其它应用</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.1. etckeeper</a><ul>
+<li><a class="reference internal" href="#id1">7.1.1. 安装etckeeper</a></li>
+<li><a class="reference internal" href="#id2">7.1.2. 配置etckeeper</a></li>
+<li><a class="reference internal" href="#id3">7.1.3. 使用etckeeper</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="index.html"
+                        title="上一章">7. Git的其它应用</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="020-gistore.html"
+                        title="下一章">7.2. Gistore</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/07-git-app/010-etckeeper.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="etckeeper">
+<h1>7.1. etckeeper<a class="headerlink" href="#etckeeper" title="永久链接至标题">¶</a></h1>
+<p>Linux/Unix的用户对<tt class="file docutils literal"><span class="pre">/etc</span></tt>目录都是再熟悉不过了，在这个最重要的目录中保存了大部分软件的配置信息，借以实现软件的配置以及整个系统的启动过程控制。对于Windows用户来说，可以把<tt class="file docutils literal"><span class="pre">/etc</span></tt>目录视为Windows中的注册表，只不过文件化了，可管理了。</p>
+<p>这么重要的<tt class="file docutils literal"><span class="pre">/etc</span></tt>目录，如果其中的文件被错误编辑或者删除，将会损失惨重。<tt class="docutils literal"><span class="pre">etckeeper</span></tt>这个软件可以帮助实现<tt class="file docutils literal"><span class="pre">/etc</span></tt>目录的持续备份，借用分布式版本控制工具，如：git、mercurial、bazaar、darcs。</p>
+<p>那么etckeeper是如何实现的呢？以git作为etckeeper的后端为例进行说明，其他的分布式版本控制系统大同小异。</p>
+<ul class="simple">
+<li>将<tt class="file docutils literal"><span class="pre">/etc</span></tt>目录Git化。将会创建Git库于目录<tt class="file docutils literal"><span class="pre">/etc/.git</span></tt>中，<tt class="file docutils literal"><span class="pre">/etc</span></tt>目录作为工作区。</li>
+<li>与系统的包管理器，如Debian/Ubuntu的apt，Redhat上的yum等整合。一旦有软件包安装或删除，对<tt class="file docutils literal"><span class="pre">/etc</span></tt>目录下的改动执行提交操作。</li>
+<li>除了能够记录<tt class="file docutils literal"><span class="pre">/etc</span></tt>目录中的文件内容，还可以记录文件属性等元信息。因为<tt class="file docutils literal"><span class="pre">/etc</span></tt>目录下的文件的权限设置往往是非常重要和致命的。</li>
+<li>因为<tt class="file docutils literal"><span class="pre">/etc</span></tt>目录已经是一个版本库了，可以用git命令对<tt class="file docutils literal"><span class="pre">/etc</span></tt>下的文件进行操作：查看历史，回退到历史版本...</li>
+<li>也可以将<tt class="file docutils literal"><span class="pre">/etc</span></tt>克隆到另外的主机中，实现双机备份。</li>
+</ul>
+<div class="section" id="id1">
+<h2>7.1.1. 安装etckeeper<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>安装etckeeper是一个最简单的活，因为etckeeper在主流的Linux发行版都有对应的安装包。使用相应Linux平台的包管理器（apt、yum）即可安装。</p>
+<p>在Debian/Ubuntu上安装etckeeper如下：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sudo aptitude install etckeeper
+</pre></div>
+</div>
+<p>安装etckeeper软件包，会自动安装上一个分布式版本控制系统工具，除非已经安装了。这是因为etckeeper需要使用一个分布式版本控制系统作为存储管理后端。在Debian/Ubuntu上会依据下面的优先级进行安装：git &gt; mercurial &gt; bzr &gt; darcs。</p>
+<p>在Debian/Ubuntu上，使用<strong class="command">dpkg -s</strong>命令查看etckeeper的软件包依赖，就会看到这个优先级。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ dpkg -s etckeeper | grep &quot;^Depends&quot;
+Depends: git-core (&gt;= 1:1.5.4) | git (&gt;= 1:1.7) | mercurial | bzr (&gt;= 1.4~) | darcs, debconf (&gt;= 0.5) | debconf-2.0
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>7.1.2. 配置etckeeper<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>配置etckeeper首先要选择好某一分布式版本库控制工具，如Git，然后用相应的版本控制工具初始化<tt class="file docutils literal"><span class="pre">/etc</span></tt>目录，并做一次提交。</p>
+<ul>
+<li><p class="first">编辑配置文件<tt class="file docutils literal"><span class="pre">/etc/etckeeper/etckeeper.conf</span></tt>。</p>
+<p>只要有下面一条配置就够了。告诉etckeeper使用git作为数据管理后端。</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">VCS</span><span class="o">=</span><span class="s">&quot;git&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">初始化<tt class="file docutils literal"><span class="pre">/etc</span></tt>目录。即将其Git化。执行下面的命令（需要以root用户身份），会将<tt class="file docutils literal"><span class="pre">/etc</span></tt>目录Git化。</p>
+<p>整个过程可能会比较慢，因为要对<tt class="file docutils literal"><span class="pre">/etc</span></tt>下的文件执行<strong class="command">git add</strong>，因为文件太多，会慢一些。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sudo etckeeper init
+</pre></div>
+</div>
+</li>
+<li><p class="first">执行第一次提交。注意使用etckeeper命令而非git命令进行提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sudo etckeeper commit &quot;this is the first etckeeper commit...&quot;
+</pre></div>
+</div>
+<p>整个过程可能会比较慢，主要是因为etckeeper要扫描<tt class="file docutils literal"><span class="pre">/etc</span></tt>下不属于root用户的文件以及特殊权限的文件并进行记录。这是为了弥补Git本身不能记录文件属主、权限信息等。</p>
+</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2>7.1.3. 使用etckeeper<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>实际上由于etckeeper已经和系统的包管理工具进行了整合（如Debian/Ubuntu的apt，Redhat上的yum等），etckeeper可以免维护运行。即一旦有软件包安装或删除，对<tt class="file docutils literal"><span class="pre">/etc</span></tt>目录下的改动会自动执行提交操作。</p>
+<p>当然也可以随时以<tt class="docutils literal"><span class="pre">root</span></tt>用户身份调用<strong class="command">etckeeper commit</strong>命令对<tt class="file docutils literal"><span class="pre">/etc</span></tt>目录的改动手动进行提交。</p>
+<p>剩下的工作就交给Git了。可以在<tt class="file docutils literal"><span class="pre">/etc</span></tt>目录执行<strong class="command">git log</strong>、<strong class="command">git show</strong>等操作。但要注意以root用户身份运行，因为<tt class="file docutils literal"><span class="pre">/etc/.git</span></tt>目录的权限不允许普通用户操作。</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="020-gistore.html" title="7.2. Gistore"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="7. Git的其它应用"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >7. Git的其它应用</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,692 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>2.2. Git暂存区 &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="up" title="2. Git独奏" href="index.html" />
+    <link rel="next" title="2.3. Git对象" href="030-head-master-commit-refs.html" />
+    <link rel="prev" title="2.1. Git初始化" href="010-git-init.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="030-head-master-commit-refs.html" title="2.3. Git对象"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="010-git-init.html" title="2.1. Git初始化"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">2. Git独奏</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">2.2. Git暂存区</a><ul>
+<li><a class="reference internal" href="#id1">2.2.1. 修改不能直接提交？</a></li>
+<li><a class="reference internal" href="#git-stage">2.2.2. 理解 Git 暂存区（stage）</a></li>
+<li><a class="reference internal" href="#git-diff">2.2.3. Git Diff魔法</a></li>
+<li><a class="reference internal" href="#git-commit-a">2.2.4. 不要使用<strong class="command">git commit -a</strong></a></li>
+<li><a class="reference internal" href="#id2">2.2.5. 搁置问题，暂存状态</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="010-git-init.html"
+                        title="上一章">2.1. Git初始化</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="030-head-master-commit-refs.html"
+                        title="下一章">2.3. Git对象</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/02-git-solo/020-git-stage.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="git">
+<h1>2.2. Git暂存区<a class="headerlink" href="#git" title="永久链接至标题">¶</a></h1>
+<p>上一章主要学习了三个命令：<strong class="command">git init</strong>、<strong class="command">git add</strong>和<strong class="command">git commit</strong>，这三条命令可以说是版本库创建的三部曲。同时还通过对几个问题的思考，使读者能够了解Git版本库在工作区中的布局，Git三个等级的配置文件以及Git的别名命令等内容。</p>
+<p>在上一章的实践中，DEMO版本库经历了两次提交，可以用<strong class="command">git log</strong>查看提交日志（附加的<tt class="docutils literal"><span class="pre">--stat</span></tt>参数看到每次提交的文件变更统计）。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/my/workspace/demo
+$ git log --stat
+commit a0c641e92b10d8bcca1ed1bf84ca80340fdefee6
+Author: Jiang Xin &lt;jiangxin@ossxp.com&gt;
+Date:   Mon Nov 29 11:00:06 2010 +0800
+
+    who does commit?
+
+commit 9e8a761ff9dd343a1380032884f488a2422c495a
+Author: Jiang Xin &lt;jiangxin@ossxp.com&gt;
+Date:   Sun Nov 28 12:48:26 2010 +0800
+
+    initialized.
+
+ welcome.txt |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+</pre></div>
+</div>
+<p>可以看到第一次提交对文件<tt class="file docutils literal"><span class="pre">welcome.txt</span></tt>有一行的变更，而第二次提交因为是使用了<tt class="docutils literal"><span class="pre">--allow-empty</span></tt>参数进行的一次空提交，所以提交说明中看不到任何对实质内容的修改。</p>
+<p>下面仍在这个工作区，继续新的实践。通过新的实践学习Git一个最重要的概念：“暂存区”。</p>
+<div class="section" id="id1">
+<h2>2.2.1. 修改不能直接提交？<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>首先更改<tt class="file docutils literal"><span class="pre">welcome.txt</span></tt>文件，在这个文件后面追加一行。可以使用下面的命令实现内容的追加。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ echo &quot;Nice to meet you.&quot; &gt;&gt; welcome.txt
+</pre></div>
+</div>
+<p>这时可以通过执行<strong class="command">git diff</strong>命令看到修改后的文件和版本库中文件的差异。（实际上这句话有问题，和本地比较的不是版本库中的文件，而是一个中间状态的文件）</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git diff
+diff --git a/welcome.txt b/welcome.txt
+index 18832d3..fd3c069 100644
+--- a/welcome.txt
++++ b/welcome.txt
+@@ -1 +1,2 @@
+ Hello.
++Nice to meet you.
+</pre></div>
+</div>
+<p>差异输出是不是很熟悉？在之前介绍版本库“黑暗的史前时代”的时候，曾经展示了<strong class="command">diff</strong>命令的输出，两者的格式是一样的。</p>
+<p>既然文件修改了，那么就提交吧。提交能够成功么？</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git commit -m &quot;Append a nice line.&quot;
+# On branch master
+# Changes not staged for commit:
+#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+#
+#       modified:   welcome.txt
+#
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
+</pre></div>
+</div>
+<p>提交成功了么？好像没有！</p>
+<p>提交没有成功的证据：</p>
+<ul>
+<li><p class="first">先来看看提交日志，如果提交成功，应该有新的提交记录出现。</p>
+<p>下面使用了精简输出来显示日志，以便更简洁和清晰的看到提交历史。在其中能够看出来版本库中只有两个提交，都是在上一章的实践中完成的。也就是说刚才针对修改文件的提交没有成功！</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git log --pretty=oneline
+a0c641e92b10d8bcca1ed1bf84ca80340fdefee6 who does commit?
+9e8a761ff9dd343a1380032884f488a2422c495a initialized.
+</pre></div>
+</div>
+</li>
+<li><p class="first">执行<strong class="command">git diff</strong>可以看到和之前相同的差异输出，这也说明了之前的提交没有成功。</p>
+</li>
+<li><p class="first">执行<strong class="command">git status</strong>查看文件状态，也可以看到文件处于未提交的状态。</p>
+<p>而且<strong class="command">git status</strong>命令的输出和<strong class="command">git commit</strong>提交失败的输出信息一模一样！</p>
+</li>
+<li><p class="first">对于习惯了像 CVS 和 Subversion 那样简练的状态输出的用户，可以在执行<strong class="command">git status</strong> 时附加上<tt class="docutils literal"><span class="pre">-s</span></tt>参数，显示精简格式的状态输出。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status -s
+ M welcome.txt
+</pre></div>
+</div>
+</li>
+</ul>
+<p>提交为什么会失败呢？再回过头来仔细看看刚才<strong class="command">git commit</strong>命令提交失败后的输出：</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre># On branch master
+# Changes not staged for commit:
+#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+#
+#       modified:   welcome.txt
+#
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
+</pre></div>
+</div>
+</div></blockquote>
+<p>把它翻译成中文普通话：</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre># 位于您当前工作的分支 master 上
+# 下列的修改还没有加入到提交任务（提交暂存区，stage）中，不会被提交：
+#   (使用 &quot;git add &lt;file&gt;...&quot; 命令后，改动就会加入到提交任务中，
+#    要在下一次提交操作时才被提交)
+#   (使用 &quot;git checkout -- &lt;file&gt;...&quot; 命令，工作区当前您不打算提交的
+#    修改会被彻底清除！！！)
+#
+#       已修改:   welcome.txt
+#
+警告：提交任务是空的噻，您不要再搔扰我啦
+(除非使用 &quot;git add&quot; 和/或 &quot;git commit -a&quot; 命令)
+</pre></div>
+</div>
+</div></blockquote>
+<p>也就是说要对修改的<tt class="file docutils literal"><span class="pre">welcome.txt</span></tt>文件执行<strong class="command">git add</strong>命令，将修改的文件添加到“提交任务”中，然后才能提交！</p>
+<p>这个行为真的很奇怪，因为<tt class="docutils literal"><span class="pre">add</span></tt>操作对于其他版本控制系统来说是向版本库添加新文件用的，修改的文件（已被版本控制跟踪的文件）在下次提交时会直接被提交。Git的这个古怪的行为会在下面的介绍中找到答案，读者会逐渐习惯并喜欢Git的这个设计。</p>
+<p>好了，现在就将修改的文件“添加”到提交任务中吧：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git add welcome.txt
+</pre></div>
+</div>
+<p>现在再执行一些Git命令，看看当执行文“添加”动作后，Git库发生了什么变化：</p>
+<ul>
+<li><p class="first">执行<strong class="command">git diff</strong>没有输出，难道是被提交了？可是只是执行了“添加” 到提交任务的操作，相当于一个“登记”的命令，并没有执行提交哇？</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git diff
+</pre></div>
+</div>
+</li>
+<li><p class="first">这时如果和HEAD（当前版本库的头指针）或者master分支（当前工作分支）进行比较，会发现有差异。这个差异才是正常的，因为尚未真正提交么。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git diff HEAD
+diff --git a/welcome.txt b/welcome.txt
+index 18832d3..fd3c069 100644
+--- a/welcome.txt
++++ b/welcome.txt
+@@ -1 +1,2 @@
+ Hello.
++Nice to meet you.
+</pre></div>
+</div>
+</li>
+<li><p class="first">执行<strong class="command">git status</strong>命令，状态输出和之前的不一样了。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status
+# On branch master
+# Changes to be committed:
+#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
+#
+#       modified:   welcome.txt
+#
+</pre></div>
+</div>
+</li>
+</ul>
+<p>再对新的Git状态输出做一回翻译：</p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre>$ git status
+# 位于分支 master 上
+# 下列的修改将被提交：
+#   (如果你后悔了，可以使用 &quot;git reset HEAD &lt;file&gt;...&quot; 命令
+#    将下列改动撤出提交任务（提交暂存区, stage），否则
+#    执行提交命令可真的要提交喽)
+#
+#       已修改:   welcome.txt
+#
+</pre></div>
+</div>
+</div></blockquote>
+<p>不得不说，Git太人性化了，它把各种情况下可以使用到的命令都告诉给用户了，虽然这显得有点罗嗦。如果不要这么罗嗦，可以用简洁方式显示状态：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status -s
+M  welcome.txt
+</pre></div>
+</div>
+<p>上面精简的状态输出与执行<strong class="command">git add</strong>之前的精简状态输出相比，有细微的差别，发现了么？</p>
+<ul class="simple">
+<li>虽然都是 M（Modified）标识，但是位置不一样。在执行<strong class="command">git add</strong>命令之前，这个<tt class="docutils literal"><span class="pre">M</span></tt>位于第二列（第一列是一个空格），在执行完<strong class="command">git add</strong>之后，字符<tt class="docutils literal"><span class="pre">M</span></tt>位于第一列（第二列是空白）。</li>
+<li>位于第一列的字符<tt class="docutils literal"><span class="pre">M</span></tt>的含义是：版本库中的文件和处于中间状态——提交任务（提交暂存区，即stage）中的文件相比有改动。</li>
+<li>位于第二列的字符<tt class="docutils literal"><span class="pre">M</span></tt>的含义是：工作区当前的文件和处于中间状态——提交任务（提交暂存区，即stage）中的文件相比也有改动。</li>
+</ul>
+<p>是不是还有一些不明白？为什么Git的状态输出中提示了那么多让人不解的命令？为什么存在一个提交任务的概念而又总是把它叫做暂存区（stage）？不要紧，马上就会专题讲述“暂存区”的概念。当了解了Git版本库的设计原理之后，理解相关Git命令就易如反掌了。</p>
+<p>这时如果直接提交（<strong class="command">git commit</strong>），加入提交任务的<tt class="file docutils literal"><span class="pre">welcome.txt</span></tt>文件的更改就被提交入库了。但是先不忙着执行提交，再进行一些操作，看看能否被彻底的搞糊涂。</p>
+<ul>
+<li><p class="first">继续修改一下<tt class="file docutils literal"><span class="pre">welcome.txt</span></tt>文件（在文件后面再追加一行）。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ echo &quot;Bye-Bye.&quot; &gt;&gt; welcome.txt
+</pre></div>
+</div>
+</li>
+<li><p class="first">然后执行<strong class="command">git status</strong>，查看一下状态：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status
+# On branch master
+# Changes to be committed:
+#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
+#
+#       modified:   welcome.txt
+#
+# Changes not staged for commit:
+#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+#
+#       modified:   welcome.txt
+#
+</pre></div>
+</div>
+<p>状态输出中居然是之前出现的两种不同状态输出的灵魂附体。</p>
+</li>
+<li><p class="first">如果显示精简的状态输出，也会看到前面两种精简输出的杂合体。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status -s
+MM welcome.txt
+</pre></div>
+</div>
+</li>
+</ul>
+<p>上面的更为复杂的 Git 状态输出可以这么理解：不但版本库中最新提交的文件和处于中间状态 —— 提交任务（提交暂存区, stage）中的文件相比有改动，而且工作区当前的文件和处于中间状态 —— 提交任务（提交暂存区, stage）中的文件相比也有改动。</p>
+<p>即现在<tt class="file docutils literal"><span class="pre">welcome.txt</span></tt>有三个不同的版本，一个在工作区，一个在等待提交的暂存区，还有一个是版本库中最新版本的<tt class="file docutils literal"><span class="pre">welcome.txt</span></tt>。通过不同的参数调用<strong class="command">git diff</strong>命令可以看到不同版本库<tt class="file docutils literal"><span class="pre">welcome.txt</span></tt>文件的差异。</p>
+<ul>
+<li><p class="first">不带任何选项和参数调用<strong class="command">git diff</strong>显示工作区最新改动，即工作区和提交任务（提交暂存区，stage）中相比的差异。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git diff
+diff --git a/welcome.txt b/welcome.txt
+index fd3c069..51dbfd2 100644
+--- a/welcome.txt
++++ b/welcome.txt
+@@ -1,2 +1,3 @@
+ Hello.
+ Nice to meet you.
++Bye-Bye.
+</pre></div>
+</div>
+</li>
+<li><p class="first">将工作区和HEAD（当前工作分支）相比，会看到更多的差异。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git diff HEAD
+diff --git a/welcome.txt b/welcome.txt
+index 18832d3..51dbfd2 100644
+--- a/welcome.txt
++++ b/welcome.txt
+@@ -1 +1,3 @@
+ Hello.
++Nice to meet you.
++Bye-Bye.
+</pre></div>
+</div>
+</li>
+<li><p class="first">通过参数<tt class="docutils literal"><span class="pre">--cached</span></tt>或者<tt class="docutils literal"><span class="pre">--staged</span></tt>参数调用<strong class="command">git diff</strong>命令，看到的是提交暂存区（提交任务，stage）和版本库中文件的差异。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git diff --cached
+diff --git a/welcome.txt b/welcome.txt
+index 18832d3..fd3c069 100644
+--- a/welcome.txt
++++ b/welcome.txt
+@@ -1 +1,2 @@
+ Hello.
++Nice to meet you.
+</pre></div>
+</div>
+</li>
+</ul>
+<p>好了现在是时候<strong>提交</strong>了。现在执行<strong class="command">git commit</strong>命令进行提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git commit -m &quot;which version checked in?&quot;
+[master e695606] which version checked in?
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+</pre></div>
+</div>
+<p>这次提交终于成功了。如何证明提交成功了呢？</p>
+<ul>
+<li><p class="first">通过查看提交日志，看到了新的提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git log --pretty=oneline
+e695606fc5e31b2ff9038a48a3d363f4c21a3d86 which version checked in?
+a0c641e92b10d8bcca1ed1bf84ca80340fdefee6 who does commit?
+9e8a761ff9dd343a1380032884f488a2422c495a initialized.
+</pre></div>
+</div>
+</li>
+<li><p class="first">查看精简的状态输出。</p>
+<p>状态输出中文件名的前面出现了一个字母<tt class="docutils literal"><span class="pre">M</span></tt>，即只位于第二列的字母<tt class="docutils literal"><span class="pre">M</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status -s
+ M welcome.txt
+</pre></div>
+</div>
+</li>
+</ul>
+<p>那么第一列的<tt class="docutils literal"><span class="pre">M</span></tt>哪里去了？被提交了呗。即提交任务（提交暂存区，stage）中的内容被提交到版本库中，所以第一列因为提交暂存区（提交任务，stage）和版本库中的状态一致，所以显示一个空白。</p>
+<p>提交的<tt class="file docutils literal"><span class="pre">welcome.txt</span></tt>是哪个版本呢？可以通过执行<strong class="command">git diff</strong>或者<strong class="command">git diff HEAD</strong>命令查看差异。虽然命令<strong class="command">git diff</strong>和<strong class="command">git diff HEAD</strong>的比较过程并不不同（可以通过<strong class="command">strace</strong>命令跟踪命令执行过程中的文件访问），但是会看到下面相同的差异输出结果。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git diff
+diff --git a/welcome.txt b/welcome.txt
+index fd3c069..51dbfd2 100644
+--- a/welcome.txt
++++ b/welcome.txt
+@@ -1,2 +1,3 @@
+ Hello.
+ Nice to meet you.
++Bye-Bye.
+</pre></div>
+</div>
+</div>
+<div class="section" id="git-stage">
+<h2>2.2.2. 理解 Git 暂存区（stage）<a class="headerlink" href="#git-stage" title="永久链接至标题">¶</a></h2>
+<p>把上面的实践从头至尾走一遍，不知道读者的感想如何？</p>
+<ul class="simple">
+<li>——“被眼花缭乱的Git魔法彻底搞糊涂了？”</li>
+<li>——“Git为什么这么折磨人，修改的文件直接提交不就完了么？”</li>
+<li>——“看不出Git这么做有什么好处？”</li>
+</ul>
+<p>在上面的实践过程中，有意无意的透漏了“暂存区”的概念。为了避免用户被新概念吓坏，在暂存区出现的地方用同时使用了“提交任务”这一更易理解的概念，但是暂存区（stage，或称为index）才是其真正的名称。我认为Git暂存区（stage，或称为index）的设计是Git最成功的设计之一，也是最难理解的一个设计。</p>
+<p>在版本库<tt class="file docutils literal"><span class="pre">.git</span></tt>目录下，有一个<tt class="file docutils literal"><span class="pre">index</span></tt>文件，下面针对这个文件做一个有趣的试验。要说明的是：这个试验是用1.7.3版本的Git进行的，低版本的Git因为没有针对<strong class="command">git status</strong>命令进行优化设计，需要使用<strong class="command">git diff</strong>命令，才能看到<tt class="file docutils literal"><span class="pre">index</span></tt>文件的日期戳变化。</p>
+<p>首先执行<strong class="command">git checkout</strong>命令（后面会介绍此命令），撤销工作区中 <cite>welcome.txt</cite> 文件尚未提交的修改。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git checkout -- welcome.txt
+$ git status -s     # 执行 git diff ，如果 git 版本号小于 1.7.3
+</pre></div>
+</div>
+<p>通过状态输出，看以看到工作区已经没有改动了。查看一下<strong class="command">.git/index</strong>文件，注意该文件的时间戳为：19:37:44。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ls --full-time .git/index
+-rw-r--r-- 1 jiangxin jiangxin 112 2010-11-29 19:37:44.625246224 +0800.git/index
+</pre></div>
+</div>
+<p>再次执行<strong class="command">git status</strong>命令，然后显示<tt class="file docutils literal"><span class="pre">.git/index</span></tt>文件的时间戳为：19:37:44，和上面的一样。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status -s     # 执行 git diff ，如果 git 版本号小于 1.7.3
+$ ls --full-time .git/index
+-rw-r--r-- 1 jiangxin jiangxin 112 2010-11-29 19:37:44.625246224 +0800 .git/index
+</pre></div>
+</div>
+<p>现在更改一下 welcome.txt 的时间戳，但是不改变它的内容。然后再执行<strong class="command">git status</strong>命令，然后查看<tt class="file docutils literal"><span class="pre">.git/index</span></tt>文件时间戳为：19:42:06。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ touch welcome.txt
+$ git status -s     # 执行 git diff ，如果 git 版本号小于 1.7.3
+$ ls --full-time .git/index
+-rw-r--r-- 1 jiangxin jiangxin 112 2010-11-29 19:42:06.980243216 +0800 .git/index
+</pre></div>
+</div>
+<p>看到了么，时间戳改变了！</p>
+<p>这个试验说明当执行<strong class="command">git status</strong>命令（或者<strong class="command">git diff</strong>命令）扫描工作区改动的时候，先依据<tt class="file docutils literal"><span class="pre">.git/index</span></tt>文件中记录的（工作区跟踪文件的）时间戳、长度等信息判断工作区文件是否改变。如果工作区的文件时间戳改变，说明文件的内容<strong>可能</strong>被改变了，需要要打开文件，读取文件内容，和更改前的原始文件相比较，判断文件内容是否被更改。如果文件内容没有改变，则将该文件新的时间戳记录到<tt class="file docutils literal"><span class="pre">.git/index</span></tt>文件中。因为判断文件是否更改，使用时间戳、文件长度等信息进行比较要比通过文件内容比较要快的多，所以Git这样的实现方式可以让工作区状态扫描更快速的执行，这也是Git高效的因素之一。</p>
+<p>文件<tt class="file docutils literal"><span class="pre">.git/index</span></tt>实际上就是一个包含文件索引的目录树，像是一个虚拟的工作区。在这个虚拟工作区的目录树中，记录了文件名、文件的状态信息（时间戳、文件长度等）。文件的内容并不存储其中，而是保存在Git对象库<tt class="file docutils literal"><span class="pre">.git/objects</span></tt>目录中，文件索引建立了文件和对象库中对象实体之间的对应。下面这个图展示了工作区、版本库中的暂存区和版本库之间的关系。</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="../images/git-stage.png"><img alt="../images/git-stage.png" src="../images/git-stage.png" style="width: 620.0px; height: 309.6px;" /></a>
+<p class="caption">工作区、版本库、暂存区原理图</p>
+</div>
+</div></blockquote>
+<p>在这个图中，可以看到部分Git命令是如何影响工作区和暂存区（stage，亦称index）的。下面就对这些命令进行简要的说明，而要彻底揭开这些命令的面纱要在接下来的几个章节。</p>
+<ul class="simple">
+<li>图中左侧为工作区，右侧为版本库。在版本库中标记为<tt class="docutils literal"><span class="pre">index</span></tt>的区域是暂存区（stage，亦称index），标记为<tt class="docutils literal"><span class="pre">master</span></tt>的是master分支所代表的目录树。</li>
+<li>图中可以看出此时HEAD实际是指向master分支的一个“游标”。所以图示的命令中出现HEAD的地方可以用master来替换。</li>
+<li>图中的objects标识的区域为Git的对象库，实际位于<tt class="file docutils literal"><span class="pre">.git/objects</span></tt>目录下，会在后面的章节重点介绍。</li>
+<li>当对工作区修改（或新增）的文件执行<strong class="command">git add</strong>命令时，暂存区的目录树被更新，同时工作区修改（或新增）的文件内容被写入到对象库中的一个新的对象中，而该对象的ID被记录在暂存区的文件索引中。</li>
+<li>当执行提交操作（<strong class="command">git commit</strong>）时，暂存区的目录树写到版本库（对象库）中，master分支会做相应的更新。即master最新指向的目录树就是提交时原暂存区的目录树。</li>
+<li>当执行<strong class="command">git reset HEAD</strong>命令时，暂存区的目录树会被重写，被master分支指向的目录树所替换，但是工作区不受影响。</li>
+<li>当执行<strong class="command">git rm &#8211;cached &lt;file&gt;</strong>命令时，会直接从暂存区删除文件，工作区则不做出改变。</li>
+<li>当执行<strong class="command">git checkout .</strong>或者<strong class="command">git checkout &#8211; &lt;file&gt;</strong>命令时，会用暂存区全部或指定的文件替换工作区的文件。这个操作很危险，会清除工作区中未添加到暂存区的改动。</li>
+<li>当执行<strong class="command">git checkout HEAD .</strong>或者<strong class="command">git checkout HEAD &lt;file&gt;</strong>命令时，会用HEAD指向的master分支中的全部或者部分文件替换暂存区和以及工作区中的文件。这个命令也是极具危险性的，因为不但会清除工作区中未提交的改动，也会清除暂存区中未提交的改动。</li>
+</ul>
+</div>
+<div class="section" id="git-diff">
+<h2>2.2.3. Git Diff魔法<a class="headerlink" href="#git-diff" title="永久链接至标题">¶</a></h2>
+<p>在本章的实践中展示了具有魔法效果的命令：<strong class="command">git diff</strong>。在不同参数的作用下，<strong class="command">git diff</strong>的输出并不相同。在理解了Git中的工作区、暂存区、和版本库最新版本（当前分支）分别是三个不同的目录树后，就非常好理解<strong class="command">git diff</strong>魔法般的行为了。</p>
+<p><strong>暂存区目录树的浏览</strong></p>
+<p>有什么办法能够像查看工作区一样的，直观的查看暂存区以及HEAD当中的目录树么？</p>
+<p>对于HEAD（版本库中当前提交）指向的目录树，可以使用Git底层命令<strong class="command">git ls-tree</strong>来查看。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git ls-tree -l HEAD
+100644 blob fd3c069c1de4f4bc9b15940f490aeb48852f3c42      25    welcome.txt
+</pre></div>
+</div>
+<p>其中:</p>
+<ul class="simple">
+<li>使用<tt class="docutils literal"><span class="pre">-l</span></tt>参数，可以显示文件的大小。上面<tt class="file docutils literal"><span class="pre">welcome.txt</span></tt>大小为25字节。</li>
+<li>输出的<tt class="file docutils literal"><span class="pre">welcome.txt</span></tt>文件条目从左至右，第一个字段是文件的属性(rw-r&#8211;r&#8211;)，第二个字段说明是Git对象库中的一个blob对象（文件），第三个字段则是该文件在对象库中对应的ID——一个40位的SHA1哈希值格式的ID（这个会在后面介绍），第四个字段是文件大小，第五个字段是文件名。</li>
+</ul>
+<p>在浏览暂存区中的目录树之前，首先清除工作区当中的改动。通过<strong class="command">git clean -fd</strong>命令清除当前工作区中没有加入版本库的文件和目录（非跟踪文件和目录），然后执行<strong class="command">git checkout .</strong>命令，用暂存区内容刷新工作区。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/my/workspace/demo
+$ git clean -fd
+$ git checkout .
+</pre></div>
+</div>
+<p>然后开始在工作区中做出一些修改（修改<tt class="file docutils literal"><span class="pre">welcome.txt</span></tt>，增加一个子目录和文件），然后添加到暂存区。最后再对工作区做出修改。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ echo &quot;Bye-Bye.&quot; &gt;&gt; welcome.txt
+$ mkdir -p a/b/c
+$ echo &quot;Hello.&quot; &gt; a/b/c/hello.txt
+$ git add .
+$ echo &quot;Bye-Bye.&quot; &gt;&gt; a/b/c/hello.txt
+$ git status -s
+AM a/b/c/hello.txt
+M  welcome.txt
+</pre></div>
+</div>
+<p>上面的命令运行完毕后，通过精简的状态输出，可以看出工作区、暂存区、和版本库当前分支的最新版本（HEAD）各不相同。先来看看工作区中文件的大小：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ find . -path ./.git -prune -o -type f -printf &quot;%-20p\t%s\n&quot;
+./welcome.txt           34
+./a/b/c/hello.txt       16
+</pre></div>
+</div>
+<p>要显示暂存区的目录树，可以使用<strong class="command">git ls-files</strong>命令。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git ls-files -s
+100644 18832d35117ef2f013c4009f5b2128dfaeff354f 0       a/b/c/hello.txt
+100644 51dbfd25a804c30e9d8dc441740452534de8264b 0       welcome.txt
+</pre></div>
+</div>
+<p>注意这个输出和之前使用<strong class="command">git ls-tree</strong>命令输出不一样，如果想要使用<strong class="command">git ls-tree</strong>命令，需要先将暂存区的目录树写入Git对象库（用<strong class="command">git write-tree</strong>命令），然后在针对<strong class="command">git write-tree</strong>命令写入的 tree 执行<strong class="command">git ls-tree</strong>命令。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git write-tree
+9431f4a3f3e1504e03659406faa9529f83cd56f8
+$ git ls-tree -l 9431f4a
+040000 tree 53583ee687fbb2e913d18d508aefd512465b2092       -    a
+100644 blob 51dbfd25a804c30e9d8dc441740452534de8264b      34    welcome.txt
+</pre></div>
+</div>
+<p>从上面的命令可以看出：</p>
+<ul class="simple">
+<li>到处都是40位的SHA1哈希值格式的ID，可以用于指代文件内容（blob），用于指代目录树（tree），还可以用于指代提交。但什么是SHA1哈希值ID，作用是什么，这些疑问暂时搁置，下一章再揭晓。</li>
+<li>命令<strong class="command">git write-tree</strong>的输出就是写入Git对象库中的Tree ID，这个ID将作为下一条命令的输入。</li>
+<li>在<strong class="command">git ls-tree</strong>命令中，没有把40位的ID写全，而是使用了前几位，实际上只要不和其他的对象ID冲突，可以随心所欲的使用缩写ID。</li>
+<li>可以看到<strong class="command">git ls-tree</strong>的输出显示的第一条是一个tree对象，即刚才创建的一级目录<tt class="file docutils literal"><span class="pre">a</span></tt>。</li>
+</ul>
+<p>如果想要递归显示目录内容，则使用<tt class="docutils literal"><span class="pre">-r</span></tt>参数调用。使用参数<tt class="docutils literal"><span class="pre">-t</span></tt>可以把递归过程遇到的每棵树都显示出来，而不只是显示最终的文件。下面执行递归操作显示目录树的内容。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git write-tree | xargs git ls-tree -l -r -t
+040000 tree 53583ee687fbb2e913d18d508aefd512465b2092       -    a
+040000 tree 514d729095b7bc203cf336723af710d41b84867b       -    a/b
+040000 tree deaec688e84302d4a0b98a1b78a434be1b22ca02       -    a/b/c
+100644 blob 18832d35117ef2f013c4009f5b2128dfaeff354f       7    a/b/c/hello.txt
+100644 blob 51dbfd25a804c30e9d8dc441740452534de8264b      34    welcome.txt
+</pre></div>
+</div>
+<p>好了现在工作区，暂存区和HEAD三个目录树的内容各不相同。下面的表格总结了不同文件在三个目录树中的文件大小。</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="36%" />
+<col width="21%" />
+<col width="21%" />
+<col width="21%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">文件名</th>
+<th class="head">工作区</th>
+<th class="head">暂存区</th>
+<th class="head">HEAD</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>welcome.txt</td>
+<td>34 字节</td>
+<td>34 字节</td>
+<td>25 字节</td>
+</tr>
+<tr class="row-odd"><td>a/b/c/hello.txt</td>
+<td>16 字节</td>
+<td>7 字节</td>
+<td>0 字节</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><strong>Git diff魔法</strong></p>
+<p>通过使用不同的参数调用<strong class="command">git diff</strong>命令，可以对工作区、暂存区、HEAD中的内容两两比较。下面的这个图，展示了不同的<strong class="command">git diff</strong>命令的作用范围。</p>
+<blockquote>
+<div><div class="figure">
+<a class="reference internal image-reference" href="../images/git-diff.png"><img alt="../images/git-diff.png" src="../images/git-diff.png" style="width: 620.0px; height: 309.6px;" /></a>
+</div>
+</div></blockquote>
+<p>通过上面的图，就不难理解下面<strong class="command">git diff</strong>命令不同的输出结果了。</p>
+<ul>
+<li><p class="first">工作区和暂存区比较。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git diff
+diff --git a/a/b/c/hello.txt b/a/b/c/hello.txt
+index 18832d3..e8577ea 100644
+--- a/a/b/c/hello.txt
++++ b/a/b/c/hello.txt
+@@ -1 +1,2 @@
+ Hello.
++Bye-Bye.
+</pre></div>
+</div>
+</li>
+<li><p class="first">暂存区和HEAD比较。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git diff --cached
+diff --git a/a/b/c/hello.txt b/a/b/c/hello.txt
+new file mode 100644
+index 0000000..18832d3
+--- /dev/null
++++ b/a/b/c/hello.txt
+@@ -0,0 +1 @@
++Hello.
+diff --git a/welcome.txt b/welcome.txt
+index fd3c069..51dbfd2 100644
+--- a/welcome.txt
++++ b/welcome.txt
+@@ -1,2 +1,3 @@
+ Hello.
+ Nice to meet you.
++Bye-Bye.
+</pre></div>
+</div>
+</li>
+<li><p class="first">工作区和HEAD比较。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git diff HEAD
+diff --git a/a/b/c/hello.txt b/a/b/c/hello.txt
+new file mode 100644
+index 0000000..e8577ea
+--- /dev/null
++++ b/a/b/c/hello.txt
+@@ -0,0 +1,2 @@
++Hello.
++Bye-Bye.
+diff --git a/welcome.txt b/welcome.txt
+index fd3c069..51dbfd2 100644
+--- a/welcome.txt
++++ b/welcome.txt
+@@ -1,2 +1,3 @@
+ Hello.
+ Nice to meet you.
++Bye-Bye.
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="git-commit-a">
+<h2>2.2.4. 不要使用<strong class="command">git commit -a</strong><a class="headerlink" href="#git-commit-a" title="永久链接至标题">¶</a></h2>
+<p>实际上Git的提交命令（<strong class="command">git commit</strong>）可以带上<tt class="docutils literal"><span class="pre">-a</span></tt>参数，对本地所有变更的文件执行提交操作，包括本地修改的文件，删除的文件，但不包括未被版本库跟踪的文件。</p>
+<p>这个命令的确可以简化一些操作，减少用<strong class="command">git add</strong>命令标识变更文件的步骤，但是如果习惯了使用这个“偷懒”的提交命令，就会丢掉Git暂存区带给用户最大的好处：对提交内容进行控制的能力。</p>
+<p>有的用户甚至通过别名设置功能，创建指向命令<strong class="command">git commit -a</strong>的别名<tt class="docutils literal"><span class="pre">ci</span></tt>，这更是不可取的行为，应严格禁止。在本书会很少看到使用<strong class="command">git commit -a</strong>命令。</p>
+</div>
+<div class="section" id="id2">
+<h2>2.2.5. 搁置问题，暂存状态<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>查看一下当前工作区的状态。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status
+# On branch master
+# Changes to be committed:
+#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
+#
+#       new file:   a/b/c/hello.txt
+#       modified:   welcome.txt
+#
+# Changes not staged for commit:
+#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+#
+#       modified:   a/b/c/hello.txt
+#
+</pre></div>
+</div>
+<p>在状态输出中Git体贴的告诉了用户如何将加入暂存区的文件从暂存区撤出以便让暂存区和HEAD一致（这样提交就不会发生），还告诉用户对于暂存区更新后在工作区所做的再一次的修改有两个选择：或者再次添加到暂存区，或者取消工作区新做出的改动。但是涉及到的命令现在理解还有些难度，一个是<strong class="command">git reset</strong>，一个是<strong class="command">git checkout</strong>。需要先解决什么是HEAD，什么是master分支以及Git对象存储的实现机制等问题，才可以更好的操作暂存区。</p>
+<p>为此，我作出一个非常艰难的决定<a class="footnote-reference" href="#id4" id="id3">[1]</a>：就是保存当前的工作进度，在研究了HEAD和master分支的机制之后，继续对暂存区的探索。命令<strong class="command">git stash</strong>就是用于保存当前工作进度的。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git stash
+Saved working directory and index state WIP on master: e695606 which version checked in?
+HEAD is now at e695606 which version checked in?
+</pre></div>
+</div>
+<p>运行完<strong class="command">git stash</strong>之后，再查看工作区状态，会看见工作区尚未提交的改动（包括暂存区的改动）全都不见了。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status
+# On branch master
+nothing to commit (working directory clean)
+</pre></div>
+</div>
+<p>&#8220;I&#8217;ll be back&#8221; ——  施瓦辛格, 《终结者》, 1984.</p>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[1]</a></td><td>此句式模仿2010年11月份发生的“3Q大战”。参见：<a class="reference external" href="http://zh.wikipedia.org/wiki">http://zh.wikipedia.org/wiki</a>/奇虎360与腾讯QQ争斗事件。</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="030-head-master-commit-refs.html" title="2.3. Git对象"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="010-git-init.html" title="2.1. Git初始化"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >2. Git独奏</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

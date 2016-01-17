@@ -1,0 +1,636 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>4.4. 子模组协同模型 &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="up" title="4. Git协同模型" href="index.html" />
+    <link rel="next" title="4.5. 子树合并" href="050-subtree-model.html" />
+    <link rel="prev" title="4.3. Topgit协同模型" href="030-topgit-model.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="050-subtree-model.html" title="4.5. 子树合并"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="030-topgit-model.html" title="4.3. Topgit协同模型"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">4. Git协同模型</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">4.4. 子模组协同模型</a><ul>
+<li><a class="reference internal" href="#id2">4.4.1. 创建子模组</a></li>
+<li><a class="reference internal" href="#id4">4.4.2. 克隆带子模组的版本库</a></li>
+<li><a class="reference internal" href="#id5">4.4.3. 在子模组中修改和子模组的更新</a></li>
+<li><a class="reference internal" href="#id6">4.4.4. 隐性子模组</a></li>
+<li><a class="reference internal" href="#id7">4.4.5. 子模组的管理问题</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="030-topgit-model.html"
+                        title="上一章">4.3. Topgit协同模型</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="050-subtree-model.html"
+                        title="下一章">4.5. 子树合并</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/04-git-model/040-submodule-model.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>4.4. 子模组协同模型<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>项目的版本库某些情况下需要引用其他版本库中的文件，例如公司积累了一套常用的函数库，被多个项目调用，显然这个函数库的代码不能直接放到某个项目的代码中，而是要独立为一个代码库，那么其他项目要调用公共的函数库，该如何处理呢？分别把公共函数库的文件拷贝到各自的项目中，会造成冗余，丢弃了公共函数库的维护历史，显然不是好的方法。本节要讨论的子模组协同模型，就是解决这个问题的一个方案。</p>
+<p>熟悉Subversion的用户马上会想起<tt class="docutils literal"><span class="pre">svn:externals</span></tt>属性，可以实现对外部代码库的引用。Git的子模组（submodule）是类似的一种实现。不过因为Git的特殊性，二者的区别还是满大的。参见表23-1。</p>
+<blockquote>
+<div><p>表23-1：SVN和Git相似功能对照表</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="31%" />
+<col width="36%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">&nbsp;</th>
+<th class="head">svn:externals</th>
+<th class="head">git submodule</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>如何记录外部版本库地址？</td>
+<td>目录的<tt class="docutils literal"><span class="pre">svn:externals</span></tt>属性</td>
+<td>项目根目录下的<tt class="file docutils literal"><span class="pre">.gitmodules</span></tt>文件</td>
+</tr>
+<tr class="row-odd"><td>缺省是否自动检出外部版本库？</td>
+<td>是。在使用<strong class="command">svn checkout</strong>检出时若使用参数<tt class="docutils literal"><span class="pre">--ignore-externals</span></tt>可以忽略对外部版本库引用不检出。</td>
+<td>否。缺省不克隆外部版本库。
+克隆要用<strong class="command">git submodule init</strong>、<strong class="command">git submodule update</strong>命令。</td>
+</tr>
+<tr class="row-even"><td>是否能<strong>部分</strong>引用外部版本库内容？</td>
+<td>是。因为SVN支持部分检出。</td>
+<td>否。必须克隆整个外部版本库。</td>
+</tr>
+<tr class="row-odd"><td>是否可以指向分支而随之改变？</td>
+<td>是。</td>
+<td>否。固定于外部版本库某个提交。</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<div class="section" id="id2">
+<h2>4.4.1. 创建子模组<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>在演示子模组的创建和使用之前，先作些准备工作。先尝试建立两个公共函数库（<tt class="docutils literal"><span class="pre">libA.git</span></tt>和<tt class="docutils literal"><span class="pre">libB.git</span></tt>）以及一个引用函数库的主版本库（<tt class="docutils literal"><span class="pre">super.git</span></tt>）。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git --git-dir=/path/to/repos/libA.git init --bare
+$ git --git-dir=/path/to/repos/libB.git init --bare
+$ git --git-dir=/path/to/repos/super.git init --bare
+</pre></div>
+</div>
+<p>向两个公共的函数库中填充些数据。这就需要在工作区克隆两个函数库，提交数据，并推送。</p>
+<ul>
+<li><p class="first">克隆<tt class="docutils literal"><span class="pre">libA.git</span></tt>版本库，添加一些数据，然后提交并推送。</p>
+<p>说明：示例中显示为<tt class="docutils literal"><span class="pre">hack...</span></tt>的地方，做一些改动（如创建新文件等），并将改动添加到暂存区。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git clone /path/to/repos/libA.git /path/to/my/workspace/libA
+$ cd /path/to/my/workspace/libA
+hack ...
+$ git commit -m &quot;add data for libA&quot;
+$ git push origin master
+</pre></div>
+</div>
+</li>
+<li><p class="first">克隆<tt class="docutils literal"><span class="pre">libB.git</span></tt>版本库，添加一些数据，然后提交并推送。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git clone /path/to/repos/libB.git /path/to/my/workspace/libB
+$ cd /path/to/my/workspace/libB
+hack ...
+$ git commit -m &quot;add data for libB&quot;
+$ git push origin master
+</pre></div>
+</div>
+</li>
+</ul>
+<p>版本库<tt class="docutils literal"><span class="pre">super</span></tt>是准备在其中创建子模组的。<tt class="docutils literal"><span class="pre">super</span></tt>版本库刚刚初始化还未包含提交，<tt class="docutils literal"><span class="pre">master</span></tt>分支尚未有正确的引用。需要在<tt class="docutils literal"><span class="pre">super</span></tt>版本中至少创建一个提交。下面就克隆<tt class="docutils literal"><span class="pre">super</span></tt>版本库，在其中完成一个提交（空提交即可），并推送。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git clone /path/to/repos/super.git /path/to/my/workspace/super
+$ cd /path/to/my/workspace/super
+$ git commit --allow-empty -m &quot;initialized.&quot;
+$ git push origin master
+</pre></div>
+</div>
+<p>现在就可以在<tt class="docutils literal"><span class="pre">super</span></tt>版本库中使用<strong class="command">git submodule add</strong>命令添加子模组了。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git submodule add /path/to/repos/libA.git lib/lib_a
+$ git submodule add /path/to/repos/libB.git lib/lib_b
+</pre></div>
+</div>
+<p>至此看一下<tt class="docutils literal"><span class="pre">super</span></tt>版本库工作区的目录结构。在根目录下多了一个<tt class="file docutils literal"><span class="pre">.gitmodules</span></tt>文件，并且两个函数库分别克隆到<tt class="file docutils literal"><span class="pre">lib/lib_a</span></tt>目录和<tt class="file docutils literal"><span class="pre">lib/lib_b</span></tt>目录下。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ls -aF
+./  ../  .git/  .gitmodules  lib/
+</pre></div>
+</div>
+<p>看看<tt class="file docutils literal"><span class="pre">.gitmodules</span></tt>的内容：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cat .gitmodules
+[submodule &quot;lib/lib_a&quot;]
+        path = lib/lib_a
+        url = /path/to/repos/libA.git
+[submodule &quot;lib/lib_b&quot;]
+        path = lib/lib_b
+        url = /path/to/repos/libB.git
+</pre></div>
+</div>
+<p>此时<tt class="docutils literal"><span class="pre">super</span></tt>的工作区尚未提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status
+# On branch master
+# Changes to be committed:
+#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
+#
+#       new file:   .gitmodules
+#       new file:   lib/lib_a
+#       new file:   lib/lib_b
+#
+</pre></div>
+</div>
+<p>完成提交之后，子模组才算正式在<tt class="docutils literal"><span class="pre">super</span></tt>版本库中创立。运行<strong class="command">git push</strong>把建立了新模组的本地库推送到远程的版本库。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git commit -m &quot;add modules in lib/lib_a and lib/lib_b.&quot;
+$ git push
+</pre></div>
+</div>
+<p>在提交过程中，发现作为子模组方式添加的版本库实际上并没有添加版本库的内容。实际上只是以gitlink方式<a class="footnote-reference" href="#id8" id="id3">[1]</a>添加了一个链接。至于子模组的实际地址，是由文件<tt class="file docutils literal"><span class="pre">.gitmodules</span></tt>中指定的。</p>
+<p>可以通过查看补丁的方式，看到<tt class="docutils literal"><span class="pre">lib/lib_a</span></tt>和<tt class="docutils literal"><span class="pre">lib/lib_b</span></tt>子模组的存在方式（即gitlink）。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git show HEAD
+
+commit 19bb54239dd7c11151e0dcb8b9389e146f055ba9
+Author: Jiang Xin &lt;jiangxin@ossxp.com&gt;
+Date:   Fri Oct 29 10:16:59 2010 +0800
+
+    add modules in lib/lib_a and lib/lib_b.
+
+diff --git a/.gitmodules b/.gitmodules
+new file mode 100644
+index 0000000..60c7d1f
+--- /dev/null
++++ b/.gitmodules
+@@ -0,0 +1,6 @@
++[submodule &quot;lib/lib_a&quot;]
++       path = lib/lib_a
++       url = /path/to/repos/libA.git
++[submodule &quot;lib/lib_b&quot;]
++       path = lib/lib_b
++       url = /path/to/repos/libB.git
+diff --git a/lib/lib_a b/lib/lib_a
+new file mode 160000
+index 0000000..126b181
+--- /dev/null
++++ b/lib/lib_a
+@@ -0,0 +1 @@
++Subproject commit 126b18153583d9bee4562f9af6b9706d2e104016
+diff --git a/lib/lib_b b/lib/lib_b
+new file mode 160000
+index 0000000..3b52a71
+--- /dev/null
++++ b/lib/lib_b
+@@ -0,0 +1 @@
++Subproject commit 3b52a710068edc070e3a386a6efcbdf28bf1bed5
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>4.4.2. 克隆带子模组的版本库<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>之前的表23-1在对比Subversion的<tt class="docutils literal"><span class="pre">svn:externals</span></tt>子模组实现差异时，提到过克隆带子模组的Git库，并不能自动将子模组的版本库克隆出来。对于只关心项目本身数据，对项目引用的外部项目数据并不关心的用户，这个功能非常好，数据也没有冗余而且克隆的速度也更块。</p>
+<p>下面在另外的位置克隆<tt class="docutils literal"><span class="pre">super</span></tt>版本库，会发现<tt class="docutils literal"><span class="pre">lib/lib_a</span></tt>和<tt class="docutils literal"><span class="pre">lib/lib_b</span></tt>并未克隆。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git clone /path/to/repos/super.git /path/to/my/workspace/super-clone
+$ cd /path/to/my/workspace/super-clone
+$ ls -aF
+./  ../  .git/  .gitmodules  lib/
+$ find lib
+lib
+lib/lib_a
+lib/lib_b
+</pre></div>
+</div>
+<p>这时如果运行<strong class="command">git submodule status</strong>可以查看到子模组状态。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git submodule status
+-126b18153583d9bee4562f9af6b9706d2e104016 lib/lib_a
+-3b52a710068edc070e3a386a6efcbdf28bf1bed5 lib/lib_b
+</pre></div>
+</div>
+<p>看到每个子模组的目录前面是40位的提交ID，在最前面是一个减号。减号的含义是该子模组尚为检出。</p>
+<p>如果需要克隆出子模组型式引用的外部库，首先需要先执行<strong class="command">git submodule init</strong>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git submodule init
+Submodule &#39;lib/lib_a&#39; (/path/to/repos/libA.git) registered for path &#39;lib/lib_a&#39;
+Submodule &#39;lib/lib_b&#39; (/path/to/repos/libB.git) registered for path &#39;lib/lib_b&#39;
+</pre></div>
+</div>
+<p>执行<strong class="command">git submodule init</strong>实际上修改了<tt class="file docutils literal"><span class="pre">.git/config</span></tt>文件，对子模组进行了注册。文件<tt class="file docutils literal"><span class="pre">.git/config</span></tt>的修改示例如下（以加号开始的行代表新增的行）。</p>
+<div class="highlight-python"><div class="highlight"><pre> [core]
+         repositoryformatversion = 0
+         filemode = true
+         bare = false
+         logallrefupdates = true
+ [remote &quot;origin&quot;]
+         fetch = +refs/heads/*:refs/remotes/origin/*
+         url = /path/to/repos/super.git
+ [branch &quot;master&quot;]
+         remote = origin
+         merge = refs/heads/master
++[submodule &quot;lib/lib_a&quot;]
++       url = /path/to/repos/libA.git
++[submodule &quot;lib/lib_b&quot;]
++       url = /path/to/repos/libB.git
+</pre></div>
+</div>
+<p>然后执行<strong class="command">git submodule update</strong>才完成子模组版本库的克隆。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git submodule update
+Initialized empty Git repository in /path/to/my/workspace/super-clone/lib/lib_a/.git/
+Submodule path &#39;lib/lib_a&#39;: checked out &#39;126b18153583d9bee4562f9af6b9706d2e104016&#39;
+Initialized empty Git repository in /path/to/my/workspace/super-clone/lib/lib_b/.git/
+Submodule path &#39;lib/lib_b&#39;: checked out &#39;3b52a710068edc070e3a386a6efcbdf28bf1bed5&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>4.4.3. 在子模组中修改和子模组的更新<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>执行<strong class="command">git submodule update</strong>更新出来的子模组，都以某个具体的提交版本进行检出。进入某个子模组目录，会发现其处于非跟踪状态（分离头指针状态）。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/my/workspace/super-clone/lib/lib_a
+$ git branch
+* (no branch)
+  master
+</pre></div>
+</div>
+<p>显然这种情况下，如果修改<tt class="docutils literal"><span class="pre">lib/lib_a</span></tt>下的文件，提交会丢失。下面介绍一下如何在检出的子模组中修改，以及更新子模组。</p>
+<p>在子模组中切换到master分支（或其他想要修改的分支）后，再进行修改。</p>
+<ul>
+<li><p class="first">切换到master分支，然后在工作区做一些改动。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/my/workspace/super-clone/lib/lib_a
+$ git checkout master
+hack ...
+</pre></div>
+</div>
+</li>
+<li><p class="first">执行提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git commit
+</pre></div>
+</div>
+</li>
+<li><p class="first">查看状态，会看到相对于远程分支领先一个提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status
+# On branch master
+# Your branch is ahead of &#39;origin/master&#39; by 1 commit.
+#
+nothing to commit (working directory clean)
+</pre></div>
+</div>
+</li>
+</ul>
+<p>在<strong class="command">git status</strong>的状态输出中，可以看出新提交尚未推送到远程版本库。现在暂时不推送，看看在<tt class="docutils literal"><span class="pre">super</span></tt>版本库中执行<strong class="command">git submodule update</strong>对子模组的影响。</p>
+<ul>
+<li><p class="first">先到<tt class="docutils literal"><span class="pre">super-clone</span></tt>版本库查看一下状态，可以看到子模组已修改，包含更新的提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/my/workspace/super-clone/
+$ git status
+# On branch master
+# Changed but not updated:
+#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+#
+#       modified:   lib/lib_a (new commits)
+#
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
+</pre></div>
+</div>
+</li>
+<li><p class="first">通过<strong class="command">git submodule stauts</strong>命令可以看出<tt class="docutils literal"><span class="pre">lib/lib_a</span></tt>子模组指向了新的提交ID（前面有一个加号），而<tt class="docutils literal"><span class="pre">lib/lib_b</span></tt>模组状态正常（提交ID前是一个空格，不是加号也不是减号）。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git submodule status
++5dea2693e5574a6e3b3a59c6b0c68cb08b2c07e9 lib/lib_a (heads/master)
+ 3b52a710068edc070e3a386a6efcbdf28bf1bed5 lib/lib_b (heads/master)
+</pre></div>
+</div>
+</li>
+<li><p class="first">这时如果不小心执行了一次<strong class="command">git submodule update</strong>命令，会将<tt class="docutils literal"><span class="pre">lib/lib_a</span></tt>重新切换到旧的指向。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git submodule update
+Submodule path &#39;lib/lib_a&#39;: checked out &#39;126b18153583d9bee4562f9af6b9706d2e104016&#39;
+</pre></div>
+</div>
+</li>
+<li><p class="first">执行<strong class="command">git submodule status</strong>命令查看子模组状态，看到<tt class="docutils literal"><span class="pre">lib/lib_a</span></tt>子模组被重置了。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git submodule status
+ 126b18153583d9bee4562f9af6b9706d2e104016 lib/lib_a (remotes/origin/HEAD)
+ 3b52a710068edc070e3a386a6efcbdf28bf1bed5 lib/lib_b (heads/master)
+</pre></div>
+</div>
+</li>
+</ul>
+<p>那么刚才在<tt class="docutils literal"><span class="pre">lib/lib_a</span></tt>中的提交丢失了么？实际上因为已经提交到了master主线，因此提交没有丢失，但是如果有数据没有提交，就会造成未提交数据的丢失。</p>
+<ul>
+<li><p class="first">进到<tt class="file docutils literal"><span class="pre">lib/lib_a</span></tt>目录，看到工作区再一次进入分离头指针状态。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd lib/lib_a
+$ git branch
+* (no branch)
+  master
+</pre></div>
+</div>
+</li>
+<li><p class="first">重新检出master分支找回之前的提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git checkout master
+Previous HEAD position was 126b181... add data for libA
+Switched to branch &#39;master&#39;
+Your branch is ahead of &#39;origin/master&#39; by 1 commit.
+</pre></div>
+</div>
+</li>
+</ul>
+<p>现在如果要将<tt class="file docutils literal"><span class="pre">lib/lib_a</span></tt>目录下子模组的改动记录到父项目（<tt class="docutils literal"><span class="pre">super</span></tt>版本库）中，就需要在父项目中进行一次提交才能实现。</p>
+<ul>
+<li><p class="first">进入父项目根目录，查看状态。因为<tt class="docutils literal"><span class="pre">lib/lib_a</span></tt>的提交已经恢复，因此再次显示为有改动。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/my/workspace/super-clone/
+$ git status -s
+ M lib/lib_a
+</pre></div>
+</div>
+</li>
+<li><p class="first">查看差异比较，会看到指向子模组的gitlink有改动。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git diff
+diff --git a/lib/lib_a b/lib/lib_a
+index 126b181..5dea269 160000
+--- a/lib/lib_a
++++ b/lib/lib_a
+@@ -1 +1 @@
+-Subproject commit 126b18153583d9bee4562f9af6b9706d2e104016
++Subproject commit 5dea2693e5574a6e3b3a59c6b0c68cb08b2c07e9
+</pre></div>
+</div>
+</li>
+<li><p class="first">将gitlink的改动添加到暂存区，然后提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git add -u
+$ git commit -m &quot;submodule lib/lib_a upgrade to new version.&quot;
+</pre></div>
+</div>
+</li>
+</ul>
+<p>此时先不要忙着推送，因为如果此时执行<strong class="command">git push</strong>将<tt class="docutils literal"><span class="pre">super</span></tt>版本库推送到远程版本库，会引发一个问题。即推送后的远程<tt class="docutils literal"><span class="pre">super</span></tt>版本库的子模组<tt class="docutils literal"><span class="pre">lib/lib_a</span></tt>指向了一个新的提交，而该提交还在本地的<tt class="docutils literal"><span class="pre">lib/lib_a</span></tt>版本库（尚未向上游推送），这会导致其他人克隆<tt class="docutils literal"><span class="pre">super</span></tt>版本库、更新模组时因为找不到该子模组版本库相应的提交而导致出错。下面就是这类错误的错误信息：</p>
+<div class="highlight-python"><div class="highlight"><pre>fatal: reference is not a tree: 5dea2693e5574a6e3b3a59c6b0c68cb08b2c07e9
+Unable to checkout &#39;5dea2693e5574a6e3b3a59c6b0c68cb08b2c07e9&#39; in submodule path &#39;lib/lib_a&#39;
+</pre></div>
+</div>
+<p>为了避免这种可能性的发生，最好先对<tt class="docutils literal"><span class="pre">lib/lib_a</span></tt>中的新提交进行推送，然后再对<tt class="docutils literal"><span class="pre">super</span></tt>的子模组更新的提交进行推送。即：</p>
+<ul>
+<li><p class="first">先推送子模组。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/my/workspace/super-clone/lib/lib_a
+$ git push
+</pre></div>
+</div>
+</li>
+<li><p class="first">再推送父版本库。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/my/workspace/super-clone/
+$ git push
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="id6">
+<h2>4.4.4. 隐性子模组<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<p>我在开发备份工具Gistore时遇到一个棘手的问题就是隐性子模组的问题。Gistore备份工具的原理是将要备份的目录都挂载（mount）在工作区中，然后执行<strong class="command">git add</strong>。但是如果有某个目录已经被Git化了，就只会以子模组方式将该目录添加进来，而不会添加该目录下的文件。对于一个备份工具来说，意味着备份没有成功。</p>
+<p>例如当前<tt class="docutils literal"><span class="pre">super</span></tt>版本库下有两个子模组：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd /path/to/my/workspace/super-clone/
+$ git submodule status
+ 126b18153583d9bee4562f9af6b9706d2e104016 lib/lib_a (remotes/origin/HEAD)
+ 3b52a710068edc070e3a386a6efcbdf28bf1bed5 lib/lib_b (heads/master)
+</pre></div>
+</div>
+<p>然后创建一个新目录<tt class="docutils literal"><span class="pre">others</span></tt>，并把该目录用git初始化并做一次空的提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mkdir others
+$ cd others
+$ git init
+$ git commit --allow-empty -m initial
+[master (root-commit) 90364e1] initial
+</pre></div>
+</div>
+<p>在<tt class="docutils literal"><span class="pre">others</span></tt>目录下创建一个文件<tt class="file docutils literal"><span class="pre">newfile</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ date &gt; newfile
+</pre></div>
+</div>
+<p>回到上一级目录，执行<strong class="command">git status</strong>，看到有一个<tt class="docutils literal"><span class="pre">others</span></tt>目录没有加入版本库控制，这很自然。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd ..
+$ git status
+# On branch master
+# Untracked files:
+#   (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+#
+#       others/
+nothing added to commit but untracked files present (use &quot;git add&quot; to track)
+</pre></div>
+</div>
+<p>但是如果对<tt class="docutils literal"><span class="pre">others</span></tt>目录执行<strong class="command">git add</strong>后，会发现奇怪的状态。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git add others
+$ git status
+# On branch master
+# Changes to be committed:
+#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
+#
+#       new file:   others
+#
+# Changed but not updated:
+#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+#   (commit or discard the untracked or modified content in submodules)
+#
+#       modified:   others (untracked content)
+#
+</pre></div>
+</div>
+<p>看看<tt class="docutils literal"><span class="pre">others</span></tt>目录的添加方式，就会发现<tt class="docutils literal"><span class="pre">others</span></tt>目录以gitlink方式添加到版本库中，而没有把该目录下的文件添加到版本库。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git diff --cached
+diff --git a/others b/others
+new file mode 160000
+index 0000000..90364e1
+--- /dev/null
++++ b/others
+@@ -0,0 +1 @@
++Subproject commit 90364e1331abc29cc63e994b4d2cfbf7c485e4ad
+</pre></div>
+</div>
+<p>之所以<strong class="command">git status</strong>的显示中<tt class="docutils literal"><span class="pre">others</span></tt>出现两次，就是因为目录<tt class="file docutils literal"><span class="pre">others</span></tt>被当做子模组添加到父版本库中。因为<tt class="docutils literal"><span class="pre">others</span></tt>版本库本身“不干净”，存在尚未加入版本控制的文件，所以又在状态输出中显示子模组包含改动的提示信息。</p>
+<p>执行提交，将<tt class="docutils literal"><span class="pre">others</span></tt>目录提交到版本库中。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git commit -m &quot;add others as submodule.&quot;
+</pre></div>
+</div>
+<p>执行<strong class="command">git submoudle status</strong>命令，会报错。因为<tt class="docutils literal"><span class="pre">others</span></tt>作为子模组，没有在<tt class="file docutils literal"><span class="pre">.gitmodules</span></tt>文件中注册。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git submodule status
+ 126b18153583d9bee4562f9af6b9706d2e104016 lib/lib_a (remotes/origin/HEAD)
+ 3b52a710068edc070e3a386a6efcbdf28bf1bed5 lib/lib_b (heads/master)
+No submodule mapping found in .gitmodules for path &#39;others&#39;
+</pre></div>
+</div>
+<p>那么如何在不破坏<tt class="docutils literal"><span class="pre">others</span></tt>版本库的前提下，把<tt class="docutils literal"><span class="pre">others</span></tt>目录下的文件加入版本库呢？即避免<tt class="docutils literal"><span class="pre">others</span></tt>以子模组形式添加入库。</p>
+<ul>
+<li><p class="first">先删除以gitlink形式入库的<tt class="docutils literal"><span class="pre">others</span></tt>子模组。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rm --cached others
+rm &#39;others&#39;
+</pre></div>
+</div>
+</li>
+<li><p class="first">查看当前状态。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status
+# On branch master
+# Changes to be committed:
+#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
+#
+#       deleted:    others
+#
+# Untracked files:
+#   (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+#
+#       others/
+</pre></div>
+</div>
+</li>
+<li><p class="first">重新添加<tt class="docutils literal"><span class="pre">others</span></tt>目录，注意目录后面的斜线（即路径分隔符）非常重要。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git add others/
+</pre></div>
+</div>
+</li>
+<li><p class="first">再次查看状态，看到<tt class="docutils literal"><span class="pre">others</span></tt>下的文件被添加到<tt class="docutils literal"><span class="pre">super</span></tt>版本库中。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status
+# On branch master
+# Changes to be committed:
+#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
+#
+#       deleted:    others
+#       new file:   others/newfile
+#
+</pre></div>
+</div>
+</li>
+<li><p class="first">执行提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git commit -m &quot;add contents in others/.&quot;
+[master 1e0c418] add contents in others/.
+ 2 files changed, 1 insertions(+), 1 deletions(-)
+ delete mode 160000 others
+ create mode 100644 others/newfile
+</pre></div>
+</div>
+</li>
+</ul>
+<p>在上面的操作过程中，首先先删除了在库中的<tt class="docutils literal"><span class="pre">others</span></tt>子模组（使用<tt class="docutils literal"><span class="pre">--cached</span></tt>参数执行删除）；然后为了添加<tt class="docutils literal"><span class="pre">others</span></tt>目录下的文件，使用了<tt class="docutils literal"><span class="pre">others/</span></tt>（注意<tt class="docutils literal"><span class="pre">others</span></tt>后面的路径分割符“/”）。现在查看一下子模组的状态，会看到只有之前的两个子模组显示出来。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git submodule status
+ 126b18153583d9bee4562f9af6b9706d2e104016 lib/lib_a (remotes/origin/HEAD)
+ 3b52a710068edc070e3a386a6efcbdf28bf1bed5 lib/lib_b (heads/master)
+</pre></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h2>4.4.5. 子模组的管理问题<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<p>子模组最主要的一个问题是不能基于外部版本库的某一个分支进行创建，使得更新后，子模组处于非跟踪状态，不便于在子模组中进行对外部版本库进行改动。尤其对于授权或其他原因将一个版本库拆分为子模组后，使用和管理非常不方便。在第25章“Android式多版本库协同”可以看到管理多版本库的另外一个可行方案。</p>
+<p>如果在局域网内维护的版本库所引用的子模组版本库在另外的服务器，甚至在互联网上，克隆子版本库就要浪费很多时间。而且如果子模组指向的版本库不在我们的掌控之内，一旦需要对其进行定制会因为提交无法向远程服务器推送而无法实现。在下一章即第24章“子树合并”中，会给出针对这个问题的解决方案。</p>
+<hr class="docutils" />
+<table class="docutils footnote" frame="void" id="id8" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[1]</a></td><td>gitlink:</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="050-subtree-model.html" title="4.5. 子树合并"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="030-topgit-model.html" title="4.3. Topgit协同模型"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >4. Git协同模型</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

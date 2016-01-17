@@ -1,0 +1,88 @@
+SVN版本库到Git的迁移
+=====================
+
+Subversion版本库到Git版本库的转换，最好的方法就是git-svn。而git-svn的使\
+用方法在前面“Git和SVN协同模型”一章已经详细介绍过。本章的内容将不再对\
+git-svn的用法做过多的重复，只在这里强调一下版本库迁移时的注意事项，相关\
+git-svn内容还请参照前面的内容。
+
+在迁移之前要确认一个问题，Subversion转换到Git库之后，Subversion还继续使\
+用么？意思是说还允许向Subversion提交么？
+
+如果回答是，那么直接查看“Git和SVN协同模型”一章，用Git作为前端工具来操作\
+Subversion版本库，而不要理会下面的内容。因为下面描述的迁移步骤针对的是\
+一次性的Subversion到Git版本库的迁移。
+
+**需要提交中出现git-svn-id标识么？**
+
+如果一次性、永久性的将Subverison迁移到Git库，可以选择\ ``git-svn-id:``\
+标识不在转换后Git的提交日志中出现，这样转换后的Git库根本看不出来曾经用\
+Subversion版本库维护过。
+
+在git-svn的\ ``clone``\ 或者\ ``init``\ 子命令行中使用参数：\
+``--no-metadata``\ 。Git库的配置会自动配置\ ``svn-remote.noMetadata``\
+为1。之后执行\ :command:`git svn fetch`\ 时就不会在日志中产生\
+``git-svn-id:``\ 的标识。
+
+**Subversion用户名到Git用户名的映射**
+
+缺省转换后Git库的提交者ID为如下格式：\ ``userid <userid@SVN-REPOS-UUID>``\ 。\
+即在邮件地址域名处以SVN版本库的UUID代替。可以在执行\ :command:`git svn fetch`\
+时通过下面的参数提供一个映射文件完成SVN用户名到Git用户名的转换。
+
+::
+
+  -A<filename>, --authors-file=<filename>
+
+即用\ ``-A``\ 或者\ ``--authors-file``\ 参数给出一个映射文件，这个文件帮\
+助git-svn将Subversion用户名映射为Git用户名。此文件的每一行定义一个用户名\
+映射，每一行的格式为：
+
+::
+
+  loginname = User Name <user@example.com>
+
+也可以通过下面的命令在Git库的\ :file:`config`\ 文件中设置，这样就不必在\
+每次执行\ :command:`git svn fetch`\ 都带上这个参数。
+
+::
+
+  $ git config svn.authorsfile /path/to/authersfile
+
+当设定了用户映射文件后，如果在执行\ :command:`git svn fetch`\ 是发现SVN\
+的用户在该映射文件中没有定义，转换过程被中断。需要重新编辑用户映射文件，\
+补充新的用户映射后，再重新执行git-svn命令。
+
+**将Subversion分支和里程碑直接转换为Git分支和里程碑，不要放在\ ``refs/remotes``\ 下**
+
+使用缺省参数执行SVN到Git的转换时，SVN的里程碑和分支转换到Git库的\
+``refs/remotes``\ 引用下。这会导致其他人从转换后的Git库克隆时，看不到\
+Subversion原有的分支和里程碑。
+
+当以缺省参数执行\ :command:`git svn init`\ 时，Git的配置文件中会生成下面\
+的配置：
+
+::
+
+  [svn-remote "svn"]
+          fetch = trunk:refs/remotes/trunk
+          branches = branches/*:refs/remotes/*
+          tags = tags/*:refs/remotes/tags/*
+
+可以直接编辑Git配置文件，将其内容调整如下：
+
+::
+
+  [svn-remote "svn"]
+          fetch = trunk:refs/heads/master
+          branches = branches/*:refs/heads/*
+          tags = tags/*:refs/tags/*
+
+之后再执行\ :command:`git svn fetch`\ 后，就可以实现SVN的分支和里程碑正\
+确的转换为Git库的里程碑。否则就需要将\ :file:`.git/refs/remots/`\ 下的引\
+用移动到\ :file:`.git/refs/heads`\ 以及\ :file:`.git/refs/tags`\ 下。
+
+**清除git-svn的中间文件**
+
+git-svn的中间文件位于目录\ :file:`.git/svn`\ 下，删除此目录完成对git-svn\
+转换数据库文件的清理。

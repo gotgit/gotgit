@@ -1,0 +1,252 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>3. Git和声 &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="next" title="3.1. Git协议与工作协同" href="010-protocol.html" />
+    <link rel="prev" title="2.11. Git库管理" href="../02-git-solo/110-git-admin.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="010-protocol.html" title="3.1. Git协议与工作协同"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="../02-git-solo/110-git-admin.html" title="2.11. Git库管理"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="../02-git-solo/110-git-admin.html"
+                        title="上一章">2.11. Git库管理</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="010-protocol.html"
+                        title="下一章">3.1. Git协议与工作协同</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/03-git-harmony/index.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="git">
+<h1>3. Git和声<a class="headerlink" href="#git" title="永久链接至标题">¶</a></h1>
+<p>上一篇的各个章节是从个人的视角研究和使用Git，通过连续的实践不但学习了Git的基本用法，还深入地了解了Git的奥秘，这些都将成为学习本篇内容的基础。从本章开始，不再是一个人的独奏，而是多人的和声，我们将从团队的视角对Git进行研究，要知道Git作为版本控制系统，其主要工作就是团队协作。</p>
+<p>团队协作和个人之间有何不同？关键就在于团队成员之间存在着数据交换：</p>
+<ul class="simple">
+<li>数据交换需要协议，就是本章要介绍的内容。</li>
+<li>数据交换可能会因为冲突造成中断，第16章将专题介绍如何解决冲突。</li>
+<li>里程碑为数据建立标识，是数据交换的参照点，这将在第17章中介绍。</li>
+<li>分支会为数据交换开辟不同的通道，从而减少冲突和混乱的发生，第18章会系统地介绍不同的分支应用模式。</li>
+<li>与远程版本库进行数据交换，是Git协同的主要手段，这将在第19章中介绍。</li>
+<li>本篇的最后（第20章）会介绍在不能直接进行版本库交互的情况下，如何使用补丁文件的方式进行数据交换。</li>
+</ul>
+<p>目录:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="010-protocol.html">3.1. Git协议与工作协同</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="010-protocol.html#id1">3.1.1. Git支持的协议</a></li>
+<li class="toctree-l2"><a class="reference internal" href="010-protocol.html#id2">3.1.2. 多用户协同的本地模拟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="010-protocol.html#id3">3.1.3. 强制非快进式推送</a></li>
+<li class="toctree-l2"><a class="reference internal" href="010-protocol.html#id4">3.1.4. 合并后推送</a></li>
+<li class="toctree-l2"><a class="reference internal" href="010-protocol.html#id5">3.1.5. 禁止非快进式推送</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="020-conflict.html">3.2. 冲突解决</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="020-conflict.html#id2">3.2.1. 拉回操作中的合并</a></li>
+<li class="toctree-l2"><a class="reference internal" href="020-conflict.html#id3">3.2.2. 合并一：自动合并</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="020-conflict.html#id4">3.2.2.1. 修改不同的文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="020-conflict.html#id5">3.2.2.2. 修改相同文件的不同区域</a></li>
+<li class="toctree-l3"><a class="reference internal" href="020-conflict.html#id6">3.2.2.3. 同时更改文件名和文件内容</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="020-conflict.html#id7">3.2.3. 合并二：逻辑冲突</a></li>
+<li class="toctree-l2"><a class="reference internal" href="020-conflict.html#id8">3.2.4. 合并三：冲突解决</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="020-conflict.html#id9">3.2.4.1. 手工编辑完成冲突解决</a></li>
+<li class="toctree-l3"><a class="reference internal" href="020-conflict.html#id10">3.2.4.2. 图形工具完成冲突解决</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="020-conflict.html#id11">3.2.5. 合并四：树冲突</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="020-conflict.html#id12">3.2.5.1. 手工操作解决树冲突</a></li>
+<li class="toctree-l3"><a class="reference internal" href="020-conflict.html#id13">3.2.5.2. 交互式解决树冲突</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="020-conflict.html#id14">3.2.6. 合并策略</a></li>
+<li class="toctree-l2"><a class="reference internal" href="020-conflict.html#id15">3.2.7. 合并相关的设置</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="030-git-tag.html">3.3. Git里程碑</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="030-git-tag.html#id1">3.3.1. 显示里程碑</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="030-git-tag.html#git-tag">3.3.1.1. 1. 命令<strong class="command">git tag</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="030-git-tag.html#git-log">3.3.1.2. 2. 命令<strong class="command">git log</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="030-git-tag.html#git-describe">3.3.1.3. 3. 命令<strong class="command">git describe</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="030-git-tag.html#git-name-rev">3.3.1.4. 4. 命令<strong class="command">git name-rev</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="030-git-tag.html#id2">3.3.2. 创建里程碑</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="030-git-tag.html#id3">3.3.2.1. 轻量级里程碑</a></li>
+<li class="toctree-l3"><a class="reference internal" href="030-git-tag.html#id4">3.3.2.2. 带说明的里程碑</a></li>
+<li class="toctree-l3"><a class="reference internal" href="030-git-tag.html#id5">3.3.2.3. 带签名的里程碑</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="030-git-tag.html#id6">3.3.3. 删除里程碑</a></li>
+<li class="toctree-l2"><a class="reference internal" href="030-git-tag.html#id7">3.3.4. 不要随意更改里程碑</a></li>
+<li class="toctree-l2"><a class="reference internal" href="030-git-tag.html#id8">3.3.5. 共享里程碑</a></li>
+<li class="toctree-l2"><a class="reference internal" href="030-git-tag.html#id9">3.3.6. 删除远程版本库的里程碑</a></li>
+<li class="toctree-l2"><a class="reference internal" href="030-git-tag.html#id10">3.3.7. 里程碑命名规范</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="040-git-branch.html">3.4. Git分支</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="040-git-branch.html#id1">3.4.1. 代码管理之殇</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="040-git-branch.html#id2">3.4.1.1. 发布分支</a></li>
+<li class="toctree-l3"><a class="reference internal" href="040-git-branch.html#id3">3.4.1.2. 特性分支</a></li>
+<li class="toctree-l3"><a class="reference internal" href="040-git-branch.html#id4">3.4.1.3. 卖主分支</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="040-git-branch.html#id5">3.4.2. 分支命令概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="040-git-branch.html#hello-world">3.4.3. Hello World开发计划</a></li>
+<li class="toctree-l2"><a class="reference internal" href="040-git-branch.html#id6">3.4.4. 基于特性分支的开发</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="040-git-branch.html#user1-getopt">3.4.4.1. 创建分支<tt class="docutils literal"><span class="pre">user1/getopt</span></tt></a></li>
+<li class="toctree-l3"><a class="reference internal" href="040-git-branch.html#user2-i18n">3.4.4.2. 创建分支<tt class="docutils literal"><span class="pre">user2/i18n</span></tt></a></li>
+<li class="toctree-l3"><a class="reference internal" href="040-git-branch.html#user1">3.4.4.3. 开发者 user1 完成功能开发</a></li>
+<li class="toctree-l3"><a class="reference internal" href="040-git-branch.html#id7">3.4.4.4. 将<tt class="docutils literal"><span class="pre">user1/getopt</span></tt>分支合并到主线</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="040-git-branch.html#id8">3.4.5. 基于发布分支的开发</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="040-git-branch.html#id9">3.4.5.1. 创建发布分支</a></li>
+<li class="toctree-l3"><a class="reference internal" href="040-git-branch.html#id10">3.4.5.2. 开发者user1工作在发布分支</a></li>
+<li class="toctree-l3"><a class="reference internal" href="040-git-branch.html#user2">3.4.5.3. 开发者user2工作在发布分支</a></li>
+<li class="toctree-l3"><a class="reference internal" href="040-git-branch.html#id11">3.4.5.4. 开发者user2合并推送</a></li>
+<li class="toctree-l3"><a class="reference internal" href="040-git-branch.html#id12">3.4.5.5. 发布分支的提交合并到主线</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="040-git-branch.html#id13">3.4.6. 分支变基</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="040-git-branch.html#id14">3.4.6.1. 完成<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>特性分支的开发</a></li>
+<li class="toctree-l3"><a class="reference internal" href="040-git-branch.html#id15">3.4.6.2. 分支<tt class="docutils literal"><span class="pre">user2/i18n</span></tt>变基</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="050-git-remote.html">3.5. 远程版本库</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="050-git-remote.html#id2">3.5.1. 远程分支</a></li>
+<li class="toctree-l2"><a class="reference internal" href="050-git-remote.html#id3">3.5.2. 分支追踪</a></li>
+<li class="toctree-l2"><a class="reference internal" href="050-git-remote.html#id4">3.5.3. 远程版本库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="050-git-remote.html#pushpull">3.5.4. PUSH和PULL操作与远程版本库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="050-git-remote.html#id5">3.5.5. 里程碑和远程版本库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="050-git-remote.html#id6">3.5.6. 分支和里程碑的安全性</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="060-git-offline.html">3.6. 补丁文件交互</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="060-git-offline.html#id2">3.6.1. 创建补丁</a></li>
+<li class="toctree-l2"><a class="reference internal" href="060-git-offline.html#id3">3.6.2. 应用补丁</a></li>
+<li class="toctree-l2"><a class="reference internal" href="060-git-offline.html#stgitquilt">3.6.3. StGit和Quilt</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="060-git-offline.html#stgit">3.6.3.1. StGit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="060-git-offline.html#quilt">3.6.3.2. Quilt</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="010-protocol.html" title="3.1. Git协议与工作协同"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="../02-git-solo/110-git-admin.html" title="2.11. Git库管理"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

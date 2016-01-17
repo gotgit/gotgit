@@ -1,0 +1,296 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.3.2. Mac OS X下安装和使用Git &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="up" title="1.3. 安装Git" href="030-installation.html" />
+    <link rel="next" title="1.3.3. Windows下安装和使用Git（Cygwin篇）" href="050-install-on-windows-cygwin.html" />
+    <link rel="prev" title="1.3.1. Linux下安装和使用Git" href="035-install-on-linux.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="050-install-on-windows-cygwin.html" title="1.3.3. Windows下安装和使用Git（Cygwin篇）"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="035-install-on-linux.html" title="1.3.1. Linux下安装和使用Git"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >1. 初识Git</a> &raquo;</li>
+          <li><a href="030-installation.html" accesskey="U">1.3. 安装Git</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1.3.2. Mac OS X下安装和使用Git</a><ul>
+<li><a class="reference internal" href="#id1">1.3.2.1. 以二进制发布包的形式安装</a></li>
+<li><a class="reference internal" href="#xcode">1.3.2.2. 安装Xcode</a></li>
+<li><a class="reference internal" href="#homebrewgit">1.3.2.3. 使用Homebrew安装Git</a></li>
+<li><a class="reference internal" href="#git">1.3.2.4. 从Git源码进行安装</a></li>
+<li><a class="reference internal" href="#id2">1.3.2.5. 命令自动补齐</a></li>
+<li><a class="reference internal" href="#id3">1.3.2.6. 其他辅助工具的安装</a></li>
+<li><a class="reference internal" href="#id4">1.3.2.7. 中文支持</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="035-install-on-linux.html"
+                        title="上一章">1.3.1. Linux下安装和使用Git</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="050-install-on-windows-cygwin.html"
+                        title="下一章">1.3.3. Windows下安装和使用Git（Cygwin篇）</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/01-meet-git/040-install-on-mac.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="mac-os-xgit">
+<h1>1.3.2. Mac OS X下安装和使用Git<a class="headerlink" href="#mac-os-xgit" title="永久链接至标题">¶</a></h1>
+<p>Mac OS X 被称为最人性化的操作系统，工作在Mac上是件非常惬意的事情，工作中怎能没有Git？</p>
+<div class="section" id="id1">
+<h2>1.3.2.1. 以二进制发布包的形式安装<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>Git在Mac OS X中也有好几种安装方法。最为简单的方式是安装<tt class="file docutils literal"><span class="pre">.dmg</span></tt>格式的安装包。</p>
+<p>访问git-osx-installer的官方网站：<tt class="docutils literal"><span class="pre">http://code.google.com/p/git-osx-installer/</span></tt>，下载Git安装包。安装包带有<tt class="file docutils literal"><span class="pre">.dmg</span></tt>扩展名，是苹果磁盘镜像（Apple Disk Image）格式的软件发布包。从官方网站上下载文件名类似<tt class="file docutils literal"><span class="pre">git-&lt;version&gt;-&lt;arch&gt;-leopard.dmg</span></tt>的安装包文件，例如：<tt class="file docutils literal"><span class="pre">git-1.7.3.5-x86_64-leopard.dmg</span></tt>是64位的安装包，<tt class="file docutils literal"><span class="pre">git-1.7.3.5-i386-leopard.dmg</span></tt>是32位的安装包。建议选择64位的软件包，因为Mac OS X 10.6 雪豹（或更新版本）完美的兼容32位和64位（开机按住键盘数字3和2进入32位系统，按住6和4进入64位系统），即使在核心处于32位架构下，也可以放心的运行64位软件包。</p>
+<p>苹果的<tt class="file docutils literal"><span class="pre">.dmg</span></tt>格式的软件包实际上是一个磁盘映像，安装起来非常方便，点击该文件就直接挂载到Finder中，并打开，如图3-1所示。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/mac-install-1.png"><img alt="../images/mac-install-1.png" src="../images/mac-install-1.png" style="width: 772.0px; height: 485.0px;" /></a>
+<p class="caption">图3-1：在 Mac OS X 下打开 .dmg 格式磁盘镜像</p>
+</div>
+<p>其中带有一个正在解包图标的文件（扩展名为<tt class="file docutils literal"><span class="pre">.pkg</span></tt>）是Git的安装程序，另外的两个脚本程序，一个用于应用的卸载（<tt class="file docutils literal"><span class="pre">uninstall.sh</span></tt>），另外一个带有长长文件名的脚本可以在Git安装后执行的，为非终端应用注册Git的安装路径，因为Git部署在标准的系统路径之外<tt class="file docutils literal"><span class="pre">/usr/local/git/bin</span></tt>。</p>
+<p>点击扩展名为<tt class="file docutils literal"><span class="pre">.pkg</span></tt>的安装程序，开始Git的安装，根据提示按步骤完成安装，如图3-2所示。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/mac-install-2.png"><img alt="../images/mac-install-2.png" src="../images/mac-install-2.png" style="width: 700.0px; height: 520.0px;" /></a>
+<p class="caption">图3-2：在 Mac OS X 下安装 Git。</p>
+</div>
+<p>安装完毕，git会被安装到<tt class="file docutils literal"><span class="pre">/usr/local/git/bin/</span></tt>目录下。重启终端程序，才能让<tt class="file docutils literal"><span class="pre">/etc/paths.d/git</span></tt>文件为PATH环境变量中添加的新路径注册生效。然后就可以在终端中直接运行<strong class="program">git</strong>命令了。</p>
+</div>
+<div class="section" id="xcode">
+<h2>1.3.2.2. 安装Xcode<a class="headerlink" href="#xcode" title="永久链接至标题">¶</a></h2>
+<p>App Store安装Xcode</p>
+<p>安装完毕，可以运行下面命令查看Xcode安装路径。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ xcode-select --print-path
+/Applications/Xcode.app/Contents/Developer
+</pre></div>
+</div>
+<p>路径并不在PATH中，可以运行<strong class="command">xcrun</strong>调用在Xcode路径中的Git工具。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ xcrun git --version
+git version 1.7.9.6 (Apple Git-31.1)
+</pre></div>
+</div>
+<p>为了方便在终端命令行下运行Git，可以用</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cat /etc/paths.d/xcode
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+/Applications/Xcode.app/Contents/Developer/usr/bin
+</pre></div>
+</div>
+<p>或者打开 Xcode，Preference -&gt; Downloads -&gt; Components -&gt; Command Line Tools (install)</p>
+<p>Mac OS X基于Unix内核，因此也可以很方便的通过源码编译的方式进行安装，但是缺省安装的Mac OS X缺乏相应的开发工具，需要安装苹果提供的Xcode软件包。在Mac随机附送的光盘（Mac OS X Install DVD）的可选安装文件夹下就有Xcode的安装包（如图3-3所示），通过随机光盘安装Xcode可以省去了网络下载的麻烦，要知道Xcode有3GB以上。</p>
+<div class="figure">
+<a class="reference internal image-reference" href="../images/xcode-install.png"><img alt="../images/xcode-install.png" src="../images/xcode-install.png" style="width: 621.0px; height: 592.0px;" /></a>
+<p class="caption">图3-3：在Mac OS X下安装Xcode。</p>
+</div>
+</div>
+<div class="section" id="homebrewgit">
+<h2>1.3.2.3. 使用Homebrew安装Git<a class="headerlink" href="#homebrewgit" title="永久链接至标题">¶</a></h2>
+<p>Mac OS X有好几个包管理器实现对一些开源软件在Mac OS X上的安装和升级进行管理。有传统的MacPort、Fink，还有更为简单易用的Homebrew。下面就介绍一下如何通过Homebrew包管理器，以源码包编译的方式安装Git。</p>
+<p>Homebrew用Ruby语言开发，支持千余种开源软件在Mac OS X中的部署和管理。Homebrew项目托管在Github上，网址为：<tt class="docutils literal"><span class="pre">https://github.com/mxcl/homebrew</span></tt>。</p>
+<p>首先是安装Homebrew，执行下面的命令：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ ruby -e \
+  &quot;$(curl -fsSL https://gist.github.com/raw/323731/install_homebrew.rb)&quot;
+</pre></div>
+</div>
+<p>安装完成后，Homebrew的主程序安装在<tt class="file docutils literal"><span class="pre">/usr/local/bin/brew</span></tt>，在目录<tt class="file docutils literal"><span class="pre">/usr/local/Library/Formula/</span></tt>下保存了所有Homebrew支持的软件的安装指引文件。</p>
+<p>运行<strong class="command">brew</strong>安装Git，使用下面的命令。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ brew install git
+</pre></div>
+</div>
+<p>使用Homebrew方式安装，Git被安装在<tt class="file docutils literal"><span class="pre">/usr/local/Cellar/git/1.7.3.5</span></tt>，可执行程序自动在<tt class="file docutils literal"><span class="pre">/usr/local/bin</span></tt>目录下创建符号连接，可以直接在终端程序中访问。</p>
+<p>通过<strong class="command">brew list</strong>命令可以查看安装的开源软件包。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ brew list
+git
+</pre></div>
+</div>
+<p>也可以查看某个软件包安装的详细路径和安装内容。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ brew list git
+/usr/local/Cellar/git/1.7.3.5/bin/gitk
+...
+</pre></div>
+</div>
+</div>
+<div class="section" id="git">
+<h2>1.3.2.4. 从Git源码进行安装<a class="headerlink" href="#git" title="永久链接至标题">¶</a></h2>
+<p>如果需要安装历史版本的Git或是安装尚在开发中的未发布版本的Git，就需要从源码安装或通过克隆Git源码库进行安装。既然Homebrew就是通过源码编译方式安装Git的，那么也应该可以直接从源码进行安装，但是使用Homebrew安装Git和直接通过Git源码安装并不完全等同，例如Homebrew安装Git的过程中，是通过下载已经编译好的Git文档包进行安装，而非从头对文档进行编译。</p>
+<p>直接通过源码安装Git包括文档，遇到主要的问题就是文档的编译，因为Git文档编译所需要的相关工具没有在Xcode中提供。但是这些工具可以通过Homebrew进行安装。下面工具软件的安装过程可能会遇到一些小麻烦，不过大多可以通过参考命令输出予以解决。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ brew install asciidoc
+$ brew install docbook2x
+$ brew install xmlto
+</pre></div>
+</div>
+<p>当编译源码及文档的工具部署完全后，就可以通过源码编译Git。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ make prefix=/usr/local all doc info
+$ sudo make prefix=/usr/local install \
+  install-doc install-html install-info
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>1.3.2.5. 命令自动补齐<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>Git通过bash-completion软件包实现命令补齐，在Mac OS X下可以通过Homebrew进行安装。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ brew search completion
+bash-completion
+$ brew install bash-completion
+...
+Add the following lines to your ~/.bash_profile file:
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+  . $(brew --prefix)/etc/bash_completion
+fi
+...
+</pre></div>
+</div>
+<p>根据bash-completion安装过程中的提示，修改文件<tt class="file docutils literal"><span class="pre">~/.bash_profile</span></tt>文件，并在其中加入如下内容，以便在终端加载时自动启用命令补齐。</p>
+<div class="highlight-python"><div class="highlight"><pre>if [ -f $(brew --prefix)/etc/bash_completion ]; then
+  . $(brew --prefix)/etc/bash_completion
+fi
+</pre></div>
+</div>
+<p>将Git的命令补齐脚本拷贝到bash-completion对应的目录中。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cp contrib/completion/git-completion.bash \
+     $(brew --prefix)/etc/bash_completion.d/
+</pre></div>
+</div>
+<p>不用重启终端程序，只需要运行下面的命令，即可立即在当前的shell中加载命令补齐。</p>
+<div class="highlight-python"><div class="highlight"><pre>. $(brew --prefix)/etc/bash_completion
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>1.3.2.6. 其他辅助工具的安装<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>本书中还会用到一些常用的GNU或其他开源软件，在Mac OS X下也可以通过Homebrew进行安装。这些软件包有：</p>
+<ul class="simple">
+<li>gnupg：数字签名和加密工具。在为Git版本库建立签名里程碑时会用到。</li>
+<li>md5sha1sum：生成MD5或SHA1摘要。在研究Git版本库中的对象过程中会用到。</li>
+<li>cvs2svn：CVS版本库迁移到SVN或Git的工具。在版本库迁移时会用到。</li>
+<li>stgit：Git的补丁和提交管理工具。</li>
+<li>quilt：一种补丁管理工具。在介绍Topgit时用到。</li>
+</ul>
+<dl class="docutils">
+<dt>在Mac OS X下能够使用到的Git图形工具除了Git软件包自带的<strong class="command">gitk</strong></dt>
+<dd>和<strong class="command">git gui</strong>之外，还可以安装GitX。下载地址：</dd>
+</dl>
+<ul class="simple">
+<li>GitX的原始版本：<tt class="docutils literal"><span class="pre">http://gitx.frim.nl/</span></tt>。</li>
+<li>或GitX的一个分支版本，提供增强的功能：
+<a class="reference external" href="https://github.com/brotherbard/gitx/downloads">https://github.com/brotherbard/gitx/downloads</a></li>
+</ul>
+<p>Git的图形工具一般需要在本地克隆版本库的工作区中执行，为了能和Mac OS X有更好的整合，可以安装插件实现和Finder的整合。在git-osx-installer的官方网站：<tt class="docutils literal"><span class="pre">http://code.google.com/p/git-osx-installer/</span></tt>，有两个以<tt class="file docutils literal"><span class="pre">OpenInGitGui-</span></tt>和<tt class="file docutils literal"><span class="pre">OpenInGitX-</span></tt>为前缀的软件包，可以分别实现和<strong class="command">git gui</strong>以及<strong class="command">gitx</strong>的整合：在Finder中进入工作区目录，点击对应插件的图标，启动<strong class="command">git gui</strong>或<strong class="command">gitx</strong>。</p>
+</div>
+<div class="section" id="id4">
+<h2>1.3.2.7. 中文支持<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>由于Mac OS X采用Unix内核，在中文支持上和Linux相近，请参照前面介绍Git在Linux下安装中3.1.5节相关内容。</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="050-install-on-windows-cygwin.html" title="1.3.3. Windows下安装和使用Git（Cygwin篇）"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="035-install-on-linux.html" title="1.3.1. Linux下安装和使用Git"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >1. 初识Git</a> &raquo;</li>
+          <li><a href="030-installation.html" >1.3. 安装Git</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

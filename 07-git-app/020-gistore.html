@@ -1,0 +1,593 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>7.2. Gistore &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="up" title="7. Git的其它应用" href="index.html" />
+    <link rel="next" title="7.3. 补丁中的二进制文件" href="030-binary-diff.html" />
+    <link rel="prev" title="7.1. etckeeper" href="010-etckeeper.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="030-binary-diff.html" title="7.3. 补丁中的二进制文件"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="010-etckeeper.html" title="7.1. etckeeper"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">7. Git的其它应用</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.2. Gistore</a><ul>
+<li><a class="reference internal" href="#id1">7.2.1. Gistore的安装</a><ul>
+<li><a class="reference internal" href="#id2">7.2.1.1. 从源码安装Gistore</a></li>
+<li><a class="reference internal" href="#easy-install">7.2.1.2. 用<tt class="docutils literal"><span class="pre">easy_install</span></tt>安装</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id3">7.2.2. Gistore的使用</a><ul>
+<li><a class="reference internal" href="#id4">7.2.2.1. 创建并初始化备份库</a></li>
+<li><a class="reference internal" href="#id5">7.2.2.2. Gistore的配置文件</a></li>
+<li><a class="reference internal" href="#id6">7.2.2.3. Gistore的备份项管理</a></li>
+<li><a class="reference internal" href="#id7">7.2.2.4. 执行备份任务</a></li>
+<li><a class="reference internal" href="#id8">7.2.2.5. 查看备份日志及数据</a></li>
+<li><a class="reference internal" href="#id9">7.2.2.6. 查看及恢复备份数据</a></li>
+<li><a class="reference internal" href="#id10">7.2.2.7. 备份回滚及设置</a></li>
+<li><a class="reference internal" href="#id11">7.2.2.8. 注册备份任务别名</a></li>
+<li><a class="reference internal" href="#crontab">7.2.2.9. 自动备份：crontab</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id12">7.2.3. Gistore双机备份</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="010-etckeeper.html"
+                        title="上一章">7.1. etckeeper</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="030-binary-diff.html"
+                        title="下一章">7.3. 补丁中的二进制文件</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/07-git-app/020-gistore.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="gistore">
+<h1>7.2. Gistore<a class="headerlink" href="#gistore" title="永久链接至标题">¶</a></h1>
+<p>当了解了etckeeper之后，读者可能会如我一样的提问到：“有没有像etckeeper一样的工具，但是能备份任意的文件和目录呢？”</p>
+<p>我在Google上搜索类似的工具无果，终于决定动手开发一个，因为无论是我还是我的客户，都需要一个更好用的备份工具。这就是Gistore。</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Gistore</span> <span class="o">=</span> <span class="n">Git</span> <span class="o">+</span> <span class="n">Store</span>
+</pre></div>
+</div>
+<p>2010年1月，我在公司的博客上发表了Gistore 0.1版本的消息，参见：<a class="reference external" href="http://blog.ossxp.com/2010/01/406/">http://blog.ossxp.com/2010/01/406/</a>。并将Gistore的源代码托管在了Github上，参见：<a class="reference external" href="http://github.com/ossxp-com/gistore">http://github.com/ossxp-com/gistore</a>。</p>
+<p>Gistore出现受到了etckeeper的启发，通过Gistore用户可以对全盘任何目录的数据纳入到备份中，定制非常简单和方便。特点有：</p>
+<ul class="simple">
+<li>使用Git作为数据后端。数据回复和历史查看等均使用熟悉的Git命令。</li>
+<li>每次备份即为一次Git提交，支持文件的添加/删除/修改/重命名等。</li>
+<li>每次备份的日志自动生成，内容为此次修改的摘要信息。</li>
+<li>支持备份回滚，可以设定保存备份历史的天数，让备份的空间占用维持在一个相对稳定的水平上。</li>
+<li>支持跨卷备份。备份的数据源可以来自任何卷/目录或者文件。</li>
+<li>备份源如果已经Git化，也能够备份。例如<tt class="file docutils literal"><span class="pre">/etc</span></tt>目录因为etckeeper被Git化，仍然可以对其用gistore进行备份。</li>
+<li>多机异地备份非常简单，使用git克隆即可解决。可以采用git协议、http、或者更为安全的ssh协议。</li>
+</ul>
+<p>说明：Gistore只能运行在Linux/Unix上，而且最好以root用户身份运行，以避免因为授权问题导致有的文件不能备份。</p>
+<div class="section" id="id1">
+<h2>7.2.1. Gistore的安装<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id2">
+<h3>7.2.1.1. 从源码安装Gistore<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<p>从源代码安装Gistore，可以确保安装的是最新的版本。</p>
+<ul>
+<li><p class="first">先用git从Github上克隆代码库。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git clone git://github.com/ossxp-com/gistore.git
+</pre></div>
+</div>
+</li>
+<li><p class="first">执行<tt class="docutils literal"><span class="pre">setup.py</span></tt>脚本完成安装</p>
+<div class="highlight-python"><div class="highlight"><pre>$ cd gistore
+$ sudo python setup.py install
+
+$ which gistore
+/usr/local/bin/gistore
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="easy-install">
+<h3>7.2.1.2. 用<tt class="docutils literal"><span class="pre">easy_install</span></tt>安装<a class="headerlink" href="#easy-install" title="永久链接至标题">¶</a></h3>
+<p>Gistore是用Python语言开发，已经在PYPI上注册：<a class="reference external" href="http://pypi.python.org/pypi/gistore">http://pypi.python.org/pypi/gistore</a>。就像其他Python软件包一样，可以使用<tt class="docutils literal"><span class="pre">easy_install</span></tt>进行安装。</p>
+<ul>
+<li><p class="first">确保机器上已经安装了setuptools。</p>
+<p>Setuptools的官方网站在<a class="reference external" href="http://peak.telecommunity.com/DevCenter/setuptools">http://peak.telecommunity.com/DevCenter/setuptools</a>。几乎每个Linux发行版都有setuptools的软件包，因此可以直接用包管理器进行安装。</p>
+<p>在Debian/Ubuntu上可以使用下面的命令安装setuptools：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sudo aptitude install python-setuptools
+
+$ which easy_install
+/usr/bin/easy_install
+</pre></div>
+</div>
+</li>
+<li><p class="first">使用<strong class="command">easy_install</strong>命令安装Gistore</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sudo easy_install -U gistore
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>7.2.2. Gistore的使用<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>先熟悉一下Gistore的术语：</p>
+<ul>
+<li><p class="first">备份库：通过<strong class="command">gistore init</strong>命令创建的，用于数据备份的数据仓库。备份库包含的数据有：</p>
+<ul class="simple">
+<li>Git版本库相关目录和文件。如<tt class="file docutils literal"><span class="pre">repo.git</span></tt>目录（相当于<tt class="file docutils literal"><span class="pre">.git</span></tt>目录），<tt class="file docutils literal"><span class="pre">.gitignore</span></tt>文件等。</li>
+<li>Gistore相关配置。如<tt class="file docutils literal"><span class="pre">.gistore/config</span></tt>文件。</li>
+</ul>
+</li>
+<li><p class="first">备份项：可以为一个备份库指定任意多的备份项目。</p>
+<ul>
+<li><p class="first">例如备份<tt class="file docutils literal"><span class="pre">/etc</span></tt>目录，<tt class="file docutils literal"><span class="pre">/var/log</span></tt>目录，<tt class="file docutils literal"><span class="pre">/boot/grub/menulist</span></tt>文件等。</p>
+</li>
+<li><p class="first">备份项在备份库的<tt class="file docutils literal"><span class="pre">.gistore/config</span></tt>文件中指定，如上述备份项在配置文件中写法为：</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">store</span> <span class="o">/</span><span class="n">etc</span><span class="p">]</span>
+<span class="p">[</span><span class="n">store</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="p">]</span>
+<span class="p">[</span><span class="n">store</span> <span class="o">/</span><span class="n">boot</span><span class="o">/</span><span class="n">grub</span><span class="o">/</span><span class="n">menu</span><span class="o">.</span><span class="n">lst</span><span class="p">]</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p class="first">备份任务：在执行<strong class="command">gistore</strong>命令时，可以指定一个任务或者多个任务。</p>
+<ul class="simple">
+<li>备份任务可以是对应的备份库的路径。可以使用绝对路径，也可以使用相对路径。</li>
+<li>如果不提供备份任务，缺省将当前目录作为备份库的所在。</li>
+<li>也可以使用一个任务别名来标识备份任务。</li>
+</ul>
+</li>
+<li><p class="first">任务别名。</p>
+<ul class="simple">
+<li>在<tt class="file docutils literal"><span class="pre">/etc/gistore/tasks</span></tt>目录中创建的备份库的符号链接的名称，作为这些备份库的任务别名。</li>
+<li>通过任务别名的机制，将可能分散在磁盘各处的备份库汇总一起，便于管理员定位备份库。</li>
+<li>将所有的别名显示出来，就是任务列表。</li>
+</ul>
+</li>
+</ul>
+<div class="section" id="id4">
+<h3>7.2.2.1. 创建并初始化备份库<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>在使用Gistore开始备份之前，必须先初始化一个备份库。命令行格式如下：</p>
+<div class="highlight-python"><div class="highlight"><pre>gistore init [备份任务]
+</pre></div>
+</div>
+<p>初始化备份库的示例如下：</p>
+<ul>
+<li><p class="first">将当前目录作为备份库进行初始化：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mkdir backup
+$ cd backup
+$ gistore init
+</pre></div>
+</div>
+</li>
+<li><p class="first">将指定的目录作为备份库进行初始化:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sudo gistore init /backup/database
+</pre></div>
+</div>
+</li>
+</ul>
+<p>当一个备份库初始化完毕后，包含下列文件和目录：</p>
+<ul class="simple">
+<li>目录<tt class="file docutils literal"><span class="pre">repo.git</span></tt>：存储备份的Git版本库。</li>
+<li>文件<tt class="file docutils literal"><span class="pre">.gistore/config</span></tt>：Gistore配置文件。</li>
+<li>目录<tt class="file docutils literal"><span class="pre">logs</span></tt>：Gistore运行的日志记录。</li>
+<li>目录<tt class="file docutils literal"><span class="pre">locks</span></tt>：Gistore运行的文件锁目录。</li>
+</ul>
+</div>
+<div class="section" id="id5">
+<h3>7.2.2.2. Gistore的配置文件<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>在每一个备份库的<tt class="file docutils literal"><span class="pre">.gistore</span></tt>目录下的<tt class="file docutils literal"><span class="pre">config</span></tt>文件是该备份库的配置文件，用于记录Gistore的备份项内容以及备份回滚设置等。</p>
+<p>例如下面的配置内容：</p>
+<div class="highlight-python"><div class="highlight"><pre>1   # Global config for all sections
+2   [main]
+3   backend = git
+4   backup_history = 200
+5   backup_copies = 5
+6   root_only = no
+7   version = 2
+8
+9   [default]
+10  keep_empty_dir = no
+11  keep_perm = no
+12
+13  # Define your backup list below. Section name begin with &#39;store &#39; will be backup.
+14  # eg: [store /etc]
+15  [store /opt/mailman/archives]
+16  [store /opt/mailman/conf]
+17  [store /opt/mailman/lists]
+18  [store /opt/moin/conf]
+19  [store /opt/moin/sites]
+</pre></div>
+</div>
+<p>如何理解这个配置文件呢？</p>
+<ul>
+<li><p class="first">第2行到第7行的<tt class="docutils literal"><span class="pre">[main]</span></tt>小节用于Gistore的全局设置。</p>
+</li>
+<li><p class="first">第3行设置了Gistore使用的SCM后端为Git，这是目前唯一可用的设置。</p>
+</li>
+<li><p class="first">第4行设置了Gistore的每一个历史分支保存的最多的提交数目，缺省200个提交。当超过这个提交数目，进行备份回滚。</p>
+</li>
+<li><p class="first">第5行设置了Gistore保存的历史分支数量，缺省5个历史分支。每当备份回滚时，会将备份主线保存到名为<tt class="docutils literal"><span class="pre">gistore/1</span></tt>的历史分支。</p>
+</li>
+<li><p class="first">第6行设置非<tt class="docutils literal"><span class="pre">root_only</span></tt>模式。如果开启<tt class="docutils literal"><span class="pre">root_only</span></tt>模式，则只有root用户能够执行此备份库的备份。</p>
+</li>
+<li><p class="first">第7行设置了Gistore备份库的版本格式。</p>
+</li>
+<li><p class="first">第9行开始的<tt class="docutils literal"><span class="pre">[default]</span></tt>小节设置后面的备份项小节的缺省设置。在后面的<tt class="docutils literal"><span class="pre">[store</span> <span class="pre">...]</span></tt>小节可以覆盖此缺省设置。</p>
+</li>
+<li><p class="first">第10行设置是否保留空目录。暂未实现。</p>
+</li>
+<li><p class="first">第11行设置是否保持文件属主和权限。暂未实现。</p>
+</li>
+<li><p class="first">第15行到第19行是备份项小节，小节名称以<tt class="docutils literal"><span class="pre">store</span></tt>开始，后面的部分即为备份项的路径。</p>
+<p>如<tt class="docutils literal"><span class="pre">[store</span> <span class="pre">/etc]</span></tt>的含义是：要对<tt class="file docutils literal"><span class="pre">/etc</span></tt>目录进行备份。</p>
+</li>
+</ul>
+</div>
+<div class="section" id="id6">
+<h3>7.2.2.3. Gistore的备份项管理<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>当然可以直接编辑<tt class="file docutils literal"><span class="pre">.gistore/config</span></tt>文件，通过添加或者删除<tt class="docutils literal"><span class="pre">[store...]</span></tt>小节的方式管理备份项。Gistore还提供了两个命令进行备份项的管理。</p>
+<p><strong>添加备份项</strong></p>
+<p>进入备份库目录，执行下面的命令，添加备份项<tt class="file docutils literal"><span class="pre">/some/dir</span></tt>。注意备份项要使用全路径，即要以“/”开始。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ gistore add /some/dir
+</pre></div>
+</div>
+<p><strong>删除备份项</strong></p>
+<p>进入备份库目录，执行下面的命令，策删除备份项<tt class="file docutils literal"><span class="pre">/some/dir</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ gistore rm /some/dir
+</pre></div>
+</div>
+<p><strong>查看备份项</strong></p>
+<p>进入备份库目录，执行<strong class="command">gistore status</strong>命令，显示备份库的设置以及备份项列表。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ gistore status
+         Task name : system
+         Directory : /data/backup/gistore/system
+           Backend : git
+ Backup capability : 200 commits * 5 copies
+       Backup list :
+                     /backup/databases (--)
+                     /backup/ldap (--)
+                     /data/backup/gistore/system/.gistore (--)
+                     /etc (AD)
+                     /opt/cosign/conf (--)
+                     /opt/cosign/factor (--)
+                     /opt/cosign/lib (--)
+                     /opt/gosa/conf (--)
+                     /opt/ossxp/conf (--)
+                     /opt/ossxp/ssl (--)
+</pre></div>
+</div>
+<p>从备份库的状态输出，可以看到：</p>
+<ul>
+<li><p class="first">备份库的路径是<tt class="file docutils literal"><span class="pre">/data/backup/gistore/system</span></tt>。</p>
+</li>
+<li><p class="first">备份库有一个任务别名为<tt class="docutils literal"><span class="pre">system</span></tt>。</p>
+</li>
+<li><p class="first">备份的容量是200*5，如果按每天一次备份计算的话，总共保存1000天，差不多3年的数据备份。</p>
+</li>
+<li><p class="first">在备份项列表，可以看到多达10项备份列表。</p>
+<p>每个备份项后面的括号代表其备份选项，其中<tt class="file docutils literal"><span class="pre">/etc</span></tt>的备份选项为<tt class="docutils literal"><span class="pre">AD</span></tt>。<tt class="docutils literal"><span class="pre">A</span></tt>代表记录并保持授权，<tt class="docutils literal"><span class="pre">D</span></tt>的含义是保持空目录。</p>
+</li>
+</ul>
+</div>
+<div class="section" id="id7">
+<h3>7.2.2.4. 执行备份任务<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<p>执行备份任务非常简单：</p>
+<ul>
+<li><p class="first">进入到备份库根目录下，执行：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sudo gistore commit
+</pre></div>
+</div>
+</li>
+<li><p class="first">或者在命令行上指定备份库的路径。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sudo gistore ci /backup/database
+</pre></div>
+</div>
+<p>说明：<tt class="docutils literal"><span class="pre">ci</span></tt>为<tt class="docutils literal"><span class="pre">commit</span></tt>命令的简称。</p>
+</li>
+</ul>
+</div>
+<div class="section" id="id8">
+<h3>7.2.2.5. 查看备份日志及数据<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<p>备份库中的<tt class="file docutils literal"><span class="pre">repo.git</span></tt>就是备份数据所在的Git库，这个Git库是一个不带工作区的裸库。可以对其执行<strong class="command">git log</strong>命令来查看备份日志。</p>
+<p>因为并非采用通常<tt class="file docutils literal"><span class="pre">.git</span></tt>作为版本库名称，而且不带工作区，需要通过<tt class="docutils literal"><span class="pre">--git-dir</span></tt>参数制定版本库位置，如下：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git --git-dir=repo.git log
+</pre></div>
+</div>
+<p>当然，也可以进入到<tt class="file docutils literal"><span class="pre">repo.git</span></tt>目录，执行<strong class="command">git log</strong>命令。</p>
+<p>下面是我公司内的服务器每日备份的日志片断：</p>
+<div class="highlight-python"><div class="highlight"><pre>commit 9d16b5668c1a09f6fa0b0142c6d34f3cbb33072f
+Author: Jiang Xin &lt;jiangxin@ossxp.com&gt;
+Date:   Thu Aug 5 04:00:23 2010 +0800
+
+    Changes summary: total= 423, A: 407, D: 1, M: 15
+    ------------------------------------------------
+        A =&gt; etc/gistore/tasks/Makefile, opt/cosign/lib/share/locale/cosign.pot, opt/cosign/lib/templates-local.old/expired_error.html, opt/cosign/lib/templates-local.old3/error.html, opt/cosign/lib/templates/inc/en/0020_scm.html, ...402 more...
+        D =&gt; etc/gistore/tasks/default
+        M =&gt; .gistore/config, etc/gistore/tasks/gosa, etc/gistore/tasks/testlink, etc/group, etc/gshadow-, ...10 more...
+
+commit 01b6bce2e4ee2f8cda57ceb3c4db0db9eb90bbed
+Author: Jiang Xin &lt;jiangxin@ossxp.com&gt;
+Date:   Wed Aug 4 04:01:09 2010 +0800
+
+    Changes summary: total= 8, A: 7, M: 1
+    -------------------------------------
+        A =&gt; backup/databases/blog_bj/blog_bj.sql, backup/databases/ossxp/mysql.sql, backup/databases/redmine/redmine.sql, backup/databases/testlink/testlink-1.8.sql, backup/databases/testlink/testlink.sql, ...2 more...
+        M =&gt; .gistore/config
+
+commit 15ef2e88f33dfa7dfb04ecbcdb9e6b2a7c4e6b00
+Author: Jiang Xin &lt;jiangxin@ossxp.com&gt;
+Date:   Tue Aug 3 16:59:12 2010 +0800
+
+    Changes summary: total= 2665, A: 2665
+    -------------------------------------
+        A =&gt; .gistore/config, etc/apache2/sites-available/gems, etc/group-, etc/pam.d/dovecot, etc/ssl/certs/0481cb65.0, ...2660 more...
+
+commit 6883d5c2ca77caab9f9b2cfd68dcbc27526731c8
+Author: Jiang Xin &lt;jiangxin@ossxp.com&gt;
+Date:   Tue Aug 3 16:55:49 2010 +0800
+
+    gistore root commit initialized.
+</pre></div>
+</div>
+<p>从上面的日志可以看出：</p>
+<ul class="simple">
+<li>备份发生在晚上4点钟左右。这是因为备份是晚上自动执行的。</li>
+<li>最老的备份，即ID为<tt class="docutils literal"><span class="pre">6883d5c</span></tt>的提交，实际上是一个不包含任何数据的空备份，在数据发生回滚的时候，设置为回滚的起点。这个后面会提到。</li>
+<li>ID为<tt class="docutils literal"><span class="pre">15ef2e8</span></tt>的提交是一次手动提交。提交说明中可以看到添加了2665个文件。</li>
+<li>最新的备份ID为<tt class="docutils literal"><span class="pre">9d16b56</span></tt>，其中既又文件添加（A），又有文件删除（D），还有文件变更（M），会随机选择各5个文件出现在提交日志中。</li>
+</ul>
+<p><strong>如果想查看详细的文件变更列表？</strong></p>
+<p>使用下面的命令：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git --git-dir=repo.git show --stat 9d16b56
+
+commit 9d16b5668c1a09f6fa0b0142c6d34f3cbb33072f
+Author: Jiang Xin &lt;jiangxin@ossxp.com&gt;
+Date:   Thu Aug 5 04:00:23 2010 +0800
+
+    Changes summary: total= 423, A: 407, D: 1, M: 15
+    ------------------------------------------------
+        A =&gt; etc/gistore/tasks/Makefile, opt/cosign/lib/share/locale/cosign.pot, opt/cosign/lib/templates-local.old/expired_error.html, opt/cosign/lib/templ
+        D =&gt; etc/gistore/tasks/default
+        M =&gt; .gistore/config, etc/gistore/tasks/gosa, etc/gistore/tasks/testlink, etc/group, etc/gshadow-, ...10 more...
+
+ .gistore/config                                    |    4 +
+ backup/databases/redmine/redmine.sql               |   44 +-
+ etc/apache2/include/redmine/redmine.conf           |   40 +-
+ etc/gistore/tasks/Makefile                         |    1 +
+ etc/gistore/tasks/default                          |    1 -
+ etc/gistore/tasks/gosa                             |    2 +-
+
+ ...
+
+ opt/gosa/conf/sieve-spam.txt                       |    6 +
+ opt/gosa/conf/sieve-vacation.txt                   |    4 +
+ opt/ossxp/conf/cron.d/ossxp-backup                 |    8 +-
+ 423 files changed, 30045 insertions(+), 51 deletions(-)
+</pre></div>
+</div>
+<p>在备份库的<tt class="file docutils literal"><span class="pre">logs</span></tt>目录下，还有一个备份过程的日志文件<tt class="file docutils literal"><span class="pre">logs/gitstore.log</span></tt>。记录了每次备份的诊断信息，主要用于调试Gistore。</p>
+</div>
+<div class="section" id="id9">
+<h3>7.2.2.6. 查看及恢复备份数据<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<p>所有的备份数据，实际上都在<tt class="file docutils literal"><span class="pre">repo.git</span></tt>目录指向的Git库中维护。如何获取呢？</p>
+<p><strong>克隆方式检出</strong></p>
+<p>执行下面的命令，克隆裸版本库<tt class="docutils literal"><span class="pre">repo.git</span></tt>：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git clone repo.git data
+</pre></div>
+</div>
+<p>进入<tt class="file docutils literal"><span class="pre">data</span></tt>目录，就可以以Git的方式查看历史数据，以及恢复历史数据。当然恢复的历史数据还要拷贝到原始位置才能实现数据的恢复。</p>
+<p><strong>分离的版本库和工作区方式检出</strong></p>
+<p>还有一个稍微复杂的方法，就是既然版本库已经在<tt class="docutils literal"><span class="pre">repo.git</span></tt>了，可以直接利用它，避免克隆导致空间上的浪费，尤其是当备份库异常庞大的情况。</p>
+<ul>
+<li><p class="first">创建一个工作目录，如<tt class="file docutils literal"><span class="pre">export</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ mkdir export
+</pre></div>
+</div>
+</li>
+<li><p class="first">设置环境变量，制定版本库和工作区的位置。注意使用绝对路径。</p>
+<p>下面的命令中，用<strong class="command">pwd</strong>命令获得当前工作路径，借以得到绝对路径。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ export GIT_DIR=`pwd:file:`/repo.git
+$ export GIT_WORK_TREE=`pwd:file:`/export
+</pre></div>
+</div>
+</li>
+<li><p class="first">然后就可以进入:file:` export`目录，执行Git操作了。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status
+$ git checkout .
+</pre></div>
+</div>
+</li>
+</ul>
+<p><strong>为什么没有历史备份？</strong></p>
+<p>当针对<tt class="docutils literal"><span class="pre">repo.git</span></tt>执行<strong class="command">git log</strong>的时候，满心期望能够看到备份的历史，但是看到的却只有孤零零的几个备份记录。不要着急，可能是备份回滚了。</p>
+<p>参见下节的备份回滚，会找到如何获取更多历史备份的方法。</p>
+</div>
+<div class="section" id="id10">
+<h3>7.2.2.7. 备份回滚及设置<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
+<p>我在开发Gistore时，最麻烦的就是备份历史的管理。如果不对备份历史进行回滚，必然会导致提交越来越多，备份空间占用越来越大，直至磁盘空间占慢。</p>
+<p>最早的想法是使用<strong class="command">git rebase</strong>。即将准备丢弃的早期备份历史合并成为一个提交，后面的提交变基到合并提交之上，这样就实现了对历史提交的丢弃。但是这样的操作即费时，又比较复杂。忽然又一天灵机一动，为什么不用分支来实现对回滚数据的保留？至于备份主线（master分支）从一个新提交开始重建。</p>
+<p>回滚后master分支如何从一个新提交开始呢？较早的实现是直接重置到一个空提交（gistore/0）上，但是这样会导致接下来的备份非常耗时。一个更好的办法是使用<strong class="command">git commit-tree</strong>命令，直接从回滚前的master分支创建新提交。在读者看到这本书的时候，我应该已经才用了新的实现。</p>
+<p>具体的实现过程是：</p>
+<ul class="simple">
+<li>首先在备份库初始化的时候，就会建立一个空的提交，并打上里程碑Tag：<tt class="docutils literal"><span class="pre">gistore/0</span></tt>（新的实现这个步骤变得没有必要）。</li>
+<li>每次备份，都提交在Git库的主线master上。</li>
+<li>当Git库的master主线的提交数达到规定的阈值（缺省200），对gistore分支进行回滚，并基于当前master打上分支：<tt class="docutils literal"><span class="pre">gistore/1</span></tt>。<ul>
+<li>如果设置了5个回滚分支，并且存在其他回滚分支，则分支依次向后回滚。</li>
+<li>删除<tt class="docutils literal"><span class="pre">gistore/5</span></tt>，<tt class="docutils literal"><span class="pre">gistore/4</span></tt>分支改名为<tt class="docutils literal"><span class="pre">gistore/5</span></tt>，等等，最后将<tt class="docutils literal"><span class="pre">gistore/1</span></tt>重命名为<tt class="docutils literal"><span class="pre">gistore/2</span></tt>。</li>
+<li>基于当前master建立分支<tt class="docutils literal"><span class="pre">gistore/1</span></tt>。</li>
+<li>将当前master以最新提交的树创建一个不含历史的提交，并重置到该提交。即master分支抛弃所有的备份历史。</li>
+<li>在新的master分支进行一次新的备份。</li>
+</ul>
+</li>
+<li>当回滚发生后，对备份库的远程数据同步不会有什么影响，传输的数据量也仅是新增备份和上一次备份的差异。</li>
+</ul>
+<p><strong>如何找回历史备份？</strong></p>
+<p>通过上面介绍的Gistore回滚的实现方法，会知道当回滚发生后，主线master只包含两个提交。一个是上一次备份的数据，另外一个是最新的数据备份。似乎大部分备份历史被完全丢弃了。其实，可以从分支<tt class="docutils literal"><span class="pre">gistore/1</span></tt>中看到最近备份的历史，还可以从其他分支（如果有的话）会看到更老的历史。</p>
+<p>查看回滚分支的提交历史：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git --git-dir=repo.git log gistore/1
+</pre></div>
+</div>
+<p>通过日志找出要恢复的时间点和提交号，使用<strong class="command">git checkout</strong>即可检出历史版本。</p>
+</div>
+<div class="section" id="id11">
+<h3>7.2.2.8. 注册备份任务别名<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
+<p>因为Gistore可以在任何目录下创建备份任务，管理员很难定位当前到底存在多少个备份库，因此需要提供一个机制，让管理员能够看到系统中有哪些备份库。还有，就是在使用Gistore时若使用长长的备份库路径作为参数会显得非常笨拙。任务别名就是用来解决这些问题的。</p>
+<p>任务别名实际上就是在备份库在目录<tt class="file docutils literal"><span class="pre">/etc/gistore/tasks</span></tt>下创建的符号连接。</p>
+<p>为备份任务创建任务别名非常简单，只需要在<tt class="file docutils literal"><span class="pre">/etc/gistore/tasks</span></tt>目录中创建的备份库的符号链接，该符号链接的名称，作为这些备份库的任务别名。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sudo ln -s /home/jiangxin/Desktop/mybackup /etc/gistore/tasks/jx
+$ sudo ln -s /backup/database /etc/gistore/tasks/db
+</pre></div>
+</div>
+<p>于是，就创建了两个任务别名，在以后执行备份时，可以简化备份命令：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ sudo gistore commit jx
+$ sudo gistore commit db
+</pre></div>
+</div>
+<p>查看一份完整备份列表也非常简单，执行<strong class="command">gistore list</strong>命令即可。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ gistore list
+db        : /backup/database
+jx        : /home/jiangxin/Desktop/mybackup
+</pre></div>
+</div>
+<p>当<tt class="docutils literal"><span class="pre">gistore</span> <span class="pre">list</span></tt>命令后面指定某个任务列表时，相当于执行<tt class="docutils literal"><span class="pre">gistore</span> <span class="pre">status</span></tt>命令，查看备份状态信息：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ gistore list db
+</pre></div>
+</div>
+<p>可以用一条命令对所有的任务别名执行备份：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ gistore commit-all
+</pre></div>
+</div>
+</div>
+<div class="section" id="crontab">
+<h3>7.2.2.9. 自动备份：crontab<a class="headerlink" href="#crontab" title="永久链接至标题">¶</a></h3>
+<p>在<tt class="file docutils literal"><span class="pre">/etc/cron.d/</span></tt>目录下创建一个文件，如<tt class="file docutils literal"><span class="pre">/etc/cron.d/gistore</span></tt>，包含如下内容：</p>
+<div class="highlight-python"><div class="highlight"><pre>## gistore backup
+0   4  *   *   *    root  /usr/bin/gistore commit-all
+</pre></div>
+</div>
+<p>这样每天凌晨4点，就会以root用户身份执行<strong class="command">gistore commit-all</strong>命令。</p>
+<p>为了执行相应的备份计划，需要将备份库在<tt class="file docutils literal"><span class="pre">/etc/gistore/tasks</span></tt>目录下创建符号链接。</p>
+</div>
+</div>
+<div class="section" id="id12">
+<h2>7.2.3. Gistore双机备份<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h2>
+<p>Gistore备份库的主体就是<tt class="docutils literal"><span class="pre">repo.git</span></tt>，即一个Git库。可以通过架设一个Git服务器，远程主机通过克隆该备份库实现双机备份甚至是异地备份。而且最酷的是，整个数据同步的过程是可视的、快速的和无痛的，感谢伟大而又神奇的Git。</p>
+<p>最好使用公钥认证的基于SSH的Git服务器架设，因为一是可以实现无口令的数据同步，二是增加安全性，因为备份数据中可能包含敏感数据。</p>
+<p>还有可以直接利用现成的<tt class="file docutils literal"><span class="pre">/etc/gistore/tasks</span></tt>目录作为版本库的根。当然还需要在架设的Git服务器上，使用一个地址变换的小巧门。Gitosis服务器软件的地址变换魔法正好可以帮助实现。参见第31章第31.5节“轻量级管理的Git服务”。</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="030-binary-diff.html" title="7.3. 补丁中的二进制文件"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="010-etckeeper.html" title="7.1. etckeeper"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >7. Git的其它应用</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>

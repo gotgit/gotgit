@@ -1,0 +1,509 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>4.5. 子树合并 &mdash; GotGit</title>
+    
+    <link rel="stylesheet" href="../static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/master.css" type="text/css" />
+    <link rel="stylesheet" href="/stylesheets/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="../static/worldhello.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../static/jquery.js"></script>
+    <script type="text/javascript" src="../static/underscore.js"></script>
+    <script type="text/javascript" src="../static/doctools.js"></script>
+    <script type="text/javascript" src="../static/translations.js"></script>
+    <link rel="top" title="GotGit" href="../index.html" />
+    <link rel="up" title="4. Git协同模型" href="index.html" />
+    <link rel="next" title="4.6. Android式多版本库协同" href="060-android-model.html" />
+    <link rel="prev" title="4.4. 子模组协同模型" href="040-submodule-model.html" /> 
+  </head>
+  <body>
+    <div id='header'>
+      <h1><a href='/'>World Hello</a></h1>
+
+      <div id='menu'>
+        <ul>
+          <li><a href='/' id='home-link' title='Home'>首页</a></li>
+          <li><a href='/blog.html' id='blog-link' title='Blog'>博客</a></li>
+          <li><a href='/doc/' id='docs-link' title='Docs'>文章</a></li>
+          <li><a href='/about.html' id='about-link' title='About'>关于</a></li>
+          <li><a href='http://github.com/gotgit' target='_blank' title='GitHub' rel='me' id='github-link'>GitHub</a></li>
+          <li><a href='http://weibo.com/gotgit' title='微博' target='_blank' id='weibo-link'>微博</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="060-android-model.html" title="4.6. Android式多版本库协同"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="040-submodule-model.html" title="4.4. 子模组协同模型"
+             accesskey="P">上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">4. Git协同模型</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">4.5. 子树合并</a><ul>
+<li><a class="reference internal" href="#id2">4.5.1. 引入外部版本库</a></li>
+<li><a class="reference internal" href="#id3">4.5.2. 子目录方式合并外部版本库</a></li>
+<li><a class="reference internal" href="#id4">4.5.3. 利用子树合并跟踪上游改动</a></li>
+<li><a class="reference internal" href="#id5">4.5.4. 子树拆分</a></li>
+<li><a class="reference internal" href="#git-subtree">4.5.5. <tt class="docutils literal"><span class="pre">git</span> <span class="pre">subtree</span></tt>插件</a><ul>
+<li><a class="reference internal" href="#git-subtree-add">4.5.5.1. <strong class="command">git subtree add</strong></a></li>
+<li><a class="reference internal" href="#git-subtree-merge">4.5.5.2. <strong class="command">git subtree merge</strong></a></li>
+<li><a class="reference internal" href="#git-subtree-pull">4.5.5.3. <strong class="command">git subtree pull</strong></a></li>
+<li><a class="reference internal" href="#git-subtree-split">4.5.5.4. <strong class="command">git subtree split</strong></a></li>
+<li><a class="reference internal" href="#git-subtree-push">4.5.5.5. <strong class="command">git subtree push</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>上一个主题</h4>
+  <p class="topless"><a href="040-submodule-model.html"
+                        title="上一章">4.4. 子模组协同模型</a></p>
+  <h4>下一个主题</h4>
+  <p class="topless"><a href="060-android-model.html"
+                        title="下一章">4.6. Android式多版本库协同</a></p>
+  <h3>本页</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/04-git-model/050-subtree-model.txt"
+           rel="nofollow">显示源代码</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>快速搜索</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    输入相关的术语，模块，类或者函数名称进行搜索
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>4.5. 子树合并<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>使用子树合并，同样可以实现在一个项目中引用其他项目的数据。但是和子模组方式不同的是，使用子树合并模式，外部的版本库整个复制到本版本库中并建立跟踪关联。使用子树合并模型，使得对源自外部版本库的数据的访问和本版本库数据的访问没有区别，也可以对其进行本地修改，并且能够以子树合并的方式将源自外部版本库的改动和本地的修改相合并。</p>
+<div class="section" id="id2">
+<h2>4.5.1. 引入外部版本库<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>为演示子树合并，需要至少准备两个版本库，一个是将被作为子目录引入的版本库<tt class="docutils literal"><span class="pre">util.git</span></tt>，另外一个是主版本库<tt class="docutils literal"><span class="pre">main.git</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git --git-dir=/path/to/repos/util.git init --bare
+$ git --git-dir=/path/to/repos/main.git init --bare
+</pre></div>
+</div>
+<p>在本地检出这两个版本库：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git clone /path/to/repos/util.git
+$ git clone /path/to/repos/main.git
+</pre></div>
+</div>
+<p>需要为这两个空版本库添加些数据。非常简单，每个版本库下只创建两个文件：<tt class="file docutils literal"><span class="pre">Makefile</span></tt>和<tt class="file docutils literal"><span class="pre">version</span></tt>。当执行<strong class="command">make</strong>命令时显示 version 文件的内容。对<tt class="file docutils literal"><span class="pre">version</span></tt>文件多次提交以建立多个提交历史。别忘记在最后使用<strong class="command">git push origin master</strong>将版本库推送到远程版本库中。</p>
+<p><tt class="file docutils literal"><span class="pre">Makefile</span></tt>文件示例如下。注意第二行前面的空白是<tt class="docutils literal"><span class="pre">&lt;TAB&gt;</span></tt>字符，而非空格。</p>
+<div class="highlight-python"><div class="highlight"><pre>all:
+        @cat version
+</pre></div>
+</div>
+<p>在之前尝试的<strong class="command">git fetch</strong>命令都是获取同一项目的版本库的内容。其实命令<strong class="command">git fetch</strong>从哪个项目获取数据并没有什么限制，因为Git的版本库不像Subversion那样用一个唯一的UUID标识让Subversion的版本库之间势同水火。当然也可以用<strong class="command">git pull</strong>来获取其他版本库中的提交，但是那样将把两个项目的文件彻底混杂在一起。对于这个示例来说，因为两个项目具有同样的文件<tt class="file docutils literal"><span class="pre">Makefile</span></tt>和<tt class="file docutils literal"><span class="pre">version</span></tt>，使用<strong class="command">git pull</strong>将导致冲突。所以为了将不同项目的版本库引入，并在稍候以子树合并方式添加到一个子目录中，需要用<strong class="command">git fetch</strong>命令从其他版本库获取数据。</p>
+<ul>
+<li><p class="first">为了便于以后对外部版本库的跟踪，在使用<strong class="command">git fetch</strong>前，先在<tt class="docutils literal"><span class="pre">main</span></tt>版本库中注册远程版本库<tt class="docutils literal"><span class="pre">util.git</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git remote add util /path/to/repos/util.git
+</pre></div>
+</div>
+</li>
+<li><p class="first">查看注册的远程版本库。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git remote -v
+origin  /path/to/repos/main.git/ (fetch)
+origin  /path/to/repos/main.git/ (push)
+util    /path/to/repos/util.git (fetch)
+util    /path/to/repos/util.git (push)
+</pre></div>
+</div>
+</li>
+<li><p class="first">执行<strong class="command">git fetch</strong>命令获取<tt class="docutils literal"><span class="pre">util.git</span></tt>版本库的提交。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git fetch util
+</pre></div>
+</div>
+</li>
+<li><p class="first">查看分支，包括远程分支。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git branch -a
+* master
+  remotes/origin/master
+  remotes/util/master
+</pre></div>
+</div>
+</li>
+</ul>
+<p>在不同的分支：<tt class="docutils literal"><span class="pre">master</span></tt>分支和<tt class="docutils literal"><span class="pre">remotes/util/master</span></tt>分支，文件<tt class="file docutils literal"><span class="pre">version</span></tt>的内容并不相同，因为来自不同的上游版本库。</p>
+<ul>
+<li><p class="first">master分支中执行<strong class="command">make</strong>命令，显示的是<tt class="docutils literal"><span class="pre">main.git</span></tt>版本库中<tt class="file docutils literal"><span class="pre">version</span></tt>文件的内容。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ make
+main v2010.1
+</pre></div>
+</div>
+</li>
+<li><p class="first">从<tt class="docutils literal"><span class="pre">util/master</span></tt>远程分支创建一个本地分支<tt class="docutils literal"><span class="pre">util-branch</span></tt>，并切换分支。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git checkout -b util-branch util/master
+Branch util-branch set up to track remote branch master from util.
+Switched to a new branch &#39;util-branch&#39;
+</pre></div>
+</div>
+</li>
+<li><p class="first">执行<strong class="command">make</strong>命令，显示的是<tt class="docutils literal"><span class="pre">util.git</span></tt>版本库中<tt class="file docutils literal"><span class="pre">version</span></tt>文件的内容。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ make
+util v3.0
+</pre></div>
+</div>
+</li>
+</ul>
+<p>像这样在<tt class="docutils literal"><span class="pre">main.git</span></tt>中引入<tt class="docutils literal"><span class="pre">util.git</span></tt>显然不能满足需要，因为在<tt class="docutils literal"><span class="pre">main.git</span></tt>的本地克隆版本库中，<tt class="docutils literal"><span class="pre">master</span></tt>分支访问不到只有在<tt class="docutils literal"><span class="pre">util-branch</span></tt>分支中才出现的<tt class="docutils literal"><span class="pre">util</span></tt>版本库数据。这就需要做进一步的工作，将两个版本库的内容合并到一个分支中。即<tt class="docutils literal"><span class="pre">util-branch</span></tt>分支的数据作为子目录加入到<tt class="docutils literal"><span class="pre">master</span></tt>分支。</p>
+</div>
+<div class="section" id="id3">
+<h2>4.5.2. 子目录方式合并外部版本库<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>下面就用git的底层命令<strong class="command">git read-tree</strong>、<strong class="command">git write-tree</strong>、<strong class="command">git commit-tree</strong>子命令实现将<tt class="docutils literal"><span class="pre">util-branch</span></tt>分支所包含的<tt class="docutils literal"><span class="pre">util.git</span></tt>版本库的目录树以子目录（<tt class="file docutils literal"><span class="pre">lib/</span></tt>）型式添加到<tt class="docutils literal"><span class="pre">master</span></tt>分支。</p>
+<p>先来看看<tt class="docutils literal"><span class="pre">util-branch</span></tt>分支当前最新提交，记住最新提交所指向的目录树（tree），即tree-id：0c743e4。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git cat-file -p util-branch
+tree 0c743e49e11019678c8b345e667504cb789431ae
+parent f21f9c10cc248a4a28bf7790414baba483f1ec15
+author Jiang Xin &lt;jiangxin@ossxp.com&gt; 1288494998 +0800
+committer Jiang Xin &lt;jiangxin@ossxp.com&gt; 1288494998 +0800
+
+util v2.0 -&gt; v3.0
+</pre></div>
+</div>
+<p>查看tree 0c743e4所包含的内容，会看到两个文件：<tt class="file docutils literal"><span class="pre">Makefile</span></tt>和<tt class="file docutils literal"><span class="pre">version</span></tt>。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git cat-file -p 0c743e4
+100644 blob 07263ff95b4c94275f4b4735e26ea63b57b3c9e3    Makefile
+100644 blob bebe6b10eb9622597dd2b641efe8365c3638004e    version
+</pre></div>
+</div>
+<p>切换到master分支，如下方式调用<strong class="command">git read-tree</strong>将<tt class="docutils literal"><span class="pre">util-branch</span></tt>分支的目录树读取到当前分支<tt class="file docutils literal"><span class="pre">lib</span></tt>目录下。</p>
+<ul>
+<li><p class="first">切换到master分支。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git checkout master
+</pre></div>
+</div>
+</li>
+<li><p class="first">执行<strong class="command">git read-tree</strong>命令，将分支<tt class="docutils literal"><span class="pre">util-branch</span></tt>读取到当前分支的一个子目录下。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git read-tree --prefix=lib util-branch
+</pre></div>
+</div>
+</li>
+<li><p class="first">调用<strong class="command">git read-tree</strong>只是更新了index，所以查看工作区状态，会看到<tt class="file docutils literal"><span class="pre">lib</span></tt>目录下的两个文件在工作区中还不存在。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status
+# On branch master
+# Changes to be committed:
+#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
+#
+#       new file:   lib/Makefile
+#       new file:   lib/version
+#
+# Changed but not updated:
+#   (use &quot;git add/rm &lt;file&gt;...&quot; to update what will be committed)
+#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+#
+#       deleted:    lib/Makefile
+#       deleted:    lib/version
+#
+</pre></div>
+</div>
+</li>
+<li><p class="first">执行检出命令，将<tt class="file docutils literal"><span class="pre">lib</span></tt>目录下的文件更新出来。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git checkout -- lib
+</pre></div>
+</div>
+</li>
+<li><p class="first">再次查看状态，会看到前面执行的<strong class="command">git read-tree</strong>命令添加到暂存区中的文件。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git status
+# On branch master
+# Changes to be committed:
+#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
+#
+#       new file:   lib/Makefile
+#       new file:   lib/version
+#
+</pre></div>
+</div>
+</li>
+</ul>
+<p>现在还不能忙着提交，因为如果现在进行提交就体现不出来两个分支的合并关系。需要使用Git底层的命令进行数据提交。</p>
+<ul>
+<li><p class="first">调用<strong class="command">git write-tree</strong>将暂存区的目录树保存下来。</p>
+<p>要记住调用<strong class="command">git write-tree</strong>后形成的新的tree-id：2153518。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git write-tree
+2153518409d218609af40babededec6e8ef51616
+</pre></div>
+</div>
+</li>
+<li><p class="first">执行<strong class="command">git cat-file</strong>命令显示这棵树的内容，会注意到其中<tt class="file docutils literal"><span class="pre">lib</span></tt>目录的tree-id和之前查看过的<tt class="docutils literal"><span class="pre">util-branch</span></tt>分支最新提交对应的tree-id一样都是0c743e4。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git cat-file -p 2153518409d218609af40babededec6e8ef51616
+100644 blob 07263ff95b4c94275f4b4735e26ea63b57b3c9e3    Makefile
+040000 tree 0c743e49e11019678c8b345e667504cb789431ae    lib
+100644 blob 638c7b7c6bdbde1d29e0b55b165f755c8c4332b5    version
+</pre></div>
+</div>
+</li>
+<li><p class="first">要手工创建一个合并提交，即新的提交要有两个父提交。这两个父提交分别是<tt class="docutils literal"><span class="pre">master</span></tt>分支和<tt class="docutils literal"><span class="pre">util-branch</span></tt>分支的最新提交。用下面的命令显示两个提交的提交ID，并记下这两个提交ID。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git rev-parse HEAD
+911b1af2e0c95a2fc1306b8dea707064d5386c2e
+$ git rev-parse util-branch
+12408a149bfa78a4c2d4011f884aa2adb04f0934
+</pre></div>
+</div>
+</li>
+<li><p class="first">执行<strong class="command">git commit-tree</strong>命令手动创建提交。新提交的目录树来自上面<strong class="command">git write-tree</strong>产生的目录树（tree-id为2153518），而新提交（合并提交）的两个父提交直接用上面<strong class="command">git rev-parse</strong>显示的两个提交ID表示。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ echo &quot;subtree merge&quot; | \
+  git commit-tree 2153518409d218609af40babededec6e8ef51616 \
+  -p 911b1af2e0c95a2fc1306b8dea707064d5386c2e \
+  -p 12408a149bfa78a4c2d4011f884aa2adb04f0934
+62ae6cc3f9280418bdb0fcf6c1e678905b1fe690
+</pre></div>
+</div>
+</li>
+<li><p class="first">执行<strong class="command">git commit-tree</strong>命令的输出是提交之后产生的新提交的提交ID。需要把当前的master分支重置到此提交ID。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git reset 62ae6cc3f9280418bdb0fcf6c1e678905b1fe690
+</pre></div>
+</div>
+</li>
+<li><p class="first">查看一下提交日志及分支图，可以看到通过复杂的<strong class="command">git read-tree</strong>、<strong class="command">git write-tree</strong>和<strong class="command">git commit-tree</strong>命令制造的合并提交，的确将两个不同版本库合并到一起了。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git log --graph --pretty=oneline
+*   62ae6cc3f9280418bdb0fcf6c1e678905b1fe690 subtree merge
+|\
+| * 12408a149bfa78a4c2d4011f884aa2adb04f0934 util v2.0 -&gt; v3.0
+| * f21f9c10cc248a4a28bf7790414baba483f1ec15 util v1.0 -&gt; v2.0
+| * 76db0ad729db9fdc5be043f3b4ed94ddc945cd7f util v1.0
+* 911b1af2e0c95a2fc1306b8dea707064d5386c2e main v2010.1
+</pre></div>
+</div>
+</li>
+<li><p class="first">看看现在的master分支。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git cat-file -p HEAD
+tree 2153518409d218609af40babededec6e8ef51616
+parent 911b1af2e0c95a2fc1306b8dea707064d5386c2e
+parent 12408a149bfa78a4c2d4011f884aa2adb04f0934
+author Jiang Xin &lt;jiangxin@ossxp.com&gt; 1288498186 +0800
+committer Jiang Xin &lt;jiangxin@ossxp.com&gt; 1288498186 +0800
+
+subtree merge
+</pre></div>
+</div>
+</li>
+<li><p class="first">看看目录树。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git cat-file -p 2153518409d218609af40babededec6e8ef51616
+100644 blob 07263ff95b4c94275f4b4735e26ea63b57b3c9e3    Makefile
+040000 tree 0c743e49e11019678c8b345e667504cb789431ae    lib
+100644 blob 638c7b7c6bdbde1d29e0b55b165f755c8c4332b5    version
+</pre></div>
+</div>
+</li>
+</ul>
+<p>整个过程非常繁琐，但是不要太过担心，只需要对原理了解清楚就可以了，因为在后面会介绍一个Git插件封装了复杂的子树合并操作。</p>
+</div>
+<div class="section" id="id4">
+<h2>4.5.3. 利用子树合并跟踪上游改动<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>如果子树（<tt class="file docutils literal"><span class="pre">lib</span></tt>目录）的上游（即<tt class="docutils literal"><span class="pre">util.git</span></tt>）包含了新的提交，如何将<tt class="docutils literal"><span class="pre">util.git</span></tt>的新提交合并过来呢？这就要用到名为subtree的合并策略。参见第3篇第16章第16.6小节“合并策略”中相关内容。</p>
+<p>在执行子树合并之前，先切换到<tt class="docutils literal"><span class="pre">util-branch</span></tt>分支，获取远程版本库改动。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git checkout util-branch
+
+$ git pull
+remote: Counting objects: 8, done.
+remote: Compressing objects: 100% (4/4), done.
+remote: Total 6 (delta 0), reused 0 (delta 0)
+Unpacking objects: 100% (6/6), done.
+From /path/to/repos/util
+   12408a1..5aba14f  master     -&gt; util/master
+Updating 12408a1..5aba14f
+Fast-forward
+ version |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+$ git checkout master
+</pre></div>
+</div>
+<p>在切换回master分支后，如果这时执行<strong class="command">git merge util-branch</strong>，会将<tt class="docutils literal"><span class="pre">uitl-branch</span></tt>的数据直接合并到<tt class="docutils literal"><span class="pre">master</span></tt>分支的根目录下，而实际上是希望合并发生在<tt class="file docutils literal"><span class="pre">lib</span></tt>目录中，这就需要如下方式进行调用，以subtree策略进行合并。</p>
+<p>如果Git的版本小于1.7，直接使用subtree合并策略。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git merge -s subtree util-branch
+</pre></div>
+</div>
+<p>如果Git的版本是1.7之后（含1.7）的版本，则可以使用缺省的recursive合并策略，通过参数<tt class="docutils literal"><span class="pre">subtree=&lt;prefix&gt;</span></tt>在合并时使用正确的子树进行匹配合并。避免了使用subtree合并策略时的猜测。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git merge -Xsubtree=lib util-branch
+</pre></div>
+</div>
+<p>再来看看执行子树合并之后的分支图示。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git log --graph --pretty=oneline
+*   f1a33e55eea04930a500c18a24a8bd009ecd9ac2 Merge branch &#39;util-branch&#39;
+|\
+| * 5aba14fd347fc22cd8fbd086c9f26a53276f15c9 util v3.1 -&gt; v3.2
+| * a6d53dfcf78e8a874e9132def5ef87a2b2febfa5 util v3.0 -&gt; v3.1
+* |   62ae6cc3f9280418bdb0fcf6c1e678905b1fe690 subtree merge
+|\ \
+| |/
+| * 12408a149bfa78a4c2d4011f884aa2adb04f0934 util v2.0 -&gt; v3.0
+| * f21f9c10cc248a4a28bf7790414baba483f1ec15 util v1.0 -&gt; v2.0
+| * 76db0ad729db9fdc5be043f3b4ed94ddc945cd7f util v1.0
+* 911b1af2e0c95a2fc1306b8dea707064d5386c2e main v2010.1
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>4.5.4. 子树拆分<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>既然可以将一个代码库通过子树合并方式作为子目录加入到另外一个版本库中，反之也可以将一个代码库的子目录独立出来转换为另外的版本库。不过这个反向过程非常复杂。要将一个版本库的子目录作为顶级目录导出到另外的项目，潜藏的条件是要导出历史的，因为如果不关心历史，直接文件拷贝重建项目就可以了。子树拆分的大致过程是：</p>
+<ol class="arabic simple">
+<li>找到要导出的目录的提交历史，并反向排序。</li>
+<li>依次对每个提交执行下面的操作：</li>
+<li>找出提交中导出目录对应的tree-id。</li>
+<li>对该tree-id执行<strong class="command">git commit-tree</strong>。</li>
+<li>执行<strong class="command">git commit-tree</strong>要保持提交信息还要重新设置提交的父提交（parent）。</li>
+</ol>
+<p>手工执行这个操作复杂且易出错，可以用下节介绍的<tt class="docutils literal"><span class="pre">git</span> <span class="pre">subtree</span></tt>插件，或使用第6篇第35.4小节“Git版本库整理”中介绍的<strong class="command">git filter-branch</strong>命令进行子目录过滤。</p>
+</div>
+<div class="section" id="git-subtree">
+<h2>4.5.5. <tt class="docutils literal"><span class="pre">git</span> <span class="pre">subtree</span></tt>插件<a class="headerlink" href="#git-subtree" title="永久链接至标题">¶</a></h2>
+<p>Git subtree插件用shell脚本开发，安装之后为Git提供了新的<strong class="command">git subtree</strong>命令，支持前面介绍的子树合并和子树拆分。命令非常简单易用，将其他版本库以子树形式导入，再也不必和底层的Git命令打交道了。</p>
+<p>Gitsubtree 插件的作者将代码库公布在Github上：<a class="reference external" href="http://github.com/apenwarr/git-subtree/">http://github.com/apenwarr/git-subtree/</a>。</p>
+<p>安装Git subtree很简单：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git clone git://github.com/apenwarr/git-subtree.git
+$ cd git-subtree
+$ make doc
+$ make test
+$ sudo make install
+</pre></div>
+</div>
+<div class="section" id="git-subtree-add">
+<h3>4.5.5.1. <strong class="command">git subtree add</strong><a class="headerlink" href="#git-subtree-add" title="永久链接至标题">¶</a></h3>
+<p>命令<strong class="command">git subtree add</strong>相当于将其他版本库以子树方式加入到当前版本库。用法：</p>
+<div class="highlight-python"><div class="highlight"><pre>git subtree add [--squash] -P &lt;prefix&gt; &lt;commit&gt;
+git subtree add [--squash] -P &lt;prefix&gt; &lt;repository&gt; &lt;refspec&gt;
+</pre></div>
+</div>
+<p>其中可选的<tt class="docutils literal"><span class="pre">--squash</span></tt>含义为压缩为一个版本后再添加。</p>
+<p>对于文章中的示例，为了将<tt class="docutils literal"><span class="pre">util.git</span></tt>合并到<tt class="docutils literal"><span class="pre">main.git</span></tt>的<tt class="file docutils literal"><span class="pre">lib</span></tt>目录。可以直接这样调用：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git subtree add -P lib /path/to/repos/util.git master
+</pre></div>
+</div>
+<p>不过推荐的方法还是先在本地建立<tt class="docutils literal"><span class="pre">util.git</span></tt>版本库的追踪分支。</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git remote add util /path/to/repos/util.git
+$ git fetch util
+$ git checkout -b util-branch util/master
+$ git subtree add -P lib util-branch
+</pre></div>
+</div>
+</div>
+<div class="section" id="git-subtree-merge">
+<h3>4.5.5.2. <strong class="command">git subtree merge</strong><a class="headerlink" href="#git-subtree-merge" title="永久链接至标题">¶</a></h3>
+<p>命令<strong class="command">git subtree merge</strong>相当于将子树对应的远程分支的更新重新合并到子树中，相当于完成了<strong class="command">git merge -s subtree</strong>操作。用法：</p>
+<div class="highlight-python"><div class="highlight"><pre>git subtree merge [--squash] -P &lt;prefix&gt; &lt;commit&gt;
+</pre></div>
+</div>
+<p>其中可选的<tt class="docutils literal"><span class="pre">--squash</span></tt>含义为压缩为一个版本后再合并。</p>
+<p>对于文章中的示例，为了将<tt class="docutils literal"><span class="pre">util-branch</span></tt>分支包含的上游最新改动合并到master分支的<tt class="file docutils literal"><span class="pre">lib</span></tt>目录。可以直接这样调用：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git subtree merge -P lib util-branch
+</pre></div>
+</div>
+</div>
+<div class="section" id="git-subtree-pull">
+<h3>4.5.5.3. <strong class="command">git subtree pull</strong><a class="headerlink" href="#git-subtree-pull" title="永久链接至标题">¶</a></h3>
+<p>命令<strong class="command">git subtree pull</strong>相当于先对子树对应的远程版本库执行一次<strong class="command">git fetch</strong>操作，然后再执行<strong class="command">git subtree merge</strong>。用法：</p>
+<div class="highlight-python"><div class="highlight"><pre>git subtree pull [--squash] -P &lt;prefix&gt; &lt;repository&gt; &lt;refspec...&gt;
+</pre></div>
+</div>
+<p>对于文章中的示例，为了将<tt class="docutils literal"><span class="pre">util.git</span></tt>版本库的master分支包含的最新改动合并到master分支的<tt class="file docutils literal"><span class="pre">lib</span></tt>目录。可以直接这样调用：</p>
+<div class="highlight-python"><div class="highlight"><pre>$ git subtree pull -P lib /path/to/repos/util.git master
+</pre></div>
+</div>
+<p>更喜欢用前面介绍的<strong class="command">git subtree merge</strong>命令，因为<strong class="command">git subtree pull</strong>存在版本库地址写错的风险。</p>
+</div>
+<div class="section" id="git-subtree-split">
+<h3>4.5.5.4. <strong class="command">git subtree split</strong><a class="headerlink" href="#git-subtree-split" title="永久链接至标题">¶</a></h3>
+<p>命令<strong class="command">git subtree split</strong>相当将目录拆分为独立的分支，即子树拆分。拆分后形成的分支可以通过推送到新的版本库实现原版本库的目录独立为一个新的版本库。用法：</p>
+<div class="highlight-python"><div class="highlight"><pre>git subtree split -P &lt;prefix&gt; [--branch &lt;branch&gt;] [--onto ...] [--ignore-joins] [--rejoin] &lt;commit...&gt;
+</pre></div>
+</div>
+<p>说明：</p>
+<ul class="simple">
+<li>该命令的总是输出子树拆分后的最后一个commit-id。这样可以通过管道方式传递给其他命令，如<strong class="command">git subtree push</strong>命令。</li>
+<li>参数<tt class="docutils literal"><span class="pre">--branch</span></tt>提供拆分后创建的分支名称。如果不提供，只能通过<strong class="command">git subtree split</strong>命令提供的提交ID得到拆分的结果。</li>
+<li>参数<tt class="docutils literal"><span class="pre">--onto</span></tt>参数将目录拆分附加于已经存在的提交上。</li>
+<li>参数<tt class="docutils literal"><span class="pre">--ignore-joins</span></tt>忽略对之前拆分历史的检查。</li>
+<li>参数<tt class="docutils literal"><span class="pre">--rejoin</span></tt>会将拆分结果合并到当前分支，因为采用ours的合并策略，不会破坏当前分支。</li>
+</ul>
+</div>
+<div class="section" id="git-subtree-push">
+<h3>4.5.5.5. <strong class="command">git subtree push</strong><a class="headerlink" href="#git-subtree-push" title="永久链接至标题">¶</a></h3>
+<p>命令<strong class="command">git subtree push</strong>先执行子树拆分，再将拆分的分支推送到远程服务器。用法：</p>
+<div class="highlight-python"><div class="highlight"><pre>git subtree push -P &lt;prefix&gt; &lt;repository&gt; &lt;refspec...&gt;
+</pre></div>
+</div>
+<p>该命令的用法和<strong class="command">git subtree split</strong>类似，不再赘述。</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="060-android-model.html" title="4.6. Android式多版本库协同"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="040-submodule-model.html" title="4.4. 子模组协同模型"
+             >上一页</a> |</li>
+        <li><a href="../index.html">GotGit</a> &raquo;</li>
+          <li><a href="index.html" >4. Git协同模型</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+      <br />
+      全部内容以 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons 署名-非商业性使用-相同方式共享 3.0 协议发布</a>.
+      <br />
+        &copy; Copyright 2011, 蒋鑫。
+      使用 <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3 创建。
+
+    </div>
+  </body>
+</html>
