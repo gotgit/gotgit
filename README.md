@@ -27,3 +27,5 @@ GotGit 是我在2010年底写的一本书《Git权威指南》的代号，五年
 
 书稿由 reStructuredText 格式书写，要想在本地编译和浏览，需要安装相关工具链。我已经将相关工具链做成 Docker 镜像，
 使用方法参见 [jiangxin/docker-gotgit](https://github.com/jiangxin/docker-gotgit) 项目。
+
+commit test.
