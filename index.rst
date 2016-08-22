@@ -23,6 +23,7 @@ Git权威指南
    07-git-app/index
    08-git-misc/index
    90-app/index
+   10-git/add
 
 
 Indices and tables
