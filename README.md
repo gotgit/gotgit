@@ -25,5 +25,5 @@ GotGit 是我在2010年底写的一本书《Git权威指南》的代号，五年
 2015年底，在为华为做咨询顾问一年多之后，我决定接受新的挑战，加入[华为公司](http://www.huawei.com/)，成为这个拥有着最大的开发者群体的世界级公司的一员。
 如何有效地在大公司内进行过知识的传递也是一个课题，我决定将这本书的书稿开源，惠及更多的开发者。
 
-书稿由 reStructuredText 格式书写，要想在本地编译和浏览，需要安装相关工具链。我已经将相关工具链做成 Docker 镜像，
+			书稿由 reStructuredText 格式书写，要想在本地编译和浏览，需要安装相关工具链。我已经将相关工具链做成 Docker 镜像，
 使用方法参见 [jiangxin/docker-gotgit](https://github.com/jiangxin/docker-gotgit) 项目。
