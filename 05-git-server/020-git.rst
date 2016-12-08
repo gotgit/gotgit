@@ -11,7 +11,7 @@ Git协议的语法格式如下。
 
 ::
 
-  语法： git://<server>[:<port>]/path/to/repos.git/
+  语法： git@<server>[:<port>]/path/to/repos.git/
 
 
 说明：
