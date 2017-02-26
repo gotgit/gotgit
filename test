@@ -1,0 +1,30 @@
+.. _browse-repo:
+
+浏览托管项目
+===============
+
+在上一节学习了如何建立GitHub的账户，接下来在建立自己的项目托管之前，\
+先来看看别人是怎么做的。
+
+在GitHub中搜索字符串“GotGit”，可以搜索到我建立的一个项目，项目地址是：\
+https://github.com/gotgit/gotgit/\ 。\
+由上至下，GotGit项目首页可以分为如下几个区域。
+
+* 区域一：项目概要介绍及版本库URL等。
+
+  项目GotGit托管在组织账号 gotgit 之下\ [#]_\ ，并且已经有若干关注用户和派生\
+  项目。最下面一行显示版本库的访问地址，只显示了HTTP和Git-daemon两个协议的\
+  URL地址，这是因为当前用户对该版本库只具有只读权限，因此没有显示SSH协议的URL\
+  地址。
+
+  .. figure:: /images/join-github/gotgit-repo-tree-1.png
+     :scale: 100
+
+     图2-10：版本库概要信息
+
+  使用任意一种协议均可克隆该Git版本库，但要注意只有Git 1.6.6及以上版本才支持\
+  智能HTTP协议，低版本Git则无法用HTTP协议克隆GitHub上的版本库\ [#]_\ 。
+
+sdfds 
+
+----
