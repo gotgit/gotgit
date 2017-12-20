@@ -103,7 +103,7 @@ Git里程碑
 
 ::
 
-  $ git tag -l jx/v2*
+  $ git tag -l 'jx/v2*'
   jx/v2.0
   jx/v2.1
   jx/v2.2
