@@ -1,4 +1,4 @@
-GotGit 是我在2010年底写的一本书《Git权威指南》的代号，五年的时间过去了，Git走进了 2.x 版本的时代。
+GogyGit 是我在2010年底写的一本书《Git权威指南》的代号，五年的时间过去了，Git走进了 2.x 版本的时代。
 短短几年 Git 爆发式的发展已经让这本书显得过时了。
 
 * GitHub 引领了社区式编程的潮流，成为开源社区的代名词。我曾经应邀写了一个分析 GitHub 的电子书 [《GotGitHub》](http://www.worldhello.net/gotgithub/)，
